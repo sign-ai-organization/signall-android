@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>SignAI Avatar</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #0d0f1a; overflow: hidden; }
+    #avatar-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; touch-action: none; }
+    #status { position: absolute; left: 8px; top: 8px; color: #8ff; font: 12px monospace; z-index: 2; }
+    #debug { position: absolute; left: 8px; top: 28px; color: #7f7; font: 11px monospace; z-index: 2; white-space: pre; pointer-events: none; }
+  </style>
+</head>
+<body>
+
+<canvas id="avatar-canvas"></canvas>
+<div id="status">Cargando...</div>
+<div id="debug"></div>
+
+<!-- Three.js desde CDN (igual que app/static/index.html) -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
