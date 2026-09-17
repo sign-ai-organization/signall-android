@@ -18,6 +18,8 @@ Single-module Gradle project (`SignAI-WebView`, `:app` only). Compose shell + We
 ./gradlew installDebug   # needs device/emulator via adb
 ```
 
+**MANDATORY after every change**: compile/verify the code and then run `./gradlew installDebug` on the connected device/emulator so the user can test immediately — never end a work item without installing. If no device is present, say so explicitly.
+
 No tests, no CI, no lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2024.12.01. Bumped from 8.7.3/2.1.0/35 → 8.9.3/2.3.21/36 in `ui-migration-lumo` Fase 0 (Phosphor 1.0.5 requires compileSdk 36 + Kotlin 2.3+ metadata).
 
 ## UI direction
@@ -47,7 +49,7 @@ Contract (`window.SignAI` in `app.js`): `play()`, `setDebug(bool)`, `setFreeCame
 
 - All Compose state lives in `MainActivity.kt` (~420 lines); there is no ViewModel/DI/navigation. History is `SharedPreferences "signai"/"history"` (max 20, top-5 never reorder).
 - Mic button is a placeholder (`play("mic")`); bottom-bar Send just replays the baked sign.
-- Settings sidebar sends `setDebug/setFreeCamera/setGrid/setBackground` toggles with defaults debug=true, grid=true, freeCam=false, bg=false; blur overlay uses `RenderEffect` (Android 12+ only, guarded).
+- Settings sidebar sends `setDebug/setFreeCamera/setGrid/setBackground` toggles with defaults debug=false, grid=true, freeCam=false, bg=false; blur overlay uses `RenderEffect` (Android 12+ only, guarded). The `#status` overlay text ("Avatar listo…") is part of debug mode and only shows when debug is on.
 - Bone naming that matters for `app.js`: fingers have no `DEF-` prefix (`thumb01L`, `f_index01L`…), arms use `DEF-` (`DEF-upper_armL`…), face is camelCase without dots (`DEF-browTL`, `DEF-lipTL`, `DEF-lidTL`, `DEF-jaw_master`). Right brow `DEF-browTR` has ~4 weighted verts vs ~32 left → right brow barely moves (rig issue, not JS).
 
 ## Context engineering (OpenSpec)

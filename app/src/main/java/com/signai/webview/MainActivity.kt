@@ -11,19 +11,14 @@ import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.border
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,31 +27,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -69,42 +42,37 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.foundation.layout.width
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
-
-// Paleta de app/static/style.css
-private val Bg = Color(0xFF0F1117)
-private val Bar = Color(0xFF1A1D27)
-private val Border = Color(0xFF2A2D3A)
-private val Input = Color(0xFF1E2130)
-private val InputBorder = Color(0xFF333333)
-private val TextMain = Color(0xFFE0E0E0)
-private val Primary = Color(0xFF1D4ED8)
-
-private val SignAIColors = darkColorScheme(
-    background = Bg,
-    surface = Bar,
-    onBackground = TextMain,
-    onSurface = Color.White,
-    primary = Primary,
-    onPrimary = Color.White,
-    outline = Border,
-)
+import com.signai.webview.ui.designsystem.components.Checkbox as SignAiCheckbox
+import com.signai.webview.ui.designsystem.components.CheckboxColors
+import com.signai.webview.ui.designsystem.components.SignAiEdgeDrawer
+import com.signai.webview.ui.designsystem.components.SignAiDropdown
+import com.signai.webview.ui.designsystem.components.SignAiDropdownMenuItem
+import com.signai.webview.ui.designsystem.components.SignAiIcon
+import com.signai.webview.ui.designsystem.components.IconButton as SignAiIconButton
+import com.signai.webview.ui.designsystem.components.IconButtonVariant
+import com.signai.webview.ui.designsystem.components.Surface as SignAiSurface
+import com.signai.webview.ui.designsystem.components.SignAiText
+import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextField as SignAiOutlinedTextField
+import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextFieldDefaults as SignAiOutlinedTextFieldDefaults
+import com.signai.webview.ui.icons.SignAiIcons
+import com.signai.webview.ui.theme.SignAiTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme(colorScheme = SignAIColors) {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    MainScreen()
-                }
+            SignAiTheme {
+                MainScreen()
             }
         }
     }
@@ -121,15 +89,15 @@ fun MainScreen() {
             if (saved.isNotEmpty()) addAll(saved.split("\n"))
         }
     }
-    // Opciones de configuración
     var showSettings by remember { mutableStateOf(false) }
-    var debugOn by remember { mutableStateOf(true) }
+    var bottomBarHeight by remember { mutableStateOf(0.dp) }
+    val density = LocalDensity.current
+    var debugOn by remember { mutableStateOf(false) }
     var freeCamOn by remember { mutableStateOf(false) }
     var gridOn by remember { mutableStateOf(true) }
     var bgOn by remember { mutableStateOf(false) }
     var sign by remember { mutableStateOf("0000_0000_0000") }
 
-    // Blur del WebView detrás de la sidebar (Android 12+)
     LaunchedEffect(showSettings) {
         webViewRef.value?.let { wv ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -143,9 +111,8 @@ fun MainScreen() {
 
     val play: (String) -> Unit = { text ->
         if (text.isNotBlank()) {
-            // Ya está en el top 5 → no se re-agrega ni reordena
             if (!(history.take(5).contains(text))) {
-                history.remove(text)          // si estaba más abajo, sube al tope
+                history.remove(text)
                 history.add(0, text)
                 while (history.size > 20) history.removeAt(history.size - 1)
             }
@@ -157,29 +124,44 @@ fun MainScreen() {
     val sendJs: (String) -> Unit = { js ->
         webViewRef.value?.evaluateJavascript(js, null)
     }
-    Box(Modifier.fillMaxSize()) {
-        Scaffold(
-            topBar = {
-                TopBar(
-                    history = history,
-                    onReplay = { play(it) },
-                    onOpenSettings = { showSettings = true },
+    SignAiSurface(
+        modifier = Modifier.fillMaxSize(),
+        color = SignAiTheme.colors.bg,
+    ) {
+        SignAiEdgeDrawer(
+            isOpen = showSettings,
+            onOpenChange = { showSettings = it },
+            drawerWidth = 300.dp,
+            edgeStripBottomExclusion = bottomBarHeight,
+            content = {
+                Column(Modifier.fillMaxSize()) {
+                    Box(Modifier.weight(1f)) {
+                        AvatarWebView(Modifier.fillMaxSize(), onReady = { webViewRef.value = it })
+                    }
+                    Box(
+                        Modifier.onSizeChanged {
+                            bottomBarHeight = with(density) { it.height.toDp() }
+                        },
+                    ) {
+                        BottomBar(
+                            history = history,
+                            onReplay = { play(it) },
+                            onSend = { play(it) },
+                            onMic = { play("mic") },
+                        )
+                    }
+                }
+            },
+            drawerContent = {
+                SettingsDrawerContent(
+                    sendJs = sendJs,
+                    debugOn = debugOn, onDebug = { debugOn = it },
+                    freeCamOn = freeCamOn, onFreeCam = { freeCamOn = it },
+                    gridOn = gridOn, onGrid = { gridOn = it },
+                    bgOn = bgOn, onBg = { bgOn = it },
+                    sign = sign, onSign = { sign = it },
                 )
             },
-            bottomBar = { BottomBar(onSend = { play(it) }, onMic = { play("mic") }) },
-        ) { innerPadding ->
-            AvatarWebView(Modifier.padding(innerPadding), onReady = { webViewRef.value = it })
-        }
-        // Overlay: cubre todo, incluidas TopBar y BottomBar
-        SettingsSidebar(
-            visible = showSettings,
-            onDismiss = { showSettings = false },
-            sendJs = sendJs,
-            debugOn = debugOn, onDebug = { debugOn = it },
-            freeCamOn = freeCamOn, onFreeCam = { freeCamOn = it },
-            gridOn = gridOn, onGrid = { gridOn = it },
-            bgOn = bgOn, onBg = { bgOn = it },
-            sign = sign, onSign = { sign = it },
         )
     }
 }
@@ -188,9 +170,7 @@ private fun jsToggle(prop: String, on: Boolean) =
     "window.SignAI?.${prop}(!!${on})"
 
 @Composable
-private fun SettingsSidebar(
-    visible: Boolean,
-    onDismiss: () -> Unit,
+private fun SettingsDrawerContent(
     sendJs: (String) -> Unit,
     debugOn: Boolean, onDebug: (Boolean) -> Unit,
     freeCamOn: Boolean, onFreeCam: (Boolean) -> Unit,
@@ -198,73 +178,73 @@ private fun SettingsSidebar(
     bgOn: Boolean, onBg: (Boolean) -> Unit,
     sign: String, onSign: (String) -> Unit,
 ) {
-    // Scrim: tocar fuera cierra
-    Box(Modifier.fillMaxSize()) {
-        AnimatedVisibility(
-            visible = visible,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            Box(Modifier.fillMaxSize().clickable(
-                indication = null, interactionSource = remember { MutableInteractionSource() }
-            ) { onDismiss() })
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .statusBarsPadding()
+            .navigationBarsPadding()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        SignAiText(
+            text = "Configuración",
+            style = SignAiTheme.typography.titleMedium,
+            color = SignAiTheme.colors.textMain,
+        )
+        Spacer(Modifier.height(8.dp))
+
+        SettingCheck("Modo debug", debugOn) {
+            onDebug(it)
+            sendJs(jsToggle("setDebug", it))
         }
-        AnimatedVisibility(
-            visible = visible,
-            enter = slideInHorizontally(initialOffsetX = { it }) + fadeIn(),
-            exit = slideOutHorizontally(targetOffsetX = { it }) + fadeOut(),
-            modifier = Modifier.fillMaxHeight().align(Alignment.CenterEnd),
-        ) {
-        Surface(
-            color = Bar,
-            modifier = Modifier.fillMaxHeight().width(300.dp),
-        ) {
-            Column(
-                modifier = Modifier
-                    .statusBarsPadding()
-                    .navigationBarsPadding()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                Text("Configuración", style = MaterialTheme.typography.titleMedium, color = Color.White)
-                Spacer(Modifier.height(8.dp))
+        SettingCheck("Cámara libre (orbitar + zoom sin límite)", freeCamOn) {
+            onFreeCam(it)
+            sendJs(jsToggle("setFreeCamera", it))
+        }
+        SettingCheck("Suelo (grilla)", gridOn) {
+            onGrid(it)
+            sendJs(jsToggle("setGrid", it))
+        }
+        SettingCheck("Fondo bosque", bgOn) {
+            onBg(it)
+            sendJs(jsToggle("setBackground", it))
+        }
 
-                SettingCheck("Modo debug", debugOn) {
-                    onDebug(it)
-                    sendJs(jsToggle("setDebug", it))
-                }
-                SettingCheck("Cámara libre (orbitar + zoom sin límite)", freeCamOn) {
-                    onFreeCam(it)
-                    sendJs(jsToggle("setFreeCamera", it))
-                }
-                SettingCheck("Suelo (grilla)", gridOn) {
-                    onGrid(it)
-                    sendJs(jsToggle("setGrid", it))
-                }
-                SettingCheck("Fondo bosque", bgOn) {
-                    onBg(it)
-                    sendJs(jsToggle("setBackground", it))
-                }
-
-                Spacer(Modifier.height(8.dp))
-                // Selector de señas
-                var expanded by remember { mutableStateOf(false) }
-                val signs = listOf("0000_0000_0000")
-                OutlinedButton(onClick = { expanded = true }, modifier = Modifier.fillMaxWidth()) {
-                    Text("Seña: $sign", color = TextMain, maxLines = 1)
-                }
-                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, containerColor = Input) {
-                    signs.forEach { s ->
-                        DropdownMenuItem(
-                            text = { Text(if (s == sign) "✓ $s" else s, color = TextMain) },
-                            onClick = { expanded = false; onSign(s) },
+        Spacer(Modifier.height(8.dp))
+        var expandedSign by remember { mutableStateOf(false) }
+        val signs = listOf("0000_0000_0000")
+        SignAiDropdown(
+            expanded = expandedSign,
+            onDismissRequest = { expandedSign = false },
+            maxHeight = 200.dp,
+            trigger = {
+                SignAiSurface(
+                    onClick = { expandedSign = !expandedSign },
+                    shape = RoundedCornerShape(8.dp),
+                    color = Color.Transparent,
+                    border = BorderStroke(1.dp, SignAiTheme.colors.inputBorder),
+                    modifier = Modifier.fillMaxWidth().height(44.dp),
+                ) {
+                    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                        SignAiText(
+                            text = "Seña: $sign",
+                            color = SignAiTheme.colors.textMain,
+                            maxLines = 1,
                         )
                     }
                 }
+            },
+        ) {
+            signs.forEach { s ->
+                SignAiDropdownMenuItem(
+                    text = if (s == sign) "✓ $s" else s,
+                    onClick = {
+                        expandedSign = false
+                        onSign(s)
+                    },
+                )
             }
         }
-    }
     }
 }
 
@@ -274,64 +254,30 @@ private fun SettingCheck(label: String, checked: Boolean, onChange: (Boolean) ->
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Checkbox(checked = checked, onCheckedChange = onChange)
-        Text(label, color = TextMain, modifier = Modifier.padding(start = 4.dp))
+        SignAiCheckbox(checked = checked, onCheckedChange = onChange, colors = signAiCheckboxColors())
+        SignAiText(
+            text = label,
+            color = SignAiTheme.colors.textMain,
+            modifier = Modifier.padding(start = 4.dp),
+        )
     }
 }
 
 @Composable
-private fun TopBar(history: SnapshotList<String>, onReplay: (String) -> Unit, onOpenSettings: () -> Unit) {
-    var showHistory by remember { mutableStateOf(false) }
-    Surface(color = Bar) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .statusBarsPadding()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = "SignAI",
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.White,
-                modifier = Modifier.padding(vertical = 12.dp),
-            )
-            Row {
-                Box {
-                    IconButton(onClick = { showHistory = true }) {
-                        Icon(Icons.Default.History, contentDescription = "Historial", tint = TextMain)
-                    }
-                    DropdownMenu(
-                        expanded = showHistory,
-                        onDismissRequest = { showHistory = false },
-                        containerColor = Input,
-                        modifier = Modifier.heightIn(max = 280.dp), // ~5 ítems de 56dp, scrollea el resto
-                    ) {
-                        if (history.isEmpty()) {
-                            DropdownMenuItem(text = { Text("Sin historial", color = TextMain) }, onClick = {})
-                        } else {
-                            val maxChars = 10
-                            history.forEach { item ->
-                                val label = if (item.length > maxChars) item.take(maxChars) + "..." else item
-                                DropdownMenuItem(
-                                    text = { Text(label, color = TextMain, maxLines = 1) },
-                                    onClick = {
-                                        showHistory = false
-                                        onReplay(item)
-                                    },
-                                )
-                            }
-                        }
-                    }
-                }
-                IconButton(onClick = onOpenSettings) {
-                    Icon(Icons.Default.Settings, contentDescription = "Configuración", tint = TextMain)
-                }
-            }
-        }
-    }
-}
+private fun signAiCheckboxColors(): CheckboxColors = CheckboxColors(
+    checkedCheckmarkColor = Color.White,
+    uncheckedCheckmarkColor = Color.Transparent,
+    checkedBoxColor = SignAiTheme.colors.primary,
+    uncheckedBoxColor = Color.Transparent,
+    disabledCheckedBoxColor = SignAiTheme.colors.border,
+    disabledUncheckedBoxColor = Color.Transparent,
+    disabledIndeterminateBoxColor = SignAiTheme.colors.border,
+    checkedBorderColor = SignAiTheme.colors.primary,
+    uncheckedBorderColor = SignAiTheme.colors.border,
+    disabledBorderColor = SignAiTheme.colors.border,
+    disabledUncheckedBorderColor = SignAiTheme.colors.border,
+    disabledIndeterminateBorderColor = SignAiTheme.colors.border,
+)
 
 @Composable
 private fun AvatarWebView(modifier: Modifier = Modifier, onReady: (WebView) -> Unit) {
@@ -371,53 +317,122 @@ private fun AvatarWebView(modifier: Modifier = Modifier, onReady: (WebView) -> U
 }
 
 @Composable
-private fun BottomBar(onSend: (String) -> Unit = {}, onMic: () -> Unit = {}) {
+private fun BottomBar(
+    history: SnapshotList<String>,
+    onReplay: (String) -> Unit,
+    onSend: (String) -> Unit = {},
+    onMic: () -> Unit = {},
+) {
+    var query by rememberSaveable { mutableStateOf("") }
+    val keyboard = LocalSoftwareKeyboardController.current
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .navigationBarsPadding()
             .imePadding()
             .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-    var query by rememberSaveable { mutableStateOf("") }
-    val keyboard = LocalSoftwareKeyboardController.current
-    OutlinedTextField(
-        value = query,
-        onValueChange = { query = it },
-            placeholder = { Text("Versión: ${BuildConfig.VERSION_NAME}") },
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = InputBorder,
-                focusedTextColor = TextMain,
-                unfocusedTextColor = TextMain,
-            ),
-        )
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            SignAiOutlinedTextField(
+                value = query,
+                onValueChange = { query = it },
+                placeholder = {
+                    SignAiText(
+                        text = "Versión: ${BuildConfig.VERSION_NAME}",
+                        color = SignAiTheme.colors.textMain,
+                    )
+                },
+                modifier = Modifier.weight(1f),
+                colors = SignAiOutlinedTextFieldDefaults.colors().copy(
+                    focusedTextColor = SignAiTheme.colors.textMain,
+                    unfocusedTextColor = SignAiTheme.colors.textMain,
+                    cursorColor = SignAiTheme.colors.primary,
+                    focusedOutlineColor = SignAiTheme.colors.primary,
+                    unfocusedOutlineColor = SignAiTheme.colors.inputBorder,
+                    focusedContainerColor = SignAiTheme.colors.input,
+                    unfocusedContainerColor = SignAiTheme.colors.input,
+                ),
+            )
+            HistoryMenuButton(
+                history = history,
+                onReplay = { text ->
+                    keyboard?.hide()
+                    onReplay(text)
+                },
+            )
+        }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             val shape = RoundedCornerShape(6.dp)
-            FilledIconButton(
+            SignAiSurface(
                 onClick = onMic,
-                modifier = Modifier.weight(0.25f).height(56.dp).border(1.dp, InputBorder, shape),
                 shape = shape,
-                colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = Input,
-                    contentColor = TextMain,
-                ),
+                color = SignAiTheme.colors.input,
+                border = BorderStroke(1.dp, SignAiTheme.colors.inputBorder),
+                modifier = Modifier.weight(0.25f).height(56.dp),
             ) {
-                Icon(Icons.Default.Mic, contentDescription = "Micrófono")
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    SignAiIcon(SignAiIcons.Mic, contentDescription = "Micrófono", tint = SignAiTheme.colors.textMain)
+                }
             }
-            Button(
+            SignAiSurface(
                 onClick = {
                     val text = query.trim()
                     query = ""
                     keyboard?.hide()
                     if (text.isNotEmpty()) onSend(text)
                 },
-                modifier = Modifier.weight(0.75f).height(56.dp),
                 shape = shape,
-                colors = ButtonDefaults.buttonColors(containerColor = Primary),
+                color = SignAiTheme.colors.primary,
+                modifier = Modifier.weight(0.75f).height(56.dp),
             ) {
-                Icon(Icons.Default.Send, contentDescription = "Enviar")
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    SignAiIcon(SignAiIcons.Send, contentDescription = "Enviar", tint = Color.White)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun HistoryMenuButton(
+    history: SnapshotList<String>,
+    onReplay: (String) -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    SignAiDropdown(
+        expanded = expanded,
+        onDismissRequest = { expanded = false },
+        modifier = Modifier.heightIn(max = 280.dp),
+        trigger = {
+            SignAiIconButton(
+                onClick = { expanded = !expanded },
+                variant = IconButtonVariant.Ghost,
+            ) {
+                SignAiIcon(
+                    imageVector = SignAiIcons.History,
+                    contentDescription = "Historial",
+                    tint = SignAiTheme.colors.textMain,
+                )
+            }
+        },
+    ) {
+        if (history.isEmpty()) {
+            SignAiDropdownMenuItem(text = "Sin historial", onClick = {})
+        } else {
+            val maxChars = 10
+            history.forEach { item ->
+                val label = if (item.length > maxChars) item.take(maxChars) + "..." else item
+                SignAiDropdownMenuItem(
+                    text = label,
+                    onClick = {
+                        expanded = false
+                        onReplay(item)
+                    },
+                )
             }
         }
     }

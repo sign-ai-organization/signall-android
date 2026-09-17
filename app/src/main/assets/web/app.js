@@ -60,8 +60,9 @@ const state = {
 //   2. Llamarla donde corresponda (o usar el refresh del render loop).
 // Toggle global: Debug.enabled = false, o window.SignAI.setDebug(false) desde Android.
 const Debug = {
-  enabled: true,
+  enabled: false,
   el: null,
+  statusEl: null,
   flags: {
     playback: () => [
       `play: ${state.playing}  frame: ${Math.floor(state.frameIdx)}/${state.frames.length}  fps_datos: ${state.fps}`,
@@ -87,14 +88,20 @@ const Debug = {
     },
     taps: () => [
       pressTimer
-        ? `long_press: ${((performance.now() - pressStartTime) / 1000).toFixed(1)}s / 1s`
+        ? `long_press: ${((performance.now() - pressStartTime) / 1000).toFixed(1)}s / 0.5s`
         : `long_press: - (${Debug.lastTap ?? "inactivo"})`,
     ],
   },
   render() {
     if (!this.el) this.el = document.getElementById("debug");
-    if (!this.enabled) { this.el.style.display = "none"; return; }
+    if (!this.statusEl) this.statusEl = document.getElementById("status");
+    if (!this.enabled) {
+      this.el.style.display = "none";
+      if (this.statusEl) this.statusEl.style.display = "none";
+      return;
+    }
     this.el.style.display = "";
+    if (this.statusEl) this.statusEl.style.display = "";
     this.el.textContent = Object.values(this.flags).flatMap(f => f()).join("\n");
   },
 };
@@ -532,7 +539,7 @@ function animTick(now) {
   }
 }
 
-// Long press (1 solo dedo, casi sin mover) 5s → reset pose + cámara al default
+// Long press (1 solo dedo, casi sin mover) 0.5s → reset pose + cámara al default
 canvas.addEventListener("pointerdown", (e) => {
   activePointers++;
   if (activePointers > 1) { cancelPress(); return; } // pinch/zoom: no cuenta
@@ -547,7 +554,7 @@ canvas.addEventListener("pointerdown", (e) => {
     controls.target.set(0, 1.45, 0);
     controls.update();
     Debug.lastTap = "reset (long press)";
-  }, 1000);
+  }, 500);
 });
 const cancelPress = () => { if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; } };
 canvas.addEventListener("pointermove", (e) => {

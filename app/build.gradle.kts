@@ -54,8 +54,6 @@ dependencies {
     api("androidx.compose.ui:ui-tooling")
     api("androidx.compose.ui:ui-tooling-preview")
     api("androidx.compose.material:material-ripple:1.7.6")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material-icons-extended")
 
     implementation("io.github.dev778g-me:phosphoricons-regular-android:1.0.5")
 
