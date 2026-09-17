@@ -907,21 +907,21 @@ más dos extras de deuda técnica y una pantalla de carga inicial.
     (bordes). Quedan `Color.Unspecified`/`Color.Black`/`Color.White` solo en
     previews y en el ripple de Lumo (no son color de UI).
 
-- [ ] 7.2 **Extra — `Lumo.Button` real para los 3 botones.** Hoy mic, enviar y
+- [x] 7.2 **Extra — `Lumo.Button` real para los 3 botones.** Hoy mic, enviar y
       el selector de señas usan `SignAiSurface(onClick = …)`. Editar
       `ui/designsystem/components/Button.kt` para aceptar
       `colors: ButtonColors? = null` (o el mecanismo que exponga Lumo) y
       migrar los 3 call sites a `Button`. Objetivo: usar el componente
       correcto del DS en vez de un `Surface` con click. Marcar `// CUSTOMIZED`.
 
-- [ ] 7.3 **Extra — centralizar `Shapes`, `Sizes`, `Spacing`** en
+- [x] 7.3 **Extra — centralizar `Shapes`, `Sizes`, `Spacing`** en
       `ui/designsystem/foundation/` (archivos generados de Lumo): crear
       `SignAiSizes` (`buttonHeight = 56.dp`, `fieldHeight = 44.dp`),
       `SignAiShapes` (`cornerSmall = 6.dp`, `cornerMedium = 8.dp`) y
       `SignAiSpacing` (`xs/sm/md/lg`). Reemplazar los `56.dp`, `44.dp`,
       `RoundedCornerShape(6/8.dp)`, `padding(4/8/16.dp)` hardcodeados.
 
-- [ ] 7.4 **Pantalla de carga inicial (splash).** Al abrir la app, mostrar
+- [x] 7.4 **Pantalla de carga inicial (splash).** Al abrir la app, mostrar
       primero una pantalla del color base de fondo con un spinner centrado;
       cuando el WebView termina de cargar, el splash desaparece y el
       contenido real entra con una animación **sutil** (fade, sin mover el
@@ -941,11 +941,31 @@ más dos extras de deuda técnica y una pantalla de carga inicial.
   - Mantener el `background` base `#000000` para no flooding; cero blur sobre
     el avatar.
 
-- [ ] 7.5 Documentar overrides aplicados a cada componente Lumo (comentario
+- [x] 7.5 Documentar overrides aplicados a cada componente Lumo (comentario
       `// CUSTOMIZED` al inicio de cada `.kt` generado modificado) y refinar
       timings de entrada/salida del drawer si hace falta.
-- [ ] 7.6 Actualizar `AGENTS.md` (paleta Lumo + splash) y `openspec/specs`
+- [x] 7.6 Actualizar `AGENTS.md` (paleta Lumo + splash) y `openspec/specs`
       si corresponde, y loguear en la sesión.
+
+**Trabajo realizado 7.2–7.6 (sep 17):**
+
+- **7.2** `Button.kt` (`// CUSTOMIZED`) acepta `colors: ButtonColors?` y
+  `shape: Shape?`; `ButtonColors` ahora es público y se añadió el helper
+  `signAiButtonColors(...)`. Los 3 botones (mic, enviar, sign picker) usan
+  `Button` en vez de `SignAiSurface(onClick)`.
+- **7.3** Nuevos tokens en `ui/designsystem/foundation/`: `SignAiSizes`
+  (buttonHeight/fieldHeight/drawerWidth/dropdown*), `SignAiShapes`
+  (cornerSmall/cornerMedium/cornerLarge), `SignAiSpacing` (xs/sm/md/lg/xl).
+  Aplicados en BottomBar, SettingsSidebar, SettingRow, SignPickerDropdown,
+  HistoryDropdown, Dropdown, EdgeDrawer y MainScreen.
+- **7.4** Splash: `ui/components/SignAiSplash.kt` (fondo + Lumo
+  `CircularProgressIndicator`). `AvatarWebView` gana `onLoaded` (en
+  `onPageFinished`); `MainScreen` controla `loading`, timeout 8 s de fallback,
+  fade-out del splash (400 ms) y fade-in del contenido (500 ms).
+- **7.5** Headers `// CUSTOMIZED` presentes en `Color.kt`, `Button.kt`,
+  `Dropdown.kt`, `Icon.kt`, `Text.kt` y `EdgeDrawer.kt`.
+- **7.6** `AGENTS.md` actualizado: sección Layers, paleta Lumo, tokens y
+  splash. `SignsCatalog` referenciado en la regla de añadir señas.
 
 ---
 

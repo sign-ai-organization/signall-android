@@ -7,9 +7,13 @@ Old approaches (Flask server, Kotlin+Filament native, Unity) are dead — ignore
 
 Single-module Gradle project (`SignAI-WebView`, `:app` only). Compose shell + WebView that renders a local Three.js avatar. No backend, no network API.
 
-- Kotlin UI: `app/src/main/java/com/signai/webview/MainActivity.kt` (all screens in this one file: TopBar, BottomBar, SettingsSidebar, AvatarWebView)
+- Kotlin UI: layered packages under `app/src/main/java/com/signai/webview/` — `data/` + `domain/` (business), `ui/state/` + `ui/webview/` (presentation), `ui/{theme,designsystem,icons,components}/` (reusable UI), `ui/screens/` + `ui/MainScreen.kt` (screens). `MainActivity.kt` is a ~27-line entry point.
 - Web scene: `app/src/main/assets/web/` — `index.html`, `app.js`, `avatar.glb`, `sign.json`, `bosque.jpg`
 - Package `com.signai.webview`, portrait-locked (`AndroidManifest.xml`)
+
+## Layers (Clean Architecture, practical)
+
+Dependency rule: screens → components → state/webview → data/domain, **never backwards**. No Hilt/ViewModel: `MainScreenState` (holds `SnapshotStateList` history + `Settings` + `sign`) is built in `MainActivity` and passed down; `SharedPrefsSignHistoryRepository` owns SharedPreferences; `WebViewSignAiController` is the only place with `evaluateJavascript`/`RenderEffect`; `domain/SignAiCommands` and `domain/SignsCatalog` are pure Kotlin.
 
 ## Build
 
@@ -28,6 +32,9 @@ No tests, no CI, no lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target
 - Migrate existing Material 3 away progressively, never add new Material 3 components.
 - Icons: Phosphor Icons for anything new; avoid `material-icons-extended` in new code.
 - Build a SignAI Design System on top of Lumo UI; centralize colors, typography, spacing, sizes, shapes, states, and animations there.
+- Palette (single source of truth): **Lumo's default dark palette**, edited in `ui/designsystem/Color.kt` (`// CUSTOMIZED`). Black background, gray surfaces `Gray900 #282828`, white text, outline `Gray800 #4B4B4B`; accent `primary` overridden to Lumo's `Blue900 #276EF1`. Do NOT re-run `lumo --setup` (overwrites). `ui/theme/SignAiTheme` delegates to Lumo and exposes `colors: Colors` — `SignAiColors` no longer exists.
+- Tokens live in `ui/designsystem/foundation/`: `SignAiSizes` (buttonHeight 56, fieldHeight 44, drawerWidth 300…), `SignAiShapes` (cornerSmall 6, cornerMedium 8), `SignAiSpacing` (xs 4, sm 8, md 16…). Use them instead of inline `.dp`.
+- Spinner/loader: Lumo `ProgressIndicators` (`ui/designsystem/components/progressindicators/`). The app shows a `SignAiSplash` overlay (`ui/components/SignAiSplash.kt`) until `AvatarWebView`'s `onLoaded` (`onPageFinished`) fires, with an 8 s timeout fallback; content fades in (500 ms).
 - Look: minimalist, modern, dark mode base with good contrast and legibility. The 3D avatar stays the visual protagonist.
 - Transparencies, subtle surfaces, blur, and animations are allowed only when subtle, functional, lightweight, and in moderation.
 - Keep SignAI components reusable and separate from screens. Keep the UI lightweight — never degrade WebView 3D performance with unnecessary libraries, effects, or animations.
@@ -43,11 +50,11 @@ Contract (`window.SignAI` in `app.js`): `play()`, `setDebug(bool)`, `setFreeCame
 - `index.html` loads Three.js r169 from jsDelivr CDN via importmap → **needs INTERNET permission + connectivity at runtime**, even though avatar/data are local.
 - `app.js` is self-contained (port of old Flask `app/static/app.js`, no video, no sign picker). `avatar.glb`, `sign.json`, `bosque.jpg` load via **relative paths** — keep all five files in the same `assets/web/` dir.
 - `shouldInterceptRequest` forces `Cache-Control: no-store` so edits to `app.js`/`sign.json` show on reload; don't remove it.
-- `sign.json` is a single baked sign (`stem 0000_0000_0000`, 59 frames @24fps). Adding a sign = regenerating/replacing this file (source CSVs in `data/LANDMARKS/`: BODY/FACE/HANDS) **and** extending the hardcoded `listOf("0000_0000_0000")` in `MainActivity.kt`.
+- `sign.json` is a single baked sign (`stem 0000_0000_0000`, 59 frames @24fps). Adding a sign = regenerating/replacing this file (source CSVs in `data/LANDMARKS/`: BODY/FACE/HANDS) **and** extending `domain/SignsCatalog.kt` (`available`).
 
 ## Gotchas
 
-- All Compose state lives in `MainActivity.kt` (~420 lines); there is no ViewModel/DI/navigation. History is `SharedPreferences "signai"/"history"` (max 20, top-5 never reorder).
+- All Compose state lives in `ui/state/MainScreenState.kt`; there is no ViewModel/DI/navigation. History is `SharedPreferences "signai"/"history"` (max 20, top-5 never reorder) behind `data/SignHistoryRepository.kt`.
 - Mic button is a placeholder (`play("mic")`); bottom-bar Send just replays the baked sign.
 - Settings sidebar sends `setDebug/setFreeCamera/setGrid/setBackground` toggles with defaults debug=false, grid=true, freeCam=false, bg=false; blur overlay uses `RenderEffect` (Android 12+ only, guarded). The `#status` overlay text ("Avatar listo…") is part of debug mode and only shows when debug is on.
 - Bone naming that matters for `app.js`: fingers have no `DEF-` prefix (`thumb01L`, `f_index01L`…), arms use `DEF-` (`DEF-upper_armL`…), face is camelCase without dots (`DEF-browTL`, `DEF-lipTL`, `DEF-lidTL`, `DEF-jaw_master`). Right brow `DEF-browTR` has ~4 weighted verts vs ~32 left → right brow barely moves (rig issue, not JS).

@@ -942,3 +942,51 @@ luego la Fase 6 (separación de capas, sin cambios de comportamiento).
 - **7.4** splash con spinner `Progress` + fallback timeout.
 - **7.5** documentar overrides, **7.6** AGENTS.md/specs.
 - Confirmación del usuario en device del nuevo look.
+
+---
+
+# Continuación Fase 7.2–7.6 — Button real, tokens, splash y docs (sep 17)
+
+## 7.2 — Button real de Lumo
+- `ui/designsystem/components/Button.kt` (`// CUSTOMIZED`): `Button` acepta
+  `colors: ButtonColors?` y `shape: Shape?`; `ButtonColors` pasó a público;
+  helper `signAiButtonColors(container, content, border?, disabled...)`.
+- Migrados los 3 botones que eran `SignAiSurface(onClick)`:
+  mic y enviar en `SignAiBottomBar`, sign picker en `SignPickerDropdown`.
+  Ahora usan `Button` con colores/tokens SignAI. Look idéntico verificado.
+
+## 7.3 — Tokens
+- `foundation/SignAiSizes.kt` (`buttonHeight 56`, `fieldHeight 44`,
+  `drawerWidth 300`, `dropdownMaxHeight 280`, `dropdownMinHeight 48`).
+- `foundation/SignAiShapes.kt` (`cornerSmall 6`, `cornerMedium 8`, `cornerLarge 12`).
+- `foundation/SignAiSpacing.kt` (`xs 4`, `sm 8`, `md 16`, `lg 24`, `xl 32`).
+- Reemplazados los `.dp` inline en BottomBar, SettingsSidebar, SettingRow,
+  SignPickerDropdown, HistoryDropdown, Dropdown, EdgeDrawer y MainScreen.
+
+## 7.4 — Splash
+- Generado `lumo --add ProgressIndicators` →
+  `ui/designsystem/components/progressindicators/{Circular,Linear}ProgressIndicator.kt`.
+- `ui/components/SignAiSplash.kt`: pantalla completa color `background` con
+  `CircularProgressIndicator` (primary azul) centrado.
+- `AvatarWebView`: nuevo `onLoaded` disparado en `onPageFinished`.
+- `MainScreen`: `loading` + timeout 8 s de fallback (necesario porque
+  Three.js viene del CDN); splash con `fadeOut` 400 ms y contenido con
+  alpha 0→1 en 500 ms (`animateFloatAsState` + `graphicsLayer`).
+
+## 7.5 — Documentación de overrides
+- Headers `// CUSTOMIZED` en `Color.kt`, `Button.kt`, `Dropdown.kt`,
+  `Icon.kt`, `Text.kt`, `EdgeDrawer.kt`.
+
+## 7.6 — Docs
+- `AGENTS.md`: nueva sección **Layers** (dependencia screens → components →
+  state/webview → data/domain); paleta Lumo y tokens; splash; `SignsCatalog`
+  en la regla de añadir señas; MainActivity ya no contiene todo.
+
+## Verificación
+- `./gradlew build` ✅, `installDebug` ✅, sin crashes.
+- Splash capturado (`screen-fase7-4-splash-*.png`: fondo + spinner) y app
+  completa tras la carga (`screen-fase7-2-buttons.png`).
+
+## Pendiente
+- Confirmación del usuario en device del splash y del look final.
+- `ui-migration-lumo` queda cerrado (Fases 0–7 completas); evaluar archivarlo.
