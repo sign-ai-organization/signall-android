@@ -863,10 +863,78 @@ siguiente.
 
 ### Fase 7 — Polish del Design System
 
-- [ ] 7.1 Ajustar `SignAiColors.kt` a paleta dark minimalista definitiva (transparencias, surfaces sutiles).
-- [ ] 7.2 Centralizar `Shapes`, `Sizes`, `Spacing` en `ui/designsystem/foundation/` (modificar los archivos generados de Lumo).
-- [ ] 7.3 Animaciones de entrada/salida para el sidebar (mantener `AnimatedVisibility` existente; refinar timings).
-- [ ] 7.4 Documentar overrides aplicados a cada componente Lumo (comentario al inicio de cada `.kt` generado modificado).
+Fase centrada en **adoptar la paleta default de Lumo** como única fuente de
+color (hoy conviven dos paletas: la de Lumo y nuestra `SignAiColors` propia),
+más dos extras de deuda técnica y una pantalla de carga inicial.
+
+**Decisiones de paleta (sep 17, aprobadas por el usuario):**
+
+- Base: **paleta oscura default de Lumo** (`Color.kt` generado). Fondo negro,
+  paneles gris `Gray900 #282828`, texto blanco, bordes `Gray800 #4B4B4B`.
+- Acento (`primary`): **azul propio de Lumo `Blue900 #276EF1`** (no inventamos
+  color; no usamos el blanco default que Lumo trae para `primary`).
+- Superficies de BottomBar y drawer: **gris `#282828`** (Lumo `surface`),
+  para que los paneles se despeguen del negro del avatar.
+
+- [ ] 7.1 **Unificar la paleta a Lumo.**
+  - Editar `ui/designsystem/Color.kt` → `DarkColors` con `primary = Blue900
+    (#276EF1)`, `onPrimary = White` y el resto de valores default de Lumo
+    (`surface = Gray900`, `background = Black`, `outline = Gray800`,
+    `text = White`, `textSecondary = Gray300`, `error = Red400`,
+    `success = Green700`, etc.).
+  - Eliminar `ui/theme/SignAiColors.kt` (data class + `DefaultSignAiColors` +
+    `LocalSignAiColors`): deja de existir la paleta paralela.
+  - `ui/theme/SignAiTheme.kt` deja de inyectar paleta propia; expone
+    `colors` = `Colors` de Lumo. Unificar los dos `LocalContentColor` (el de
+    `ui/theme/LocalContentColor.kt` y el de `ui/designsystem/Color.kt`) en uno.
+  - Renombrar los 7 tokens viejos en pantallas/componentes a los de Lumo:
+    `bg`→`background`, `bar`→`surface`, `border`/`inputBorder`→`outline`,
+    `input`→`surface`, `textMain`→`text`, `primary`→`primary`.
+    Regla: ningún `Color(0xFF…)` ni `Color.White`/`Color.Transparent` literal
+    fuera de `ui/designsystem/Color.kt`.
+  - **Criterio de éxito:** una sola paleta en el repo; `rg "SignAiColors"
+    app/src/main/java` devuelve 0 hits; `rg "Color\(0x"` en `ui/theme`,
+    `ui/screens`, `ui/components` devuelve 0 hits.
+
+- [ ] 7.2 **Extra — `Lumo.Button` real para los 3 botones.** Hoy mic, enviar y
+      el selector de señas usan `SignAiSurface(onClick = …)`. Editar
+      `ui/designsystem/components/Button.kt` para aceptar
+      `colors: ButtonColors? = null` (o el mecanismo que exponga Lumo) y
+      migrar los 3 call sites a `Button`. Objetivo: usar el componente
+      correcto del DS en vez de un `Surface` con click. Marcar `// CUSTOMIZED`.
+
+- [ ] 7.3 **Extra — centralizar `Shapes`, `Sizes`, `Spacing`** en
+      `ui/designsystem/foundation/` (archivos generados de Lumo): crear
+      `SignAiSizes` (`buttonHeight = 56.dp`, `fieldHeight = 44.dp`),
+      `SignAiShapes` (`cornerSmall = 6.dp`, `cornerMedium = 8.dp`) y
+      `SignAiSpacing` (`xs/sm/md/lg`). Reemplazar los `56.dp`, `44.dp`,
+      `RoundedCornerShape(6/8.dp)`, `padding(4/8/16.dp)` hardcodeados.
+
+- [ ] 7.4 **Pantalla de carga inicial (splash).** Al abrir la app, mostrar
+      primero una pantalla del color base de fondo con un spinner centrado;
+      cuando el WebView termina de cargar, el splash desaparece y el
+      contenido real entra con una animación **sutil** (fade, sin mover el
+      avatar ni afectar rendimiento del WebView).
+  - Spinner: usar el componente `Progress` de Lumo
+    (`./gradlew lumo --add Progress`); si no encaja, spinner propio con
+    `androidx.compose.foundation` + `infiniteTransition`.
+  - Señal de "listo": extender `ui/webview/AvatarWebView.kt` con un callback
+    `onLoaded` disparado en `onPageFinished` (hoy `onReady` dispara al crear
+    la vista, antes de que la página cargue).
+  - Estado: `loading` en `MainScreen` (o `MainScreenState`); overlay
+    `Box` con `background` + spinner; `AnimatedVisibility`/`Crossfade` para
+    la salida y la entrada del contenido.
+  - **Fallback obligatorio:** si la página no carga (necesita internet para
+    Three.js del CDN), ocultar el splash igual tras un timeout (~8 s) para no
+    dejar la app colgada en el spinner.
+  - Mantener el `background` base `#000000` para no flooding; cero blur sobre
+    el avatar.
+
+- [ ] 7.5 Documentar overrides aplicados a cada componente Lumo (comentario
+      `// CUSTOMIZED` al inicio de cada `.kt` generado modificado) y refinar
+      timings de entrada/salida del drawer si hace falta.
+- [ ] 7.6 Actualizar `AGENTS.md` (paleta Lumo + splash) y `openspec/specs`
+      si corresponde, y loguear en la sesión.
 
 ---
 
