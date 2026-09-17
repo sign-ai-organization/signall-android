@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import com.signai.webview.ui.theme.LocalContentColor
-import com.signai.webview.ui.theme.SignAiTheme
+import com.signai.webview.ui.designsystem.LocalContentColor
+import com.signai.webview.ui.designsystem.SignAiTheme
 
 // CUSTOMIZED — no re-generate with `lumo --add Text`.
 // Wraps foundation BasicText so we don't depend on material3.Text.

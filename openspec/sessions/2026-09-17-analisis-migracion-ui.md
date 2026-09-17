@@ -897,3 +897,48 @@ luego la Fase 6 (separación de capas, sin cambios de comportamiento).
   y animaciones, documentar overrides de Lumo.
 - Confirmación del usuario en device de la Fase 6 (layout idéntico, drawer y
   defaults ya validados antes).
+
+---
+
+# Continuación Fase 7.1 — Paleta única de Lumo (sep 17)
+
+## Decisiones de paleta (usuario)
+
+- Base: paleta oscura **default de Lumo** (fondo negro, superficies gris
+  `#282828`, texto blanco, bordes `#4B4B4B`).
+- Acento `primary`: **azul propio de Lumo `Blue900 #276EF1`** (no el blanco
+  default de Lumo, para conservar CTA azul).
+- Superficies de barras/drawer: gris `#282828` (Lumo `surface`).
+
+## Qué se hizo
+
+1. `ui/designsystem/Color.kt` (`// CUSTOMIZED`): `DarkColors.primary = Blue900`,
+   `onPrimary = White`. Resto de valores = default de Lumo.
+2. Borradas `ui/theme/SignAiColors.kt` y `ui/theme/LocalContentColor.kt`
+   (paleta paralela + `LocalContentColor` duplicado).
+3. `ui/theme/SignAiTheme.kt` reescrito: delega a `LumoSignAiTheme` y expone
+   `colors: Colors` (Lumo). `SignAiTypography` sin cambios.
+4. `Icon.kt`/`Text.kt` migrados a `ui.designsystem.LocalContentColor`.
+5. Renombre de tokens viejos → Lumo en MainScreen (`bg`→`background`),
+   BottomBar (`textMain`→`text`, `input`→`surface`, `inputBorder`→`outline`,
+   `Color.White`→`onPrimary`), SettingsSidebar, SignPickerDropdown,
+   SettingRow (`border`→`outline`, literales→tokens, uncheckedBorder=outline),
+   SignAiIconButton, EdgeDrawer (`bar`→`surface`), Dropdown.
+
+## Verificación
+
+- `./gradlew build` ✅, `installDebug` ✅, app sin crash.
+- `rg`: 0 hits de `SignAiColors`, 0 de tokens viejos, 0 `Color(0x…)` fuera de
+  `Color.kt`. Los `Color.White/Black/Unspecified` restantes están solo en
+  previews de Lumo y en el ripple (no son color de UI).
+- Muestreo de píxeles del screenshot: enviar `#276EF1`, superficies `#282828`,
+  bordes `#4B4B4B`, drawer `#282828`, checkbox marcado azul.
+- Screenshots: `screen-fase7-main.png`, `screen-fase7-sidebar.png`.
+
+## Pendiente
+
+- **7.2** Button real de Lumo para mic/enviar/sign picker.
+- **7.3** tokens de tamaños/formas/espaciados.
+- **7.4** splash con spinner `Progress` + fallback timeout.
+- **7.5** documentar overrides, **7.6** AGENTS.md/specs.
+- Confirmación del usuario en device del nuevo look.

@@ -33,7 +33,7 @@ fun MainScreen(state: MainScreenState) {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = SignAiTheme.colors.bg,
+        color = SignAiTheme.colors.background,
     ) {
         SignAiEdgeDrawer(
             isOpen = showSettings,

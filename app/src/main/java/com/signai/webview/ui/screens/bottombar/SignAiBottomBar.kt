@@ -19,7 +19,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.signai.webview.BuildConfig
@@ -59,18 +58,18 @@ fun SignAiBottomBar(
                 placeholder = {
                     SignAiText(
                         text = "Versión: ${BuildConfig.VERSION_NAME}",
-                        color = SignAiTheme.colors.textMain,
+                        color = SignAiTheme.colors.text,
                     )
                 },
                 modifier = Modifier.weight(1f),
                 colors = OutlinedTextFieldDefaults.colors().copy(
-                    focusedTextColor = SignAiTheme.colors.textMain,
-                    unfocusedTextColor = SignAiTheme.colors.textMain,
+                    focusedTextColor = SignAiTheme.colors.text,
+                    unfocusedTextColor = SignAiTheme.colors.text,
                     cursorColor = SignAiTheme.colors.primary,
                     focusedOutlineColor = SignAiTheme.colors.primary,
-                    unfocusedOutlineColor = SignAiTheme.colors.inputBorder,
-                    focusedContainerColor = SignAiTheme.colors.input,
-                    unfocusedContainerColor = SignAiTheme.colors.input,
+                    unfocusedOutlineColor = SignAiTheme.colors.outline,
+                    focusedContainerColor = SignAiTheme.colors.surface,
+                    unfocusedContainerColor = SignAiTheme.colors.surface,
                 ),
             )
             HistoryDropdown(
@@ -86,15 +85,15 @@ fun SignAiBottomBar(
             Surface(
                 onClick = onMic,
                 shape = shape,
-                color = SignAiTheme.colors.input,
-                border = BorderStroke(1.dp, SignAiTheme.colors.inputBorder),
+                color = SignAiTheme.colors.surface,
+                border = BorderStroke(1.dp, SignAiTheme.colors.outline),
                 modifier = Modifier.weight(0.25f).height(56.dp),
             ) {
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                     SignAiIcon(
                         imageVector = SignAiIcons.Mic,
                         contentDescription = "Micrófono",
-                        tint = SignAiTheme.colors.textMain,
+                        tint = SignAiTheme.colors.text,
                     )
                 }
             }
@@ -113,7 +112,7 @@ fun SignAiBottomBar(
                     SignAiIcon(
                         imageVector = SignAiIcons.Send,
                         contentDescription = "Enviar",
-                        tint = Color.White,
+                        tint = SignAiTheme.colors.onPrimary,
                     )
                 }
             }

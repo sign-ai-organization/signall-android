@@ -876,7 +876,7 @@ más dos extras de deuda técnica y una pantalla de carga inicial.
 - Superficies de BottomBar y drawer: **gris `#282828`** (Lumo `surface`),
   para que los paneles se despeguen del negro del avatar.
 
-- [ ] 7.1 **Unificar la paleta a Lumo.**
+- [x] 7.1 **Unificar la paleta a Lumo.**
   - Editar `ui/designsystem/Color.kt` → `DarkColors` con `primary = Blue900
     (#276EF1)`, `onPrimary = White` y el resto de valores default de Lumo
     (`surface = Gray900`, `background = Black`, `outline = Gray800`,
@@ -895,6 +895,17 @@ más dos extras de deuda técnica y una pantalla de carga inicial.
   - **Criterio de éxito:** una sola paleta en el repo; `rg "SignAiColors"
     app/src/main/java` devuelve 0 hits; `rg "Color\(0x"` en `ui/theme`,
     `ui/screens`, `ui/components` devuelve 0 hits.
+  - **Hecho (sep 17):** `DarkColors.primary = Blue900`, `onPrimary = White`.
+    Borrados `SignAiColors.kt` y `ui/theme/LocalContentColor.kt`; `SignAiTheme`
+    ahora delega a Lumo (`colors: Colors`). `Icon.kt`/`Text.kt` migrados a
+    `ui.designsystem.LocalContentColor`. Renombrados todos los tokens viejos
+    en MainScreen, BottomBar, SettingsSidebar, SignPickerDropdown, SettingRow,
+    SignAiIconButton, EdgeDrawer y Dropdown. Literales de UI reemplazados por
+    `onPrimary`/`transparent`; `signAiCheckboxColors` ahora usa tokens Lumo
+    (checked=primary azul, unchecked=outline). Build + install OK; muestreo de
+    píxeles confirma `#276EF1` (enviar), `#282828` (superficies) y `#4B4B4B`
+    (bordes). Quedan `Color.Unspecified`/`Color.Black`/`Color.White` solo en
+    previews y en el ripple de Lumo (no son color de UI).
 
 - [ ] 7.2 **Extra — `Lumo.Button` real para los 3 botones.** Hoy mic, enviar y
       el selector de señas usan `SignAiSurface(onClick = …)`. Editar

@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.signai.webview.ui.theme.LocalContentColor
+import com.signai.webview.ui.designsystem.LocalContentColor
 
 // CUSTOMIZED — no re-generate with `lumo --add Icon`.
 // Wraps foundation Image + rememberVectorPainter so we don't depend on material3.Icon.

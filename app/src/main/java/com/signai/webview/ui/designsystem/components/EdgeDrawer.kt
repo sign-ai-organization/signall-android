@@ -162,7 +162,7 @@ fun SignAiEdgeDrawer(
                 ),
         ) {
             Surface(
-                color = SignAiTheme.colors.bar,
+                color = SignAiTheme.colors.surface,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .fillMaxHeight()
@@ -175,7 +175,7 @@ fun SignAiEdgeDrawer(
                     .align(Alignment.CenterEnd)
                     .fillMaxHeight()
                     .width(drawerOverflow)
-                    .background(SignAiTheme.colors.bar),
+                    .background(SignAiTheme.colors.surface),
             )
         }
 

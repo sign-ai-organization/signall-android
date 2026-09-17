@@ -37,7 +37,7 @@ fun SettingsSidebar(
         SignAiText(
             text = "Configuración",
             style = SignAiTheme.typography.titleMedium,
-            color = SignAiTheme.colors.textMain,
+            color = SignAiTheme.colors.text,
         )
         Spacer(Modifier.height(8.dp))
 

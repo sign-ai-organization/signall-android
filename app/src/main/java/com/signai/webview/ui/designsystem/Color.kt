@@ -1,5 +1,12 @@
 package com.signai.webview.ui.designsystem
 
+// CUSTOMIZED — Lumo-generated (`lumo --setup`). Overrides applied:
+//   - DarkColors.primary = Blue900 (#276EF1) instead of Lumo's default White,
+//     so the app accent (Enviar, checkbox, drawer handle) is blue.
+//   - Everything else keeps the Lumo default palette (black bg, gray surfaces,
+//     white text, gray outline).
+// Do NOT re-run `lumo --setup` (it would overwrite these changes).
+
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -112,8 +119,8 @@ internal val LightColors =
 
 internal val DarkColors =
     Colors(
-        primary = White,
-        onPrimary = Black,
+        primary = Blue900,
+        onPrimary = White,
         secondary = Gray400,
         onSecondary = White,
         tertiary = Blue300,

@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.designsystem.components.SignAiDropdown
 import com.signai.webview.ui.designsystem.components.SignAiDropdownMenuItem
@@ -36,14 +35,14 @@ fun SignPickerDropdown(
             Surface(
                 onClick = { expanded = !expanded },
                 shape = RoundedCornerShape(8.dp),
-                color = Color.Transparent,
-                border = BorderStroke(1.dp, SignAiTheme.colors.inputBorder),
+                color = SignAiTheme.colors.transparent,
+                border = BorderStroke(1.dp, SignAiTheme.colors.outline),
                 modifier = Modifier.fillMaxWidth().height(44.dp),
             ) {
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                     SignAiText(
                         text = "Seña: $current",
-                        color = SignAiTheme.colors.textMain,
+                        color = SignAiTheme.colors.text,
                         maxLines = 1,
                     )
                 }

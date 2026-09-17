@@ -13,7 +13,7 @@ fun SignAiIconButton(
     icon: ImageVector,
     contentDescription: String?,
     onClick: () -> Unit,
-    tint: Color = SignAiTheme.colors.textMain,
+    tint: Color = SignAiTheme.colors.text,
 ) {
     IconButton(
         onClick = onClick,

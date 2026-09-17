@@ -77,8 +77,8 @@ fun SignAiDropdown(
                 properties = PopupProperties(focusable = true),
             ) {
                 Surface(
-                    color = SignAiTheme.colors.input,
-                    border = BorderStroke(1.dp, SignAiTheme.colors.border),
+                    color = SignAiTheme.colors.surface,
+                    border = BorderStroke(1.dp, SignAiTheme.colors.outline),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier
                         .widthIn(min = 160.dp)
@@ -96,7 +96,7 @@ fun SignAiDropdownMenuItem(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    color: Color = SignAiTheme.colors.textMain,
+    color: Color = SignAiTheme.colors.text,
     maxLines: Int = Int.MAX_VALUE,
 ) {
     Box(
