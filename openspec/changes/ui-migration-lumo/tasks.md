@@ -751,8 +751,8 @@ Verificación: build verde, install OK.
 
 ### Fase 5 — Dropdowns propios + DropdownMenu sin Material 3
 
-- [ ] 5.1 Reescribir `HistoryMenu` y `SignPicker` usando `androidx.compose.ui.window.Popup` o un wrapper que centralice el patrón dropdown (focus + dismiss on outside click).
-- [ ] 5.2 Confirmar que ya no hay **ningún** import de `androidx.compose.material3.*` en todo el proyecto.
+- [x] 5.1 Reescribir `HistoryMenu` y `SignPicker` usando `androidx.compose.ui.window.Popup` o un wrapper que centralice el patrón dropdown (focus + dismiss on outside click).
+- [x] 5.2 Confirmar que ya no hay **ningún** import de `androidx.compose.material3.*` en todo el proyecto.
 
 ### Fase 6 — Separación de capas (limpieza arquitectónica)
 
@@ -763,35 +763,35 @@ siguiente.
 
 #### Capa 1 — Negocio (sin Compose, sin Android UI)
 
-- [ ] 6.1 Crear `data/SignHistoryRepository.kt`:
+- [x] 6.1 Crear `data/SignHistoryRepository.kt`:
       - `interface SignHistoryRepository { fun load(): List<String>; fun record(text: String): List<String> }`.
       - `class SharedPrefsSignHistoryRepository(context: Context) : SignHistoryRepository`.
       - Mover aquí: key `"signai"`/`"history"`, separador `"\n"`, cap 20, regla "top-5 nunca se reordena", y el `.apply()` de SharedPreferences.
-- [ ] 6.2 Crear `domain/SignAiCommands.kt`:
+- [x] 6.2 Crear `domain/SignAiCommands.kt`:
       - `object SignAiCommands { const val PLAY = "window.SignAI?.play()" ; ... }`.
       - `fun jsToggle(prop: String, on: Boolean): String` (movida de `MainActivity.kt:187`).
-- [ ] 6.3 Crear `domain/SignsCatalog.kt`:
+- [x] 6.3 Crear `domain/SignsCatalog.kt`:
       - `object SignsCatalog { val available: List<String> = listOf("0000_0000_0000") }`.
 
 #### Capa 2 — Presentación (orquesta, no pinta)
 
-- [ ] 6.4 Crear `ui/state/Settings.kt`: `data class Settings(val debug, val freeCam, val grid, val bg: Boolean)` con defaults actuales.
-- [ ] 6.5 Crear `ui/webview/SignAiWebViewController.kt`:
+- [x] 6.4 Crear `ui/state/Settings.kt`: `data class Settings(val debug, val freeCam, val grid, val bg: Boolean)` con defaults actuales.
+- [x] 6.5 Crear `ui/webview/SignAiWebViewController.kt`:
       - Interface con `play()`, `setDebug(on)`, `setFreeCamera(on)`, `setGrid(on)`, `setBackground(on)`, `applyBlur(enabled)`.
       - Impl `WebViewSignAiController(webView: WebView)` que centraliza los `evaluateJavascript(SignAiCommands.X, null)` y el `setRenderEffect(...)` con el guard `?.` del contrato.
-- [ ] 6.6 Crear `ui/state/MainScreenState.kt`:
+- [x] 6.6 Crear `ui/state/MainScreenState.kt`:
       - `class MainScreenState(val history: SignHistoryRepository, val webView: SignAiWebViewController)` con `SnapshotStateList<String>` y `Settings` interno.
       - Métodos: `play(text)`, `replay(text)`, `toggleSetting(prop, on)`, `pickSign(id)`. Toda la lógica de las lambdas `play` y `sendJs` actuales vive aquí.
-- [ ] 6.7 Mover `AvatarWebView` (AndroidView) a `ui/webview/AvatarWebView.kt`. Su `onReady` callback ahora entrega el `WebView` al `WebViewSignAiController` (no un `WebView?` suelto).
+- [x] 6.7 Mover `AvatarWebView` (AndroidView) a `ui/webview/AvatarWebView.kt`. Su `onReady` callback ahora entrega el `WebView` al `WebViewSignAiController` (no un `WebView?` suelto).
 
 #### Capa 3 — UI reusable (componentes, sin estado de negocio)
 
-- [ ] 6.8 Extraer `ui/components/HistoryDropdown.kt`, `SignPickerDropdown.kt`, `SettingRow.kt`, `SignAiIconButton.kt` según el mapeo del plan.
-- [ ] 6.9 Mover `ui/screens/topbar/SignAiTopBar.kt`, `bottombar/SignAiBottomBar.kt`, `settings/SettingsSidebar.kt`.
+- [x] 6.8 Extraer `ui/components/HistoryDropdown.kt`, `SignPickerDropdown.kt`, `SettingRow.kt`, `SignAiIconButton.kt` según el mapeo del plan.
+- [x] 6.9 Mover `ui/screens/topbar/SignAiTopBar.kt`, `bottombar/SignAiBottomBar.kt`, `settings/SettingsSidebar.kt`.
 
 #### Capa 4 — Screens (composición pura)
 
-- [ ] 6.10 Reescribir `ui/MainScreen.kt` para que **solo componga**:
+- [x] 6.10 Reescribir `ui/MainScreen.kt` para que **solo componga**:
       ```kotlin
       @Composable
       fun MainScreen(state: MainScreenState) {
@@ -807,7 +807,7 @@ siguiente.
       }
       ```
       Cero `webViewRef`, cero `mutableStateOf("0000_0000_0000")`, cero `SharedPreferences.edit()` dentro del composable.
-- [ ] 6.11 `MainActivity.kt` queda en ~15 líneas:
+- [x] 6.11 `MainActivity.kt` queda en ~15 líneas:
       ```kotlin
       class MainActivity : ComponentActivity() {
           override fun onCreate(savedInstanceState: Bundle?) {
@@ -822,6 +822,44 @@ siguiente.
       ```
 
 **Criterio de éxito:** `git grep -n "SharedPreferences" app/src/main/java` solo devuelve hits en `data/`. `git grep -n "evaluateJavascript" app/src/main/java` solo devuelve hits en `ui/webview/SignAiWebViewController.kt`. Cero hits en `ui/screens/`, `ui/components/`, `ui/theme/`.
+
+**Trabajo realizado en Fase 6 (sep 17):**
+
+1. **`MainActivity.kt` reducido a 27 líneas** (imports incluidos, ~13 de código):
+   crea `MainScreenState(SharedPrefsSignHistoryRepository(this), WebViewSignAiController())`
+   y compone `SignAiTheme { MainScreen(state) }`. Cero `SharedPreferences`, cero
+   `WebView`, cero estado de negocio.
+2. **Capas creadas** (regla de dependencia 4 → 3 → 2 → 1 respetada):
+   - Capa 1: `data/SignHistoryRepository.kt` (interface + `SharedPrefsSignHistoryRepository`,
+     cap 20 + top-5 protegido + separador `\n`), `domain/SignAiCommands.kt`
+     (constantes JS + `jsToggle` + setters `setDebug/setFreeCamera/setGrid/setBackground`),
+     `domain/SignsCatalog.kt` (`available`).
+   - Capa 2: `ui/state/Settings.kt` (`data class Settings` + `enum Setting`),
+     `ui/state/MainScreenState.kt` (`SnapshotStateList` historial, `settings`, `sign`,
+     métodos `play/toggle/pickSign/setBlur/attachWebView`),
+     `ui/webview/SignAiWebViewController.kt` (interface + `WebViewSignAiController`:
+     único lugar con `evaluateJavascript` y `RenderEffect`),
+     `ui/webview/AvatarWebView.kt` (AndroidView movido).
+   - Capa 3: `ui/components/{SignAiIconButton,SettingRow,HistoryDropdown,SignPickerDropdown}.kt`.
+   - Capa 4: `ui/screens/bottombar/SignAiBottomBar.kt`,
+     `ui/screens/settings/SettingsSidebar.kt`, `ui/MainScreen.kt`.
+3. **Desviaciones del plan:**
+   - **Sin `ui/screens/topbar/SignAiTopBar.kt`**: la TopBar fue eliminada en Fase 5,
+     no existe contraparte que mover.
+   - **`Settings` defaults reales**: `debug=false` (no `true` como decía el plan),
+     `grid=true`, `freeCam=false`, `bg=false` — se preserva el comportamiento
+     vigente tras el ajuste de defaults previo a esta fase.
+   - **`SignAiWebViewController` sin `WebView` en constructor**: el WebView nace
+     dentro del `AndroidView.factory`, así que el controller expone `attach(webView)`
+     (el plan ya lo insinuaba con "attached in onReady").
+   - **`SignsCatalog` como `object`**: `MainScreenState` recibe `signs: List<String>`
+     con default `SignsCatalog.available` (más simple que inyectar el object).
+4. **Verificación:** `./gradlew build` verde (7s, 99 tareas), `installDebug` OK,
+   app arranca y renderiza idéntica (screenshots `/tmp/opencode/screen-fase6-main.png`
+   y `screen-fase6-sidebar.png` con flip temporal de `showSettings`). `rg` confirma:
+   `SharedPreferences` solo en `data/`, `evaluateJavascript` y `window.SignAI`
+   solo en `ui/webview/SignAiWebViewController.kt` / `domain/SignAiCommands.kt`,
+   0 hits de `androidx.compose.material3` / `material.icons`.
 
 ### Fase 7 — Polish del Design System
 

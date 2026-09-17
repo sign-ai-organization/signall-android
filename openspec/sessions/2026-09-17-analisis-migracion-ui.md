@@ -829,3 +829,71 @@ que buscarla lejos del filo del drawer.
 ## Pendiente
 
 - **Fase 6 — Separación de capas**, **Fase 7 — Polish DS**.
+
+---
+
+# Continuación Fase 6 — Separación de capas (sep 17)
+
+## Qué se hizo
+
+Commit previo (`788fd87`, `feat(ui)`) con todo el trabajo de Fases 1-5.x, y
+luego la Fase 6 (separación de capas, sin cambios de comportamiento).
+
+### Capa 1 — Negocio (sin Compose)
+- `data/SignHistoryRepository.kt`: interface `load()`/`record(text)` + impl
+  `SharedPrefsSignHistoryRepository` (key `signai`/`history`, separador `\n`,
+  cap 20, top-5 protegido).
+- `domain/SignAiCommands.kt`: `PLAY` + `jsToggle(prop, on)` + setters
+  `setDebug/setFreeCamera/setGrid/setBackground`.
+- `domain/SignsCatalog.kt`: `available = listOf("0000_0000_0000")`.
+
+### Capa 2 — Presentación
+- `ui/state/Settings.kt`: `data class Settings` (debug=false, freeCam=false,
+  grid=true, bg=false) + `enum Setting`.
+- `ui/webview/SignAiWebViewController.kt`: interface + `WebViewSignAiController`
+  (único lugar con `evaluateJavascript` y `RenderEffect`; `attach(webView)`).
+- `ui/state/MainScreenState.kt`: `historyList` (`SnapshotStateList`), `settings`,
+  `sign`; métodos `play`, `toggle`, `pickSign`, `setBlur`, `attachWebView`.
+- `ui/webview/AvatarWebView.kt`: `AndroidView` movido tal cual.
+
+### Capa 3 — UI reusable + screens
+- `ui/components/`: `SignAiIconButton`, `SettingRow` (+ `signAiCheckboxColors`),
+  `HistoryDropdown`, `SignPickerDropdown`.
+- `ui/screens/bottombar/SignAiBottomBar.kt`.
+- `ui/screens/settings/SettingsSidebar.kt`.
+- (No hay `topbar/SignAiTopBar.kt`: la TopBar se eliminó en Fase 5.)
+
+### Capa 4 — Screens
+- `ui/MainScreen.kt`: composición pura (`SignAiEdgeDrawer` + `AvatarWebView` +
+  `SignAiBottomBar` + `SettingsSidebar`), solo `showSettings`/`bottomBarHeight`
+  locales y `LaunchedEffect(showSettings) { state.setBlur(...) }`.
+- `MainActivity.kt`: 27 líneas (imports incluidos). Crea el `MainScreenState`
+  y compone `SignAiTheme { MainScreen(state) }`.
+
+## Verificación
+
+- `./gradlew build` ✅ (7s, 99 tareas), `installDebug` ✅.
+- `rg` en `app/src/main/java`: `SharedPreferences` solo en `data/`;
+  `evaluateJavascript` y `window.SignAI` solo en
+  `ui/webview/SignAiWebViewController.kt` / `domain/SignAiCommands.kt`;
+  0 hits de `androidx.compose.material3` y `material.icons`; 0 `MaterialTheme`.
+- Screenshots: `screen-fase6-main.png` y `screen-fase6-sidebar.png`
+  (esta última con flip temporal de `showSettings`, revertido). Paridad total.
+
+## Decisiones
+
+- **`attach(webView)`** en vez de constructor: el WebView nace dentro del
+  `AndroidView.factory`, no existe al crear el controller en `onCreate`.
+- **`Settings` defaults reales** (`debug=false`): el plan decía `debug=true`
+  pero se preserva el comportamiento vigente.
+- **`SignsCatalog` object**; `MainScreenState` recibe `signs: List<String>`
+  con default `SignsCatalog.available`.
+
+## Pendiente
+
+- **Fase 7 — Polish DS** (única restante de `ui-migration-lumo`): extender
+  `SignAiColors` (disabled/secondary/error), centralizar Sizes/Shapes/Spacing,
+  migrar los 3 `SignAiSurface(onClick)` a `Lumo.Button` customizado, tipografía
+  y animaciones, documentar overrides de Lumo.
+- Confirmación del usuario en device de la Fase 6 (layout idéntico, drawer y
+  defaults ya validados antes).
