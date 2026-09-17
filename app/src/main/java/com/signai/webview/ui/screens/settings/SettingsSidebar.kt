@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.components.SettingRow
 import com.signai.webview.ui.components.SignPickerDropdown
 import com.signai.webview.ui.designsystem.components.SignAiText
+import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.state.Setting
 import com.signai.webview.ui.state.Settings
 import com.signai.webview.ui.theme.SignAiTheme
@@ -31,15 +31,15 @@ fun SettingsSidebar(
             .fillMaxHeight()
             .statusBarsPadding()
             .navigationBarsPadding()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+            .padding(SignAiSpacing.md),
+        verticalArrangement = Arrangement.spacedBy(SignAiSpacing.xs),
     ) {
         SignAiText(
             text = "Configuración",
             style = SignAiTheme.typography.titleMedium,
             color = SignAiTheme.colors.text,
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(SignAiSpacing.sm))
 
         SettingRow("Modo debug", settings.debug) { onToggle(Setting.Debug, it) }
         SettingRow("Cámara libre (orbitar + zoom sin límite)", settings.freeCam) {
@@ -48,7 +48,7 @@ fun SettingsSidebar(
         SettingRow("Suelo (grilla)", settings.grid) { onToggle(Setting.Grid, it) }
         SettingRow("Fondo bosque", settings.bg) { onToggle(Setting.Background, it) }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(SignAiSpacing.sm))
         SignPickerDropdown(
             current = sign,
             options = signs,

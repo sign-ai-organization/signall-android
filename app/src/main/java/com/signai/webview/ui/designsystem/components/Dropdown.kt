@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +25,9 @@ import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.signai.webview.ui.designsystem.foundation.SignAiShapes
+import com.signai.webview.ui.designsystem.foundation.SignAiSizes
+import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.theme.SignAiTheme
 
 // CUSTOMIZED — no re-generate with `lumo --add Dropdown` (Lumo doesn't have one).
@@ -47,7 +49,7 @@ fun SignAiDropdown(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    maxHeight: Dp = 280.dp,
+    maxHeight: Dp = SignAiSizes.dropdownMaxHeight,
     trigger: @Composable () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -79,7 +81,7 @@ fun SignAiDropdown(
                 Surface(
                     color = SignAiTheme.colors.surface,
                     border = BorderStroke(1.dp, SignAiTheme.colors.outline),
-                    shape = RoundedCornerShape(8.dp),
+                    shape = SignAiShapes.cornerMedium,
                     modifier = Modifier
                         .widthIn(min = 160.dp)
                         .heightIn(max = maxHeight),
@@ -102,9 +104,9 @@ fun SignAiDropdownMenuItem(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 48.dp)
+            .heightIn(min = SignAiSizes.dropdownMinHeight)
             .clickable { onClick() }
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = SignAiSpacing.md),
         contentAlignment = Alignment.CenterStart,
     ) {
         SignAiText(text, color = color, maxLines = maxLines)

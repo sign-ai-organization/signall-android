@@ -12,6 +12,7 @@ import androidx.webkit.WebViewClientCompat
 fun AvatarWebView(
     modifier: Modifier = Modifier,
     onReady: (WebView) -> Unit,
+    onLoaded: () -> Unit = {},
 ) {
     val context = LocalContext.current
     AndroidView(
@@ -33,6 +34,11 @@ fun AvatarWebView(
                     .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(context))
                     .build()
                 webViewClient = object : WebViewClientCompat() {
+                    override fun onPageFinished(view: WebView, url: String) {
+                        super.onPageFinished(view, url)
+                        onLoaded()
+                    }
+
                     override fun shouldInterceptRequest(
                         view: WebView,
                         request: android.webkit.WebResourceRequest,

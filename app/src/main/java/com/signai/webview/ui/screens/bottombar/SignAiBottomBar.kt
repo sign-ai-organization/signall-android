@@ -1,33 +1,31 @@
 package com.signai.webview.ui.screens.bottombar
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.unit.dp
 import com.signai.webview.BuildConfig
 import com.signai.webview.ui.components.HistoryDropdown
+import com.signai.webview.ui.designsystem.components.Button
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
-import com.signai.webview.ui.designsystem.components.Surface
+import com.signai.webview.ui.designsystem.components.signAiButtonColors
 import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextField
 import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextFieldDefaults
+import com.signai.webview.ui.designsystem.foundation.SignAiShapes
+import com.signai.webview.ui.designsystem.foundation.SignAiSizes
+import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.icons.SignAiIcons
 import com.signai.webview.ui.theme.SignAiTheme
 
@@ -45,12 +43,12 @@ fun SignAiBottomBar(
             .fillMaxWidth()
             .navigationBarsPadding()
             .imePadding()
-            .padding(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(SignAiSpacing.sm),
+        verticalArrangement = Arrangement.spacedBy(SignAiSpacing.sm),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(SignAiSpacing.sm),
         ) {
             OutlinedTextField(
                 value = query,
@@ -80,41 +78,43 @@ fun SignAiBottomBar(
                 },
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            val shape = RoundedCornerShape(6.dp)
-            Surface(
+        Row(horizontalArrangement = Arrangement.spacedBy(SignAiSpacing.sm)) {
+            val shape = SignAiShapes.cornerSmall
+            Button(
                 onClick = onMic,
+                colors = signAiButtonColors(
+                    containerColor = SignAiTheme.colors.surface,
+                    contentColor = SignAiTheme.colors.text,
+                    borderColor = SignAiTheme.colors.outline,
+                ),
                 shape = shape,
-                color = SignAiTheme.colors.surface,
-                border = BorderStroke(1.dp, SignAiTheme.colors.outline),
-                modifier = Modifier.weight(0.25f).height(56.dp),
+                modifier = Modifier.weight(0.25f).height(SignAiSizes.buttonHeight),
             ) {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    SignAiIcon(
-                        imageVector = SignAiIcons.Mic,
-                        contentDescription = "Micrófono",
-                        tint = SignAiTheme.colors.text,
-                    )
-                }
+                SignAiIcon(
+                    imageVector = SignAiIcons.Mic,
+                    contentDescription = "Micrófono",
+                    tint = SignAiTheme.colors.text,
+                )
             }
-            Surface(
+            Button(
                 onClick = {
                     val text = query.trim()
                     query = ""
                     keyboard?.hide()
                     if (text.isNotEmpty()) onSend(text)
                 },
+                colors = signAiButtonColors(
+                    containerColor = SignAiTheme.colors.primary,
+                    contentColor = SignAiTheme.colors.onPrimary,
+                ),
                 shape = shape,
-                color = SignAiTheme.colors.primary,
-                modifier = Modifier.weight(0.75f).height(56.dp),
+                modifier = Modifier.weight(0.75f).height(SignAiSizes.buttonHeight),
             ) {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    SignAiIcon(
-                        imageVector = SignAiIcons.Send,
-                        contentDescription = "Enviar",
-                        tint = SignAiTheme.colors.onPrimary,
-                    )
-                }
+                SignAiIcon(
+                    imageVector = SignAiIcons.Send,
+                    contentDescription = "Enviar",
+                    tint = SignAiTheme.colors.onPrimary,
+                )
             }
         }
     }

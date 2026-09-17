@@ -7,9 +7,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.designsystem.components.SignAiDropdown
 import com.signai.webview.ui.designsystem.components.SignAiDropdownMenuItem
+import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.icons.SignAiIcons
 
 @Composable
@@ -21,7 +21,7 @@ fun HistoryDropdown(
     SignAiDropdown(
         expanded = expanded,
         onDismissRequest = { expanded = false },
-        modifier = Modifier.heightIn(max = 280.dp),
+        modifier = Modifier.heightIn(max = SignAiSizes.dropdownMaxHeight),
         trigger = {
             SignAiIconButton(
                 icon = SignAiIcons.History,

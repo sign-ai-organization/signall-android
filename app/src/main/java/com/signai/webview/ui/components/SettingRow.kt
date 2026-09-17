@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.designsystem.components.Checkbox
 import com.signai.webview.ui.designsystem.components.CheckboxColors
 import com.signai.webview.ui.designsystem.components.SignAiText
+import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.theme.SignAiTheme
 
 @Composable
@@ -30,7 +30,7 @@ fun SettingRow(
         SignAiText(
             text = label,
             color = SignAiTheme.colors.text,
-            modifier = Modifier.padding(start = 4.dp),
+            modifier = Modifier.padding(start = SignAiSpacing.xs),
         )
     }
 }

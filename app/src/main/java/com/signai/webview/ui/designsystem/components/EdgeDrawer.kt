@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.theme.SignAiTheme
 import kotlinx.coroutines.launch
 
@@ -68,7 +69,7 @@ fun SignAiEdgeDrawer(
     isOpen: Boolean,
     onOpenChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    drawerWidth: Dp = 300.dp,
+    drawerWidth: Dp = SignAiSizes.drawerWidth,
     drawerOverflow: Dp = 64.dp,
     edgeStripWidth: Dp = 48.dp,
     edgeStripBottomExclusion: Dp = 0.dp,
