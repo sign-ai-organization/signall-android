@@ -83,7 +83,7 @@ fun AvatarStage(
             visible = doneVisible,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 76.dp + bottomInset),
+                .padding(bottom = 64.dp + bottomInset),
             enter = fadeIn() + scaleIn(initialScale = 0.9f),
             exit = fadeOut() + scaleOut(targetScale = 0.9f),
         ) {
@@ -99,19 +99,19 @@ fun AvatarStage(
                     .semantics { contentDescription = "Repetir reproducción" },
             ) {
                 Row(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 11.dp),
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 14.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     SignAiIcon(
                         imageVector = SignAiIcons.Repeat,
                         contentDescription = null,
-                        size = 18.dp,
+                        size = 22.dp,
                         tint = SignAiTheme.colors.text,
                     )
                     SignAiText(
                         text = "Repetir",
-                        style = SignAiTheme.typography.body3,
+                        style = SignAiTheme.typography.body2,
                         color = SignAiTheme.colors.text,
                     )
                 }
