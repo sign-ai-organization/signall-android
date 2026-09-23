@@ -517,3 +517,22 @@ Iteración sobre la UI ya implementada, verificada con capturas en device.
   `conversationFraction` (drawer izquierdo) y lo pasa al handle derecho.
   También se unificó el scrim a `SignAiTheme.colors.scrim`.
 
+## Conversación (drawer izq) como registro de sesión
+
+- **Antes**: 4 bloques fijos siempre visibles (TÚ, TRADUCCIÓN, AVATAR con
+  "Esperando traducción", Repetir) tomados de `lastText || input`.
+- **Ahora** (`CNV-2..CNV-8`): registro que crece con cada frase enviada. Cada
+  turno muestra `TÚ` + frase y `TRADUCCIÓN` + gloss, entra con
+  `Modifier.animateItem()` y la lista se desplaza al último (`LazyColumn` +
+  `animateScrollToItem`). Se eliminó el bloque AVATAR/estado y el fallback
+  "Esperando".
+- **Alcance**: sesión actual. Nuevo `ConversationTurn` (id, text, gloss) y
+  `MainScreenState.conversation` (en memoria, no se persiste). Se vacía al
+  morir el proceso.
+- **Repetir**: aparece solo con ≥1 turno; `replay()` ahora re-dispara la
+  reproducción sin crear turno ni tocar historial (`startPlayback()` extraído
+  de `play()`).
+- Spec actualizada en `openspec/specs/ui/spec.md` (§7) y tabla de iconos
+  (`Sparkles` pasa a `SET-3`).
+
+

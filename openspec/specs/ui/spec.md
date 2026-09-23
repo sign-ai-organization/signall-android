@@ -136,13 +136,13 @@ Main.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | CNV-1 | Header | `[P]` | Eyebrow "CONTEXTO" + título "Conversación" + cerrar. |
-| CNV-2 | Bloque **TÚ** | `[P]` | Label "TÚ" + frase del usuario; fallback "Aún no has escrito una frase." |
-| CNV-3 | Bloque **TRADUCCIÓN** | `[P]` | Label "TRADUCCIÓN" + gloss LSC (`GLS-*`). |
-| CNV-4 | Estado del avatar | `[P]` | Mini-tile + label "AVATAR" + estado (`Waiting/Signing/Done`). |
-| CNV-5 | Botón **Repetir** | `[P]` | Repite la última frase; deshabilitado sin texto. |
+| CNV-2 | Turno **TÚ** | `[P]` | Por cada frase enviada: label "TÚ" + la frase del usuario. |
+| CNV-3 | Turno **TRADUCCIÓN** | `[P]` | Por cada turno: label "TRADUCCIÓN" + gloss LSC (`GLS-*`). |
+| CNV-4 | Registro de sesión | `[N]` | La lista crece con cada frase enviada; cada turno entra con animación y la vista se desplaza al último. Vive solo mientras el proceso está abierto (`ConversationTurn`, en memoria; no se persiste). |
+| CNV-5 | Botón **Repetir** | `[P]` | Aparece solo cuando hay ≥1 turno; repite la última frase sin crear un turno nuevo. |
 | CNV-6 | Nota de gesto | `[P]` | "Desliza desde el borde para volver". |
-| CNV-7 | Texto mostrado | `[P]` | Usa `lastText || input`. |
-| CNV-8 | Estado del panel | `[P]` | `done`→"Reproducción completada"; `signing`→"Reproduciendo señas..."; si no→"Esperando traducción". |
+| CNV-7 | Estado vacío | `[N]` | Sin turnos: "Aún no hay frases en esta conversación." (no hay bloques estáticos). |
+| CNV-8 | Sin estado "Esperando" | `[N]` | Se elimina el bloque de estado del avatar; ninguna sección dice "Esperando traducción". |
 
 ---
 
@@ -347,7 +347,7 @@ Todos verificados disponibles en `phosphoricons-regular-android:1.0.5`.
 | RotateCcw | `ArrowCounterClockwise` | `STG-4`, `CNV-5` |
 | Send | `PaperPlaneTilt` | `CTL-4` |
 | Settings2 | `SlidersHorizontal` | `NAV-6` |
-| Sparkles | `Sparkle` | `CNV-4` |
+| Sparkles | `Sparkle` | `SET-3` |
 | Type | `TextAa` | `ACC-1/2` |
 | Volume2 | `SpeakerHigh` | `SET-4` |
 | X | `X` | cierres |

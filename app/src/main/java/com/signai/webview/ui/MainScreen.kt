@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.signai.webview.domain.Gloss
 import com.signai.webview.ui.components.HistoryBottomSheet
 import com.signai.webview.ui.components.SignAiSplash
 import com.signai.webview.ui.designsystem.components.DrawerSide
@@ -88,12 +87,6 @@ fun MainScreen(state: MainScreenState) {
             fadeOut(animationSpec = tween(durationMillis = SplashFadeMs))
         }
 
-    val avatarStatus = when (state.playbackState) {
-        PlaybackState.Done -> "Reproducción completada"
-        PlaybackState.Signing -> "Reproduciendo señas..."
-        else -> "Esperando traducción"
-    }
-
     Box(Modifier.fillMaxSize()) {
         if (showAbout) {
             // About is exclusive: Main and drawers are not shown (spec `NAV-8`).
@@ -149,9 +142,7 @@ fun MainScreen(state: MainScreenState) {
                             onFractionChange = { conversationFraction = it },
                             drawerContent = {
                                 ConversationPanel(
-                                    text = state.lastText,
-                                    gloss = Gloss.glossFor(state.lastText),
-                                    avatarStatus = avatarStatus,
+                                    turns = state.conversation,
                                     onRepeat = state::replay,
                                     onClose = { showConversation = false },
                                 )

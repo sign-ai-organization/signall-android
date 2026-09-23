@@ -9,6 +9,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.signai.webview.data.SettingsRepository
 import com.signai.webview.data.SignHistoryRepository
 import com.signai.webview.domain.Character
+import com.signai.webview.domain.Gloss
 import com.signai.webview.domain.Setting
 import com.signai.webview.domain.Settings
 import com.signai.webview.domain.SignsCatalog
@@ -34,6 +35,13 @@ class MainScreenState(
     val historyList: SnapshotStateList<String> = mutableStateListOf<String>().apply {
         addAll(history.load())
     }
+
+    /**
+     * Session-scoped conversation shown in the left drawer: one turn per phrase
+     * sent while the app is open (spec `CNV-4`). In-memory only, never persisted.
+     */
+    val conversation: SnapshotStateList<ConversationTurn> = mutableStateListOf()
+    private var turnCounter = 0L
 
     var settings by mutableStateOf(settingsStore.load())
         private set
@@ -74,9 +82,9 @@ class MainScreenState(
         }
     }
 
-    /** Repeats the last translated phrase (spec `STG-4`/`CNV-5`). */
+    /** Repeats the last translated phrase without adding a new conversation turn. */
     fun replay() {
-        if (lastText.isNotBlank()) play(lastText)
+        if (lastText.isNotBlank()) startPlayback()
     }
 
     fun setInput(text: String) {
@@ -100,8 +108,9 @@ class MainScreenState(
     }
 
     /**
-     * Sends a phrase: `translating → signing` (850 ms) and then `done` once the
-     * JS bridge reports the playback ended (spec `STA-7`/`STA-8`).
+     * Sends a phrase: appends a session turn, then `translating → signing`
+     * (850 ms) and finally `done` once the JS bridge reports the playback ended
+     * (spec `STA-7`/`STA-8`/`CNV-4`).
      */
     fun play(text: String) {
         val clean = text.trim()
@@ -110,6 +119,13 @@ class MainScreenState(
         lastText = clean
         inputText = clean
         syncHistory(history.record(clean))
+        conversation.add(
+            ConversationTurn(id = turnCounter++, text = clean, gloss = Gloss.glossFor(clean)),
+        )
+        startPlayback()
+    }
+
+    private fun startPlayback() {
         playbackState = PlaybackState.Translating
         webView.play()
         scope.launch {

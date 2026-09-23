@@ -1,7 +1,6 @@
 package com.signai.webview.ui.screens.conversation
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,7 +14,11 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,26 +34,35 @@ import com.signai.webview.ui.components.SignAiSmallIconButton
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Surface
+import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
-import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.designsystem.foundation.pressScale
 import com.signai.webview.ui.icons.SignAiIcons
+import com.signai.webview.ui.state.ConversationTurn
 import com.signai.webview.ui.theme.SignAiTheme
 
 /**
- * Left drawer — Conversation (spec `CNV-*`): header, `TÚ`/`TRADUCCIÓN` blocks,
- * avatar status and the repeat button.
+ * Left drawer — Conversation (spec `CNV-*`): header plus a session log that
+ * grows as phrases are sent. Each turn appears when it happens (no empty
+ * placeholders, no "Esperando"); the repeat action shows up only once there is
+ * something to repeat. The log lives as long as the app process (`CNV-6`).
  */
 @Composable
 fun ConversationPanel(
-    text: String,
-    gloss: String,
-    avatarStatus: String,
+    turns: List<ConversationTurn>,
     onRepeat: () -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val reduceMotion = LocalReduceMotion.current
+    val listState = rememberLazyListState()
+
+    // Keep the newest turn in view as the conversation grows.
+    LaunchedEffect(turns.size) {
+        if (turns.isNotEmpty()) listState.animateScrollToItem(turns.lastIndex)
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -83,95 +95,89 @@ fun ConversationPanel(
 
         Spacer(Modifier.height(38.dp))
 
-        ConversationBlock(label = "TÚ") {
-            SignAiText(
-                text = text.ifBlank { "Aún no has escrito una frase." },
-                style = SignAiTheme.typography.quote,
-                color = SignAiTheme.colors.text,
-            )
+        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+            if (turns.isEmpty()) {
+                SignAiText(
+                    text = "Aún no hay frases en esta conversación.",
+                    style = SignAiTheme.typography.body2,
+                    color = SignAiTheme.colors.muted,
+                )
+            } else {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    items(items = turns, key = { it.id }) { turn ->
+                        ConversationTurnItem(
+                            turn = turn,
+                            modifier = if (reduceMotion) Modifier else Modifier.animateItem(),
+                        )
+                    }
+                }
+            }
         }
 
-        ConversationBlock(label = "TRADUCCIÓN") {
-            SignAiText(
-                text = gloss,
-                style = SignAiTheme.typography.gloss,
-                color = SignAiTheme.colors.text,
-            )
-        }
-
-        Row(
-            modifier = Modifier.padding(vertical = 22.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(13.dp),
-        ) {
+        // Repetir: only once the session has a phrase to repeat.
+        if (turns.isNotEmpty()) {
+            val interaction = remember { MutableInteractionSource() }
             Surface(
-                shape = SignAiShapes.cornerMiniAvatar,
+                onClick = onRepeat,
+                shape = SignAiShapes.cornerRepeat,
                 color = SignAiTheme.colors.soft,
-                modifier = Modifier.size(SignAiSizes.miniAvatarSize),
+                border = BorderStroke(1.dp, SignAiTheme.colors.outline),
+                interactionSource = interaction,
+                modifier = Modifier
+                    .padding(top = 18.dp)
+                    .size(SignAiSizes.repeatButtonSize)
+                    .pressScale(interaction)
+                    .semantics {
+                        role = Role.Button
+                        contentDescription = "Repetir reproducción"
+                    },
             ) {
                 Box(
-                    modifier = Modifier.size(SignAiSizes.miniAvatarSize),
+                    modifier = Modifier.size(SignAiSizes.repeatButtonSize),
                     contentAlignment = Alignment.Center,
                 ) {
                     SignAiIcon(
-                        imageVector = SignAiIcons.Sparkle,
+                        imageVector = SignAiIcons.Repeat,
                         contentDescription = null,
                         size = 18.dp,
                         tint = SignAiTheme.colors.text,
                     )
                 }
             }
-            Column {
-                SignAiText(
-                    text = "AVATAR",
-                    style = SignAiTheme.typography.label,
-                    color = SignAiTheme.colors.muted,
-                )
-                SignAiText(
-                    text = avatarStatus,
-                    style = SignAiTheme.typography.body2,
-                    color = SignAiTheme.colors.text,
-                )
-            }
         }
-
-        val interaction = remember { MutableInteractionSource() }
-        Surface(
-            onClick = onRepeat,
-            enabled = text.isNotBlank(),
-            shape = SignAiShapes.cornerRepeat,
-            color = SignAiTheme.colors.soft,
-            border = BorderStroke(1.dp, SignAiTheme.colors.outline),
-            interactionSource = interaction,
-            modifier = Modifier
-                .padding(top = 18.dp)
-                .size(SignAiSizes.repeatButtonSize)
-                .pressScale(interaction)
-                .semantics {
-                    role = Role.Button
-                    contentDescription = "Repetir reproducción"
-                },
-        ) {
-            Box(
-                modifier = Modifier.size(SignAiSizes.repeatButtonSize),
-                contentAlignment = Alignment.Center,
-            ) {
-                SignAiIcon(
-                    imageVector = SignAiIcons.Repeat,
-                    contentDescription = null,
-                    size = 18.dp,
-                    tint = SignAiTheme.colors.text,
-                )
-            }
-        }
-
-        Spacer(Modifier.weight(1f))
 
         SignAiText(
             text = "Desliza desde el borde para volver",
             style = SignAiTheme.typography.body3.copy(fontSize = 11.sp),
             color = SignAiTheme.colors.muted,
+            modifier = Modifier.padding(top = 18.dp),
         )
+    }
+}
+
+@Composable
+private fun ConversationTurnItem(
+    turn: ConversationTurn,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        ConversationBlock(label = "TÚ") {
+            SignAiText(
+                text = turn.text,
+                style = SignAiTheme.typography.quote,
+                color = SignAiTheme.colors.text,
+            )
+        }
+        ConversationBlock(label = "TRADUCCIÓN") {
+            SignAiText(
+                text = turn.gloss,
+                style = SignAiTheme.typography.gloss,
+                color = SignAiTheme.colors.text,
+            )
+        }
     }
 }
 
@@ -204,4 +210,3 @@ private fun ConversationBlock(
         content()
     }
 }
-
