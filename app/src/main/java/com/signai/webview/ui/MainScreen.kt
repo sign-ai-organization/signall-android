@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,10 +42,14 @@ import com.signai.webview.ui.state.PlaybackState
 import com.signai.webview.ui.theme.SignAiTheme
 import com.signai.webview.ui.webview.AvatarWebView
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private const val SplashTimeoutMs = 8_000L
 private const val ContentFadeMs = 500
 private const val SplashFadeMs = 400
+
+/** Wait for the drawer close animation before starting a delayed replay. */
+private const val DrawerCloseDelayMs = 500L
 
 @Composable
 fun MainScreen(state: MainScreenState) {
@@ -52,6 +57,7 @@ fun MainScreen(state: MainScreenState) {
     var showSettings by remember { mutableStateOf(false) }
     var showHistory by remember { mutableStateOf(false) }
     var showAbout by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     var loading by remember { mutableStateOf(true) }
     var progress by remember { mutableIntStateOf(0) }
@@ -144,8 +150,11 @@ fun MainScreen(state: MainScreenState) {
                                 ConversationPanel(
                                     turns = state.conversation,
                                     onRepeat = { text ->
-                                        state.replayTurn(text)
                                         showConversation = false
+                                        scope.launch {
+                                            delay(DrawerCloseDelayMs)
+                                            state.replayTurn(text)
+                                        }
                                     },
                                     onClose = { showConversation = false },
                                 )
