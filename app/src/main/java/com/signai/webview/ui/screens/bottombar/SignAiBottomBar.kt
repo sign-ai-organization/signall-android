@@ -18,9 +18,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.signai.webview.BuildConfig
 import com.signai.webview.ui.components.HistoryDropdown
 import com.signai.webview.ui.designsystem.components.Button
+import com.signai.webview.ui.designsystem.components.ButtonVariant
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
-import com.signai.webview.ui.designsystem.components.signAiButtonColors
 import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextField
 import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextFieldDefaults
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
@@ -82,18 +82,13 @@ fun SignAiBottomBar(
             val shape = SignAiShapes.cornerSmall
             Button(
                 onClick = onMic,
-                colors = signAiButtonColors(
-                    containerColor = SignAiTheme.colors.surface,
-                    contentColor = SignAiTheme.colors.text,
-                    borderColor = SignAiTheme.colors.outline,
-                ),
+                variant = ButtonVariant.PrimaryOutlined,
                 shape = shape,
                 modifier = Modifier.weight(0.25f).height(SignAiSizes.buttonHeight),
             ) {
                 SignAiIcon(
                     imageVector = SignAiIcons.Mic,
                     contentDescription = "Micrófono",
-                    tint = SignAiTheme.colors.text,
                 )
             }
             Button(
@@ -103,17 +98,13 @@ fun SignAiBottomBar(
                     keyboard?.hide()
                     if (text.isNotEmpty()) onSend(text)
                 },
-                colors = signAiButtonColors(
-                    containerColor = SignAiTheme.colors.primary,
-                    contentColor = SignAiTheme.colors.onPrimary,
-                ),
+                variant = ButtonVariant.Primary,
                 shape = shape,
                 modifier = Modifier.weight(0.75f).height(SignAiSizes.buttonHeight),
             ) {
                 SignAiIcon(
                     imageVector = SignAiIcons.Send,
                     contentDescription = "Enviar",
-                    tint = SignAiTheme.colors.onPrimary,
                 )
             }
         }

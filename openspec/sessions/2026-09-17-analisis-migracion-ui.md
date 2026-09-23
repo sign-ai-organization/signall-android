@@ -990,3 +990,46 @@ luego la Fase 6 (separación de capas, sin cambios de comportamiento).
 ## Pendiente
 - Confirmación del usuario en device del splash y del look final.
 - `ui-migration-lumo` queda cerrado (Fases 0–7 completas); evaluar archivarlo.
+
+---
+
+# Post Fase 7 — Alineación con Lumo (sep 17)
+
+## Contexto / decisión
+El usuario revisó el catálogo real de Lumo (`www.lumoui.com`, app de muestra
+`com.nomanr.lumo.sample`) y pidió **usar los componentes de Lumo como
+corresponde**, manteniendo nuestros colores (azul `#276EF1`). Se acordó
+empezar por dos frentes de bajo riesgo: **Switch** en Configuración y
+**botones con variantes** (en vez de inyectar colores a mano).
+
+## Cambios
+- **Switch**: generado `./gradlew lumo --add Switch` →
+  `ui/designsystem/components/Switch.kt` (no sobrescribió `Ripple.kt`). Su
+  `SwitchDefaults.colors()` ya usa `primary` azul para track/thumb.
+- **`ui/components/SettingRow.kt`**: reescrito a fila Lumo estándar
+  (label a la izquierda, `Switch` a la derecha). Se eliminó el helper
+  `signAiCheckboxColors()` y el uso de `Checkbox`.
+- **Botones con variantes** (`ButtonVariant`):
+  - Enviar (`SignAiBottomBar`): `Primary`.
+  - Mic (`SignAiBottomBar`): `PrimaryOutlined`.
+  - Trigger "Seña:" (`SignPickerDropdown`): `PrimaryOutlined`.
+  - Los íconos/textos ahora heredan color vía `LocalContentColor` (el
+    `Surface` de `Button` lo propaga), así que se quitaron los `tint`/`color`
+    explícitos.
+- **`Button.kt`** (`// CUSTOMIZED`): eliminado el helper
+  `signAiButtonColors`, el param `colors: ButtonColors?` y revertido
+  `ButtonColors` a `internal`. Se conserva solo el override `shape`.
+- **`Switch` nuevo**; `Checkbox.kt` queda generado pero sin uso (parte del DS).
+
+## Verificación
+- `./gradlew build` ✅, `installDebug` ✅ (Redmi Note 9S / `1ed6699f`).
+- Screenshot `switch-variants-main.png`: Enviar relleno azul + ícono blanco,
+  Mic borde azul + ícono azul, campo e historial intactos.
+- **Pendiente manual**: el drawer (switches) no se pudo capturar porque
+  `adb shell input` está bloqueado (`INJECT_EVENTS`). El usuario debe deslizar
+  desde el borde derecho para ver los `Switch`.
+
+## Pendiente / próximos pasos
+- Confirmación del usuario de los switches en device.
+- Opcional (segunda iteración): `Divider` en Configuración y dropdowns con
+  `Card` + `Divider` + `Icon`; extras `Chip`/`Snackbar`/`Tooltip`.

@@ -1009,3 +1009,22 @@ Después de **cada** fase:
 - [ ] `./gradlew build` limpio.
 - [ ] `./gradlew installDebug` funciona.
 - [ ] `openspec/specs/` y `openspec/sessions/` actualizados con el resultado final.
+
+---
+
+## Post Fase 7 — Alineación con Lumo (sep 17)
+
+Tras revisar el catálogo de Lumo, se ajustó la app para **usar los componentes
+con sus variantes** en vez de inyectar colores a mano, manteniendo la paleta
+azul.
+
+- [x] `./gradlew lumo --add Switch` y `SettingRow` con `Switch` (label izq.,
+      switch der.); se eliminó `signAiCheckboxColors()` y el uso de `Checkbox`.
+- [x] Botones con `ButtonVariant`: Enviar → `Primary`, Mic → `PrimaryOutlined`,
+      trigger "Seña:" → `PrimaryOutlined`.
+- [x] Limpieza de `Button.kt`: sin `signAiButtonColors`, sin param `colors`,
+      `ButtonColors` de vuelta a `internal`; solo se conserva el override `shape`.
+- [ ] Confirmación del usuario de los `Switch` en device (no verificable por adb:
+      `INJECT_EVENTS` bloqueado).
+- [ ] Opcional segunda iteración: `Divider` en Configuración; dropdowns con
+      `Card` + `Divider` + `Icon`; extras `Chip`/`Snackbar`/`Tooltip`.

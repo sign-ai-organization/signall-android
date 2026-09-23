@@ -1,0 +1,103 @@
+schema: spec-driven
+
+context: |
+  ## SignAI WebView — contexto técnico
+
+  **Objetivo**: Traducción de español hablado → Lengua de Señas Colombiana (LSC) mediante
+  un avatar 3D animado en una app Android WebView. Solo vive `webview/`;
+  Flask (`../app/`), Kotlin+Filament (`../appKotlin/`) y Unity (`../unity/`) están
+  muertos (solo referencia). El avatar y `app.js` se portaron del prototipo web
+  `../app/static/` (tenía video y `/api/*`; el port no).
+
+  ### Stack
+  - Shell: Jetpack Compose + WebView (`WebViewAssetLoader`), paquete `com.signai.webview`
+  - UI nueva: Lumo UI de nomanr (Compose, NO el Lumo de Vaadin) + Phosphor Icons;
+    Material 3 solo legacy en migración. Ver `AGENTS.md`.
+  - Escena 3D: Three.js r169 (ES modules, CDN jsDelivr — requiere INTERNET en runtime)
+  - Puente Kotlin↔JS: `window.SignAI` (`play`, `setDebug`, `setFreeCamera`, `setGrid`,
+    `setBackground`), llamadas con guard `?.`
+  - Datos: `sign.json` horneado (1 seña `0000_0000_0000`, 59 frames @24fps)
+  - Dataset fuente: LSC50 (50 señas, 5 voluntarios, 4 reps = 1000 videos), CSVs en `data/LANDMARKS/`
+
+  ### Formato CSV de landmarks (crítico para señas propias)
+  Todos los CSVs tienen header: `landmark_0_x, landmark_0_y, landmark_0_z, landmark_1_x, ...`
+  - BODY: 33 landmarks MediaPipe Pose (x,y norm 0-1, y=0 arriba, z relativo pequeño)
+  - HANDS (LEFT/RIGHT): 21 landmarks MediaPipe Hands (x,y norm 0-1, z profundidad relativa a muñeca)
+  - FACE: 468 landmarks MediaPipe FaceMesh (x,y norm 0-1, z profundidad relativa a cabeza)
+  Videos propios deben producir CSVs con exactamente este mismo formato y modelos MediaPipe.
+
+  ### FPS por fuente (la sync se resuelve al hornear `sign.json`)
+  - BODY + HANDS: 24fps → ~59 frames típicos
+  - FACE: 50fps → ~163 frames típicos (ratio ~2.9× respecto a body)
+  Al re-hornear: `face_idx = round(i * len(face_frames) / len(body_frames))`.
+  `app.js` NO remuestrea en runtime.
+
+  ### Nombres de huesos — CRÍTICO (verificado en `app.js` + GLB)
+  NINGÚN hueso usa puntos. Dedos sin `DEF-`, cara camelCase sin separadores.
+  Dedos: thumb01L, f_index01L, f_middle01L, f_ring01L, f_pinky01L (ídem R)
+  Brazos: DEF-upper_armL, DEF-upper_armL001, DEF-forearmL, DEF-forearmL001, DEF-handL (ídem R)
+  Cara: DEF-browTL/TR, DEF-lipTL/TR, DEF-lidTL/TR, DEF-jaw_master,
+        DEF-eyeL/R, DEF-eye_irisL/R
+  El spec pre-WebView con puntos (DEF-brow.T.L) es incorrecto — no reintroducirlo.
+
+  ### Problemas conocidos del rig
+  - DEF-browTR tiene solo ~4 vértices pesados vs 32 en DEF-browTL → ceja derecha casi estática
+  - Fix en Blender + re-exportar el GLB (ver `specs/avatar`)
+
+  ### Expresiones faciales requeridas (prioridad del proyecto)
+  1. Duda: cejas asimétricas (DEF-browTL + DEF-browTR)
+  2. Felicidad: cejas arriba + comisuras boca (DEF-browTL/TR + DEF-lipTL/TR)
+  3. Pregunta: cejas arriba + boca abierta (DEF-browTL/TR + DEF-jaw_master)
+  Párpados y dirección de mirada: no son prioridad en esta fase.
+
+  ### Landmarks de cara en `sign.json` (16 keys)
+  lm 13,14 = labio sup/inf (mandíbula)
+  lm 78,308 = comisura izq/der
+  lm 70,107,55 = ceja izq (exterior, centro, interior)
+  lm 300,336,285 = ceja der
+  lm 159,145 = párpado izq sup/inf
+  lm 386,374 = párpado der sup/inf
+  lm 1,168 = nariz (referencia estable)
+
+  ### UI / Features (fuente de verdad)
+  El catálogo completo de features de la app vive en `openspec/specs/ui/spec.md`
+  (IDs `NAV`, `SPL`, `EDG`, `STG`, `CTL`, `HIS`, `CNV`, `SET`, `PER`, `ACC`,
+  `APP`, `STA`, `GLS`, `BRG`, `ANI`, `SEM`, `RSP`, `BRD`, `OM`). Derivado del
+  prototipo `PrototipoFrontend/` (Next.js/Vercel, solo referencia visual). La
+  app se implementa en Compose nativo (Lumo + Phosphor); el WebView es solo el
+  canvas 3D. Plan de ejecución: `openspec/changes/prototipo-ui-vercel/tasks.md`.
+
+  **Branding ABIERTO**: se mantiene "SignAI" por ahora, pero el nombre
+  seguramente cambiará (el prototipo usa "Seña"); el wordmark debe ser una
+  constante/string resource única.
+
+  **Contrato JS** se extiende de forma aditiva (`setSpeed`, evento
+  `onPlaybackDone`); los 5 comandos actuales y el guard `?.` no cambian.
+
+  ### Integraciones futuras
+  - `../sign-ai-backend`: SÍ, previsto a futuro. Hoy: cero integración.
+  - `../sign-ai-gloss-engine`: NO, fuera de alcance.
+
+rules:
+  proposal:
+    - Incluir sección de impacto en el pipeline de animación
+    - No reintroducir dependencias muertas (Flask, Filament, Unity, Flutter)
+    - Mencionar qué landmarks de LSC50 se usan
+  tasks:
+    - Tareas de código separadas de tareas de Blender/assets
+    - Indicar si requiere re-exportar el GLB
+    - "Verificar nombres de huesos en `app.js` — cara: camelCase sin puntos (DEF-browTL), dedos: sin DEF- (thumb01L)"
+  spec:
+    - Documentar el formato CSV exacto si se describe captura de landmarks
+    - Indicar la fuente (LSC50 vs video propio) para cada dato
+
+operations:
+  apply:
+    guidance:
+      - Contrastar nombres de huesos contra `app.js` (fuente de verdad), no contra specs viejos
+      - Usar FACE_ALPHA = 1.0 para huesos faciales (no slerp)
+      - No usar removeFromParent() en objetos WGT-*, solo obj.visible = false
+      - Los huesos de cara NO usan puntos: DEF-browTL, DEF-lipTL, DEF-lidTL (camelCase, sin separadores)
+  archive:
+    guidance:
+      - Actualizar el estado actual del proyecto en config.yaml context si cambió algo relevante

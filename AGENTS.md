@@ -63,5 +63,5 @@ Contract (`window.SignAI` in `app.js`): `play()`, `setDebug(bool)`, `setFreeCame
 
 `openspec/` is the project's living context — keep it updated with every non-trivial change:
 
-- `specs/` (avatar, dataset, pipeline): source of truth for rig/animation behavior; update the relevant spec when fixing such behavior.
+- `specs/` (avatar, dataset, pipeline, ui): source of truth. `specs/ui/spec.md` is the **complete feature catalog** of the app (all features come from the `PrototipoFrontend/` Vercel prototype); `avatar`/`dataset`/`pipeline` cover rig/animation behavior. Update the relevant spec when fixing such behavior.
 - `sessions/`: work log, one file per session (`YYYY-MM-DD-<slug>.md`, header with title/day/date/time). Append what was done, decided, and left pending at the end of each work item. Convention in `openspec/sessions/README.md`.

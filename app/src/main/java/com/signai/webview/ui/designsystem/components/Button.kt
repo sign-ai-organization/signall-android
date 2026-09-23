@@ -1,9 +1,9 @@
 package com.signai.webview.ui.designsystem.components
 
 // CUSTOMIZED — Lumo-generated (`lumo --add Button`). Overrides applied:
-//   - Added optional `colors` and `shape` params to `Button`, so SignAI call
-//     sites reuse the real Button with custom tokens instead of a clickable
-//     Surface. `ButtonColors` was made public for that.
+//   - Added optional `shape` param to `Button`, so SignAI call sites can tweak
+//     the shape token while still picking a real `ButtonVariant`. Call sites
+//     use variants; they no longer inject custom colors.
 //   - `DefaultButtonContent` uses `BasicText` (Fase 4, no material3).
 // Do NOT re-run `lumo --add Button` (it would overwrite these changes).
 
@@ -47,7 +47,6 @@ fun Button(
     loading: Boolean = false,
     variant: ButtonVariant = ButtonVariant.Primary,
     onClick: () -> Unit = {},
-    colors: ButtonColors? = null,
     shape: Shape? = null,
     contentPadding: PaddingValues = ButtonDefaults.contentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -61,7 +60,6 @@ fun Button(
         loading = loading,
         style =
             baseStyle.copy(
-                colors = colors ?: baseStyle.colors,
                 shape = shape ?: baseStyle.shape,
             ),
         onClick = onClick,
@@ -441,7 +439,7 @@ internal object ButtonDefaults {
 }
 
 @Immutable
-data class ButtonColors(
+internal data class ButtonColors(
     val containerColor: Color,
     val contentColor: Color,
     val borderColor: Color? = null,
@@ -460,28 +458,6 @@ data class ButtonColors(
     @Composable
     fun borderColor(enabled: Boolean) = rememberUpdatedState(newValue = if (enabled) borderColor else disabledBorderColor)
 }
-
-/**
- * Builds a [ButtonColors] from arbitrary SignAI tokens. Lets call sites reuse
- * the real Lumo [Button] with a custom look without editing each variant.
- */
-@Composable
-fun signAiButtonColors(
-    containerColor: Color,
-    contentColor: Color,
-    borderColor: Color? = null,
-    disabledContainerColor: Color = SignAiTheme.colors.disabled,
-    disabledContentColor: Color = SignAiTheme.colors.onDisabled,
-    disabledBorderColor: Color? = borderColor,
-): ButtonColors =
-    ButtonColors(
-        containerColor = containerColor,
-        contentColor = contentColor,
-        borderColor = borderColor,
-        disabledContainerColor = disabledContainerColor,
-        disabledContentColor = disabledContentColor,
-        disabledBorderColor = disabledBorderColor,
-    )
 
 @Immutable
 internal data class ButtonStyle(
