@@ -56,13 +56,19 @@ fun SignAiBottomBar(
     onSend: (String) -> Unit,
     onMic: () -> Unit,
     onOpenHistory: () -> Unit,
+    enabled: Boolean = true,
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
 
+    val busy =
+        playbackState == PlaybackState.Translating ||
+            playbackState == PlaybackState.Signing ||
+            playbackState == PlaybackState.Processing
+    val controlsEnabled = enabled && !busy
+
     val sendEnabled =
-        query.isNotBlank() &&
-            playbackState != PlaybackState.Translating &&
-            playbackState != PlaybackState.Signing
+        controlsEnabled &&
+            query.isNotBlank()
     val listening = playbackState == PlaybackState.Listening
 
     val send: () -> Unit = {
@@ -100,6 +106,7 @@ fun SignAiBottomBar(
                 OutlinedTextField(
                     value = query,
                     onValueChange = onQueryChange,
+                    enabled = controlsEnabled,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = { send() }),
@@ -127,6 +134,7 @@ fun SignAiBottomBar(
                     icon = SignAiIcons.History,
                     contentDescription = "Historial reciente",
                     onClick = onOpenHistory,
+                    enabled = controlsEnabled,
                 )
             }
 
@@ -174,6 +182,7 @@ fun SignAiBottomBar(
                     contentDescription = "Entrada por voz",
                     onClick = onMic,
                     active = listening,
+                    enabled = controlsEnabled,
                 )
             }
 
@@ -200,6 +209,7 @@ private fun ControlIconButton(
     contentDescription: String,
     onClick: () -> Unit,
     active: Boolean = false,
+    enabled: Boolean = true,
 ) {
     val shape = SignAiShapes.cornerControl
     val container = if (active) SignAiTheme.colors.strong else SignAiTheme.colors.soft
@@ -207,10 +217,12 @@ private fun ControlIconButton(
     val ringColor = SignAiTheme.colors.soft
     Surface(
         onClick = onClick,
+        enabled = enabled,
         shape = shape,
         color = container,
         modifier = Modifier
             .size(SignAiSizes.actionButtonSize)
+            .alpha(if (enabled) 1f else 0.35f)
             .then(
                 if (active) {
                     // Prototype `.mic-button.active` has

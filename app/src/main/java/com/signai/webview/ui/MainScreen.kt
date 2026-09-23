@@ -57,6 +57,7 @@ fun MainScreen(state: MainScreenState) {
     var showSettings by remember { mutableStateOf(false) }
     var showHistory by remember { mutableStateOf(false) }
     var showAbout by remember { mutableStateOf(false) }
+    var replayPending by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     var loading by remember { mutableStateOf(true) }
@@ -69,6 +70,13 @@ fun MainScreen(state: MainScreenState) {
     // Blur the 3D canvas only while a drawer is open (perf, spec `EDG-14`).
     LaunchedEffect(showConversation, showSettings) {
         state.setBlur(showConversation || showSettings)
+    }
+
+    // The main controls stay disabled from "Repetir" until the sign finishes playing.
+    LaunchedEffect(state.playbackState) {
+        if (state.playbackState == PlaybackState.Done || state.playbackState == PlaybackState.Idle) {
+            replayPending = false
+        }
     }
 
     // Safety net: never leave the app stuck on the splash if the WebView fails
@@ -151,6 +159,7 @@ fun MainScreen(state: MainScreenState) {
                                     turns = state.conversation,
                                     onRepeat = { text ->
                                         showConversation = false
+                                        replayPending = true
                                         scope.launch {
                                             delay(DrawerCloseDelayMs)
                                             state.replayTurn(text)
@@ -196,6 +205,7 @@ fun MainScreen(state: MainScreenState) {
                                         onSend = state::play,
                                         onMic = state::toggleMic,
                                         onOpenHistory = { showHistory = true },
+                                        enabled = !replayPending,
                                     )
                                 }
                             }
