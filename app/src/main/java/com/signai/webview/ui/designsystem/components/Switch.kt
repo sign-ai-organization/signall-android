@@ -177,25 +177,27 @@ private fun SwitchComponent(
 }
 
 object SwitchDefaults {
-    val ThumbSize = 16.dp
-    val UncheckedThumbSize = 12.dp
+    // Prototype `.switch` (PrototipoFrontend/app/globals.css): 43x25, padding 3,
+    // 19px thumb, no border, radius 20 (clamps to a pill).
+    val ThumbSize = 19.dp
+    val UncheckedThumbSize = 19.dp
     val ThumbSizeStateOffset = ThumbSize - UncheckedThumbSize
-    val SwitchWidth = 40.dp
-    val SwitchHeight = 24.dp
-    val TrackBorderWidth = 2.dp
-    val TrackShape = RoundedCornerShape(50)
+    val SwitchWidth = 43.dp
+    val SwitchHeight = 25.dp
+    val TrackBorderWidth = 0.dp
+    val TrackShape = RoundedCornerShape(20.dp)
     val RippleRadius = 20.dp
 
     @Composable
     fun colors(
-        checkedThumbColor: Color = SignAiTheme.colors.onPrimary,
-        checkedTrackColor: Color = SignAiTheme.colors.primary,
-        checkedBorderColor: Color = SignAiTheme.colors.primary,
-        checkedIconColor: Color = SignAiTheme.colors.primary,
-        uncheckedThumbColor: Color = SignAiTheme.colors.primary,
-        uncheckedTrackColor: Color = SignAiTheme.colors.background,
-        uncheckedBorderColor: Color = SignAiTheme.colors.primary,
-        uncheckedIconColor: Color = SignAiTheme.colors.onPrimary,
+        checkedThumbColor: Color = SignAiTheme.colors.background,
+        checkedTrackColor: Color = SignAiTheme.colors.strong,
+        checkedBorderColor: Color = SignAiTheme.colors.strong,
+        checkedIconColor: Color = SignAiTheme.colors.strong,
+        uncheckedThumbColor: Color = SignAiTheme.colors.muted,
+        uncheckedTrackColor: Color = SignAiTheme.colors.soft,
+        uncheckedBorderColor: Color = SignAiTheme.colors.soft,
+        uncheckedIconColor: Color = SignAiTheme.colors.muted,
         disabledCheckedThumbColor: Color = SignAiTheme.colors.onDisabled,
         disabledCheckedTrackColor: Color = SignAiTheme.colors.disabled,
         disabledCheckedBorderColor: Color = SignAiTheme.colors.disabled,
@@ -294,7 +296,7 @@ private class SwitchAnimationState(
 
     val animationSpec =
         tween<Float>(
-            durationMillis = 100,
+            durationMillis = 200,
             easing = FastOutSlowInEasing,
         )
 

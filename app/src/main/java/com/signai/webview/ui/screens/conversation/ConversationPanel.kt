@@ -1,5 +1,6 @@
 package com.signai.webview.ui.screens.conversation
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -18,11 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.signai.webview.ui.components.SignAiSmallIconButton
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
@@ -101,7 +105,7 @@ fun ConversationPanel(
             horizontalArrangement = Arrangement.spacedBy(13.dp),
         ) {
             Surface(
-                shape = SignAiShapes.cornerIcon,
+                shape = SignAiShapes.cornerMiniAvatar,
                 color = SignAiTheme.colors.soft,
                 modifier = Modifier.size(SignAiSizes.miniAvatarSize),
             ) {
@@ -135,10 +139,12 @@ fun ConversationPanel(
         Surface(
             onClick = onRepeat,
             enabled = text.isNotBlank(),
-            shape = SignAiShapes.cornerTile,
+            shape = SignAiShapes.cornerRepeat,
             color = SignAiTheme.colors.soft,
+            border = BorderStroke(1.dp, SignAiTheme.colors.outline),
             interactionSource = interaction,
             modifier = Modifier
+                .padding(top = 18.dp)
                 .size(SignAiSizes.repeatButtonSize)
                 .pressScale(interaction)
                 .semantics {
@@ -163,7 +169,7 @@ fun ConversationPanel(
 
         SignAiText(
             text = "Desliza desde el borde para volver",
-            style = SignAiTheme.typography.body3,
+            style = SignAiTheme.typography.body3.copy(fontSize = 11.sp),
             color = SignAiTheme.colors.muted,
         )
     }
@@ -174,9 +180,19 @@ private fun ConversationBlock(
     label: String,
     content: @Composable () -> Unit,
 ) {
+    val lineColor = SignAiTheme.colors.outline
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .drawBehind {
+                val stroke = 1.dp.toPx()
+                drawLine(
+                    color = lineColor,
+                    start = Offset(0f, size.height - stroke / 2f),
+                    end = Offset(size.width, size.height - stroke / 2f),
+                    strokeWidth = stroke,
+                )
+            }
             .padding(vertical = 18.dp),
     ) {
         SignAiText(

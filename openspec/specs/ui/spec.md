@@ -15,6 +15,12 @@ actual de la app nativa (`Compose shell + WebView 3D`).
   canvas 3D.
 - **Estado:** **implementado** en la rama `feat/prototipo-ui-vercel` (fases A–G),
   verificado en device (build + install). Pendiente de merge a `main`.
+- **Tema:** el **default es claro** con la paleta del prototipo
+  (`Settings.darkTheme = false`). El modo oscuro existe y usa la paleta oscura
+  del prototipo.
+- **MIUI force-dark:** la app **debe** declarar `android:forceDarkAllowed=false`
+  (`res/values/themes.xml`). Si no, MIUI "smart dark" invierte el contenido de
+  las capas hardware y el texto dentro de `verticalScroll`/drawers se ve blanco.
 
 Leyenda de origen: `[P]` = del prototipo · `[A]` = ya existe en la app ·
 `[N]` = nueva/derivada.
@@ -67,7 +73,7 @@ Main.
 | EDG-5 | Umbral de apertura por drag | `[P]` | Soltar con offset `> 90` abre; si no, vuelve. |
 | EDG-6 | **Drag preview** | `[P]` | Panel translúcido que sigue el dedo con label "Conversación"/"Ajustes". |
 | EDG-7 | **Edge swipe** desde borde | `[P]` | Swipe desde el borde izquierdo (inicio `< 54px`, delta `> 58`) abre Conversación; desde el derecho (`> width-54`, delta `< -58`) abre Ajustes. |
-| EDG-8 | Pestaña visible + grip | `[A]` | Pill/grip visible como affordance (no solo área invisible). |
+| EDG-8 | Pestaña visible + grip | `[A]` | Pestaña de agarre = `.edge-tab` del prototipo: tab de `surface` 20×62 dp pegado al borde, borde hairline `outline`, sombra suave y grip de **dos** líneas `muted` (4×28 dp, opacidad 0.65, separación 3 dp), redondeado solo en el lado que sobresale. |
 | EDG-9 | Cerrar arrastrando el panel | `[A]` | El drawer abierto se cierra arrastrando hacia su borde o con tap en el scrim. |
 | EDG-10 | Tap en scrim cierra | `[P]` | Overlay oscurecido clicable para cerrar. |
 | EDG-11 | Pestaña del panel abierto | `[P]` | Handle lateral en el borde del panel que también cierra (click). |
@@ -105,7 +111,7 @@ Main.
 | CTL-7 | Estado **activo** del mic | `[P]` | Fondo strong + ring cuando `listening`. |
 | CTL-8 | Estado **disabled** de Traducir | `[P]` | Opacidad reducida cuando no se puede enviar. |
 | CTL-9 | Foco del input | `[P]` | Borde strong + ring al enfocar. |
-| CTL-10 | Home indicator | `[P]` | Barrita inferior. **Omitida** en Android (duplica la navegación por gestos). |
+| CTL-10 | Home indicator | `[P]` | Barrita inferior 112×4 (`strong` al 70%). **Se conserva** por fidelidad con el prototipo. |
 | CTL-11 | Safe area / IME | `[A]` | Respeta navigation bar y teclado (`imePadding`). |
 
 ---
@@ -186,7 +192,7 @@ Main.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | APP-1 | **Modo claro** | `[P]` | Tema claro con su paleta. |
-| APP-2 | **Modo oscuro** | `[P][A]` | Tema oscuro (default actual de la app). |
+| APP-2 | **Modo oscuro** | `[P][A]` | Tema oscuro con la paleta oscura del prototipo. **El default de la app es claro** (`Settings.darkTheme = false`). |
 | APP-3 | **Switch de tema** | `[P]` | Alterna; el ícono/label cambia (Moon ↔ Sun, "Modo oscuro" ↔ "Modo claro"). |
 | APP-4 | Tokens de color temables | `[P]` | `background`, `foreground/text`, `muted`, `line/outline`, `surface`, `strong`, `soft`, `primary`. |
 | APP-5 | Transición de tema | `[P]` | Cambio de color suave (250 ms). |
@@ -312,7 +318,7 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 
 | ID | Feature | Origen | Estado | Razón |
 |---|---|---|---|---|
-| OM-1 | Home indicator | `[P]` | **Omitida** | Duplica la navegación por gestos de Android. |
+| OM-1 | Home indicator | `[P]` | **Conservada** | Se implementó (112×4) por fidelidad con el prototipo. |
 | OM-2 | Avatar CSS del prototipo | `[P]` | **Reemplazada** | Se usa el GLB 3D real. |
 | OM-3 | Starter history mock | `[P]` | **Reemplazada** | Se usa historial persistido real. |
 | OM-4 | Auto-relleno del mic | `[P]` | **Placeholder** | Sin reconocimiento de voz real todavía (`CTL-6`). |

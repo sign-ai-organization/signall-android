@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
@@ -34,8 +35,9 @@ import com.signai.webview.ui.theme.SignAiTheme
 
 /**
  * Avatar stage (spec `STG-*`): the 3D WebView is the protagonist, overlaid with
- * the status hint (top-left), the `LSC · Avatar 3D` caption (bottom-center) and
- * the Repetir button (bottom-right, only when the last playback is `done`).
+ * the status hint (top-left) and the Repetir button (bottom-center, just above
+ * the control bar, only when the last playback is `done`). [bottomInset] keeps
+ * the button clear of the overlaid control bar.
  *
  * The WebView itself is passed as [content] so this stays a presentation
  * component and never touches the bridge directly.
@@ -46,6 +48,7 @@ fun AvatarStage(
     doneVisible: Boolean,
     onRepeat: () -> Unit,
     modifier: Modifier = Modifier,
+    bottomInset: Dp = 0.dp,
     content: @Composable () -> Unit,
 ) {
     Box(
@@ -74,11 +77,12 @@ fun AvatarStage(
             )
         }
 
-        // stage-caption: LSC · Avatar 3D.
+        // stage-caption (prototype `.stage-caption`): `LSC · AVATAR 3D` centered
+        // just above the overlaid control bar.
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 34.dp),
+                .padding(bottom = 34.dp + bottomInset),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(9.dp),
         ) {
@@ -88,15 +92,16 @@ fun AvatarStage(
                     .size(3.dp)
                     .background(SignAiTheme.colors.muted, CircleShape),
             )
-            CaptionText("Avatar 3D")
+            CaptionText("AVATAR 3D")
         }
 
-        // Repetir: only after a completed playback.
+        // Repetir: only after a completed playback, bottom-right just above the
+        // control bar (prototype `.repeat-button`: bottom 58, right 23).
         AnimatedVisibility(
             visible = doneVisible,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(end = 23.dp, bottom = 58.dp),
+                .padding(end = 23.dp, bottom = 58.dp + bottomInset),
             enter = fadeIn() + scaleIn(initialScale = 0.9f),
             exit = fadeOut() + scaleOut(targetScale = 0.9f),
         ) {
@@ -136,7 +141,7 @@ fun AvatarStage(
 @Composable
 private fun CaptionText(text: String) {
     SignAiText(
-        text = text.uppercase(),
+        text = text,
         style = SignAiTheme.typography.caption,
         color = SignAiTheme.colors.muted,
     )

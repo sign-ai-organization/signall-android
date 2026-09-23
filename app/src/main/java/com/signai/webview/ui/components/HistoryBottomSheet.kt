@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Surface
@@ -196,7 +197,7 @@ private fun HistoryItem(phrase: String, onClick: () -> Unit) {
             ) {
                 SignAiText(
                     text = "Reutilizar",
-                    style = SignAiTheme.typography.body3,
+                    style = SignAiTheme.typography.body3.copy(fontSize = 11.sp),
                     color = SignAiTheme.colors.muted,
                 )
                 SignAiIcon(

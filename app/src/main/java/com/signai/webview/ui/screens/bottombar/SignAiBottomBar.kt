@@ -1,7 +1,6 @@
 package com.signai.webview.ui.screens.bottombar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +11,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,6 +20,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.Role
@@ -159,7 +163,7 @@ fun SignAiBottomBar(
                         Box(Modifier.size(9.dp))
                         SignAiText(
                             text = "Traducir",
-                            style = SignAiTheme.typography.button.copy(fontWeight = FontWeight.Bold),
+                            style = SignAiTheme.typography.body1.copy(fontWeight = FontWeight.Bold),
                             color = SignAiTheme.colors.onStrong,
                         )
                     }
@@ -172,6 +176,20 @@ fun SignAiBottomBar(
                     active = listening,
                 )
             }
+
+            // home-indicator (prototype `.home-indicator`): 112x4 foreground pill,
+            // 17dp below the action row, 70% opacity.
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 7.dp)
+                    .width(112.dp)
+                    .height(4.dp)
+                    .background(
+                        color = SignAiTheme.colors.text.copy(alpha = 0.7f),
+                        shape = SignAiShapes.cornerPill,
+                    ),
+            )
         }
     }
 }
@@ -186,6 +204,7 @@ private fun ControlIconButton(
     val shape = SignAiShapes.cornerControl
     val container = if (active) SignAiTheme.colors.strong else SignAiTheme.colors.soft
     val tint = if (active) SignAiTheme.colors.onStrong else SignAiTheme.colors.text
+    val ringColor = SignAiTheme.colors.soft
     Surface(
         onClick = onClick,
         shape = shape,
@@ -194,7 +213,18 @@ private fun ControlIconButton(
             .size(SignAiSizes.actionButtonSize)
             .then(
                 if (active) {
-                    Modifier.border(3.dp, SignAiTheme.colors.soft, shape)
+                    // Prototype `.mic-button.active` has
+                    // `box-shadow: 0 0 0 5px var(--soft)`: a 5dp soft ring that
+                    // does not affect layout. Drawn behind the surface.
+                    Modifier.drawBehind {
+                        val ring = 5.dp.toPx()
+                        drawRoundRect(
+                            color = ringColor,
+                            topLeft = Offset(-ring, -ring),
+                            size = Size(size.width + ring * 2, size.height + ring * 2),
+                            cornerRadius = CornerRadius(16.dp.toPx()),
+                        )
+                    }
                 } else {
                     Modifier
                 },

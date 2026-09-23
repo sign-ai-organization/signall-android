@@ -9,7 +9,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +17,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onSizeChanged
@@ -151,12 +151,16 @@ fun MainScreen(state: MainScreenState) {
                                 )
                             },
                         ) {
-                            Column(Modifier.fillMaxSize()) {
+                            // The WebView fills the whole content and the control
+                            // bar overlays it, so the bar's rounded top corners
+                            // reveal the scene (not the black root background).
+                            Box(Modifier.fillMaxSize()) {
                                 AvatarStage(
                                     status = state.playbackState.label,
                                     doneVisible = state.playbackState == PlaybackState.Done,
                                     onRepeat = state::replay,
-                                    modifier = Modifier.weight(1f),
+                                    bottomInset = bottomBarHeight,
+                                    modifier = Modifier.fillMaxSize(),
                                 ) {
                                     AvatarWebView(
                                         modifier = Modifier.fillMaxSize(),
@@ -170,9 +174,11 @@ fun MainScreen(state: MainScreenState) {
                                     )
                                 }
                                 Box(
-                                    Modifier.onSizeChanged {
-                                        bottomBarHeight = with(density) { it.height.toDp() }
-                                    },
+                                    Modifier
+                                        .align(Alignment.BottomCenter)
+                                        .onSizeChanged {
+                                            bottomBarHeight = with(density) { it.height.toDp() }
+                                        },
                                 ) {
                                     SignAiBottomBar(
                                         query = state.inputText,

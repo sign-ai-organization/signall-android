@@ -102,12 +102,15 @@ fun SignAiDropdown(
                     Surface(
                         color = SignAiTheme.colors.surface,
                         border = BorderStroke(1.dp, SignAiTheme.colors.outline),
-                        shape = SignAiShapes.cornerMedium,
+                        shape = SignAiShapes.cornerControl,
                         modifier = Modifier
-                            .widthIn(min = 160.dp)
+                            .widthIn(min = 168.dp)
                             .heightIn(max = maxHeight),
                     ) {
-                        Column(content = content)
+                        Column(
+                            modifier = Modifier.padding(6.dp),
+                            content = content,
+                        )
                     }
                 }
             }

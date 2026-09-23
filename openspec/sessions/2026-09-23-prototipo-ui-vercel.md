@@ -388,3 +388,105 @@ en cada una y commit por fase en `feat/prototipo-ui-vercel`. Pendiente global:
 
 
 
+
+---
+
+## Ajustes de UI posteriores (device)
+
+Iteración sobre la UI ya implementada, verificada con capturas en device.
+
+### Cámara del avatar (default + reset por long-press)
+- Valores finales en `app.js` (init y reset): `camera.position.set(0, 1.5, 2.15)`
+  con `controls.target.set(0, 1.2, 0)`. Cámara algo alta mirando hacia adelante/
+  abajo para compensar el contrapicado de una altura baja, encuadre hasta cadera.
+- Aprendizaje: bajar **solo** la `y` de la cámara con el target fijo inclina la
+  mirada; para bajar sin inclinar hay que bajar cámara y target juntos.
+
+### Stage
+- Eliminado el caption "LSC · AVATAR 3D" (`STG-3`) y su `CaptionText`.
+- Botón **Repetir** movido a `BottomCenter` justo sobre la barra y agrandado ~25%.
+- **Esquinas negras** de la bottom bar: se resolvió con WebView a pantalla completa
+  y la barra superpuesta (`Box` + `BottomCenter`) en vez de `Column`, así las
+  esquinas redondeadas muestran la escena y no el fondo raíz.
+
+### Pestañas de agarre de los drawers (EDG-8/EDG-11)
+- Reemplazada la barra azul (`primary`) por el diseño del prototipo `.edge-tab`:
+  tab de `surface` 20×62 dp, borde hairline `outline`, sombra suave, redondeo 18 dp
+  solo en el lado que sobresale (`SignAiShapes.cornerEdgeTabLeft/Right`) y grip de
+  **dos** líneas `muted` (4×28 dp, opacidad 0.65, separación 3 dp).
+- Se reutilizan los tokens `SignAiShapes.cornerEdgeTabLeft/Right` que ya existían.
+- Verificado en device: cerrado (pestaña en el borde de pantalla) y abierto
+  (pestaña pegada al borde del panel), ambos con su grip.
+
+### Fix: hueco entre el drawer abierto y su agarre
+- Síntoma: al terminar la animación de apertura, el drawer se "contraía" y la
+  pestaña quedaba flotando, separada del panel.
+- Causa: el cuerpo del drawer se medía con `width(drawerWidth + drawerOverflow)`
+  = 1128px en un `Box` de 1080px; Compose lo **centraba** en vez de alinearlo al
+  borde (natural left = -24px en lugar de -48px). Con el `offset` del overflow,
+  el borde de entrada del panel quedaba ~23px adentro → hueco de ~23px respecto
+  a la pestaña (que sí estaba en la posición correcta). Confirmado con logs
+  `positionInRoot()` y prueba pintando el `Surface` de rojo.
+- Fix: se elimina el cuerpo sobredimensionado. Ahora el `Surface` mide
+  exactamente `drawerWidth` (tamaño natural, sin desbordar el padre) y un `Box`
+  de desborde aparte (`drawerOverflow`) sigue cubriendo el borde de pantalla
+  durante el rebote del spring. Verificado en device: borde del drawer en 130px
+  = borde derecho de la pestaña.
+
+---
+
+## 2026-09-23 (cont.) — Fidelidad de la paleta del prototipo + fix crítico de MIUI force-dark
+
+### Paleta del prototipo aplicada verbatim
+- `Color.kt`: `LightColors` y `DarkColors` ahora usan los tokens del prototipo
+  (`PrototipoFrontend/app/globals.css`). Claro (default): `background #F4F4F2`,
+  `text #171717`, `outline #DEDED9`, `muted #777773`, `strong #171717`,
+  `onStrong #F4F4F2`, `soft #E8E8E3`, `scrim` negro .28, `elevation` negro.
+  Oscuro: `#111110 / #F5F5F1 / #32322F / #969690 / #292926`.
+- `surface` pasa de translúcido (`rgba(255,255,253,.92)`) a **opaco `#FEFEFC`**:
+  el prototipo lo atenúa con `backdrop-filter: blur(14px)` (que Compose no tiene
+  barato) y además recorta el avatar arriba del panel, así que el resultado
+  opaco es lo que se ve. Sin esto el avatar "sangraba" por la barra inferior.
+- `primary` sigue a `strong` (el prototipo no tiene acento azul).
+- **Claro es el default**: `Settings.darkTheme = false`; `MainActivity` y
+  `syncWebSettings` respetan `settings.darkTheme` en vez de forzar claro.
+
+### Tipografía
+- El prototipo usa `Arial, Helvetica, sans-serif`; Android no trae ninguno.
+  Se empaqueta **Liberation Sans** (métricamente compatible con Arial) en
+  `res/font/` y se usa como `SignAiFontFamily`.
+
+### Fidelidad por componente
+- Bottom bar: borde del input 1dp, switch 43×25, anillo `soft` 5dp en el mic
+  activo, home indicator 112×4 al 70%, "Traducir" en `body1` bold.
+- Stage: caption `LSC · AVATAR 3D` restaurado, Repetir a `BottomEnd` (pill,
+  13/9, icono 14).
+- Drawers: pestaña al 42% de alto (era centro), grip de 2 líneas, **esquinas
+  interiores 27dp** (`cornerDrawerLeft/Right`), scrim con `background` negro
+  (antes era un `Box` transparente → no oscurecía).
+- `CharacterPicker`: fondo `soft` + `cornerMenu` en el ítem seleccionado y
+  anillo `background` de 3px en el punto del personaje.
+- Splash/About/Ajustes/Historial: paddings, hairlines y tamaños alineados.
+
+### Fix crítico: MIUI "smart dark" invertía el texto
+- **Síntoma**: en el drawer de Ajustes y en Conversación, todo el texto con
+  `color = colors.text` (#171717) se veía **blanco**; #333333 se aclaraba;
+  #777773 salía gris; el rojo y los rectángulos de color salían correctos.
+  Diagnóstico: `SignAiText` recibía el color correcto (logcat), el mismo
+  `BasicText` con el mismo color se veía bien en la pantalla principal pero
+  mal dentro de `Modifier.verticalScroll`/drawer. Un test controlado
+  (columna fija vs. columna con scroll) lo confirmó: **el texto dentro de una
+  capa hardware (scroll/drawer) se invertía**.
+- **Causa**: el dispositivo tiene modo oscuro + **`smart_dark_enable=1`** de
+  MIUI; la app declara tema claro (`Theme.Material.Light.NoActionBar`), así que
+  MIUI le aplica force-dark e invierte el contenido de los `RenderNode`.
+- **Fix**: `android:forceDarkAllowed=false` en `res/values/themes.xml`.
+  Verificado en device: drawer, conversación, historial y about con texto
+  oscuro correcto. **No quitar ese item** (ver `AGENTS.md` → Gotchas).
+
+### Pendiente
+- Revisar con el usuario: rejilla del piso (`Settings.grid` default `true`; el
+  prototipo no tiene rejilla), anillo de foco del input (3px `soft` del
+  prototipo, no implementado), sombra superior del panel (`.control-panel`).
+- Modo oscuro: no se tocó (queda para después), pero ambas paletas ya están
+  alineadas al prototipo.

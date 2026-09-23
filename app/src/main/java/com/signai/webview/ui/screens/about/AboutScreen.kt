@@ -46,6 +46,7 @@ fun AboutScreen(
             contentDescription = "Volver",
             onClick = onBack,
             size = 50.dp,
+            shape = SignAiShapes.cornerControl,
         )
 
         Column(
@@ -57,7 +58,7 @@ fun AboutScreen(
             Box(
                 modifier = Modifier
                     .size(68.dp)
-                    .background(SignAiTheme.colors.strong, SignAiShapes.cornerPanel),
+                    .background(SignAiTheme.colors.strong, SignAiShapes.cornerLogoTile),
                 contentAlignment = Alignment.Center,
             ) {
                 SignAiText(
@@ -67,7 +68,7 @@ fun AboutScreen(
                         fontWeight = FontWeight.Bold,
                         letterSpacing = (-3).sp,
                     ),
-                    color = SignAiTheme.colors.onStrong,
+                    color = SignAiTheme.colors.white,
                 )
             }
 
@@ -97,6 +98,7 @@ fun AboutScreen(
                 text = "Una herramienta que transforma tus frases en español a " +
                     "Lengua de Señas Colombiana mediante un avatar 3D.",
                 style = SignAiTheme.typography.body1.copy(
+                    fontSize = 15.sp,
                     textAlign = TextAlign.Center,
                     lineHeight = 23.sp,
                 ),

@@ -4,19 +4,22 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,9 +27,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import android.util.Log
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.contentDescription
@@ -35,6 +40,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
+import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.theme.SignAiTheme
@@ -134,9 +140,18 @@ fun SignAiEdgeDrawer(
     val horizontalAlignment = if (side == DrawerSide.End) Alignment.CenterEnd else Alignment.CenterStart
     val topAlignment = if (side == DrawerSide.End) Alignment.TopEnd else Alignment.TopStart
     val dragDirectionSign = if (side == DrawerSide.End) 1f else -1f
+    val drawerShape =
+        if (side == DrawerSide.End) SignAiShapes.cornerDrawerRight
+        else SignAiShapes.cornerDrawerLeft
 
-    Box(modifier = modifier.fillMaxSize()) {
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         content()
+
+        // Prototype `.edge-tab { top: 42% }`: the tab's top sits at 42% of the
+        // screen height, i.e. slightly above the vertical center. The handle Box
+        // is 160dp tall and centered, so shift it up by 8% of the height (plus
+        // the half-tab correction to align the 62dp tab's top).
+        val tabOffsetY = 31.dp - maxHeight * 0.08f
 
         // Invisible open-gesture strip on this drawer's edge. `padding` BEFORE
         // `fillMaxHeight` shrinks the node itself, so the hit area excludes the
@@ -160,6 +175,7 @@ fun SignAiEdgeDrawer(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer { alpha = fraction * 0.28f }
+                    .background(Color.Black)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
@@ -187,17 +203,16 @@ fun SignAiEdgeDrawer(
             }
         }
 
-        // The body is `drawerOverflow` wider than the visible drawer and shifted
-        // toward its edge by the same amount, so the extra surface hangs off
-        // screen (invisible at rest). On the open spring's rebound the offset
-        // overshoots the edge; without this the body's edge would separate and
-        // expose the content behind. The visible drawer stays `drawerWidth`.
+        // Drawer surface: exactly `drawerWidth`, aligned to its edge and riding
+        // `offsetX`. Kept at its natural size (not wider than the parent) because
+        // a body wider than the Box gets centered instead of edge-aligned, which
+        // opened a gap between the drawer and its handle.
         Box(
             modifier = Modifier
                 .align(horizontalAlignment)
                 .fillMaxHeight()
-                .width(drawerWidth + drawerOverflow)
-                .offset { IntOffset((offsetX.value + dragDirectionSign * overflowPx).toInt(), 0) }
+                .width(drawerWidth)
+                .offset { IntOffset(offsetX.value.toInt(), 0) }
                 .draggable(
                     state = dragState,
                     orientation = Orientation.Horizontal,
@@ -207,24 +222,33 @@ fun SignAiEdgeDrawer(
         ) {
             Surface(
                 color = SignAiTheme.colors.surface,
-                modifier = Modifier
-                    .align(if (side == DrawerSide.End) Alignment.CenterStart else Alignment.CenterEnd)
-                    .fillMaxHeight()
-                    .width(drawerWidth),
+                shape = drawerShape,
+                modifier = Modifier.fillMaxSize(),
             ) {
                 drawerContent()
             }
-            Box(
-                modifier = Modifier
-                    .align(if (side == DrawerSide.End) Alignment.CenterEnd else Alignment.CenterStart)
-                    .fillMaxHeight()
-                    .width(drawerOverflow)
-                    .background(SignAiTheme.colors.surface),
-            )
         }
 
-        // Handle: grab tab that rides the drawer's leading edge, tappable to
-        // open/close (spec `EDG-3`/`EDG-11`) and draggable.
+        // Overflow strip: an extra `drawerOverflow` of surface hanging off the
+        // trailing screen edge. On the open spring's rebound `offsetX` overshoots
+        // past 0; this keeps the edge covered instead of exposing the content
+        // behind. Invisible at rest.
+        Box(
+            modifier = Modifier
+                .align(horizontalAlignment)
+                .fillMaxHeight()
+                .width(drawerOverflow)
+                .offset { IntOffset((offsetX.value + dragDirectionSign * overflowPx).toInt(), 0) }
+                .background(SignAiTheme.colors.surface),
+        )
+
+        // Handle: edge tab that rides the drawer's leading edge, matching the
+        // prototype `.edge-tab` (globals.css): a small `surface` tab hugging the
+        // screen edge, hairline `outline`, soft shadow and a two-line grip.
+        // Tappable to open/close (spec `EDG-3`/`EDG-11`) and draggable.
+        val tabShape =
+            if (side == DrawerSide.End) SignAiShapes.cornerEdgeTabRight
+            else SignAiShapes.cornerEdgeTabLeft
         Box(
             modifier = Modifier
                 .align(horizontalAlignment)
@@ -235,7 +259,7 @@ fun SignAiEdgeDrawer(
                         } else {
                             (offsetX.value + widthPx).coerceAtLeast(0f)
                         }
-                    IntOffset(handleOffset.toInt(), 0)
+                    IntOffset(handleOffset.toInt(), tabOffsetY.roundToPx())
                 }
                 .width(edgeStripWidth)
                 .height(160.dp)
@@ -249,21 +273,33 @@ fun SignAiEdgeDrawer(
                 .semantics {
                     contentDescription = if (isOpen) "Cerrar panel" else "Abrir $previewLabel"
                 },
+            contentAlignment = if (side == DrawerSide.End) Alignment.CenterEnd else Alignment.CenterStart,
         ) {
             Box(
                 modifier = Modifier
-                    .align(if (side == DrawerSide.End) Alignment.CenterEnd else Alignment.CenterStart)
-                    .width(5.dp)
-                    .height(50.dp)
-                    .shadow(
-                        elevation = 2.dp,
-                        shape = RoundedCornerShape(2.5.dp),
-                    )
-                    .background(
-                        color = SignAiTheme.colors.primary.copy(alpha = 0.85f),
-                        shape = RoundedCornerShape(2.5.dp),
-                    ),
-            )
+                    .width(20.dp)
+                    .height(62.dp)
+                    .shadow(elevation = 6.dp, shape = tabShape, clip = false)
+                    .background(color = SignAiTheme.colors.surface, shape = tabShape)
+                    .border(width = 1.dp, color = SignAiTheme.colors.outline, shape = tabShape),
+                contentAlignment = Alignment.Center,
+            ) {
+                // Grip: two rounded vertical lines (prototype `.edge-grip`,
+                // `box-shadow: 7px 0 0` → 4dp line + 3dp gap + 4dp line).
+                Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+                    repeat(2) {
+                        Box(
+                            modifier = Modifier
+                                .width(4.dp)
+                                .height(28.dp)
+                                .background(
+                                    color = SignAiTheme.colors.muted.copy(alpha = 0.65f),
+                                    shape = SignAiShapes.cornerPill,
+                                ),
+                        )
+                    }
+                }
+            }
         }
     }
 }

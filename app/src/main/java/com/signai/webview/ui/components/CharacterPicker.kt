@@ -21,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
@@ -89,10 +91,17 @@ fun CharacterPicker(
     ) {
         Character.entries.forEach { character ->
             val selected = character == current
+            val menuShape = SignAiShapes.cornerMenu
+            val ringColor = SignAiTheme.colors.background
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 42.dp)
+                    .clip(menuShape)
+                    .background(
+                        if (selected) SignAiTheme.colors.soft else Color.Transparent,
+                        menuShape,
+                    )
                     .selectable(
                         selected = selected,
                         role = Role.RadioButton,
@@ -108,6 +117,14 @@ fun CharacterPicker(
                 Box(
                     modifier = Modifier
                         .size(9.dp)
+                        .drawBehind {
+                            // Prototype `.character-dot { box-shadow: 0 0 0 3px
+                            // var(--background) }` — a 3dp ring, no layout cost.
+                            drawCircle(
+                                color = ringColor,
+                                radius = size.minDimension / 2f + 3.dp.toPx(),
+                            )
+                        }
                         .background(Color(character.colorArgb), CircleShape),
                 )
                 SignAiText(

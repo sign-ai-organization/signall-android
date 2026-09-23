@@ -57,7 +57,7 @@ fun SignAiSplash(
                         fontWeight = FontWeight.Bold,
                         letterSpacing = (-3).sp,
                     ),
-                    color = SignAiTheme.colors.onStrong,
+                    color = SignAiTheme.colors.white,
                 )
             }
 
@@ -82,7 +82,7 @@ fun SignAiSplash(
 
             SignAiText(
                 text = "$clamped%",
-                style = SignAiTheme.typography.body3,
+                style = SignAiTheme.typography.body3.copy(fontSize = 11.sp),
                 color = SignAiTheme.colors.muted,
             )
         }

@@ -19,8 +19,9 @@ data class Settings(
     val contrast: Boolean = false,
     val large: Boolean = false,
     val reduceMotion: Boolean = false,
-    // Appearance (spec `APP-*`).
-    val darkTheme: Boolean = true,
+    // Appearance (spec `APP-*`). The prototype is light-first, so light is the
+    // default; the dark switch still works and is persisted.
+    val darkTheme: Boolean = false,
 )
 
 enum class Setting {

@@ -123,11 +123,12 @@ const scene  = new THREE.Scene();
 scene.background = new THREE.Color(0x0d0f1a);
 
 const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
-// De frente, a la altura del cuello (~1.45 con avatar de 1.7): encuadre centrado en cara/cuello
-camera.position.set(0, 1.45, 2);
+// De frente, cámara algo alta (y=1.50, z=2.15) con target por debajo (y=1.20):
+// la mirada cae hacia adelante y compensa el contrapicado de la altura baja
+camera.position.set(0, 1.5, 2.15);
 
 const controls = new OrbitControls(camera, canvas);
-controls.target.set(0, 1.45, 0);
+controls.target.set(0, 1.2, 0);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.enableRotate = false;  // solo zoom: sin orbitar ni pan
@@ -143,6 +144,7 @@ const fill = new THREE.DirectionalLight(0x8090ff, 0.4);
 fill.position.set(-2, 2, -2);
 scene.add(fill);
 const grid = new THREE.GridHelper(4, 8, 0x1e2130, 0x1e2130);
+grid.visible = false; // por defecto sin grilla (suelo)
 scene.add(grid);
 
 // Fondo opcional (bosque): se carga una vez, se activa vía SignAI.setBackground(true)
@@ -564,8 +566,8 @@ canvas.addEventListener("pointerdown", (e) => {
     state.playing = false;
     cancelAnimationFrame(state.animHandle);
     resetPose();
-    camera.position.set(0, 1.45, 2);
-    controls.target.set(0, 1.45, 0);
+    camera.position.set(0, 1.5, 2.15);
+    controls.target.set(0, 1.2, 0);
     controls.update();
     Debug.lastTap = "reset (long press)";
   }, 500);

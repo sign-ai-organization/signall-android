@@ -5,12 +5,24 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.signai.webview.R
+
+// The prototype renders with `Arial, Helvetica, sans-serif` (globals.css body).
+// Android ships neither, so we bundle Liberation Sans, which is metrically
+// compatible with Arial (same advance widths and glyph shapes), to keep the
+// layout and text weight identical to the prototype.
+private val SignAiFontFamily =
+    FontFamily(
+        Font(R.font.liberation_sans_regular, FontWeight.Normal),
+        Font(R.font.liberation_sans_bold, FontWeight.Bold),
+    )
 
 @Composable
-fun fontFamily() = FontFamily.Default
+fun fontFamily() = SignAiFontFamily
 
 data class Typography(
     val h1: TextStyle,
@@ -45,9 +57,9 @@ private val defaultTypography =
         h2 =
             TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                lineHeight = 28.sp,
-                letterSpacing = 0.sp,
+                fontSize = 24.sp,
+                lineHeight = 29.sp,
+                letterSpacing = (-1.2).sp,
             ),
         h3 =
             TextStyle(

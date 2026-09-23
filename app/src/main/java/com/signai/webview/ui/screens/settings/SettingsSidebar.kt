@@ -93,6 +93,9 @@ fun SettingsSidebar(
             )
         }
 
+        // Prototype `.panel-top { margin-bottom: 38px }`.
+        Spacer(Modifier.height(38.dp))
+
         Section("AVATAR") {
             SettingRow(label = "Personaje", icon = SignAiIcons.Sparkle) {
                 CharacterPicker(current = settings.character, onPick = onCharacter)
@@ -184,51 +187,62 @@ private fun Section(
     label: String,
     content: @Composable () -> Unit,
 ) {
+    // Prototype `.setting-section { border-top: 1px solid var(--line);
+    // padding: 21px 0 8px }` and `.label { margin: 0 0 9px }`.
     Column(modifier = Modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 21.dp, bottom = 8.dp)
                 .height(1.dp)
                 .background(SignAiTheme.colors.outline),
         )
-        SignAiText(
-            text = label,
-            style = SignAiTheme.typography.label,
-            color = SignAiTheme.colors.muted,
-            modifier = Modifier.padding(top = 13.dp, bottom = 4.dp),
-        )
-        content()
+        Column(modifier = Modifier.padding(top = 21.dp, bottom = 8.dp)) {
+            SignAiText(
+                text = label,
+                style = SignAiTheme.typography.label,
+                color = SignAiTheme.colors.muted,
+                modifier = Modifier.padding(bottom = 9.dp),
+            )
+            content()
+        }
     }
 }
 
 @Composable
 private fun AboutLink(onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(vertical = 18.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        SignAiIcon(
-            imageVector = SignAiIcons.Info,
-            contentDescription = null,
-            size = 18.dp,
-            tint = SignAiTheme.colors.muted,
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(SignAiTheme.colors.outline),
         )
-        SignAiText(
-            text = "Acerca de",
-            style = SignAiTheme.typography.body2,
-            color = SignAiTheme.colors.text,
-            modifier = Modifier.weight(1f),
-        )
-        SignAiIcon(
-            imageVector = SignAiIcons.CaretRight,
-            contentDescription = null,
-            size = 16.dp,
-            tint = SignAiTheme.colors.muted,
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(role = Role.Button, onClick = onClick)
+                .padding(vertical = 18.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            SignAiIcon(
+                imageVector = SignAiIcons.Info,
+                contentDescription = null,
+                size = 18.dp,
+                tint = SignAiTheme.colors.muted,
+            )
+            SignAiText(
+                text = "Acerca de",
+                style = SignAiTheme.typography.body2,
+                color = SignAiTheme.colors.text,
+                modifier = Modifier.weight(1f),
+            )
+            SignAiIcon(
+                imageVector = SignAiIcons.CaretRight,
+                contentDescription = null,
+                size = 16.dp,
+                tint = SignAiTheme.colors.muted,
+            )
+        }
     }
 }
