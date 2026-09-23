@@ -633,3 +633,34 @@ opuesta ya no se veía.
   — la pestaña del lado que no se puede abrir se atenúa al 35% en vez de
   desaparecer, comunicando que hay un panel abierto.
 - `./gradlew build` ✅ e `installDebug` ✅ en `1ed6699f`.
+
+## Drawers: tap para cerrar en ambos lados + zona de arrastre amplia
+
+Tercera pasada. El usuario reportó dos fallos asimétricos: con la izquierda
+abierta, **tocar fuera no cerraba** (con la derecha sí); y cerrar por drag era
+casi imposible porque la pestaña no tomaba el gesto y había que empezar desde la
+mitad del panel.
+
+- **Bug del backdrop** (`EDG-10`): el `Box` del scrim era `fillMaxSize` con un
+  hijo `.offset{...}`. Un nodo cuyo único hijo está posicionado se **mide por su
+  contenido**, así que el scrim colapsaba a su tamaño natural (0 en `fillMaxSize`
+  sin contenido) y su área táctil no existía en toda la zona de fuera. Por eso
+  los taps caían al WebView. Se reescribió con tamaño explícito
+  (`fillMaxHeight().fillMaxWidth()` + `offset` como modificador) y se movió
+  **después** del panel; el handle queda compuesto al final para seguir siendo
+  lo único tappable con el drawer abierto. Con `offsetX == 0` el scrim arranca
+  en el borde del panel y no roba el tap de la pestaña (un `0.dp` de ancho no
+  hace hit-test; un sliver sí).
+- **Bug del drag sobre el contenido** (`EDG-9`): la `LazyColumn` de la
+  conversación consume cualquier drag que decida scrollear, y decide por la
+  dirección dominante del primer slop, así que los deslizamientos horizontales
+  sobre los turnos nunca llegaban al drawer. Nuevo
+  `Modifier.horizontalDragBlocked()` (`designsystem/foundation/
+  HorizontalDragBlocked.kt`, sobre `detectHorizontalDragGestures`) que reclama el
+  gesto solo si es horizontal y deja pasar el scroll vertical.
+- **Zona de arrastre** (`EDG-21`): `handleDragWidth = 72.dp` para la pestaña del
+  drawer abierto (48 dp seguía siendo el target de apertura del lado cerrado) y
+  la franja del borde queda activa también con el panel abierto
+  (`edgeStripIsOpen`), que era la queja "ni siquiera la pestaña la está
+  tomando". Se ajustó el gate de `EDG-19` para no bloquear el cierre.
+- `./gradlew build` ✅ e `installDebug` ✅ en `1ed6699f`.

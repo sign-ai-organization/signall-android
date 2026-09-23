@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -77,6 +78,9 @@ fun SignAiEdgeDrawer(
     drawerWidth: Dp = SignAiSizes.drawerWidth,
     drawerOverflow: Dp = 64.dp,
     edgeStripWidth: Dp = 48.dp,
+    // Grab strip of the OPEN drawer: wider than the closed-side strip, since
+    // this one is an actual drag handle and not just a screen-edge swipe zone.
+    handleDragWidth: Dp = 72.dp,
     edgeStripBottomExclusion: Dp = 0.dp,
     drawerTopInset: Dp = 0.dp,
     previewLabel: String = "",
@@ -99,6 +103,7 @@ fun SignAiEdgeDrawer(
     val density = LocalDensity.current
     val widthPx = with(density) { drawerWidth.toPx() }
     val overflowPx = with(density) { drawerOverflow.toPx() }
+    val edgeStripWidthPx = with(density) { edgeStripWidth.toPx() }
     val scope = rememberCoroutineScope()
 
     // 1 while this drawer can still be opened, 0 while it is not: false when it
@@ -183,10 +188,13 @@ fun SignAiEdgeDrawer(
         // the half-tab correction to align the 62dp tab's top).
         val tabOffsetY = 31.dp - maxHeight * 0.08f
 
-        // Invisible open-gesture strip on this drawer's edge. `padding` BEFORE
+        // Invisible gesture strip on this drawer's edge. `padding` BEFORE
         // `fillMaxHeight` shrinks the node itself, so the hit area excludes the
-        // bottom bar instead of covering it (spec `EDG-12`). Disabled while the
-        // other drawer is open (`EDG-19`).
+        // bottom bar instead of covering it (spec `EDG-12`). It opens the closed
+        // drawer and keeps dragging the open one back closed: once the panel is
+        // on screen the strip is still part of the gesture, so a closing drag
+        // does not have to start on the tab (`EDG-9`).
+        val edgeStripIsOpen = isOpen || fraction > 0.01f
         Box(
             modifier = Modifier
                 .align(topAlignment)
@@ -196,40 +204,11 @@ fun SignAiEdgeDrawer(
                 .draggable(
                     state = dragState,
                     orientation = Orientation.Horizontal,
-                    enabled = !otherDrawerOpen,
+                    enabled = edgeStripIsOpen || !otherDrawerOpen,
                     onDragStarted = { dragging = true },
                     onDragStopped = { snapAfterDrag() },
                 ),
         )
-
-        if (fraction > 0.01f) {
-            // The prototype's `.drawer-backdrop` is a weighted black gradient
-            // anchored on the open drawer: opaque at its edge → fully transparent
-            // at the far side. The other half is untouched, so two backdrops can
-            // never stack, and there is no divider to collide with the drawer's
-            // own outline.
-            val base = SignAiTheme.colors.scrim
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer { alpha = fraction }
-                    .background(
-                        if (side == DrawerSide.Start) {
-                            Brush.horizontalGradient(
-                                listOf(base, base.copy(alpha = 0.28f * base.alpha), Color.Transparent),
-                            )
-                        } else {
-                            Brush.horizontalGradient(
-                                listOf(Color.Transparent, base.copy(alpha = 0.28f * base.alpha), base),
-                            )
-                        },
-                    )
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                    ) { onOpenChange(false) },
-            )
-        }
 
         // Drag preview: translucent panel that follows the finger.
         if (dragging && fraction > 0.02f && fraction < 0.98f) {
@@ -293,6 +272,49 @@ fun SignAiEdgeDrawer(
                 .background(SignAiTheme.colors.surface),
         )
 
+        // Backdrop: the prototype's `.drawer-backdrop` is a weighted black
+        // gradient anchored on the open drawer — opaque at its edge, fully
+        // transparent at the far side — so the other half stays untouched and two
+        // backdrops can never stack. It is placed AFTER the drawer and explicitly
+        // sized (a `fillMaxSize` node whose content is an offset child bounds
+        // itself to that content, which is why left-drawer taps were falling
+        // through). Composed before the handle, which is the one part of a drawer
+        // that must stay tappable while it is open (`EDG-10`).
+        if (fraction > 0.01f) {
+            val base = SignAiTheme.colors.scrim
+            Box(
+                modifier = Modifier
+                    .offset {
+                        // Zero-width while the drawer is fully open: the panel
+                        // itself covers that area, and a sliver left over the
+                        // cursor-catcher is the difference between opening the
+                        // handle and closing the drawer.
+                        val baseX =
+                            if (side == DrawerSide.End) offsetX.value
+                            else (widthPx - abs(offsetX.value)).coerceAtLeast(0f)
+                        IntOffset(baseX.toInt(), 0)
+                    }
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .graphicsLayer { alpha = fraction }
+                    .background(
+                        if (side == DrawerSide.Start) {
+                            Brush.horizontalGradient(
+                                listOf(base, base.copy(alpha = 0.28f * base.alpha), Color.Transparent),
+                            )
+                        } else {
+                            Brush.horizontalGradient(
+                                listOf(Color.Transparent, base.copy(alpha = 0.28f * base.alpha), base),
+                            )
+                        },
+                    )
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) { onOpenChange(false) },
+            )
+        }
+
         // Handle: edge tab that rides the drawer's leading edge, matching the
         // prototype `.edge-tab` (globals.css): a small `surface` tab hugging the
         // screen edge, hairline `outline`, soft shadow and a two-line grip.
@@ -315,7 +337,7 @@ fun SignAiEdgeDrawer(
                         tabOffsetY.roundToPx() + drawerTopInset.roundToPx(),
                     )
                 }
-                .width(edgeStripWidth)
+                .width(if (isOpen) handleDragWidth else edgeStripWidth)
                 .height(160.dp)
                 .draggable(
                     state = dragState,

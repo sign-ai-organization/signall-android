@@ -37,6 +37,7 @@ import com.signai.webview.ui.designsystem.components.Surface
 import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
+import com.signai.webview.ui.designsystem.foundation.horizontalDragBlocked
 import com.signai.webview.ui.designsystem.foundation.pressScale
 import com.signai.webview.ui.icons.SignAiIcons
 import com.signai.webview.ui.state.ConversationTurn
@@ -106,7 +107,12 @@ fun ConversationPanel(
             } else {
                 LazyColumn(
                     state = listState,
-                    modifier = Modifier.fillMaxSize(),
+                    // The list is vertical: hand horizontal drags back to the
+                    // drawer, so swiping over the turns closes it like swiping
+                    // over the header does (spec `EDG-9`).
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .horizontalDragBlocked(),
                 ) {
                     items(items = turns, key = { it.id }) { turn ->
                         ConversationTurnItem(

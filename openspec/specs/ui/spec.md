@@ -74,8 +74,8 @@ Main.
 | EDG-6 | **Drag preview** | `[P]` | Panel translúcido que sigue el dedo con label "Conversación"/"Ajustes". |
 | EDG-7 | **Edge swipe** desde borde | `[P]` | Swipe desde el borde izquierdo (inicio `< 54px`, delta `> 58`) abre Conversación; desde el derecho (`> width-54`, delta `< -58`) abre Ajustes. |
 | EDG-8 | Pestaña visible + grip | `[A]` | Pestaña de agarre = `.edge-tab` del prototipo: tab de `surface` 20×62 dp pegado al borde, borde hairline `outline`, sombra suave y grip de **dos** líneas `muted` (4×28 dp, opacidad 0.65, separación 3 dp), redondeado solo en el lado que sobresale. |
-| EDG-9 | Cerrar arrastrando el panel | `[A]` | El drawer abierto se cierra arrastrando hacia su borde o con tap en el scrim. |
-| EDG-10 | Tap en scrim cierra | `[P]` | Overlay oscurecido clicable para cerrar. |
+| EDG-9 | Cerrar arrastrando el panel | `[A]` | El drawer abierto se cierra arrastrando desde cualquier zona de gesto: la pestaña, la franja del borde (ahora activa también con el panel abierto) o el cuerpo deslizando sobre zonas que no scrollean. Se cierra también con tap en su backdrop. |
+| EDG-10 | Tap en scrim cierra | `[P]` | Overlay oscurecido clicable para cerrar. El backdrop se dimensiona explícitamente (no depende del hijo posicionado) para que el tap cubra toda la zona fuera del panel en ambos lados. |
 | EDG-11 | Pestaña del panel abierto | `[P]` | Handle lateral en el borde del panel que también cierra (click). |
 | EDG-12 | Exclusión de la bottom bar | `[A]` | El área de gesto no tapa la barra de controles. |
 | EDG-13 | Drawer bidireccional generalizado | `[N]` | Un solo componente `SignAiEdgeDrawer(side = Start/End)` reutilizado por ambos lados. |
@@ -86,6 +86,7 @@ Main.
 | EDG-18 | Drawer por debajo de la barra de estado | `[A]` | El drawer y su pestaña arrancan bajo la status bar (`systemBars` top inset): su borde superior queda visible en vez de correr bajo los íconos del sistema. |
 | EDG-19 | Una sola sidebar a la vez | `[N]` | Con un drawer abierto, la pestaña y la franja de gesto del otro lado se atenúan al 35% y quedan inertes: tocarlas o arrastrarlas no abre nada. Para cambiar de panel primero hay que cerrar el que está abierto (tap en su backdrop o su pestaña, drag hacia su borde, o atrás). |
 | EDG-20 | Pestaña atenuada, no oculta | `[N]` | Mientras un drawer está abierto, su pestaña sigue visible pero con un oscurecimiento leve que sigue el fade del backdrop; nunca desaparece ni se sobre-oscuriza. |
+| EDG-21 | Zona de arrastre amplia | `[N]` | La pestaña del drawer abierto tiene una zona de arrastre de 72 dp (antes 48 dp) y la franja de borde del panel abierto está activa, así que cerrar por drag ya no exige empezar justo sobre la pestaña. |
 
 ---
 
