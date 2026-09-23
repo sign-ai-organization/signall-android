@@ -10,30 +10,31 @@ import androidx.compose.ui.Modifier
 import com.signai.webview.ui.designsystem.components.SignAiDropdown
 import com.signai.webview.ui.designsystem.components.SignAiDropdownMenuItem
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
-import com.signai.webview.ui.icons.SignAiIcons
 
+/**
+ * Anchored history menu. The [trigger] receives the click handler so call sites
+ * can style their own button (e.g. the control-panel icon button).
+ *
+ * Replaced by the history bottom sheet in Phase D.
+ */
 @Composable
 fun HistoryDropdown(
     history: List<String>,
     onPick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    trigger: @Composable (onClick: () -> Unit) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     SignAiDropdown(
         expanded = expanded,
         onDismissRequest = { expanded = false },
-        modifier = Modifier.heightIn(max = SignAiSizes.dropdownMaxHeight),
-        trigger = {
-            SignAiIconButton(
-                icon = SignAiIcons.History,
-                contentDescription = "Historial",
-                onClick = { expanded = !expanded },
-            )
-        },
+        modifier = modifier.heightIn(max = SignAiSizes.dropdownMaxHeight),
+        trigger = { trigger { expanded = !expanded } },
     ) {
         if (history.isEmpty()) {
             SignAiDropdownMenuItem(text = "Sin historial", onClick = {})
         } else {
-            val maxChars = 10
+            val maxChars = 18
             history.forEach { item ->
                 val label = if (item.length > maxChars) item.take(maxChars) + "..." else item
                 SignAiDropdownMenuItem(

@@ -239,14 +239,18 @@ device (regla de `AGENTS.md`) + verificación visual.
 
 ### Fase B — Chrome principal (stage + control panel + splash)
 
-- [ ] B.1 `ui/screens/stage/AvatarStage.kt` (nuevo): envuelve `AvatarWebView`
+- [x] B.1 `ui/screens/stage/AvatarStage.kt` (nuevo): envuelve `AvatarWebView`
       + `stage-hint` (live-dot + estado) + `stage-caption` + botón Repetir.
-- [ ] B.2 `ui/screens/bottombar/SignAiBottomBar.kt`: input con placeholder
-      real, botón historial, fila `Mic (25%) | Traducir (75%)` con label.
-- [ ] B.3 `ui/components/SignAiSplash.kt`: rediseño (logo tile, eyebrow,
-      progreso real vía `onProgressChanged`, `%`). Exponer progreso desde
-      `AvatarWebView` (`onProgress: (Int) -> Unit`).
-- [ ] B.4 Build + install + verificación.
+      **Nota:** requirió adelantar `PlaybackState` (era E.1) para el texto de
+      estado; la orquestación real sigue en E.
+- [x] B.2 `ui/screens/bottombar/SignAiBottomBar.kt`: input con placeholder
+      real, botón historial, fila `Traducir (flex) | Mic (50dp)` con label.
+      **Decisión:** se siguió el **prototipo** (Traducir a la izquierda con
+      label, Mic a la derecha 50dp), no el "Mic | Traducir 25/75" del plan.
+- [x] B.3 `ui/components/SignAiSplash.kt`: rediseño (logo tile, eyebrow,
+      progreso real vía `onProgressChanged`, `%`). `AvatarWebView` expone
+      `onProgress: (Int) -> Unit`.
+- [x] B.4 Build + install + verificación (capturas: main + splash 80%).
 
 ### Fase C — Sidebars (drawers)
 

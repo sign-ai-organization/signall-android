@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,7 +27,9 @@ import com.signai.webview.ui.designsystem.components.Surface
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.screens.bottombar.SignAiBottomBar
 import com.signai.webview.ui.screens.settings.SettingsSidebar
+import com.signai.webview.ui.screens.stage.AvatarStage
 import com.signai.webview.ui.state.MainScreenState
+import com.signai.webview.ui.state.PlaybackState
 import com.signai.webview.ui.theme.SignAiTheme
 import com.signai.webview.ui.webview.AvatarWebView
 import kotlinx.coroutines.delay
@@ -40,6 +43,7 @@ fun MainScreen(state: MainScreenState) {
     var showSettings by remember { mutableStateOf(false) }
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     var loading by remember { mutableStateOf(true) }
+    var progress by remember { mutableIntStateOf(0) }
     val density = LocalDensity.current
 
     LaunchedEffect(showSettings) {
@@ -73,10 +77,16 @@ fun MainScreen(state: MainScreenState) {
                 edgeStripBottomExclusion = bottomBarHeight,
                 content = {
                     Column(Modifier.fillMaxSize()) {
-                        Box(Modifier.weight(1f)) {
+                        AvatarStage(
+                            status = state.playbackState.label,
+                            doneVisible = state.playbackState == PlaybackState.Done,
+                            onRepeat = state::replay,
+                            modifier = Modifier.weight(1f),
+                        ) {
                             AvatarWebView(
                                 modifier = Modifier.fillMaxSize(),
                                 onReady = state::attachWebView,
+                                onProgress = { progress = it },
                                 onLoaded = { loading = false },
                             )
                         }
@@ -87,9 +97,10 @@ fun MainScreen(state: MainScreenState) {
                         ) {
                             SignAiBottomBar(
                                 history = state.historyList,
-                                onReplay = state::play,
+                                playbackState = state.playbackState,
                                 onSend = state::play,
-                                onMic = { state.play("mic") },
+                                onMic = state::toggleMic,
+                                onPickHistory = state::play,
                             )
                         }
                     }
@@ -111,7 +122,7 @@ fun MainScreen(state: MainScreenState) {
             enter = EnterTransition.None,
             exit = fadeOut(animationSpec = tween(durationMillis = SplashFadeMs)),
         ) {
-            SignAiSplash()
+            SignAiSplash(progress = progress)
         }
     }
 }

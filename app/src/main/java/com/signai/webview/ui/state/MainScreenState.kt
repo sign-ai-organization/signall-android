@@ -25,11 +25,29 @@ class MainScreenState(
     var sign by mutableStateOf(signs.firstOrNull().orEmpty())
         private set
 
+    var playbackState by mutableStateOf(PlaybackState.Idle)
+        private set
+
+    var lastText by mutableStateOf("")
+        private set
+
+    /** Mic placeholder (spec `CTL-5`/`STA-9`): toggles the listening feedback. */
+    fun toggleMic() {
+        playbackState =
+            if (playbackState == PlaybackState.Listening) PlaybackState.Idle else PlaybackState.Listening
+    }
+
+    /** Repeats the last translated phrase (spec `STG-4`/`CNV-5`). */
+    fun replay() {
+        if (lastText.isNotBlank()) play(lastText)
+    }
+
     fun attachWebView(webView: WebView) {
         this.webView.attach(webView)
     }
 
     fun play(text: String) {
+        lastText = text
         syncHistory(history.record(text))
         webView.play()
     }

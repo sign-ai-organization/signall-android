@@ -121,4 +121,51 @@
 - `./gradlew installDebug` → **OK** en Redmi Note 9S (`Redmi Note 9S - 11`,
   1 device). Sin cambios visuales esperados (Fase A solo agrega tokens).
 
+---
+
+## 2026-09-23 — Ejecución Fase B (chrome principal)
+
+Device disponible: **Redmi Note 9S (Android 11)**.
+
+### Qué se hizo
+
+- **B.1 `AvatarStage.kt`** (nuevo, `ui/screens/stage/`): escena con el WebView
+  como contenido + `stage-hint` (dot `strong` + `PlaybackState.label`,
+  top-left con status bar insets), `stage-caption` (`LSC · Avatar 3D`,
+  bottom-center) y botón **Repetir** (pill, solo en `Done`).
+- **B.2 `SignAiBottomBar.kt`**: panel con borde superior de 1dp, esquinas
+  superiores 26, input (`Escribe una frase...`, Enter→enviar con `ImeAction.Done`),
+  botón historial 50dp, y fila de acciones `Traducir` (flex, `strong` + label) +
+  `Mic` (50dp, activo con `listening`). `HistoryDropdown` ahora recibe un slot
+  `trigger` para estilizar el botón.
+- **B.3 `SignAiSplash.kt`**: logo tile `S` (68dp, 23 radio, `strong`),
+  eyebrow del branding, barra de progreso real y `%`. `AvatarWebView` expone
+  `onProgress: (Int) -> Unit` vía `WebChromeClient.onProgressChanged`.
+- **`PlaybackState.kt`** (nuevo) y `MainScreenState`: `playbackState`, `lastText`,
+  `replay()` y `toggleMic()`.
+
+### Decisiones
+
+- **`PlaybackState` se adelantó de E.1 a B**: el stage y el estado activo del
+  mic necesitan el enum ya. E conserva la orquestación y el callback real.
+- **Fila de acciones fiel al prototipo**: `Traducir` a la izquierda (flex, con
+  label) y `Mic` a la derecha 50dp (el plan decía "Mic | Traducir 25/75").
+- **Mic ya no hace `play("mic")`** (que metía "mic" al historial): ahora solo
+  alterna `listening`. El mock con auto-relleno llega en E (`OM-4`).
+- **Branding centralizado** en `ui/SignAiBranding.kt` (`Name`, `LogoLetter`,
+  `Eyebrow`) — el splash ya lo consume (`APP-6`).
+- **Repetir** usa `lastText` (nuevo en `MainScreenState`).
+
+### Verificación
+
+- `./gradlew build` → **BUILD SUCCESSFUL**.
+- `./gradlew installDebug` → **OK** en Redmi Note 9S.
+- Capturas: main (hint + caption + panel nuevo) y splash con progreso real al
+  **80%**. `SPL-5` verificado en device.
+
+### Pendiente
+
+- Fase C (sidebars) — no arrancar hasta OK del usuario.
+
+
 

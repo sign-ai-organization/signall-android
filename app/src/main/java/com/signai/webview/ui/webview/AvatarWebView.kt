@@ -12,6 +12,7 @@ import androidx.webkit.WebViewClientCompat
 fun AvatarWebView(
     modifier: Modifier = Modifier,
     onReady: (WebView) -> Unit,
+    onProgress: (Int) -> Unit = {},
     onLoaded: () -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -22,6 +23,11 @@ fun AvatarWebView(
                 settings.javaScriptEnabled = true
                 settings.mediaPlaybackRequiresUserGesture = false
                 webChromeClient = object : android.webkit.WebChromeClient() {
+                    override fun onProgressChanged(view: WebView, newProgress: Int) {
+                        super.onProgressChanged(view, newProgress)
+                        onProgress(newProgress)
+                    }
+
                     override fun onConsoleMessage(message: android.webkit.ConsoleMessage): Boolean {
                         android.util.Log.d(
                             "SignAIWeb",
