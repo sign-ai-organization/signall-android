@@ -16,10 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -33,7 +29,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.signai.webview.ui.components.HistoryDropdown
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Surface
@@ -41,7 +36,6 @@ import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextField
 import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextFieldDefaults
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
-import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.icons.SignAiIcons
 import com.signai.webview.ui.state.PlaybackState
 import com.signai.webview.ui.theme.SignAiTheme
@@ -52,13 +46,13 @@ import com.signai.webview.ui.theme.SignAiTheme
  */
 @Composable
 fun SignAiBottomBar(
-    history: List<String>,
+    query: String,
+    onQueryChange: (String) -> Unit,
     playbackState: PlaybackState,
     onSend: (String) -> Unit,
     onMic: () -> Unit,
-    onPickHistory: (String) -> Unit,
+    onOpenHistory: () -> Unit,
 ) {
-    var query by rememberSaveable { mutableStateOf("") }
     val keyboard = LocalSoftwareKeyboardController.current
 
     val sendEnabled =
@@ -101,7 +95,7 @@ fun SignAiBottomBar(
             ) {
                 OutlinedTextField(
                     value = query,
-                    onValueChange = { query = it },
+                    onValueChange = onQueryChange,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = { send() }),
@@ -125,19 +119,11 @@ fun SignAiBottomBar(
                         unfocusedContainerColor = SignAiTheme.colors.background,
                     ),
                 )
-                HistoryDropdown(
-                    history = history,
-                    onPick = { text ->
-                        keyboard?.hide()
-                        onPickHistory(text)
-                    },
-                ) { onClick ->
-                    ControlIconButton(
-                        icon = SignAiIcons.History,
-                        contentDescription = "Historial reciente",
-                        onClick = onClick,
-                    )
-                }
+                ControlIconButton(
+                    icon = SignAiIcons.History,
+                    contentDescription = "Historial reciente",
+                    onClick = onOpenHistory,
+                )
             }
 
             Row(

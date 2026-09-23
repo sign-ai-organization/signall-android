@@ -31,6 +31,10 @@ class MainScreenState(
     var lastText by mutableStateOf("")
         private set
 
+    /** Current phrase in the control panel input (shared with the history sheet). */
+    var inputText by mutableStateOf("")
+        private set
+
     /** Mic placeholder (spec `CTL-5`/`STA-9`): toggles the listening feedback. */
     fun toggleMic() {
         playbackState =
@@ -40,6 +44,10 @@ class MainScreenState(
     /** Repeats the last translated phrase (spec `STG-4`/`CNV-5`). */
     fun replay() {
         if (lastText.isNotBlank()) play(lastText)
+    }
+
+    fun setInput(text: String) {
+        inputText = text
     }
 
     fun attachWebView(webView: WebView) {

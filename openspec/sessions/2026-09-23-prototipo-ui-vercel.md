@@ -217,6 +217,39 @@ Device disponible: **Redmi Note 9S (Android 11)**.
 
 - Fase D (historial bottom sheet + About) — no arrancar hasta OK del usuario.
 
+---
+
+## 2026-09-23 — Ejecución Fase D (historial + About)
+
+### Qué se hizo
+
+- **D.1 `HistoryBottomSheet.kt`** (`HIS-1..8`): sheet modal con scrim, handle,
+  eyebrow `TUS FRASES`, título "Historial reciente", items con `Reutilizar →`,
+  estado vacío y scroll. Entrada `rise` con `slideInVertically`; cierre por
+  scrim o X (`HIS-8`). Reemplaza `HistoryDropdown` (eliminado).
+  - El **input** del control panel se elevó a `MainScreenState.inputText` para
+    que `Reutilizar` cargue la frase y la envíe (`HIS-3`).
+- **D.2 `AboutScreen.kt`** (`NAV-3`, `BRD-2/3/4`): volver, logo, eyebrow,
+  nombre centralizado, copy y meta con **versión dinámica**
+  (`BuildConfig.VERSION_NAME` = `1.0.0-webview`).
+- **D.3 `MainScreen`**: `showHistory`/`showAbout`; About exclusiva (`NAV-8`) y
+  `onOpenAbout` del sidebar cierra el drawer y navega (`NAV-7`).
+
+### Verificación
+
+- `./gradlew build` → **BUILD SUCCESSFUL**; `installDebug` → **OK**.
+- Capturas: sheet con historial real (incluye entradas viejas persistidas) y
+  About con versión dinámica.
+- **Límite:** igual que en C, `adb input` bloqueado → los taps reales
+  (abrir historial, Reutilizar, Acerca de, volver) quedan para verificación
+  manual.
+
+### Pendiente
+
+- Fase E (estado de reproducción + bridge `setSpeed`/`onPlaybackDone`) — no
+  arrancar hasta OK del usuario.
+
+
 
 
 

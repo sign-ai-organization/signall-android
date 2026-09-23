@@ -23,10 +23,12 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.signai.webview.domain.Gloss
+import com.signai.webview.ui.components.HistoryBottomSheet
 import com.signai.webview.ui.components.SignAiSplash
 import com.signai.webview.ui.designsystem.components.DrawerSide
 import com.signai.webview.ui.designsystem.components.SignAiEdgeDrawer
 import com.signai.webview.ui.designsystem.components.Surface
+import com.signai.webview.ui.screens.about.AboutScreen
 import com.signai.webview.ui.screens.bottombar.SignAiBottomBar
 import com.signai.webview.ui.screens.conversation.ConversationPanel
 import com.signai.webview.ui.screens.settings.SettingsSidebar
@@ -45,6 +47,8 @@ private const val SplashFadeMs = 400
 fun MainScreen(state: MainScreenState) {
     var showConversation by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
+    var showHistory by remember { mutableStateOf(false) }
+    var showAbout by remember { mutableStateOf(false) }
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     var loading by remember { mutableStateOf(true) }
     var progress by remember { mutableIntStateOf(0) }
@@ -75,91 +79,111 @@ fun MainScreen(state: MainScreenState) {
     }
 
     Box(Modifier.fillMaxSize()) {
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .graphicsLayer { alpha = contentAlpha },
-            color = SignAiTheme.colors.background,
-        ) {
-            BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-            val panelWidth = minOf(maxWidth * 0.88f, 350.dp)
-            SignAiEdgeDrawer(
-                side = DrawerSide.End,
-                isOpen = showSettings,
-                onOpenChange = { open ->
-                    showSettings = open
-                    if (open) showConversation = false
-                },
-                drawerWidth = panelWidth,
-                edgeStripBottomExclusion = bottomBarHeight,
-                previewLabel = "Ajustes",
-                drawerContent = {
-                    SettingsSidebar(
-                        settings = state.settings,
-                        onToggle = state::toggle,
-                        onCharacter = state::setCharacter,
-                        onSpeed = state::setSpeed,
-                        onInterfaceSize = state::setInterfaceSize,
-                        sign = state.sign,
-                        signs = state.signs,
-                        onPickSign = state::pickSign,
-                        onClose = { showSettings = false },
-                        onOpenAbout = { showSettings = false },
-                    )
-                },
+        if (showAbout) {
+            // About is exclusive: Main and drawers are not shown (spec `NAV-8`).
+            AboutScreen(onBack = { showAbout = false })
+        } else {
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .graphicsLayer { alpha = contentAlpha },
+                color = SignAiTheme.colors.background,
             ) {
-                SignAiEdgeDrawer(
-                    side = DrawerSide.Start,
-                    isOpen = showConversation,
-                    onOpenChange = { open ->
-                        showConversation = open
-                        if (open) showSettings = false
-                    },
-                    drawerWidth = panelWidth,
-                    edgeStripBottomExclusion = bottomBarHeight,
-                    previewLabel = "Conversación",
-                    drawerContent = {
-                        ConversationPanel(
-                            text = state.lastText,
-                            gloss = Gloss.glossFor(state.lastText),
-                            avatarStatus = avatarStatus,
-                            onRepeat = state::replay,
-                            onClose = { showConversation = false },
-                        )
-                    },
-                ) {
-                    Column(Modifier.fillMaxSize()) {
-                        AvatarStage(
-                            status = state.playbackState.label,
-                            doneVisible = state.playbackState == PlaybackState.Done,
-                            onRepeat = state::replay,
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            AvatarWebView(
-                                modifier = Modifier.fillMaxSize(),
-                                onReady = state::attachWebView,
-                                onProgress = { progress = it },
-                                onLoaded = { loading = false },
+                BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+                    val panelWidth = minOf(maxWidth * 0.88f, 350.dp)
+                    SignAiEdgeDrawer(
+                        side = DrawerSide.End,
+                        isOpen = showSettings,
+                        onOpenChange = { open ->
+                            showSettings = open
+                            if (open) showConversation = false
+                        },
+                        drawerWidth = panelWidth,
+                        edgeStripBottomExclusion = bottomBarHeight,
+                        previewLabel = "Ajustes",
+                        drawerContent = {
+                            SettingsSidebar(
+                                settings = state.settings,
+                                onToggle = state::toggle,
+                                onCharacter = state::setCharacter,
+                                onSpeed = state::setSpeed,
+                                onInterfaceSize = state::setInterfaceSize,
+                                sign = state.sign,
+                                signs = state.signs,
+                                onPickSign = state::pickSign,
+                                onClose = { showSettings = false },
+                                onOpenAbout = {
+                                    showSettings = false
+                                    showAbout = true
+                                },
                             )
-                        }
-                        Box(
-                            Modifier.onSizeChanged {
-                                bottomBarHeight = with(density) { it.height.toDp() }
+                        },
+                    ) {
+                        SignAiEdgeDrawer(
+                            side = DrawerSide.Start,
+                            isOpen = showConversation,
+                            onOpenChange = { open ->
+                                showConversation = open
+                                if (open) showSettings = false
+                            },
+                            drawerWidth = panelWidth,
+                            edgeStripBottomExclusion = bottomBarHeight,
+                            previewLabel = "Conversación",
+                            drawerContent = {
+                                ConversationPanel(
+                                    text = state.lastText,
+                                    gloss = Gloss.glossFor(state.lastText),
+                                    avatarStatus = avatarStatus,
+                                    onRepeat = state::replay,
+                                    onClose = { showConversation = false },
+                                )
                             },
                         ) {
-                            SignAiBottomBar(
-                                history = state.historyList,
-                                playbackState = state.playbackState,
-                                onSend = state::play,
-                                onMic = state::toggleMic,
-                                onPickHistory = state::play,
-                            )
+                            Column(Modifier.fillMaxSize()) {
+                                AvatarStage(
+                                    status = state.playbackState.label,
+                                    doneVisible = state.playbackState == PlaybackState.Done,
+                                    onRepeat = state::replay,
+                                    modifier = Modifier.weight(1f),
+                                ) {
+                                    AvatarWebView(
+                                        modifier = Modifier.fillMaxSize(),
+                                        onReady = state::attachWebView,
+                                        onProgress = { progress = it },
+                                        onLoaded = { loading = false },
+                                    )
+                                }
+                                Box(
+                                    Modifier.onSizeChanged {
+                                        bottomBarHeight = with(density) { it.height.toDp() }
+                                    },
+                                ) {
+                                    SignAiBottomBar(
+                                        query = state.inputText,
+                                        onQueryChange = state::setInput,
+                                        playbackState = state.playbackState,
+                                        onSend = state::play,
+                                        onMic = state::toggleMic,
+                                        onOpenHistory = { showHistory = true },
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
-            }
         }
+
+        HistoryBottomSheet(
+            visible = showHistory && !showAbout,
+            history = state.historyList,
+            onPick = { phrase ->
+                showHistory = false
+                state.setInput(phrase)
+                state.play(phrase)
+            },
+            onDismiss = { showHistory = false },
+        )
 
         AnimatedVisibility(
             visible = loading,

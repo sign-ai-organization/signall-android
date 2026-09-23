@@ -273,10 +273,13 @@ device (regla de `AGENTS.md`) + verificación visual.
 
 ### Fase D — Historial bottom sheet + About
 
-- [ ] D.1 `ui/components/HistoryBottomSheet.kt` (nuevo): handle, `TUS FRASES`,
-      items con `Reutilizar →`; reemplaza `HistoryDropdown` en el BottomBar.
-- [ ] D.2 `ui/screens/about/AboutScreen.kt` (nuevo): logo, copy, meta.
-- [ ] D.3 Build + install + verificación.
+- [x] D.1 `ui/components/HistoryBottomSheet.kt` (nuevo): handle, `TUS FRASES`,
+      items con `Reutilizar →`; reemplaza `HistoryDropdown` en el BottomBar
+      (eliminado). El input se elevó a `MainScreenState.inputText`.
+- [x] D.2 `ui/screens/about/AboutScreen.kt` (nuevo): logo, copy, meta con
+      versión dinámica (`BuildConfig.VERSION_NAME`). `NAV-7/8`: About es
+      excluyente y abrirla desde Ajustes cierra el drawer.
+- [x] D.3 Build + install + verificación (capturas de sheet y About).
 
 ### Fase E — Estado de reproducción + bridge
 
