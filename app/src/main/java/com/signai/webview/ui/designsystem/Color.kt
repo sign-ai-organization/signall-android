@@ -86,7 +86,18 @@ data class Colors(
     val textDisabled: Color,
     val scrim: Color,
     val elevation: Color,
-)
+    // Prototype-aligned tokens (PrototipoFrontend/app/globals.css):
+    // `strong` is the high-contrast foreground used for filled CTAs, the live
+    // dot and active states; `onStrong` is its readable content color.
+    // `soft` is the muted surface used for icon buttons, glows and tiles.
+    val strong: Color,
+    val onStrong: Color,
+    val soft: Color,
+) {
+    // The prototype exposes `muted` separately from any Lumo token; map it to
+    // the existing `textSecondary` so there is a single source of truth.
+    val muted: Color get() = textSecondary
+}
 
 internal val LightColors =
     Colors(
@@ -115,6 +126,9 @@ internal val LightColors =
         textDisabled = Gray400,
         scrim = Color.Black.copy(alpha = 0.32f),
         elevation = Gray700,
+        strong = Color(0xFF171717),
+        onStrong = White,
+        soft = Color(0xFFE8E8E3),
     )
 
 internal val DarkColors =
@@ -144,6 +158,9 @@ internal val DarkColors =
         textDisabled = Gray600,
         scrim = Color.Black.copy(alpha = 0.72f),
         elevation = Gray200,
+        strong = Color(0xFFF5F5F1),
+        onStrong = Black,
+        soft = Color(0xFF292926),
     )
 
 val LocalColors = staticCompositionLocalOf { LightColors }
@@ -160,6 +177,7 @@ fun Colors.contentColorFor(backgroundColor: Color): Color {
         success -> onSuccess
         disabled -> onDisabled
         background -> onBackground
+        strong -> onStrong
         else -> Color.Unspecified
     }
 }

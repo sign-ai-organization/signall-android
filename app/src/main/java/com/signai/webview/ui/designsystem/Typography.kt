@@ -25,6 +25,12 @@ data class Typography(
     val label3: TextStyle,
     val button: TextStyle,
     val input: TextStyle,
+    // Prototype-aligned styles (PrototipoFrontend/app/globals.css).
+    val eyebrow: TextStyle,
+    val caption: TextStyle,
+    val quote: TextStyle,
+    val gloss: TextStyle,
+    val label: TextStyle,
 )
 
 private val defaultTypography =
@@ -113,6 +119,46 @@ private val defaultTypography =
                 lineHeight = 24.sp,
                 letterSpacing = 0.sp,
             ),
+        // .eyebrow — 10px / 700 / .18em, muted color at call site.
+        eyebrow =
+            TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 10.sp,
+                lineHeight = 14.sp,
+                letterSpacing = 1.8.sp,
+            ),
+        // .stage-caption — 10px / .12em, uppercase at call site.
+        caption =
+            TextStyle(
+                fontWeight = FontWeight.Normal,
+                fontSize = 10.sp,
+                lineHeight = 14.sp,
+                letterSpacing = 1.2.sp,
+            ),
+        // .quote — 20px / 1.25 / -.03em
+        quote =
+            TextStyle(
+                fontWeight = FontWeight.Normal,
+                fontSize = 20.sp,
+                lineHeight = 25.sp,
+                letterSpacing = (-0.6).sp,
+            ),
+        // .gloss — 15px / 700 / .08em
+        gloss =
+            TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp,
+                lineHeight = 20.sp,
+                letterSpacing = 1.2.sp,
+            ),
+        // .label — 10px / 700 / .16em, muted color at call site.
+        label =
+            TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 10.sp,
+                lineHeight = 14.sp,
+                letterSpacing = 1.6.sp,
+            ),
     )
 
 @Composable
@@ -132,6 +178,11 @@ fun provideTypography(): Typography {
         label3 = defaultTypography.label3.copy(fontFamily = fontFamily),
         button = defaultTypography.button.copy(fontFamily = fontFamily),
         input = defaultTypography.input.copy(fontFamily = fontFamily),
+        eyebrow = defaultTypography.eyebrow.copy(fontFamily = fontFamily),
+        caption = defaultTypography.caption.copy(fontFamily = fontFamily),
+        quote = defaultTypography.quote.copy(fontFamily = fontFamily),
+        gloss = defaultTypography.gloss.copy(fontFamily = fontFamily),
+        label = defaultTypography.label.copy(fontFamily = fontFamily),
     )
 }
 

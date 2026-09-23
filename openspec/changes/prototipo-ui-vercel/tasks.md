@@ -221,18 +221,21 @@ device (regla de `AGENTS.md`) + verificación visual.
 
 ### Fase A — Design system extendido (sin cambiar pantallas)
 
-- [ ] A.1 `ui/designsystem/Color.kt`: dejar utilizable `LightColors`; agregar
+- [x] A.1 `ui/designsystem/Color.kt`: dejar utilizable `LightColors`; agregar
       tokens que faltan (`muted`, `surfaceVariant`/`soft`, `strong`) o mapear a
       los existentes Lumo. Mantener dark Lumo actual como default.
-- [ ] A.2 `ui/designsystem/foundation/SignAiMotion.kt` (nuevo): duraciones
-      (`fast 200`, `medium 250`, `slow 500`) y easings; flag reduce-motion.
-- [ ] A.3 `ui/designsystem/foundation/SignAiSizes.kt` / `SignAiShapes.kt` /
+- [x] A.2 `ui/designsystem/foundation/SignAiMotion.kt` (nuevo): duraciones
+      (`fast 160`, `short 180`, `medium 250`, `slow 500`) y easings; flag
+      reduce-motion. (El plan decía `fast 200`; se usó **160** por fidelidad al
+      prototipo/`ANI-3`, dropdown-in .16s.)
+- [x] A.3 `ui/designsystem/foundation/SignAiSizes.kt` / `SignAiShapes.kt` /
       `SignAiSpacing.kt`: alinear al prototipo (radio 24/16/13/12, panel
       `min(88%,350dp)`, botón 50/56, field 50).
-- [ ] A.4 `ui/designsystem/Typography.kt` + `ui/theme/SignAiTypography.kt`:
+- [x] A.4 `ui/designsystem/Typography.kt` + `ui/theme/SignAiTypography.kt`:
       agregar estilos `eyebrow`, `caption`, `quote`, `gloss`, `label`.
-- [ ] A.5 `ui/icons/SignAiIcons.kt`: agregar todos los iconos del mapeo.
-- [ ] A.6 Build + install (paridad: sin cambios visuales).
+- [x] A.5 `ui/icons/SignAiIcons.kt`: agregar todos los iconos del mapeo.
+- [x] A.6 Build + install (paridad: sin cambios visuales).
+      `./gradlew build` verde + `installDebug` OK en Redmi Note 9S (Android 11).
 
 ### Fase B — Chrome principal (stage + control panel + splash)
 

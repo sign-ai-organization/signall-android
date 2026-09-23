@@ -74,3 +74,51 @@
   está completo y con las decisiones registradas en `tasks.md`.
 - El usuario pidió **ver el planning antes de que se ejecute nada** — no se ha
   tocado código de la app (solo se crearon documentos de openspec).
+
+---
+
+## 2026-09-23 — Ejecución Fase A (design system)
+
+### Git
+
+- `main`: commit `chore: consolida prototipo Vercel, dataset y contexto openspec`
+  (prototipo, `data/` 6.4 MB, `opencode.json`, todo `openspec/` y cambios Kotlin)
+  y **push a origin**. Verificado que `PrototipoFrontend/node_modules` y
+  `PrototipoFrontend/.next` están ignorados (`git check-ignore`).
+- Rama de trabajo creada: **`feat/prototipo-ui-vercel`** (todo lo de aquí en
+  adelante va en esta rama; `main` no se toca).
+
+### Fase A — Design system extendido
+
+- **A.1 `Color.kt`**: `Colors` ahora expone `strong`, `onStrong` y `soft`
+  (valores del prototipo: light `#171717`/`#E8E8E3`, dark `#F5F5F1`/`#292926`)
+  y `muted` como alias de `textSecondary`. No se tocaron los valores Lumo
+  existentes (paridad visual). `contentColorFor` mapea `strong → onStrong`.
+- **A.2 `SignAiMotion.kt`** (nuevo): duraciones `Fast 160`, `Short 180`,
+  `Medium 250`, `Slow 500`; easings `EaseOut` (LinearOutSlowIn) y `EaseInOut`
+  (FastOutSlowIn); helper `motionTween()` que colapsa a 0 ms y
+  `LocalReduceMotion` para ACC-5/ANI-7.
+- **A.3 tokens**: `SignAiSizes` (+input 50, actionButton 50, panel
+  `min(88%,350dp)`, sheet/tile/switch/etc.), `SignAiShapes` (+corner 12/13/16/
+  24/28, pill, edge tabs) y `SignAiSpacing` (+xxs/smLg/mdLg/xxl). Se conservaron
+  los tokens viejos para no alterar pantallas actuales.
+- **A.4 tipografía**: `Typography` + wrapper público exponen `eyebrow`,
+  `caption`, `quote`, `gloss`, `label` con las métricas del prototipo.
+- **A.5 iconos**: `SignAiIcons` con los 23 del mapeo (todos verificados en
+  `phosphoricons-regular-android:1.0.5` contra el AAR), conservando `Mic`,
+  `Send`, `Gear`, `History`.
+
+### Decisión
+
+- Se mantienen **intactos los valores Lumo** de `background/surface/outline/...`
+  en Fase A para cumplir "paridad: sin cambios visuales"; los nuevos tokens
+  `strong`/`soft` son los que llevan los valores del prototipo y se usarán en
+  Fases B–F. Se revisará el ajuste fino de la paleta en su fase.
+
+### Verificación
+
+- `./gradlew build` → **BUILD SUCCESSFUL**.
+- `./gradlew installDebug` → **OK** en Redmi Note 9S (`Redmi Note 9S - 11`,
+  1 device). Sin cambios visuales esperados (Fase A solo agrega tokens).
+
+
