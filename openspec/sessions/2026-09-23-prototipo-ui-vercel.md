@@ -490,3 +490,14 @@ Iteración sobre la UI ya implementada, verificada con capturas en device.
   prototipo, no implementado), sombra superior del panel (`.control-panel`).
 - Modo oscuro: no se tocó (queda para después), pero ambas paletas ya están
   alineadas al prototipo.
+
+## Ajustes finales de UI (segunda pasada)
+
+- **Handles de las sidebars**: se quitó el ripple/indication del `clickable`
+  (dejaba una zona rectangular al mantener presionado). Ahora solo abre/cierra
+  sin feedback visual; el drag sigue igual.
+- **Repetir**: pasa de `BottomEnd` (right 23 / bottom 58) a `BottomCenter`,
+  subido a `bottom 76`, y ~25% más grande (padding 16/11, icono 18).
+- **Stage**: eliminado el caption `LSC · AVATAR 3D` que quedaba frente al avatar.
+- Commit `3249c97` con todo el pulido previo + estos ajustes, pusheado a
+  `origin/feat/prototipo-ui-vercel`.

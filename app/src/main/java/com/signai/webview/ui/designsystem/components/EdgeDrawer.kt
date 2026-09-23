@@ -269,7 +269,10 @@ fun SignAiEdgeDrawer(
                     onDragStarted = { dragging = true },
                     onDragStopped = { snapAfterDrag() },
                 )
-                .clickable { onOpenChange(!isOpen) }
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) { onOpenChange(!isOpen) }
                 .semantics {
                     contentDescription = if (isOpen) "Cerrar panel" else "Abrir $previewLabel"
                 },

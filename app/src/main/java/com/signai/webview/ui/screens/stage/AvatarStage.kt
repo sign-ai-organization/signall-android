@@ -77,31 +77,13 @@ fun AvatarStage(
             )
         }
 
-        // stage-caption (prototype `.stage-caption`): `LSC · AVATAR 3D` centered
-        // just above the overlaid control bar.
-        Row(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 34.dp + bottomInset),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(9.dp),
-        ) {
-            CaptionText("LSC")
-            Box(
-                modifier = Modifier
-                    .size(3.dp)
-                    .background(SignAiTheme.colors.muted, CircleShape),
-            )
-            CaptionText("AVATAR 3D")
-        }
-
-        // Repetir: only after a completed playback, bottom-right just above the
-        // control bar (prototype `.repeat-button`: bottom 58, right 23).
+        // Repetir: only after a completed playback, centered a little above the
+        // overlaid control bar.
         AnimatedVisibility(
             visible = doneVisible,
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = 23.dp, bottom = 58.dp + bottomInset),
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 76.dp + bottomInset),
             enter = fadeIn() + scaleIn(initialScale = 0.9f),
             exit = fadeOut() + scaleOut(targetScale = 0.9f),
         ) {
@@ -117,14 +99,14 @@ fun AvatarStage(
                     .semantics { contentDescription = "Repetir reproducción" },
             ) {
                 Row(
-                    modifier = Modifier.padding(horizontal = 13.dp, vertical = 9.dp),
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 11.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(7.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     SignAiIcon(
                         imageVector = SignAiIcons.Repeat,
                         contentDescription = null,
-                        size = 14.dp,
+                        size = 18.dp,
                         tint = SignAiTheme.colors.text,
                     )
                     SignAiText(
@@ -136,13 +118,4 @@ fun AvatarStage(
             }
         }
     }
-}
-
-@Composable
-private fun CaptionText(text: String) {
-    SignAiText(
-        text = text,
-        style = SignAiTheme.typography.caption,
-        color = SignAiTheme.colors.muted,
-    )
 }
