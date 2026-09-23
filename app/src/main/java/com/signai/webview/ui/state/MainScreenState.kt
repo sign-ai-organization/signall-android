@@ -13,6 +13,7 @@ import com.signai.webview.domain.Gloss
 import com.signai.webview.domain.Setting
 import com.signai.webview.domain.Settings
 import com.signai.webview.domain.SignsCatalog
+import com.signai.webview.ui.designsystem.components.DrawerSide
 import com.signai.webview.ui.webview.SignAiWebViewController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,9 @@ import kotlinx.coroutines.launch
 private const val TranslatingMs = 850L
 private const val ListeningFillMs = 1_500L
 private const val ProcessingMs = 800L
+
+/** Wait for the drawer close animation before replaying a conversation turn (`CNV-6`). */
+private const val DrawerCloseDelayMs = 500L
 
 class MainScreenState(
     private val history: SignHistoryRepository,
@@ -52,7 +56,23 @@ class MainScreenState(
     var playbackState by mutableStateOf(PlaybackState.Idle)
         private set
 
+    /**
+     * Which edge drawer is open (`EDG-15`). `null` = both closed. The state only
+     * carries the state; the open gesture of each `SignAiEdgeDrawer` calls back
+     * here, so a Repetir tap can close the left drawer and start the sign only
+     * once the closing animation is over.
+     */
+    var openDrawer by mutableStateOf<DrawerSide?>(null)
+        private set
+
     var lastText by mutableStateOf("")
+        private set
+
+    /**
+     * True from a conversation Repetir tap until the replayed sign ends: keeps
+     * the control panel disabled (`CNV-7`).
+     */
+    var replayPending by mutableStateOf(false)
         private set
 
     /** Current phrase in the control panel input (shared with the history sheet). */
@@ -94,6 +114,29 @@ class MainScreenState(
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) return
         lastText = clean
         startPlayback()
+    }
+
+    /**
+     * Repetir from the conversation drawer (`CNV-6`): closes the drawer, waits
+     * `DrawerCloseDelayMs` so the closing animation is done, then replays that
+     * turn. While the wait and the playback last the control panel is disabled
+     * (`replayPending`).
+     */
+    fun repeatTurnFromDrawer(text: String) {
+        openDrawer = null
+        replayPending = true
+        scope.launch {
+            delay(DrawerCloseDelayMs)
+            replayTurn(text)
+        }
+    }
+
+    fun openDrawer(side: DrawerSide) {
+        openDrawer = side
+    }
+
+    fun closeDrawer() {
+        openDrawer = null
     }
 
     fun setInput(text: String) {
@@ -148,6 +191,9 @@ class MainScreenState(
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
             playbackState = PlaybackState.Done
         }
+        // The control panel stays disabled until the sign ends (`CNV-7`); clear
+        // the flag here so it is released even while a drawer is closing.
+        replayPending = false
     }
 
     fun toggle(setting: Setting, on: Boolean) {

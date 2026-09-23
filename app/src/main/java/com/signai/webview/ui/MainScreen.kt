@@ -1,5 +1,6 @@
 package com.signai.webview.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -9,7 +10,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,7 +20,6 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,40 +44,41 @@ import com.signai.webview.ui.state.PlaybackState
 import com.signai.webview.ui.theme.SignAiTheme
 import com.signai.webview.ui.webview.AvatarWebView
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 private const val SplashTimeoutMs = 8_000L
 private const val ContentFadeMs = 500
 private const val SplashFadeMs = 400
 
-/** Wait for the drawer close animation before starting a delayed replay. */
-private const val DrawerCloseDelayMs = 500L
-
 @Composable
 fun MainScreen(state: MainScreenState) {
-    var showConversation by remember { mutableStateOf(false) }
-    var showSettings by remember { mutableStateOf(false) }
     var showHistory by remember { mutableStateOf(false) }
     var showAbout by remember { mutableStateOf(false) }
-    var replayPending by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     var loading by remember { mutableStateOf(true) }
     var progress by remember { mutableIntStateOf(0) }
-    // Open fraction of the left drawer; dims the right handle so it falls behind
-    // the left drawer's backdrop too (the nested layout hides it otherwise).
+    // Open fraction of each drawer: the left one drives the fallback dim of the
+    // right handle, the right one drives the dim of the left handle (`EDG-14`).
     var conversationFraction by remember { mutableFloatStateOf(0f) }
+    var settingsFraction by remember { mutableFloatStateOf(0f) }
     val density = LocalDensity.current
 
-    // Blur the 3D canvas only while a drawer is open (perf, spec `EDG-14`).
+    val showConversation = state.openDrawer == DrawerSide.Start
+    val showSettings = state.openDrawer == DrawerSide.End
+    // The drawer tops start below the status bar: they are drawn edge-to-edge,
+    // so without this inset their top edge runs under the system icons.
+    val drawerTopInset = with(density) { WindowInsets.systemBars.getTop(this).toDp() }
+
+    // Blur the 3D canvas only while a drawer is open (perf, spec `EDG-14`). The
+    // control panel is disabled separately, by `state.replayPending` (`CNV-9`).
     LaunchedEffect(showConversation, showSettings) {
         state.setBlur(showConversation || showSettings)
     }
 
-    // The main controls stay disabled from "Repetir" until the sign finishes playing.
-    LaunchedEffect(state.playbackState) {
-        if (state.playbackState == PlaybackState.Done || state.playbackState == PlaybackState.Idle) {
-            replayPending = false
+    // Back closes the history sheet, then the open drawer, instead of leaving.
+    BackHandler(enabled = showConversation || showSettings || showHistory) {
+        when {
+            showHistory -> showHistory = false
+            showConversation || showSettings -> state.closeDrawer()
         }
     }
 
@@ -118,13 +121,14 @@ fun MainScreen(state: MainScreenState) {
                         side = DrawerSide.End,
                         isOpen = showSettings,
                         onOpenChange = { open ->
-                            showSettings = open
-                            if (open) showConversation = false
+                            if (open) state.openDrawer(DrawerSide.End) else state.closeDrawer()
                         },
                         drawerWidth = panelWidth,
                         edgeStripBottomExclusion = bottomBarHeight,
+                        drawerTopInset = drawerTopInset,
                         previewLabel = "Ajustes",
-                        handleDimFraction = conversationFraction,
+                        oppositeFraction = conversationFraction,
+                        onFractionChange = { settingsFraction = it },
                         drawerContent = {
                             SettingsSidebar(
                                 settings = state.settings,
@@ -135,9 +139,9 @@ fun MainScreen(state: MainScreenState) {
                                 sign = state.sign,
                                 signs = state.signs,
                                 onPickSign = state::pickSign,
-                                onClose = { showSettings = false },
+                                onClose = state::closeDrawer,
                                 onOpenAbout = {
-                                    showSettings = false
+                                    state.closeDrawer()
                                     showAbout = true
                                 },
                             )
@@ -147,25 +151,19 @@ fun MainScreen(state: MainScreenState) {
                             side = DrawerSide.Start,
                             isOpen = showConversation,
                             onOpenChange = { open ->
-                                showConversation = open
-                                if (open) showSettings = false
+                                if (open) state.openDrawer(DrawerSide.Start) else state.closeDrawer()
                             },
                             drawerWidth = panelWidth,
                             edgeStripBottomExclusion = bottomBarHeight,
+                            drawerTopInset = drawerTopInset,
                             previewLabel = "Conversación",
+                            oppositeFraction = settingsFraction,
                             onFractionChange = { conversationFraction = it },
                             drawerContent = {
                                 ConversationPanel(
                                     turns = state.conversation,
-                                    onRepeat = { text ->
-                                        showConversation = false
-                                        replayPending = true
-                                        scope.launch {
-                                            delay(DrawerCloseDelayMs)
-                                            state.replayTurn(text)
-                                        }
-                                    },
-                                    onClose = { showConversation = false },
+                                    onRepeat = state::repeatTurnFromDrawer,
+                                    onClose = state::closeDrawer,
                                 )
                             },
                         ) {
@@ -205,7 +203,7 @@ fun MainScreen(state: MainScreenState) {
                                         onSend = state::play,
                                         onMic = state::toggleMic,
                                         onOpenHistory = { showHistory = true },
-                                        enabled = !replayPending,
+                                        enabled = !state.replayPending,
                                     )
                                 }
                             }

@@ -31,6 +31,8 @@ import android.util.Log
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.contentDescription
@@ -53,7 +55,7 @@ import kotlin.math.abs
 //
 // - OPEN: an invisible edge strip on the drawer's half of the screen is
 //   draggable, plus a visible grab tab (handle) that can be tapped or dragged.
-// - CLOSE: drag the body/handle toward the edge, or tap the scrim.
+// - CLOSE: drag the body/handle toward the edge, tap the scrim, or press back.
 // - PREVIEW: while dragging, a translucent panel with the drawer label follows
 //   the finger (spec `EDG-6`).
 //
@@ -74,14 +76,15 @@ fun SignAiEdgeDrawer(
     drawerOverflow: Dp = 64.dp,
     edgeStripWidth: Dp = 48.dp,
     edgeStripBottomExclusion: Dp = 0.dp,
+    drawerTopInset: Dp = 0.dp,
     previewLabel: String = "",
-    // 0..1 progress of the OPPOSITE drawer's backdrop. The two drawers nest
-    // (End wraps Start), so the inner drawer's scrim cannot cover the outer
-    // drawer's handle. The outer drawer dims its own handle with this value so
-    // both tabs fall behind the backdrop symmetrically (spec `EDG-14`).
-    handleDimFraction: Float = 0f,
-    // Reports this drawer's open fraction (0 closed → 1 open) so the opposite
-    // handle can follow the same scrim animation.
+    // Reported by the OPPOSITE drawer: its backdrop gradient is painted over this
+    // drawer's half of the screen, and the drawers nest (End wraps Start), so the
+    // inner scrim cannot cover the outer drawer's handle. The gradient also
+    // reaches this handle as a subtle dim (spec `EDG-14`).
+    oppositeFraction: Float = 0f,
+    // Reports this drawer's open fraction (0 closed → 1 open) so its own handle
+    // can follow the same backdrop animation.
     onFractionChange: (Float) -> Unit = {},
     drawerContent: @Composable () -> Unit,
     content: @Composable () -> Unit,
@@ -161,6 +164,13 @@ fun SignAiEdgeDrawer(
         // is 160dp tall and centered, so shift it up by 8% of the height (plus
         // the half-tab correction to align the 62dp tab's top).
         val tabOffsetY = 31.dp - maxHeight * 0.08f
+        // Screen x (0..1) of this tab's center, used to sample the opposite
+        // drawer's backdrop gradient for the handle dim.
+        val tabWidthPx = with(density) { edgeStripWidth.toPx() }
+        val screenWidthPx = constraints.maxWidth.toFloat()
+        val tabCenterFraction =
+            if (side == DrawerSide.End) 1f - tabWidthPx / 2f / screenWidthPx
+            else tabWidthPx / 2f / screenWidthPx
 
         // Invisible open-gesture strip on this drawer's edge. `padding` BEFORE
         // `fillMaxHeight` shrinks the node itself, so the hit area excludes the
@@ -180,11 +190,26 @@ fun SignAiEdgeDrawer(
         )
 
         if (fraction > 0.01f) {
+            // The prototype dims the content with a weighted gradient anchored on
+            // the open drawer: near-black on that edge and fully transparent by
+            // the far side (globals.css `.drawer-backdrop`), so the open drawer's
+            // dim never reaches the opposite handle and the two backdrops cannot
+            // pile up mid-animation.
+            val base = SignAiTheme.colors.scrim
+            val horizontal = side == DrawerSide.Start
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer { alpha = fraction }
-                    .background(SignAiTheme.colors.scrim)
+                    .background(
+                        Brush.horizontalGradient(
+                            if (horizontal) {
+                                listOf(base, base.copy(alpha = 0.35f * base.alpha), Color.Transparent)
+                            } else {
+                                listOf(Color.Transparent, base.copy(alpha = 0.35f * base.alpha), base)
+                            },
+                        ),
+                    )
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
@@ -215,11 +240,14 @@ fun SignAiEdgeDrawer(
         // Drawer surface: exactly `drawerWidth`, aligned to its edge and riding
         // `offsetX`. Kept at its natural size (not wider than the parent) because
         // a body wider than the Box gets centered instead of edge-aligned, which
-        // opened a gap between the drawer and its handle.
+        // opened a gap between the drawer and its handle. The height starts below
+        // the status bar (`drawerTopInset`), so the top edge of the drawer and of
+        // its handle are visible instead of running under the system icons.
         Box(
             modifier = Modifier
                 .align(horizontalAlignment)
                 .fillMaxHeight()
+                .padding(top = drawerTopInset)
                 .width(drawerWidth)
                 .offset { IntOffset(offsetX.value.toInt(), 0) }
                 .draggable(
@@ -268,7 +296,10 @@ fun SignAiEdgeDrawer(
                         } else {
                             (offsetX.value + widthPx).coerceAtLeast(0f)
                         }
-                    IntOffset(handleOffset.toInt(), tabOffsetY.roundToPx())
+                    IntOffset(
+                        handleOffset.toInt(),
+                        tabOffsetY.roundToPx() + drawerTopInset.roundToPx(),
+                    )
                 }
                 .width(edgeStripWidth)
                 .height(160.dp)
@@ -311,17 +342,35 @@ fun SignAiEdgeDrawer(
                         )
                     }
                 }
-                // Backdrop dim: the opposite drawer's scrim cannot reach this
-                // handle (it is composed above the inner drawer), so the same
-                // scrim is painted over the tab here to keep both tabs behind it.
-                if (handleDimFraction > 0f) {
+                // Backdrop dim: this handle belongs to the OPEN drawer, so it
+                // receives the same gradient as the rest of the screen at its own
+                // position. The nesting keeps the opposite drawer's scrim from
+                // reaching it, so it is painted here instead (spec `EDG-14`).
+                val dim =
+                    if (oppositeFraction > 0f) {
+                        val base = SignAiTheme.colors.scrim
+                        // Same stops as the opposite drawer's gradient, evaluated
+                        // at this tab's position (0 = far edge, 1 = that drawer's
+                        // edge).
+                        val position =
+                            if (side == DrawerSide.End) 1f - tabCenterFraction else tabCenterFraction
+                        val peak = base.alpha * 0.35f
+                        val alpha =
+                            when {
+                                position <= 0.5f -> base.alpha * (1f - position * 2f)
+                                position <= 0.75f -> peak * (2f - (position - 0.5f) * 4f)
+                                else -> peak * (1f - (position - 0.75f) * 4f)
+                            }
+                        alpha * oppositeFraction
+                    } else {
+                        0f
+                    }
+                if (dim > 0f) {
                     Box(
                         modifier = Modifier
                             .matchParentSize()
                             .background(
-                                color = SignAiTheme.colors.scrim.copy(
-                                    alpha = SignAiTheme.colors.scrim.alpha * handleDimFraction,
-                                ),
+                                color = SignAiTheme.colors.scrim.copy(alpha = dim),
                                 shape = tabShape,
                             ),
                     )

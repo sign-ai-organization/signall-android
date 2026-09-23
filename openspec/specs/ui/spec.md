@@ -80,6 +80,10 @@ Main.
 | EDG-12 | Exclusión de la bottom bar | `[A]` | El área de gesto no tapa la barra de controles. |
 | EDG-13 | Drawer bidireccional generalizado | `[N]` | Un solo componente `SignAiEdgeDrawer(side = Start/End)` reutilizado por ambos lados. |
 | EDG-14 | Blur del canvas 3D | `[A]` | El WebView se difumina mientras un drawer está abierto (Android 12+, guardado). |
+| EDG-15 | Drawer abierto es estado de la app | `[A]` | `MainScreenState.openDrawer` (`Start`/`End`/`null`) es la única fuente de verdad: abrir un drawer cierra el otro sin solape. |
+| EDG-16 | Back cierra el drawer | `[A]` | Atrás con un drawer (o el sheet de historial) abierto lo cierra en vez de salir de la app. |
+| EDG-17 | Backdrop en degradado, anclado al drawer | `[A]` | El overlay no es oscuro uniforme: es un degradado con peso sobre el borde del drawer abierto y transparente hacia el lado opuesto (como `.drawer-backdrop` del prototipo). Así los dos backdrops nunca se solapan cerca de una pestaña. |
+| EDG-18 | Drawer por debajo de la barra de estado | `[A]` | El drawer y su pestaña arrancan bajo la status bar (`systemBars` top inset): su borde superior queda visible en vez de correr bajo los íconos del sistema. |
 
 ---
 
@@ -113,6 +117,7 @@ Main.
 | CTL-9 | Foco del input | `[P]` | Borde strong + ring al enfocar. |
 | CTL-10 | Home indicator | `[P]` | Barrita inferior 112×4 (`strong` al 70%). **Se conserva** por fidelidad con el prototipo. |
 | CTL-11 | Safe area / IME | `[A]` | Respeta navigation bar y teclado (`imePadding`). |
+| CTL-12 | Controles bloqueados durante un replay | `[N]` | Desde "Repetir" (stage o drawer) hasta que la seña termina, todos los controles (mic, Recientes, input, Traducir) quedan deshabilitados y atenuados al 35% (`replayPending`, se libera con `onPlaybackDone`). |
 
 ---
 
@@ -143,6 +148,7 @@ Main.
 | CNV-6 | Nota de gesto | `[P]` | "Desliza desde el borde para volver". |
 | CNV-7 | Estado vacío | `[N]` | Sin turnos: "Aún no hay frases en esta conversación." (no hay bloques estáticos). |
 | CNV-8 | Sin estado "Esperando" | `[N]` | Se elimina el bloque de estado del avatar; ninguna sección dice "Esperando traducción". |
+| CNV-9 | Repetir cierra el drawer antes de reproducir | `[N]` | Repetir en un turno cierra el panel izquierdo, espera 500 ms (animación de cierre) y recién ahí reproduce la seña. |
 
 ---
 

@@ -567,3 +567,41 @@ Iteración sobre la UI ya implementada, verificada con capturas en device.
   `#status` vuelve arriba (+8px, z-index 3) y `#debug` baja a +34px para
   despejar la línea "Listo para traducir". Se mantiene el fix de contraste
   en tema claro (`html.light`).
+
+## Drawers laterales: sin solape + un solo estado
+
+Pedido del usuario: al abrir el drawer derecho el izquierdo se esconde "al
+100%", pero durante la animación los dos backdrops se solapan cerca de la
+pestaña izquierda; el borde superior de los drawers también queda bajo la
+barra de estado.
+
+- **Un solo estado** (`EDG-15`): `MainScreenState.openDrawer` (`Start`/`End`/
+  `null`) reemplaza los dos `Boolean` de `MainScreen`. `SignAiEdgeDrawer` es
+  stateless: recibe `isOpen` y reporta en `onOpenChange`; abrir un lado
+  desmonta el `isOpen` del otro, así que nunca se dibujan abiertos a la vez.
+- **Backdrop en degradado** (`EDG-17`): el overlay pasó de negro uniforme
+  (`scrim` 28%) a `Brush.horizontalGradient` anclado al borde del drawer
+  abierto (opaco en su borde → transparente en el lado opuesto, como
+  `.drawer-backdrop` del prototipo). Como el negro ya no llega al otro
+  extremo, los dos backdrops no se suman cerca de las pestañas: se elimina
+  el solape visible durante la animación cruzada.
+- **Pestaña con el mismo degradado** (`EDG-14`): el handle de cada drawer
+  muestrea el degradado del drawer opuesto en su propia posición
+  (`oppositeFraction`, reemplaza `handleDimFraction`), en vez de oscurecerse
+  entero por igual. Cada lado clava su propio progreso (`onFractionChange`).
+- **Back cierra drawer/sheet** (`EDG-16`): `BackHandler` en `MainScreen`
+  cierra el drawer abierto o el sheet de historial antes de salir.
+- **Drawers bajo la status bar** (`EDG-18`): nuevo `drawerTopInset`
+  (`WindowInsets.systemBars` top) aplicado al cuerpo del drawer y a su
+  pestaña; el borde superior redondeado ahora se ve (antes corría por debajo
+  de los íconos del sistema). En el dispositivo (`1ed6699f`, Android 11) el
+  `enableEdgeToEdge` deja la status bar transparente, pero el inset se
+  calcula y se respeta en cualquier caso.
+- **Repetir del drawer movido al estado** (`CNV-9`/`CTL-12`):
+  `MainScreenState.replayTurn` sigue bloqueado mientras `translating`/
+  `signing`, así que una espera de 500 ms con el drawer aún abierto perdería
+  el replay en silencio (el estado nunca salía de `Done`). Por eso
+  `repeatTurnFromDrawer` (`CNV-9`) vive en el estado y `replayPending`
+  (`CTL-12`) también: se libera en `onPlaybackDone`, no por un
+  `LaunchedEffect` observando `playbackState`. `MainScreen` solo cablea.
+- `./gradlew build` ✅ y `installDebug` ✅ en `1ed6699f`.
