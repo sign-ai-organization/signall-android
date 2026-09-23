@@ -35,9 +35,9 @@ import com.signai.webview.ui.designsystem.components.Switch
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.icons.SignAiIcons
-import com.signai.webview.ui.state.Character
-import com.signai.webview.ui.state.Setting
-import com.signai.webview.ui.state.Settings
+import com.signai.webview.domain.Character
+import com.signai.webview.domain.Setting
+import com.signai.webview.domain.Settings
 import com.signai.webview.ui.theme.SignAiTheme
 
 /**

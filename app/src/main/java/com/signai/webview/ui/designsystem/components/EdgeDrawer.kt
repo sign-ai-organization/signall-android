@@ -34,6 +34,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.theme.SignAiTheme
@@ -84,16 +85,22 @@ fun SignAiEdgeDrawer(
 
     val offsetX = remember(side) { Animatable(if (isOpen) 0f else closedOffset) }
     var dragging by remember { mutableStateOf(false) }
+    val reduceMotion = LocalReduceMotion.current
 
     LaunchedEffect(isOpen) {
         if (!dragging) {
-            offsetX.animateTo(
-                targetValue = if (isOpen) 0f else closedOffset,
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessMedium,
-                ),
-            )
+            val target = if (isOpen) 0f else closedOffset
+            if (reduceMotion) {
+                offsetX.snapTo(target)
+            } else {
+                offsetX.animateTo(
+                    targetValue = target,
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessMedium,
+                    ),
+                )
+            }
         }
     }
 
@@ -108,13 +115,18 @@ fun SignAiEdgeDrawer(
         scope.launch {
             dragging = false
             val shouldOpen = abs(offsetX.value) < widthPx / 2f
-            offsetX.animateTo(
-                targetValue = if (shouldOpen) 0f else closedOffset,
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioMediumBouncy,
-                    stiffness = Spring.StiffnessHigh,
-                ),
-            )
+            val target = if (shouldOpen) 0f else closedOffset
+            if (reduceMotion) {
+                offsetX.snapTo(target)
+            } else {
+                offsetX.animateTo(
+                    targetValue = target,
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessHigh,
+                    ),
+                )
+            }
             onOpenChange(shouldOpen)
         }
     }

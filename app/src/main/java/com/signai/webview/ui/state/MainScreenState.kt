@@ -6,7 +6,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.signai.webview.data.SettingsRepository
 import com.signai.webview.data.SignHistoryRepository
+import com.signai.webview.domain.Character
+import com.signai.webview.domain.Setting
+import com.signai.webview.domain.Settings
 import com.signai.webview.domain.SignsCatalog
 import com.signai.webview.ui.webview.SignAiWebViewController
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +26,7 @@ private const val ProcessingMs = 800L
 
 class MainScreenState(
     private val history: SignHistoryRepository,
+    private val settingsStore: SettingsRepository,
     private val webView: SignAiWebViewController,
     val signs: List<String> = SignsCatalog.available,
 ) {
@@ -30,7 +35,7 @@ class MainScreenState(
         addAll(history.load())
     }
 
-    var settings by mutableStateOf(Settings())
+    var settings by mutableStateOf(settingsStore.load())
         private set
 
     var sign by mutableStateOf(signs.firstOrNull().orEmpty())
@@ -80,7 +85,18 @@ class MainScreenState(
 
     fun attachWebView(webView: WebView) {
         this.webView.attach(webView)
-        this.webView.setSpeed(settings.speed / 100f)
+        // Best-effort; the bridge may not be ready yet, so this is repeated on load.
+        syncWebSettings()
+    }
+
+    /** Pushes the current persisted settings to the WebView bridge. */
+    fun syncWebSettings() {
+        webView.setDebug(settings.debug)
+        webView.setFreeCamera(settings.freeCam)
+        webView.setGrid(settings.grid)
+        webView.setBackground(settings.bg)
+        webView.setTheme(settings.darkTheme)
+        webView.setSpeed(settings.speed / 100f)
     }
 
     /**
@@ -110,7 +126,7 @@ class MainScreenState(
     }
 
     fun toggle(setting: Setting, on: Boolean) {
-        settings = when (setting) {
+        val updated = when (setting) {
             Setting.Debug -> settings.copy(debug = on)
             Setting.FreeCam -> settings.copy(freeCam = on)
             Setting.Grid -> settings.copy(grid = on)
@@ -121,27 +137,34 @@ class MainScreenState(
             Setting.ReduceMotion -> settings.copy(reduceMotion = on)
             Setting.DarkTheme -> settings.copy(darkTheme = on)
         }
+        persist(updated)
         when (setting) {
             Setting.Debug -> webView.setDebug(on)
             Setting.FreeCam -> webView.setFreeCamera(on)
             Setting.Grid -> webView.setGrid(on)
             Setting.Background -> webView.setBackground(on)
+            Setting.DarkTheme -> webView.setTheme(on)
             else -> Unit
         }
     }
 
     fun setCharacter(character: Character) {
-        settings = settings.copy(character = character)
+        persist(settings.copy(character = character))
     }
 
     fun setSpeed(speed: Int) {
         val clamped = speed.coerceIn(10, 100)
-        settings = settings.copy(speed = clamped)
+        persist(settings.copy(speed = clamped))
         webView.setSpeed(clamped / 100f)
     }
 
     fun setInterfaceSize(size: Int) {
-        settings = settings.copy(interfaceSize = size.coerceIn(0, 100))
+        persist(settings.copy(interfaceSize = size.coerceIn(0, 100)))
+    }
+
+    private fun persist(newSettings: Settings) {
+        settings = newSettings
+        settingsStore.save(newSettings)
     }
 
     fun pickSign(id: String) {

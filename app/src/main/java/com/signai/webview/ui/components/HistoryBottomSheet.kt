@@ -1,6 +1,8 @@
 package com.signai.webview.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Surface
+import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.icons.SignAiIcons
@@ -50,14 +53,20 @@ fun HistoryBottomSheet(
     onPick: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val reduceMotion = LocalReduceMotion.current
+    val scrimEnter = if (reduceMotion) EnterTransition.None else fadeIn()
+    val scrimExit = if (reduceMotion) ExitTransition.None else fadeOut()
+    val sheetEnter = if (reduceMotion) EnterTransition.None else slideInVertically(initialOffsetY = { it })
+    val sheetExit = if (reduceMotion) ExitTransition.None else slideOutVertically(targetOffsetY = { it })
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter,
     ) {
         AnimatedVisibility(
             visible = visible,
-            enter = fadeIn(),
-            exit = fadeOut(),
+            enter = scrimEnter,
+            exit = scrimExit,
         ) {
             Box(
                 modifier = Modifier
@@ -73,8 +82,8 @@ fun HistoryBottomSheet(
         AnimatedVisibility(
             visible = visible,
             modifier = Modifier.align(Alignment.BottomCenter),
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it }),
+            enter = sheetEnter,
+            exit = sheetExit,
         ) {
             val topShape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
             Surface(

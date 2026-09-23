@@ -2,6 +2,7 @@ package com.signai.webview.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -28,6 +29,8 @@ import com.signai.webview.ui.components.SignAiSplash
 import com.signai.webview.ui.designsystem.components.DrawerSide
 import com.signai.webview.ui.designsystem.components.SignAiEdgeDrawer
 import com.signai.webview.ui.designsystem.components.Surface
+import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
+import com.signai.webview.ui.designsystem.foundation.SignAiMotion
 import com.signai.webview.ui.screens.about.AboutScreen
 import com.signai.webview.ui.screens.bottombar.SignAiBottomBar
 import com.signai.webview.ui.screens.conversation.ConversationPanel
@@ -68,9 +71,18 @@ fun MainScreen(state: MainScreenState) {
 
     val contentAlpha by animateFloatAsState(
         targetValue = if (loading) 0f else 1f,
-        animationSpec = tween(durationMillis = ContentFadeMs, easing = LinearEasing),
+        animationSpec = SignAiMotion.motionTween(
+            durationMillis = ContentFadeMs,
+            easing = LinearEasing,
+        ),
         label = "contentAlpha",
     )
+    val splashExit: ExitTransition =
+        if (LocalReduceMotion.current) {
+            ExitTransition.None
+        } else {
+            fadeOut(animationSpec = tween(durationMillis = SplashFadeMs))
+        }
 
     val avatarStatus = when (state.playbackState) {
         PlaybackState.Done -> "Reproducción completada"
@@ -151,7 +163,10 @@ fun MainScreen(state: MainScreenState) {
                                         onReady = state::attachWebView,
                                         onProgress = { progress = it },
                                         onPlaybackDone = state::onPlaybackDone,
-                                        onLoaded = { loading = false },
+                                        onLoaded = {
+                                            loading = false
+                                            state.syncWebSettings()
+                                        },
                                     )
                                 }
                                 Box(
@@ -189,7 +204,7 @@ fun MainScreen(state: MainScreenState) {
         AnimatedVisibility(
             visible = loading,
             enter = EnterTransition.None,
-            exit = fadeOut(animationSpec = tween(durationMillis = SplashFadeMs)),
+            exit = splashExit,
         ) {
             SignAiSplash(progress = progress)
         }

@@ -296,6 +296,60 @@ Device disponible: **Redmi Note 9S (Android 11)**.
 
 - Fase F (ajustes reales + theming + persistencia) — no arrancar hasta OK.
 
+---
+
+## 2026-09-23 — Ejecución Fase F (ajustes + theming)
+
+### Qué se hizo
+
+- **F.1 modelos**: `Settings`/`Setting`/`Character` se movieron de `ui/state` a
+  **`domain`** (carácter guarda `colorArgb` en vez de Compose `Color`) para que
+  `data` pueda persistirlos sin depender de `ui`.
+- **F.2 accesibilidad real**:
+  - `large` → `provideTypography(scale)` (fontSize/lineHeight ×1.15).
+  - `bold` → `provideTypography(bold)` sube pesos (Normal→SemiBold, …).
+  - `contrast` → `outline = #777777` en el tema.
+  - `reduceMotion` → `LocalReduceMotion`; drawer y sheet saltan la animación y
+    el fade del contenido/splash se colapsa (`SignAiMotion.motionTween`).
+  - `interfaceSize` → escala de `LocalDensity` (0.9×–1.1×) en el tema.
+- **F.3 theming**: `SignAiTheme` acepta `darkTheme` y pasa a
+  `LightColors`/`DarkColors`; `MainActivity` provee el tema desde `Settings` y
+  fija la apariencia de las barras del sistema. `enableEdgeToEdge` sigue.
+  - **Canvas 3D theme-aware (extra):** nuevo comando aditivo `setTheme(dark)` en
+    `app.js` (no toca los 5 originales) que cambia el fondo del render entre
+    `#111110` y `#f4f4f2`. Se aplica en `onLoaded` (`syncWebSettings`) y al
+    cambiar el switch.
+- **F.4 persistencia**: `data/SettingsRepository.kt` +
+  `SharedPrefsSettingsRepository` (mismo archivo `signai`). `MainScreenState`
+  persiste en cada cambio y re-aplica al bridge en attach/load.
+- **F.5** build + install + capturas dark / light / accesibilidad.
+
+### Decisiones
+
+- **`Settings` en `domain`** (no en `data` ni `ui.state`) para respetar la
+  regla de dependencias con la persistencia en `data`.
+- **Tercer comando aditivo `setTheme`** (además de `setSpeed` y el evento
+  `onPlaybackDone`), porque en light el canvas oscuro chocaba con el chrome
+  claro (riesgo previsto en el plan). El contrato original sigue intacto.
+- **`darkTheme` default = true** (se mantiene dark como base, como pidió el
+  AGENTS).
+
+### Verificación
+
+- `./gradlew build`/`installDebug` → **OK**; `node --check app.js` → OK.
+- Capturas: dark normal; light con bold+large+contrast (chrome y canvas claros,
+  texto más grande/negrita); dark final tras revertir defaults.
+- **Limitación conocida:** en **MIUI** (Redmi Note 9S) los iconos de la status
+  bar no cambian a oscuro en light pese a `isAppearanceLightStatusBars` +
+  flag legacy. Pendiente probar en otro ROM / decidir si se deja.
+
+### Pendiente
+
+- Fase G (polish + docs) — no arrancar hasta OK.
+- Verificación manual de interacción (taps/switches) por el bloqueo de
+  `adb input` en MIUI.
+
+
 
 
 

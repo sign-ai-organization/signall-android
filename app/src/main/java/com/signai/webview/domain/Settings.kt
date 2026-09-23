@@ -1,5 +1,9 @@
-package com.signai.webview.ui.state
+package com.signai.webview.domain
 
+/**
+ * App configuration (spec `SET-*`/`ACC-*`/`APP-*`). Lives in `domain` so the
+ * `data` layer can persist it without depending on `ui`.
+ */
 data class Settings(
     // Advanced / debug (spec `SET-8`).
     val debug: Boolean = false,
@@ -29,4 +33,18 @@ enum class Setting {
     Large,
     ReduceMotion,
     DarkTheme,
+}
+
+/**
+ * Avatar characters (spec `PER-*`). Pure domain: the color is stored as ARGB
+ * and converted to a Compose `Color` at the call site.
+ */
+enum class Character(
+    val label: String,
+    val colorArgb: Long,
+) {
+    Julian("Julián", 0xFF765044),
+    Samuel("Samuel", 0xFF303843),
+    Ximena("Ximena", 0xFFA46B54),
+    Gris("Gris", 0xFF9A9A94),
 }

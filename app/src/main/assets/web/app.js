@@ -147,8 +147,15 @@ scene.add(grid);
 
 // Fondo opcional (bosque): se carga una vez, se activa vía SignAI.setBackground(true)
 const BG_COLOR = new THREE.Color(0x0d0f1a);
+const BG_LIGHT = new THREE.Color(0xf4f4f2);
 let bgTexture = null;
+let showBg = false;
+let darkTheme = true;
 new THREE.TextureLoader().load("bosque.jpg", (t) => { bgTexture = t; });
+
+function refreshBackground() {
+  scene.background = (showBg && bgTexture) ? bgTexture : (darkTheme ? BG_COLOR : BG_LIGHT);
+}
 
 function resizeRenderer() {
   const w = canvas.clientWidth  || window.innerWidth;
@@ -596,5 +603,7 @@ window.SignAI = {
     controls.maxDistance = on ? 20 : 3.8;
   },
   setGrid(on) { grid.visible = !!on; },
-  setBackground(on) { scene.background = (on && bgTexture) ? bgTexture : BG_COLOR; },
+  setBackground(on) { showBg = !!on; refreshBackground(); },
+  // Tema del canvas (aditivo, Fase F): el fondo del render sigue al tema.
+  setTheme(on) { darkTheme = !!on; refreshBackground(); },
 };

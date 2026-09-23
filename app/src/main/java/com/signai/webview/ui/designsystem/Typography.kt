@@ -162,29 +162,75 @@ private val defaultTypography =
     )
 
 @Composable
-fun provideTypography(): Typography {
+fun provideTypography(
+    scale: Float = 1f,
+    bold: Boolean = false,
+): Typography {
     val fontFamily = fontFamily()
+    val base = defaultTypography.transform(scale = scale, bold = bold)
 
-    return defaultTypography.copy(
-        h1 = defaultTypography.h1.copy(fontFamily = fontFamily),
-        h2 = defaultTypography.h2.copy(fontFamily = fontFamily),
-        h3 = defaultTypography.h3.copy(fontFamily = fontFamily),
-        h4 = defaultTypography.h4.copy(fontFamily = fontFamily),
-        body1 = defaultTypography.body1.copy(fontFamily = fontFamily),
-        body2 = defaultTypography.body2.copy(fontFamily = fontFamily),
-        body3 = defaultTypography.body3.copy(fontFamily = fontFamily),
-        label1 = defaultTypography.label1.copy(fontFamily = fontFamily),
-        label2 = defaultTypography.label2.copy(fontFamily = fontFamily),
-        label3 = defaultTypography.label3.copy(fontFamily = fontFamily),
-        button = defaultTypography.button.copy(fontFamily = fontFamily),
-        input = defaultTypography.input.copy(fontFamily = fontFamily),
-        eyebrow = defaultTypography.eyebrow.copy(fontFamily = fontFamily),
-        caption = defaultTypography.caption.copy(fontFamily = fontFamily),
-        quote = defaultTypography.quote.copy(fontFamily = fontFamily),
-        gloss = defaultTypography.gloss.copy(fontFamily = fontFamily),
-        label = defaultTypography.label.copy(fontFamily = fontFamily),
+    return base.copy(
+        h1 = base.h1.copy(fontFamily = fontFamily),
+        h2 = base.h2.copy(fontFamily = fontFamily),
+        h3 = base.h3.copy(fontFamily = fontFamily),
+        h4 = base.h4.copy(fontFamily = fontFamily),
+        body1 = base.body1.copy(fontFamily = fontFamily),
+        body2 = base.body2.copy(fontFamily = fontFamily),
+        body3 = base.body3.copy(fontFamily = fontFamily),
+        label1 = base.label1.copy(fontFamily = fontFamily),
+        label2 = base.label2.copy(fontFamily = fontFamily),
+        label3 = base.label3.copy(fontFamily = fontFamily),
+        button = base.button.copy(fontFamily = fontFamily),
+        input = base.input.copy(fontFamily = fontFamily),
+        eyebrow = base.eyebrow.copy(fontFamily = fontFamily),
+        caption = base.caption.copy(fontFamily = fontFamily),
+        quote = base.quote.copy(fontFamily = fontFamily),
+        gloss = base.gloss.copy(fontFamily = fontFamily),
+        label = base.label.copy(fontFamily = fontFamily),
     )
 }
+
+/** Accessibility transform: `large` scales sizes, `bold` bumps weights (`ACC-2`/`ACC-4`). */
+private fun Typography.transform(scale: Float, bold: Boolean): Typography {
+    fun TextStyle.applyAccessibility(): TextStyle {
+        var style = this
+        if (scale != 1f) {
+            style = style.copy(fontSize = style.fontSize * scale, lineHeight = style.lineHeight * scale)
+        }
+        if (bold) {
+            style = style.copy(fontWeight = style.fontWeight.boldened())
+        }
+        return style
+    }
+    return copy(
+        h1 = h1.applyAccessibility(),
+        h2 = h2.applyAccessibility(),
+        h3 = h3.applyAccessibility(),
+        h4 = h4.applyAccessibility(),
+        body1 = body1.applyAccessibility(),
+        body2 = body2.applyAccessibility(),
+        body3 = body3.applyAccessibility(),
+        label1 = label1.applyAccessibility(),
+        label2 = label2.applyAccessibility(),
+        label3 = label3.applyAccessibility(),
+        button = button.applyAccessibility(),
+        input = input.applyAccessibility(),
+        eyebrow = eyebrow.applyAccessibility(),
+        caption = caption.applyAccessibility(),
+        quote = quote.applyAccessibility(),
+        gloss = gloss.applyAccessibility(),
+        label = label.applyAccessibility(),
+    )
+}
+
+private fun FontWeight?.boldened(): FontWeight =
+    when {
+        this == null || weight >= 700 -> FontWeight.ExtraBold
+        weight >= 600 -> FontWeight.Bold
+        weight >= 500 -> FontWeight.SemiBold
+        else -> FontWeight.SemiBold
+    }
+
 
 val LocalTypography = staticCompositionLocalOf { defaultTypography }
 val LocalTextStyle = compositionLocalOf(structuralEqualityPolicy()) { TextStyle.Default }

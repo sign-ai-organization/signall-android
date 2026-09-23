@@ -22,8 +22,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.signai.webview.domain.Character
 import com.signai.webview.ui.designsystem.components.SignAiDropdown
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
@@ -31,7 +33,6 @@ import com.signai.webview.ui.designsystem.components.Surface
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.icons.SignAiIcons
-import com.signai.webview.ui.state.Character
 import com.signai.webview.ui.theme.SignAiTheme
 
 /**
@@ -107,7 +108,7 @@ fun CharacterPicker(
                 Box(
                     modifier = Modifier
                         .size(9.dp)
-                        .background(character.dotColor, CircleShape),
+                        .background(Color(character.colorArgb), CircleShape),
                 )
                 SignAiText(
                     text = character.label,

@@ -302,15 +302,23 @@ device (regla de `AGENTS.md`) + verificación visual.
 
 ### Fase F — Ajustes funcionales + theming
 
-- [ ] F.1 `ui/state/Settings.kt`: agregar `character` (UI-only), `speed`,
-      `bold`, `large`, `contrast`, `reduceMotion`, `darkTheme`.
-- [ ] F.2 Aplicar accesibilidad real: escala tipográfica, weight, tokens de
-      contraste, motion off.
-- [ ] F.3 Dark/light switch: `SignAiTheme` deja de ser siempre dark; usar
-      `LightColors`/`DarkColors` de Lumo + `enableEdgeToEdge` coherente.
-- [ ] F.4 Persistencia de settings en SharedPreferences (extender
-      `data/SignHistoryRepository` o crear `data/SettingsRepository`).
-- [ ] F.5 Build + install + verificación.
+- [x] F.1 `domain/Settings.kt` (movido desde `ui/state`): `character`
+      (UI-only), `speed`, `interfaceSize`, `bold`, `contrast`, `large`,
+      `reduceMotion`, `darkTheme` (se adelantó en C).
+- [x] F.2 Aplicar accesibilidad real: escala tipográfica (`large` vía
+      `provideTypography(scale)`), weight (`bold`), tokens de contraste
+      (`outline #777`), motion off (`LocalReduceMotion`), y `interfaceSize` vía
+      escala de `LocalDensity`.
+- [x] F.3 Dark/light switch: `SignAiTheme` deja de ser siempre dark; usa
+      `LightColors`/`DarkColors` + iconos de barras del sistema. **Extra:**
+      el fondo del canvas 3D sigue al tema mediante el comando aditivo
+      `setTheme(dark)` en `app.js` (mitigación del riesgo "light mode").
+- [x] F.4 Persistencia: `data/SettingsRepository.kt`
+      (`SharedPrefsSettingsRepository`, prefs `signai`) + `persist()` en
+      `MainScreenState`; `attachWebView`/`onLoaded` re-aplican al bridge.
+- [x] F.5 Build + install + verificación (capturas dark, light y accesibilidad).
+      **Pendiente manual:** en MIUI los iconos de la status bar no responden al
+      flag de apariencia en light (limitación del ROM).
 
 ### Fase G — Polish + documentación
 
