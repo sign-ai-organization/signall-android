@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Icono plano (API < 26, sin adaptive icon): mismo lenguaje que el adaptive
+  icon — tile oscuro redondeado + la "S" clara del splash.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="640"
+    android:viewportHeight="640">
+    <path
+        android:fillColor="#171717"
+        android:pathData="M120,0 L520,0 A120,120 0 0 1 640,120 L640,520 A120,120 0 0 1 520,640 L120,640 A120,120 0 0 1 0,520 L0,120 A120,120 0 0 1 120,0 Z" />
+    <path
+        android:strokeColor="#F5F5F1"
+        android:strokeWidth="72"
+        android:strokeLineCap="round"
+        android:pathData="M232,232 C184,232 168,260 168,292 C168,332 200,340 244,352 C288,364 316,372 316,412 C316,444 296,472 248,472 M232,232 C280,232 314,252 314,252" />
+</vector>

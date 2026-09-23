@@ -311,6 +311,7 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 | BRD-2 | Pantalla About | `[P]` | Logo, título, copy "Una herramienta que transforma tus frases en español a Lengua de Señas Colombiana mediante un avatar 3D." |
 | BRD-3 | Meta del About | `[P]` | "Proyecto de tesis" · "Pontificia Universidad Javeriana" · "Versión 1.0". |
 | BRD-4 | Versión dinámica | `[N]` | "Versión 1.0" debe leer de `BuildConfig.VERSION_NAME`, no hardcodeado. |
+| BRD-5 | Icono de lanzador propio | `[N]` | La app tenía el icono por defecto de Android. Ahora usa la "S" de `SignAiBranding.LogoLetter` como trazo geométrico: adaptive icon (`mipmap-anydpi-v26`, tile `#171717` + S `#F5F5F1`) y fallback plano para API < 26 (`drawable/ic_launcher.xml`). Ver `drawable/ic_launcher_foreground.xml`. |
 
 ---
 

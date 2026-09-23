@@ -553,3 +553,17 @@ Iteración sobre la UI ya implementada, verificada con capturas en device.
   (`bottom: safe-area + 8px`); `#debug` cierra en `bottom + 28px` para no
   chocar con el bottom bar nativo.
 - Commit `66e6ea0`, `installDebug` ✅ en `1ed6699f`.
+
+## Icono de lanzador ("S") + ajuste del texto de debug
+
+- **Icono** (`BRD-5`): la app no tenía icono propio (lista de `mipmap` vacía
+  → icono Android por defecto). Se creó la "S" del splash como trazo
+  geométrico en `res/drawable/ic_launcher_foreground.xml` (adaptive icon,
+  tile `#171717` + S `#F5F5F1`) y el fallback plano
+  `res/drawable/ic_launcher{,_round}.xml` para API < 26. Fondo del adaptive
+  en `res/values/colors.xml`. Manifest con `android:icon`/`android:roundIcon`.
+- **Debug**: el intento anterior de mover `#debug` arriba dejó el texto de
+  estado abajo; el usuario quería simplemente **bajarlo**. Se revirtió:
+  `#status` vuelve arriba (+8px, z-index 3) y `#debug` baja a +34px para
+  despejar la línea "Listo para traducir". Se mantiene el fix de contraste
+  en tema claro (`html.light`).

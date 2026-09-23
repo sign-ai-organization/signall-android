@@ -10,16 +10,17 @@
     #status {
       position: absolute;
       left: 8px;
-      bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+      top: calc(env(safe-area-inset-top, 0px) + 8px);
       color: #8ff;
       font: 12px monospace;
-      z-index: 2;
+      z-index: 3;
     }
+    /* El debug arranca por debajo de la línea de estado ("Listo para
+       traducir", ~12px + 8px) y no la tapa. */
     #debug {
       position: absolute;
       left: 8px;
-      top: calc(env(safe-area-inset-top, 0px) + 8px);
-      bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
+      top: calc(env(safe-area-inset-top, 0px) + 34px);
       color: #7f7;
       font: 11px monospace;
       z-index: 2;
