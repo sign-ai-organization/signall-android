@@ -501,3 +501,19 @@ Iteración sobre la UI ya implementada, verificada con capturas en device.
 - **Stage**: eliminado el caption `LSC · AVATAR 3D` que quedaba frente al avatar.
 - Commit `3249c97` con todo el pulido previo + estos ajustes, pusheado a
   `origin/feat/prototipo-ui-vercel`.
+
+## Ajustes finales de UI (tercera pasada)
+
+- **Repetir**: segundo +25% (padding 20/14, icono 22, spacing 10, texto
+  `body2` 14sp) y luego bajado de `bottom 76` → `bottom 64`.
+- **Handles de las sidebars vs. scrim**: al abrir Ajustes (drawer derecho) el
+  scrim oscurecía todo, incluida la pestaña izquierda; al abrir Conversación
+  (drawer izquierdo) la pestaña derecha **no** se oscurecía. Causa: los
+  drawers están anidados (`End` envuelve a `Start`), así que el scrim del
+  drawer interno no puede cubrir el handle del externo.
+  Fix: `SignAiEdgeDrawer` reporta su `fraction` (`onFractionChange`) y el
+  drawer externo pinta el mismo `scrim` sobre su propia pestaña
+  (`handleDimFraction`), sincronizado con la animación. `MainScreen` guarda
+  `conversationFraction` (drawer izquierdo) y lo pasa al handle derecho.
+  También se unificó el scrim a `SignAiTheme.colors.scrim`.
+

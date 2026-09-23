@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,6 +56,9 @@ fun MainScreen(state: MainScreenState) {
     var bottomBarHeight by remember { mutableStateOf(0.dp) }
     var loading by remember { mutableStateOf(true) }
     var progress by remember { mutableIntStateOf(0) }
+    // Open fraction of the left drawer; dims the right handle so it falls behind
+    // the left drawer's backdrop too (the nested layout hides it otherwise).
+    var conversationFraction by remember { mutableFloatStateOf(0f) }
     val density = LocalDensity.current
 
     // Blur the 3D canvas only while a drawer is open (perf, spec `EDG-14`).
@@ -113,6 +117,7 @@ fun MainScreen(state: MainScreenState) {
                         drawerWidth = panelWidth,
                         edgeStripBottomExclusion = bottomBarHeight,
                         previewLabel = "Ajustes",
+                        handleDimFraction = conversationFraction,
                         drawerContent = {
                             SettingsSidebar(
                                 settings = state.settings,
@@ -141,6 +146,7 @@ fun MainScreen(state: MainScreenState) {
                             drawerWidth = panelWidth,
                             edgeStripBottomExclusion = bottomBarHeight,
                             previewLabel = "Conversación",
+                            onFractionChange = { conversationFraction = it },
                             drawerContent = {
                                 ConversationPanel(
                                     text = state.lastText,

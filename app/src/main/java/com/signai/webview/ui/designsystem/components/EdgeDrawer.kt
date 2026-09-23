@@ -31,7 +31,6 @@ import android.util.Log
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.contentDescription
@@ -76,6 +75,14 @@ fun SignAiEdgeDrawer(
     edgeStripWidth: Dp = 48.dp,
     edgeStripBottomExclusion: Dp = 0.dp,
     previewLabel: String = "",
+    // 0..1 progress of the OPPOSITE drawer's backdrop. The two drawers nest
+    // (End wraps Start), so the inner drawer's scrim cannot cover the outer
+    // drawer's handle. The outer drawer dims its own handle with this value so
+    // both tabs fall behind the backdrop symmetrically (spec `EDG-14`).
+    handleDimFraction: Float = 0f,
+    // Reports this drawer's open fraction (0 closed → 1 open) so the opposite
+    // handle can follow the same scrim animation.
+    onFractionChange: (Float) -> Unit = {},
     drawerContent: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -111,6 +118,8 @@ fun SignAiEdgeDrawer(
     }
 
     val fraction = (1f - abs(offsetX.value) / widthPx).coerceIn(0f, 1f)
+
+    LaunchedEffect(fraction) { onFractionChange(fraction) }
 
     val dragState = rememberDraggableState { delta ->
         scope.launch {
@@ -174,8 +183,8 @@ fun SignAiEdgeDrawer(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .graphicsLayer { alpha = fraction * 0.28f }
-                    .background(Color.Black)
+                    .graphicsLayer { alpha = fraction }
+                    .background(SignAiTheme.colors.scrim)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
@@ -301,6 +310,21 @@ fun SignAiEdgeDrawer(
                                 ),
                         )
                     }
+                }
+                // Backdrop dim: the opposite drawer's scrim cannot reach this
+                // handle (it is composed above the inner drawer), so the same
+                // scrim is painted over the tab here to keep both tabs behind it.
+                if (handleDimFraction > 0f) {
+                    Box(
+                        modifier = Modifier
+                            .matchParentSize()
+                            .background(
+                                color = SignAiTheme.colors.scrim.copy(
+                                    alpha = SignAiTheme.colors.scrim.alpha * handleDimFraction,
+                                ),
+                                shape = tabShape,
+                            ),
+                    )
                 }
             }
         }
