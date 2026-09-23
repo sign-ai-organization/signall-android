@@ -15,12 +15,12 @@
       font: 12px monospace;
       z-index: 3;
     }
-    /* El debug arranca por debajo de la línea de estado ("Listo para
-       traducir", ~12px + 8px) y no la tapa. */
+    /* El debug arranca bastante por debajo de la línea de estado
+       ("Listo para traducir") para no taparla nunca. */
     #debug {
       position: absolute;
       left: 8px;
-      top: calc(env(safe-area-inset-top, 0px) + 34px);
+      top: calc(env(safe-area-inset-top, 0px) + 56px);
       color: #7f7;
       font: 11px monospace;
       z-index: 2;
