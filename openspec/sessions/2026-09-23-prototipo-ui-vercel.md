@@ -540,3 +540,16 @@ Iteración sobre la UI ya implementada, verificada con capturas en device.
   (`Sparkles` pasa a `SET-3`).
 
 
+## Debug legible en tema claro y sin solapamiento
+
+- **Bug**: en modo claro el overlay de debug (`#status` cían `#8ff`, `#debug`
+  verde `#7f7`) era ilegible sobre el fondo claro del canvas (`#F4F4F2`).
+- **Fix contraste** (`BRG-2`/`BRG-9`): `setTheme()` ahora alterna la clase
+  `light` en `<html>`; `index.html` define `html.light #status { color:#0b6b6b }`
+  y `html.light #debug { color:#0b6b0b }`. En oscuro se mantienen los neones.
+- **Bug**: `#debug` (top +32px) caía encima del texto de estado
+  "Listo para traducir" (`#status`, top +8px).
+- **Fix layout**: `#debug` pasa arriba (top +8px) y `#status` se ancla abajo
+  (`bottom: safe-area + 8px`); `#debug` cierra en `bottom + 28px` para no
+  chocar con el bottom bar nativo.
+- Commit `66e6ea0`, `installDebug` ✅ en `1ed6699f`.
