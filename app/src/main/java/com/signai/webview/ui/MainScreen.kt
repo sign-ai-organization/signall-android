@@ -127,7 +127,8 @@ fun MainScreen(state: MainScreenState) {
                         edgeStripBottomExclusion = bottomBarHeight,
                         drawerTopInset = drawerTopInset,
                         previewLabel = "Ajustes",
-                        oppositeFraction = conversationFraction,
+                        otherDrawerOpen = showConversation,
+                        currentlyOpenFraction = settingsFraction,
                         onFractionChange = { settingsFraction = it },
                         drawerContent = {
                             SettingsSidebar(
@@ -157,7 +158,8 @@ fun MainScreen(state: MainScreenState) {
                             edgeStripBottomExclusion = bottomBarHeight,
                             drawerTopInset = drawerTopInset,
                             previewLabel = "Conversación",
-                            oppositeFraction = settingsFraction,
+                            otherDrawerOpen = showSettings,
+                            currentlyOpenFraction = conversationFraction,
                             onFractionChange = { conversationFraction = it },
                             drawerContent = {
                                 ConversationPanel(

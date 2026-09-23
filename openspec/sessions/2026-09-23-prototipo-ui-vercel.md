@@ -605,3 +605,31 @@ barra de estado.
   (`CTL-12`) también: se libera en `onPlaybackDone`, no por un
   `LaunchedEffect` observando `playbackState`. `MainScreen` solo cablea.
 - `./gradlew build` ✅ y `installDebug` ✅ en `1ed6699f`.
+
+## Drawers: una sola sidebar a la vez + pestaña atenuada
+
+Feedback del usuario tras la primera pasada: con la izquierda abierta, tocar la
+pestaña derecha **abría** Ajustes (la izquierda se cerraba, pero no debería
+abrirse nada mientras hay otra abierta); además el oscurecimiento de la pestaña
+opuesta ya no se veía.
+
+- **Gate de apertura** (`EDG-19`): nuevo `otherDrawerOpen`. Con un drawer
+  abierto, la franja de gesto y el drag de la pestaña del otro lado quedan
+  `enabled = false`, y el tap de la pestaña se deshabilita. La pestaña del lado
+  abierto sí sigue cerrando. Resultado: con una sidebar abierta la única salida
+  es cerrarla (tap en backdrop/pestaña, drag hacia su borde, atrás).
+  `snapAfterDrag` también fuerza `shouldOpen = false` si el otro drawer está
+  abierto, por si un drag se inició justo antes de abrir el otro.
+- **Clamp del drag**: al no poder abrirse, el drawer se ancla en `closedOffset`
+  en vez de `min/maxOffset` (el drag ya no puede empujar el panel hacia dentro
+  desde el lado inerte).
+- **Pestaña atenuada, no oculta** (`EDG-20`): el dim se había vuelto
+  inapreciable al bajarlo a 0.28α·0.35. Vuelve a un valor visible
+  (`scrim.alpha * 0.5`) y sigue el fade del backdrop vía
+  `currentlyOpenFraction`, así la pestaña del lado abierto se oscurece
+  progresivamente y la del lado cerrado queda normal. Se eliminó el muestreo
+  del degradado en la posición de la pestaña (complejidad que no se veía).
+- **Pestaña inactiva**: `graphicsLayer { alpha = 0.35f + 0.65f * enabledFraction }`
+  — la pestaña del lado que no se puede abrir se atenúa al 35% en vez de
+  desaparecer, comunicando que hay un panel abierto.
+- `./gradlew build` ✅ e `installDebug` ✅ en `1ed6699f`.

@@ -57,12 +57,16 @@ class MainScreenState(
         private set
 
     /**
-     * Which edge drawer is open (`EDG-15`). `null` = both closed. The state only
-     * carries the state; the open gesture of each `SignAiEdgeDrawer` calls back
-     * here, so a Repetir tap can close the left drawer and start the sign only
-     * once the closing animation is over.
+     * Which edge drawer is open (`EDG-15`). `null` = both closed. The drawer
+     * open gesture calls back here, so a Repetir tap can close the left drawer
+     * and start the sign only once the closing animation is over.
+     *
+     * Only one drawer can be open at a time (`EDG-19`): setting a side always
+     * clears the other, so a tap on the inactive handle closes instead of
+     * crossing over. Written on tap/drag-snap only (a handful of times per
+     * interaction), not from an animation callback, to keep recomposition cheap.
      */
-    var openDrawer by mutableStateOf<DrawerSide?>(null)
+    var openDrawer: DrawerSide? by mutableStateOf(null)
         private set
 
     var lastText by mutableStateOf("")

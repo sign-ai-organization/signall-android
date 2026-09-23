@@ -2,6 +2,7 @@ package com.signai.webview.ui.designsystem.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
+import com.signai.webview.ui.designsystem.foundation.SignAiMotion
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
@@ -78,11 +80,16 @@ fun SignAiEdgeDrawer(
     edgeStripBottomExclusion: Dp = 0.dp,
     drawerTopInset: Dp = 0.dp,
     previewLabel: String = "",
-    // Reported by the OPPOSITE drawer: its backdrop gradient is painted over this
-    // drawer's half of the screen, and the drawers nest (End wraps Start), so the
-    // inner scrim cannot cover the outer drawer's handle. The gradient also
-    // reaches this handle as a subtle dim (spec `EDG-14`).
-    oppositeFraction: Float = 0f,
+    // The other drawer is the one on screen. The open gestures (edge strip and
+    // handle drag) are inert while it is: with a drawer open the only way out is
+    // closing it (tap its backdrop/handle, drag it back, or press back), so the
+    // two drawers can never cross-fade into each other (spec `EDG-19`).
+    otherDrawerOpen: Boolean = false,
+    // This drawer's own open fraction (0 closed → 1 open), echoed back by the
+    // host. The handle of the drawer that IS open uses it to take its dim as the
+    // backdrop fades in, so the closed side never flashes undimmed (spec
+    // `EDG-14`).
+    currentlyOpenFraction: Float = 0f,
     // Reports this drawer's open fraction (0 closed → 1 open) so its own handle
     // can follow the same backdrop animation.
     onFractionChange: (Float) -> Unit = {},
@@ -93,6 +100,16 @@ fun SignAiEdgeDrawer(
     val widthPx = with(density) { drawerWidth.toPx() }
     val overflowPx = with(density) { drawerOverflow.toPx() }
     val scope = rememberCoroutineScope()
+
+    // 1 while this drawer can still be opened, 0 while it is not: false when it
+    // is the one on screen (it is the one being closed) and when the other one
+    // is. The inactive handle fades instead of disappearing, so it is clear that
+    // only one drawer can be open at a time (spec `EDG-19`).
+    val enabledFraction by animateFloatAsState(
+        targetValue = if (isOpen || !otherDrawerOpen) 1f else 0f,
+        animationSpec = SignAiMotion.motionTween(durationMillis = SignAiMotion.Medium),
+        label = "handleEnabled",
+    )
 
     val direction = if (side == DrawerSide.End) 1f else -1f
     val closedOffset = direction * widthPx
@@ -130,9 +147,10 @@ fun SignAiEdgeDrawer(
         }
     }
     val snapAfterDrag: () -> Unit = {
+        dragging = false
+        // A drawer cannot be dragged open while the other one is on screen.
+        val shouldOpen = !otherDrawerOpen && abs(offsetX.value) < widthPx / 2f
         scope.launch {
-            dragging = false
-            val shouldOpen = abs(offsetX.value) < widthPx / 2f
             val target = if (shouldOpen) 0f else closedOffset
             if (reduceMotion) {
                 offsetX.snapTo(target)
@@ -164,17 +182,11 @@ fun SignAiEdgeDrawer(
         // is 160dp tall and centered, so shift it up by 8% of the height (plus
         // the half-tab correction to align the 62dp tab's top).
         val tabOffsetY = 31.dp - maxHeight * 0.08f
-        // Screen x (0..1) of this tab's center, used to sample the opposite
-        // drawer's backdrop gradient for the handle dim.
-        val tabWidthPx = with(density) { edgeStripWidth.toPx() }
-        val screenWidthPx = constraints.maxWidth.toFloat()
-        val tabCenterFraction =
-            if (side == DrawerSide.End) 1f - tabWidthPx / 2f / screenWidthPx
-            else tabWidthPx / 2f / screenWidthPx
 
         // Invisible open-gesture strip on this drawer's edge. `padding` BEFORE
         // `fillMaxHeight` shrinks the node itself, so the hit area excludes the
-        // bottom bar instead of covering it (spec `EDG-12`).
+        // bottom bar instead of covering it (spec `EDG-12`). Disabled while the
+        // other drawer is open (`EDG-19`).
         Box(
             modifier = Modifier
                 .align(topAlignment)
@@ -184,31 +196,33 @@ fun SignAiEdgeDrawer(
                 .draggable(
                     state = dragState,
                     orientation = Orientation.Horizontal,
+                    enabled = !otherDrawerOpen,
                     onDragStarted = { dragging = true },
                     onDragStopped = { snapAfterDrag() },
                 ),
         )
 
         if (fraction > 0.01f) {
-            // The prototype dims the content with a weighted gradient anchored on
-            // the open drawer: near-black on that edge and fully transparent by
-            // the far side (globals.css `.drawer-backdrop`), so the open drawer's
-            // dim never reaches the opposite handle and the two backdrops cannot
-            // pile up mid-animation.
+            // The prototype's `.drawer-backdrop` is a weighted black gradient
+            // anchored on the open drawer: opaque at its edge → fully transparent
+            // at the far side. The other half is untouched, so two backdrops can
+            // never stack, and there is no divider to collide with the drawer's
+            // own outline.
             val base = SignAiTheme.colors.scrim
-            val horizontal = side == DrawerSide.Start
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer { alpha = fraction }
                     .background(
-                        Brush.horizontalGradient(
-                            if (horizontal) {
-                                listOf(base, base.copy(alpha = 0.35f * base.alpha), Color.Transparent)
-                            } else {
-                                listOf(Color.Transparent, base.copy(alpha = 0.35f * base.alpha), base)
-                            },
-                        ),
+                        if (side == DrawerSide.Start) {
+                            Brush.horizontalGradient(
+                                listOf(base, base.copy(alpha = 0.28f * base.alpha), Color.Transparent),
+                            )
+                        } else {
+                            Brush.horizontalGradient(
+                                listOf(Color.Transparent, base.copy(alpha = 0.28f * base.alpha), base),
+                            )
+                        },
                     )
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
@@ -306,12 +320,14 @@ fun SignAiEdgeDrawer(
                 .draggable(
                     state = dragState,
                     orientation = Orientation.Horizontal,
+                    enabled = isOpen || !otherDrawerOpen,
                     onDragStarted = { dragging = true },
                     onDragStopped = { snapAfterDrag() },
                 )
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
+                    enabled = isOpen || !otherDrawerOpen,
                 ) { onOpenChange(!isOpen) }
                 .semantics {
                     contentDescription = if (isOpen) "Cerrar panel" else "Abrir $previewLabel"
@@ -322,6 +338,7 @@ fun SignAiEdgeDrawer(
                 modifier = Modifier
                     .width(20.dp)
                     .height(62.dp)
+                    .graphicsLayer { alpha = 0.35f + 0.65f * enabledFraction }
                     .shadow(elevation = 6.dp, shape = tabShape, clip = false)
                     .background(color = SignAiTheme.colors.surface, shape = tabShape)
                     .border(width = 1.dp, color = SignAiTheme.colors.outline, shape = tabShape),
@@ -342,29 +359,10 @@ fun SignAiEdgeDrawer(
                         )
                     }
                 }
-                // Backdrop dim: this handle belongs to the OPEN drawer, so it
-                // receives the same gradient as the rest of the screen at its own
-                // position. The nesting keeps the opposite drawer's scrim from
-                // reaching it, so it is painted here instead (spec `EDG-14`).
-                val dim =
-                    if (oppositeFraction > 0f) {
-                        val base = SignAiTheme.colors.scrim
-                        // Same stops as the opposite drawer's gradient, evaluated
-                        // at this tab's position (0 = far edge, 1 = that drawer's
-                        // edge).
-                        val position =
-                            if (side == DrawerSide.End) 1f - tabCenterFraction else tabCenterFraction
-                        val peak = base.alpha * 0.35f
-                        val alpha =
-                            when {
-                                position <= 0.5f -> base.alpha * (1f - position * 2f)
-                                position <= 0.75f -> peak * (2f - (position - 0.5f) * 4f)
-                                else -> peak * (1f - (position - 0.75f) * 4f)
-                            }
-                        alpha * oppositeFraction
-                    } else {
-                        0f
-                    }
+                // This handle belongs to the open drawer (the drawers nest, so
+                // the opposite backdrop cannot reach it): it gets a mild dim
+                // instead of vanishing behind the backdrop (spec `EDG-14`).
+                val dim = SignAiTheme.colors.scrim.alpha * 0.5f * currentlyOpenFraction
                 if (dim > 0f) {
                     Box(
                         modifier = Modifier
