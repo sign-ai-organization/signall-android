@@ -58,13 +58,31 @@ class MainScreenState(
             Setting.FreeCam -> settings.copy(freeCam = on)
             Setting.Grid -> settings.copy(grid = on)
             Setting.Background -> settings.copy(bg = on)
+            Setting.Bold -> settings.copy(bold = on)
+            Setting.Contrast -> settings.copy(contrast = on)
+            Setting.Large -> settings.copy(large = on)
+            Setting.ReduceMotion -> settings.copy(reduceMotion = on)
+            Setting.DarkTheme -> settings.copy(darkTheme = on)
         }
         when (setting) {
             Setting.Debug -> webView.setDebug(on)
             Setting.FreeCam -> webView.setFreeCamera(on)
             Setting.Grid -> webView.setGrid(on)
             Setting.Background -> webView.setBackground(on)
+            else -> Unit
         }
+    }
+
+    fun setCharacter(character: Character) {
+        settings = settings.copy(character = character)
+    }
+
+    fun setSpeed(speed: Int) {
+        settings = settings.copy(speed = speed.coerceIn(10, 100))
+    }
+
+    fun setInterfaceSize(size: Int) {
+        settings = settings.copy(interfaceSize = size.coerceIn(0, 100))
     }
 
     fun pickSign(id: String) {

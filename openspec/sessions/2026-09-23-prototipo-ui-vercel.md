@@ -167,5 +167,56 @@ Device disponible: **Redmi Note 9S (Android 11)**.
 
 - Fase C (sidebars) — no arrancar hasta OK del usuario.
 
+---
+
+## 2026-09-23 — Ejecución Fase C (sidebars)
+
+### Qué se hizo
+
+- **C.1 `EdgeDrawer.kt` generalizado** a `DrawerSide.Start/End` (`EDG-13`):
+  mismo modelo de gesto para ambos lados (offset firmado), pestaña visible
+  (grip) tappable y arrastrable (`EDG-3`/`EDG-8`/`EDG-11`), `EDG-6`
+  **drag-preview** translúcido con label, scrim (`EDG-10`) y exclusión de la
+  bottom bar (`EDG-12`).
+- **C.2 `ConversationPanel.kt`** (`CNV-1..8`): CONTEXTO/Conversación, TÚ,
+  TRADUCCIÓN (gloss), estado del avatar, repetir y nota de swipe. Con insets de
+  status/navigation bar.
+- **C.3 `SettingsSidebar.kt`** (`SET-1/2/5/6/9/10`): header con logo, secciones
+  AVATAR (Personaje + Velocidad), ACCESIBILIDAD (tamaño/negrita/contraste/
+  grande/reducir), APARIENCIA (dark/light) y **AVANZADO** (`SET-8`) con los
+  toggles debug y el selector de Seña. Link "Acerca de" añadido (cierra el
+  drawer por ahora; D lo cablea a la pantalla).
+- **Componentes nuevos**: `CharacterPicker` (`PER-1..3/5`), `SignAiSlider`
+  (sin Material), `SettingRow` genérico (`SET-9`), `SignAiSmallIconButton`.
+- **C.4** blur del canvas solo con drawer abierto (`EDG-14`), ya guardado a
+  Android 12+.
+- `MainScreen` con **dos drawers anidados** (Start=Conversación, End=Ajustes),
+  exclusión mutua al abrir, y ancho de panel `min(88%, 350dp)`.
+
+### Decisiones / adelantos
+
+- **`domain/Gloss.kt` (era E.2)** se adelantó: el panel Conversación necesita el
+  gloss real. **`Settings` (era F.1)** también: los controles del sidebar
+  necesitan los campos. La **aplicación real** de accesibilidad/tema/velocidad y
+  la **persistencia** siguen en F.
+- El link **Acerca de** existe ya pero cierra el drawer sin navegar; D crea la
+  pantalla y cablea `NAV-3/7`.
+- **Switches en azul `primary`** (Lumo), no `strong` como el prototipo; se
+  revisará en F/polish si molesta la fidelidad.
+
+### Verificación
+
+- `./gradlew build` → **BUILD SUCCESSFUL**; `installDebug` → **OK**.
+- Capturas con Ajustes abierto y con Conversación abierto (blur + panel
+  correctos, sin overlap de status bar tras el fix).
+- **Límite:** `adb shell input` está bloqueado en MIUI (`INJECT_EVENTS`), así que
+  los **gestos** (tap de pestaña, drag, edge-swipe) no se pudieron automatizar.
+  Verificación manual del usuario pendiente.
+
+### Pendiente
+
+- Fase D (historial bottom sheet + About) — no arrancar hasta OK del usuario.
+
+
 
 

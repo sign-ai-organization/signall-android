@@ -254,17 +254,22 @@ device (regla de `AGENTS.md`) + verificación visual.
 
 ### Fase C — Sidebars (drawers)
 
-- [ ] C.1 Generalizar `SignAiEdgeDrawer` a `side: DrawerSide` (Start/End),
+- [x] C.1 Generalizar `SignAiEdgeDrawer` a `side: DrawerSide` (Start/End),
       con pestaña + drag + drag-preview reutilizables.
-- [ ] C.2 `ui/screens/conversation/ConversationPanel.kt` (nuevo) para el
+- [x] C.2 `ui/screens/conversation/ConversationPanel.kt` (nuevo) para el
       drawer izquierdo.
-- [ ] C.3 `ui/screens/settings/SettingsSidebar.kt`: rediseño con secciones
+- [x] C.3 `ui/screens/settings/SettingsSidebar.kt`: rediseño con secciones
       AVATAR / ACCESIBILIDAD / APARIENCIA / About, más una sección
       **"Avanzado"** al final con los ajustes debug actuales (Modo debug,
       Cámara libre, Suelo, Fondo, selector de Seña).
-- [ ] C.4 Blur/scrim: mantener `RenderEffect` guardado a Android 12+ y solo
+- [x] C.4 Blur/scrim: mantener `RenderEffect` guardado a Android 12+ y solo
       mientras un drawer está abierto (rendimiento).
-- [ ] C.5 Build + install + verificación (ambos lados, drag y tap).
+- [x] C.5 Build + install + verificación (capturas con cada drawer abierto;
+      `adb input` bloqueado en MIUI, así que la verificación de *gestos* queda
+      para prueba manual del usuario).
+      **Adelantos:** `domain/Gloss.kt` (era E.2), campos de `Settings`
+      (era F.1) y `SignAiSlider`. La verificación funcional de esos ajustes
+      sigue en F.
 
 ### Fase D — Historial bottom sheet + About
 
