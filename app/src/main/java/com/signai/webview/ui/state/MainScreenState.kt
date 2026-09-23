@@ -9,12 +9,23 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.signai.webview.data.SignHistoryRepository
 import com.signai.webview.domain.SignsCatalog
 import com.signai.webview.ui.webview.SignAiWebViewController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+/** Prototype timing: `translating` lasts 850 ms before `signing` (spec `STA-7`). */
+private const val TranslatingMs = 850L
+private const val ListeningFillMs = 1_500L
+private const val ProcessingMs = 800L
 
 class MainScreenState(
     private val history: SignHistoryRepository,
     private val webView: SignAiWebViewController,
     val signs: List<String> = SignsCatalog.available,
 ) {
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     val historyList: SnapshotStateList<String> = mutableStateListOf<String>().apply {
         addAll(history.load())
     }
@@ -35,10 +46,27 @@ class MainScreenState(
     var inputText by mutableStateOf("")
         private set
 
-    /** Mic placeholder (spec `CTL-5`/`STA-9`): toggles the listening feedback. */
+    /**
+     * Mic placeholder (spec `CTL-5`/`STA-9`, `OM-4`): toggles `listening` and,
+     * while active, auto-fills a demo phrase and runs `processing → idle`.
+     */
     fun toggleMic() {
-        playbackState =
-            if (playbackState == PlaybackState.Listening) PlaybackState.Idle else PlaybackState.Listening
+        if (playbackState == PlaybackState.Listening) {
+            playbackState = PlaybackState.Idle
+            return
+        }
+        if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
+            return
+        }
+        playbackState = PlaybackState.Listening
+        scope.launch {
+            delay(ListeningFillMs)
+            if (playbackState != PlaybackState.Listening) return@launch
+            inputText = "Quiero ir a la universidad"
+            playbackState = PlaybackState.Processing
+            delay(ProcessingMs)
+            if (playbackState == PlaybackState.Processing) playbackState = PlaybackState.Idle
+        }
     }
 
     /** Repeats the last translated phrase (spec `STG-4`/`CNV-5`). */
@@ -52,12 +80,33 @@ class MainScreenState(
 
     fun attachWebView(webView: WebView) {
         this.webView.attach(webView)
+        this.webView.setSpeed(settings.speed / 100f)
     }
 
+    /**
+     * Sends a phrase: `translating → signing` (850 ms) and then `done` once the
+     * JS bridge reports the playback ended (spec `STA-7`/`STA-8`).
+     */
     fun play(text: String) {
-        lastText = text
-        syncHistory(history.record(text))
+        val clean = text.trim()
+        if (clean.isEmpty()) return
+        if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) return
+        lastText = clean
+        inputText = clean
+        syncHistory(history.record(clean))
+        playbackState = PlaybackState.Translating
         webView.play()
+        scope.launch {
+            delay(TranslatingMs)
+            if (playbackState == PlaybackState.Translating) playbackState = PlaybackState.Signing
+        }
+    }
+
+    /** Called by the JS bridge (`onPlaybackDone`, spec `BRG-7`/`STA-8`). */
+    fun onPlaybackDone() {
+        if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
+            playbackState = PlaybackState.Done
+        }
     }
 
     fun toggle(setting: Setting, on: Boolean) {
@@ -86,7 +135,9 @@ class MainScreenState(
     }
 
     fun setSpeed(speed: Int) {
-        settings = settings.copy(speed = speed.coerceIn(10, 100))
+        val clamped = speed.coerceIn(10, 100)
+        settings = settings.copy(speed = clamped)
+        webView.setSpeed(clamped / 100f)
     }
 
     fun setInterfaceSize(size: Int) {

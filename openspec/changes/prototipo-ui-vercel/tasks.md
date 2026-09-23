@@ -283,19 +283,22 @@ device (regla de `AGENTS.md`) + verificación visual.
 
 ### Fase E — Estado de reproducción + bridge
 
-- [ ] E.1 `ui/state/PlaybackState.kt` (nuevo): `Idle, Listening, Processing,
-      Translating, Signing, Done` + texto de estado.
-- [ ] E.2 `domain/Gloss.kt` (nuevo): `glossFor(text): String` pura.
-- [ ] E.3 `ui/webview/AvatarWebView.kt`: `addWebMessageListener` para
-      `onPlaybackDone`; `SignAiWebViewController` recibe el evento y lo
-      propaga a `MainScreenState`.
-- [ ] E.4 `domain/SignAiCommands.kt`: `setSpeed` (aditivo).
-- [ ] E.5 `assets/web/app.js`: emitir `SignAI.onPlaybackDone()` al terminar
-      `play()`; implementar `setSpeed` (factor de frames). `index.html` sin
-      cambios de contrato.
-- [ ] E.6 `MainScreenState`: orquestar `send()` → `Translating` → `Signing` →
-      `Done` con el callback real.
-- [ ] E.7 Build + install + verificación (node --check app.js incluido).
+- [x] E.1 `ui/state/PlaybackState.kt` (nuevo): `Idle, Listening, Processing,
+      Translating, Signing, Done` + texto de estado. **(adelantado a la Fase B)**
+- [x] E.2 `domain/Gloss.kt` (nuevo): `glossFor(text): String` pura.
+      **(adelantado a la Fase C)**
+- [x] E.3 `ui/webview/AvatarWebView.kt`: `WebViewCompat.addWebMessageListener`
+      (`SignAIBridge`, feature check) para `onPlaybackDone`; se propaga a
+      `MainScreenState.onPlaybackDone()`.
+- [x] E.4 `domain/SignAiCommands.kt`: `setSpeed(0..1)` (aditivo).
+- [x] E.5 `assets/web/app.js`: emite `SignAIBridge.postMessage("onPlaybackDone")`
+      al terminar `play()`; implementa `setSpeed` (factor 0.1..3×).
+      `index.html` sin cambios de contrato. `node --check` OK.
+- [x] E.6 `MainScreenState`: orquesta `play()` → `Translating` → (850 ms)
+      `Signing` → `Done` con el callback real; mock del mic (`Listening`→
+      auto-relleno→`Processing`→`Idle`).
+- [x] E.7 Build + install + verificación (`node --check app.js` incluido;
+      captura en `Done` con botón Repetir ⇒ el bridge funciona).
 
 ### Fase F — Ajustes funcionales + theming
 

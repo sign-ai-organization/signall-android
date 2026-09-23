@@ -150,6 +150,7 @@ fun MainScreen(state: MainScreenState) {
                                         modifier = Modifier.fillMaxSize(),
                                         onReady = state::attachWebView,
                                         onProgress = { progress = it },
+                                        onPlaybackDone = state::onPlaybackDone,
                                         onLoaded = { loading = false },
                                     )
                                 }

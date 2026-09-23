@@ -7,12 +7,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
+
+private const val BridgeObjectName = "SignAIBridge"
+private const val BridgeOrigin = "https://appassets.androidplatform.net"
 
 @Composable
 fun AvatarWebView(
     modifier: Modifier = Modifier,
     onReady: (WebView) -> Unit,
     onProgress: (Int) -> Unit = {},
+    onPlaybackDone: () -> Unit = {},
     onLoaded: () -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -35,6 +41,28 @@ fun AvatarWebView(
                         )
                         return true
                     }
+                }
+
+                // JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")`.
+                // Only registered when the feature is supported (fallback: no
+                // event, the UI just stays in `signing`).
+                if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
+                    WebViewCompat.addWebMessageListener(
+                        this,
+                        BridgeObjectName,
+                        setOf(BridgeOrigin),
+                        object : WebViewCompat.WebMessageListener {
+                            override fun onPostMessage(
+                                view: WebView,
+                                message: androidx.webkit.WebMessageCompat,
+                                sourceOrigin: android.net.Uri,
+                                isMainFrame: Boolean,
+                                replyProxy: androidx.webkit.JavaScriptReplyProxy,
+                            ) {
+                                if (message.data == "onPlaybackDone") onPlaybackDone()
+                            }
+                        },
+                    )
                 }
                 val assetLoader = WebViewAssetLoader.Builder()
                     .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(context))

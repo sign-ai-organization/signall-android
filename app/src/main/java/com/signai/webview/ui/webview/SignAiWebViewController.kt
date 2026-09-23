@@ -19,6 +19,8 @@ interface SignAiWebViewController {
 
     fun setBackground(on: Boolean)
 
+    fun setSpeed(factor: Float)
+
     fun applyBlur(enabled: Boolean)
 }
 
@@ -42,6 +44,8 @@ class WebViewSignAiController : SignAiWebViewController {
     override fun setGrid(on: Boolean) = js(SignAiCommands.setGrid(on))
 
     override fun setBackground(on: Boolean) = js(SignAiCommands.setBackground(on))
+
+    override fun setSpeed(factor: Float) = js(SignAiCommands.setSpeed(factor))
 
     override fun applyBlur(enabled: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

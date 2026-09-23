@@ -40,6 +40,7 @@ const state = {
   boneRestDir:   new Map(),
   frames: [],
   fps: 24,
+  speed: 1,
   frameIdx: 0,
   playing: false,
   lastTime: null,
@@ -65,7 +66,7 @@ const Debug = {
   statusEl: null,
   flags: {
     playback: () => [
-      `play: ${state.playing}  frame: ${Math.floor(state.frameIdx)}/${state.frames.length}  fps_datos: ${state.fps}`,
+      `play: ${state.playing}  frame: ${Math.floor(state.frameIdx)}/${state.frames.length}  fps_datos: ${state.fps}  speed: ${state.speed.toFixed(2)}`,
       `alpha_smooth: ${state.smoothAlpha}`,
       `palmL: (${state.palmNormalL.x.toFixed(2)}, ${state.palmNormalL.y.toFixed(2)}, ${state.palmNormalL.z.toFixed(2)})`,
       `palmR: (${state.palmNormalR.x.toFixed(2)}, ${state.palmNormalR.y.toFixed(2)}, ${state.palmNormalR.z.toFixed(2)})`,
@@ -511,12 +512,17 @@ function resetPose() {
 }
 
 // ── Loop de reproducción (sin video) ─────────────────────────────────────────
+// Avisa a Android que la seña terminó (Kotlin: WebMessageListener SignAIBridge).
+function notifyPlaybackDone() {
+  try { window.SignAIBridge?.postMessage("onPlaybackDone"); } catch (e) { /* no bridge */ }
+}
+
 function animTick(now) {
   if (!state.playing) return;
   state.animHandle = requestAnimationFrame(animTick);
   if (state.lastTime === null) { state.lastTime = now; return; }
 
-  state.frameIdx += (now - state.lastTime) / 1000 * state.fps;
+  state.frameIdx += (now - state.lastTime) / 1000 * state.fps * state.speed;
   state.lastTime  = now;
 
   const idx = Math.floor(state.frameIdx);
@@ -527,6 +533,7 @@ function animTick(now) {
     state.lastTime = null;
     cancelAnimationFrame(state.animHandle);
     resetPose();
+    notifyPlaybackDone();
     return;
   }
   try {
@@ -577,6 +584,11 @@ window.SignAI = {
     state.animHandle = requestAnimationFrame(animTick);
   },
   setDebug(on) { Debug.enabled = !!on; Debug.render(); },
+  setSpeed(v) {
+    // v en 0..1 (0.5 = velocidad normal) → factor 0.1..3
+    const factor = (Number(v) || 0.5) * 2;
+    state.speed = Math.max(0.1, Math.min(3, factor));
+  },
   setFreeCamera(on) {
     controls.enableRotate = !!on;
     controls.enablePan = false; // nunca mover el punto de vista, solo orbitar/zoom

@@ -249,6 +249,54 @@ Device disponible: **Redmi Note 9S (Android 11)**.
 - Fase E (estado de reproducción + bridge `setSpeed`/`onPlaybackDone`) — no
   arrancar hasta OK del usuario.
 
+---
+
+## 2026-09-23 — Ejecución Fase E (estado + bridge)
+
+### Qué se hizo
+
+- **E.3 `AvatarWebView`**: `WebViewCompat.addWebMessageListener(this,
+  "SignAIBridge", setOf("https://appassets.androidplatform.net"), …)` con
+  `WebViewFeature.isFeatureSupported(WEB_MESSAGE_LISTENER)`. Expone
+  `onPlaybackDone: () -> Unit`; `MainScreen` lo cablea a
+  `state::onPlaybackDone`.
+- **E.4 `SignAiCommands.setSpeed(factor)`**: `window.SignAI?.setSpeed(...)`
+  (aditivo, guard `?.` intacto). `SignAiWebViewController.setSpeed`.
+- **E.5 `app.js`**: nuevo `state.speed` (multiplica el avance de frames),
+  `notifyPlaybackDone()` → `window.SignAIBridge?.postMessage("onPlaybackDone")`
+  al terminar `animTick`, y `setSpeed(v)` (v 0..1 → factor 0.1..3, 0.5 = 1×).
+  Los 5 comandos existentes y `index.html` no cambian. `node --check` OK.
+- **E.6 `MainScreenState`**: `play()` ahora `Translating` → (850 ms) `Signing`
+  → `Done` por callback real; `onPlaybackDone()`; mock del mic
+  (`Listening` → 1.5 s auto-rellena "Quiero ir a la universidad" →
+  `Processing` → 0.8 s `Idle`); `setSpeed` aplica al WebView y `attachWebView`
+  siembra la velocidad actual.
+
+### Decisiones
+
+- **Bridge vía `addWebMessageListener`** (recomendado en el plan) en vez de
+  `@JavascriptInterface`. Si el feature no está soportado, no hay evento (la UI
+  se queda en `signing`); no rompe nada.
+- El evento se propaga directo `AvatarWebView → MainScreenState` en vez de pasar
+  por el controller (el controller sigue siendo el único con `evaluateJavascript`).
+- Se implementó el **mock del mic** del prototipo (`OM-4`) porque era barato y
+  mejora la fidelidad; sigue sin reconocimiento de voz real.
+
+### Verificación
+
+- `./gradlew build` → **BUILD SUCCESSFUL**; `installDebug` → **OK**;
+  `node --check app.js` → **OK**.
+- Captura en estado **Done** ("Reproducción completada" + botón **Repetir** +
+  input con la frase) alcanzado por el **callback real** ⇒ `BRG-7`/`STA-8`
+  funcionando en device. Sin errores en logcat.
+- **Límite:** `adb input` bloqueado → la interacción manual (escribir y pulsar
+  Traducir, slider de velocidad, mic) queda para verificación del usuario.
+
+### Pendiente
+
+- Fase F (ajustes reales + theming + persistencia) — no arrancar hasta OK.
+
+
 
 
 
