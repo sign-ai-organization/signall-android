@@ -253,14 +253,14 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | BRG-1 | `window.SignAI.play()` | `[A]` | Reproduce el sign.json. Guard `?.`. |
-| BRG-2 | `setDebug(bool)` | `[A]` | Activa overlay de debug + `#status`. |
+| BRG-2 | `setDebug(bool)` | `[A]` | Activa overlay de debug + `#status`. El texto del overlay usa colores oscuros en tema claro (clase `light` en `<html>`) y coloca `#debug` arriba y `#status` abajo para no solaparse. |
 | BRG-3 | `setFreeCamera(bool)` | `[A]` | Cámara libre (orbitar/zoom sin límite). |
 | BRG-4 | `setGrid(bool)` | `[A]` | Grilla/suelo. |
 | BRG-5 | `setBackground(bool)` | `[A]` | Fondo bosque. |
 | BRG-6 | `setSpeed(0..1)` | `[N]` | Velocidad de reproducción de señas (slider `SET-4`). Aditivo. |
 | BRG-7 | `onPlaybackDone` (JS→Kotlin) | `[N]` | Evento al terminar `play()`; alimenta `STA-8`. Vía `WebMessageListener` (`SignAIBridge`). |
 | BRG-8 | Contrato retrocompatible | `[A]` | Los 5 comandos actuales y el guard `?.` no cambian. |
-| BRG-9 | `setTheme(dark)` | `[N]` | Aditivo. Hace que el fondo del canvas 3D siga el tema claro/oscuro (mitiga el riesgo de light mode). |
+| BRG-9 | `setTheme(dark)` | `[N]` | Aditivo. Hace que el fondo del canvas 3D siga el tema claro/oscuro (mitiga el riesgo de light mode) y alterna la clase `light` en `<html>` para contrastar el texto de debug/estado. |
 
 ---
 

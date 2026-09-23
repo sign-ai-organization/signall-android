@@ -607,5 +607,11 @@ window.SignAI = {
   setGrid(on) { grid.visible = !!on; },
   setBackground(on) { showBg = !!on; refreshBackground(); },
   // Tema del canvas (aditivo, Fase F): el fondo del render sigue al tema.
-  setTheme(on) { darkTheme = !!on; refreshBackground(); },
+  // El <html> lleva la clase para que el CSS ajuste el color del texto
+  // de debug/estado (ver index.html).
+  setTheme(on) {
+    darkTheme = !!on;
+    document.documentElement.classList.toggle("light", !darkTheme);
+    refreshBackground();
+  },
 };

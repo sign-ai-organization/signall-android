@@ -10,7 +10,7 @@
     #status {
       position: absolute;
       left: 8px;
-      top: calc(env(safe-area-inset-top, 0px) + 8px);
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
       color: #8ff;
       font: 12px monospace;
       z-index: 2;
@@ -18,13 +18,18 @@
     #debug {
       position: absolute;
       left: 8px;
-      top: calc(env(safe-area-inset-top, 0px) + 32px);
+      top: calc(env(safe-area-inset-top, 0px) + 8px);
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
       color: #7f7;
       font: 11px monospace;
       z-index: 2;
       white-space: pre;
       pointer-events: none;
     }
+    /* Tema claro: los colores neón del debug/estado quedan ilegibles sobre
+       el fondo claro (#F4F4F2); se oscurecen para mantener contraste. */
+    html.light #status { color: #0b6b6b; }
+    html.light #debug  { color: #0b6b0b; }
   </style>
 </head>
 <body>
