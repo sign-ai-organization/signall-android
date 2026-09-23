@@ -2,7 +2,6 @@ package com.signai.webview.ui.screens.conversation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +13,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -45,13 +45,14 @@ import com.signai.webview.ui.theme.SignAiTheme
 /**
  * Left drawer — Conversation (spec `CNV-*`): header plus a session log that
  * grows as phrases are sent. Each turn appears when it happens (no empty
- * placeholders, no "Esperando"); the repeat action shows up only once there is
- * something to repeat. The log lives as long as the app process (`CNV-6`).
+ * placeholders, no "Esperando"), with a repeat button on the right of its
+ * translation to replay that turn's sign. The log lives as long as the app
+ * process (`CNV-4`).
  */
 @Composable
 fun ConversationPanel(
     turns: List<ConversationTurn>,
-    onRepeat: () -> Unit,
+    onRepeat: (String) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -110,41 +111,10 @@ fun ConversationPanel(
                     items(items = turns, key = { it.id }) { turn ->
                         ConversationTurnItem(
                             turn = turn,
+                            onRepeat = { onRepeat(turn.text) },
                             modifier = if (reduceMotion) Modifier else Modifier.animateItem(),
                         )
                     }
-                }
-            }
-        }
-
-        // Repetir: only once the session has a phrase to repeat.
-        if (turns.isNotEmpty()) {
-            val interaction = remember { MutableInteractionSource() }
-            Surface(
-                onClick = onRepeat,
-                shape = SignAiShapes.cornerRepeat,
-                color = SignAiTheme.colors.soft,
-                border = BorderStroke(1.dp, SignAiTheme.colors.outline),
-                interactionSource = interaction,
-                modifier = Modifier
-                    .padding(top = 18.dp)
-                    .size(SignAiSizes.repeatButtonSize)
-                    .pressScale(interaction)
-                    .semantics {
-                        role = Role.Button
-                        contentDescription = "Repetir reproducción"
-                    },
-            ) {
-                Box(
-                    modifier = Modifier.size(SignAiSizes.repeatButtonSize),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    SignAiIcon(
-                        imageVector = SignAiIcons.Repeat,
-                        contentDescription = null,
-                        size = 18.dp,
-                        tint = SignAiTheme.colors.text,
-                    )
                 }
             }
         }
@@ -161,6 +131,7 @@ fun ConversationPanel(
 @Composable
 private fun ConversationTurnItem(
     turn: ConversationTurn,
+    onRepeat: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -172,10 +143,50 @@ private fun ConversationTurnItem(
             )
         }
         ConversationBlock(label = "TRADUCCIÓN") {
-            SignAiText(
-                text = turn.gloss,
-                style = SignAiTheme.typography.gloss,
-                color = SignAiTheme.colors.text,
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                SignAiText(
+                    text = turn.gloss,
+                    style = SignAiTheme.typography.gloss,
+                    color = SignAiTheme.colors.text,
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(Modifier.width(12.dp))
+                TurnRepeatButton(phrase = turn.text, onClick = onRepeat)
+            }
+        }
+    }
+}
+
+/** Per-turn repeat: replays the sign of this translation (`CNV-5`). */
+@Composable
+private fun TurnRepeatButton(phrase: String, onClick: () -> Unit) {
+    val interaction = remember { MutableInteractionSource() }
+    Surface(
+        onClick = onClick,
+        shape = SignAiShapes.cornerRepeat,
+        color = SignAiTheme.colors.soft,
+        border = BorderStroke(1.dp, SignAiTheme.colors.outline),
+        interactionSource = interaction,
+        modifier = Modifier
+            .size(SignAiSizes.repeatButtonSize)
+            .pressScale(interaction)
+            .semantics {
+                role = Role.Button
+                contentDescription = "Repetir la seña de $phrase"
+            },
+    ) {
+        Box(
+            modifier = Modifier.size(SignAiSizes.repeatButtonSize),
+            contentAlignment = Alignment.Center,
+        ) {
+            SignAiIcon(
+                imageVector = SignAiIcons.Repeat,
+                contentDescription = null,
+                size = 18.dp,
+                tint = SignAiTheme.colors.text,
             )
         }
     }

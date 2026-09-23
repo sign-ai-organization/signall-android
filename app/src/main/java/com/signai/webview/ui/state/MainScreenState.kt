@@ -82,9 +82,18 @@ class MainScreenState(
         }
     }
 
-    /** Repeats the last translated phrase without adding a new conversation turn. */
+    /** Repeats the last translated phrase (stage button). */
     fun replay() {
-        if (lastText.isNotBlank()) startPlayback()
+        if (lastText.isNotBlank()) replayTurn(lastText)
+    }
+
+    /** Repeats a specific conversation turn without adding a new turn (`CNV-5`). */
+    fun replayTurn(text: String) {
+        val clean = text.trim()
+        if (clean.isEmpty()) return
+        if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) return
+        lastText = clean
+        startPlayback()
     }
 
     fun setInput(text: String) {

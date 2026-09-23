@@ -139,7 +139,7 @@ Main.
 | CNV-2 | Turno **TÚ** | `[P]` | Por cada frase enviada: label "TÚ" + la frase del usuario. |
 | CNV-3 | Turno **TRADUCCIÓN** | `[P]` | Por cada turno: label "TRADUCCIÓN" + gloss LSC (`GLS-*`). |
 | CNV-4 | Registro de sesión | `[N]` | La lista crece con cada frase enviada; cada turno entra con animación y la vista se desplaza al último. Vive solo mientras el proceso está abierto (`ConversationTurn`, en memoria; no se persiste). |
-| CNV-5 | Botón **Repetir** | `[P]` | Aparece solo cuando hay ≥1 turno; repite la última frase sin crear un turno nuevo. |
+| CNV-5 | Botón **Repetir** por turno | `[N]` | A la derecha de la traducción de cada turno; repite la seña de ese turno sin crear uno nuevo. El botón del stage (`STG-4`) sigue repitiendo la última frase. |
 | CNV-6 | Nota de gesto | `[P]` | "Desliza desde el borde para volver". |
 | CNV-7 | Estado vacío | `[N]` | Sin turnos: "Aún no hay frases en esta conversación." (no hay bloques estáticos). |
 | CNV-8 | Sin estado "Esperando" | `[N]` | Se elimina el bloque de estado del avatar; ninguna sección dice "Esperando traducción". |

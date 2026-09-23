@@ -532,6 +532,10 @@ Iteración sobre la UI ya implementada, verificada con capturas en device.
 - **Repetir**: aparece solo con ≥1 turno; `replay()` ahora re-dispara la
   reproducción sin crear turno ni tocar historial (`startPlayback()` extraído
   de `play()`).
+- **Repetir por turno** (ajuste posterior): el botón se movió del pie del
+  drawer a la **derecha de cada traducción** (mismo estilo `cornerRepeat`),
+  para repetir la seña de ese turno. `MainScreenState.replayTurn(text)` repite
+  una frase concreta; `replay()` (stage) sigue usando la última.
 - Spec actualizada en `openspec/specs/ui/spec.md` (§7) y tabla de iconos
   (`Sparkles` pasa a `SET-3`).
 

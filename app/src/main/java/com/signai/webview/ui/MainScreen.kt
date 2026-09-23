@@ -143,7 +143,7 @@ fun MainScreen(state: MainScreenState) {
                             drawerContent = {
                                 ConversationPanel(
                                     turns = state.conversation,
-                                    onRepeat = state::replay,
+                                    onRepeat = state::replayTurn,
                                     onClose = { showConversation = false },
                                 )
                             },
