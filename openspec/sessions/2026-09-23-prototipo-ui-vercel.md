@@ -349,6 +349,39 @@ Device disponible: **Redmi Note 9S (Android 11)**.
 - Verificación manual de interacción (taps/switches) por el bloqueo de
   `adb input` en MIUI.
 
+---
+
+## 2026-09-23 — Ejecución Fase G (polish + docs) — CIERRE
+
+### Qué se hizo
+
+- **G.1 polish**:
+  - `dropdown-in` en `SignAiDropdown` (fade + scale 160 ms), respetando
+    reduce-motion.
+  - `Modifier.pressScale` (`foundation/PressScale.kt`) aplicado a los botones
+    Repetir del stage y de Conversación (0.94, `ANI-6`).
+  - Eliminado el `SignAiIconButton` ya muerto.
+- **G.2 documentación**:
+  - `AGENTS.md`: contrato JS actualizado (5 + `setSpeed`/`setTheme` +
+    `onPlaybackDone`), theming/accesibilidad, screens, gotchas (MIUI).
+  - `openspec/specs/ui/spec.md`: estado = implementado; nuevo `BRG-9`
+    (`setTheme`).
+  - `openspec/config.yaml`: puente JS y estado UI actualizados.
+- **G.3**: capturas revisadas en device (main, splash con progreso, Ajustes,
+  Conversación, historial, About, translating/signing/done, light/dark/a11y).
+
+### Estado final
+
+Las **7 fases (A–G)** quedan implementadas, con `build` + `installDebug` verdes
+en cada una y commit por fase en `feat/prototipo-ui-vercel`. Pendiente global:
+- **Verificación manual de gestos/taps** por el bloqueo de `adb input` en MIUI
+  (pestañas de borde, drag-preview, edge-swipe, Reutilizar, switches, Acerca de,
+  volver).
+- **Merge a `main`** cuando el usuario apruebe.
+- Decidir sobre el **branding** ("SignAI" ↔ "Seña") y sobre el icono de status
+  bar en light en MIUI.
+
+
 
 
 

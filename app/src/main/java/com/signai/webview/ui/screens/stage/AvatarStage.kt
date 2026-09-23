@@ -7,6 +7,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
@@ -26,6 +28,7 @@ import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Surface
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
+import com.signai.webview.ui.designsystem.foundation.pressScale
 import com.signai.webview.ui.icons.SignAiIcons
 import com.signai.webview.ui.theme.SignAiTheme
 
@@ -97,12 +100,16 @@ fun AvatarStage(
             enter = fadeIn() + scaleIn(initialScale = 0.9f),
             exit = fadeOut() + scaleOut(targetScale = 0.9f),
         ) {
+            val interaction = remember { MutableInteractionSource() }
             Surface(
                 onClick = onRepeat,
                 shape = SignAiShapes.cornerPill,
                 color = SignAiTheme.colors.surface,
                 border = BorderStroke(1.dp, SignAiTheme.colors.outline),
-                modifier = Modifier.semantics { contentDescription = "Repetir reproducción" },
+                interactionSource = interaction,
+                modifier = Modifier
+                    .pressScale(interaction)
+                    .semantics { contentDescription = "Repetir reproducción" },
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = 13.dp, vertical = 9.dp),

@@ -1,6 +1,7 @@
 package com.signai.webview.ui.screens.conversation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
@@ -28,6 +30,7 @@ import com.signai.webview.ui.designsystem.components.Surface
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
+import com.signai.webview.ui.designsystem.foundation.pressScale
 import com.signai.webview.ui.icons.SignAiIcons
 import com.signai.webview.ui.theme.SignAiTheme
 
@@ -128,13 +131,16 @@ fun ConversationPanel(
             }
         }
 
+        val interaction = remember { MutableInteractionSource() }
         Surface(
             onClick = onRepeat,
             enabled = text.isNotBlank(),
             shape = SignAiShapes.cornerTile,
             color = SignAiTheme.colors.soft,
+            interactionSource = interaction,
             modifier = Modifier
                 .size(SignAiSizes.repeatButtonSize)
+                .pressScale(interaction)
                 .semantics {
                     role = Role.Button
                     contentDescription = "Repetir reproducción"

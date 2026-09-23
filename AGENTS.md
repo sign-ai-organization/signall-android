@@ -13,7 +13,7 @@ Single-module Gradle project (`SignAI-WebView`, `:app` only). Compose shell + We
 
 ## Layers (Clean Architecture, practical)
 
-Dependency rule: screens → components → state/webview → data/domain, **never backwards**. No Hilt/ViewModel: `MainScreenState` (holds `SnapshotStateList` history + `Settings` + `sign`) is built in `MainActivity` and passed down; `SharedPrefsSignHistoryRepository` owns SharedPreferences; `WebViewSignAiController` is the only place with `evaluateJavascript`/`RenderEffect`; `domain/SignAiCommands` and `domain/SignsCatalog` are pure Kotlin.
+Dependency rule: screens → components → state/webview → data/domain, **never backwards**. No Hilt/ViewModel: `MainScreenState` (holds `SnapshotStateList` history + `Settings` + `sign` + playback state) is built in `MainActivity` and passed down; `SharedPrefsSignHistoryRepository` and `SharedPrefsSettingsRepository` own SharedPreferences; `WebViewSignAiController` is the only place with `evaluateJavascript`/`RenderEffect`; `domain/SignAiCommands`, `domain/SignsCatalog`, `domain/Gloss` and `domain/Settings` are pure Kotlin.
 
 ## Build
 
@@ -32,9 +32,11 @@ No tests, no CI, no lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target
 - Migrate existing Material 3 away progressively, never add new Material 3 components.
 - Icons: Phosphor Icons for anything new; avoid `material-icons-extended` in new code.
 - Build a SignAI Design System on top of Lumo UI; centralize colors, typography, spacing, sizes, shapes, states, and animations there.
-- Palette (single source of truth): **Lumo's default dark palette**, edited in `ui/designsystem/Color.kt` (`// CUSTOMIZED`). Black background, gray surfaces `Gray900 #282828`, white text, outline `Gray800 #4B4B4B`; accent `primary` overridden to Lumo's `Blue900 #276EF1`. Do NOT re-run `lumo --setup` (overwrites). `ui/theme/SignAiTheme` delegates to Lumo and exposes `colors: Colors` — `SignAiColors` no longer exists.
-- Tokens live in `ui/designsystem/foundation/`: `SignAiSizes` (buttonHeight 56, fieldHeight 44, drawerWidth 300…), `SignAiShapes` (cornerSmall 6, cornerMedium 8), `SignAiSpacing` (xs 4, sm 8, md 16…). Use them instead of inline `.dp`.
-- Spinner/loader: Lumo `ProgressIndicators` (`ui/designsystem/components/progressindicators/`). The app shows a `SignAiSplash` overlay (`ui/components/SignAiSplash.kt`) until `AvatarWebView`'s `onLoaded` (`onPageFinished`) fires, with an 8 s timeout fallback; content fades in (500 ms).
+- Palette (single source of truth): **Lumo palettes**, edited in `ui/designsystem/Color.kt` (`// CUSTOMIZED`). `DarkColors` is the default (black bg, gray surfaces `Gray900 #282828`, white text, outline `Gray800 #4B4B4B`; accent `primary` = Lumo `Blue900 #276EF1`). `LightColors` is wired to the dark/light switch. Prototype-aligned tokens `strong`/`onStrong`/`soft` and `muted` (alias of `textSecondary`) live next to them. Do NOT re-run `lumo --setup` (overwrites). `ui/theme/SignAiTheme` delegates to Lumo and exposes `colors: Colors` — `SignAiColors` no longer exists.
+- Tokens live in `ui/designsystem/foundation/`: `SignAiSizes`, `SignAiShapes`, `SignAiSpacing`, `SignAiMotion` (durations/easings + `LocalReduceMotion`) and `pressScale`. Use them instead of inline `.dp`/literals.
+- Theming: `SignAiTheme(darkTheme, fontScale, uiScale, bold, highContrast, reduceMotion)` applies `Settings`. `interfaceSize` scales `LocalDensity`; `large`/`bold` transform the typography; `contrast` overrides `outline`; light mode also switches the 3D canvas background via the `setTheme` bridge command.
+- Spinner/loader: `SignAiSplash` (`ui/components/SignAiSplash.kt`) is shown until `AvatarWebView`'s `onLoaded`, with real progress from `onProgressChanged` and an 8 s timeout fallback; content fades in (500 ms).
+- Screens: `ui/screens/stage/AvatarStage.kt` (avatar + hint + caption + Repetir), `ui/screens/bottombar/SignAiBottomBar.kt`, `ui/components/HistoryBottomSheet.kt`, `ui/screens/conversation/ConversationPanel.kt` (left drawer), `ui/screens/settings/SettingsSidebar.kt` (right drawer, sections AVATAR/ACCESIBILIDAD/APARIENCIA/AVANZADO), `ui/screens/about/AboutScreen.kt`. Branding ("SignAI", may become "Seña") is centralized in `ui/SignAiBranding.kt`.
 - Look: minimalist, modern, dark mode base with good contrast and legibility. The 3D avatar stays the visual protagonist.
 - Transparencies, subtle surfaces, blur, and animations are allowed only when subtle, functional, lightweight, and in moderation.
 - Keep SignAI components reusable and separate from screens. Keep the UI lightweight — never degrade WebView 3D performance with unnecessary libraries, effects, or animations.
@@ -43,7 +45,12 @@ No tests, no CI, no lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target
 
 WebView loads via `WebViewAssetLoader` at `https://appassets.androidplatform.net/assets/web/index.html`. JS console forwards to Logcat tag `SignAIWeb`.
 
-Contract (`window.SignAI` in `app.js`): `play()`, `setDebug(bool)`, `setFreeCamera(bool)`, `setGrid(bool)`, `setBackground(bool)`. Kotlin calls them with `evaluateJavascript("window.SignAI?.<method>(...)")` — keep the `?.` guard and these exact names.
+Contract (`window.SignAI` in `app.js`), **backward compatible** — keep the `?.` guard and these exact names:
+- Original 5: `play()`, `setDebug(bool)`, `setFreeCamera(bool)`, `setGrid(bool)`, `setBackground(bool)`.
+- Added (additive): `setSpeed(factor 0..1)` (0.5 ≈ normal), `setTheme(dark)` (canvas background follows the app theme).
+Kotlin calls them with `evaluateJavascript("window.SignAI?.<method>(...)")`.
+
+JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when `play()` finishes; Kotlin registers it with `WebViewCompat.addWebMessageListener` (feature-guarded) and drives the playback state machine.
 
 ## Web asset rules
 
@@ -54,9 +61,11 @@ Contract (`window.SignAI` in `app.js`): `play()`, `setDebug(bool)`, `setFreeCame
 
 ## Gotchas
 
-- All Compose state lives in `ui/state/MainScreenState.kt`; there is no ViewModel/DI/navigation. History is `SharedPreferences "signai"/"history"` (max 20, top-5 never reorder) behind `data/SignHistoryRepository.kt`.
-- Mic button is a placeholder (`play("mic")`); bottom-bar Send just replays the baked sign.
-- Settings sidebar sends `setDebug/setFreeCamera/setGrid/setBackground` toggles with defaults debug=false, grid=true, freeCam=false, bg=false; blur overlay uses `RenderEffect` (Android 12+ only, guarded). The `#status` overlay text ("Avatar listo…") is part of debug mode and only shows when debug is on.
+- All Compose state lives in `ui/state/MainScreenState.kt`; there is no ViewModel/DI/navigation. History is `SharedPreferences "signai"/"history"` (max 20, top-5 never reorder) behind `data/SignHistoryRepository.kt`; settings user choices persist in the same file behind `data/SettingsRepository.kt`.
+- Playback state machine (`ui/state/PlaybackState.kt`): `idle → translating → signing → done`; `signing → done` is driven by the real `onPlaybackDone` bridge event, not a timer. Mic is a placeholder that toggles `listening` and auto-fills a demo phrase (`OM-4`) — no real speech recognition.
+- The two edge drawers are one component (`ui/designsystem/components/EdgeDrawer.kt`, `side = Start/End`) with tap + drag + drag-preview; Conversation is `Start`, Settings is `End`, and opening one closes the other.
+- Settings sidebar sends `setDebug/setFreeCamera/setGrid/setBackground/setTheme` toggles; blur overlay uses `RenderEffect` (Android 12+ only, guarded) and only while a drawer is open. The `#status` overlay text is part of debug mode and only shows when debug is on.
+- Known device quirk: on MIUI the status-bar icon appearance does not follow the light theme (`isAppearanceLightStatusBars` + legacy flag ignored).
 - Bone naming that matters for `app.js`: fingers have no `DEF-` prefix (`thumb01L`, `f_index01L`…), arms use `DEF-` (`DEF-upper_armL`…), face is camelCase without dots (`DEF-browTL`, `DEF-lipTL`, `DEF-lidTL`, `DEF-jaw_master`). Right brow `DEF-browTR` has ~4 weighted verts vs ~32 left → right brow barely moves (rig issue, not JS).
 
 ## Context engineering (OpenSpec)

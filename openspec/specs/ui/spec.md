@@ -13,7 +13,8 @@ actual de la app nativa (`Compose shell + WebView 3D`).
 - **Plan de ejecución:** `openspec/changes/prototipo-ui-vercel/tasks.md`.
 - **Implementación:** Compose nativo (Lumo + Phosphor). El WebView es solo el
   canvas 3D.
-- **Estado:** especificado, **no implementado** (2026-09-23).
+- **Estado:** **implementado** en la rama `feat/prototipo-ui-vercel` (fases A–G),
+  verificado en device (build + install). Pendiente de merge a `main`.
 
 Leyenda de origen: `[P]` = del prototipo · `[A]` = ya existe en la app ·
 `[N]` = nueva/derivada.
@@ -251,8 +252,9 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 | BRG-4 | `setGrid(bool)` | `[A]` | Grilla/suelo. |
 | BRG-5 | `setBackground(bool)` | `[A]` | Fondo bosque. |
 | BRG-6 | `setSpeed(0..1)` | `[N]` | Velocidad de reproducción de señas (slider `SET-4`). Aditivo. |
-| BRG-7 | `onPlaybackDone` (JS→Kotlin) | `[N]` | Evento al terminar `play()`; alimenta `STA-8`. Vía WebMessage / listener. |
+| BRG-7 | `onPlaybackDone` (JS→Kotlin) | `[N]` | Evento al terminar `play()`; alimenta `STA-8`. Vía `WebMessageListener` (`SignAIBridge`). |
 | BRG-8 | Contrato retrocompatible | `[A]` | Los 5 comandos actuales y el guard `?.` no cambian. |
+| BRG-9 | `setTheme(dark)` | `[N]` | Aditivo. Hace que el fondo del canvas 3D siga el tema claro/oscuro (mitiga el riesgo de light mode). |
 
 ---
 

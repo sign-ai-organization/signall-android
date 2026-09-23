@@ -322,11 +322,14 @@ device (regla de `AGENTS.md`) + verificación visual.
 
 ### Fase G — Polish + documentación
 
-- [ ] G.1 Animaciones sutiles (fade contenido, rise del sheet, slide drawer)
+- [x] G.1 Animaciones sutiles (fade contenido, rise del sheet, slide drawer,
+      `dropdown-in` del menú con fade+scale, press-scale en Repetir)
       respetando reduce-motion.
-- [ ] G.2 Actualizar `openspec/specs/`, sesión y `AGENTS.md` (nuevas
-      capacidades y contrato JS extendido).
-- [ ] G.3 Capturas comparativas vs prototipo.
+- [x] G.2 Actualizar `openspec/specs/ui/spec.md` (estado + `BRG-9`),
+      `openspec/config.yaml`, sesión y `AGENTS.md` (nuevas capacidades y
+      contrato JS extendido).
+- [x] G.3 Capturas comparativas vs prototipo (main, splash, drawers, historial,
+      About, estados, light/dark) revisadas en device; no se commitean binarios.
 
 ---
 
