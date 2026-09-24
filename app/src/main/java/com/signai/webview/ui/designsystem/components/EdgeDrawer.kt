@@ -33,8 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -108,7 +114,6 @@ fun SignAiEdgeDrawer(
     // this one is an actual drag handle and not just a screen-edge swipe zone.
     handleDragWidth: Dp = 72.dp,
     edgeStripBottomExclusion: Dp = 0.dp,
-    drawerTopInset: Dp = 0.dp,
     previewLabel: String = "",
     // The other drawer is the one on screen. The open gestures (edge strip and
     // handle drag) are inert while it is: with a drawer open the only way out is
@@ -355,24 +360,62 @@ fun SignAiEdgeDrawer(
             )
         }
 
-        // Drawer surface: exactly `drawerWidth`, aligned to its edge and riding
-        // `offsetX`. Kept at its natural size (not wider than the parent) because
-        // a body wider than the parent gets centered instead of edge-aligned,
-        // which opened a gap between the drawer and its handle. The height starts
-        // below the status bar (`drawerTopInset`), so the top edge of the drawer
-        // and of its handle are visible instead of running under the system
-        // icons. Composed AFTER the backdrop so the panel keeps its own touches.
-        //
-        // The drag is attached only while this drawer is open or moving. An
-        // inactive, closed drawer must have NO gesture at all: its off-screen
-        // panel used to keep its `draggable`, so a swipe from the very edge could
-        // still pull the *other* drawer open over an open one (spec `EDG-19`).
+        // Panel shadow: the prototype's `.side-panel { box-shadow: 0 0 28px
+        // rgba(0,0,0,.12) }`. `Modifier.shadow` renders as hard side bands on
+        // this Android version, and a stepped fake blur bands visibly. So the
+        // shadow is ONE smooth gradient clipped to the panel's rounded
+        // silhouette expanded by `shadowPx`: the outer boundary of the halo is
+        // that rounded rect, so it follows the corner while the panel (drawn on
+        // top) hides the middle. Composed before the panel and riding the same
+        // `offsetX`, so it tracks the panel exactly while it moves.
         val panelMovable = isOpen || fraction > 0.001f
+        val shadowBase = SignAiTheme.colors.scrim
         Box(
             modifier = Modifier
                 .align(horizontalAlignment)
                 .fillMaxHeight()
-                .padding(top = drawerTopInset)
+                .width(drawerWidth)
+                .offset { IntOffset(offsetX.value.toInt(), 0) }
+                .graphicsLayer { alpha = fraction }
+                .drawBehind {
+                    val shadowPx = 22.dp.toPx()
+                    val cornerPx = 27.dp.toPx()
+                    val outer = RoundRect(
+                        rect = Rect(
+                            left = -shadowPx,
+                            top = -shadowPx,
+                            right = size.width + shadowPx,
+                            bottom = size.height + shadowPx,
+                        ),
+                        cornerRadius = CornerRadius(cornerPx + shadowPx),
+                    )
+                    val clip = Path().apply { addRoundRect(outer) }
+                    clipPath(clip) {
+                        val span = size.width + 2 * shadowPx
+                        val edge0 = shadowPx / span
+                        val edge1 = (shadowPx + size.width) / span
+                        drawRect(
+                            brush = Brush.horizontalGradient(
+                                colorStops = arrayOf(
+                                    0f to Color.Transparent,
+                                    edge0 to shadowBase.copy(alpha = 0.12f),
+                                    edge1 to shadowBase.copy(alpha = 0.12f),
+                                    1f to Color.Transparent,
+                                ),
+                                startX = -shadowPx,
+                                endX = size.width + shadowPx,
+                            ),
+                        )
+                    }
+                },
+        ) {
+            Box(Modifier.fillMaxSize())
+        }
+
+        Box(
+            modifier = Modifier
+                .align(horizontalAlignment)
+                .fillMaxHeight()
                 .width(drawerWidth)
                 .offset { IntOffset(offsetX.value.toInt(), 0) }
                 .then(
@@ -445,7 +488,7 @@ fun SignAiEdgeDrawer(
                         }
                     IntOffset(
                         handleOffset.toInt(),
-                        tabOffsetY.roundToPx() + drawerTopInset.roundToPx(),
+                        tabOffsetY.roundToPx(),
                     )
                 }
                 .width(if (isOpen) handleDragWidth else edgeStripWidth)

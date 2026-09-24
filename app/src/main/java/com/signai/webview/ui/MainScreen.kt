@@ -10,9 +10,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -64,9 +62,6 @@ fun MainScreen(state: MainScreenState) {
 
     val showConversation = state.openDrawer == DrawerSide.Start
     val showSettings = state.openDrawer == DrawerSide.End
-    // The drawer tops start below the status bar: they are drawn edge-to-edge,
-    // so without this inset their top edge runs under the system icons.
-    val drawerTopInset = with(density) { WindowInsets.systemBars.getTop(this).toDp() }
 
     // Blur the 3D canvas only while a drawer is open (perf, spec `EDG-14`). The
     // control panel is disabled separately, by `state.replayPending` (`CNV-9`).
@@ -173,7 +168,6 @@ fun MainScreen(state: MainScreenState) {
                             },
                             drawerWidth = panelWidth,
                             edgeStripBottomExclusion = bottomBarHeight,
-                            drawerTopInset = drawerTopInset,
                             previewLabel = "Conversación",
                             otherDrawerOpen = showSettings,
                             currentlyOpenFraction = conversationFraction,
@@ -202,7 +196,6 @@ fun MainScreen(state: MainScreenState) {
                             },
                             drawerWidth = panelWidth,
                             edgeStripBottomExclusion = bottomBarHeight,
-                            drawerTopInset = drawerTopInset,
                             previewLabel = "Ajustes",
                             otherDrawerOpen = showConversation,
                             currentlyOpenFraction = settingsFraction,

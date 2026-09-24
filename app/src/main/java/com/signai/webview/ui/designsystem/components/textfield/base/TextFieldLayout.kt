@@ -293,6 +293,19 @@ private class TextFieldMeasurePolicy(
                 ),
             )
 
+        // When the call site forces a height larger than the natural content
+        // height, the input/placeholder must be vertically centered in the
+        // *actual* container instead of pinned to the top padding. Without this
+        // the text sits 10dp from the top of a 50dp box, leaving a lopsided
+        // 16dp below (the hint and the typed text both looked off-center).
+        val inputBlockHeight =
+            maxOf(
+                heightOrZero(textFieldPlaceable),
+                heightOrZero(placeholderPlaceable),
+            )
+        val centeredTextPosition =
+            labelHeight + ((containerHeight - inputBlockHeight) / 2).coerceAtLeast(0)
+
         return layout(width, totalHeight) {
             placePlaceables(
                 width = width,
@@ -306,7 +319,7 @@ private class TextFieldMeasurePolicy(
                 suffixPlaceable = suffixPlaceable,
                 containerPlaceable = containerPlaceable,
                 supportingPlaceable = supportingPlaceable,
-                textPosition = topPaddingValue + heightOrZero(labelPlaceable),
+                textPosition = centeredTextPosition,
             )
         }
     }

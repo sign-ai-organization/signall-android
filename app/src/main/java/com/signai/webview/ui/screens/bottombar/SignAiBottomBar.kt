@@ -185,20 +185,6 @@ fun SignAiBottomBar(
                     enabled = controlsEnabled,
                 )
             }
-
-            // home-indicator (prototype `.home-indicator`): 112x4 foreground pill,
-            // 17dp below the action row, 70% opacity.
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 7.dp)
-                    .width(112.dp)
-                    .height(4.dp)
-                    .background(
-                        color = SignAiTheme.colors.text.copy(alpha = 0.7f),
-                        shape = SignAiShapes.cornerPill,
-                    ),
-            )
         }
     }
 }
