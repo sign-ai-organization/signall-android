@@ -221,86 +221,115 @@ device (regla de `AGENTS.md`) + verificación visual.
 
 ### Fase A — Design system extendido (sin cambiar pantallas)
 
-- [ ] A.1 `ui/designsystem/Color.kt`: dejar utilizable `LightColors`; agregar
+- [x] A.1 `ui/designsystem/Color.kt`: dejar utilizable `LightColors`; agregar
       tokens que faltan (`muted`, `surfaceVariant`/`soft`, `strong`) o mapear a
       los existentes Lumo. Mantener dark Lumo actual como default.
-- [ ] A.2 `ui/designsystem/foundation/SignAiMotion.kt` (nuevo): duraciones
-      (`fast 200`, `medium 250`, `slow 500`) y easings; flag reduce-motion.
-- [ ] A.3 `ui/designsystem/foundation/SignAiSizes.kt` / `SignAiShapes.kt` /
+- [x] A.2 `ui/designsystem/foundation/SignAiMotion.kt` (nuevo): duraciones
+      (`fast 160`, `short 180`, `medium 250`, `slow 500`) y easings; flag
+      reduce-motion. (El plan decía `fast 200`; se usó **160** por fidelidad al
+      prototipo/`ANI-3`, dropdown-in .16s.)
+- [x] A.3 `ui/designsystem/foundation/SignAiSizes.kt` / `SignAiShapes.kt` /
       `SignAiSpacing.kt`: alinear al prototipo (radio 24/16/13/12, panel
       `min(88%,350dp)`, botón 50/56, field 50).
-- [ ] A.4 `ui/designsystem/Typography.kt` + `ui/theme/SignAiTypography.kt`:
+- [x] A.4 `ui/designsystem/Typography.kt` + `ui/theme/SignAiTypography.kt`:
       agregar estilos `eyebrow`, `caption`, `quote`, `gloss`, `label`.
-- [ ] A.5 `ui/icons/SignAiIcons.kt`: agregar todos los iconos del mapeo.
-- [ ] A.6 Build + install (paridad: sin cambios visuales).
+- [x] A.5 `ui/icons/SignAiIcons.kt`: agregar todos los iconos del mapeo.
+- [x] A.6 Build + install (paridad: sin cambios visuales).
+      `./gradlew build` verde + `installDebug` OK en Redmi Note 9S (Android 11).
 
 ### Fase B — Chrome principal (stage + control panel + splash)
 
-- [ ] B.1 `ui/screens/stage/AvatarStage.kt` (nuevo): envuelve `AvatarWebView`
+- [x] B.1 `ui/screens/stage/AvatarStage.kt` (nuevo): envuelve `AvatarWebView`
       + `stage-hint` (live-dot + estado) + `stage-caption` + botón Repetir.
-- [ ] B.2 `ui/screens/bottombar/SignAiBottomBar.kt`: input con placeholder
-      real, botón historial, fila `Mic (25%) | Traducir (75%)` con label.
-- [ ] B.3 `ui/components/SignAiSplash.kt`: rediseño (logo tile, eyebrow,
-      progreso real vía `onProgressChanged`, `%`). Exponer progreso desde
-      `AvatarWebView` (`onProgress: (Int) -> Unit`).
-- [ ] B.4 Build + install + verificación.
+      **Nota:** requirió adelantar `PlaybackState` (era E.1) para el texto de
+      estado; la orquestación real sigue en E.
+- [x] B.2 `ui/screens/bottombar/SignAiBottomBar.kt`: input con placeholder
+      real, botón historial, fila `Traducir (flex) | Mic (50dp)` con label.
+      **Decisión:** se siguió el **prototipo** (Traducir a la izquierda con
+      label, Mic a la derecha 50dp), no el "Mic | Traducir 25/75" del plan.
+- [x] B.3 `ui/components/SignAiSplash.kt`: rediseño (logo tile, eyebrow,
+      progreso real vía `onProgressChanged`, `%`). `AvatarWebView` expone
+      `onProgress: (Int) -> Unit`.
+- [x] B.4 Build + install + verificación (capturas: main + splash 80%).
 
 ### Fase C — Sidebars (drawers)
 
-- [ ] C.1 Generalizar `SignAiEdgeDrawer` a `side: DrawerSide` (Start/End),
+- [x] C.1 Generalizar `SignAiEdgeDrawer` a `side: DrawerSide` (Start/End),
       con pestaña + drag + drag-preview reutilizables.
-- [ ] C.2 `ui/screens/conversation/ConversationPanel.kt` (nuevo) para el
+- [x] C.2 `ui/screens/conversation/ConversationPanel.kt` (nuevo) para el
       drawer izquierdo.
-- [ ] C.3 `ui/screens/settings/SettingsSidebar.kt`: rediseño con secciones
+- [x] C.3 `ui/screens/settings/SettingsSidebar.kt`: rediseño con secciones
       AVATAR / ACCESIBILIDAD / APARIENCIA / About, más una sección
       **"Avanzado"** al final con los ajustes debug actuales (Modo debug,
       Cámara libre, Suelo, Fondo, selector de Seña).
-- [ ] C.4 Blur/scrim: mantener `RenderEffect` guardado a Android 12+ y solo
+- [x] C.4 Blur/scrim: mantener `RenderEffect` guardado a Android 12+ y solo
       mientras un drawer está abierto (rendimiento).
-- [ ] C.5 Build + install + verificación (ambos lados, drag y tap).
+- [x] C.5 Build + install + verificación (capturas con cada drawer abierto;
+      `adb input` bloqueado en MIUI, así que la verificación de *gestos* queda
+      para prueba manual del usuario).
+      **Adelantos:** `domain/Gloss.kt` (era E.2), campos de `Settings`
+      (era F.1) y `SignAiSlider`. La verificación funcional de esos ajustes
+      sigue en F.
 
 ### Fase D — Historial bottom sheet + About
 
-- [ ] D.1 `ui/components/HistoryBottomSheet.kt` (nuevo): handle, `TUS FRASES`,
-      items con `Reutilizar →`; reemplaza `HistoryDropdown` en el BottomBar.
-- [ ] D.2 `ui/screens/about/AboutScreen.kt` (nuevo): logo, copy, meta.
-- [ ] D.3 Build + install + verificación.
+- [x] D.1 `ui/components/HistoryBottomSheet.kt` (nuevo): handle, `TUS FRASES`,
+      items con `Reutilizar →`; reemplaza `HistoryDropdown` en el BottomBar
+      (eliminado). El input se elevó a `MainScreenState.inputText`.
+- [x] D.2 `ui/screens/about/AboutScreen.kt` (nuevo): logo, copy, meta con
+      versión dinámica (`BuildConfig.VERSION_NAME`). `NAV-7/8`: About es
+      excluyente y abrirla desde Ajustes cierra el drawer.
+- [x] D.3 Build + install + verificación (capturas de sheet y About).
 
 ### Fase E — Estado de reproducción + bridge
 
-- [ ] E.1 `ui/state/PlaybackState.kt` (nuevo): `Idle, Listening, Processing,
-      Translating, Signing, Done` + texto de estado.
-- [ ] E.2 `domain/Gloss.kt` (nuevo): `glossFor(text): String` pura.
-- [ ] E.3 `ui/webview/AvatarWebView.kt`: `addWebMessageListener` para
-      `onPlaybackDone`; `SignAiWebViewController` recibe el evento y lo
-      propaga a `MainScreenState`.
-- [ ] E.4 `domain/SignAiCommands.kt`: `setSpeed` (aditivo).
-- [ ] E.5 `assets/web/app.js`: emitir `SignAI.onPlaybackDone()` al terminar
-      `play()`; implementar `setSpeed` (factor de frames). `index.html` sin
-      cambios de contrato.
-- [ ] E.6 `MainScreenState`: orquestar `send()` → `Translating` → `Signing` →
-      `Done` con el callback real.
-- [ ] E.7 Build + install + verificación (node --check app.js incluido).
+- [x] E.1 `ui/state/PlaybackState.kt` (nuevo): `Idle, Listening, Processing,
+      Translating, Signing, Done` + texto de estado. **(adelantado a la Fase B)**
+- [x] E.2 `domain/Gloss.kt` (nuevo): `glossFor(text): String` pura.
+      **(adelantado a la Fase C)**
+- [x] E.3 `ui/webview/AvatarWebView.kt`: `WebViewCompat.addWebMessageListener`
+      (`SignAIBridge`, feature check) para `onPlaybackDone`; se propaga a
+      `MainScreenState.onPlaybackDone()`.
+- [x] E.4 `domain/SignAiCommands.kt`: `setSpeed(0..1)` (aditivo).
+- [x] E.5 `assets/web/app.js`: emite `SignAIBridge.postMessage("onPlaybackDone")`
+      al terminar `play()`; implementa `setSpeed` (factor 0.1..3×).
+      `index.html` sin cambios de contrato. `node --check` OK.
+- [x] E.6 `MainScreenState`: orquesta `play()` → `Translating` → (850 ms)
+      `Signing` → `Done` con el callback real; mock del mic (`Listening`→
+      auto-relleno→`Processing`→`Idle`).
+- [x] E.7 Build + install + verificación (`node --check app.js` incluido;
+      captura en `Done` con botón Repetir ⇒ el bridge funciona).
 
 ### Fase F — Ajustes funcionales + theming
 
-- [ ] F.1 `ui/state/Settings.kt`: agregar `character` (UI-only), `speed`,
-      `bold`, `large`, `contrast`, `reduceMotion`, `darkTheme`.
-- [ ] F.2 Aplicar accesibilidad real: escala tipográfica, weight, tokens de
-      contraste, motion off.
-- [ ] F.3 Dark/light switch: `SignAiTheme` deja de ser siempre dark; usar
-      `LightColors`/`DarkColors` de Lumo + `enableEdgeToEdge` coherente.
-- [ ] F.4 Persistencia de settings en SharedPreferences (extender
-      `data/SignHistoryRepository` o crear `data/SettingsRepository`).
-- [ ] F.5 Build + install + verificación.
+- [x] F.1 `domain/Settings.kt` (movido desde `ui/state`): `character`
+      (UI-only), `speed`, `interfaceSize`, `bold`, `contrast`, `large`,
+      `reduceMotion`, `darkTheme` (se adelantó en C).
+- [x] F.2 Aplicar accesibilidad real: escala tipográfica (`large` vía
+      `provideTypography(scale)`), weight (`bold`), tokens de contraste
+      (`outline #777`), motion off (`LocalReduceMotion`), y `interfaceSize` vía
+      escala de `LocalDensity`.
+- [x] F.3 Dark/light switch: `SignAiTheme` deja de ser siempre dark; usa
+      `LightColors`/`DarkColors` + iconos de barras del sistema. **Extra:**
+      el fondo del canvas 3D sigue al tema mediante el comando aditivo
+      `setTheme(dark)` en `app.js` (mitigación del riesgo "light mode").
+- [x] F.4 Persistencia: `data/SettingsRepository.kt`
+      (`SharedPrefsSettingsRepository`, prefs `signai`) + `persist()` en
+      `MainScreenState`; `attachWebView`/`onLoaded` re-aplican al bridge.
+- [x] F.5 Build + install + verificación (capturas dark, light y accesibilidad).
+      **Pendiente manual:** en MIUI los iconos de la status bar no responden al
+      flag de apariencia en light (limitación del ROM).
 
 ### Fase G — Polish + documentación
 
-- [ ] G.1 Animaciones sutiles (fade contenido, rise del sheet, slide drawer)
+- [x] G.1 Animaciones sutiles (fade contenido, rise del sheet, slide drawer,
+      `dropdown-in` del menú con fade+scale, press-scale en Repetir)
       respetando reduce-motion.
-- [ ] G.2 Actualizar `openspec/specs/`, sesión y `AGENTS.md` (nuevas
-      capacidades y contrato JS extendido).
-- [ ] G.3 Capturas comparativas vs prototipo.
+- [x] G.2 Actualizar `openspec/specs/ui/spec.md` (estado + `BRG-9`),
+      `openspec/config.yaml`, sesión y `AGENTS.md` (nuevas capacidades y
+      contrato JS extendido).
+- [x] G.3 Capturas comparativas vs prototipo (main, splash, drawers, historial,
+      About, estados, light/dark) revisadas en device; no se commitean binarios.
 
 ---
 

@@ -13,7 +13,14 @@ actual de la app nativa (`Compose shell + WebView 3D`).
 - **Plan de ejecución:** `openspec/changes/prototipo-ui-vercel/tasks.md`.
 - **Implementación:** Compose nativo (Lumo + Phosphor). El WebView es solo el
   canvas 3D.
-- **Estado:** especificado, **no implementado** (2026-09-23).
+- **Estado:** **implementado** en la rama `feat/prototipo-ui-vercel` (fases A–G),
+  verificado en device (build + install). Pendiente de merge a `main`.
+- **Tema:** el **default es claro** con la paleta del prototipo
+  (`Settings.darkTheme = false`). El modo oscuro existe y usa la paleta oscura
+  del prototipo.
+- **MIUI force-dark:** la app **debe** declarar `android:forceDarkAllowed=false`
+  (`res/values/themes.xml`). Si no, MIUI "smart dark" invierte el contenido de
+  las capas hardware y el texto dentro de `verticalScroll`/drawers se ve blanco.
 
 Leyenda de origen: `[P]` = del prototipo · `[A]` = ya existe en la app ·
 `[N]` = nueva/derivada.
@@ -66,13 +73,22 @@ Main.
 | EDG-5 | Umbral de apertura por drag | `[P]` | Soltar con offset `> 90` abre; si no, vuelve. |
 | EDG-6 | **Drag preview** | `[P]` | Panel translúcido que sigue el dedo con label "Conversación"/"Ajustes". |
 | EDG-7 | **Edge swipe** desde borde | `[P]` | Swipe desde el borde izquierdo (inicio `< 54px`, delta `> 58`) abre Conversación; desde el derecho (`> width-54`, delta `< -58`) abre Ajustes. |
-| EDG-8 | Pestaña visible + grip | `[A]` | Pill/grip visible como affordance (no solo área invisible). |
-| EDG-9 | Cerrar arrastrando el panel | `[A]` | El drawer abierto se cierra arrastrando hacia su borde o con tap en el scrim. |
-| EDG-10 | Tap en scrim cierra | `[P]` | Overlay oscurecido clicable para cerrar. |
+| EDG-8 | Pestaña visible + grip | `[A]` | Pestaña de agarre = `.edge-tab` del prototipo: tab de `surface` 20×62 dp pegado al borde, borde hairline `outline`, sombra suave y grip de **dos** líneas `muted` (4×28 dp, opacidad 0.65, separación 3 dp), redondeado solo en el lado que sobresale. |
+| EDG-9 | Cerrar arrastrando el panel | `[A]` | El drawer abierto se cierra arrastrando desde cualquier zona de gesto: la pestaña, la franja del borde (activa también con el panel abierto) o el cuerpo deslizando sobre zonas que no scrollean. Se cierra también con tap en su backdrop. |
+| EDG-10 | Tap en scrim cierra | `[P]` | Overlay oscurecido clicable para cerrar en **todo** lo que queda fuera del panel. El backdrop es un nodo a pantalla completa compuesto **antes** del panel y la pestaña, de modo que éstos conservan sus propios toques y cualquier otro punto (franja expuesta, hueco de la pestaña opuesta, esquina vacía) cierra el drawer. |
 | EDG-11 | Pestaña del panel abierto | `[P]` | Handle lateral en el borde del panel que también cierra (click). |
 | EDG-12 | Exclusión de la bottom bar | `[A]` | El área de gesto no tapa la barra de controles. |
 | EDG-13 | Drawer bidireccional generalizado | `[N]` | Un solo componente `SignAiEdgeDrawer(side = Start/End)` reutilizado por ambos lados. |
 | EDG-14 | Blur del canvas 3D | `[A]` | El WebView se difumina mientras un drawer está abierto (Android 12+, guardado). |
+| EDG-15 | Drawer abierto es estado de la app | `[A]` | `MainScreenState.openDrawer` (`Start`/`End`/`null`) es la única fuente de verdad. |
+| EDG-16 | Back cierra el drawer | `[A]` | Atrás con un drawer (o el sheet de historial) abierto lo cierra en vez de salir de la app. |
+| EDG-17 | Backdrop en degradado, anclado al drawer | `[A]` | El overlay no es oscuro uniforme: es un degradado con peso sobre el borde del drawer abierto y transparente hacia el lado opuesto (como `.drawer-backdrop` del prototipo), dibujado sobre un nodo a pantalla completa cuyo gradiente se ancla al borde del panel (`edgeX = widthPx + offsetX` en Start, `offsetX` en End). |
+| EDG-18 | Drawer por debajo de la barra de estado | `[A]` | El drawer y su pestaña arrancan bajo la status bar (`systemBars` top inset): su borde superior queda visible en vez de correr bajo los íconos del sistema. |
+| EDG-19 | Una sola sidebar a la vez | `[N]` | Con un drawer abierto, la pestaña y la franja del otro lado quedan **totalmente inertes** (no sólo atenuadas): ningún toque ni arrastre abre nada. Además hay un lock síncrono compartido (`MainScreenState.claimDrawerGesture`) que se reclama en el **primer** evento de puntero, así que dos dedos simultáneos en ambas pestañas no pueden abrir los dos paneles: el segundo gesto se rechaza en el mismo frame, antes de recomponer. Para cambiar de panel primero hay que cerrar el que está abierto (tap en su backdrop o su pestaña, drag hacia su borde, o atrás). |
+| EDG-20 | Pestaña atenuada, no oculta | `[N]` | La pestaña del lado que se abre se desvanece de forma **continua y sincronizada** con la fracción de apertura del drawer contrario (no de golpe al terminar): arranca con el propio gesto o con la animación del tap. Sigue visible mientras dura, sin desaparecer abruptamente. |
+| EDG-21 | Zona de arrastre amplia | `[N]` | La pestaña del drawer abierto tiene una zona de arrastre de 72 dp (antes 48 dp) y la franja de borde del panel abierto está activa, así que cerrar por drag ya no exige empezar justo sobre la pestaña. |
+| EDG-22 | Orden de capas y hit-testing (causa raíz) | `[N]` | Regla de oro, documentada en `EdgeDrawer.kt`: (1) Un `draggable`/`clickable` con `enabled = false` **sigue registrando** un nodo de input en Compose y **sigue siendo la ruta de hit-test más alta**, por lo que el drawer inactivo apilado a pantalla completa se comía todos los toques del backdrop del activo. Solución: no adjuntar el gesto en absoluto cuando no puede actuar (`.then(if (enabled) Modifier.draggable(...) else Modifier)`); un nodo de layout sin input es ignorado por el hit-test y puede seguir dibujándose (para el fade). (2) Un `AndroidView`/WebView es una View hija real: se lleva todo toque dentro de sus límites y ningún hermano Compose lo pinta encima, así que debe ser el **primer** hijo (abajo), los drawers van por encima y su `pointerInteropFilter` devuelve `true` mientras un drawer está abierto. (3) El backdrop debe ir **antes** del panel y la pestaña, y a pantalla completa. |
+| EDG-23 | El drawer inactivo no compone ningún gesto | `[N]` | Un drawer cerrado cuyo contrario está abierto no tiene **ningún** nodo interactivo: ni franja de borde, ni pestaña, ni `draggable` en el panel (el panel sólo se arrastra cuando está abierto o en movimiento, `isOpen || fraction > 0.001`). Esto cierra el último resquicio: deslizar desde el borde extremo ya no puede abrir el panel opuesto por encima de uno abierto. |
 
 ---
 
@@ -104,8 +120,9 @@ Main.
 | CTL-7 | Estado **activo** del mic | `[P]` | Fondo strong + ring cuando `listening`. |
 | CTL-8 | Estado **disabled** de Traducir | `[P]` | Opacidad reducida cuando no se puede enviar. |
 | CTL-9 | Foco del input | `[P]` | Borde strong + ring al enfocar. |
-| CTL-10 | Home indicator | `[P]` | Barrita inferior. **Omitida** en Android (duplica la navegación por gestos). |
+| CTL-10 | Home indicator | `[P]` | Barrita inferior 112×4 (`strong` al 70%). **Se conserva** por fidelidad con el prototipo. |
 | CTL-11 | Safe area / IME | `[A]` | Respeta navigation bar y teclado (`imePadding`). |
+| CTL-12 | Controles bloqueados durante un replay | `[N]` | Desde "Repetir" (stage o drawer) hasta que la seña termina, todos los controles (mic, Recientes, input, Traducir) quedan deshabilitados y atenuados al 35% (`replayPending`, se libera con `onPlaybackDone`). |
 
 ---
 
@@ -129,13 +146,14 @@ Main.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | CNV-1 | Header | `[P]` | Eyebrow "CONTEXTO" + título "Conversación" + cerrar. |
-| CNV-2 | Bloque **TÚ** | `[P]` | Label "TÚ" + frase del usuario; fallback "Aún no has escrito una frase." |
-| CNV-3 | Bloque **TRADUCCIÓN** | `[P]` | Label "TRADUCCIÓN" + gloss LSC (`GLS-*`). |
-| CNV-4 | Estado del avatar | `[P]` | Mini-tile + label "AVATAR" + estado (`Waiting/Signing/Done`). |
-| CNV-5 | Botón **Repetir** | `[P]` | Repite la última frase; deshabilitado sin texto. |
+| CNV-2 | Turno **TÚ** | `[P]` | Por cada frase enviada: label "TÚ" + la frase del usuario. |
+| CNV-3 | Turno **TRADUCCIÓN** | `[P]` | Por cada turno: label "TRADUCCIÓN" + gloss LSC (`GLS-*`). |
+| CNV-4 | Registro de sesión | `[N]` | La lista crece con cada frase enviada; cada turno entra con animación y la vista se desplaza al último. Vive solo mientras el proceso está abierto (`ConversationTurn`, en memoria; no se persiste). |
+| CNV-5 | Botón **Repetir** por turno | `[N]` | A la derecha de la traducción de cada turno; repite la seña de ese turno sin crear uno nuevo. El botón del stage (`STG-4`) sigue repitiendo la última frase. |
 | CNV-6 | Nota de gesto | `[P]` | "Desliza desde el borde para volver". |
-| CNV-7 | Texto mostrado | `[P]` | Usa `lastText || input`. |
-| CNV-8 | Estado del panel | `[P]` | `done`→"Reproducción completada"; `signing`→"Reproduciendo señas..."; si no→"Esperando traducción". |
+| CNV-7 | Estado vacío | `[N]` | Sin turnos: "Aún no hay frases en esta conversación." (no hay bloques estáticos). |
+| CNV-8 | Sin estado "Esperando" | `[N]` | Se elimina el bloque de estado del avatar; ninguna sección dice "Esperando traducción". |
+| CNV-9 | Repetir cierra el drawer antes de reproducir | `[N]` | Repetir en un turno cierra el panel izquierdo, espera 500 ms (animación de cierre) y recién ahí reproduce la seña. |
 
 ---
 
@@ -185,7 +203,7 @@ Main.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | APP-1 | **Modo claro** | `[P]` | Tema claro con su paleta. |
-| APP-2 | **Modo oscuro** | `[P][A]` | Tema oscuro (default actual de la app). |
+| APP-2 | **Modo oscuro** | `[P][A]` | Tema oscuro con la paleta oscura del prototipo. **El default de la app es claro** (`Settings.darkTheme = false`). |
 | APP-3 | **Switch de tema** | `[P]` | Alterna; el ícono/label cambia (Moon ↔ Sun, "Modo oscuro" ↔ "Modo claro"). |
 | APP-4 | Tokens de color temables | `[P]` | `background`, `foreground/text`, `muted`, `line/outline`, `surface`, `strong`, `soft`, `primary`. |
 | APP-5 | Transición de tema | `[P]` | Cambio de color suave (250 ms). |
@@ -246,13 +264,14 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | BRG-1 | `window.SignAI.play()` | `[A]` | Reproduce el sign.json. Guard `?.`. |
-| BRG-2 | `setDebug(bool)` | `[A]` | Activa overlay de debug + `#status`. |
+| BRG-2 | `setDebug(bool)` | `[A]` | Activa overlay de debug + `#status`. El texto del overlay usa colores oscuros en tema claro (clase `light` en `<html>`) y coloca `#debug` arriba y `#status` abajo para no solaparse. |
 | BRG-3 | `setFreeCamera(bool)` | `[A]` | Cámara libre (orbitar/zoom sin límite). |
 | BRG-4 | `setGrid(bool)` | `[A]` | Grilla/suelo. |
 | BRG-5 | `setBackground(bool)` | `[A]` | Fondo bosque. |
 | BRG-6 | `setSpeed(0..1)` | `[N]` | Velocidad de reproducción de señas (slider `SET-4`). Aditivo. |
-| BRG-7 | `onPlaybackDone` (JS→Kotlin) | `[N]` | Evento al terminar `play()`; alimenta `STA-8`. Vía WebMessage / listener. |
+| BRG-7 | `onPlaybackDone` (JS→Kotlin) | `[N]` | Evento al terminar `play()`; alimenta `STA-8`. Vía `WebMessageListener` (`SignAIBridge`). |
 | BRG-8 | Contrato retrocompatible | `[A]` | Los 5 comandos actuales y el guard `?.` no cambian. |
+| BRG-9 | `setTheme(dark)` | `[N]` | Aditivo. Hace que el fondo del canvas 3D siga el tema claro/oscuro (mitiga el riesgo de light mode) y alterna la clase `light` en `<html>` para contrastar el texto de debug/estado. |
 
 ---
 
@@ -303,6 +322,7 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 | BRD-2 | Pantalla About | `[P]` | Logo, título, copy "Una herramienta que transforma tus frases en español a Lengua de Señas Colombiana mediante un avatar 3D." |
 | BRD-3 | Meta del About | `[P]` | "Proyecto de tesis" · "Pontificia Universidad Javeriana" · "Versión 1.0". |
 | BRD-4 | Versión dinámica | `[N]` | "Versión 1.0" debe leer de `BuildConfig.VERSION_NAME`, no hardcodeado. |
+| BRD-5 | Icono de lanzador propio | `[N]` | La app tenía el icono por defecto de Android. Ahora usa la "S" de `SignAiBranding.LogoLetter` como trazo geométrico: adaptive icon (`mipmap-anydpi-v26`, tile `#171717` + S `#F5F5F1`) y fallback plano para API < 26 (`drawable/ic_launcher.xml`). Ver `drawable/ic_launcher_foreground.xml`. |
 
 ---
 
@@ -310,7 +330,7 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 
 | ID | Feature | Origen | Estado | Razón |
 |---|---|---|---|---|
-| OM-1 | Home indicator | `[P]` | **Omitida** | Duplica la navegación por gestos de Android. |
+| OM-1 | Home indicator | `[P]` | **Conservada** | Se implementó (112×4) por fidelidad con el prototipo. |
 | OM-2 | Avatar CSS del prototipo | `[P]` | **Reemplazada** | Se usa el GLB 3D real. |
 | OM-3 | Starter history mock | `[P]` | **Reemplazada** | Se usa historial persistido real. |
 | OM-4 | Auto-relleno del mic | `[P]` | **Placeholder** | Sin reconocimiento de voz real todavía (`CTL-6`). |
@@ -339,7 +359,7 @@ Todos verificados disponibles en `phosphoricons-regular-android:1.0.5`.
 | RotateCcw | `ArrowCounterClockwise` | `STG-4`, `CNV-5` |
 | Send | `PaperPlaneTilt` | `CTL-4` |
 | Settings2 | `SlidersHorizontal` | `NAV-6` |
-| Sparkles | `Sparkle` | `CNV-4` |
+| Sparkles | `Sparkle` | `SET-3` |
 | Type | `TextAa` | `ACC-1/2` |
 | Volume2 | `SpeakerHigh` | `SET-4` |
 | X | `X` | cierres |

@@ -53,6 +53,26 @@ object SignAiTypography {
         @Composable @ReadOnlyComposable
         get() = LumoSignAiTheme.typography.input
 
+    val eyebrow
+        @Composable @ReadOnlyComposable
+        get() = LumoSignAiTheme.typography.eyebrow
+
+    val caption
+        @Composable @ReadOnlyComposable
+        get() = LumoSignAiTheme.typography.caption
+
+    val quote
+        @Composable @ReadOnlyComposable
+        get() = LumoSignAiTheme.typography.quote
+
+    val gloss
+        @Composable @ReadOnlyComposable
+        get() = LumoSignAiTheme.typography.gloss
+
+    val label
+        @Composable @ReadOnlyComposable
+        get() = LumoSignAiTheme.typography.label
+
     val titleLarge
         @Composable @ReadOnlyComposable
         get() = LumoSignAiTheme.typography.h2

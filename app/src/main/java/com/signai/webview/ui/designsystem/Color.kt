@@ -1,10 +1,9 @@
 package com.signai.webview.ui.designsystem
 
-// CUSTOMIZED — Lumo-generated (`lumo --setup`). Overrides applied:
-//   - DarkColors.primary = Blue900 (#276EF1) instead of Lumo's default White,
-//     so the app accent (Enviar, checkbox, drawer handle) is blue.
-//   - Everything else keeps the Lumo default palette (black bg, gray surfaces,
-//     white text, gray outline).
+// CUSTOMIZED — originally Lumo-generated (`lumo --setup`), now overridden with
+// the Vercel prototype palette (see `LightColors`/`DarkColors` below). The Lumo
+// default names (Gray*, Blue*, Red*, Green*) are kept for the remaining tokens
+// (error/success) but the semantic palette is the prototype's.
 // Do NOT re-run `lumo --setup` (it would overwrite these changes).
 
 import androidx.compose.runtime.Immutable
@@ -86,64 +85,95 @@ data class Colors(
     val textDisabled: Color,
     val scrim: Color,
     val elevation: Color,
-)
+    // Prototype-aligned tokens (PrototipoFrontend/app/globals.css):
+    // `strong` is the high-contrast foreground used for filled CTAs, the live
+    // dot and active states; `onStrong` is its readable content color.
+    // `soft` is the muted surface used for icon buttons, glows and tiles.
+    val strong: Color,
+    val onStrong: Color,
+    val soft: Color,
+) {
+    // The prototype exposes `muted` separately from any Lumo token; map it to
+    // the existing `textSecondary` so there is a single source of truth.
+    val muted: Color get() = textSecondary
+}
 
+// Palette mirrors the Vercel prototype exactly (PrototipoFrontend/app/globals.css
+// `:root` and `.theme-dark`). The prototype is the visual source of truth in
+// light mode, so the Lumo defaults were overridden:
+//   light  — background #f4f4f2, foreground #171717, muted #777773,
+//            line #deded9, surface rgba(255,255,253,.92), soft #e8e8e3
+//   dark   — background #111110, foreground #f5f5f1, muted #969690,
+//            line #32322f, surface rgba(30,30,28,.94), soft #292926
+// `primary` follows `strong` because the prototype has no blue accent; every
+// filled control uses the monochrome `strong`.
 internal val LightColors =
     Colors(
-        primary = Black,
-        onPrimary = White,
-        secondary = Gray400,
-        onSecondary = Black,
-        tertiary = Blue900,
-        onTertiary = White,
-        surface = Gray200,
-        onSurface = Black,
+        primary = Color(0xFF171717),
+        onPrimary = Color(0xFFF4F4F2),
+        secondary = Color(0xFFDEDED9),
+        onSecondary = Color(0xFF171717),
+        tertiary = Color(0xFF171717),
+        onTertiary = Color(0xFFF4F4F2),
+        // Prototype `--surface: rgba(255,255,253,.92)` is translucent because it
+        // sits over a `backdrop-filter: blur(14px)` panel. Compose has no cheap
+        // region blur, so we use the opaque composite over `background`
+        // (#f4f4f2) → #fefefc, which is what the prototype looks like with the
+        // avatar clipped above the panel.
+        surface = Color(0xFFFEFEFC),
+        onSurface = Color(0xFF171717),
         error = Red600,
         onError = White,
         success = Green600,
         onSuccess = White,
-        disabled = Gray100,
-        onDisabled = Gray500,
-        background = White,
-        onBackground = Black,
-        outline = Gray300,
+        disabled = Color(0xFFE8E8E3),
+        onDisabled = Color(0xFF777773),
+        background = Color(0xFFF4F4F2),
+        onBackground = Color(0xFF171717),
+        outline = Color(0xFFDEDED9),
         transparent = Color.Transparent,
         white = White,
         black = Black,
-        text = Black,
-        textSecondary = Gray700,
-        textDisabled = Gray400,
-        scrim = Color.Black.copy(alpha = 0.32f),
-        elevation = Gray700,
+        text = Color(0xFF171717),
+        textSecondary = Color(0xFF777773),
+        textDisabled = Color(0xFFB9B9B4),
+        scrim = Color.Black.copy(alpha = 0.28f),
+        elevation = Black,
+        strong = Color(0xFF171717),
+        onStrong = Color(0xFFF4F4F2),
+        soft = Color(0xFFE8E8E3),
     )
 
 internal val DarkColors =
     Colors(
-        primary = Blue900,
-        onPrimary = White,
-        secondary = Gray400,
-        onSecondary = White,
-        tertiary = Blue300,
-        onTertiary = Black,
-        surface = Gray900,
-        onSurface = White,
+        primary = Color(0xFFF5F5F1),
+        onPrimary = Color(0xFF111110),
+        secondary = Color(0xFF32322F),
+        onSecondary = Color(0xFFF5F5F1),
+        tertiary = Color(0xFFF5F5F1),
+        onTertiary = Color(0xFF111110),
+        surface = Color(0xFF1E1E1C), // opaque composite of rgba(30,30,28,.94)
+        onSurface = Color(0xFFF5F5F1),
         error = Red400,
         onError = Black,
         success = Green700,
         onSuccess = Black,
-        disabled = Gray700,
-        onDisabled = Gray500,
-        background = Black,
-        onBackground = White,
-        outline = Gray800,
+        disabled = Color(0xFF292926),
+        onDisabled = Color(0xFF969690),
+        background = Color(0xFF111110),
+        onBackground = Color(0xFFF5F5F1),
+        outline = Color(0xFF32322F),
         transparent = Color.Transparent,
         white = White,
         black = Black,
-        text = White,
-        textSecondary = Gray300,
-        textDisabled = Gray600,
-        scrim = Color.Black.copy(alpha = 0.72f),
-        elevation = Gray200,
+        text = Color(0xFFF5F5F1),
+        textSecondary = Color(0xFF969690),
+        textDisabled = Color(0xFF6B6B66),
+        scrim = Color.Black.copy(alpha = 0.28f),
+        elevation = Black,
+        strong = Color(0xFFF5F5F1),
+        onStrong = Color(0xFF111110),
+        soft = Color(0xFF292926),
     )
 
 val LocalColors = staticCompositionLocalOf { LightColors }
@@ -160,6 +190,7 @@ fun Colors.contentColorFor(backgroundColor: Color): Color {
         success -> onSuccess
         disabled -> onDisabled
         background -> onBackground
+        strong -> onStrong
         else -> Color.Unspecified
     }
 }

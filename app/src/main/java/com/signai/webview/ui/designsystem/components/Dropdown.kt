@@ -1,5 +1,11 @@
 package com.signai.webview.ui.designsystem.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,6 +34,7 @@ import androidx.compose.ui.window.PopupProperties
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
+import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
 import com.signai.webview.ui.theme.SignAiTheme
 
 // CUSTOMIZED — no re-generate with `lumo --add Dropdown` (Lumo doesn't have one).
@@ -78,15 +85,33 @@ fun SignAiDropdown(
                 onDismissRequest = onDismissRequest,
                 properties = PopupProperties(focusable = true),
             ) {
-                Surface(
-                    color = SignAiTheme.colors.surface,
-                    border = BorderStroke(1.dp, SignAiTheme.colors.outline),
-                    shape = SignAiShapes.cornerMedium,
-                    modifier = Modifier
-                        .widthIn(min = 160.dp)
-                        .heightIn(max = maxHeight),
+                val visibleState = remember { MutableTransitionState(false) }.apply { targetState = true }
+                AnimatedVisibility(
+                    visibleState = visibleState,
+                    enter =
+                        if (LocalReduceMotion.current) {
+                            EnterTransition.None
+                        } else {
+                            fadeIn(animationSpec = tween(160)) +
+                                scaleIn(
+                                    initialScale = 0.98f,
+                                    animationSpec = tween(160),
+                                )
+                        },
                 ) {
-                    Column(content = content)
+                    Surface(
+                        color = SignAiTheme.colors.surface,
+                        border = BorderStroke(1.dp, SignAiTheme.colors.outline),
+                        shape = SignAiShapes.cornerControl,
+                        modifier = Modifier
+                            .widthIn(min = 168.dp)
+                            .heightIn(max = maxHeight),
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(6.dp),
+                            content = content,
+                        )
+                    }
                 }
             }
         }

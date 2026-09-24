@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Icono de la app (spec BRD-*): la "S" del splash (SignAiBranding.LogoLetter).
+  Trazo geométrico y minimalista acorde al resto de la UI. El fondo oscuro
+  redondeado lo pinta @color/ic_launcher_background (capa de fondo del
+  adaptive icon).
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="640"
+    android:viewportHeight="640">
+    <path
+        android:strokeColor="#F5F5F1"
+        android:strokeWidth="72"
+        android:strokeLineCap="round"
+        android:pathData="M232,232 C184,232 168,260 168,292 C168,332 200,340 244,352 C288,364 316,372 316,412 C316,444 296,472 248,472 M232,232 C280,232 314,252 314,252" />
+</vector>

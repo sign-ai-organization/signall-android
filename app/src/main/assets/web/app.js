@@ -40,6 +40,7 @@ const state = {
   boneRestDir:   new Map(),
   frames: [],
   fps: 24,
+  speed: 1,
   frameIdx: 0,
   playing: false,
   lastTime: null,
@@ -65,7 +66,7 @@ const Debug = {
   statusEl: null,
   flags: {
     playback: () => [
-      `play: ${state.playing}  frame: ${Math.floor(state.frameIdx)}/${state.frames.length}  fps_datos: ${state.fps}`,
+      `play: ${state.playing}  frame: ${Math.floor(state.frameIdx)}/${state.frames.length}  fps_datos: ${state.fps}  speed: ${state.speed.toFixed(2)}`,
       `alpha_smooth: ${state.smoothAlpha}`,
       `palmL: (${state.palmNormalL.x.toFixed(2)}, ${state.palmNormalL.y.toFixed(2)}, ${state.palmNormalL.z.toFixed(2)})`,
       `palmR: (${state.palmNormalR.x.toFixed(2)}, ${state.palmNormalR.y.toFixed(2)}, ${state.palmNormalR.z.toFixed(2)})`,
@@ -122,11 +123,12 @@ const scene  = new THREE.Scene();
 scene.background = new THREE.Color(0x0d0f1a);
 
 const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
-// De frente, a la altura del cuello (~1.45 con avatar de 1.7): encuadre centrado en cara/cuello
-camera.position.set(0, 1.45, 2);
+// De frente, cámara algo alta (y=1.50, z=2.15) con target por debajo (y=1.20):
+// la mirada cae hacia adelante y compensa el contrapicado de la altura baja
+camera.position.set(0, 1.5, 2.15);
 
 const controls = new OrbitControls(camera, canvas);
-controls.target.set(0, 1.45, 0);
+controls.target.set(0, 1.2, 0);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.enableRotate = false;  // solo zoom: sin orbitar ni pan
@@ -142,12 +144,20 @@ const fill = new THREE.DirectionalLight(0x8090ff, 0.4);
 fill.position.set(-2, 2, -2);
 scene.add(fill);
 const grid = new THREE.GridHelper(4, 8, 0x1e2130, 0x1e2130);
+grid.visible = false; // por defecto sin grilla (suelo)
 scene.add(grid);
 
 // Fondo opcional (bosque): se carga una vez, se activa vía SignAI.setBackground(true)
 const BG_COLOR = new THREE.Color(0x0d0f1a);
+const BG_LIGHT = new THREE.Color(0xf4f4f2);
 let bgTexture = null;
+let showBg = false;
+let darkTheme = true;
 new THREE.TextureLoader().load("bosque.jpg", (t) => { bgTexture = t; });
+
+function refreshBackground() {
+  scene.background = (showBg && bgTexture) ? bgTexture : (darkTheme ? BG_COLOR : BG_LIGHT);
+}
 
 function resizeRenderer() {
   const w = canvas.clientWidth  || window.innerWidth;
@@ -511,12 +521,17 @@ function resetPose() {
 }
 
 // ── Loop de reproducción (sin video) ─────────────────────────────────────────
+// Avisa a Android que la seña terminó (Kotlin: WebMessageListener SignAIBridge).
+function notifyPlaybackDone() {
+  try { window.SignAIBridge?.postMessage("onPlaybackDone"); } catch (e) { /* no bridge */ }
+}
+
 function animTick(now) {
   if (!state.playing) return;
   state.animHandle = requestAnimationFrame(animTick);
   if (state.lastTime === null) { state.lastTime = now; return; }
 
-  state.frameIdx += (now - state.lastTime) / 1000 * state.fps;
+  state.frameIdx += (now - state.lastTime) / 1000 * state.fps * state.speed;
   state.lastTime  = now;
 
   const idx = Math.floor(state.frameIdx);
@@ -527,6 +542,7 @@ function animTick(now) {
     state.lastTime = null;
     cancelAnimationFrame(state.animHandle);
     resetPose();
+    notifyPlaybackDone();
     return;
   }
   try {
@@ -550,8 +566,8 @@ canvas.addEventListener("pointerdown", (e) => {
     state.playing = false;
     cancelAnimationFrame(state.animHandle);
     resetPose();
-    camera.position.set(0, 1.45, 2);
-    controls.target.set(0, 1.45, 0);
+    camera.position.set(0, 1.5, 2.15);
+    controls.target.set(0, 1.2, 0);
     controls.update();
     Debug.lastTap = "reset (long press)";
   }, 500);
@@ -577,6 +593,11 @@ window.SignAI = {
     state.animHandle = requestAnimationFrame(animTick);
   },
   setDebug(on) { Debug.enabled = !!on; Debug.render(); },
+  setSpeed(v) {
+    // v en 0..1 (0.5 = velocidad normal) → factor 0.1..3
+    const factor = (Number(v) || 0.5) * 2;
+    state.speed = Math.max(0.1, Math.min(3, factor));
+  },
   setFreeCamera(on) {
     controls.enableRotate = !!on;
     controls.enablePan = false; // nunca mover el punto de vista, solo orbitar/zoom
@@ -584,5 +605,13 @@ window.SignAI = {
     controls.maxDistance = on ? 20 : 3.8;
   },
   setGrid(on) { grid.visible = !!on; },
-  setBackground(on) { scene.background = (on && bgTexture) ? bgTexture : BG_COLOR; },
+  setBackground(on) { showBg = !!on; refreshBackground(); },
+  // Tema del canvas (aditivo, Fase F): el fondo del render sigue al tema.
+  // El <html> lleva la clase para que el CSS ajuste el color del texto
+  // de debug/estado (ver index.html).
+  setTheme(on) {
+    darkTheme = !!on;
+    document.documentElement.classList.toggle("light", !darkTheme);
+    refreshBackground();
+  },
 };

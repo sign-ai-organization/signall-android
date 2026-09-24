@@ -15,7 +15,9 @@ context: |
     Material 3 solo legacy en migración. Ver `AGENTS.md`.
   - Escena 3D: Three.js r169 (ES modules, CDN jsDelivr — requiere INTERNET en runtime)
   - Puente Kotlin↔JS: `window.SignAI` (`play`, `setDebug`, `setFreeCamera`, `setGrid`,
-    `setBackground`), llamadas con guard `?.`
+    `setBackground` + aditivos `setSpeed`, `setTheme`), llamadas con guard `?.`.
+    JS→Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` vía
+    `WebViewCompat.addWebMessageListener`.
   - Datos: `sign.json` horneado (1 seña `0000_0000_0000`, 59 frames @24fps)
   - Dataset fuente: LSC50 (50 señas, 5 voluntarios, 4 reps = 1000 videos), CSVs en `data/LANDMARKS/`
 
@@ -71,8 +73,15 @@ context: |
   seguramente cambiará (el prototipo usa "Seña"); el wordmark debe ser una
   constante/string resource única.
 
-  **Contrato JS** se extiende de forma aditiva (`setSpeed`, evento
+  **Contrato JS** se extiende de forma aditiva (`setSpeed`, `setTheme`, evento
   `onPlaybackDone`); los 5 comandos actuales y el guard `?.` no cambian.
+
+  **Estado UI (2026-09-23)**: las 7 fases del plan `prototipo-ui-vercel` (A–G)
+  están implementadas en `feat/prototipo-ui-vercel` y verificadas en device:
+  design system extendido, chrome (stage/panel/splash), drawers bidireccionales
+  (Conversación/Ajustes), historial en bottom sheet, About, máquina de estados
+  con bridge real, ajustes reales con persistencia y tema claro/oscuro. El
+  branding sigue centralizado en `ui/SignAiBranding.kt` (nombre abierto).
 
   ### Integraciones futuras
   - `../sign-ai-backend`: SÍ, previsto a futuro. Hoy: cero integración.

@@ -1,0 +1,29 @@
+package com.signai.webview.ui.designsystem.foundation
+
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+
+/**
+ * Press feedback (spec `ANI-6`): scales the node while pressed. Collapses to 1f
+ * when reduce-motion is active (`ANI-7`).
+ */
+@Composable
+fun Modifier.pressScale(
+    interactionSource: InteractionSource,
+    pressedScale: Float = 0.94f,
+): Modifier {
+    val pressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (pressed && !LocalReduceMotion.current) pressedScale else 1f,
+        label = "pressScale",
+    )
+    return this.graphicsLayer {
+        scaleX = scale
+        scaleY = scale
+    }
+}

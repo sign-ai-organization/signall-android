@@ -353,7 +353,10 @@ internal val PrefixSuffixTextPadding = 2.dp
 internal val MinTextLineHeight = 24.dp
 internal val MinSupportingTextLineHeight = 16.dp
 
-internal val UnfocusedOutlineThickness = 2.dp
-internal val FocusedOutlineThickness = 2.dp
+// Prototype input is `border: 1px solid var(--line)` (PrototipoFrontend
+// globals.css `.input-row input`). Focus keeps the 1px border and adds a soft
+// ring at the call site, so both states are hairline-thin.
+internal val UnfocusedOutlineThickness = 1.dp
+internal val FocusedOutlineThickness = 1.dp
 
 internal val IconDefaultSizeModifier = Modifier.defaultMinSize(24.dp, 24.dp)
