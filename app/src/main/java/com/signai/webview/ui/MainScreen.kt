@@ -117,37 +117,54 @@ fun MainScreen(state: MainScreenState) {
             ) {
                 BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
                     val panelWidth = minOf(maxWidth * 0.88f, 350.dp)
-                    SignAiEdgeDrawer(
-                        side = DrawerSide.End,
-                        isOpen = showSettings,
-                        onOpenChange = { open ->
-                            if (open) state.openDrawer(DrawerSide.End) else state.closeDrawer()
-                        },
-                        drawerWidth = panelWidth,
-                        edgeStripBottomExclusion = bottomBarHeight,
-                        drawerTopInset = drawerTopInset,
-                        previewLabel = "Ajustes",
-                        otherDrawerOpen = showConversation,
-                        currentlyOpenFraction = settingsFraction,
-                        onFractionChange = { settingsFraction = it },
-                        drawerContent = {
-                            SettingsSidebar(
-                                settings = state.settings,
-                                onToggle = state::toggle,
-                                onCharacter = state::setCharacter,
-                                onSpeed = state::setSpeed,
-                                onInterfaceSize = state::setInterfaceSize,
-                                sign = state.sign,
-                                signs = state.signs,
-                                onPickSign = state::pickSign,
-                                onClose = state::closeDrawer,
-                                onOpenAbout = {
-                                    state.closeDrawer()
-                                    showAbout = true
+
+                    // Compose order is the fix (spec `EDG-22`). The WebView is
+                    // an embedded Android View: it takes every touch inside its
+                    // bounds and no Compose sibling can paint over it, so the
+                    // stage and the control bar must be the FIRST children and
+                    // the drawers must be composed after them, as siblings (not
+                    // nested inside each other). Previously each drawer wrapped
+                    // the next one (End → Start → stage), so the scene and the
+                    // bar lived inside the drawers' content and stayed on top of
+                    // the panels, while the backdrops never saw a tap.
+                    Box(Modifier.fillMaxSize()) {
+                        AvatarStage(
+                            status = state.playbackState.label,
+                            doneVisible = state.playbackState == PlaybackState.Done,
+                            onRepeat = state::replay,
+                            bottomInset = bottomBarHeight,
+                            modifier = Modifier.fillMaxSize(),
+                        ) {
+                            AvatarWebView(
+                                modifier = Modifier.fillMaxSize(),
+                                onReady = state::attachWebView,
+                                onProgress = { progress = it },
+                                onPlaybackDone = state::onPlaybackDone,
+                                onLoaded = {
+                                    loading = false
+                                    state.syncWebSettings()
                                 },
+                                interactive = !(showConversation || showSettings),
                             )
-                        },
-                    ) {
+                        }
+                        Box(
+                            Modifier
+                                .align(Alignment.BottomCenter)
+                                .onSizeChanged {
+                                    bottomBarHeight = with(density) { it.height.toDp() }
+                                },
+                        ) {
+                            SignAiBottomBar(
+                                query = state.inputText,
+                                onQueryChange = state::setInput,
+                                playbackState = state.playbackState,
+                                onSend = state::play,
+                                onMic = state::toggleMic,
+                                onOpenHistory = { showHistory = true },
+                                enabled = !state.replayPending,
+                            )
+                        }
+
                         SignAiEdgeDrawer(
                             side = DrawerSide.Start,
                             isOpen = showConversation,
@@ -160,7 +177,10 @@ fun MainScreen(state: MainScreenState) {
                             previewLabel = "Conversación",
                             otherDrawerOpen = showSettings,
                             currentlyOpenFraction = conversationFraction,
+                            otherOpenFraction = settingsFraction,
                             onFractionChange = { conversationFraction = it },
+                            claimGesture = { state.claimDrawerGesture(DrawerSide.Start) },
+                            releaseGesture = { state.releaseDrawerGesture(DrawerSide.Start) },
                             drawerContent = {
                                 ConversationPanel(
                                     turns = state.conversation,
@@ -169,46 +189,46 @@ fun MainScreen(state: MainScreenState) {
                                 )
                             },
                         ) {
-                            // The WebView fills the whole content and the control
-                            // bar overlays it, so the bar's rounded top corners
-                            // reveal the scene (not the black root background).
-                            Box(Modifier.fillMaxSize()) {
-                                AvatarStage(
-                                    status = state.playbackState.label,
-                                    doneVisible = state.playbackState == PlaybackState.Done,
-                                    onRepeat = state::replay,
-                                    bottomInset = bottomBarHeight,
-                                    modifier = Modifier.fillMaxSize(),
-                                ) {
-                                    AvatarWebView(
-                                        modifier = Modifier.fillMaxSize(),
-                                        onReady = state::attachWebView,
-                                        onProgress = { progress = it },
-                                        onPlaybackDone = state::onPlaybackDone,
-                                        onLoaded = {
-                                            loading = false
-                                            state.syncWebSettings()
-                                        },
-                                    )
-                                }
-                                Box(
-                                    Modifier
-                                        .align(Alignment.BottomCenter)
-                                        .onSizeChanged {
-                                            bottomBarHeight = with(density) { it.height.toDp() }
-                                        },
-                                ) {
-                                    SignAiBottomBar(
-                                        query = state.inputText,
-                                        onQueryChange = state::setInput,
-                                        playbackState = state.playbackState,
-                                        onSend = state::play,
-                                        onMic = state::toggleMic,
-                                        onOpenHistory = { showHistory = true },
-                                        enabled = !state.replayPending,
-                                    )
-                                }
-                            }
+                            // Empty: the drawer still needs the slot, but the
+                            // scene is a sibling below it now (spec `EDG-22`).
+                            Box(Modifier.fillMaxSize())
+                        }
+
+                        SignAiEdgeDrawer(
+                            side = DrawerSide.End,
+                            isOpen = showSettings,
+                            onOpenChange = { open ->
+                                if (open) state.openDrawer(DrawerSide.End) else state.closeDrawer()
+                            },
+                            drawerWidth = panelWidth,
+                            edgeStripBottomExclusion = bottomBarHeight,
+                            drawerTopInset = drawerTopInset,
+                            previewLabel = "Ajustes",
+                            otherDrawerOpen = showConversation,
+                            currentlyOpenFraction = settingsFraction,
+                            otherOpenFraction = conversationFraction,
+                            onFractionChange = { settingsFraction = it },
+                            claimGesture = { state.claimDrawerGesture(DrawerSide.End) },
+                            releaseGesture = { state.releaseDrawerGesture(DrawerSide.End) },
+                            drawerContent = {
+                                SettingsSidebar(
+                                    settings = state.settings,
+                                    onToggle = state::toggle,
+                                    onCharacter = state::setCharacter,
+                                    onSpeed = state::setSpeed,
+                                    onInterfaceSize = state::setInterfaceSize,
+                                    sign = state.sign,
+                                    signs = state.signs,
+                                    onPickSign = state::pickSign,
+                                    onClose = state::closeDrawer,
+                                    onOpenAbout = {
+                                        state.closeDrawer()
+                                        showAbout = true
+                                    },
+                                )
+                            },
+                        ) {
+                            Box(Modifier.fillMaxSize())
                         }
                     }
                 }

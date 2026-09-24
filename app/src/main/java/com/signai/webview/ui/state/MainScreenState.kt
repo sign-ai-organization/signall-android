@@ -20,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicReference
 
 /** Prototype timing: `translating` lasts 850 ms before `signing` (spec `STA-7`). */
 private const val TranslatingMs = 850L
@@ -141,6 +142,27 @@ class MainScreenState(
 
     fun closeDrawer() {
         openDrawer = null
+    }
+
+    /**
+     * Immediate, synchronous claim for the drawer gesture (spec `EDG-19`).
+     *
+     * `openDrawer` is reactive: a second finger lands before the state change has
+     * recomposed the other tab, so two tabs could be pressed "at the same time"
+     * and both open. This flag is read and written on the spot, in the touch
+     * handler, so the second gesture is rejected in the same frame. Not Compose
+     * state on purpose: it is a lock, it must not trigger recomposition.
+     */
+    private val drawerGestureOwner = AtomicReference<DrawerSide?>(null)
+
+    /** Returns true when [side] may start a drawer gesture right now. */
+    fun claimDrawerGesture(side: DrawerSide): Boolean =
+        drawerGestureOwner.compareAndSet(null, side) ||
+            drawerGestureOwner.get() == side
+
+    /** Releases the lock if [side] still owns it. */
+    fun releaseDrawerGesture(side: DrawerSide) {
+        drawerGestureOwner.compareAndSet(side, null)
     }
 
     fun setInput(text: String) {

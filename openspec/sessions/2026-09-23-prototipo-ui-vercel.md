@@ -664,3 +664,93 @@ mitad del panel.
   (`edgeStripIsOpen`), que era la queja "ni siquiera la pestaña la está
   tomando". Se ajustó el gate de `EDG-19` para no bloquear el cierre.
 - `./gradlew build` ✅ e `installDebug` ✅ en `1ed6699f`.
+
+## Drawers: causa raíz del hit-testing resuelta (con pruebas en dispositivo)
+
+Cuarta pasada, la definitiva. El usuario seguía reportando que con la izquierda
+abierta **nada** cerraba: ni tocar afuera, ni la pestaña, ni arrastrar. Se
+invirtió el orden anterior (se reordenaron los drawers como hermanos, no
+anidados) y **aun así** fallaba, así que esta vez se probó **en el dispositivo**
+en lugar de razonar.
+
+### Cómo se probó
+
+- `adb shell input` está **bloqueado por MIUI** (`INJECT_EVENTS`), así que se
+  escribió un cliente mínimo del protocolo de control de scrcpy
+  (`/tmp/opencode/scrcpy_ctl.py`, no commiteado): ejecuta `scrcpy-server` como
+  `shell`, abre `localabstract:scrcpy_<SCID>` y serializa `INJECT_TOUCH_EVENT`.
+  Sirvió para acotar el problema, pero la verificación final la hizo el usuario
+  tocando mientras se leían logs. **Lección:** en MIUI, para pruebas de toques,
+  pedir al usuario que toque y leer `logcat -s <tag>` es más fiable que cualquier
+  inyección.
+- Se instrumentó temporalmente un nodo a pantalla completa y *no consumidor*
+  (`awaitPointerEventScope`) en la cima del árbol. Reveló dos cosas: (1) los
+  toques del usuario **sí** llegan a Compose; (2) un nodo Compose en la cima
+  **acapara la ruta de hit-test** aunque no consuma, así que el propio
+  diagnóstico bloqueaba la pestaña. Fue la pista que llevó a la causa real.
+- Se midió la posición real del backdrop y de los overlays con logs de layout:
+  el panel mide ~936 px de 1080 (88%), o sea "afuera" son sólo ~144 px, y los
+  overlays del drawer **inactivo** (franja de borde + pestaña) cubrían justo esa
+  franja del lado derecho.
+
+### Causa raíz (`EDG-22`)
+
+1. Los dos drawers eran árboles **a pantalla completa apilados**. El inactivo
+   seguía componiendo su franja de borde y su pestaña con
+   `draggable(enabled = false)` / `clickable(enabled = false)`. En Compose **un
+   gesto deshabilitado sigue registrando un nodo de input y sigue siendo la ruta
+   de hit-test más alta**, así que el drawer inactivo se comía todos los toques
+   destinados al backdrop del activo. El backdrop nunca disparaba.
+2. En el panel **izquierdo**, el backdrop se posicionaba mal (`baseX =
+   widthPx - abs(offsetX)`), y al abrirse quedaba desplazado fuera de la pantalla.
+3. Además, el `draggable` del panel del drawer **inactivo** seguía activo, así
+   que un deslizamiento desde el borde extremo podía abrir el panel opuesto por
+   encima de uno abierto.
+
+### Qué se cambió
+
+- **`MainScreen.kt`**: los dos `SignAiEdgeDrawer` son **hermanos** compuestos
+  después del stage y de la barra inferior (que pasan a ser los primeros hijos).
+  El WebView es `AndroidView`, así que debe quedar **abajo**; los drawers van
+  encima. Se eliminó el anidamiento `End → Start → stage`. Se conectan
+  `claimGesture`/`releaseGesture` y `otherOpenFraction`.
+- **`EdgeDrawer.kt`**: reordenado a
+  `content → edge strip → preview → backdrop → panel → overflow → handle`.
+  - Backdrop **a pantalla completa** (`fillMaxSize`), compuesto **antes** del
+    panel y del handle, con el gradiente anclado al borde del panel
+    (`edgeX = widthPx + offsetX` en Start, `offsetX` en End) vía
+    `drawBehind`/`Brush.horizontalGradient`. Antes se recortaba a la franja
+    expuesta y fallaba el posicionamiento.
+  - Franja de borde, pestaña y `draggable` del panel: **no se adjunta el gesto**
+    cuando el drawer no puede actuar (`.then(if (enabled) ... else Modifier)`).
+    Un nodo sin input es ignorado por el hit-test y puede seguir dibujándose.
+  - La pestaña del lado contrario se **desvanece de forma continua** con
+    `enabledFraction = 1 - otherOpenFraction` (sincronizada con la apertura, no
+    al final), en vez de desaparecer de golpe.
+  - `panelMovable = isOpen || fraction > 0.001f` controla el drag del panel.
+- **`MainScreenState.kt`**: lock síncrono
+  `claimDrawerGesture(side)` / `releaseDrawerGesture(side)` sobre un
+  `AtomicReference` (no estado Compose: es un candado, no debe recomponer). Se
+  reclama en el **primer** evento de puntero (`onPress`/`onDragStarted`), así que
+  dos dedos en ambas pestañas no pueden abrir los dos paneles: el segundo gesto
+  se rechaza en el mismo frame (`EDG-19`).
+- **`AvatarWebView.kt`**: nuevo `interactive: Boolean`. El `AndroidView` lleva un
+  `pointerInteropFilter` que devuelve `true` mientras un drawer está abierto, de
+  modo que la escena no se come los gestos del panel/backdrop.
+- **`AvatarStage.kt`**: se separó `AvatarStageOverlays` (hint + Repetir) para que
+  el chrome del stage siga encima de los drawers sin arrastrar el WebView.
+- **Comentario "ORO"** al inicio de `EdgeDrawer.kt` con las tres reglas
+  (gesto deshabilitado en Compose, `AndroidView` como View hija, orden del
+  backdrop).
+- **`openspec/specs/ui/spec.md`**: reescritos EDG-9/10/17/19/20/21 y nuevos
+  EDG-22 (orden de capas y hit-testing) y EDG-23 (el drawer inactivo no compone
+  ningún gesto).
+
+### Estado
+
+- Verificado por el usuario en `1ed6699f`: abrir/cerrar por tap, tap afuera,
+  drag desde pestaña/borde/panel, exclusión de la sidebar contraria, desvanecido
+  gradual sincronizado, doble dedo bloqueado y borde extremo inerte. Todo
+  funcional.
+- `./gradlew build` ✅ e `installDebug` ✅ en `1ed6699f`.
+- Sin restos de instrumentación en el código (`grep SignAIDrawer` → vacío).

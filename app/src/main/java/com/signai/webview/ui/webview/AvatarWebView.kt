@@ -3,6 +3,7 @@ package com.signai.webview.ui.webview
 import android.webkit.WebView
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebViewAssetLoader
@@ -20,10 +21,18 @@ fun AvatarWebView(
     onProgress: (Int) -> Unit = {},
     onPlaybackDone: () -> Unit = {},
     onLoaded: () -> Unit = {},
+    // While a drawer is open the WebView must not take any touch: it is an
+    // embedded Android View and would otherwise win the whole screen, leaving
+    // the drawer's backdrop and handle unreachable (spec `EDG-22`).
+    interactive: Boolean = true,
 ) {
     val context = LocalContext.current
     AndroidView(
-        modifier = modifier,
+        modifier = modifier.pointerInteropFilter {
+            // Returning true consumes the event here, so the scene never sees it
+            // while a drawer is open and the panel/backdrop keep the taps.
+            !interactive
+        },
         factory = {
             WebView(it).apply {
                 settings.javaScriptEnabled = true
