@@ -314,6 +314,21 @@ async def handle_session(websocket) -> None:
                 print(f"[mock] frame no JSON, ignorado: {message!r}")
                 continue
 
+            if payload.get("type") == "end":
+                # El cliente soltó el micrófono: los 1.5 s de silencio que
+                # cierran una frase nunca van a llegar porque dejó de mandar
+                # audio. Se cierra a la fuerza, que es para lo que existe este
+                # frame en el protocolo del STT.
+                if USE_STT and (utterance.voice or utterance.chunks):
+                    print(f"[stt] 'end' del cliente, cerrando {len(utterance.chunks)} chunks")
+                    pcm = utterance.pcm()
+                    utterance.reset()
+                    if transcribing is None or transcribing.done():
+                        transcribing = asyncio.ensure_future(transcribe_and_translate(pcm))
+                else:
+                    utterance.reset()
+                continue
+
             if payload.get("type") != "text":
                 print(f"[mock] tipo ignorado: {payload.get('type')!r}")
                 continue

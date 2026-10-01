@@ -93,6 +93,20 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
      */
     fun sendAudio(chunk: ByteArray): Boolean = socket?.send(chunk.toByteString()) ?: false
 
+    /**
+     * Closes the utterance the transcriber has open.
+     *
+     * The STT decides a segment ended by hearing silence, but if the user
+     * releases the mic first, that silence is never sent — the capture stops
+     * the moment it is toggled off — and the segment would stay open forever.
+     * The STT protocol has a frame for exactly this: send `end` to force the
+     * final transcript of the segment in progress.
+     */
+    fun sendEnd(): Boolean {
+        val payload = JSONObject().put("type", "end").toString()
+        return socket?.send(payload) ?: false
+    }
+
     fun close() {
         socket?.close(NORMAL_CLOSURE, "client closing")
         socket = null
