@@ -156,8 +156,31 @@ pero no `glosas:`, el problema es Ollama.
 ```
 
 Lo que **no** está todavía: el micrófono (paso 5 del plan) y el catálogo real
-(la tabla de las 50 señas en Neon). Por eso hoy todas las glosas comparten la
-misma animación: el mock sirve el `sign.json` del repo para todas.
+(la tabla de las 50 señas en Neon).
+
+### Por qué se repite la seña
+
+El avatar reproduce **una vez por glosa**: 3 glosas = 3 reproducciones. Con el
+catálogo real cada glosa tiene su propia animación, así que se ven 3 señas
+distintas.
+
+Hoy el mock solo tiene **una** animación (`sign.json` del repo), así que la
+parte en ANIMATION_SLICES: cada glosa recibe una porción distinta de esa misma
+seña, para que se note que la cola va cambiando de movimiento en vez de repetir
+lo mismo.
+
+### La caché de las animaciones
+
+La app guarda en el disco lo que baja, en `cache/signs/`, con un nombre tipo
+`YO_3c0f62.json`: la glosa más una huella de la ruta del asset. Si el backend
+empieza a servir otra ruta, baja el archivo nuevo en vez de reusar el viejo.
+
+Límite conocido: si la ruta no cambia pero **cambia el contenido**, la caché
+sigue vieja (haría falta un ETag o un hash del servidor). Para forzarlo:
+
+```bash
+adb shell run-as com.signai.webview rm -rf cache/signs
+```
 
 ---
 

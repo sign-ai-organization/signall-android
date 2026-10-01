@@ -106,6 +106,16 @@ GLOSS_SYSTEM_PROMPT = (
 # Glosas fijas, para que la prueba sea estable y no dependa del modelo.
 FIXED_GLOSSES = ["YO", "UNIVERSIDAD", "IR"]
 
+# Una sola animación real alcanza para la demo, pero si todas las glosas
+# recibieran el MISMO archivo se vería "la misma seña repetida N veces" y no
+# dejaría claro que la cola está reproduciendo ítems distintos. Así que el
+# archivo se corta en ANIMATION_SLICES porciones: cada glosa recibe una parte
+# distinta de la misma seña, y se nota que el avatar va cambiando de movimiento.
+#
+# NO es así en el sistema real: cada glosa tiene su propia animación, que es lo
+# que descarga la app (el backend guarda una ruta distinta por glosa).
+ANIMATION_SLICES = 4
+
 # Si la frase contiene esta palabra se responde con un error, para probar el
 # camino de fallo del cliente.
 FAIL_WITH = "FALLA"
@@ -118,11 +128,26 @@ def animation_bytes() -> bytes:
     return DEFAULT_ANIMATION.read_bytes()
 
 
-def gloss_filename(gloss: str) -> str:
-    """`YO` → `yo.json`. El backend guarda la ruta; el nombre del archivo es
-    cosa de este mock."""
-    safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in gloss.strip())
-    return f"{safe or 'glosa'}.json"
+def animation_slice(index: int) -> bytes:
+    """Porción `index` de la animación, para que cada glosa se vea distinta.
+
+    El archivo real de cada seña sería una animación completa; acá se usa un
+    solo sign.json partido en ANIMATION_SLICES trozos (ver la nota de esa
+    constante).
+    """
+    data = json.loads(animation_bytes())
+    frames = data.get("frames") or []
+    if not frames:
+        return animation_bytes()
+
+    total = len(frames)
+    start = (index % ANIMATION_SLICES) * total // ANIMATION_SLICES
+    end = ((index % ANIMATION_SLICES) + 1) * total // ANIMATION_SLICES
+    chunk = frames[start:end] or frames
+    return json.dumps(
+        {"stem": f"{data.get('stem', '0000_0000_0000')}_p{index}", "fps": data.get("fps", 24),
+         "total_frames": len(chunk), "frames": chunk}
+    ).encode()
 
 
 def glosses_from_ollama(text: str) -> list[str]:
@@ -159,8 +184,14 @@ def build_result(text: str) -> list[dict]:
         {
             "type": "AFFIRMATIVE",
             "glosses": [
-                {"text": g, "available": True, "glb_path": f"/static/{gloss_filename(g)}"}
-                for g in glosses
+                {
+                    "text": g,
+                    "available": True,
+                    # La ruta lleva el índice: el mock reparte la única
+                    # animación disponible en ANIMATION_SLICES porciones.
+                    "glb_path": f"/static/{i}.json",
+                }
+                for i, g in enumerate(glosses)
             ],
         }
     ]
@@ -185,11 +216,14 @@ def handle_http(connection, request) -> Response | None:
             ).encode(),
         )
     if path.startswith("/static/"):
+        name = path[len("/static/"):]
+        # El nombre lleva el índice de la glosa en la respuesta.
+        index = int(name.split(".")[0]) if name.split(".")[0].isdigit() else 0
         return Response(
             200,
             "OK",
             Headers([("Content-Type", "application/json")]),
-            animation_bytes(),
+            animation_slice(index),
         )
     return Response(404, "Not Found", Headers(), b"not found")
 

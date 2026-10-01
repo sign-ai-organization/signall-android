@@ -33,8 +33,8 @@ class SignAssetRepository(
         .build()
 
     /** Same-origin path of an already-downloaded asset, or null. */
-    fun cachedUrl(gloss: String, extension: String): String? {
-        val file = fileFor(gloss, extension)
+    fun cachedUrl(gloss: String, assetPath: String): String? {
+        val file = fileFor(gloss, assetPath)
         return if (file.isFile) SIGNS_PATH_PREFIX + file.name else null
     }
 
@@ -45,16 +45,14 @@ class SignAssetRepository(
      */
     suspend fun resolve(gloss: String, assetPath: String): String? {
         if (assetPath.isBlank()) return null
-        val extension = extensionFor(assetPath)
-        cachedUrl(gloss, extension)?.let { return it }
-
+        cachedUrl(gloss, assetPath)?.let { return it }
+        val target = fileFor(gloss, assetPath)
+        val relative = assetPath.trimStart('/')
+        // The request is built *inside* the runCatching on purpose: a
+        // malformed URL (a bad `signai.backendWsUrl`) must degrade to
+        // "asset unavailable", not take the app down mid-playback.
         return withContext(Dispatchers.IO) {
-            val dir = File(cacheDir, SIGNS_PATH_PREFIX.trim('/')).apply { mkdirs() }
-            val target = File(dir, fileNameFor(gloss, extension))
-            val relative = assetPath.trimStart('/')
-            // The request is built *inside* the runCatching on purpose: a
-            // malformed URL (a bad `signai.backendWsUrl`) must degrade to
-            // "asset unavailable", not take the app down mid-playback.
+            target.parentFile?.mkdirs()
             runCatching {
                 val request = Request.Builder()
                     .url(httpOrigin.trimEnd('/') + "/" + relative)
@@ -73,8 +71,9 @@ class SignAssetRepository(
         }
     }
 
-    private fun fileFor(gloss: String, extension: String) =
-        File(cacheDir, SIGNS_PATH_PREFIX.trim('/')).let { File(it, fileNameFor(gloss, extension)) }
+    private fun fileFor(gloss: String, assetPath: String) =
+        File(cacheDir, SIGNS_PATH_PREFIX.trim('/'))
+            .let { File(it, fileNameFor(gloss, assetPath)) }
 
     companion object {
         const val TAG = "SignAiNet"
@@ -85,8 +84,24 @@ class SignAssetRepository(
         /** Must stay in sync with the `WebViewAssetLoader` domain in `AvatarWebView`. */
         const val WEB_ORIGIN = "https://appassets.androidplatform.net"
 
-        fun fileNameFor(gloss: String, extension: String): String =
-            gloss.uppercase().replace(UNSAFE, "_") + extension
+        /**
+         * Cached file name: the gloss plus a short fingerprint of the asset
+         * path, e.g. `YO_a1b2c3.json`.
+         *
+         * The fingerprint is what keeps the cache honest. Keyed by gloss alone,
+         * an already-downloaded file was reused forever, so a backend that
+         * starts serving a *different* animation for a gloss looked like it had
+         * no effect. Tying the name to the path means a new path means a new
+         * file.
+         *
+         * Known limit: if the path stays the same and only its contents
+         * change, the cache is still stale — that needs an ETag or a content
+         * hash from the server.
+         */
+        fun fileNameFor(gloss: String, assetPath: String): String {
+            val fingerprint = assetPath.hashCode().toUInt().toString(16).take(6)
+            return gloss.uppercase().replace(UNSAFE, "_") + "_" + fingerprint + extensionFor(assetPath)
+        }
 
         /** The corpus ships baked landmark frames (`.json`); `.glb` is the later format. */
         fun extensionFor(assetPath: String): String =
