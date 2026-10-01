@@ -134,34 +134,50 @@ Con el usuario autorizando "conectar todo lo posible, mockeando lo que falte":
   repo). Permite probar la app sin Neon, Whisper ni Ollama, y ejercita el camino
   de descarga que más riesgo tenía.
 
-### Verificado en emulador (VMApp_API36)
+### Bugs encontrados y corregidos probando en el emulador
 
-- `./gradlew build` verde, `installDebug` OK, la app arranca.
-- **Conecta**: con el mock corriendo, el hint dice "Listo para traducir" y no
-  "Sin conexión"; el mock registra la sesión abierta. El parser del cliente
-  funciona contra el payload real del mock.
-- Avatar carga, la escena 3D anda, el drawer de Conversación abre con drag.
+Probando con el MCP de mobile-next (elAGENTS.md lo marca como vía primaria;
+yo venía usando `adb shell input` a ciegas y por eso diagnosing cosas que no
+eran) aparecieron dos bugs reales:
 
-### NO verificado: el flujo de la frase escrita
+1. **Crash al descargar el asset** — `4bf0699`. `httpOrigin` concatenaba
+   esquema y host sin separador: `ws://10.0.2.2:8080/ws/translate` se
+   volvía `http10.0.2.2:8080/ws`, OkHttp lo rechazaba y la app moría con
+   `Expected URL scheme 'http' or 'https' but was 'http10.0.2.2'` justo
+   cuando llegaba la primera glosa con animación. Además, la request se
+   construía *fuera* del `runCatching`, así que una URL mal puesta mataba
+   la app; ahora degrada a "asset no disponible".
+2. **El WebView robaba el foco** — `be653ec`. Un WebView es focusable en
+   touch mode por defecto: lo tomaba al arrancar y lo mantenía, así que
+   **todo lo que se escribía iba a la escena 3D en vez de al campo**, el
+   botón Traducir quedaba deshabilitado y la app parecía muerta.
+   `mobile_list_elements_on_screen` lo dejó claro: WebView y EditText
+   ambos `[focused]`. La escena no tiene input de texto ni necesita el
+   IME, así que `isFocusableInTouchMode = false` lo resuelve.
 
-**Los toques en la barra de control no llegan en este emulador.** Se probaron
-`input tap`, `input swipe` con punto fijo (120-150 ms), `input touchscreen swipe`
-con 1 px de movimiento, y navegación con TAB: ninguno enfocó el campo ni activó
-el mic ni el botón de historial. Lo que **sí** responde es el `draggable` del
-tirador del drawer — el mismo patrón que el WebView se queda con los toques.
+**Corrección a lo que reporté antes:** sospeché un bug de layering
+preexistente entre el WebView y la barra de control. **Era falso.** Mis
+coordenadas estaban mal (leí y≈1735 de una captura escalada; la barra
+está en y≈2017) y el problema real era el foco. El layering estaba bien
+desde el principio.
 
-**No lo introdujo este trabajo**: no se tocó el orden de composición ni la barra.
-Es lo mismo que ya está documentado en `AGENTS.md`/`EDG-22` (el `AndroidView` del
-WebView es un View real y se queda con los toques de sus bounds). Ojo: en esa nota
-se habla de los *drawers*, no de la barra de control, y el comentario de
-`MainScreen` sí afirma que la barra debe ir antes que los drawers. **Hay que
-comprobarlo en el device real**: si la barra está muerta ahí también, es un bug de
-layering preexistente y vale la pena arreglarlo.
+### Verificado end-to-end en emulador (VMApp_API36)
 
-Lo que falta para cerrar la prueba end-to-end: enviar una frase desde la UI y ver
-las glosas en el caption y la cola reproduciéndose. Se puede hacer a mano en el
-device, o con el mock corriendo y
-`-Psignai.backendWsUrl=ws://<ip-de-tu-lan>:8080/ws/translate`.
+Todo el camino, con `tools/mock_backend.py`:
+
+1. Escribo "quiero ir a la universidad" y le doy Traducir.
+2. El mock registra la frase recibida.
+3. La app descarga los 3 assets al `cache/` (438 KB cada uno).
+4. El hint del stage muestra **`YO · UNIVERSIDAD · IR`** (las glosas del
+   backend, `STA-13`).
+5. La cola se reproduce completa y el estado llega a
+   **"Reproducción completada"** con el botón Repetir visible → el evento
+   `onPlaybackDone` del bridge funciona (`BRG-7`/`STA-8`).
+6. **Repetir** reenvía la frase y reproduce de nuevo, y **no vuelve a
+   descargar** (mtime intacto): la caché de assets funciona.
+7. El drawer de Conversación muestra los 3 turnos con sus glosas.
+
+Sin crashes nuevos. `cache/signs/{YO,UNIVERSIDAD,IR}.json` en disco.
 
 ## Pendiente
 
