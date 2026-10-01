@@ -99,36 +99,40 @@ def handle_http(connection, request) -> Response | None:
 async def handle_session(websocket) -> None:
     print(f"[mock] sesión abierta desde {websocket.remote_address}")
 
-    async for message in websocket:
-        if isinstance(message, bytes):
-            # Audio real: el backend se lo reenvía a Whisper. Acá se ignora.
-            print(f"[mock] audio recibido ({len(message)} bytes), ignorado")
-            continue
+    try:
+        async for message in websocket:
+            if isinstance(message, bytes):
+                # Audio real: el backend se lo reenvía a Whisper. Acá se ignora.
+                print(f"[mock] audio recibido ({len(message)} bytes), ignorado")
+                continue
 
-        try:
-            payload = json.loads(message)
-        except json.JSONDecodeError:
-            print(f"[mock] frame no JSON, ignorado: {message!r}")
-            continue
+            try:
+                payload = json.loads(message)
+            except json.JSONDecodeError:
+                print(f"[mock] frame no JSON, ignorado: {message!r}")
+                continue
 
-        if payload.get("type") != "text":
-            print(f"[mock] tipo ignorado: {payload.get('type')!r}")
-            continue
+            if payload.get("type") != "text":
+                print(f"[mock] tipo ignorado: {payload.get('type')!r}")
+                continue
 
-        text = (payload.get("text") or "").strip()
-        print(f"[mock] frase: {text!r}")
+            text = (payload.get("text") or "").strip()
+            print(f"[mock] frase: {text!r}")
 
-        if FAIL_WITH in text.upper():
+            if FAIL_WITH in text.upper():
+                await websocket.send(
+                    json.dumps({"type": "error", "message": "Mock: no se pudo traducir."})
+                )
+                continue
+
             await websocket.send(
-                json.dumps({"type": "error", "message": "Mock: no se pudo traducir."})
+                json.dumps({"type": "transcript", "text": text, "final": True})
             )
-            continue
-
-        await websocket.send(
-            json.dumps({"type": "transcript", "text": text, "final": True})
-        )
-        await asyncio.sleep(0.4)  # imitates the LLM round trip
-        await websocket.send(json.dumps(RESULT))
+            await asyncio.sleep(0.4)  # imitates the LLM round trip
+            await websocket.send(json.dumps(RESULT))
+    except websockets.exceptions.ConnectionClosed:
+        # Normal: the app dropped the session, it reconnects on its own.
+        print("[mock] sesión cerrada por el cliente")
 
 
 async def main() -> None:
