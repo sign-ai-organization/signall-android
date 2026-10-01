@@ -10,6 +10,22 @@ tema y la escena 3D se quedan igual. Solo cambiamos **de dónde salen las glosas
 
 ---
 
+## Cómo correrlo ahora (terminales)
+
+La guía completa, paso a paso y con una terminal por proceso, está en
+[`puesta-en-marcha.md`](puesta-en-marcha.md). Resumen:
+
+```bash
+# 1. Calentar Ollama (solo la primera vez: tarda ~1 min)
+ollama run qwen3:4b-instruct "hola"
+
+# 2. Terminal del "cerebro" (mock con el LLM real)
+cd ../webview && python tools/mock_backend.py --ollama
+
+# 3. Terminal de la app (en el emulador no hace falta pasar la IP)
+cd ../webview && ./gradlew installDebug
+```
+
 ## Los tres repos, en una línea
 
 ```
