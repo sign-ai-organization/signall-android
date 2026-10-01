@@ -95,14 +95,44 @@ cd ../webview
 ./gradlew installDebug
 ```
 
-**En un celular físico**, con la IP de tu compu en la red local
-(`hostname -I | awk '{print $1}'`):
+### En un celular físico: dos caminos
+
+El firewall de la máquina (`ufw` activo) descarta el puerto 8080 de la red
+local, así que el celular **no** alcanza a la laptop por Wi-Fi. Dos salidas:
+
+**A. Túnel por el cable USB (sin sudo, es el que se viene usando)**
 
 ```bash
-./gradlew installDebug -Psignai.backendWsUrl=ws://192.168.1.50:8080/ws/translate
+adb reverse tcp:8080 tcp:8080
+cd ../webview
+./gradlew installDebug -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate
 ```
 
-Nunca `127.0.0.1`: eso apunta al propio celular.
+El `127.0.0.1:8080` del celular queda tunelizado a la laptop por el cable. El
+cable tiene que seguir conectado, y hay que repetir el `adb reverse` si se
+desconecta o se reinicia el teléfono.
+
+**B. Por Wi-Fi (hay que abrir el puerto una vez)**
+
+```bash
+sudo ufw allow from 192.168.78.0/24 to any port 8080 proto tcp
+cd ../webview
+./gradlew installDebug -Psignai.backendWsUrl=ws://192.168.78.167:8080/ws/translate
+```
+
+Queda limitado a la red local, no se abre a internet. La IP se verifica con
+`ip route get 1.1.1.1 | grep -oP 'src \K\S+'` porque cambia según la red.
+
+Nunca uses `127.0.0.1` **sin** el `adb reverse`: ahí apunta al propio celular y
+no llega a la laptop.
+
+### MIUI: un agente no puede tocar la pantalla
+
+En el Redmi el MCP devuelve `device refused MotionEvent` y no puede determinar
+la app en primer plano. MIUI bloquea la inyección de eventos por adb salvo que
+se active *Depuración de USB (ajustes de seguridad)* en Opciones de
+desarrollador. No afecta a la app: significa que las pruebas de interfaz las
+hace la persona a mano, que para el micrófono es lo razonable igual.
 
 ### Qué mirar en la app
 
