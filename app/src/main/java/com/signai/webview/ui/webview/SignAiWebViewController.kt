@@ -16,6 +16,8 @@ interface SignAiWebViewController {
 
     fun setQueue(items: List<SignQueueItem>)
 
+    fun setDefaultSign(url: String)
+
     fun setDebug(on: Boolean)
 
     fun setFreeCamera(on: Boolean)
@@ -60,6 +62,8 @@ class WebViewSignAiController : SignAiWebViewController {
         }.toString()
         js(SignAiCommands.setQueue(json))
     }
+
+    override fun setDefaultSign(url: String) = js(SignAiCommands.setDefaultSign(url))
 
     override fun setDebug(on: Boolean) = js(SignAiCommands.setDebug(on))
 

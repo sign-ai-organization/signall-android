@@ -272,6 +272,54 @@ def vocab_stems(data_root: pathlib.Path, rep: int, angle: int) -> list[str]:
     return out
 
 
+CATALOG_PATH = REPO / "app/src/main/java/com/signai/webview/domain/SignsCatalog.kt"
+
+CATALOG_TEMPLATE = '''package com.signai.webview.domain
+
+/**
+ * Signs baked into the APK, from `tools/build_signs.py`.
+ *
+ * One entry per vocabulary sign of LSC50 (rep 0, angle 0); each maps to
+ * `assets/web/signs/<id>.json`.
+ *
+ * This file is GENERATED — `tools/build_signs.py` rewrites it from the assets
+ * it just wrote, so the list and the files on disk cannot drift apart. Editing
+ * it by hand will be undone on the next generator run.
+ *
+ * These are *animation* assets, not glosses. What a sign *means* still comes
+ * from the backend's catalog, which is still empty: `available` on a
+ * translation is about the gloss, not about whether we have the movement.
+ */
+object SignsCatalog {{
+    val available: List<String> = listOf(
+{items}
+    )
+
+    /** The sign the app opens on, and the one it falls back to. */
+    const val DEFAULT: String = "{default}"
+
+    /** Where a sign's animation lives, as a same-origin asset path. */
+    fun assetUrl(id: String): String = "signs/$id.json"
+}}
+'''
+
+
+def write_catalog(stems: list[str], default: str) -> None:
+    """
+    Reescribe `SignsCatalog.kt` desde los assets realmente escritos.
+
+    El asset y su entrada en el catálogo tienen que existir juntos: si la lista
+    ganara una seña sin asset, esa seña daría 404 al reproducirla sin que nada
+    en pantalla lo explique. Generar los dos en la misma pasada hace que esa
+    desincronización no pueda ocurrir.
+    """
+    items = "\n".join(
+        "        " + ", ".join(f'"{s}"' for s in stems[i:i + 4]) + ","
+        for i in range(0, len(stems), 4)
+    )
+    CATALOG_PATH.write_text(CATALOG_TEMPLATE.format(items=items, default=default))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--data", help="Ruta a LANDMARKS (o su contenedor)")
@@ -284,6 +332,8 @@ def main() -> None:
     parser.add_argument("--out", default=str(OUT_DIR), help="Directorio destino")
     parser.add_argument("--no-face", action="store_true",
                         help="No incluir `face` (este avatar no la usa)")
+    parser.add_argument("--default", default="0000_0000_0000",
+                        help="Seña con la que abre la app (se escribe en el catálogo)")
     parser.add_argument("--list", action="store_true", help="Listar y salir")
     parser.add_argument("--jobs", type=int, default=os.cpu_count() or 4)
     args = parser.parse_args()
@@ -317,7 +367,10 @@ def main() -> None:
     with ProcessPoolExecutor(max_workers=max(1, args.jobs)) as pool:
         for line in pool.map(build_and_write, payload):
             print("  " + line)
+    write_catalog(stems, args.default)
     print(f"\nlisto: {len(stems)} assets")
+    print(f"catálogo: {CATALOG_PATH.relative_to(REPO)} "
+          f"(por defecto {args.default})")
 
 
 if __name__ == "__main__":

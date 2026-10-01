@@ -4,9 +4,9 @@
 Habla exactamente el mismo protocolo que el backend real, en un solo puerto:
 
 - `GET /health` → `{"status": "ok"}`
-- `GET /static/<cual>.json` → una animación (por defecto, la seña horneada
-  `app/src/main/assets/web/sign.json` de este repo, para que la app tenga algo
-  real que descargar y reproducir)
+- `GET /static/<sign_id>.json` → una animación real de las 50 horneadas en
+  `app/src/main/assets/web/signs/`, para que la app tenga algo real que
+  descargar y reproducir
 - `WS /ws/translate` → acepta `{"type": "text", "text": "<frase>"}` y responde
   con `{"type": "transcript", ...}` y después un **array** de segmentos, igual
   que `Controller.send_result`
@@ -75,7 +75,16 @@ OLLAMA_MODEL = "qwen3:4b-instruct"
 OLLAMA_TIMEOUT_S = 180
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
-DEFAULT_ANIMATION = REPO / "app/src/main/assets/web/sign.json"
+# Las 50 animaciones horneadas en el APK (tools/build_signs.py). El mock sirve
+# estos mismos archivos, así lo que se ve en la app es exactamente lo que se
+# grabó — y cada glosa recibe una seña DISTINTA, que antes no pasaba: había un
+SIGNS_DIR = REPO / "app/src/main/assets/web/signs"
+
+def available_signs() -> list[str]:
+    """Ids de las señas horneadas, ordenados."""
+    if not SIGNS_DIR.is_dir():
+        return []
+    return sorted(p.stem for p in SIGNS_DIR.glob("*.json"))
 
 # Copia del SYSTEM_PROMPT de ../sign-ai-backend/app/nlp/llm_client.py. Si el
 # backend lo cambia, hay que cambiarlo acá también.
@@ -109,16 +118,6 @@ GLOSS_SYSTEM_PROMPT = (
 # Glosas fijas, para que la prueba sea estable y no dependa del modelo.
 FIXED_GLOSSES = ["YO", "UNIVERSIDAD", "IR"]
 
-# Una sola animación real alcanza para la demo, pero si todas las glosas
-# recibieran el MISMO archivo se vería "la misma seña repetida N veces" y no
-# dejaría claro que la cola está reproduciendo ítems distintos. Así que el
-# archivo se corta en ANIMATION_SLICES porciones: cada glosa recibe una parte
-# distinta de la misma seña, y se nota que el avatar va cambiando de movimiento.
-#
-# NO es así en el sistema real: cada glosa tiene su propia animación, que es lo
-# que descarga la app (el backend guarda una ruta distinta por glosa).
-ANIMATION_SLICES = 4
-
 # Si la frase contiene esta palabra se responde con un error, para probar el
 # camino de fallo del cliente.
 FAIL_WITH = "FALLA"
@@ -129,30 +128,12 @@ USE_OLLAMA = False
 USE_STT = False
 
 
-def animation_bytes() -> bytes:
-    return DEFAULT_ANIMATION.read_bytes()
-
-
-def animation_slice(index: int) -> bytes:
-    """Porción `index` de la animación, para que cada glosa se vea distinta.
-
-    El archivo real de cada seña sería una animación completa; acá se usa un
-    solo sign.json partido en ANIMATION_SLICES trozos (ver la nota de esa
-    constante).
-    """
-    data = json.loads(animation_bytes())
-    frames = data.get("frames") or []
-    if not frames:
-        return animation_bytes()
-
-    total = len(frames)
-    start = (index % ANIMATION_SLICES) * total // ANIMATION_SLICES
-    end = ((index % ANIMATION_SLICES) + 1) * total // ANIMATION_SLICES
-    chunk = frames[start:end] or frames
-    return json.dumps(
-        {"stem": f"{data.get('stem', '0000_0000_0000')}_p{index}", "fps": data.get("fps", 24),
-         "total_frames": len(chunk), "frames": chunk}
-    ).encode()
+def sign_bytes(sign_id: str) -> bytes | None:
+    """Contenido del asset de una seña horneada, o `None` si no existe."""
+    path = SIGNS_DIR / f"{sign_id}.json"
+    if not path.is_file():
+        return None
+    return path.read_bytes()
 
 
 def glosses_from_ollama(text: str) -> list[str]:
@@ -185,6 +166,11 @@ def build_result(text: str) -> list[dict]:
         glosses = glosses_from_ollama(text)
     else:
         glosses = list(FIXED_GLOSSES)
+    # Cada glosa recibe una seña DISTINTA de las horneadas. No es lo que hace
+    # el backend real (que mapea glosa → seña por el catálogo, hoy vacío), pero
+    # así la app recorre 50 URLs distintas, y que cada glosa dé un movimiento
+    # distinto es justo lo que faltaba para ver que la cola avanza.
+    signs = available_signs() or ["0000_0000_0000"]
     return [
         {
             "type": "AFFIRMATIVE",
@@ -192,9 +178,7 @@ def build_result(text: str) -> list[dict]:
                 {
                     "text": g,
                     "available": True,
-                    # La ruta lleva el índice: el mock reparte la única
-                    # animación disponible en ANIMATION_SLICES porciones.
-                    "glb_path": f"/static/{i}.json",
+                    "glb_path": f"/static/{signs[i % len(signs)]}.json",
                 }
                 for i, g in enumerate(glosses)
             ],
@@ -221,14 +205,13 @@ def handle_http(connection, request) -> Response | None:
             ).encode(),
         )
     if path.startswith("/static/"):
-        name = path[len("/static/"):]
-        # El nombre lleva el índice de la glosa en la respuesta.
-        index = int(name.split(".")[0]) if name.split(".")[0].isdigit() else 0
+        # El nombre es el id de la seña, tal cual lo puso `build_result`.
+        sign_id = path[len("/static/"):].removesuffix(".json")
+        data = sign_bytes(sign_id)
+        if data is None:
+            return Response(404, "Not Found", Headers(), b"no such sign")
         return Response(
-            200,
-            "OK",
-            Headers([("Content-Type", "application/json")]),
-            animation_slice(index),
+            200, "OK", Headers([("Content-Type", "application/json")]), data
         )
     return Response(404, "Not Found", Headers(), b"not found")
 
@@ -352,8 +335,11 @@ async def handle_session(websocket) -> None:
 
 
 async def main() -> None:
-    if not DEFAULT_ANIMATION.is_file():
-        sys.exit(f"No encuentro la animación de ejemplo: {DEFAULT_ANIMATION}")
+    if not available_signs():
+        sys.exit(
+            f"No hay señas horneadas en {SIGNS_DIR}.\n"
+            "Generá las con:  python3 tools/build_signs.py --vocab --no-face"
+        )
 
     async with serve(handle_session, HOST, PORT, process_request=handle_http):
         print(f"[mock] escuchando en ws://{HOST}:{PORT}/ws/translate")
@@ -370,7 +356,7 @@ async def main() -> None:
             print(f"[mock] STT local: {local_stt.engine_name()}")
         else:
             print("[mock] STT apagado: el audio se ignora (--stt para transcribirlo)")
-        print(f"[mock] animación servida: {DEFAULT_ANIMATION.name}")
+        print(f"[mock] {len(available_signs())} animaciones servidas desde {SIGNS_DIR.name}/")
         print("[mock] Ctrl+C para salir")
         await asyncio.Future()
 
