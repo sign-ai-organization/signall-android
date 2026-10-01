@@ -51,18 +51,24 @@ class SignAssetRepository(
         return withContext(Dispatchers.IO) {
             val dir = File(cacheDir, SIGNS_PATH_PREFIX.trim('/')).apply { mkdirs() }
             val target = File(dir, fileNameFor(gloss, extension))
-            val request = Request.Builder().url(httpOrigin.trimEnd('/') + "/" + assetPath.trimStart('/')).build()
+            val relative = assetPath.trimStart('/')
+            // The request is built *inside* the runCatching on purpose: a
+            // malformed URL (a bad `signai.backendWsUrl`) must degrade to
+            // "asset unavailable", not take the app down mid-playback.
             runCatching {
+                val request = Request.Builder()
+                    .url(httpOrigin.trimEnd('/') + "/" + relative)
+                    .build()
                 http.newCall(request).execute().use { response ->
                     if (!response.isSuccessful) {
-                        Log.w(TAG, "asset ${assetPath.trimStart('/')} -> HTTP ${response.code}")
+                        Log.w(TAG, "asset $relative -> HTTP ${response.code}")
                         return@use null
                     }
                     val body = response.body ?: return@use null
                     target.outputStream().use { out -> body.byteStream().copyTo(out) }
                     SIGNS_PATH_PREFIX + target.name
                 }
-            }.onFailure { Log.w(TAG, "asset ${assetPath.trimStart('/')} failed: ${it.message}") }
+            }.onFailure { Log.w(TAG, "asset $relative failed: ${it.message}") }
                 .getOrNull()
         }
     }
