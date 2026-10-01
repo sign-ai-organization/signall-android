@@ -26,6 +26,10 @@ Dependency rule: screens → components → state/webview → data/domain, **nev
 
 No tests, no CI, no lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2024.12.01. Bumped from 8.7.3/2.1.0/35 → 8.9.3/2.3.21/36 in `ui-migration-lumo` Fase 0 (Phosphor 1.0.5 requires compileSdk 36 + Kotlin 2.3+ metadata).
 
+## Git workflow
+
+**Este repo es del owner: commit y push directo a `main`, sin PR ni rama de feature** (decidido 2026-09-30). No abrir PRs acá ni pedir confirmación para commitear. Los repos hermanos (`../sign-ai-backend`, `../sign-ai-stt`) sí usan PR contra `develop`, y el `CLAUDE.md` de ese repo manda no commitear sin que el usuario lo pida explícitamente.
+
 ## UI direction
 
 - Jetpack Compose is the UI framework. New components use **Lumo UI by Noman R** (https://github.com/nomanr/lumo-ui, docs https://www.lumoui.com/) — NOT Vaadin's Lumo Design System. It is Compose-specific and shadcn-like: adopt its components as a base, then customize them into our own SignAI Design System. Consult its current docs before making Lumo decisions; don't assume it works like a conventional component library.
