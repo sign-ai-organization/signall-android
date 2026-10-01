@@ -139,6 +139,9 @@ class MainScreenState(
     /** Text of the turn in flight, so the conversation entry is added on result. */
     private var pendingText: String? = null
 
+    /** True when the turn in flight is a Repetir, which must not be re-recorded. */
+    private var isReplay = false
+
     /** What the stage hint shows: the glosses while signing, else state or message. */
     val statusLine: String
         get() = when {
@@ -195,6 +198,11 @@ class MainScreenState(
                 // `pendingText`, a spoken one is only known now.
                 if (event.final && pendingText == null) {
                     pendingText = event.text
+                    // `lastText` is what Repetir replays. A typed phrase set it
+                    // when it was sent; a spoken one is only known now, and
+                    // without this the button appeared after a mic phrase and
+                    // did nothing.
+                    lastText = event.text
                     // The backend closed the segment, so this utterance is
                     // over: stop recording even if the user never toggled the
                     // mic off. Anything after this belongs to the next phrase.
@@ -214,8 +222,11 @@ class MainScreenState(
         }
     }
 
-    /** Sends a phrase to the backend (plan paso 2: typed, no microphone yet). */
-    private fun requestTranslation(text: String) {
+    /**
+     * Sends a phrase to the backend. [replay] marks a Repetir, which must not
+     * be recorded again as a new turn.
+     */
+    private fun requestTranslation(text: String, replay: Boolean = false) {
         if (playbackState == PlaybackState.Translating ||
             playbackState == PlaybackState.Signing ||
             playbackState == PlaybackState.Connecting ||
@@ -229,6 +240,7 @@ class MainScreenState(
         }
         pendingText = text
         lastText = text
+        isReplay = replay
         inputText = text
         transcript = text
         statusOverride = null
@@ -290,7 +302,10 @@ class MainScreenState(
                 }
             }
 
-            if (text.isNotBlank()) {
+            // A replay is not a new turn: the phrase is already in the history
+            // and already has a conversation entry, so recording it again would
+            // duplicate both (`CNV-5`).
+            if (text.isNotBlank() && !isReplay) {
                 syncHistory(history.record(text))
                 conversation.add(
                     ConversationTurn(
@@ -401,7 +416,7 @@ class MainScreenState(
         val clean = text.trim()
         if (clean.isEmpty()) return
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) return
-        requestTranslation(clean)
+        requestTranslation(clean, replay = true)
     }
 
     /**
