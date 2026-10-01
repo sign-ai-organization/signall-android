@@ -1,5 +1,6 @@
 package com.signai.webview.ui.state
 
+import android.util.Log
 import android.webkit.WebView
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -7,33 +8,55 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.signai.webview.data.SettingsRepository
+import com.signai.webview.data.SignAiWebSocketClient
+import com.signai.webview.data.SignAssetRepository
 import com.signai.webview.data.SignHistoryRepository
+import com.signai.webview.domain.BackendEvent
 import com.signai.webview.domain.Character
-import com.signai.webview.domain.Gloss
 import com.signai.webview.domain.Setting
 import com.signai.webview.domain.Settings
+import com.signai.webview.domain.SignQueueItem
 import com.signai.webview.domain.SignsCatalog
+import com.signai.webview.domain.TranslationSegment
 import com.signai.webview.ui.designsystem.components.DrawerSide
 import com.signai.webview.ui.webview.SignAiWebViewController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicReference
 
-/** Prototype timing: `translating` lasts 850 ms before `signing` (spec `STA-7`). */
-private const val TranslatingMs = 850L
+/** How long the mic placeholder waits before auto-filling the demo phrase. */
 private const val ListeningFillMs = 1_500L
 private const val ProcessingMs = 800L
 
 /** Wait for the drawer close animation before replaying a conversation turn (`CNV-6`). */
 private const val DrawerCloseDelayMs = 500L
 
+/** Reconnect backoff, multiplied by the attempt count (`RF-INT-COM-01`). */
+private const val ReconnectBaseMs = 1_000L
+private const val MaxReconnectAttempts = 5
+
+/** How long a transient message stays in the stage hint. */
+private const val StatusOverrideMs = 3_000L
+
+/**
+ * The single baked sign shipped in the APK. Used as the playback fallback while
+ * the backend's catalog is still empty — see [Settings.demoSignFallback].
+ */
+const val LocalDemoSignUrl = "sign.json"
+
+private const val TAG = "SignAiState"
+
 class MainScreenState(
     private val history: SignHistoryRepository,
     private val settingsStore: SettingsRepository,
     private val webView: SignAiWebViewController,
+    private val backend: SignAiWebSocketClient,
+    private val assets: SignAssetRepository,
     val signs: List<String> = SignsCatalog.available,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -56,6 +79,14 @@ class MainScreenState(
 
     var playbackState by mutableStateOf(PlaybackState.Idle)
         private set
+
+    /** Glosses of the sequence being played, shown in the stage hint while signing. */
+    private var caption by mutableStateOf("")
+
+    /** Transient message (errors) that replaces the state label in the hint. */
+    private var statusOverride by mutableStateOf<String?>(null)
+
+    private var statusJob: Job? = null
 
     /**
      * Which edge drawer is open (`EDG-15`). `null` = both closed. The drawer
@@ -84,9 +115,193 @@ class MainScreenState(
     var inputText by mutableStateOf("")
         private set
 
+    /** Text the backend understood, echoed back for the transcription bar (`RF-UI-02`). */
+    var transcript by mutableStateOf("")
+        private set
+
+    private var connectJob: Job? = null
+
+    /** Text of the turn in flight, so the conversation entry is added on result. */
+    private var pendingText: String? = null
+
+    /** What the stage hint shows: the glosses while signing, else state or message. */
+    val statusLine: String
+        get() = when {
+            statusOverride != null -> statusOverride!!
+            playbackState == PlaybackState.Signing && caption.isNotBlank() -> caption
+            else -> playbackState.label
+        }
+
+    // ── Backend session ─────────────────────────────────────────────────────
+
+    /** Opens the translation session and keeps it open, reconnecting on failure. */
+    fun connect() {
+        connectJob?.cancel()
+        connectJob = scope.launch {
+            var attempt = 0
+            while (isActive) {
+                if (playbackState == PlaybackState.Idle) {
+                    playbackState = PlaybackState.Connecting
+                }
+                backend.events().collect { event -> handleEvent(event) }
+                // The flow only ends when the session dropped, so this is the
+                // reconnect path: back off, then try again.
+                if (playbackState != PlaybackState.Translating &&
+                    playbackState != PlaybackState.Signing
+                ) {
+                    playbackState = PlaybackState.Offline
+                }
+                attempt++
+                delay(ReconnectBaseMs * attempt.coerceAtMost(MaxReconnectAttempts))
+            }
+        }
+    }
+
+    private fun handleEvent(event: BackendEvent) {
+        when (event) {
+            is BackendEvent.Connected -> {
+                if (playbackState == PlaybackState.Connecting ||
+                    playbackState == PlaybackState.Offline
+                ) {
+                    playbackState = PlaybackState.Idle
+                }
+            }
+
+            is BackendEvent.Transcript -> {
+                if (event.text.isNotBlank()) {
+                    transcript = event.text
+                    inputText = event.text
+                }
+            }
+
+            is BackendEvent.Translation -> {
+                transcript = pendingText ?: transcript
+                startQueue(event.segments)
+            }
+
+            is BackendEvent.Failure -> fail(event.message)
+
+            is BackendEvent.Disconnected -> Unit
+        }
+    }
+
+    /** Sends a phrase to the backend (plan paso 2: typed, no microphone yet). */
+    private fun requestTranslation(text: String) {
+        if (playbackState == PlaybackState.Translating ||
+            playbackState == PlaybackState.Signing ||
+            playbackState == PlaybackState.Connecting ||
+            playbackState == PlaybackState.Offline
+        ) {
+            return
+        }
+        if (!backend.sendText(text)) {
+            fail("No hay conexión con el servidor.")
+            return
+        }
+        pendingText = text
+        lastText = text
+        inputText = text
+        transcript = text
+        statusOverride = null
+        playbackState = PlaybackState.Translating
+    }
+
+    private fun fail(message: String) {
+        pendingText = null
+        caption = ""
+        playbackState = PlaybackState.Idle
+        showStatus(message)
+    }
+
+    private fun showStatus(message: String) {
+        statusOverride = message
+        statusJob?.cancel()
+        statusJob = scope.launch {
+            delay(StatusOverrideMs)
+            statusOverride = null
+        }
+    }
+
     /**
-     * Mic placeholder (spec `CTL-5`/`STA-9`, `OM-4`): toggles `listening` and,
-     * while active, auto-fills a demo phrase and runs `processing → idle`.
+     * Resolves the glosses to assets and hands the queue to the scene.
+     *
+     * A gloss the catalog doesn't know is not played (RF-CAT-03), unless
+     * [Settings.demoSignFallback] is on: while the catalog is empty every gloss
+     * is unknown, and that switch keeps the multi-sign queue visible using the
+     * single sign baked into the APK. It is a development crutch to be turned
+     * off once the backend serves real animations.
+     */
+    private fun startQueue(segments: List<TranslationSegment>) {
+        val text = pendingText.orEmpty()
+        scope.launch {
+            val queue = mutableListOf<SignQueueItem>()
+            for (segment in segments) {
+                for (gloss in segment.glosses) {
+                    val url = if (gloss.available) {
+                        assets.resolve(gloss.text, gloss.glbPath)
+                    } else {
+                        null
+                    }
+                    when {
+                        url != null -> queue += SignQueueItem(
+                            gloss = gloss.text,
+                            type = segment.type,
+                            url = url,
+                            available = true,
+                        )
+
+                        settings.demoSignFallback -> queue += SignQueueItem(
+                            gloss = gloss.text,
+                            type = segment.type,
+                            url = LocalDemoSignUrl,
+                            available = gloss.available,
+                        )
+                        // Unknown gloss, no fallback: reported in the caption.
+                    }
+                }
+            }
+
+            if (text.isNotBlank()) {
+                syncHistory(history.record(text))
+                conversation.add(
+                    ConversationTurn(
+                        id = turnCounter++,
+                        text = text,
+                        gloss = formatGlosses(segments),
+                    ),
+                )
+            }
+            pendingText = null
+            caption = queue.joinToString(" · ") { it.gloss }.ifBlank { "Seña no disponible" }
+            showStatus(
+                if (queue.isEmpty()) {
+                    "Ninguna seña de esta frase está en el catálogo todavía"
+                } else {
+                    ""
+                },
+            )
+
+            if (queue.isEmpty()) {
+                playbackState = PlaybackState.Done
+                replayPending = false
+                return@launch
+            }
+
+            webView.setQueue(queue)
+            webView.play()
+            playbackState = PlaybackState.Signing
+        }
+    }
+
+    private fun formatGlosses(segments: List<TranslationSegment>): String =
+        segments.flatMap { it.glosses }.joinToString(" ") { it.text }
+
+    // ── Mic placeholder ─────────────────────────────────────────────────────
+
+    /**
+     * Mic placeholder (spec `CTL-5`/`STA-9`, `OM-4`): still the prototype's
+     * auto-fill. Real capture is paso 5 of the plan (`AudioRecord` streaming
+     * PCM16 over the same session).
      */
     fun toggleMic() {
         if (playbackState == PlaybackState.Listening) {
@@ -117,8 +332,7 @@ class MainScreenState(
         val clean = text.trim()
         if (clean.isEmpty()) return
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) return
-        lastText = clean
-        startPlayback()
+        requestTranslation(clean)
     }
 
     /**
@@ -186,30 +400,15 @@ class MainScreenState(
     }
 
     /**
-     * Sends a phrase: appends a session turn, then `translating → signing`
-     * (850 ms) and finally `done` once the JS bridge reports the playback ended
+     * Sends a phrase: the backend translates it, the scene plays the returned
+     * sequence, and `done` is driven by the real `onPlaybackDone` bridge event
      * (spec `STA-7`/`STA-8`/`CNV-4`).
      */
     fun play(text: String) {
         val clean = text.trim()
         if (clean.isEmpty()) return
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) return
-        lastText = clean
-        inputText = clean
-        syncHistory(history.record(clean))
-        conversation.add(
-            ConversationTurn(id = turnCounter++, text = clean, gloss = Gloss.glossFor(clean)),
-        )
-        startPlayback()
-    }
-
-    private fun startPlayback() {
-        playbackState = PlaybackState.Translating
-        webView.play()
-        scope.launch {
-            delay(TranslatingMs)
-            if (playbackState == PlaybackState.Translating) playbackState = PlaybackState.Signing
-        }
+        requestTranslation(clean)
     }
 
     /** Called by the JS bridge (`onPlaybackDone`, spec `BRG-7`/`STA-8`). */
@@ -217,6 +416,7 @@ class MainScreenState(
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
             playbackState = PlaybackState.Done
         }
+        caption = ""
         // The control panel stays disabled until the sign ends (`CNV-7`); clear
         // the flag here so it is released even while a drawer is closing.
         replayPending = false
@@ -233,6 +433,7 @@ class MainScreenState(
             Setting.Large -> settings.copy(large = on)
             Setting.ReduceMotion -> settings.copy(reduceMotion = on)
             Setting.DarkTheme -> settings.copy(darkTheme = on)
+            Setting.DemoSignFallback -> settings.copy(demoSignFallback = on)
         }
         persist(updated)
         when (setting) {
@@ -275,5 +476,10 @@ class MainScreenState(
     private fun syncHistory(list: List<String>) {
         historyList.clear()
         historyList.addAll(list)
+    }
+
+    init {
+        connect()
+        Log.i(TAG, "backend session starting")
     }
 }

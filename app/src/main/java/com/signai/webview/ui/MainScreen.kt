@@ -124,7 +124,7 @@ fun MainScreen(state: MainScreenState) {
                     // the panels, while the backdrops never saw a tap.
                     Box(Modifier.fillMaxSize()) {
                         AvatarStage(
-                            status = state.playbackState.label,
+                            status = state.statusLine,
                             doneVisible = state.playbackState == PlaybackState.Done,
                             onRepeat = state::replay,
                             bottomInset = bottomBarHeight,

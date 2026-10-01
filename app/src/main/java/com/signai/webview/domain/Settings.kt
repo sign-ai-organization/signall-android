@@ -22,6 +22,12 @@ data class Settings(
     // Appearance (spec `APP-*`). The prototype is light-first, so light is the
     // default; the dark switch still works and is persisted.
     val darkTheme: Boolean = false,
+    // Development crutch: the backend's `catalog` table is still empty, so every
+    // gloss comes back unknown. With this on, such a gloss plays the single sign
+    // baked into the APK instead of being skipped, which is what makes the
+    // multi-sign queue visible before the real animations exist. Turn it off as
+    // soon as the backend serves animations.
+    val demoSignFallback: Boolean = true,
 )
 
 enum class Setting {
@@ -34,6 +40,7 @@ enum class Setting {
     Large,
     ReduceMotion,
     DarkTheme,
+    DemoSignFallback,
 }
 
 /**
