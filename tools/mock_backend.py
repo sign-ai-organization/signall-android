@@ -56,6 +56,9 @@ import sys
 import urllib.error
 import urllib.request
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import local_stt  # noqa: E402
+
 try:
     import websockets
     from websockets.asyncio.server import serve
@@ -122,6 +125,8 @@ FAIL_WITH = "FALLA"
 
 # Puesto por --ollama.
 USE_OLLAMA = False
+# Puesto por --stt: transcribe el audio con whisper.cpp local.
+USE_STT = False
 
 
 def animation_bytes() -> bytes:
@@ -228,14 +233,79 @@ def handle_http(connection, request) -> Response | None:
     return Response(404, "Not Found", Headers(), b"not found")
 
 
+async def send_translation(websocket, loop: asyncio.AbstractEventLoop, text: str) -> None:
+    """LLM -> glosas. La llamada bloquea, así que va fuera del event loop."""
+    try:
+        result = await loop.run_in_executor(None, build_result, text)
+    except (urllib.error.URLError, OSError, KeyError, TimeoutError) as error:
+        print(f"[mock] LLM falló: {error}")
+        print('[mock] ¿arrancaste Ollama? ¿lo calentaste con `ollama run '
+              f'{OLLAMA_MODEL} "hola"`?')
+        await websocket.send(
+            json.dumps({"type": "error", "message": f"Mock: el LLM falló ({error})."})
+        )
+        return
+
+    glosses = [g["text"] for g in result[0]["glosses"]]
+    print(f"[mock] glosas: {glosses}")
+    await websocket.send(json.dumps(result))
+
+
 async def handle_session(websocket) -> None:
     print(f"[mock] sesión abierta desde {websocket.remote_address}")
+    loop = asyncio.get_running_loop()
+    utterance = local_stt.Utterance()
+    transcribing: asyncio.Task | None = None
+    warned_audio = False
+
+    async def transcribe_and_translate(pcm: bytes) -> None:
+        """Transcribe then translate, without ever stopping the read loop.
+
+        Runs as a background task on purpose: Whisper takes seconds and the
+        phone keeps streaming audio the whole time. If the loop stopped reading
+        while it worked, the socket buffer would fill and the client would get
+        a broken pipe in the middle of the phrase.
+        """
+        seconds = len(pcm) / 2 / local_stt.SAMPLE_RATE
+        try:
+            spoken = await loop.run_in_executor(None, local_stt.transcribe, pcm)
+        except Exception as error:  # noqa: BLE001 - nunca debe tumbar la sesión
+            print(f"[stt] falló: {error}")
+            await websocket.send(
+                json.dumps({"type": "error", "message": f"Mock: la transcripción falló ({error})."})
+            )
+            return
+
+        spoken = spoken.strip()
+        if not spoken:
+            print(f"[stt] {seconds:.1f}s de audio, no se entendió nada")
+            return
+
+        print(f"[stt] {seconds:.1f}s de audio -> {spoken!r}")
+        await websocket.send(
+            json.dumps({"type": "transcript", "text": spoken, "final": True})
+        )
+        await send_translation(websocket, loop, spoken)
 
     try:
         async for message in websocket:
             if isinstance(message, bytes):
-                # Audio real: el backend se lo reenvía a Whisper. Acá se ignora.
-                print(f"[mock] audio recibido ({len(message)} bytes), ignorado")
+                if not USE_STT:
+                    if not warned_audio:
+                        print("[mock] audio ignorado; arrancá con --stt para transcribirlo")
+                        warned_audio = True
+                    continue
+                utterance.add(message)
+                if utterance.should_finalize:
+                    pcm = utterance.pcm()
+                    utterance.reset()
+                    # One transcription at a time; a burst of audio while one
+                    # is running is dropped rather than queued (and the next
+                    # silence window picks up whatever comes next).
+                    if transcribing is None or transcribing.done():
+                        transcribing = asyncio.ensure_future(
+                            transcribe_and_translate(pcm)
+                        )
                 continue
 
             try:
@@ -260,24 +330,7 @@ async def handle_session(websocket) -> None:
             await websocket.send(
                 json.dumps({"type": "transcript", "text": text, "final": True})
             )
-
-            # La llamada al LLM bloquea: fuera del event loop, para que el
-            # heartbeat siga respondiendo mientras espera.
-            loop = asyncio.get_running_loop()
-            try:
-                result = await loop.run_in_executor(None, build_result, text)
-            except (urllib.error.URLError, OSError, KeyError, TimeoutError) as error:
-                print(f"[mock] LLM falló: {error}")
-                print("[mock] ¿arrancaste Ollama? ¿lo calentaste con "
-                      f"`ollama run {OLLAMA_MODEL} \"hola\"`?")
-                await websocket.send(
-                    json.dumps({"type": "error", "message": f"Mock: el LLM falló ({error})."})
-                )
-                continue
-
-            glosses = [g["text"] for g in result[0]["glosses"]]
-            print(f"[mock] glosas: {glosses}")
-            await websocket.send(json.dumps(result))
+            await send_translation(websocket, loop, text)
     except websockets.exceptions.ConnectionClosed:
         # Normal: the app dropped the session, it reconnects on its own.
         print("[mock] sesión cerrada por el cliente")
@@ -294,6 +347,15 @@ async def main() -> None:
             print(f'[mock] calentá antes: ollama run {OLLAMA_MODEL} "hola"')
         else:
             print(f"[mock] glosas fijas: {FIXED_GLOSSES}")
+        if USE_STT:
+            model = local_stt.model_path()
+            if model is None:
+                print("[mock] --stt pedido pero no hay whisper.cpp ni modelo en "
+                      f"{local_stt.CACHE}")
+                return
+            print(f"[mock] STT local: whisper.cpp con {model.name}")
+        else:
+            print("[mock] STT apagado: el audio se ignora (--stt para transcribirlo)")
         print(f"[mock] animación servida: {DEFAULT_ANIMATION.name}")
         print("[mock] Ctrl+C para salir")
         await asyncio.Future()
@@ -302,6 +364,8 @@ async def main() -> None:
 if __name__ == "__main__":
     if "--ollama" in sys.argv:
         USE_OLLAMA = True
+    if "--stt" in sys.argv:
+        USE_STT = True
     try:
         asyncio.run(main())
     except KeyboardInterrupt:

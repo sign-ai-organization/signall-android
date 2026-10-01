@@ -1,6 +1,10 @@
 package com.signai.webview.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -23,8 +27,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import com.signai.webview.ui.components.HistoryBottomSheet
 import com.signai.webview.ui.components.SignAiSplash
 import com.signai.webview.ui.designsystem.components.DrawerSide
@@ -59,6 +65,23 @@ fun MainScreen(state: MainScreenState) {
     var conversationFraction by remember { mutableFloatStateOf(0f) }
     var settingsFraction by remember { mutableFloatStateOf(0f) }
     val density = LocalDensity.current
+
+    // The mic is the only feature that needs a runtime permission. Asked the
+    // first time the user taps it, not on launch, so the dialog arrives with a
+    // reason attached (`RF-UI-04`).
+    val context = LocalContext.current
+    val micPermission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        if (granted) state.toggleMic() else state.onMicPermissionDenied()
+    }
+    val onMic: () -> Unit = {
+        val granted = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.RECORD_AUDIO,
+        ) == PackageManager.PERMISSION_GRANTED
+        if (granted) state.toggleMic() else micPermission.launch(Manifest.permission.RECORD_AUDIO)
+    }
 
     val showConversation = state.openDrawer == DrawerSide.Start
     val showSettings = state.openDrawer == DrawerSide.End
@@ -154,7 +177,7 @@ fun MainScreen(state: MainScreenState) {
                                 onQueryChange = state::setInput,
                                 playbackState = state.playbackState,
                                 onSend = state::play,
-                                onMic = state::toggleMic,
+                                onMic = onMic,
                                 onOpenHistory = { showHistory = true },
                                 enabled = !state.replayPending,
                             )

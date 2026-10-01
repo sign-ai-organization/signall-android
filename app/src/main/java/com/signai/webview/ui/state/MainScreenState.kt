@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.signai.webview.data.AudioCapture
 import com.signai.webview.data.SettingsRepository
 import com.signai.webview.data.SignAiWebSocketClient
 import com.signai.webview.data.SignAssetRepository
@@ -28,10 +29,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicReference
-
-/** How long the mic placeholder waits before auto-filling the demo phrase. */
-private const val ListeningFillMs = 1_500L
-private const val ProcessingMs = 800L
 
 /** Wait for the drawer close animation before replaying a conversation turn (`CNV-6`). */
 private const val DrawerCloseDelayMs = 500L
@@ -60,6 +57,13 @@ class MainScreenState(
     val signs: List<String> = SignsCatalog.available,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+    /**
+     * Microphone capture. Built here rather than injected because the chunk
+     * callback is this class's own `sendAudio`; `AudioRecord` needs no context.
+     */
+    private val audio = AudioCapture { chunk -> sendAudio(chunk) }
+
     val historyList: SnapshotStateList<String> = mutableStateListOf<String>().apply {
         addAll(history.load())
     }
@@ -168,9 +172,20 @@ class MainScreenState(
             }
 
             is BackendEvent.Transcript -> {
-                if (event.text.isNotBlank()) {
-                    transcript = event.text
-                    inputText = event.text
+                if (event.text.isBlank()) return
+                transcript = event.text
+                inputText = event.text
+                // A final transcript means the backend heard a whole utterance.
+                // The translation follows on its own, but this is the phrase
+                // the turn has to be recorded with: a typed one already set
+                // `pendingText`, a spoken one is only known now.
+                if (event.final && pendingText == null) {
+                    pendingText = event.text
+                    // The backend closed the segment, so this utterance is
+                    // over: stop recording even if the user never toggled the
+                    // mic off. Anything after this belongs to the next phrase.
+                    audio.stop()
+                    playbackState = PlaybackState.Translating
                 }
             }
 
@@ -296,29 +311,57 @@ class MainScreenState(
     private fun formatGlosses(segments: List<TranslationSegment>): String =
         segments.flatMap { it.glosses }.joinToString(" ") { it.text }
 
-    // ── Mic placeholder ─────────────────────────────────────────────────────
+    // ── Micrófono ───────────────────────────────────────────────────────────
 
     /**
-     * Mic placeholder (spec `CTL-5`/`STA-9`, `OM-4`): still the prototype's
-     * auto-fill. Real capture is paso 5 of the plan (`AudioRecord` streaming
-     * PCM16 over the same session).
+     * Microphone capture (spec `CTL-5`/`STA-9`, paso 5 del plan). While
+     * `listening` the raw PCM16 chunks go out on the same session as the typed
+     * phrases; the backend transcribes them and the final transcript drives the
+     * same path a typed phrase takes.
+     *
+     * The prototype's auto-fill is gone: it only made the app look like it was
+     * listening while nothing was captured.
      */
     fun toggleMic() {
         if (playbackState == PlaybackState.Listening) {
-            playbackState = PlaybackState.Idle
+            stopListening()
             return
         }
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
             return
         }
+        if (!backend.isConnected) {
+            showStatus("Sin conexión: no puedo escuchar.")
+            return
+        }
+        statusOverride = null
+        transcript = ""
         playbackState = PlaybackState.Listening
-        scope.launch {
-            delay(ListeningFillMs)
-            if (playbackState != PlaybackState.Listening) return@launch
-            inputText = "Quiero ir a la universidad"
-            playbackState = PlaybackState.Processing
-            delay(ProcessingMs)
-            if (playbackState == PlaybackState.Processing) playbackState = PlaybackState.Idle
+        audio.start(scope)
+        if (!audio.isRecording) {
+            // The device refused to open the mic (usually a missing permission).
+            playbackState = PlaybackState.Idle
+            showStatus("No se pudo abrir el micrófono.")
+        }
+    }
+
+    /** Mic blocked by the user (RF-UI-04: say so, the app can't work without it). */
+    fun onMicPermissionDenied() {
+        playbackState = PlaybackState.Idle
+        showStatus("Sin permiso de micrófono la app no puede traducir voz.")
+    }
+
+    private fun stopListening() {
+        audio.stop()
+        // The transcript has not arrived yet: it comes from the backend once it
+        // detects the silence that follows the speech. "Procesando" until then.
+        playbackState = PlaybackState.Processing
+    }
+
+    private fun sendAudio(chunk: ByteArray) {
+        if (!backend.sendAudio(chunk)) {
+            stopListening()
+            fail("Se cortó la conexión mientras escuchaba.")
         }
     }
 
