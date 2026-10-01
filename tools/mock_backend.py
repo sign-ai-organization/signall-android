@@ -319,7 +319,7 @@ async def handle_session(websocket) -> None:
                 # cierran una frase nunca van a llegar porque dejó de mandar
                 # audio. Se cierra a la fuerza, que es para lo que existe este
                 # frame en el protocolo del STT.
-                if USE_STT and (utterance.voice or utterance.chunks):
+                if USE_STT and (utterance.has_voice or utterance.chunks):
                     print(f"[stt] 'end' del cliente, cerrando {len(utterance.chunks)} chunks")
                     pcm = utterance.pcm()
                     utterance.reset()
@@ -363,12 +363,11 @@ async def main() -> None:
         else:
             print(f"[mock] glosas fijas: {FIXED_GLOSSES}")
         if USE_STT:
-            model = local_stt.model_path()
-            if model is None:
-                print("[mock] --stt pedido pero no hay whisper.cpp ni modelo en "
+            if not local_stt.available():
+                print("[mock] --stt pedido pero no hay motor de STT en "
                       f"{local_stt.CACHE}")
                 return
-            print(f"[mock] STT local: whisper.cpp con {model.name}")
+            print(f"[mock] STT local: {local_stt.engine_name()}")
         else:
             print("[mock] STT apagado: el audio se ignora (--stt para transcribirlo)")
         print(f"[mock] animación servida: {DEFAULT_ANIMATION.name}")
