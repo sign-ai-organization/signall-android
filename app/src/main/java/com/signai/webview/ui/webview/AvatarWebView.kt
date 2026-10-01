@@ -66,6 +66,13 @@ fun AvatarWebView(
             WebView(it).apply {
                 settings.javaScriptEnabled = true
                 settings.mediaPlaybackRequiresUserGesture = false
+                // The scene has no text input and never needs the IME, but a
+                // WebView is focusable in touch mode by default: it took focus
+                // on start and kept it, so the phrase field never got it and
+                // everything typed went to the 3D canvas instead. Found with
+                // `mobile_list_elements_on_screen`, where the WebView and the
+                // EditText both showed as `[focused]`.
+                isFocusableInTouchMode = false
                 webChromeClient = object : android.webkit.WebChromeClient() {
                     override fun onProgressChanged(view: WebView, newProgress: Int) {
                         super.onProgressChanged(view, newProgress)
