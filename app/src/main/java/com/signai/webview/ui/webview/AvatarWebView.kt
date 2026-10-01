@@ -1,18 +1,46 @@
 package com.signai.webview.ui.webview
 
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebViewAssetLoader
+import androidx.webkit.WebViewAssetLoader.PathHandler
 import androidx.webkit.WebViewClientCompat
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
+import com.signai.webview.data.SignAssetRepository
+import java.io.File
+import java.io.FileInputStream
 
 private const val BridgeObjectName = "SignAIBridge"
-private const val BridgeOrigin = "https://appassets.androidplatform.net"
+private const val BridgeOrigin = SignAssetRepository.WEB_ORIGIN
+private const val AssetsPath = "/assets/"
+
+/**
+ * Serves the sign assets the app downloaded from the backend, so the 3D scene can
+ * `fetch()` them on its own origin (plan paso 4).
+ *
+ * This exists because the scene cannot reach the backend itself: it runs on
+ * `https://appassets.androidplatform.net`, so a plain-HTTP request to the backend
+ * would be mixed content and Android blocks it. `shouldInterceptRequest` already
+ * delegates to the `WebViewAssetLoader`, so registering the handler is all it
+ * takes.
+ */
+private fun signsPathHandler(dir: File): PathHandler = object : PathHandler {
+    override fun handle(path: String): WebResourceResponse? {
+        val name = path.removePrefix("/")
+        if (name.isEmpty() || name.contains("..")) return null
+        val file = File(dir, name)
+        if (!file.isFile) return null
+        val mime = if (name.endsWith(".glb")) "model/gltf-binary" else "application/json"
+        return runCatching { WebResourceResponse(mime, "utf-8", FileInputStream(file)) }.getOrNull()
+    }
+}
 
 @Composable
 fun AvatarWebView(
@@ -27,6 +55,7 @@ fun AvatarWebView(
     interactive: Boolean = true,
 ) {
     val context = LocalContext.current
+    val signsDir = remember(context) { File(context.cacheDir, SignAssetRepository.SIGNS_PATH_PREFIX.trim('/')) }
     AndroidView(
         modifier = modifier.pointerInteropFilter {
             // Returning true consumes the event here, so the scene never sees it
@@ -74,7 +103,8 @@ fun AvatarWebView(
                     )
                 }
                 val assetLoader = WebViewAssetLoader.Builder()
-                    .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(context))
+                    .addPathHandler(AssetsPath, WebViewAssetLoader.AssetsPathHandler(context))
+                    .addPathHandler(SignAssetRepository.SIGNS_PATH_PREFIX, signsPathHandler(signsDir))
                     .build()
                 webViewClient = object : WebViewClientCompat() {
                     override fun onPageFinished(view: WebView, url: String) {
@@ -93,7 +123,7 @@ fun AvatarWebView(
                         return resp
                     }
                 }
-                loadUrl("https://appassets.androidplatform.net/assets/web/index.html")
+                loadUrl("$BridgeOrigin$AssetsPath" + "web/index.html")
                 onReady(this)
             }
         },

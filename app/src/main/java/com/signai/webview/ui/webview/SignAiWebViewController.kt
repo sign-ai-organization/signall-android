@@ -5,11 +5,16 @@ import android.graphics.Shader
 import android.os.Build
 import android.webkit.WebView
 import com.signai.webview.domain.SignAiCommands
+import com.signai.webview.domain.SignQueueItem
+import org.json.JSONArray
+import org.json.JSONObject
 
 interface SignAiWebViewController {
     fun attach(webView: WebView)
 
     fun play()
+
+    fun setQueue(items: List<SignQueueItem>)
 
     fun setDebug(on: Boolean)
 
@@ -38,6 +43,23 @@ class WebViewSignAiController : SignAiWebViewController {
     }
 
     override fun play() = js(SignAiCommands.PLAY)
+
+    override fun setQueue(items: List<SignQueueItem>) {
+        if (items.isEmpty()) return
+        val json = JSONArray().apply {
+            items.forEach { item ->
+                put(
+                    JSONObject().apply {
+                        put("gloss", item.gloss)
+                        put("type", item.type.wire)
+                        put("url", item.url)
+                        put("available", item.available)
+                    },
+                )
+            }
+        }.toString()
+        js(SignAiCommands.setQueue(json))
+    }
 
     override fun setDebug(on: Boolean) = js(SignAiCommands.setDebug(on))
 

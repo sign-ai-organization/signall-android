@@ -35,6 +35,7 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
             large = prefs.getBoolean(KEY_LARGE, defaults.large),
             reduceMotion = prefs.getBoolean(KEY_REDUCE_MOTION, defaults.reduceMotion),
             darkTheme = prefs.getBoolean(KEY_DARK_THEME, defaults.darkTheme),
+            demoSignFallback = prefs.getBoolean(KEY_DEMO_FALLBACK, defaults.demoSignFallback),
         )
     }
 
@@ -52,6 +53,7 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
             .putBoolean(KEY_LARGE, settings.large)
             .putBoolean(KEY_REDUCE_MOTION, settings.reduceMotion)
             .putBoolean(KEY_DARK_THEME, settings.darkTheme)
+            .putBoolean(KEY_DEMO_FALLBACK, settings.demoSignFallback)
             .apply()
     }
 
@@ -69,5 +71,6 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
         const val KEY_LARGE = "large"
         const val KEY_REDUCE_MOTION = "reduce_motion"
         const val KEY_DARK_THEME = "dark_theme"
+        const val KEY_DEMO_FALLBACK = "demo_sign_fallback"
     }
 }

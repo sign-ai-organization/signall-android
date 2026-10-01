@@ -150,6 +150,15 @@ fun SettingsSidebar(
             SettingRow(label = "Fondo bosque", icon = SignAiIcons.Gear) {
                 Switch(checked = settings.bg, onCheckedChange = { onToggle(Setting.Background, it) })
             }
+            SettingRow(
+                label = "Seña de prueba si falta en el catálogo",
+                icon = SignAiIcons.Gear,
+            ) {
+                Switch(
+                    checked = settings.demoSignFallback,
+                    onCheckedChange = { onToggle(Setting.DemoSignFallback, it) },
+                )
+            }
             Spacer(Modifier.height(8.dp))
             SignPickerDropdown(current = sign, options = signs, onPick = onPickSign)
         }
