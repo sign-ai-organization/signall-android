@@ -84,7 +84,13 @@ context: |
   branding sigue centralizado en `ui/SignAiBranding.kt` (nombre abierto).
 
   ### Integraciones futuras
-  - `../sign-ai-backend`: SÍ, previsto a futuro. Hoy: cero integración.
+  - `../sign-ai-backend`: SÍ. Plan en `openspec/changes/integracion-backend/tasks.md`.
+    Decisiones 2026-09-30: (a) **híbrido** — el vertical slice reproduce frames de
+    landmarks servidos por HTTP, los clips GLB por seña se difieren; (b) **texto
+    primero**, el audio real (`AudioRecord`) es la Fase D. La red la posee Kotlin
+    (OkHttp), nunca el JS: el WebView corre en `https://appassets.androidplatform.net`
+    y un `fetch` a `http://` sería mixed content, así que los assets descargados se
+    sirven al JS como same-origin vía un `PathHandler` extra del `WebViewAssetLoader`.
   - `../sign-ai-gloss-engine`: NO, fuera de alcance.
 
 rules:

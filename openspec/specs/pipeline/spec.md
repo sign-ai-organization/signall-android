@@ -70,7 +70,11 @@ Para que videos propios sean compatibles con el pipeline:
 
 ## Integraciones futuras (carpetas hermanas en `..`)
 
-- `sign-ai-backend`: **SÍ, previsto a futuro**. Hoy: cero integración.
+- `sign-ai-backend`: **SÍ**. Plan en `openspec/changes/integracion-backend/tasks.md`.
+  Hoy el flujo de arriba sigue siendo 100% local. Cuando la integración aterrice, este
+  diagrama se reemplaza por: `micrófono → WS /ws/translate → glosas validadas →
+  assets descargados a cacheDir/signs → app.js reproduce la cola`. Decisiones 2026-09-30:
+  híbrido (frames de landmarks ahora, clips GLB después) y texto primero.
 - `sign-ai-gloss-engine`: **NO**, fuera de alcance.
 
 ## Constantes de animación en `app.js` (valores reales)
