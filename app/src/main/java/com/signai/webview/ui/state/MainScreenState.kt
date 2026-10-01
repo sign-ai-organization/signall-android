@@ -48,12 +48,6 @@ private const val MaxReconnectAttempts = 5
 /** How long a transient message stays in the stage hint. */
 private const val StatusOverrideMs = 3_000L
 
-/**
- * The single baked sign shipped in the APK. Used as the playback fallback while
- * the backend's catalog is still empty — see [Settings.demoSignFallback].
- */
-const val LocalDemoSignUrl = "sign.json"
-
 private const val TAG = "SignAiState"
 
 class MainScreenState(
@@ -86,8 +80,17 @@ class MainScreenState(
     var settings by mutableStateOf(settingsStore.load())
         private set
 
-    var sign by mutableStateOf(signs.firstOrNull().orEmpty())
+    var sign by mutableStateOf(signs.firstOrNull() ?: SignsCatalog.DEFAULT)
         private set
+
+    /**
+     * Playback fallback while the backend's catalog is still empty — see
+     * [Settings.demoSignFallback].
+     *
+     * Always the sign picked in the settings menu, so the demo playback follows
+     * the same choice the user made instead of a hardcoded one.
+     */
+    private val fallbackSignUrl: String get() = SignsCatalog.assetUrl(sign)
 
     var playbackState by mutableStateOf(PlaybackState.Idle)
         private set
@@ -294,7 +297,7 @@ class MainScreenState(
                         settings.demoSignFallback -> queue += SignQueueItem(
                             gloss = gloss.text,
                             type = segment.type,
-                            url = LocalDemoSignUrl,
+                            url = fallbackSignUrl,
                             available = gloss.available,
                         )
                         // Unknown gloss, no fallback: reported in the caption.
@@ -549,8 +552,18 @@ class MainScreenState(
         settingsStore.save(newSettings)
     }
 
+    /**
+     * Picks the sign shown when the catalog has no asset for a gloss (the demo
+     * fallback), and the one the scene opens on.
+     *
+     * Telling the scene matters because it loads a sign when the page is ready:
+     * the default is baked into `app.js`, so without this the very first
+     * playback would use the old one no matter what the menu says.
+     */
     fun pickSign(id: String) {
+        if (id == sign) return
         sign = id
+        webView.setDefaultSign(SignsCatalog.assetUrl(id))
     }
 
     fun setBlur(enabled: Boolean) {

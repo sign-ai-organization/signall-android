@@ -17,6 +17,18 @@ import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 
+/**
+ * Picks one of the signs baked into the APK.
+ *
+ * The ids are dataset filenames (`0007_0000_0000` = sign 7, repetition 0,
+ * angle 0), which say nothing to a person, so only the sign number is shown.
+ * The number is not a gloss either — what a sign *means* comes from the
+ * backend's catalog, which is still empty — so the label does not pretend to
+ * name it.
+ */
+private fun label(id: String): String =
+    id.substringBefore('_').trimStart('0').ifEmpty { "0" }.let { "Seña $it" }
+
 @Composable
 fun SignPickerDropdown(
     current: String,
@@ -27,7 +39,7 @@ fun SignPickerDropdown(
     SignAiDropdown(
         expanded = expanded,
         onDismissRequest = { expanded = false },
-        maxHeight = 200.dp,
+        maxHeight = 260.dp,
         trigger = {
             Button(
                 onClick = { expanded = !expanded },
@@ -36,7 +48,7 @@ fun SignPickerDropdown(
                 modifier = Modifier.fillMaxWidth().height(SignAiSizes.fieldHeight),
             ) {
                 SignAiText(
-                    text = "Seña: $current",
+                    text = label(current),
                     maxLines = 1,
                 )
             }
@@ -44,7 +56,7 @@ fun SignPickerDropdown(
     ) {
         options.forEach { option ->
             SignAiDropdownMenuItem(
-                text = if (option == current) "✓ $option" else option,
+                text = if (option == current) "✓ ${label(option)}" else label(option),
                 onClick = {
                     expanded = false
                     onPick(option)

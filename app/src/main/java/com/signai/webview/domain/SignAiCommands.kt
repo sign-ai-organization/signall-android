@@ -27,4 +27,13 @@ object SignAiCommands {
      * parsed on the JS side — never interpolated raw into the script.
      */
     fun setQueue(json: String) = "window.SignAI?.setQueue(${JSONObject.quote(json)})"
+
+    /**
+     * Sets the sign the scene opens on and falls back to (settings menu).
+     *
+     * [url] is a same-origin asset path from [SignsCatalog.assetUrl]; it is
+     * quoted into a JS string literal, and the JS side additionally refuses
+     * anything outside `signs/`.
+     */
+    fun setDefaultSign(url: String) = "window.SignAI?.setDefaultSign(${JSONObject.quote(url)})"
 }
