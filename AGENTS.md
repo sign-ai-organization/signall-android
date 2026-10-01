@@ -82,3 +82,27 @@ JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when `play()`
 
 - `specs/` (avatar, dataset, pipeline, ui): source of truth. `specs/ui/spec.md` is the **complete feature catalog** of the app (all features come from the `PrototipoFrontend/` Vercel prototype); `avatar`/`dataset`/`pipeline` cover rig/animation behavior. Update the relevant spec when fixing such behavior.
 - `sessions/`: work log, one file per session (`YYYY-MM-DD-<slug>.md`, header with title/day/date/time). Append what was done, decided, and left pending at the end of each work item. Convention in `openspec/sessions/README.md`.
+
+## Tooling del agente (mobile-next)
+
+Stack de mobile-next instalado en este equipo para que un agente (Claude,
+opencode) opere el emulador/dispositivo sin pedir coordenadas a ciegas. Mismo
+setup que el repo `AppMovil`/`trabajoVM`.
+
+- **`tools/dev.sh`** — wrapper sobre `mobilecli`. Subcomandos: `devices`,
+  `shot`, `tap`, `swipe`, `text`, `key`, `back`, `log`, `clearlog`,
+  `tree`, `install`, `install-debug` (`./gradlew installDebug` + relanzar
+  la app), `launch`, `terminate`, `apps`, `fg`, `logcat-tag`, `doctor`.
+  **Sin escala**: mobilecli trabaja en coords reales del device.
+- **Vía primaria del agente**: MCP **`mobile-mcp`**
+  (`mobile_list_available_devices`, `mobile_take_screenshot`,
+  `mobile_list_elements_on_screen` — preferir refs sobre coordenadas—,
+  `mobile_click_on_screen_at_coordinates`, `mobile_install_app`,
+  `mobile_launch_app`, `mobile_get_device_logs`, `mobile_batch_commands`).
+  Configurado en `opencode.json` con `MOBILEMCP_DISABLE_TELEMETRY=1`.
+  Antes de tocar, leer el árbol con `mobile_list_elements_on_screen`.
+  Si el MCP no está disponible, fallback a `tools/dev.sh`.
+
+Ver `tools/README.md` § "Operar desde un agente" para el detalle y el flujo
+"verificar un cambio" con `./gradlew installDebug` + `mobile_install_app`
++ `mobile_launch_app` + `mobile_take_screenshot` + `mobile_get_device_logs`.
