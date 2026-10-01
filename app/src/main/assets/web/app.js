@@ -45,6 +45,13 @@ const state = {
   playing: false,
   lastTime: null,
   animHandle: null,
+  // Secuencia a reproducir (plan paso 3). La envía Android con setQueue(); cada
+  // ítem es {gloss, type, url, available} y `url` es siempre same-origin.
+  queue: [],
+  queueIdx: 0,
+  currentType: "",
+  transition: 0,
+  loading: false,
   smoothAlpha: 0.12,
   palmNormalL: new THREE.Vector3(0, 0, 1),
   palmNormalR: new THREE.Vector3(0, 0, 1),
@@ -177,6 +184,27 @@ function renderLoop() {
 }
 renderLoop();
 
+// ── Carga de señas ────────────────────────────────────────────────────────────
+// Las URLs son siempre same-origin: "sign.json" sale de los assets empaquetados y
+// las descargadas del backend pasan por /signs/ (PathHandler en AvatarWebView).
+// El JS no puede pedir http:// al backend: sería mixed content y Android lo
+// bloquea. Por eso las descargas las hace Kotlin, no esta escena.
+const signCache = new Map();
+
+async function loadSignData(url) {
+  if (signCache.has(url)) return signCache.get(url);
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(url + " -> HTTP " + response.status);
+  const data = await response.json();
+  const sign = {
+    frames: data.frames ?? [],
+    fps:    data.fps ?? 24,
+    total:  data.total_frames ?? 0,
+  };
+  signCache.set(url, sign);
+  return sign;
+}
+
 function setStatus(msg) {
   document.getElementById("status").textContent = msg;
 }
@@ -215,11 +243,12 @@ new GLTFLoader().load("avatar.glb", (gltf) => {
 
   measureArmRest();
 
-  // Cargar frames de la seña demo
-  fetch("sign.json").then(r => r.json()).then(data => {
-    state.frames   = data.frames ?? [];
-    state.fps      = data.fps ?? 24;
-    setStatus(`Avatar listo — ${data.total_frames} frames · presiona Enviar`);
+  // Cargar frames de la seña demo (sirve de fallback offline: la app abre y
+  // muestra algo aunque el backend esté caído).
+  loadSignData("sign.json").then(sign => {
+    state.frames = sign.frames;
+    state.fps    = sign.fps;
+    setStatus(`Avatar listo — ${sign.total} frames · presiona Enviar`);
   }).catch(err => {
     setStatus("Error cargando sign.json");
     console.error(err);
@@ -345,6 +374,9 @@ const _hNorm = new THREE.Vector3();
 const _hSide = new THREE.Vector3();
 const _hMat  = new THREE.Matrix4();
 const _hQ    = new THREE.Quaternion();
+
+const _mnmUp = new THREE.Vector3(0, 1, 0);
+const _mnmQ  = new THREE.Quaternion();
 
 function rotateBone(bone, targetDir, alpha = state.smoothAlpha) {
   const restDir    = state.boneRestDir.get(bone.name);
@@ -477,6 +509,36 @@ function applyFace(face) {
   }
 }
 
+// ── Marcadores no manuales por tipo de frase (RF-AVT-03) ──────────────────────
+// El tipo viene del backend (PhraseType) y es el mismo para todos los segmentos.
+// Se aplica ENCIMA de la pose del frame: `rotateBone` con FACE_ALPHA = 1.0
+// reemplaza la rotación, así que hay que partir de la dirección actual del hueso
+// y no de la de reposo, o el MNM borraría el movimiento de la propia seña.
+// Alcance honesto: el rig no tiene huesos de cuello, así que aquí solo se toca
+// ceja y mandíbula. La NEGATIVA no puede negar con la cabeza todavía.
+// `DEF-browTR` casi no se mueve (bug de rig, ver specs/avatar): una ceja
+// asimétrica es esperable, no un error.
+const MNM_BROW_UP = {
+  AFFIRMATIVE:      0.16,  // cejas arriba
+  YES_NO_QUESTION:  0.20,  // cejas arriba y juntas
+  CONTENT_QUESTION: 0.12,  // cejas arriba
+  NEGATIVE:        -0.10,  // cejas juntas hacia abajo
+  IMPERATIVE:       0.00,
+};
+
+function applyMnm(type) {
+  const up = MNM_BROW_UP[type];
+  if (!up) return;
+
+  for (const name of ["DEF-browTL", "DEF-browTR"]) {
+    const bone = state.bones.get(name);
+    if (!bone) continue;
+    bone.getWorldQuaternion(_mnmQ);
+    _faceDir.copy(_mnmUp).applyQuaternion(_mnmQ).applyAxisAngle(_xAxis, -up);
+    rotateBone(bone, _faceDir, FACE_ALPHA);
+  }
+}
+
 function applyFrame(frameData) {
   if (frameData.body) {
     applyArmIK(frameData.body);
@@ -521,9 +583,48 @@ function resetPose() {
 }
 
 // ── Loop de reproducción (sin video) ─────────────────────────────────────────
-// Avisa a Android que la seña terminó (Kotlin: WebMessageListener SignAIBridge).
+// Reproduce la cola que envía Android (o la seña local si no hay cola) y avisa a
+// Android que terminó (Kotlin: WebMessageListener SignAIBridge).
+const TRANSITION_FRAMES = 6; // ticks de rAF ≈ 100 ms a 60 Hz
+
 function notifyPlaybackDone() {
   try { window.SignAIBridge?.postMessage("onPlaybackDone"); } catch (e) { /* no bridge */ }
+}
+
+function stopPlayback() {
+  state.playing = false;
+  state.frameIdx = 0;
+  state.lastTime = null;
+  state.transition = 0;
+  state.loading = false;
+  cancelAnimationFrame(state.animHandle);
+  resetPose();
+}
+
+/**
+ * Carga el asset del ítem [index] en `state.frames`. Mientras está cargando,
+ * `state.loading` mantiene el loop en pose de reposo: sin eso, un fetch lento
+ * dejaría `state.frames` apuntando a la seña anterior y el loop volvería a
+ * reproducirla desde el frame 0.
+ */
+function loadQueueItem(index) {
+  const item = state.queue[index];
+  if (!item) return Promise.resolve(false);
+  state.loading = true;
+  state.currentType = item.type || "";
+  return loadSignData(item.url)
+    .then(sign => {
+      state.frames = sign.frames;
+      state.fps    = sign.fps;
+      state.loading = false;
+      return sign.frames.length > 0;
+    })
+    .catch(err => {
+      console.error("No se pudo cargar la seña", item.url, err);
+      state.frames = [];
+      state.loading = false;
+      return false;
+    });
 }
 
 function animTick(now) {
@@ -534,19 +635,35 @@ function animTick(now) {
   state.frameIdx += (now - state.lastTime) / 1000 * state.fps * state.speed;
   state.lastTime  = now;
 
+  if (state.loading) { state.frameIdx = 0; return; }
+
+  // Transición entre señas: pose de reposo unos ticks (RF-AVT-04 simplificado,
+  // ver openspec/changes/integracion-backend/tasks.md).
+  if (state.transition > 0) {
+    state.transition--;
+    state.frameIdx = 0;
+    return;
+  }
+
   const idx = Math.floor(state.frameIdx);
   if (idx >= state.frames.length) {
-    // Fin de la seña: detener en rest pose
-    state.playing = false;
-    state.frameIdx = 0;
-    state.lastTime = null;
-    cancelAnimationFrame(state.animHandle);
-    resetPose();
+    const next = state.queueIdx + 1;
+    if (next < state.queue.length) {
+      state.queueIdx = next;
+      state.transition = TRANSITION_FRAMES;
+      state.frameIdx = 0;
+      loadQueueItem(next);
+      resetPose();
+      return;
+    }
+    // Fin de la secuencia: detener en rest pose
+    stopPlayback();
     notifyPlaybackDone();
     return;
   }
   try {
     applyFrame(state.frames[idx]);
+    applyMnm(state.currentType);
   } catch (e) {
     state.playing = false;
     cancelAnimationFrame(state.animHandle);
@@ -563,9 +680,7 @@ canvas.addEventListener("pointerdown", (e) => {
   pressStartTime = performance.now();
   pressTimer = setTimeout(() => {
     pressTimer = null;
-    state.playing = false;
-    cancelAnimationFrame(state.animHandle);
-    resetPose();
+    stopPlayback();
     camera.position.set(0, 1.5, 2.15);
     controls.target.set(0, 1.2, 0);
     controls.update();
@@ -582,14 +697,45 @@ canvas.addEventListener("pointermove", (e) => {
 canvas.addEventListener("pointerup", () => { activePointers = Math.max(0, activePointers - 1); cancelPress(); });
 canvas.addEventListener("pointercancel", () => { activePointers = 0; cancelPress(); });
 
-// API para Android: SignAI.play(), setDebug, setFreeCamera, setGrid, setBackground
+// API para Android: SignAI.play(), setQueue, setDebug, setFreeCamera, setGrid,
+// setBackground
 window.SignAI = {
+  /**
+   * Secuencia a reproducir. `json` llega como string (Kotlin lo entrecomilla) y
+   * se parsea acá para no interpolar datos crudos en el script.
+   * Aditivo: los comandos originales y el guard `?.` no cambian (BRG-8).
+   */
+  setQueue(json) {
+    try {
+      const items = JSON.parse(json);
+      if (!Array.isArray(items) || items.length === 0) return;
+      state.queue = items;
+      state.queueIdx = 0;
+    } catch (e) {
+      console.error("setQueue: payload inválido", e);
+    }
+  },
   play() {
-    if (state.playing || !state.frames.length) return;
+    if (state.playing) return;
     resetPose();
     state.playing = true;
     state.frameIdx = 0;
     state.lastTime = null;
+    state.transition = 0;
+
+    if (state.queue.length) {
+      // El asset puede no estar en caché todavía (recién descargado del
+      // backend), así que la carga es asíncrona y el loop arranca al resolver.
+      loadQueueItem(0).then(ok => {
+        if (!ok) { stopPlayback(); notifyPlaybackDone(); return; }
+        state.frameIdx = 0;
+        state.lastTime = null;
+        state.animHandle = requestAnimationFrame(animTick);
+      });
+      return;
+    }
+
+    if (!state.frames.length) return;
     state.animHandle = requestAnimationFrame(animTick);
   },
   setDebug(on) { Debug.enabled = !!on; Debug.render(); },
