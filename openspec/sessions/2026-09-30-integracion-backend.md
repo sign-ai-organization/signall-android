@@ -104,7 +104,73 @@ RTX 3050 mientras esta máquina tiene una **RTX 4050 de 6 GB**.
     `docs/sdd-changes.md` (el canal también lleva texto escrito).
   - El PR #6 (solo texto, rama `feat/text-frames`) se cerró al consolidar: la
     rama se renombró y el trabajo quedó en `1a5d975`.
-- Este repo: rama `feat/integracion-backend` con el plan y la bitácora.
+- Este repo: 4 commits en `main` (sin PR, directo, por decisión del owner):
+  `77aa092` sesión con el backend, `76ff5d9` frase escrita + cola, `61ecd51` cola
+  y MNM en `app.js`, `4c0d399` features en el spec. Más `tools/mock_backend.py`.
+
+## Implementado y verificado (2026-09-30, tarde)
+
+Con el usuario autorizando "conectar todo lo posible, mockeando lo que falte":
+
+- **Datos**: `SignAiWebSocketClient` (OkHttp, flow frío por sesión, parser
+  tolerante: resultado = array pelado, transcript/error = objetos),
+  `SignAiBackendConfig` (BuildConfig + `-Psignai.backendWsUrl`),
+  `SignAssetRepository` (descarga nativa → URL same-origin),
+  `network_security_config.xml` para cleartext con la nota de por qué.
+- **Estado**: `play()` manda `{"type":"text",…}` y espera el resultado; se
+  borraron el delay falso de 850 ms y `domain/Gloss.kt`. Estados
+  `Connecting`/`Offline` con reconexión y backoff, hint con las glosas durante
+  `signing`, mensaje de error 3 s.
+- **app.js**: `setQueue(json)` (string, `JSON.parse` en JS), caché de assets por
+  URL, transición corta entre señas, `loading` para que un fetch lento no
+  repita la seña anterior, y MNM de ceja por `PhraseType` **compuesto sobre la
+  pose actual** (porque `FACE_ALPHA = 1.0` reemplaza la rotación).
+- **`/signs/` PathHandler** en el `WebViewAssetLoader` existente.
+- **Ajuste "Seña de prueba si falta en el catálogo"** (activo por defecto): con
+  el catálogo vacío toda glosa llega desconocida, y esto hace que use la seña
+  horneada del APK para que la cola se vea.
+- **`tools/mock_backend.py`**: mock del backend con el mismo protocolo en un
+  solo puerto (WS + `/health` + `/static/*.json` sirviendo el `sign.json` del
+  repo). Permite probar la app sin Neon, Whisper ni Ollama, y ejercita el camino
+  de descarga que más riesgo tenía.
+
+### Verificado en emulador (VMApp_API36)
+
+- `./gradlew build` verde, `installDebug` OK, la app arranca.
+- **Conecta**: con el mock corriendo, el hint dice "Listo para traducir" y no
+  "Sin conexión"; el mock registra la sesión abierta. El parser del cliente
+  funciona contra el payload real del mock.
+- Avatar carga, la escena 3D anda, el drawer de Conversación abre con drag.
+
+### NO verificado: el flujo de la frase escrita
+
+**Los toques en la barra de control no llegan en este emulador.** Se probaron
+`input tap`, `input swipe` con punto fijo (120-150 ms), `input touchscreen swipe`
+con 1 px de movimiento, y navegación con TAB: ninguno enfocó el campo ni activó
+el mic ni el botón de historial. Lo que **sí** responde es el `draggable` del
+tirador del drawer — el mismo patrón que el WebView se queda con los toques.
+
+**No lo introdujo este trabajo**: no se tocó el orden de composición ni la barra.
+Es lo mismo que ya está documentado en `AGENTS.md`/`EDG-22` (el `AndroidView` del
+WebView es un View real y se queda con los toques de sus bounds). Ojo: en esa nota
+se habla de los *drawers*, no de la barra de control, y el comentario de
+`MainScreen` sí afirma que la barra debe ir antes que los drawers. **Hay que
+comprobarlo en el device real**: si la barra está muerta ahí también, es un bug de
+layering preexistente y vale la pena arreglarlo.
+
+Lo que falta para cerrar la prueba end-to-end: enviar una frase desde la UI y ver
+las glosas en el caption y la cola reproduciéndose. Se puede hacer a mano en el
+device, o con el mock corriendo y
+`-Psignai.backendWsUrl=ws://<ip-de-tu-lan>:8080/ws/translate`.
+
+## Pendiente
+
+- **Paso 0.1 sigue bloqueando la prueba real**: sembrar `catalog` en Neon.
+- Mergear el PR #7 del backend a mano.
+- Probar la frase escrita en el device real (ver arriba).
+- `turn_id` cliente→servidor: no hace falta hasta el paso 5.
+- `RF-AVT-04` (interpolación real) queda en crossfade corto; está anotado.
+- Seguridad (auth/TLS, `RF-INT-COM-03` / DEC-14) fuera de alcance.
 
 ### Ollama: lo que se midió
 
@@ -131,21 +197,3 @@ con `ollama run qwen3:4b-instruct`. Y usar `qwen3:4b-instruct`, no `qwen3:4b`:
 esta última tiene *thinking* y rompe el formato de salida (solo glosas por
 comas).
 
-## Pendiente
-
-- **Paso 0.1 sigue bloqueando todo**: sembrar `catalog` en Neon. Sin las 50
-  glosas, el 100% vuelve `available:false` y no hay nada que reproducir.
-- Mergear el PR #7 a mano.
-- **Ojo con la sesión de solo texto:** `router.py:44` conecta al STT antes de
-  atender la sesión, así que sin STT manda `error` y cierra aunque el cliente solo
-  mande texto. Con el STT falso se resuelve. Hacer la conexión perezosa es un
-  cambio de diseño aparte, propuesto en el PR pero **no aplicado**.
-- `turn_id` cliente→servidor: no hace falta hasta el paso 5 (con reconexión
-  automática un resultado puede llegar de una sesión anterior). El guard actual de
-  `MainScreenState.play()` basta mientras tanto.
-- El paso 4 (assets) es el único con riesgo real de arquitectura: la red la debe
-  hacer Kotlin y nunca el JS, porque el WebView corre en origen `https://` y un
-  `fetch` a `http://` es mixed content. Hay que hacerlo bien desde el principio.
-- `RF-AVT-04` (interpolación real entre señas) queda en crossfade corto contra el
-  rest pose, y hay que decirlo: no es la interpolación del requerimiento.
-- Seguridad (auth/TLS, `RF-INT-COM-03` / DEC-14) explícitamente fuera de alcance.
