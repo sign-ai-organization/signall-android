@@ -33,6 +33,14 @@ import java.util.concurrent.atomic.AtomicReference
 /** Wait for the drawer close animation before replaying a conversation turn (`CNV-6`). */
 private const val DrawerCloseDelayMs = 500L
 
+/**
+ * How long to wait for the transcript after the mic is released before giving
+ * up. Transcribing 8 s of audio locally takes a few seconds, so this is
+ * generous; it exists so a lost transcript shows a message instead of leaving
+ * the app in "Procesando..." forever.
+ */
+private const val TranscriptionTimeoutMs = 15_000L
+
 /** Reconnect backoff, multiplied by the attempt count (`RF-INT-COM-01`). */
 private const val ReconnectBaseMs = 1_000L
 private const val MaxReconnectAttempts = 5
@@ -125,6 +133,9 @@ class MainScreenState(
 
     private var connectJob: Job? = null
 
+    /** Bounds the wait for a transcript after the mic is released. */
+    private var processingJob: Job? = null
+
     /** Text of the turn in flight, so the conversation entry is added on result. */
     private var pendingText: String? = null
 
@@ -173,6 +184,9 @@ class MainScreenState(
 
             is BackendEvent.Transcript -> {
                 if (event.text.isBlank()) return
+                // Anything coming back means the round trip is alive, so the
+                // "no transcript arrived" guard is no longer needed.
+                processingJob?.cancel()
                 transcript = event.text
                 inputText = event.text
                 // A final transcript means the backend heard a whole utterance.
@@ -353,9 +367,21 @@ class MainScreenState(
 
     private fun stopListening() {
         audio.stop()
-        // The transcript has not arrived yet: it comes from the backend once it
-        // detects the silence that follows the speech. "Procesando" until then.
+        // The transcriber closes a segment by hearing silence. Stopping the
+        // capture means that silence never arrives, so the segment has to be
+        // closed explicitly — otherwise the app waits for a transcript that
+        // will never come.
+        backend.sendEnd()
         playbackState = PlaybackState.Processing
+        // Safety net: no transcript is a failure mode (STT down, audio lost),
+        // and "Procesando..." has to be a wait, not a hang.
+        processingJob?.cancel()
+        processingJob = scope.launch {
+            delay(TranscriptionTimeoutMs)
+            if (playbackState == PlaybackState.Processing) {
+                fail("No llegó la transcripción. Probá de nuevo.")
+            }
+        }
     }
 
     private fun sendAudio(chunk: ByteArray) {
