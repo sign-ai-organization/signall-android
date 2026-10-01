@@ -87,6 +87,16 @@ def splice(proto: list[str], web: list[str]) -> list[str]:
     # FINGER_LM, HINGE_FINGERS, FLEX_*, acoplamientos DIP/MCP, span degradado.
     # Los helpers de conversión (lmDir/mpToThree) no cambiaron entre versiones
     # y se copian tal cual para no depender del bloque importado.
+    # Los imports van PRIMERO: el bloque de constantes del prototipo arranca
+    # después de los suyos, así que si se copian tal cual el módulo queda sin
+    # THREE y revienta al cargar.
+    out += [
+        "",
+        'import * as THREE from "three";',
+        'import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";',
+        'import { OrbitControls } from "three/addons/controls/OrbitControls.js";',
+    ]
+
     out += span(proto, proto_consts, proto_state)
     # lmDir/mpToThree NO se copian: el WebView ya los declara en su cabecera y
     # son idénticos a los del prototipo (no cambiaron entre versiones).

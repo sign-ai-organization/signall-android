@@ -1,3 +1,7 @@
+
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 // ── Dedos: landmarks MediaPipe Hands por familia ────────────────────────────
 // [MCP, PIP, DIP, TIP]. Las falanges 1/2/3 de cada familia mapean a los huesos
 // AutoRigPro thumb1/2/3, index1/2/3, … (Three.js quita los puntos: index1.l → index1l).
@@ -565,7 +569,7 @@ function _applyOneArm(body, iS, iE, wristTarget,
   if (bUA1) rotateBone(bUA1, dirUA);
   if (bFA)  rotateBone(bFA,  dirFA);
   if (bFA1) rotateBone(bFA1, dirFA);
-  // La orientación de hand{l,r} (incluye roll de muñeca) se aplica en applyFrame
+  // La orientación de DEF-handL/R (incluye roll de muñeca) se aplica en applyFrame
   // usando applyHandOrientation con los landmarks completos de la mano.
 }
 
