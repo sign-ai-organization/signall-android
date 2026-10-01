@@ -18,11 +18,18 @@ import com.signai.webview.BuildConfig
  */
 data class SignAiBackendConfig(val url: String) {
 
-    /** HTTP origin of the same backend, for downloading sign assets over HTTPS. */
+    /**
+     * HTTP origin of the same backend, for downloading sign assets.
+     *
+     * `ws://10.0.2.2:8080/ws/translate` → `http://10.0.2.2:8080`. Only the
+     * scheme and the host/port are kept; the WebSocket path is dropped.
+     */
     val httpOrigin: String
-        get() = url
-            .substringBefore("://")
-            .replace("ws", "http") + url.substringAfter("://").substringBeforeLast("/")
+        get() {
+            val scheme = if (url.startsWith("wss://")) "https://" else "http://"
+            val hostAndPort = url.substringAfter("://").substringBefore("/")
+            return scheme + hostAndPort
+        }
 
     companion object {
         const val DEFAULT = "ws://10.0.2.2:8080/ws/translate"
