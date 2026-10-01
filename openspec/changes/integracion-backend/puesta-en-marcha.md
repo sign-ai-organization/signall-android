@@ -54,9 +54,27 @@ cd ../webview
 python3 -u tools/mock_backend.py --ollama --stt
 ```
 
-`--stt` agrega transcripción local con `whisper.cpp`, usando los modelos que ya
-están en `~/.cache/opencode-voice/`. No descarga nada y no necesita GPU. Es lo
-que permite hablarle al micrófono sin el contenedor de Whisper.
+`--stt` agrega transcripción local usando los motores y modelos que ya están
+en `~/.cache/opencode-voice/`. No descarga nada y no necesita GPU. Es lo que
+permite hablarle al micrófono sin el contenedor de Whisper.
+
+Por defecto usa **Qwen3-ASR 0.6B**, que es el que hay. Medido acá sobre una
+frase de 2 s:
+
+| motor | modelo | tiempo | español |
+|---|---|---|---|
+| `transcribe-cpp` | `Qwen3-ASR-0.6B` | **~0.7 s** | ✔ |
+| `whisper.cpp` | `ggml-large-v3-turbo` | 5–26 s | ✔ |
+| `transcribe-cpp` | `parakeet-tdt-0.6b-v3` | ~0.65 s | ✘ contesta en cirílico |
+
+Ojo con Parakeet: es el más rápido de los tres, pero **el modelo que tenés es
+el ruso**, así que para español devuelve basura. No va de default.
+
+Para forzar otro:
+```bash
+SIGNAI_STT_ENGINE=whisper python3 -u tools/mock_backend.py --ollama --stt
+SIGNAI_STT_MODEL=/ruta/al/modelo python3 -u tools/mock_backend.py --ollama --stt
+```
 
 Sin `--stt`, el audio se ignora (solo funciona el camino de texto).
 
