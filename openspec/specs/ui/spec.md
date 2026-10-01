@@ -242,20 +242,27 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 | STA-8 | **Fin real de reproducción** | `[N]` | La transición `signing → done` usa un callback JS→Kotlin (`onPlaybackDone`), no un timer. |
 | STA-9 | Flujo del mic | `[P]` | `listening`: el prototipo auto-rellena una frase y procesa. En la app: placeholder. |
 | STA-10 | Estado visible en stage + panel | `[P]` | El estado alimenta el hint del stage y el estado del avatar en Conversación. |
+| STA-11 | Estado **connecting** | `[N]` | "Conectando con el servidor..." mientras abre el WebSocket. |
+| STA-12 | Estado **offline** | `[N]` | "Sin conexión con el servidor" + reconexión automática con backoff (RF-INT-COM-01). |
+| STA-13 | Hint con glosas | `[N]` | Mientras `signing`, el hint del stage muestra las glosas de la secuencia en vez del label. |
+| STA-14 | Mensaje transitorio | `[N]` | Un error del backend se muestra en el hint durante 3 s y vuelve a `idle` (RF-UI-05). |
 
 ---
 
 ## 12. Gloss (traducción español → LSC)
 
+Las glosas ya **no** se inventan en el cliente: las produce `../sign-ai-backend`
+(paso 2 del plan en `openspec/changes/integracion-backend/tasks.md`). El
+placeholder local se eliminó.
+
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| GLS-1 | Función de gloss | `[P]` | `glossFor(text)` pura, en `domain/`. |
-| GLS-2 | Regla "universidad" | `[P]` | Contiene "universidad" → "YO UNIVERSIDAD IR QUERER". |
-| GLS-3 | Regla "gracias" | `[P]` | Contiene "gracias" → "GRACIAS MUCHO". |
-| GLS-4 | Regla "ayuda" | `[P]` | Contiene "ayuda" → "YO AYUDA NECESITAR". |
-| GLS-5 | Regla "cómo" | `[P]` | Contiene "cómo" → "TÚ CÓMO ESTAR". |
-| GLS-6 | Fallback | `[P]` | Mayúsculas sin `¿?¡!`; vacío → "ESPERANDO MENSAJE". |
-| GLS-7 | Placeholder honesto | `[N]` | Es aproximado; el motor de gloss real está fuera de alcance. |
+| GLS-1 | Glosas del backend | `[N]` | `TranslationSegment`/`TranslationGloss` espejan los modelos Python. La frase viaja por el WebSocket como `{"type":"text","text":…}` y la respuesta es un array de segmentos. |
+| GLS-2 | Tipo de frase | `[N]` | `PhraseType` (los 5 valores del backend) + `UNKNOWN` para no crashear ante un valor nuevo. Alimenta los marcadores no manuales. |
+| GLS-3 | Glosa no disponible | `[N]` | `available == false` → la glosa no se reproduce y se reporta en el caption (RF-CAT-03). |
+| GLS-4 | Transcripción del backend | `[N]` | El evento `transcript` se refleja en el input, para poder corregirlo antes de reenviar (RF-UI-02). |
+| GLS-5 | Fallback de seña de prueba | `[N]` | Con el catálogo vacío toda glosa llega desconocida. El ajuste "Seña de prueba si falta en el catálogo" hace que use la seña horneada del APK, para poder ver la cola. Se apaga cuando el backend sirva animaciones. |
+| GLS-6 | Placeholder eliminado | `[N]` | `domain/Gloss.kt` (`glossFor`) se borró: era una aproximación que ya no se usa. |
 
 ---
 
@@ -272,6 +279,8 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 | BRG-7 | `onPlaybackDone` (JS→Kotlin) | `[N]` | Evento al terminar `play()`; alimenta `STA-8`. Vía `WebMessageListener` (`SignAIBridge`). |
 | BRG-8 | Contrato retrocompatible | `[A]` | Los 5 comandos actuales y el guard `?.` no cambian. |
 | BRG-9 | `setTheme(dark)` | `[N]` | Aditivo. Hace que el fondo del canvas 3D siga el tema claro/oscuro (mitiga el riesgo de light mode) y alterna la clase `light` en `<html>` para contrastar el texto de debug/estado. |
+| BRG-10 | `setQueue(json)` | `[N]` | Aditivo. Recibe la secuencia de glosas como **string** (Kotlin lo entrecomilla con `JSONObject.quote` y el JS hace `JSON.parse`), nunca datos crudos en el script. `play()` recorre la cola y `onPlaybackDone` salta al terminar la última. |
+| BRG-11 | Marcadores no manuales | `[N]` | `app.js` aplica ceja por `PhraseType` **encima** de la pose del frame (parte de la dirección actual del hueso, no de la de reposo, porque `FACE_ALPHA = 1.0` reemplaza la rotación). Solo ceja: el rig no tiene huesos de cuello. |
 
 ---
 
