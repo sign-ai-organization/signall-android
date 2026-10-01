@@ -51,9 +51,14 @@ Se ve: `[fake-stt] received chunk #1 (960 bytes)`.
 
 ```bash
 cd ../webview
-pip install websockets        # solo la primera vez
-python tools/mock_backend.py --ollama
+python3 -u tools/mock_backend.py --ollama --stt
 ```
+
+`--stt` agrega transcripción local con `whisper.cpp`, usando los modelos que ya
+están en `~/.cache/opencode-voice/`. No descarga nada y no necesita GPU. Es lo
+que permite hablarle al micrófono sin el contenedor de Whisper.
+
+Sin `--stt`, el audio se ignora (solo funciona el camino de texto).
 
 Imprime:
 

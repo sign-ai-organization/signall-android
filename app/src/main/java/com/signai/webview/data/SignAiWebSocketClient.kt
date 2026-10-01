@@ -17,6 +17,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
+import okio.ByteString.Companion.toByteString
 
 /**
  * WebSocket client for the backend's translation session (`/ws/translate`).
@@ -38,6 +39,10 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
 
     @Volatile
     private var socket: WebSocket? = null
+
+    /** True while there is a live session to talk to. */
+    val isConnected: Boolean
+        get() = socket != null
 
     fun events(): Flow<BackendEvent> = callbackFlow {
         val producer = this
@@ -78,6 +83,15 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         val payload = JSONObject().put("type", "text").put("text", text).toString()
         return socket?.send(payload) ?: false
     }
+
+    /**
+     * Sends one raw audio chunk over the same session as [sendText].
+     *
+     * The backend is the only one that talks to the STT service, so this is
+     * plain binary in and nothing else: the backend regroups the chunks for its
+     * voice-activity detector and answers with transcripts and a result.
+     */
+    fun sendAudio(chunk: ByteArray): Boolean = socket?.send(chunk.toByteString()) ?: false
 
     fun close() {
         socket?.close(NORMAL_CLOSURE, "client closing")
