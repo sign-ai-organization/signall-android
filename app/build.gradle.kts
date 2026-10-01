@@ -7,6 +7,13 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+// Where the backend lives. Override per device without touching code, e.g.
+//   ./gradlew installDebug -Psignai.backendWsUrl=ws://192.168.1.50:8080/ws/translate
+// Default is the Android emulator's alias for the host machine. A real device
+// needs the host's LAN address, never 127.0.0.1.
+val backendWsUrl: String =
+    (project.findProperty("signai.backendWsUrl") as String?) ?: "ws://10.0.2.2:8080/ws/translate"
+
 android {
     namespace = "com.signai.webview"
     compileSdk = 36
@@ -17,6 +24,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0.0-webview"
+        buildConfigField("String", "BACKEND_WS_URL", "\"$backendWsUrl\"")
     }
 
     buildTypes {
@@ -45,6 +53,9 @@ kotlin {
 dependencies {
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.activity:activity-compose:1.9.3")
+
+    // Backend translation session (ws://…/ws/translate).
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     implementation(platform("androidx.compose:compose-bom:2024.12.01"))
     implementation("androidx.compose.ui:ui")

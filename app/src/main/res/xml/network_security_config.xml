@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The development backend is reached over plain HTTP/WS on the local network, and
+  Android blocks cleartext by default since API 28. Allowed here for development.
+
+  Pending, tracked as RF-INT-COM-03 / DEC-14 in the backend repo: expose the
+  backend over TLS (and add auth) before this app goes anywhere but a demo on a
+  trusted network. When that happens, delete this file, drop
+  `android:networkSecurityConfig` from the manifest, and set
+  `LLM`/backend URLs to `https://` / `wss://`.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

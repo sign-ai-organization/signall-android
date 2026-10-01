@@ -12,6 +12,9 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.signai.webview.data.SharedPrefsSettingsRepository
 import com.signai.webview.data.SharedPrefsSignHistoryRepository
+import com.signai.webview.data.SignAiBackendConfig
+import com.signai.webview.data.SignAiWebSocketClient
+import com.signai.webview.data.SignAssetRepository
 import com.signai.webview.ui.MainScreen
 import com.signai.webview.ui.state.MainScreenState
 import com.signai.webview.ui.theme.SignAiTheme
@@ -21,11 +24,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        val backendConfig = SignAiBackendConfig.fromBuildConfig()
         val state =
             MainScreenState(
                 history = SharedPrefsSignHistoryRepository(this),
                 settingsStore = SharedPrefsSettingsRepository(this),
                 webView = WebViewSignAiController(),
+                backend = SignAiWebSocketClient(backendConfig),
+                assets = SignAssetRepository(cacheDir, backendConfig.httpOrigin),
             )
         setContent {
             val settings = state.settings
