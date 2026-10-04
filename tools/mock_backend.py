@@ -7,9 +7,10 @@ Habla exactamente el mismo protocolo que el backend real, en un solo puerto:
 - `GET /static/<sign_id>.json` → una animación real de las 50 horneadas en
   `app/src/main/assets/web/signs/`, para que la app tenga algo real que
   descargar y reproducir
-- `WS /ws/translate` → acepta `{"type": "text", "text": "<frase>"}` y responde
-  con `{"type": "transcript", ...}` y después un **array** de segmentos, igual
-  que `Controller.send_result`
+- `WS /ws/translate` → acepta `{"type": "text", "text": "<frase>"}` y `{"type":
+  "end"}`, y responde como `Controller.handle_transcript`: `{"type":
+  "transcript", ...}`, un `{"type": "segment", "index", "total", "segment"}` por
+  oración y un `{"type": "done"}` al final
 
 Todas las glosas vienen con `available: true` y una ruta de animación, así que la
 app descarga el archivo por HTTP y lo reproduce: eso ejercita el camino que más
@@ -217,9 +218,16 @@ def handle_http(connection, request) -> Response | None:
 
 
 async def send_translation(websocket, loop: asyncio.AbstractEventLoop, text: str) -> None:
-    """LLM -> glosas. La llamada bloquea, así que va fuera del event loop."""
+    """LLM -> glosas -> la frase como la manda el backend.
+
+    Un `segment` por oración, cada uno con su `index` y el `total`, y un `done`
+    al final: es lo que produce `Controller.handle_transcript`, y lo que la app
+    espera desde que el backend dejó de mandar un array pelado.
+
+    La llamada al LLM bloquea, así que va fuera del event loop.
+    """
     try:
-        result = await loop.run_in_executor(None, build_result, text)
+        segments = await loop.run_in_executor(None, build_result, text)
     except (urllib.error.URLError, OSError, KeyError, TimeoutError) as error:
         print(f"[mock] LLM falló: {error}")
         print('[mock] ¿arrancaste Ollama? ¿lo calentaste con `ollama run '
@@ -229,9 +237,17 @@ async def send_translation(websocket, loop: asyncio.AbstractEventLoop, text: str
         )
         return
 
-    glosses = [g["text"] for g in result[0]["glosses"]]
-    print(f"[mock] glosas: {glosses}")
-    await websocket.send(json.dumps(result))
+    total = len(segments)
+    for index, segment in enumerate(segments):
+        glosses = [g["text"] for g in segment["glosses"]]
+        print(f"[mock] segmento {index + 1}/{total}: {glosses}")
+        await websocket.send(json.dumps({
+            "type": "segment",
+            "index": index,
+            "total": total,
+            "segment": segment,
+        }))
+    await websocket.send(json.dumps({"type": "done"}))
 
 
 async def handle_session(websocket) -> None:

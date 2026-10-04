@@ -22,9 +22,14 @@ import okio.ByteString.Companion.toByteString
 /**
  * WebSocket client for the backend's translation session (`/ws/translate`).
  *
- * Only the typed-phrase direction exists so far (plan paso 2): [sendText]
- * sends `{"type":"text","text":…}`. Audio chunks are paso 5 of the plan and
- * will reuse this same connection, not a second one.
+ * One session carries both directions the app needs, and both are plain frames
+ * on the same socket:
+ *
+ * - [sendAudio] streams the microphone as binary PCM; the backend owns the STT
+ *   connection and answers with transcripts.
+ * - [sendText] sends a phrase typed instead of spoken.
+ * - [sendEnd] tells the backend the utterance is over, so it can close the
+ *   segment the STT has open (see [sendEnd]).
  *
  * [events] is a function, not a property: every call is a fresh cold flow, so
  * reconnecting means collecting it again.
@@ -53,7 +58,7 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
-                parseMessage(text)?.let { trySend(it) }
+                parseMessage(text).forEach { trySend(it) }
             }
 
             // Closing the flow on failure is what makes reconnecting possible:
@@ -113,58 +118,80 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
     }
 
     /**
-     * Tolerant parser: a result is a bare array, transcript and error are
-     * objects tagged with `type`. Anything unreadable is dropped with a log
-     * rather than thrown — a malformed frame must not take the session down.
+     * Tolerant parser: a message is a JSON object tagged with `type`, and
+     * anything unreadable is dropped with a log rather than thrown — a
+     * malformed frame must not take the session down.
+     *
+     * Returns a list because an older backend sent the phrase's segments as one
+     * bare array with no envelope, which turns into one event per segment. The
+     * backend is deployed from its own repo and can lag behind the app, so both
+     * shapes are accepted and produce the same events — nothing downstream has
+     * to know which one arrived.
      */
-    private fun parseMessage(text: String): BackendEvent? {
-        val trimmed = text.trim()
+    private fun parseMessage(raw: String): List<BackendEvent> {
+        val trimmed = raw.trim()
         return try {
             when {
-                trimmed.startsWith("[") -> parseSegments(trimmed)
-                trimmed.startsWith("{") -> {
-                    val obj = JSONObject(trimmed)
-                    when (obj.optString("type")) {
-                        "transcript" -> BackendEvent.Transcript(
-                            text = obj.optString("text"),
-                            final = obj.optBoolean("final"),
-                        )
-
-                        "error" -> BackendEvent.Failure(
-                            message = obj.optString("message").ifBlank { DEFAULT_ERROR },
-                        )
-
-                        else -> null
-                    }
-                }
-
-                else -> null
+                trimmed.startsWith("{") -> listOfNotNull(parseEnvelope(JSONObject(trimmed)))
+                trimmed.startsWith("[") -> parseLegacyArray(JSONArray(trimmed))
+                else -> emptyList()
             }
         } catch (e: JSONException) {
             Log.w(TAG, "ignoring unreadable message: ${e.message}")
-            null
+            emptyList()
         }
     }
 
-    private fun parseSegments(raw: String): BackendEvent.Translation {
-        val array = JSONArray(raw)
-        val segments = (0 until array.length()).map { i ->
-            val segment = array.getJSONObject(i)
-            val glossArray = segment.optJSONArray("glosses") ?: JSONArray()
-            val glosses = (0 until glossArray.length()).map { j ->
-                val gloss = glossArray.getJSONObject(j)
-                TranslationGloss(
-                    text = gloss.optString("text"),
-                    available = gloss.optBoolean("available"),
-                    glbPath = gloss.optString("glb_path"),
-                )
-            }
-            TranslationSegment(
-                type = PhraseType.from(segment.optString("type")),
-                glosses = glosses,
+    /** One tagged message, or null when its `type` is one we ignore. */
+    private fun parseEnvelope(obj: JSONObject): BackendEvent? = when (obj.optString("type")) {
+        "transcript" -> BackendEvent.Transcript(
+            text = obj.optString("text"),
+            final = obj.optBoolean("final"),
+        )
+
+        "segment" -> {
+            val segment = obj.optJSONObject("segment") ?: return null
+            BackendEvent.Segment(
+                index = obj.optInt("index"),
+                total = obj.optInt("total"),
+                segment = parseSegment(segment),
             )
         }
-        return BackendEvent.Translation(segments)
+
+        "done" -> BackendEvent.PhraseDone
+
+        "error" -> BackendEvent.Failure(
+            message = obj.optString("message").ifBlank { DEFAULT_ERROR },
+        )
+
+        // `trace` / `sentence_trace` are the debug-only pipeline timings.
+        // Ignoring every unknown type is what lets the backend add messages
+        // without breaking this client.
+        else -> null
+    }
+
+    private fun parseSegment(segment: JSONObject): TranslationSegment {
+        val glossArray = segment.optJSONArray("glosses") ?: JSONArray()
+        val glosses = (0 until glossArray.length()).map { j ->
+            val gloss = glossArray.getJSONObject(j)
+            TranslationGloss(
+                text = gloss.optString("text"),
+                available = gloss.optBoolean("available"),
+                glbPath = gloss.optString("glb_path"),
+            )
+        }
+        return TranslationSegment(
+            type = PhraseType.from(segment.optString("type")),
+            glosses = glosses,
+        )
+    }
+
+    private fun parseLegacyArray(array: JSONArray): List<BackendEvent> {
+        val total = array.length()
+        return (0 until total).mapNotNull { i ->
+            val segment = array.optJSONObject(i) ?: return@mapNotNull null
+            BackendEvent.Segment(index = i, total = total, segment = parseSegment(segment))
+        }
     }
 
     private companion object {
