@@ -59,9 +59,15 @@ Ya tiene listo el canal: un WebSocket en `ws://IP-DEL-BACKEND:8080/ws/translate`
 
 | Repo | Qué | Estado |
 |---|---|---|
-| `sign-ai-backend` | [PR #7](https://github.com/sign-ai-organization/sign-ai-backend/pull/7): frases escritas + LLM local (Ollama) | Abierto, listo para revisar. **Falta mergearlo** |
-| `sign-ai-stt` | — | **No hace falta PR.** El camino de texto nunca pasa por el oído |
-| `webview` (este) | Este plan + la implementación paso a paso | Rama `feat/integracion-backend` |
+| `sign-ai-backend` | [PR #7](https://github.com/sign-ai-organization/sign-ai-backend/pull/7): frases escritas + LLM local (Ollama) | **Nunca se mergeó** y quedó 17 commits atrás de `main`. La rama `feat/android-client-support-v2` (2026-10-04) rehace el trabajo sobre `main` actual y además cierra el frame `end` |
+| `sign-ai-stt` | — | **No hace falta PR.** El frame `end` ya lo entendía |
+| `webview` (este) | Este plan + la implementación paso a paso | Rama `feat/integracion-backend-v2` |
+
+> **2026-10-04 — el protocolo cambió por debajo.** `main` del backend ya no
+> manda un array de segmentos: manda un `segment` por oración y un `done`. La
+> app se había quedado atrás y no señaba nada (ver
+> `openspec/sessions/2026-10-04-protocolo-backend.md`). Mientras la rama del
+> backend no se mergee, la app no funciona contra el backend desplegado.
 
 ---
 
@@ -226,13 +232,19 @@ no hay red. La app tiene que abrir y verse bien aunque el backend esté caído.
 
 Al final, porque no hace falta para probar nada de lo anterior.
 
-- [ ] Grabar audio de verdad (`AudioRecord`, 16 kHz, mono) y mandarlo en pedacitos
+- [x] Grabar audio de verdad (`AudioRecord`, 16 kHz, mono) y mandarlo en pedacitos
       de 30 ms — el mismo tamaño que usa el cliente de prueba del backend.
-- [ ] Pedir el permiso de micrófono con su explicación (la app no funciona sin él,
-      así que hay que decirlo).
-- [ ] El botón del micrófono deja de hacer el autocompletado de ejemplo y pasa a
+      → `data/AudioCapture.kt`.
+- [x] Pedir el permiso de micrófono con su explicación (la app no funciona sin él,
+      así que hay que decirlo). → `MainScreenState.onMicPermissionDenied`.
+- [x] El botón del micrófono deja de hacer el autocompletado de ejemplo y pasa a
       usar lo que realmente escucha.
-- [ ] Si se cae la conexión, reconectar solo y dejar el avatar quieto.
+- [x] Si se cae la conexión, reconectar solo y dejar el avatar quieto. →
+      `MainScreenState.connect` con backoff.
+- [ ] **Cerrar la frase al soltar el micrófono.** Depende de que el backend
+      reenvíe el frame `end` al STT: está en la rama
+      `feat/android-client-support-v2` del backend, sin mergear. Ver
+      `openspec/sessions/2026-10-04-protocolo-backend.md`.
 
 ---
 
