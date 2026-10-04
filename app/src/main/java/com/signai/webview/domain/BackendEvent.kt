@@ -3,17 +3,37 @@ package com.signai.webview.domain
 /**
  * Everything the backend can tell us over `ws://…/ws/translate`.
  *
- * The protocol is deliberately asymmetric: a transcript and an error are JSON
- * objects tagged with `type`, while a translation result is a **bare JSON
- * array** of segments with no envelope. That is why a result cannot be told
- * apart by a `type` field.
+ * The backend streams a phrase as one `segment` message per sentence, each
+ * carrying its position and how many sentences the phrase has in total, then a
+ * `done`. Segments therefore arrive while the phrase is still being
+ * translated — `MainScreenState` collects them and only builds the playback
+ * queue once the phrase is complete, so the avatar never signs half a phrase.
+ *
+ * Frames tagged with a `type` this client does not know (`trace` and
+ * `sentence_trace`, both debug-only) are dropped by the parser, so the backend
+ * can add messages without breaking the app.
  */
 sealed interface BackendEvent {
     data object Connected : BackendEvent
 
     data class Transcript(val text: String, val final: Boolean) : BackendEvent
 
-    data class Translation(val segments: List<TranslationSegment>) : BackendEvent
+    /**
+     * One translated sentence of the phrase in flight.
+     *
+     * [index] is its position and [total] how many sentences the phrase has;
+     * both are known from the very first message. They arrive in order, but the
+     * queue still waits for all of them, because a sentence that takes an extra
+     * LLM round trip must not cut the phrase short.
+     */
+    data class Segment(
+        val index: Int,
+        val total: Int,
+        val segment: TranslationSegment,
+    ) : BackendEvent
+
+    /** End of the phrase: every segment has been sent. */
+    data object PhraseDone : BackendEvent
 
     data class Failure(val message: String) : BackendEvent
 

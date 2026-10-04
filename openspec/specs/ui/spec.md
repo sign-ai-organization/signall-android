@@ -257,12 +257,14 @@ placeholder local se eliminó.
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| GLS-1 | Glosas del backend | `[N]` | `TranslationSegment`/`TranslationGloss` espejan los modelos Python. La frase viaja por el WebSocket como `{"type":"text","text":…}` y la respuesta es un array de segmentos. |
+| GLS-1 | Glosas del backend | `[N]` | `TranslationSegment`/`TranslationGloss` espejan los modelos Python. La frase viaja por el WebSocket como `{"type":"text","text":…}` y la respuesta es **un `segment` por oración** (`{"type":"segment","index":…,"total":…,"segment":…}`) seguido de un `done`. La app los acumula y solo arma la cola cuando la frase está completa, para no ejecutar media frase. |
 | GLS-2 | Tipo de frase | `[N]` | `PhraseType` (los 5 valores del backend) + `UNKNOWN` para no crashear ante un valor nuevo. Alimenta los marcadores no manuales. |
 | GLS-3 | Glosa no disponible | `[N]` | `available == false` → la glosa no se reproduce y se reporta en el caption (RF-CAT-03). |
 | GLS-4 | Transcripción del backend | `[N]` | El evento `transcript` se refleja en el input, para poder corregirlo antes de reenviar (RF-UI-02). |
 | GLS-5 | Fallback de seña de prueba | `[N]` | Con el catálogo vacío toda glosa llega desconocida. El ajuste "Seña de prueba si falta en el catálogo" hace que use la seña horneada del APK, para poder ver la cola. Se apaga cuando el backend sirva animaciones. |
 | GLS-6 | Placeholder eliminado | `[N]` | `domain/Gloss.kt` (`glossFor`) se borró: era una aproximación que ya no se usa. |
+| GLS-7 | Frames desconocidos | `[N]` | Cualquier `type` que la app no conozca se ignora en silencio, sin tumbar la sesión. Así el backend puede añadir `trace`/`sentence_trace` u otros sin romper clientes ya instalados. |
+| GLS-8 | Cierre del micrófono | `[N]` | Al soltar el micrófono la app manda `{"type":"end"}`; el backend lo reenvía al STT como un frame `end`. Sin esto, soltar a mitad de una frase la pierde, porque el silencio que cierra el segmento nunca llega. |
 
 ---
 

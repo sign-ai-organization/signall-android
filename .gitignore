@@ -6,3 +6,11 @@ app/build/
 local.properties
 *.iml
 .DS_Store
+
+# Credenciales del backend. `env` es una copia local de sign-ai-backend/.env con
+# la contraseña de Neon y la API key del LLM: nunca al repo. Copiá
+# .env.example -> env y llenalo.
+env
+.env
+.env.*
+!.env.example

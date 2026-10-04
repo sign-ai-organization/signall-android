@@ -142,6 +142,19 @@ class MainScreenState(
     /** Text of the turn in flight, so the conversation entry is added on result. */
     private var pendingText: String? = null
 
+    /**
+     * Segments of the phrase being translated, keyed by their position.
+     *
+     * The backend streams one segment per sentence and they all belong to the
+     * same phrase, so they are collected here instead of being played as they
+     * arrive: the avatar signs the phrase as one queue, and a sentence that
+     * needs an extra LLM round trip cannot leave it signing half a phrase.
+     */
+    private val pendingSegments = sortedMapOf<Int, TranslationSegment>()
+
+    /** How many segments the phrase has; 0 until the first one says so. */
+    private var pendingTotal = 0
+
     /** True when the turn in flight is a Repetir, which must not be re-recorded. */
     private var isReplay = false
 
@@ -214,15 +227,54 @@ class MainScreenState(
                 }
             }
 
-            is BackendEvent.Translation -> {
+            is BackendEvent.Segment -> {
                 transcript = pendingText ?: transcript
-                startQueue(event.segments)
+                pendingTotal = maxOf(pendingTotal, event.total)
+                pendingSegments[event.index] = event.segment
+                // Play as soon as the phrase is whole. `done` only arrives after
+                // the last segment, so once every segment is in there is nothing
+                // left to wait for — and a phrase the backend never closes with
+                // `done` still gets signed.
+                if (pendingTotal > 0 && pendingSegments.size >= pendingTotal) flushSegments()
             }
+
+            is BackendEvent.PhraseDone -> flushSegments()
 
             is BackendEvent.Failure -> fail(event.message)
 
             is BackendEvent.Disconnected -> Unit
         }
+    }
+
+    /**
+     * Turns the collected segments into a playback queue and starts signing.
+     *
+     * Reached both when the last segment lands and when `done` does, so it has
+     * to be idempotent: the first caller takes the segments and every later one
+     * finds the map empty. It also drops anything left over from an abandoned
+     * phrase, so a failed turn cannot leak into the next one.
+     */
+    private fun flushSegments() {
+        val segments = pendingSegments.values.toList()
+        pendingSegments.clear()
+        pendingTotal = 0
+
+        if (segments.isEmpty()) {
+            // A `done` with nothing behind it. When a phrase really is in flight
+            // (`pendingText` is only set once the backend has committed to one)
+            // it means the phrase produced no segments at all, and without this
+            // the turn would sit in "Traduciendo" forever. Without a phrase in
+            // flight it is a `done` that arrived late or twice — the queue
+            // already started — so there is nothing to report and ending the
+            // current turn here would kill it.
+            if (pendingText != null) {
+                pendingText = null
+                playbackState = PlaybackState.Done
+                showStatus("Esa frase no produjo ninguna seña.")
+            }
+            return
+        }
+        startQueue(segments)
     }
 
     /**
@@ -247,11 +299,18 @@ class MainScreenState(
         inputText = text
         transcript = text
         statusOverride = null
+        // Nothing of a previous phrase may survive into this one.
+        pendingSegments.clear()
+        pendingTotal = 0
         playbackState = PlaybackState.Translating
     }
 
     private fun fail(message: String) {
         pendingText = null
+        // The phrase this was building for is dead: its partial segments must
+        // not be picked up by the next phrase.
+        pendingSegments.clear()
+        pendingTotal = 0
         caption = ""
         playbackState = PlaybackState.Idle
         showStatus(message)
