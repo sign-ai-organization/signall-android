@@ -3,14 +3,30 @@
 > Esta carpeta **no es parte de la app**: es el kit de herramientas con el
 > que opera el desarrollador (humano o agente) mientras prueba en el
 > emulador/dispositivo.
+>
+> **Si sos un agente**, cargá primero el skill `controlar-app-movil`
+> (`.opencode/skills/controlar-app-movil/`): trae la decisión de qué usar, los
+> workflows y los errores ya pisados, en menos tokens. Este README es el índice.
 
 ## Contenido
 
-- **`mock_backend.py`** — servidor mock del backend de SignAI para correr la
-  app sin red. Ver header del archivo para detalles.
 - **`dev.sh`** — wrapper sobre `mobilecli` (mobile-next) para manejar el
   emulador Android. Lista, captura, toca, escribe, instala el APK,
   lanza/termina la app, lee logs, dump del UI tree.
+- **`HERRAMIENTAS.md`** — referencia completa del stack de control: las tools
+  de `mobile-mcp`, cómo elegir selector, los `contentDescription` que existen
+  en la app, y por qué Maestro no anda en el Redmi. Es largo: no lo cargues de
+  entrada.
+- **`pinch.sh`** — pinch de dos dedos por `sendevent`, para probar el zoom en el
+  emulador. No hay otra forma: `adb input` y `mobile-mcp` son de un solo
+  puntero.
+- **`maestro/`** — flows YAML repetibles: arranque, drawers, traducción +
+  historial, y una plantilla.
+- **`rendimiento/`** — medir de verdad si la app va lenta. Su propio
+  [`README.md`](rendimiento/README.md) tiene las recetas y las trampas.
+- **`mock_backend.py`**, `local_stt.py`, `pose_filter.py`, `splice_movement.py`,
+  `build_signs.py`, `hand_corrector.py`, `patch_webview_glue.py` — el pipeline de
+  la app. Ver el header de cada uno.
 
 ## `dev.sh` rápido
 
@@ -21,7 +37,7 @@ tools/dev.sh tap 540 1200             # tap sin escala, coords reales del device
 tools/dev.sh text "hola"              # escribir
 tools/dev.sh back                     # atrás
 tools/dev.sh tree                     # UI tree con refs @eN
-tools/dev.sh install-debug            # ./gradlew installDebug + relanzar la app
+tools/dev.sh install-debug            # ./gradlew installDebug + relanzar
 tools/dev.sh logcat-tag SignAIWeb 80  # últimas 80 líneas del bridge JS→Kotlin
 tools/dev.sh log 40                   # últimas líneas del device log
 tools/dev.sh doctor                   # valida entorno (mobilewright doctor)
@@ -33,7 +49,7 @@ sobrescribir con `$APP_PKG` y `$APP_ACTIVITY`. El device se fija con
 
 **Sin escala**: `mobilecli` trabaja en píxeles reales del device (1080×2400),
 las capturas y las coords de tap/swipe están en la misma unidad. Si algo no
-responde, **no** es el factor 1.172 — es que el árbol cambió o el elemento
+responde, **no** es un factor de escala — es que el árbol cambió o el elemento
 no estaba donde pensabas. Usá `tools/dev.sh tree` para ver qué hay.
 
 ## Operar desde un agente
@@ -53,9 +69,28 @@ configurado en `opencode.json` de este repo. Expone tools como:
 - `mobile_install_app`, `mobile_launch_app`, `mobile_terminate_app` —
   ciclo de vida de la app (instalar APK, lanzar activity, terminar).
 - `mobile_get_device_logs` — logs del device (filtrar por package).
+- `mobile_batch_commands` — agrupa una secuencia de taps y tipeos en un
+  round-trip. Cada llamada es un viaje al device: agrupá.
 
 `mobile-mcp` está construido sobre `mobilecli`, así que las dos capas ven
 el mismo device y comparten el daemon en `~/.mobilecli/`.
+
+### La limitación que hay que tener presente
+
+**El avatar 3D no existe para estas herramientas.** En el árbol sale como
+`android.webkit.WebView` **sin ningún hijo**: el canvas de Three.js no publica
+nada a accesibilidad. No se puede tocar ni inspeccionar el avatar con
+`mobile-mcp`, Maestro ni `uiautomator`.
+
+Para el estado de la escena:
+
+- `tools/dev.sh logcat-tag SignAIWeb 80` — el bridge JS→Kotlin.
+- El **modo debug** de la app (Ajustes → AVATAR → depurar), que enciende el
+  overlay `#status` con el FPS en pantalla.
+
+Y como el WebView es un `AndroidView`, es un View real: **se come cada toque
+dentro de sus bounds**. Si un drawer no abre, el problema es el layering de
+`EdgeDrawer.kt` (ver `AGENTS.md` § Gotchas), no el gesto.
 
 ## El flujo de "verificar un cambio"
 
@@ -63,16 +98,43 @@ El `AGENTS.md` § Build dice que es **obligatorio** instalar la app en el
 device/emulador después de cada cambio. Con este tooling:
 
 ```bash
-# humano o agente
-./gradlew installDebug                                        # build
-tools/dev.sh install app/build/outputs/apk/debug/app-debug.apk # push APK
-tools/dev.sh launch com.signai.webview/com.signai.webview.MainActivity
+# humano o agente: un solo comando
+tools/dev.sh install-debug
 tools/dev.sh shot post-build
 tools/dev.sh logcat-tag SignAIWeb 40   # ver mensajes del bridge JS↔Kotlin
 ```
 
 Con MCP, la versión agente es `mobile_install_app` + `mobile_launch_app`
 + `mobile_take_screenshot` + `mobile_get_device_logs`.
+
+## Maestro
+
+```bash
+export PATH="$PATH:$HOME/.maestro/bin"
+maestro test tools/maestro/smoke-avatar.yaml
+```
+
+Cuatro flows en `tools/maestro/`: `smoke-avatar.yaml`, `drawers.yaml`,
+`historial.yaml` y `ejemplo-flow.yaml` (plantilla).
+
+Los selectors salen de los `contentDescription` del `.semantics {}` de Compose.
+La tabla de los que ya existen está en
+[`HERRAMIENTAS.md`](HERRAMIENTAS.md).
+
+## Rendimiento
+
+```bash
+# la principal: reparto por fotograma y latencia de toque
+tools/rendimiento/gfxinfo.py reproducir --sec 8 \
+    --run "adb -s 1ed6699f shell 'input tap 540 2000; sleep 5'"
+
+# el mismo gesto desde el punto de vista del ojo
+tools/rendimiento/sf-medir.sh reproducir 8 -- \
+    "adb -s 1ed6699f shell 'input tap 540 2000; sleep 5'"
+```
+
+`tools/rendimiento/README.md` tiene el resto: qué mide cada script, las recetas,
+y las trampas ya pisadas.
 
 ## Stack del tooling del agente
 
@@ -81,6 +143,10 @@ Con MCP, la versión agente es `mobile_install_app` + `mobile_launch_app`
 - **`mobile-mcp`** — servidor MCP que envuelve mobilecli como tools para
   agentes. Configurado en este repo en `opencode.json`. Telemetry off vía
   `MOBILEMCP_DISABLE_TELEMETRY=1`.
+- **Maestro** `2.11.0` — flows YAML. `~/.maestro/bin`, ya en el `.zshrc`.
+  **No anda en el Redmi (MIUI)**: su driver de Android revienta al arrancar con
+  `Cannot call disconnect() while connecting UiAutomation`. Ver
+  `HERRAMIENTAS.md`.
 - **`mobilewright`** — instalado pero **no se usa** (no escribimos tests
   E2E). Su CLI queda disponible para `mobilewright doctor`/`inspect`/
   `screenshot`/`codegen` si alguna vez hace falta.
@@ -89,3 +155,10 @@ Con MCP, la versión agente es `mobile_install_app` + `mobile_launch_app`
 - **`tools/dev.sh`** — wrapper sobre `mobilecli`. Convive con
   `mock_backend.py`. Si algo se rompe, `adb` puro sigue disponible como
   fallback.
+
+### Instalado y descartado — no lo propongas
+
+- **`agent-device`** (Callstack) — competidor directo de `mobile-mcp`. `doctor`
+  pasa, pero `snapshot` falla siempre con `UiAutomationService already
+  registered`. Se reproduce en el emulador limpio, así que no es MIUI.
+- **`e2e`** (`e2e.tester.army`) — su motor móvil depende de agent-device.

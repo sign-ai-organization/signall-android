@@ -1,0 +1,15 @@
+appId: com.signai.webview
+---
+# Plantilla para partir de este. Sustituye los ids por los `contentDescription`
+# que existen de verdad (la tabla esta en tools/HERRAMIENTAS.md) y los textos por
+# los que se ven en pantalla.
+- launchApp:
+    clearState: false
+- assertVisible:
+    id: "Abrir Ajustes"
+- tapOn:
+    id: "Abrir Ajustes"
+- assertVisible: "AVATAR"
+- tapOn:
+    id: "Cerrar"
+- takeScreenshot: maestro/shots/ejemplo
