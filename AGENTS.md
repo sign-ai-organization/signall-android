@@ -87,22 +87,51 @@ JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when `play()`
 
 Stack de mobile-next instalado en este equipo para que un agente (Claude,
 opencode) opere el emulador/dispositivo sin pedir coordenadas a ciegas. Mismo
-setup que el repo `AppMovil`/`trabajoVM`.
+setup que el repo `AppMovil`/`trabajoVM`, **adaptado a Android nativo**: allá es
+Flutter y tiene `dart-mcp` + `marionette`; acá no aplica nada de eso.
+
+**Un agente que vaya a operar el device debería cargar el skill
+`controlar-app-movil`** (tool `skill`, en `.opencode/skills/controlar-app-movil/`).
+Ese skill tiene la guía de cuál herramienta usar, los workflows y los errores ya
+pisados. Esta sección es solo el índice.
 
 - **`tools/dev.sh`** — wrapper sobre `mobilecli`. Subcomandos: `devices`,
-  `shot`, `tap`, `swipe`, `text`, `key`, `back`, `log`, `clearlog`,
-  `tree`, `install`, `install-debug` (`./gradlew installDebug` + relanzar
-  la app), `launch`, `terminate`, `apps`, `fg`, `logcat-tag`, `doctor`.
+  `shot`, `tap`, `swipe`, `text`, `key`, `back`, `log`, `clearlog`, `tree`,
+  `install`, `install-debug` (`./gradlew installDebug` + relanzar la app),
+  `launch`, `terminate`, `apps`, `fg`, `logcat-tag`, `doctor`.
   **Sin escala**: mobilecli trabaja en coords reales del device.
 - **Vía primaria del agente**: MCP **`mobile-mcp`**
   (`mobile_list_available_devices`, `mobile_take_screenshot`,
   `mobile_list_elements_on_screen` — preferir refs sobre coordenadas—,
-  `mobile_click_on_screen_at_coordinates`, `mobile_install_app`,
-  `mobile_launch_app`, `mobile_get_device_logs`, `mobile_batch_commands`).
-  Configurado en `opencode.json` con `MOBILEMCP_DISABLE_TELEMETRY=1`.
-  Antes de tocar, leer el árbol con `mobile_list_elements_on_screen`.
-  Si el MCP no está disponible, fallback a `tools/dev.sh`.
+  `mobile_click_on_screen_at_coordinates`, `mobile_type_keys`,
+  `mobile_install_app`, `mobile_launch_app`, `mobile_get_device_logs`,
+  `mobile_batch_commands`). Configurado en `opencode.json` con
+  `MOBILEMCP_DISABLE_TELEMETRY=1`. Antes de tocar, leer el árbol con
+  `mobile_list_elements_on_screen`. Si el MCP no está disponible, fallback a
+  `tools/dev.sh`.
+- **`tools/maestro/`** — flows YAML (`smoke-avatar`, `drawers`, `historial`,
+  `ejemplo-flow`). Los selectors salen de los `contentDescription` del
+  `.semantics {}` de Compose. **No anda en el Redmi (MIUI)**: su driver de
+  Android revienta al arrancar con `Cannot call disconnect() while connecting
+  UiAutomation`. Usarlo en un emulador con imagen AOSP.
+- **`tools/rendimiento/`** — `gfxinfo.py` (reparto por fotograma, latencia de
+  toque), `sf-medir.sh` (fotogramas que llegaron a pantalla), `frames.py`
+  (duración de la animación, repintado en reposo), `perfetto.sh` (trace para
+  atribuir). Midiendo en build release, nunca en debug.
+- **`tools/pinch.sh`** — pinch de dos dedos por `sendevent`. Solo emulador o
+  root; en un físico sin root da `Permission denied`.
 
-Ver `tools/README.md` § "Operar desde un agente" para el detalle y el flujo
-"verificar un cambio" con `./gradlew installDebug` + `mobile_install_app`
-+ `mobile_launch_app` + `mobile_take_screenshot` + `mobile_get_device_logs`.
+### Dos limitaciones que hay que saber antes de intentar
+
+1. **El avatar 3D es invisible para toda esta instrumentación.** En el árbol sale
+   como `android.webkit.WebView` **sin ningún hijo**: el canvas de Three.js no
+   publica nada a accesibilidad. No se puede tocar ni leer con `mobile-mcp`,
+   Maestro ni `uiautomator`. Para el estado de la escena: el tag `SignAIWeb` de
+   logcat, o el modo debug de la app (Ajustes → AVATAR → depurar).
+2. **El WebView se come los toques.** Es un `AndroidView`, o sea un View real:
+   toma cada toque dentro de sus bounds. Si un drawer no abre, el problema es el
+   layering de `EdgeDrawer.kt` (§ Gotchas), no el gesto.
+
+Ver `tools/README.md` para el índice y `tools/HERRAMIENTAS.md` para la
+referencia completa (tools de `mobile-mcp`, tabla de `contentDescription`,
+selectores, y las trampas ya pisadas).

@@ -1,0 +1,25 @@
+appId: com.signai.webview
+---
+# Smoke de arranque: abre la app y confirma que el splash se fue y que la
+# pantalla principal quedo montada.
+#
+# El splash (`SignAiSplash`) se muestra hasta el `onLoaded` del WebView, con un
+# timeout de 8 s (ver AGENTS.md § UI direction). O sea que "Cargando..." tiene
+# que desaparecer: si sigue visible, el Three.js no cargo y hay que mirar
+# `tools/dev.sh logcat-tag SignAIWeb 80` antes que cualquier otra cosa.
+#
+# OJO: este flow NO verifica el avatar. El WebView no publica nada a
+# accesibilidad, asi que Maestro no puede tocar ni leer la escena. Lo unico que
+# confirma es que la activity levanto y que la barra inferior quedo montada.
+- launchApp:
+    clearState: false
+- assertNotVisible: "Cargando…"
+- assertVisible:
+    id: "Traducir"
+- assertVisible:
+    id: "Entrada por voz"
+- assertVisible:
+    id: "Abrir Conversación"
+- assertVisible:
+    id: "Abrir Ajustes"
+- takeScreenshot: maestro/shots/smoke-avatar

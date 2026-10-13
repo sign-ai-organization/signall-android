@@ -1,0 +1,42 @@
+appId: com.signai.webview
+---
+# Los dos drawers de borde, y la regla de "uno a la vez".
+#
+# El componente es uno solo (`EdgeDrawer.kt`, `side = Start/End`): Conversacion
+# a la izquierda, Ajustes a la derecha, y abrir uno cierra el otro. Eso se
+# verifica al final: con Conversacion abierta, "Abrir Ajustes" NO puede estar
+# disponible como handle, porque el handle de Ajustes queda detras del backdrop.
+#
+# Para cerrar se usa el boton "Cerrar" del panel y NO "Cerrar panel": con un
+# drawer abierto los dos handles exponen ese texto, asi que "Cerrar panel" es
+# ambiguo y Maestro pegaria en el primero. Ver tools/HERRAMIENTAS.md.
+- launchApp:
+    clearState: false
+- assertVisible:
+    id: "Abrir Conversación"
+
+# --- Abrir Conversacion ---
+- tapOn:
+    id: "Abrir Conversación"
+- assertVisible: "Aún no hay frases en esta conversación."
+- assertVisible: "Desliza desde el borde para volver"
+- assertVisible:
+    id: "Cerrar"
+- takeScreenshot: maestro/shots/drawer-conversacion
+- tapOn:
+    id: "Cerrar"
+- assertVisible:
+    id: "Abrir Conversación"
+
+# --- Abrir Ajustes ---
+- tapOn:
+    id: "Abrir Ajustes"
+- assertVisible: "AVATAR"
+- assertVisible: "ACCESIBILIDAD"
+- assertVisible: "APARIENCIA"
+- assertVisible: "AVANZADO"
+- takeScreenshot: maestro/shots/drawer-ajustes
+- tapOn:
+    id: "Cerrar"
+- assertVisible:
+    id: "Abrir Ajustes"

@@ -1,0 +1,45 @@
+appId: com.signai.webview
+---
+# Traducir una frase, comprobar que aparece el resultado y recorrer el historial.
+#
+# El campo de entrada es un `OutlinedTextField` cuyo placeholder es "Escribe una
+# frase...", asi que antes de escribir hay que tocarlo. El boton "Traducir"
+# arranca deshabilitado (`sendEnabled` depende de que el campo tenga texto) y en
+# el arbol de accesibilidad aparece como `(disabled)`: por eso el `inputText` va
+# antes del `tapOn`.
+#
+# Si el backend no esta disponible, la pantalla muestra "Sin conexion con el
+# servidor" y este flow falla en el `assertVisible` del resultado. Es el fallo
+# correcto, no un bug del flow.
+- launchApp:
+    clearState: false
+
+# --- escribir y enviar ---
+- tapOn: "Escribe una frase..."
+- inputText: "hola"
+- assertVisible:
+    id: "Traducir"
+- tapOn:
+    id: "Traducir"
+- extendedWaitUntil:
+    visible: "TÚ"
+    timeout: 30000
+- takeScreenshot: maestro/shots/traducir
+
+# --- el historial guarda la frase y la puede reutilizar ---
+- tapOn:
+    id: "Historial reciente"
+- assertVisible:
+    id: "Reutilizar hola"
+- takeScreenshot: maestro/shots/historial
+- tapOn:
+    id: "Reutilizar hola"
+
+# --- repetir desde la escena ---
+- assertVisible:
+    id: "Repetir reproducción"
+- tapOn:
+    id: "Repetir reproducción"
+- extendedWaitUntil:
+    visible: "OM-4"
+    timeout: 15000
