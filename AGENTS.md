@@ -3,7 +3,7 @@
 Thesis: Spanish speech → LSC via 3D avatar. This repo is **only** the WebView app.
 Old approaches (Flask server, Kotlin+Filament native, Unity) are dead — ignore any docs referencing them.
 
-## Real-time mode (branch `tiempo-real`, 2026-10-14)
+## Real-time mode (2026-10-14)
 
 The app signs **while the user speaks**, not after they stop. The pipeline is:
 mic → PCM16/16 kHz → WebSocket → backend → STT → fragments of glosses → appended
@@ -186,9 +186,11 @@ instrument is a number you cannot claim improved.
 
 ## Git workflow
 
-**Este repo es del owner: commit y push directo a `main`, sin PR ni rama de feature** (decidido 2026-09-30). No abrir PRs acá ni pedir confirmación para commitear. Los repos hermanos (`../sign-ai-backend`, `../sign-ai-stt`) sí usan PR contra `develop`, y el `CLAUDE.md` de ese repo manda no commitear sin que el usuario lo pida explícitamente.
+**Este repo es del owner: commit y push directo a `main`, sin PR ni rama de feature** (decidido 2026-09-30). No abrir PRs acá ni pedir confirmación para commitear. Los repos hermanos (`../sign-ai-backend`, `../sign-ai-stt`) usan PR contra `develop`, y el `CLAUDE.md` de esos manda no commitear sin que el usuario lo pida explícitamente.
 
-**Branch `tiempo-real`**: the real-time work is in this branch and in the matching `tiempo-real` branch of `sign-ai-backend` and `sign-ai-stt` (both cut from `develop`). The user authorised commit and push on those three branches.
+**La rama `tiempo-real` ya no existe** (2026-10-14). El trabajo de tiempo real de los tres repos entró por fast-forward a su rama de destino y la rama se borró local y remoto: acá a `main`, en los hermanos a `develop`. Donde quede escrita en una bitácora vieja o en un doc es un dato histórico de dónde se hizo el trabajo, no una rama a la que volver.
+
+**`develop` existe acá desde 2026-10-14**, creado como copia exacta de `main` (`4221303`), para dejar los tres repos con la misma rama de integración. Por ahora **no cambia el flujo**: este repo sigue por `main` directo sin PR. Nadie la mergea ni la borra sin que lo pidas.
 
 ## Neon
 
