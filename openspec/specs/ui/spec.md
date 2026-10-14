@@ -116,7 +116,7 @@ Main.
 | CTL-3 | Botón **Historial** | `[P][A]` | Ícono a la derecha del input; abre el bottom sheet (o dropdown). |
 | CTL-4 | Botón **Traducir** | `[P][A]` | Ícono + label; ancho 75%. Deshabilitado si input vacío o estado translating/signing. |
 | CTL-5 | Botón **Micrófono** | `[P][A]` | Ancho 25%. Alterna estado `listening`; visual "activo" mientras escucha. |
-| CTL-6 | Mic es placeholder | `[A]` | Hoy `play("mic")`; sin reconocimiento de voz real. |
+| CTL-6 | Mic real | `[A]` | **Corregido 2026-10-14.** `data/AudioCapture.kt` captura con `AudioRecord` sobre `AudioSource.VOICE_RECOGNITION` y manda chunks de 30 ms de PCM16 mono a 16 kHz por el mismo WebSocket de traducción. `VOICE_RECOGNITION` y no `MIC` a propósito: es la fuente afinada para reconocimiento, así el STT escucha la voz en vez del AGC bombeando. El audio crudo va al backend, que es el único que habla con el STT. |
 | CTL-7 | Estado **activo** del mic | `[P]` | Fondo strong + ring cuando `listening`. |
 | CTL-8 | Estado **disabled** de Traducir | `[P]` | Opacidad reducida cuando no se puede enviar. |
 | CTL-9 | Foco del input | `[P]` | Borde strong + ring al enfocar. |
@@ -240,7 +240,8 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 | STA-6 | Estado **done** | `[P]` | Texto "Reproducción completada". |
 | STA-7 | Flujo de envío | `[P]` | `send()`: idle → translating → signing → done. El prototipo usa 850 ms/2700 ms fake. |
 | STA-8 | **Fin real de reproducción** | `[N]` | La transición `signing → done` usa un callback JS→Kotlin (`onPlaybackDone`), no un timer. |
-| STA-9 | Flujo del mic | `[P]` | `listening`: el prototipo auto-rellena una frase y procesa. En la app: placeholder. |
+| STA-9 | Flujo del mic | `[A]` | **Corregido 2026-10-14.** El auto-relleno del prototipo se eliminó: hacía que la app *pareciera* estar escuchando sin capturar nada. Ahora: `toggleMic` → `audio.start()` → se mandan chunks → el backend devuelve `transcript` parciales → llega el primer `segment` con `stream: true` y el estado pasa a `signing` **mientras la persona sigue hablando**. Al soltar, `{"type":"end"}` cierra el segmento del STT. Si no volvió nada en toda la sesión de escucha, se vuelve a `idle` de inmediato con "No se escuchó nada." en vez de esperar el timeout de 15 s y reportar un fallo que no ocurrió. |
+| STA-15 | Turno fragmentado | `[N]` | El estado de un turno en modo tiempo real vive en `MainScreenState` (`streamedSegments`, `streamingGlosses`, `turnStartedAt`, `streamingTurn`) y lo limpia `resetStreamingTurn()` al empezar cada frase y en `fail()`. Un turno que murió a mitad no puede filtrar fragmentos al siguiente. `turnStartedAt` arranca al **abrir el micrófono**, no al primer fragmento, para que la latencia medida incluya el silencio previo a la primera palabra — que es lo que percibe el usuario. |
 | STA-10 | Estado visible en stage + panel | `[P]` | El estado alimenta el hint del stage y el estado del avatar en Conversación. |
 | STA-11 | Estado **connecting** | `[N]` | "Conectando con el servidor..." mientras abre el WebSocket. |
 | STA-12 | Estado **offline** | `[N]` | "Sin conexión con el servidor" + reconexión automática con backoff (RF-INT-COM-01). |
@@ -258,6 +259,8 @@ placeholder local se eliminó.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | GLS-1 | Glosas del backend | `[N]` | `TranslationSegment`/`TranslationGloss` espejan los modelos Python. La frase viaja por el WebSocket como `{"type":"text","text":…}` y la respuesta es **un `segment` por oración** (`{"type":"segment","index":…,"total":…,"segment":…}`) seguido de un `done`. La app los acumula y solo arma la cola cuando la frase está completa, para no ejecutar media frase. |
+| GLS-11 | Fragmentos en tiempo real | `[N]` | El backend tiene dos modos y los dos usan el mismo frame `segment`, distinguidos por `stream`. **Sin `stream`** (`REALTIME_ENABLED=false`, o un backend más viejo que la app): un `segment` por oración con `total` conocido desde el primero, y la app firma la frase completa — así el avatar nunca firma media oración. **Con `stream: true`**: un fragmento por cola ya dicha, con `total: 0` (en un utterance abierto nadie sabe todavía cuántas son), `provisional` y `source_text`; la app lo encadena y firma ya. Un backend sin el flag cae en el camino de frase completa, que es el default seguro. Verificado en el Redmi: `stream=true total=0` → 3 señas en 5 ms → el avatar firma HAMBRE, POR FAVOR, DONDE → `onPlaybackDone` deja la app en "Reproducción completada". |
+| GLS-12 | Orden de los fragmentos | `[N]` | Los fragmentos pasan por un `Mutex` en `MainScreenState`. Resolver una glosa puede suspender (hay que bajar un asset remoto) y dos fragmentos compitiendo se anexarían desordenados, con el avatar firmando la frase al revés. Verificado en `verify_client_frames.py` con tres hipótesis crecientes: índices 0 y 1 correlativos, en orden. |
 | GLS-2 | Tipo de frase | `[N]` | `PhraseType` (los 5 valores del backend) + `UNKNOWN` para no crashear ante un valor nuevo. Alimenta los marcadores no manuales. |
 | GLS-3 | Glosa no disponible | `[N]` | `available == false` → la glosa no se reproduce y se reporta en el caption (RF-CAT-03). |
 | GLS-4 | Transcripción del backend | `[N]` | El evento `transcript` se refleja en el input, para poder corregirlo antes de reenviar (RF-UI-02). |
@@ -287,8 +290,33 @@ placeholder local se eliminó.
 | BRG-11 | Marcadores no manuales | `[N]` | Reemplazado el 2026-10-13: el motor procedural que aplicaba ceja por `PhraseType` ya no existe. Los cues vienen horneados en el clip. El rig nuevo sí tiene huesos faciales (28: ceja, párpado, mandíbula, boca, mirada), así que la expresión facial y MNM **vuelven a ser posibles** — es el pendiente que abre esto. |
 | BRG-12 | `avatarReady` (JS→Kotlin) | `[N]` | La escena avisa cuando el personaje está parseado y en escena. `onPageFinished` dispara mientras el GLB de 10 MB todavía baja, así que usarlo para esconder el splash dejaba ver un canvas negro. Si el `WebMessageListener` no está soportado, se vuelve al fallback por `onPageFinished` y el timeout de 8 s de `SignAiSplash`. |
 | BRG-13 | Variantes de seña | `[N]` | 10 de las 32 señas traen 2–4 tomas. `play()` elige una al azar, así la misma glosa no se ve idéntica cada vez. |
+| BRG-14 | `appendQueue(json)` / `playFrom(i)` | `[N]` | Aditivo, `tiempo-real`. `setQueue` no se puede reusar en streaming: asume la cola completa y salta al índice 0. `appendQueue` suma al final sin tocar lo que se está firmando; `playFrom` arranca desde un índice y no hace nada si ya hay algo sonando, que es lo que corresponde cuando llega un fragmento mientras el anterior se reproduce. `play()` sigue siendo el camino de la frase completa y del "Repetir". |
+| BRG-15 | Adelanto automático | `[N]` | `tiempo-real`. Las 32 señas exportadas duran 2.08–2.75 s (promedio **2.15 s**, del `manifest.json`). El español corre a 2–3 palabras por segundo y cada palabra es una seña: a velocidad normal el avatar va dos señas atrasado antes de terminar la primera frase y nunca alcanza. La traducción es rápida; la animación es el cuello de botella. Cuando la cola tiene **2 o más** señas pendientes, la escena firma a **1.6×** y vuelve a la velocidad del usuario en cuanto se vacía. El umbral de 2 es deliberado: con una sola todavía se está al día y acelerar antes solo costaría claridad en el movimiento de las manos. `setSpeed` ahora guarda el valor del usuario en `state.baseSpeed` y el adelanto multiplica sobre él en vez de reemplazarlo. La decisión se toma en `tickPlayback` y no donde llegan los fragmentos, porque "cuántas me faltan" solo existe ahí. |
 
 ---
+
+## 13bis. Observabilidad (`tiempo-real`)
+
+Sin instrumentación no hay forma de afirmar que algo mejoró, así que estos
+requisitos son parte del trabajo y no un extra. Los tres servicios exponen
+`/metrics` (formato de exposición de Prometheus) y `/metrics.json` (lo mismo,
+estructurado, que es lo que leen los checks automáticos porque parsear texto con
+expresiones regulares es frágil).
+
+| ID | Requisito | Dónde | Criterio |
+|---|---|---|---|
+| OBS-1 | Latencia de la primera seña | backend `/metrics` | `rt_first_sign_ms` = del primer texto del STT a la primera seña enviada. Es **la** métrica que decide si el producto se siente en tiempo real. |
+| OBS-2 | Latencia del turno | backend `/metrics` | `rt_utterance_ms` = primer texto → última seña. `rt_chunk_delay_ms` por fragmento, para ver si se entregan espaciados o de golpe al final. |
+| OBS-3 | El audio está fluyendo | backend `/metrics` | `audio_bytes_total` y `audio_chunks_total`. Es el único tramo del sistema que no produce salida: si el micrófono del teléfono se rompe, el STT se queda mudo y no hay ningún `segment` que llegue. Cuenta bytes además de fragmentos, así distingue "no manda nada" de "manda el doble". |
+| OBS-4 | Contención de la GPU | STT `/metrics` | `stt_partial_queue_ms`. Antes de este trabajo un parcial podía retrasar un final 4–8 s; el guard de regresión es que este número no vuelva a subir. |
+| OBS-5 | Saturación de audio | STT `/metrics` | `stt_partial_lag_ms`: audio recibido menos audio procesado. Sube = la GPU no da abasto y el avatar va a quedar atrás respecto a la voz. |
+| OBS-6 | Descartes con motivo | STT `/metrics` | `stt_dropped_total{reason="rms"\|"no_speech"\|"logprob"}`. `reason="logprob"` merece atención porque cuenta audio que Whisper transcribió **bien** y el filtro tiró igual: con `-0.8` se comía "cómo estás" y "estoy triste". Si sube, el filtro está comiéndose audio real. |
+| OBS-7 | Latencias del teléfono | logcat `SignAiMetrics` | Fragmento→cola y duración de turno, p50/p95/max, en un anillo de 256 muestras. Es lo único que el dispositivo puede medir: los otros dos servicios no ven qué pasa después de que el mensaje llega al teléfono. |
+| OBS-8 | Traza de segmentos | logcat `SignAiNet` | Cada `segment` recibido con `stream`, `provisional`, `source_text` y sus glosas. Con eso se separa "el backend mandó otra cosa" de "el avatar no la firmó". |
+| OBS-9 | Motivo de descarte del STT | log + `TranscriptionResult` | `transcribe_buffer` devuelve `drop_reason`. Un final vacío sin explicación es indistinguible de un micrófono roto. |
+
+Regla de trabajo: **agregar la métrica antes que la feature**. Un número que no
+se instrumentó es un número que no se puede afirmar que mejoró.
 
 ## 14. Animaciones y motion
 
@@ -348,7 +376,7 @@ placeholder local se eliminó.
 | OM-1 | Home indicator | `[P]` | **Conservada** | Se implementó (112×4) por fidelidad con el prototipo. |
 | OM-2 | Avatar CSS del prototipo | `[P]` | **Reemplazada** | Se usa el GLB 3D real. |
 | OM-3 | Starter history mock | `[P]` | **Reemplazada** | Se usa historial persistido real. |
-| OM-4 | Auto-relleno del mic | `[P]` | **Placeholder** | Sin reconocimiento de voz real todavía (`CTL-6`). |
+| OM-4 | Auto-relleno del mic | `[P]` | **Eliminado** | 2026-10-14. Existía porque no había reconocimiento de voz real; ahora sí lo hay (`CTL-6`) y el auto-relleno solo hacía que la app pareciera escuchar mientras no capturaba nada. |
 | OM-5 | Assets de v0 / shadcn / Tailwind | `[P]` | **No se usan** | Base nativa Lumo + Phosphor. |
 | OM-6 | "Tamaño de interfaz" sin cablear | `[P]` | **Se cablea** | En el prototipo era un slider sin estado; `ACC-1` lo hace real. |
 
