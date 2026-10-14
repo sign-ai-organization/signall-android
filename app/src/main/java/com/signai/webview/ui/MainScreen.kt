@@ -202,6 +202,10 @@ fun MainScreen(state: MainScreenState) {
                                 // prendido pasa a `Signing` mientras firma.
                                 dictationActive = state.dictationActive,
                                 realtimeActive = state.realtimeActive,
+                                // El campo tiene la frase que la voz ya mandó: se
+                                // la puede leer, pero no se la puede volver a
+                                // mandar (`STA-20`).
+                                voiceTextLocked = state.voiceTextLocked,
                                 micAvailable = state.backendConnected,
                                 enabled = !state.replayPending,
                             )

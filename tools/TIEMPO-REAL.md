@@ -92,7 +92,11 @@ se deshabilita, porque es el único botón que puede cortar el modo continuo.
 3. Tocá el micrófono de nuevo para dejar de dictar.
 4. **Firma solo, sin tocar Traducir.** El texto queda en el campo y el muñeco
    firma `HOLA · COMO ESTAS` en medio segundo.
-5. Cuando termine de firmar, Traducir, Historial, el micrófono y el campo quedan
+5. Al mandar, Traducir queda **deshabilitado 1,5 s** con el texto a la vista:
+   no se puede reenviar lo que ya se firmó. Pasados 1,5 s el texto se borra solo
+   y el campo y Traducir vuelven a quedar utilizables. En los logs son las dos
+   líneas `texto ya firmado` y `texto retenido borrado`.
+6. Cuando termine de firmar, Traducir, Historial, el micrófono y el campo quedan
    **habilitados**.
 
 Las pausas son el punto de la prueba: el STT cierra cada frase por silencio, y
@@ -124,10 +128,26 @@ dictabas.
 5. Cuando te boredes, tocá TR de nuevo para apagarlo.
 
 Deberías ver al muñeco firmar HOLA mientras todavía estás hablando, no después.
-Y al apagarlo, Traducir, Historial, el micrófono y el campo tienen que quedar
-**habilitados en el acto**, aunque al avatar todavía le falte cola: en tiempo real
-la cola se llena más rápido de lo que el muñeco la consume, y bloquear el panel
-mientras termina deja al usuario mirando una app muerta sin explicación.
+
+Y al apagarlo hay que mirar **qué pasa en los 1,5 s siguientes**, porque no todo
+se libera en el acto:
+
+| | al apagar TR | 1,5 s después |
+|---|---|---|
+| Micrófono, Historial, TR | habilitados al instante | habilitados |
+| El campo | **solo lectura**, con lo último que firmaba el muñeco | vacío y escribible |
+| Traducir | **deshabilitado** | habilitado |
+
+El campo no se libera enseguida a propósito: muestra lo que la voz acaba de
+mandar y ya se firmó, y si Traducir estuviera disponible sería un botón para
+reenviarlo. Por eso el texto se va solo, y **el texto que se borra, el campo y
+el botón vuelven en el mismo instante** — nunca se ve el campo vacío con Traducir
+muerto, que es lo que hace que la app parezca trabada.
+
+Mientras tanto, aunque al avatar todavía le falte cola, el resto del panel no se
+bloquea: en tiempo real la cola se llena más rápido de lo que el muñeco la
+consume, y dejar todo deshabilitado mientras termina esconde al usuario una app
+muerta sin explicación.
 
 Mientras tanto:
 
@@ -142,8 +162,16 @@ adb logcat -s SignAiWeb          # consola del JS (modo depuración)
 queda de solo lectura (muestra lo que se está transcribiendo en vivo), y
 **Traducir** e **Historial** quedan deshabilitados. Es a propósito: texto y voz
 van por el mismo socket y el backend no puede saber de quién es cada fragmento;
-mezclados, el avatar firmaría la frase al revés. En TR, Traducir se rehabilita
-apagando TR.
+mezclados, el avatar firmaría la frase al revés.
+
+**Y el otro interruptor también se apaga, en los dos sentidos:** con el
+micrófono prendido, TR queda deshabilitado, y con TR prendido, el micrófono. No
+pueden estar prendidos a la vez porque comparten el `AudioRecord` y el socket. Lo
+que **no** se deshabilita nunca es el interruptor que está prendido: es el botón
+de parar. Un control apagado se reconoce por su icono y su etiqueta en gris
+(`muted`), no por un relleno más claro — el relleno de estos dos botones es casi
+del mismo color que la barra, así que un relleno atenuado no se distingue de uno
+habilitado.
 
 ### C. Cambiar de uno al otro sin soltar nada
 
@@ -426,6 +454,8 @@ texto produce el mismo WAV, así que las cifras son comparables entre corridas.
 | Solo aparece la última frase dictada | el STT cierra por silencio y el app no acumuló | es el buffer (`dictationBuffer`), no el STT: fijate si hay varias líneas `dictado #` |
 | Tocar un botón no hace nada | el tap cayó en el borde de la superficie | `mobile-mcp` hay que usarlo con el **centro** del elemento, no con la esquina |
 | Al apagar TR queda todo deshabilitado y dice "Procesando..." | se confundió "el `done` ya llegó" con "el avatar ya terminó": en tiempo real la cola va 30-40 s por detrás | la fuente de verdad es `queuePlaying`, no `playbackState` (`STA-18`) |
+| El otro interruptor no se ve deshabilitado | el relleno `soft` atenuado al 35 % sobre `surface` da dos colores casi iguales | se apaga el icono y la etiqueta a `muted`, nunca la superficie (`STA-17`) |
+| Traducir manda dos veces lo mismo | el campo tiene la frase que la voz ya firmó | 1,5 s de retención: el texto se ve, Traducir no, y después se borra solo (`STA-20`) |
 | Al dictar hay que apretar Traducir a mano | versión anterior a que apagar el interruptor mandara solo | el envío automático es `sendDictation()` |
 
 ### El micrófono no se puede probar con el audio del propio teléfono

@@ -53,17 +53,18 @@ import com.signai.webview.ui.theme.SignAiTheme
  *
  * Los dos de la derecha son cosas distintas y no se confunden:
  *
- * - **Micrófono (fila 1)** — dictado: se toca, se habla, se toca de nuevo. El
- *   texto se va escribiendo en el input y el muñeco no se mueve. Traducirlo es
- *   un paso aparte, el botón Traducir.
+ * - **Micrófono (fila 1)** — dictado: se toca, se habla, se toca de nuevo y el
+ *   texto se manda solo. Lo que se escribió queda a la vista, pero Traducir no
+ *   queda disponible para firmarlo otra vez.
  * - **TR (fila 2)** — "tiempo real": el interruptor continuo, el que firma
  *   mientras se habla sin esperar a que termine la frase.
  *
  * Los dos son interruptores, ninguno se mantiene apretado, y **no pueden estar
  * prendidos a la vez**: comparten una sola captura de micrófono y un solo socket.
- * Por eso el micrófono queda deshabilitado mientras TR está prendido, pero TR
- * nunca se deshabilita: si la única forma de cortar el modo continuo estuviera
- * bloqueada durante una seña, no habría forma de cortarlo.
+ * Por eso cada uno deshabilita al otro, en los dos sentidos, y ninguno se
+ * deshabilita mientras está prendido: es el botón de parar, y si la única forma
+ * de cortar el modo continuo quedara bloqueada durante una seña no habría forma
+ * de cortarla.
  *
  * El input usa `weight(1f)` y los dos botones son de ancho fijo, así que el
  * micrófono le saca ancho al campo sin tocar ningún tamaño.
@@ -79,6 +80,7 @@ fun SignAiBottomBar(
     onRealtime: () -> Unit,
     dictationActive: Boolean = false,
     realtimeActive: Boolean = false,
+    voiceTextLocked: Boolean = false,
     micAvailable: Boolean = true,
     enabled: Boolean = true,
 ) {
@@ -109,7 +111,11 @@ fun SignAiBottomBar(
             // `index` de los fragmentos de voz deja de corresponderse con el orden
             // en que llegaron y el avatar firmaría la frase al revés. Son dos
             // formas de mandar, no dos a la vez.
-            !micActive
+            !micActive &&
+            // Tampoco si el campo tiene la frase que la voz acaba de mandar: el
+            // botón ofrecería reenviar lo que ya se firmó, y el avatar firmaría
+            // la frase dos veces seguidas por un solo toque.
+            !voiceTextLocked
 
     // El estado visual de los dos interruptores viene de su propio flag y no de
     // `playbackState`: con el micrófono prendido el muñeco firma al mismo tiempo,
@@ -121,8 +127,15 @@ fun SignAiBottomBar(
     // bloqueada durante una seña no habría forma de pararlo. Esa regla es la que
     // lo dejaba tocable mientras el resto del panel estaba deshabilitado, y no
     // es un descuido: es el botón de parar.
+    //
+    // La misma regla para los dos, y **en los dos sentidos**: comparten el
+    // `AudioRecord` y el socket, así que no pueden estar prendidos a la vez y el
+    // que está prendido tiene que dejar al otro deshabilitado. Antes solo pasaba
+    // en un sentido —el micrófono se apagaba con TR prendido, pero TR seguía
+    // habilitado con el micrófono prendido—, así que un estado que el código sí
+    // representa y el backend rechaza aparecía en pantalla como disponible.
     val micEnabled = enabled && micAvailable && !realtimeActive
-    val realtimeEnabled = enabled && micAvailable
+    val realtimeEnabled = enabled && micAvailable && !dictationActive
 
 
     val send: () -> Unit = {
@@ -167,8 +180,15 @@ fun SignAiBottomBar(
                     // Deliberadamente `readOnly` y no `enabled`: un campo
                     // deshabilitado se atenúa y el texto se vuelve difícil de
                     // leer, y acá el texto es justo lo que el usuario quiere ver.
-                    enabled = controlsEnabled || micActive,
-                    readOnly = micActive,
+                    //
+                    // Y lo mismo con la frase que la voz acaba de mandar: está
+                    // para que se lea, no para que se mande. Se va sola, así que
+                    // dejarla editable 1,5 s solo serviría para que el teclado
+                    // salte sin motivo. Cuando se borra, `sentVoiceText` vuelve
+                    // a `null` en la misma asignación, y con ella el campo y
+                    // Traducir quedan utilizables en el mismo fotograma.
+                    enabled = controlsEnabled || micActive || voiceTextLocked,
+                    readOnly = micActive || voiceTextLocked,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = { send() }),
@@ -266,9 +286,19 @@ fun SignAiBottomBar(
                 // que el padding y el `spacedBy(9.dp)` de la fila los reparten
                 // solos y ningún ancho se calcula a mano.
                 //
-                // Nunca se deshabilita, ni siquiera prendido: es el único botón
-                // que puede apagar el modo continuo, así que bloquearlo sería
-                // dejar al usuario sin salida.
+                // Nunca se deshabilita **prendido**: es el único botón que puede
+                // apagar el modo continuo, así que bloquearlo sería dejar al
+                // usuario sin salida. Apagado sí se deshabilita, y solo cuando
+                // está tomando el micrófono el otro interruptor.
+                //
+                // Igual que en el micrófono, el apagado se ve en el icono y en la
+                // etiqueta: atenuar la superficie entera —`soft` sobre `surface`,
+                // los dos casi blancos— no se veía.
+                val trContentColor = when {
+                    realtimeActive -> SignAiTheme.colors.onStrong
+                    !realtimeEnabled -> SignAiTheme.colors.muted
+                    else -> SignAiTheme.colors.text
+                }
                 Surface(
                     onClick = onRealtime,
                     enabled = realtimeEnabled,
@@ -283,10 +313,11 @@ fun SignAiBottomBar(
                             role = Role.Switch
                             contentDescription = "Modo tiempo real"
                             stateDescription =
-                                if (realtimeActive) {
-                                    "Encendido. Firmando mientras hablás."
-                                } else {
-                                    "Apagado. Tocar para firmar en tiempo real."
+                                when {
+                                    realtimeActive -> "Encendido. Firmando mientras hablás."
+                                    !realtimeEnabled ->
+                                        "Apagado. El micrófono está dictando."
+                                    else -> "Apagado. Tocar para firmar en tiempo real."
                                 }
                         },
                 ) {
@@ -301,9 +332,7 @@ fun SignAiBottomBar(
                             imageVector = SignAiIcons.Waveform,
                             contentDescription = null,
                             size = 18.dp,
-                            tint =
-                                if (realtimeActive) SignAiTheme.colors.onStrong
-                                else SignAiTheme.colors.text,
+                            tint = trContentColor,
                         )
                         Box(Modifier.size(9.dp))
                         SignAiText(
@@ -311,9 +340,7 @@ fun SignAiBottomBar(
                             style =
                                 SignAiTheme.typography.body1
                                     .copy(fontWeight = FontWeight.Bold),
-                            color =
-                                if (realtimeActive) SignAiTheme.colors.onStrong
-                                else SignAiTheme.colors.text,
+                            color = trContentColor,
                         )
                     }
                 }
@@ -341,7 +368,18 @@ private fun ControlIconButton(
 ) {
     val shape = SignAiShapes.cornerControl
     val container = if (active) SignAiTheme.colors.strong else SignAiTheme.colors.soft
-    val tint = if (active) SignAiTheme.colors.onStrong else SignAiTheme.colors.text
+    // El apagado se marca apagando el **icono**, no la superficie entera.
+    //
+    // El relleno de estos dos botones es `soft` sobre una barra `surface`: al
+    // bajarle el alfa a 0.35 a todo, el fondo queda a `#F8F8F5` sobre `#FEFEFC`,
+    // o sea un gris que a simple vista es el mismo color, y el botón seguía
+    // pareciendo habilitado siendo que no lo estaba. Attenuar solo el contenido
+    // deja el bloque gris bien visible y el icono se ve apagado.
+    val tint = when {
+        active -> SignAiTheme.colors.onStrong
+        !enabled -> SignAiTheme.colors.muted
+        else -> SignAiTheme.colors.text
+    }
     val ringColor = SignAiTheme.colors.soft
     Surface(
         onClick = onClick,
@@ -350,7 +388,6 @@ private fun ControlIconButton(
         color = container,
         modifier = Modifier
             .size(SignAiSizes.actionButtonSize)
-            .alpha(if (enabled) 1f else 0.35f)
             .then(
                 if (active) {
                     // Prototype `.mic-button.active` has
