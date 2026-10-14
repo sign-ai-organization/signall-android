@@ -12,7 +12,7 @@
 //   signs/*.glb        → solo animación, un clip por variante, mismo esqueleto
 //
 // Contrato con Android (`window.SignAI`) — no cambiar sin tocar el lado Kotlin:
-//   setQueue, appendQueue, playFrom, queuePending, play, setDebug,
+//   setQueue, appendQueue, playFrom, queuePending, queueState, play, setDebug,
 //   setFreeCamera, setGrid, setBackground,
 //   setSpeed, setTheme, setDefaultSign
 // Hacia Android: `window.SignAIBridge.postMessage("onPlaybackDone")` y
@@ -37,11 +37,41 @@ const state = {
   queue: [],
   queueIdx: 0,
   currentType: "",
+  // Velocidad pedida por el usuario (setSpeed) y velocidad realmente aplicada.
+  // Se separan porque el adelanto automático multiplica sobre la primera y
+  // tiene que poder deshacerse sin perder el ajuste del usuario.
+  baseSpeed: 1,
+  catchUp: false,
 };
 
 const AVATAR_URL = "models/avatar.glb";
 const DEFAULT_SIGN_URL = "signs/0000_0000_0000.glb";
 let defaultSignUrl = DEFAULT_SIGN_URL;
+
+// ── Adelanto automático ──────────────────────────────────────────────────────
+//
+// Las 32 señas que hay exportadas duran 2.08-2.75 s cada una (promedio 2.15 s,
+// medido contra el manifest.json). Una persona habla a razón de 2-3 palabras
+// por segundo y cada palabra se traduce en una seña: si el muñeco firmara a
+// velocidad normal, con la primera frase ya está dos señas de atraso y nunca
+// alcanza. La traduzco-interpretación es rápida; la animación es el cuello de
+// botella.
+//
+// Así que cuando la cola se acumula, el muñeco firma más rápido. Dos señas de
+// cola es el umbral: con una sola todavía se está al día, y acelerar antes solo
+// quitaría claridad a los movimientos.
+const CATCHUP_BACKLOG = 2;
+const CATCHUP_FACTOR = 1.6;
+
+/** Aplica el factor de adelanto sobre la velocidad pedida. */
+function applySpeed() {
+  state.speed = Math.max(0.1, Math.min(3, state.baseSpeed * (state.catchUp ? CATCHUP_FACTOR : 1)));
+}
+
+/** Cuántas señas quedaron por detrás de la que está sonando. */
+function queueBacklog() {
+  return Math.max(0, state.queue.length - state.queueIdx - 1);
+}
 
 // Cuántos ticks de reposo (~100 ms) se dejan entre dos señas de la cola, para
 // que no se encadenen las manos.
@@ -348,6 +378,20 @@ async function loadQueueItem(index) {
 function tickPlayback(dt) {
   if (!state.playing) return;
 
+  // El adelanto se decide acá y no cuando llega un fragmento: la cola crece
+  // por dos vías (la app y el propio avance) y el dato bueno es "cuántas me
+  // faltan", que solo existe en este punto.
+  const backlog = queueBacklog();
+  const shouldCatchUp = backlog >= CATCHUP_BACKLOG;
+  if (shouldCatchUp !== state.catchUp) {
+    state.catchUp = shouldCatchUp;
+    applySpeed();
+    if (Debug.enabled) {
+      console.log(`[SignAI] cola ${state.queueIdx + 1}/${state.queue.length}, ` +
+                  `adelanto ${state.catchUp ? "on" : "off"} (velocidad ${state.speed.toFixed(2)})`);
+    }
+  }
+
   // Enfriamiento entre señas: pose de reposo unos ticks.
   if (state.transition > 0) {
     state.transition--;
@@ -486,7 +530,19 @@ window.SignAI = {
   /** Cola pendiente de firmar; lo usa la app para mostrar el texto en vivo. */
   queuePending() {
     if (!state.playing) return state.queue.length;
-    return Math.max(0, state.queue.length - state.queueIdx - 1);
+    return queueBacklog();
+  },
+
+  /** Estado de la cola, para diagnóstico desde el modo debug. */
+  queueState() {
+    return {
+      idx: state.queueIdx,
+      length: state.queue.length,
+      backlog: queueBacklog(),
+      catchUp: state.catchUp,
+      speed: state.speed,
+      baseSpeed: state.baseSpeed,
+    };
   },
 
   play() {
@@ -507,8 +563,8 @@ window.SignAI = {
 
   setSpeed(v) {
     // v en 0..1 (0.5 = velocidad normal) → factor 0.1..3
-    const factor = (Number(v) || 0.5) * 2;
-    state.speed = Math.max(0.1, Math.min(3, factor));
+    state.baseSpeed = Math.max(0.1, Math.min(3, (Number(v) || 0.5) * 2));
+    applySpeed();
   },
 
   setFreeCamera(on) {
