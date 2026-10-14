@@ -85,13 +85,15 @@ No pueden estar prendidos a la vez: comparten el `AudioRecord` y el WebSocket.
 Por eso el micrófono se ve deshabilitado mientras TR está prendido — y TR nunca
 se deshabilita, porque es el único botón que puede cortar el modo continuo.
 
-### A. Dictado — probar que la voz se vuelve texto
+### A. Dictado — probar que la voz se vuelve texto y se manda sola
 
 1. Tocá el **micrófono** (se prende solo).
 2. Hablá con una pausa en el medio: *"hola"* … *(1 s)* … *"¿cómo estás?"*.
 3. Tocá el micrófono de nuevo para dejar de dictar.
-4. El campo tiene que tener **las dos frases** y el muñeco **no se movió**.
-5. Tocá **Traducir**: ahora sí firma la frase entera.
+4. **Firma solo, sin tocar Traducir.** El texto queda en el campo y el muñeco
+   firma `HOLA · COMO ESTAS` en medio segundo.
+5. Cuando termine de firmar, Traducir, Historial, el micrófono y el campo quedan
+   **habilitados**.
 
 Las pausas son el punto de la prueba: el STT cierra cada frase por silencio, y
 dictar son varias frases, no una. Si solo apareciera la última, el buffer no se
@@ -101,15 +103,17 @@ En los logs:
 
 ```
 SignAiState: micrófono prendido en modo Dictation
-SignAiMetrics: dictado #1: 24 palabras, 136 caracteres
-SignAiMetrics: dictado #2: 9 palabras, 46 caracteres      <- el STT cerró por silencio
-SignAiMetrics: dictado #3: 10 palabras, 59 caracteres
+SignAiMetrics: dictado #1: 1 palabras, 6 caracteres
+SignAiMetrics: dictado #2: 3 palabras, 18 caracteres      <- el STT cerró por silencio
 SignAiState: micrófono apagado (venía de Dictation)
-SignAiMetrics: dictado #4: 10 palabras, 60 caracteres      <- el `end` forzó el final
+SignAiMetrics: dictado #3: 4 palabras, 25 caracteres      <- el `end` forzó el final
+SignAiState: dictado → envío: 25 caracteres, 4 palabras   <- y sale solo
+SignAiNet: segment 0 ... de=hola ¿cómo estás? -> HOLA,COMO ESTAS
 ```
 
 Y en el backend, `capture mode -> dictation` y `dictated: '...'`, **sin** ningún
-`Sending segment`: esa es la prueba de que no firmó.
+`Sending segment` antes del envío: esa es la prueba de que no firmó mientras
+dictabas.
 
 ### B. Tiempo real — probar que firma mientras hablás
 
@@ -120,6 +124,11 @@ Y en el backend, `capture mode -> dictation` y `dictated: '...'`, **sin** ningú
 5. Cuando te boredes, tocá TR de nuevo para apagarlo.
 
 Deberías ver al muñeco firmar HOLA mientras todavía estás hablando, no después.
+Y al apagarlo, Traducir, Historial, el micrófono y el campo tienen que quedar
+**habilitados en el acto**, aunque al avatar todavía le falte cola: en tiempo real
+la cola se llena más rápido de lo que el muñeco la consume, y bloquear el panel
+mientras termina deja al usuario mirando una app muerta sin explicación.
+
 Mientras tanto:
 
 ```bash
@@ -416,6 +425,8 @@ texto produce el mismo WAV, así que las cifras son comparables entre corridas.
 | Al prender TR no pasa nada hasta la pausa | el cambio de modo no cerró el utterance anterior | el `end` tiene que ir **antes** del `mode`; el backend lo lacha por utterance |
 | Solo aparece la última frase dictada | el STT cierra por silencio y el app no acumuló | es el buffer (`dictationBuffer`), no el STT: fijate si hay varias líneas `dictado #` |
 | Tocar un botón no hace nada | el tap cayó en el borde de la superficie | `mobile-mcp` hay que usarlo con el **centro** del elemento, no con la esquina |
+| Al apagar TR queda todo deshabilitado y dice "Procesando..." | se confundió "el `done` ya llegó" con "el avatar ya terminó": en tiempo real la cola va 30-40 s por detrás | la fuente de verdad es `queuePlaying`, no `playbackState` (`STA-18`) |
+| Al dictar hay que apretar Traducir a mano | versión anterior a que apagar el interruptor mandara solo | el envío automático es `sendDictation()` |
 
 ### El micrófono no se puede probar con el audio del propio teléfono
 

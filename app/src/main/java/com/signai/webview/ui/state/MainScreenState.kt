@@ -110,6 +110,22 @@ class MainScreenState(
     var playbackState by mutableStateOf(PlaybackState.Idle)
         private set
 
+    /**
+     * La escena tiene una cola de señas firmándose.
+     *
+     * Distinto de [playbackState], y la distinción no es un detalle. En modo
+     * tiempo real la cola se llena más rápido de lo que el avatar la consume: en
+     * una prueba de 30 s había 38 fragmentos en cola, así que "el último `done`
+     * ya llegó" y "el avatar ya terminó" son cosas distintas hasta por medio
+     * minuto. Confundirlas dejaba la interfaz diciendo "escuchando" con medio
+     * minuto de señas por delante, y al apagar el micrófono eso se leía como "no
+     * hay nada en curso": la app esperaba una transcripción que no iba a llegar
+     * y todo el panel quedaba deshabilitado.
+     *
+     * La fuente de verdad es el puente `onPlaybackDone`, no el enum.
+     */
+    private var queuePlaying = false
+
     /** Glosses of the sequence being played, shown in the stage hint while signing. */
     private var caption by mutableStateOf("")
 
@@ -238,6 +254,28 @@ class MainScreenState(
     private var dictationBuffer = ""
 
     /**
+     * El STT tiene una frase abierta del dictado: llegó transcripción pero no su
+     * `final`.
+     *
+     * Es lo que decide si apagar el micrófono manda el texto ya o si tiene que
+     * esperar a que cierre la frase. Un dictado con pausas ya cerrado por el
+     * silencio no tiene nada pendiente, y hacer esperar al usuario por un `final`
+     * que no va a llegar sería dejarlo mirando "Procesando..." hasta el timeout.
+     */
+    private var dictationOpen = false
+
+    /**
+     * El texto dictado se manda solo en cuanto llegue el `final`.
+     *
+     * Apagar el micrófono **es** mandar: es lo que el usuario espera de un
+     * interruptor, y exigirle un segundo toque después de haber hablado es
+     * exactamente la fricción que este modo vino a sacar. El envío espera al
+     * `final` solo porque las últimas palabras todavía no están transcritas; si
+     * el STT ya cerró la frase por silencio, se manda en el acto.
+     */
+    private var dictationAutoSend = false
+
+    /**
      * Whether the backend session is up.
      *
      * The mic button greys out without it, because tapping it otherwise produces
@@ -333,6 +371,7 @@ class MainScreenState(
                     caption = (caption + " · " + items.joinToString(" · ") { it.gloss }).trim('·', ' ')
                 }
                 playbackState = PlaybackState.Signing
+                queuePlaying = true
                 replayPending = false
                 metrics.onFragment(SystemClock.elapsedRealtime() - startedAt, items.size)
             }
@@ -393,7 +432,7 @@ class MainScreenState(
 
     /**
      * Devuelve la interfaz a "escuchando" o "dictando" cuando el mic sigue
-     * abierto.
+     * abierto, y la libera cuando ya no.
      *
      * Una frase terminó y el avatar va a terminar de firmarla, pero el mic sigue
      * prendido: el siguiente `done` tiene que devolver el estado a la etiqueta
@@ -405,10 +444,17 @@ class MainScreenState(
      * la anterior hasta que terminó esta.
      */
     private fun resumeListeningIfMicOn() {
-        if (!micActive) return
+        if (!micActive) {
+            // No hay a quién volver a escuchar, y esa es la otra mitad de la
+            // misma pregunta: si el avatar sigue con cola se la deja terminar —
+            // el puente `onPlaybackDone` la cierra —; si no, el turno terminó y la
+            // interfaz tiene que quedar libre. Sin esto se quedaba en
+            // "Procesando..." con todo el panel deshabilitado.
+            playbackState = if (queuePlaying) PlaybackState.Signing else PlaybackState.Done
+            return
+        }
         resetStreamingTurn()
-        playbackState =
-            if (realtimeActive) PlaybackState.Listening else PlaybackState.Dictating
+        playbackState = labelFor(micMode)
     }
 
     /** Whole-phrase mode: collect every sentence, then sign the phrase as a unit. */
@@ -543,14 +589,46 @@ class MainScreenState(
         val live = joinWords(dictationBuffer, event.text)
         inputText = live
         transcript = live
-        if (!event.final) return
+        if (!event.final) {
+            dictationOpen = true
+            return
+        }
 
         dictationBuffer = live
+        dictationOpen = false
         metrics.onDictationUtterance(event.text)
-        // Con el micrófono ya apagado no hay nada más que esperar: el texto
-        // quedó en el input. Si sigue prendido, el estado es el del modo y no
-        // hay que tocarlo.
-        if (!dictationActive) playbackState = PlaybackState.Idle
+        // Sigue dictando: el texto queda en el input y nada más. El envío lo
+        // dispara apagar el micrófono, no cada frase.
+        if (dictationActive) return
+
+        if (dictationAutoSend) {
+            sendDictation()
+            return
+        }
+        // Con el micrófono ya apagado y sin envío pendiente no hay nada más que
+        // esperar: el texto quedó en el input y la interfaz se puede volver a
+        // usar.
+        playbackState = PlaybackState.Idle
+    }
+
+    /**
+     * Manda lo dictado, sin que nadie toque Traducir.
+     *
+     * El texto sigue en el input después de mandarlo: queda a la vista, se puede
+     * corregir y volver a firmar si hizo falta.
+     */
+    private fun sendDictation() {
+        val text = dictationBuffer.trim()
+        dictationBuffer = ""
+        dictationAutoSend = false
+        if (text.isEmpty()) {
+            playbackState = PlaybackState.Idle
+            showStatus("No se escuchó nada.")
+            return
+        }
+        Log.i(TAG, "dictado → envío: ${text.length} caracteres, ${text.split(' ').size} palabras")
+        playbackState = PlaybackState.Idle
+        play(text)
     }
 
     private fun joinWords(first: String, second: String): String =
@@ -608,13 +686,21 @@ class MainScreenState(
             showStatus("Apagá el micrófono o el TR para mandar una frase escrita.")
             return
         }
+        // Un Traducir a mano cancela el envío automático pendiente: si el usuario
+        // ya lo mandó, mandarlo otra vez al llegar el `final` firmaría la misma
+        // frase dos veces seguidas.
+        dictationAutoSend = false
         if (playbackState == PlaybackState.Translating ||
-            playbackState == PlaybackState.Signing ||
+            playbackState == PlaybackState.Processing ||
             playbackState == PlaybackState.Connecting ||
             playbackState == PlaybackState.Offline
         ) {
             return
         }
+        // `Signing` no bloquea: el panel deja al usuario mandar otra frase con el
+        // avatar firmando la anterior, y la escena reemplaza la cola. Si acá
+        // también se rechazara, el botón Traducir se vería habilitado y no haría
+        // nada, que es peor que deshabilitarlo.
         if (!backend.sendText(text)) {
             fail("No hay conexión con el servidor.")
             return
@@ -664,6 +750,8 @@ class MainScreenState(
         // button says it is off.
         audio.stop()
         micMode = MicMode.Off
+        dictationAutoSend = false
+        queuePlaying = false
         resetStreamingTurn()
         caption = ""
         playbackState = PlaybackState.Idle
@@ -765,6 +853,7 @@ class MainScreenState(
             webView.setQueue(queue)
             webView.play()
             playbackState = PlaybackState.Signing
+            queuePlaying = true
         }
     }
 
@@ -826,7 +915,11 @@ class MainScreenState(
         // vacío: si quedara la frase anterior se leería como parte de lo que
         // está diciendo.
         inputText = ""
-        if (mode == MicMode.Dictation) dictationBuffer = ""
+        if (mode == MicMode.Dictation) {
+            dictationBuffer = ""
+            dictationOpen = false
+            dictationAutoSend = false
+        }
         micMode = mode
         backend.sendMode(realtime = mode == MicMode.Realtime)
         playbackState = labelFor(mode)
@@ -863,6 +956,8 @@ class MainScreenState(
             inputText = ""
             transcript = ""
             dictationBuffer = ""
+            dictationOpen = false
+            dictationAutoSend = false
         }
         streamingTurn = false
         resetStreamingTurn()
@@ -881,10 +976,15 @@ class MainScreenState(
         // fuerza: si no, el `final` con lo que el usuario dijo nunca llega.
         backend.sendEnd()
 
+        if (previous == MicMode.Dictation) {
+            stopDictation()
+            return
+        }
+
         // Con TR apagado, lo que quedó en el campo es lo último que firmaba el
         // muñeco. Si hubo dictado, lo que el usuario escribió tiene más
         // interest: es lo único que puede volver a mandar.
-        if (previous == MicMode.Realtime && dictationBuffer.isNotBlank()) {
+        if (dictationBuffer.isNotBlank()) {
             inputText = dictationBuffer
             transcript = dictationBuffer
         }
@@ -903,14 +1003,54 @@ class MainScreenState(
             return
         }
 
-        playbackState = PlaybackState.Processing
-        // Safety net: no transcript is a failure mode (STT down, audio lost),
-        // and "Procesando..." has to be a wait, not a hang.
+        // Aquí no hay nada que esperar. La captura se cortó, el backend ya cerró
+        // el utterance con el `end`, y si no volvió nada fue porque no quedaba
+        // nada pendiente: quedarse en "Procesando..." y el avatar firmando lo
+        // que le sobraba era el estado real, no una espera.
         //
-        // In streamed mode this is much less likely than it was: the avatar is
-        // already signing by the time the user turns the mic off, so by this
-        // point a transcript has almost certainly landed. It stays because
-        // "already signing" is not a guarantee.
+        // La cola manda sobre el enum: en tiempo real el `done` del último turno
+        // llega mucho antes de que el avatar termine de firmarlo, así que el
+        // `playbackState` ya decía "escuchando" con medio minuto de señas por
+        // delante. Con la cola como fuente de verdad, apagar el micro devuelve la
+        // interfaz enseguida y el `onPlaybackDone` la deja en `done` al terminar.
+        playbackState = if (queuePlaying) PlaybackState.Signing else PlaybackState.Done
+        processingJob?.cancel()
+    }
+
+    /**
+     * Se apagó el dictado, y **apagar es mandar**.
+     *
+     * El texto se manda solo: es lo que el usuario espera de un interruptor, y
+     * pedirle un segundo toque después de haber hablado es la fricción que este
+     * modo vino a sacar. El envío espera al `final` solo si el STT todavía tiene
+     * la frase abierta; si ya la cerró por una pausa, se manda en el acto.
+     */
+    private fun stopDictation() {
+        if (!heardAnythingThisSession) {
+            Log.i(TAG, "el dictado se apagó sin transcripción")
+            streamingTurn = false
+            resetStreamingTurn()
+            playbackState = PlaybackState.Idle
+            showStatus("No se escuchó nada.")
+            return
+        }
+
+        if (dictationOpen) {
+            dictationAutoSend = true
+            playbackState = PlaybackState.Processing
+            armTranscriptionTimeout()
+            Log.i(TAG, "dictado: esperando el final de la frase abierta para mandarla")
+            return
+        }
+        sendDictation()
+    }
+
+    /**
+     * Red de seguridad de "Procesando...": si en 15 s no volvió nada, es un
+     * fallo (STT caído, audio perdido) y "Procesando..." tiene que ser una
+     * espera, no un cuelgue.
+     */
+    private fun armTranscriptionTimeout() {
         processingJob?.cancel()
         processingJob = scope.launch {
             delay(TranscriptionTimeoutMs)
@@ -947,7 +1087,6 @@ class MainScreenState(
     fun replayTurn(text: String) {
         val clean = text.trim()
         if (clean.isEmpty()) return
-        if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) return
         requestTranslation(clean, replay = true)
     }
 
@@ -1027,20 +1166,19 @@ class MainScreenState(
     fun play(text: String) {
         val clean = text.trim()
         if (clean.isEmpty()) return
-        if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) return
         requestTranslation(clean)
     }
 
     /** Called by the JS bridge (`onPlaybackDone`, spec `BRG-7`/`STA-8`). */
     fun onPlaybackDone() {
-        if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
-            // Con el micrófono prendido no "terminó todo": terminó esta seña y el
-            // usuario sigue hablando. Volver a `Listening` es lo que deja el
-            // botón de micrófono mostrando que sigue abierto.
+        if (queuePlaying) {
+            queuePlaying = false
             playbackState =
                 when (micMode) {
                     MicMode.Realtime -> PlaybackState.Listening
                     MicMode.Dictation -> PlaybackState.Dictating
+                    // El micrófono apagado no tiene a quién volver: el turno
+                    // terminó y la interfaz queda libre.
                     MicMode.Off -> PlaybackState.Done
                 }
         }
