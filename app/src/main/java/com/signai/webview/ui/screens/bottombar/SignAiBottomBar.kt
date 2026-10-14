@@ -268,7 +268,7 @@ fun SignAiBottomBar(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         SignAiIcon(
-                            imageVector = SignAiIcons.Lightning,
+                            imageVector = SignAiIcons.Waveform,
                             contentDescription = null,
                             size = 18.dp,
                             tint =
