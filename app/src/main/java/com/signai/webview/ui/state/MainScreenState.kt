@@ -1,5 +1,6 @@
 package com.signai.webview.ui.state
 
+import android.os.SystemClock
 import android.util.Log
 import android.webkit.WebView
 import androidx.compose.runtime.getValue
@@ -28,6 +29,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.atomic.AtomicReference
 
 /** Wait for the drawer close animation before replaying a conversation turn (`CNV-6`). */
@@ -65,6 +68,17 @@ class MainScreenState(
      * callback is this class's own `sendAudio`; `AudioRecord` needs no context.
      */
     private val audio = AudioCapture { chunk -> sendAudio(chunk) }
+
+    /**
+     * Client-side latency numbers, mirrored to logcat and readable from
+     * `adb shell dumpsys`.
+     *
+     * The server measures its own leg; these are the numbers only the device
+     * can produce — how long a fragment took to become queue items, and how
+     * long a whole turn took from the first text to the last fragment. They are
+     * what tells you whether the avatar is keeping up with the speaker.
+     */
+    private val metrics = SignAiMetrics()
 
     val historyList: SnapshotStateList<String> = mutableStateListOf<String>().apply {
         addAll(history.load())
@@ -159,6 +173,36 @@ class MainScreenState(
     /** True when the turn in flight is a Repetir, which must not be re-recorded. */
     private var isReplay = false
 
+    // ── Modo fragmentado (tiempo real) ───────────────────────────────────────
+    // El backend ya no espera a tener la frase entera: manda un fragmento
+    // apenas el transcriber confirma que esas palabras se dijeron. Estos campos
+    // son el estado del turno en curso; se limpian en el `done`.
+    private var streamingTurn = false
+    private val streamedSegments = mutableListOf<TranslationSegment>()
+    private val streamingGlosses = mutableListOf<String>()
+
+    /** Wall clock of the current turn, for the timing logs and `metrics`. */
+    private var turnStartedAt = SystemClock.elapsedRealtime()
+
+    /**
+     * Whether anything at all came back during the current listening session.
+     *
+     * Set by the first transcript, partial or final. It is the difference
+     * between "the user released the mic without speaking" and "we spoke and
+     * never got a word back", which need opposite handling: the first goes back
+     * to idle immediately, the second is a real failure worth reporting.
+     */
+    private var heardAnythingThisTurn = false
+
+    /**
+     * Keeps streamed fragments in the order the backend sent them.
+     *
+     * Resolving a gloss may suspend (a remote asset has to be downloaded), and
+     * without this two fragments racing would append out of order and the avatar
+     * would sign the phrase backwards.
+     */
+    private val streamMutex = Mutex()
+
     /** What the stage hint shows: the glosses while signing, else state or message. */
     val statusLine: String
         get() = when {
@@ -192,6 +236,144 @@ class MainScreenState(
         }
     }
 
+    /**
+     * A streamed fragment: sign it now, do not wait for the rest of the phrase.
+     *
+     * This is the whole point of the real-time mode. The backend sends a
+     * fragment as soon as the transcriber confirmed those words had been said,
+     * so by the time it arrives the person may already be on their second word.
+     * The queue is appended to instead of replaced, and playback starts from the
+     * first fragment's index, which is what lets the avatar sign the phrase
+     * while it is still being spoken.
+     */
+    private fun onStreamedSegment(event: BackendEvent.Segment) {
+        val startedAt = SystemClock.elapsedRealtime()
+        streamingTurn = true
+        streamedSegments += event.segment
+        streamingGlosses += event.segment.glosses.map { it.text }
+
+        // Resolving a remote asset is a suspending download, and the queue is
+        // order-dependent: appending fragment 2 before fragment 1 would sign the
+        // phrase backwards. The mutex makes the fragments queue up in the order
+        // the backend sent them.
+        scope.launch {
+            streamMutex.withLock {
+                val items = queueItemsFor(event.segment)
+                if (items.isEmpty()) {
+                    // A fragment of words the catalog does not cover. Not an error:
+                    // the turn keeps going and the next fragment may resolve to
+                    // real signs.
+                    metrics.onUnavailableGloss()
+                    Log.i(TAG, "fragmento ${event.index} sin señas disponibles: ${event.sourceText}")
+                    return@withLock
+                }
+
+                if (playbackState != PlaybackState.Signing) {
+                    // First fragment: nothing is playing yet, so this starts the
+                    // queue.
+                    webView.setQueue(items)
+                    webView.playFrom(0)
+                    caption = items.joinToString(" · ") { it.gloss }
+                } else {
+                    // Mid-playback: append. `playFrom` is deliberately not
+                    // called, the scene advances on its own as the queue grows.
+                    webView.appendQueue(items)
+                    caption = (caption + " · " + items.joinToString(" · ") { it.gloss }).trim('·', ' ')
+                }
+                playbackState = PlaybackState.Signing
+                replayPending = false
+                metrics.onFragment(SystemClock.elapsedRealtime() - startedAt, items.size)
+            }
+        }
+    }
+
+    /**
+     * Closes a streamed turn once the backend says `done`.
+     *
+     * The avatar keeps signing whatever is left in the queue: `done` means the
+     * backend stopped sending, not that the animation ended. Recording the turn
+     * happens here rather than per fragment, because only now is the phrase
+     * complete and only now is it worth a history entry.
+     */
+    private fun finishStreamedTurn() {
+        val text = pendingText.orEmpty()
+        val segments = streamedSegments.toList()
+
+        if (segments.isEmpty()) {
+            streamingTurn = false
+            pendingText = null
+            playbackState = PlaybackState.Done
+            showStatus("Esa frase no produjo ninguna seña.")
+            return
+        }
+
+        if (text.isNotBlank() && !isReplay) {
+            syncHistory(history.record(text))
+            conversation.add(
+                ConversationTurn(
+                    id = turnCounter++,
+                    text = text,
+                    gloss = formatGlosses(segments),
+                ),
+            )
+        }
+
+        metrics.onTurn(
+            totalMs = SystemClock.elapsedRealtime() - turnStartedAt,
+            fragmentCount = segments.size,
+            glossCount = streamingGlosses.size,
+        )
+        Log.i(TAG, "resumen: ${metrics.snapshot()}")
+
+        streamingTurn = false
+        streamedSegments.clear()
+        streamingGlosses.clear()
+        pendingText = null
+    }
+
+    /** Whole-phrase mode: collect every sentence, then sign the phrase as a unit. */
+    private fun onWholePhraseSegment(event: BackendEvent.Segment) {
+        transcript = pendingText ?: transcript
+        pendingTotal = maxOf(pendingTotal, event.total)
+        pendingSegments[event.index] = event.segment
+        // Play as soon as the phrase is whole. `done` only arrives after
+        // the last segment, so once every segment is in there is nothing
+        // left to wait for — and a phrase the backend never closes with
+        // `done` still gets signed.
+        if (pendingTotal > 0 && pendingSegments.size >= pendingTotal) flushSegments()
+    }
+
+    /** Resolves one fragment's glosses to queue items, same rules as a whole phrase. */
+    private suspend fun queueItemsFor(segment: TranslationSegment): List<SignQueueItem> {
+        val items = mutableListOf<SignQueueItem>()
+        for (gloss in segment.glosses) {
+            val local = SignsCatalog.localAssetOrNull(gloss.glbPath)
+            val url = when {
+                local != null -> local
+                SignsCatalog.isOwnAssetPath(gloss.glbPath) -> null
+                gloss.available -> assets.resolve(gloss.text, gloss.glbPath)
+                else -> null
+            }
+            when {
+                url != null -> items += SignQueueItem(
+                    gloss = gloss.text,
+                    type = segment.type,
+                    url = url,
+                    available = true,
+                )
+
+                settings.demoSignFallback -> items += SignQueueItem(
+                    gloss = gloss.text,
+                    type = segment.type,
+                    url = fallbackSignUrl,
+                    available = gloss.available,
+                )
+                // Unknown gloss, no fallback: not queued. See startQueue for why.
+            }
+        }
+        return items
+    }
+
     private fun handleEvent(event: BackendEvent) {
         when (event) {
             is BackendEvent.Connected -> {
@@ -207,39 +389,39 @@ class MainScreenState(
                 // Anything coming back means the round trip is alive, so the
                 // "no transcript arrived" guard is no longer needed.
                 processingJob?.cancel()
+                heardAnythingThisTurn = true
                 transcript = event.text
                 inputText = event.text
-                // A final transcript means the backend heard a whole utterance.
-                // The translation follows on its own, but this is the phrase
-                // the turn has to be recorded with: a typed one already set
-                // `pendingText`, a spoken one is only known now.
-                if (event.final && pendingText == null) {
+                // The utterance starts at the *first* text, not at the final:
+                // in streamed mode the avatar is already signing by then, and
+                // `pendingText` has to exist before the first fragment so the
+                // turn is recorded against the right phrase.
+                if (pendingText == null) {
                     pendingText = event.text
-                    // `lastText` is what Repetir replays. A typed phrase set it
-                    // when it was sent; a spoken one is only known now, and
-                    // without this the button appeared after a mic phrase and
-                    // did nothing.
                     lastText = event.text
+                }
+                if (event.final) {
                     // The backend closed the segment, so this utterance is
                     // over: stop recording even if the user never toggled the
                     // mic off. Anything after this belongs to the next phrase.
                     audio.stop()
-                    playbackState = PlaybackState.Translating
+                    if (!streamingTurn) playbackState = PlaybackState.Translating
                 }
             }
 
-            is BackendEvent.Segment -> {
-                transcript = pendingText ?: transcript
-                pendingTotal = maxOf(pendingTotal, event.total)
-                pendingSegments[event.index] = event.segment
-                // Play as soon as the phrase is whole. `done` only arrives after
-                // the last segment, so once every segment is in there is nothing
-                // left to wait for — and a phrase the backend never closes with
-                // `done` still gets signed.
-                if (pendingTotal > 0 && pendingSegments.size >= pendingTotal) flushSegments()
-            }
+            is BackendEvent.Segment ->
+                if (event.stream) {
+                    onStreamedSegment(event)
+                } else {
+                    onWholePhraseSegment(event)
+                }
 
-            is BackendEvent.PhraseDone -> flushSegments()
+            is BackendEvent.PhraseDone -> {
+                // En modo fragmentado la cola ya se fue firmando; acá solo queda
+                // cerrar el turno. En modo frase completa, `flushSegments` arma la
+                // cola de una.
+                if (streamingTurn) finishStreamedTurn() else flushSegments()
+            }
 
             is BackendEvent.Failure -> fail(event.message)
 
@@ -303,7 +485,23 @@ class MainScreenState(
         // Nothing of a previous phrase may survive into this one.
         pendingSegments.clear()
         pendingTotal = 0
+        resetStreamingTurn()
         playbackState = PlaybackState.Translating
+    }
+
+    /**
+     * Clears everything a streamed turn accumulated.
+     *
+     * Called at the start of every new phrase and on failure, so a turn that
+     * died halfway cannot leak its fragments into the next one. `streamingTurn`
+     * itself is left alone by [resetStreamingTurn] because the caller decides
+     * whether a turn is starting or ending.
+     */
+    private fun resetStreamingTurn() {
+        streamedSegments.clear()
+        streamingGlosses.clear()
+        turnStartedAt = SystemClock.elapsedRealtime()
+        metrics.reset()
     }
 
     private fun fail(message: String) {
@@ -312,6 +510,8 @@ class MainScreenState(
         // not be picked up by the next phrase.
         pendingSegments.clear()
         pendingTotal = 0
+        streamingTurn = false
+        resetStreamingTurn()
         caption = ""
         playbackState = PlaybackState.Idle
         showStatus(message)
@@ -444,6 +644,12 @@ class MainScreenState(
         statusOverride = null
         transcript = ""
         playbackState = PlaybackState.Listening
+        // The turn clock starts when the mic opens, so `rt_turn_total_ms`
+        // includes the silence before the first word — which is the number a
+        // user actually perceives.
+        streamingTurn = false
+        resetStreamingTurn()
+        heardAnythingThisTurn = false
         audio.start(scope)
         if (!audio.isRecording) {
             // The device refused to open the mic (usually a missing permission).
@@ -465,9 +671,29 @@ class MainScreenState(
         // closed explicitly — otherwise the app waits for a transcript that
         // will never come.
         backend.sendEnd()
+
+        // Nothing came back at all: the user released the mic without saying
+        // anything (or in a room so quiet the VAD never fired). Going to
+        // "Procesando..." here is fifteen seconds of waiting for a transcript
+        // that does not exist, ending in an error about a failure that did not
+        // happen. Back to Idle with a plain message instead.
+        if (!heardAnythingThisTurn) {
+            Log.i(TAG, "el micrófono se soltó sin transcripción: no hay nada que traducir")
+            streamingTurn = false
+            resetStreamingTurn()
+            playbackState = PlaybackState.Idle
+            showStatus("No se escuchó nada.")
+            return
+        }
+
         playbackState = PlaybackState.Processing
         // Safety net: no transcript is a failure mode (STT down, audio lost),
         // and "Procesando..." has to be a wait, not a hang.
+        //
+        // In streamed mode this is much less likely than it was: the avatar is
+        // already signing by the time the user is allowed to release the mic, so
+        // by this point a transcript has almost certainly landed. It stays
+        // because "already signing" is not a guarantee.
         processingJob?.cancel()
         processingJob = scope.launch {
             delay(TranscriptionTimeoutMs)

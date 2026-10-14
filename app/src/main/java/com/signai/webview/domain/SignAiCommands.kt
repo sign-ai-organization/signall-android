@@ -29,6 +29,28 @@ object SignAiCommands {
     fun setQueue(json: String) = "window.SignAI?.setQueue(${JSONObject.quote(json)})"
 
     /**
+     * Agrega señas al final de la cola sin reiniciar la que ya se está firmando.
+     *
+     * La mitad en tiempo real de [setQueue]: el backend manda un fragmento de la
+     * frase apenas confirma que esas palabras ya se dijeron, y el muñeco lo firma
+     * mientras la persona sigue hablando. [setQueue] sigue reemplazando, que es
+     * lo correcto para una frase escrita o un "Repetir".
+     *
+     * Aditivo: el guard `?.` y los comandos anteriores no cambian (`BRG-8`).
+     */
+    fun appendQueue(json: String) = "window.SignAI?.appendQueue(${JSONObject.quote(json)})"
+
+    /**
+     * Arranca a firmar desde [index] sin volver al principio de la cola.
+     *
+     * `play()` asume que la cola está completa y salta al ítem 0. En streaming
+     * la cola recién empieza a llenarse, así que arrancar tiene que respetar
+     * el índice. Si ya hay algo sonando no hace nada, que es lo que corresponde
+     * cuando llega un fragmento mientras el anterior se reproduce.
+     */
+    fun playFrom(index: Int) = "window.SignAI?.playFrom(${index.coerceAtLeast(0)})"
+
+    /**
      * Sets the sign the scene opens on and falls back to (settings menu).
      *
      * [url] is a same-origin asset path from [SignsCatalog.assetUrl]; it is

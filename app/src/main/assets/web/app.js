@@ -12,7 +12,8 @@
 //   signs/*.glb        → solo animación, un clip por variante, mismo esqueleto
 //
 // Contrato con Android (`window.SignAI`) — no cambiar sin tocar el lado Kotlin:
-//   setQueue, play, setDebug, setFreeCamera, setGrid, setBackground,
+//   setQueue, appendQueue, playFrom, queuePending, play, setDebug,
+//   setFreeCamera, setGrid, setBackground,
 //   setSpeed, setTheme, setDefaultSign
 // Hacia Android: `window.SignAIBridge.postMessage("onPlaybackDone")` y
 // `postMessage("avatarReady")`.
@@ -437,6 +438,55 @@ window.SignAI = {
     } catch (e) {
       console.error("setQueue: payload inválido", e);
     }
+  },
+
+  /**
+   * Agrega ítems al final de la cola sin tocar lo que ya se está firmando.
+   *
+   * Es la mitad en tiempo real de `setQueue`. El backend ya no espera a tener
+   * la frase entera: manda un fragmento, la app lo agrega a la cola y el
+   * muñeco lo firma mientras la persona sigue hablando. `setQueue` sigue
+   * existiendo y sigue reemplazando, porque una frase escrita o un "Repetir"
+   * llegan completos de una.
+   *
+   * Aditivo: no cambia `setQueue` ni el guard `?.` (BRG-8).
+   */
+  appendQueue(json) {
+    try {
+      const items = JSON.parse(json);
+      if (!Array.isArray(items) || items.length === 0) return 0;
+      state.queue.push(...items);
+      return state.queue.length;
+    } catch (e) {
+      console.error("appendQueue: payload inválido", e);
+      return 0;
+    }
+  },
+
+  /**
+   * Empieza a firmar sin reiniciar la cola.
+   *
+   * `play()` es correcto solo cuando la cola está completa: salta al índice 0.
+   * En streaming se llama cuando llega el primer fragmento y la cola puede
+   * seguir creciendo, así que tiene que arrancar desde donde esté y no volver
+   * al principio. Si ya está sonando no hace nada, que es justo lo que quiere
+   * un fragmento que llega mientras el anterior se reproduce.
+   */
+  playFrom(startIndex) {
+    if (state.playing || !state.mixer) return false;
+    const from = Number(startIndex) || 0;
+    if (from < 0 || from >= state.queue.length) return false;
+    state.queueIdx = from;
+    loadQueueItem(from).then(ok => {
+      if (!ok) { stopPlayback(); notifyPlaybackDone(); }
+    });
+    return true;
+  },
+
+  /** Cola pendiente de firmar; lo usa la app para mostrar el texto en vivo. */
+  queuePending() {
+    if (!state.playing) return state.queue.length;
+    return Math.max(0, state.queue.length - state.queueIdx - 1);
   },
 
   play() {

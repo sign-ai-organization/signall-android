@@ -151,11 +151,21 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
 
         "segment" -> {
             val segment = obj.optJSONObject("segment") ?: return null
-            BackendEvent.Segment(
+            val event = BackendEvent.Segment(
                 index = obj.optInt("index"),
                 total = obj.optInt("total"),
                 segment = parseSegment(segment),
+                stream = obj.optBoolean("stream"),
+                provisional = obj.optBoolean("provisional"),
+                sourceText = obj.optString("source_text"),
             )
+            Log.d(
+                TAG,
+                "segment ${event.index} total=${event.total} stream=${event.stream} " +
+                    "provisional=${event.provisional} de=${event.sourceText} -> " +
+                    event.segment.glosses.joinToString(",") { it.text },
+            )
+            event
         }
 
         "done" -> BackendEvent.PhraseDone
