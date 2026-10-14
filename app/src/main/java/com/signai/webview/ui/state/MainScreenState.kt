@@ -141,6 +141,21 @@ class MainScreenState(
      */
     private var queuePlaying = false
 
+    /**
+     * Reloj de la animación: cuando arrancó la primera seña del turno y cuántas
+     * van. Es lo que mide `SignAiMetrics.onPlayback`, el número que dice si el
+     * muñeco termina la frase a tiempo — y el único que se mueve cuando cambia
+     * la escena (ver `rt_turn_total_ms`, que mide otra cosa).
+     */
+    private var playbackStartedAt = 0L
+    private var playbackSigns = 0
+
+    /** Marca el arranque del turno de animación; el primer item es el que cuenta. */
+    private fun startPlaybackClock(firstSignCount: Int) {
+        playbackStartedAt = SystemClock.elapsedRealtime()
+        playbackSigns = firstSignCount
+    }
+
     /** Glosses of the sequence being played, shown in the stage hint while signing. */
     private var caption by mutableStateOf("")
 
@@ -455,11 +470,13 @@ class MainScreenState(
                     // queue.
                     webView.setQueue(items)
                     webView.playFrom(0)
+                    startPlaybackClock(items.size)
                     caption = items.joinToString(" · ") { it.gloss }
                 } else {
                     // Mid-playback: append. `playFrom` is deliberately not
                     // called, the scene advances on its own as the queue grows.
                     webView.appendQueue(items)
+                    playbackSigns += items.size
                     caption = (caption + " · " + items.joinToString(" · ") { it.gloss }).trim('·', ' ')
                 }
                 playbackState = PlaybackState.Signing
@@ -968,6 +985,7 @@ class MainScreenState(
 
             webView.setQueue(queue)
             webView.play()
+            startPlaybackClock(queue.size)
             playbackState = PlaybackState.Signing
             queuePlaying = true
         }
@@ -1291,6 +1309,7 @@ class MainScreenState(
         webView.setBackground(settings.bg)
         webView.setTheme(settings.darkTheme)
         webView.setSpeed(settings.speed / 100f)
+        webView.setReduceMotion(settings.reduceMotion)
     }
 
     /**
@@ -1308,6 +1327,13 @@ class MainScreenState(
     fun onPlaybackDone() {
         if (queuePlaying) {
             queuePlaying = false
+            if (playbackStartedAt > 0L) {
+                metrics.onPlayback(
+                    totalMs = SystemClock.elapsedRealtime() - playbackStartedAt,
+                    signCount = playbackSigns,
+                )
+                playbackStartedAt = 0L
+            }
             playbackState =
                 when (micMode) {
                     MicMode.Realtime -> PlaybackState.Listening
@@ -1343,6 +1369,10 @@ class MainScreenState(
             Setting.Grid -> webView.setGrid(on)
             Setting.Background -> webView.setBackground(on)
             Setting.DarkTheme -> webView.setTheme(on)
+            // La fundición entre señas es movimiento, y el ajuste que lo apaga
+            // tiene que llegar a la escena además de a Compose: ahí es donde se
+            // decide entre fundir y cortar.
+            Setting.ReduceMotion -> webView.setReduceMotion(on)
             else -> Unit
         }
     }

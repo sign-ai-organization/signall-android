@@ -13,7 +13,7 @@
 //
 // Contrato con Android (`window.SignAI`) — no cambiar sin tocar el lado Kotlin:
 //   setQueue, appendQueue, playFrom, queuePending, queueState, play, setDebug,
-//   setFreeCamera, setGrid, setBackground,
+//   setFreeCamera, setGrid, setBackground, setReduceMotion,
 //   setSpeed, setTheme, setDefaultSign
 // Hacia Android: `window.SignAIBridge.postMessage("onPlaybackDone")` y
 // `postMessage("avatarReady")`.
@@ -26,10 +26,13 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 const state = {
   mixer: null,
   action: null,          // clip en curso
+  outgoing: null,        // clip que se va (peso 1 → 0) durante la fundición
+  finishing: false,      // la fundición de salida está calendarizada
   playing: false,
   speed: 1,
-  transition: 0,         // ticks de reposo entre señas de la cola
   loading: false,
+  epoch: 0,              // sube en cada stopPlayback(); una carga vieja no revive
+  reduceMotion: false,   // ACC-*: sin fundición, corte seco
   nodeCount: 0,
   nodeNames: new Set(),
   // Cola que envía Android con setQueue(); cada ítem es
@@ -73,9 +76,41 @@ function queueBacklog() {
   return Math.max(0, state.queue.length - state.queueIdx - 1);
 }
 
-// Cuántos ticks de reposo (~100 ms) se dejan entre dos señas de la cola, para
-// que no se encadenen las manos.
-const TRANSITION_FRAMES = 6;
+// ── Fundición entre señas ─────────────────────────────────────────────────────
+//
+// Las 46 variantes de clip arrancan y terminan en el mismo lugar (medido en
+// `openspec/changes/reposo-y-crossfade/investigacion.md` §4.1: el salto directo
+// del final de una seña al inicio de la siguiente es de **5.9 cm de mediana** y
+// el 79% de los pares ya es continuo). Este archivo antes metía ~100 ms de pose
+// **congelada** de reposo entre cada par (`TRANSITION_FRAMES`), y eso
+// desarmaba lo que los clips ya traían bien: en vez de un salto de 5.9 cm cada
+// transición pagaba dos de ~46 cm, uno al salir al reposo y otro al volver.
+//
+// Con la fundición el clip siguiente arranca `CROSSFADE_MS` antes de que termine
+// el actual, y las dos actions viven juntas sobre el mismo esqueleto mientras
+// three.js las mezcla. Con 100 ms desaparece el 87% del salto (94.5 → 12.1
+// cm/frame entre fotogramas) solapando solo ~3 cm de gesto de cada lado; más
+// allá de 150 ms no se mejora nada (el piso de 8.8 cm/frame es la velocidad real
+// de una seña, no un salto).
+//
+// Sale **más corto**, no más largo: la cola adelanta 100 ms por seña, y además
+// desaparecen los ~100 ms de pose congelada que había entre cada par. Medido en
+// el Redmi con dos señas: 4708 ms → 4522 ms (−186 ms, contra los −200 ms que
+// predice la cuenta; el resto es redondeo de fotograma).
+const CROSSFADE_MS = 100;
+
+/**
+ * Segundos de fundición. Con `reduceMotion` es 0 y la transición es un corte
+ * seco.
+ *
+ * Ojo con el 0: `fadeIn(0)` no es "sin fundición" sino lo contrario — el
+ * interpolant de peso arranca y termina en el mismo instante, así que three.js
+ * lo da por terminado de una y **deshabilita la action**. Por eso el 0 se
+ * maneja como un caso aparte, sin llamar a `fadeIn`/`fadeOut`.
+ */
+function crossfade() {
+  return state.reduceMotion ? 0 : CROSSFADE_MS / 1000;
+}
 
 let pressTimer = null;
 let pressStart = null;
@@ -170,6 +205,10 @@ const Debug = {
       `t: ${(state.action?.time ?? 0).toFixed(2)} / ` +
         `${(state.action?.getClip().duration ?? 0).toFixed(2)}s  speed: ${state.speed.toFixed(2)}`,
       `cola: ${state.queueIdx + 1}/${state.queue.length}  tipo: ${state.currentType || "-"}`,
+      // `inUse` es la prueba de que hay dos actions vivas: durante la fundición
+      // son 2 (la que entra y la que sale) y el resto del tiempo 1.
+      `fundición: ${state.finishing ? "salida" : state.outgoing ? "saliendo" : "-"}` +
+        `  ${CROSSFADE_MS}ms  actions vivas: ${state.mixer?.stats.actions.inUse ?? 0}`,
     ],
     avatar: () => [
       `nodos: ${state.nodeCount}`,
@@ -339,26 +378,102 @@ function notifyPlaybackDone() {
 /**
  * Detiene lo que esté sonando y deja al muñeco en pose de reposo.
  * `stopAllAction()` llama a `restoreOriginalDirection()` sobre cada binding,
- * así que los huesos vuelven a los quaterniones con los que se cargó el avatar.
+ * así que los huesos vuelven a los quaterniones con los que se cargó el avatar:
+ * la pose de descanso horneada en `models/avatar.glb` por `tools/rest_pose.py`.
+ *
+ * Es también el camino del long press (reset) y del corte seco con
+ * `reduceMotion`: no es una transición, es cortar.
  */
 function stopPlayback() {
   state.playing = false;
   state.action = null;
-  state.transition = 0;
+  state.outgoing = null;
+  state.finishing = false;
   state.loading = false;
+  // Una carga que ya estaba en vuelo no debe resucitar la reproducción después
+  // de un reset (o el long press "no resetea" y la seña arranca sola).
+  state.epoch++;
   state.mixer?.stopAllAction();
 }
 
-/** Arranca un clip sobre el mixer. `clip` ya debe venir de `loadSignClips`. */
+/**
+ * Arranca un clip sobre el mixer. `clip` ya debe venir de `loadSignClips`.
+ *
+ * Tres casos:
+ *
+ *   - **hay algo sonando y es otro clip** → las dos actions quedan vivas y
+ *     `crossFadeTo` encadena la que entra sobre la que sale.
+ *   - **no hay nada sonando** → `fadeIn` desde la pose de reposo, para que el
+ *     turno no empiece con un corte.
+ *   - **el clip es el mismo que está sonando** → corte seco. Pasa con una
+ *     frase repetida ("hola hola"): three.js cachea una `action` por clip, así
+ *     que no hay dos actions que fundir. Los clips son continuos consigo
+ *     mismos (los 46 arrancan y terminan en el mismo cluster), así que el salto
+ *     es el mismo de cualquier par, sin la pausa de antes.
+ *
+ * Con `reduceMotion` los tres son corte seco: una fundición de duración 0 no es
+ * "sin fundición" sino "peso 0 y action deshabilitada" (ver [crossfade]).
+ */
 function startClip(clip) {
   const mixer = state.mixer;
   if (!mixer) return false;
-  mixer.stopAllAction();
   const missing = unresolvedTracks(clip, state.nodeNames);
   if (missing) console.warn("[SignAI] seña con", missing, "tracks sin hueso:", clip.name);
-  state.action = mixer.clipAction(clip).reset().play();
+
+  const previous = state.action;
+  const action = mixer.clipAction(clip);
+  // La misma seña dos veces seguidas devuelve la misma action (three.js cachea
+  // una por clip): no hay dos actions que fundir.
+  const fade = previous && previous !== action ? crossfade() : 0;
+
+  state.finishing = false;
   state.playing = true;
+
+  if (Debug.enabled) {
+    const how = fade > 0 ? "fundición" : !previous && crossfade() > 0
+      ? "fundición desde el reposo" : "corte seco";
+    console.log(`[SignAI] ${how} -> ${action.getClip().name || "(clip sin nombre)"}`);
+  }
+
+  if (fade > 0) {
+    // Lo que todavía se está yendo no se puede volver a fundir: se mata antes
+    // de encadenar otra (un `play()` en mitad de una fundición, un `playFrom`).
+    if (state.outgoing) state.outgoing.stop();
+    state.outgoing = null;
+    action.reset().setEffectiveWeight(1).play();
+    previous.crossFadeTo(action, fade, false);
+    state.outgoing = previous;
+    state.action = action;
+  } else {
+    mixer.stopAllAction();
+    state.outgoing = null;
+    state.action = action.reset().setEffectiveWeight(1).play();
+    if (!previous && crossfade() > 0) {
+      // Primera seña del turno: entra desde el reposo, como sale la última.
+      state.action.fadeIn(crossfade());
+    } else {
+      // `update(0)` aplica la pose en este mismo frame: sin esto queda un
+      // fotograma en reposo entre dos señas, que es justo el salto que se viene a
+      // quitar. No avanza el reloj.
+      mixer.update(0);
+    }
+  }
+
+  preloadNext();
   return true;
+}
+
+/**
+ * Pide el clip del ítem siguiente para que esté en caché cuando llegue la
+ * frontera. Sin esto la fundición depende de que la carga del `.glb` termine
+ * justo a tiempo, y si no termina se cae al corte seco: no es peor que antes,
+ * pero tampoco mejora nada. `signCache` ya cachea por URL.
+ */
+function preloadNext() {
+  const next = state.queue[state.queueIdx + 1];
+  if (!next || signCache.has(next.url)) return;
+  loadSignClips(next.url).catch(err =>
+    console.warn("[SignAI] no se pudo precargar", next.url, err));
 }
 
 /** Elige una variante al azar: 10 de las 32 señas traen 2–4 tomas distintas. */
@@ -368,28 +483,59 @@ function pickVariant(clips) {
 
 /**
  * Carga el ítem [index] de la cola y lo deja listo para reproducir. Mientras
- * carga, `state.loading` congela el loop en reposo: sin eso, una carga lenta
- * dejaría sonando el clip anterior.
+ * carga, `state.loading` congela el loop: sin eso, una carga lenta dejaría
+ * sonando el clip anterior.
  */
 async function loadQueueItem(index) {
   const item = state.queue[index];
   if (!item) return false;
+  const epoch = state.epoch;
   state.loading = true;
   state.currentType = item.type || "";
   try {
     const { clips } = await loadSignClips(item.url);
-    if (index !== state.queueIdx) return false;   // la cola avanzó mientras tanto
+    if (index !== state.queueIdx || epoch !== state.epoch) return false;
     state.loading = false;
     startClip(pickVariant(clips));
     return true;
   } catch (err) {
     console.error("No se pudo cargar la seña", item.url, err);
     state.loading = false;
+    // Un ítem que no carga no puede dejar el turno colgado en "firmando": el
+    // muñeco vuelve al reposo y se avisa que terminó, que es lo que espera el
+    // lado Kotlin para liberar el panel y el micrófono.
+    stopPlayback();
+    notifyPlaybackDone();
     return false;
   }
 }
 
-/** Avanza el mixer un frame y resuelve el fin de clip. */
+/** Pasa al ítem siguiente de la cola, o cierra el turno si no hay más. */
+function advanceQueue() {
+  const next = state.queueIdx + 1;
+  const fade = crossfade();
+
+  if (next >= state.queue.length) {
+    if (fade > 0) {
+      // Salida al reposo. No hace falta escribir ningún keyframe: cuando el
+      // peso de una action llega a 0, `PropertyMixer.apply()` completa con el
+      // valor guardado cuando se creó el binding — el TRS del nodo, o sea la
+      // pose de descanso horneada. Como la fundición se calendariza para
+      // acabar junto con el clip, esperar a que termine no alarga el turno.
+      state.action.fadeOut(fade);
+      state.finishing = true;
+      return;
+    }
+    stopPlayback();
+    notifyPlaybackDone();
+    return;
+  }
+
+  state.queueIdx = next;
+  loadQueueItem(next);
+}
+
+/** Avanza el mixer un frame y resuelve la frontera entre clips. */
 function tickPlayback(dt) {
   if (!state.playing) return;
 
@@ -407,32 +553,35 @@ function tickPlayback(dt) {
     }
   }
 
-  // Enfriamiento entre señas: pose de reposo unos ticks.
-  if (state.transition > 0) {
-    state.transition--;
-    return;
-  }
-  if (state.loading || !state.action) return;
+  if (state.loading) return;           // el mixer espera al clip
+  const action = state.action;
+  if (!action) return;
 
-  const clip = state.action.getClip();
-  // Un dt grande (la app volvió del background, p.ej.) no debe teletransportar
-  // el clip: se avanza a lo que falte y se cierra acá mismo.
-  if (state.action.time + dt * state.speed >= clip.duration) {
-    const next = state.queueIdx + 1;
-    if (next < state.queue.length) {
-      state.queueIdx = next;
-      state.transition = TRANSITION_FRAMES;
-      state.mixer.stopAllAction();
-      state.action = null;
-      loadQueueItem(next);
+  const clip = action.getClip();
+  const step = dt * state.speed;
+  // El clip siguiente entra `fade` antes del final de este, así que la
+  // fundición termina justo cuando termina el clip.
+  const boundary = clip.duration - crossfade();
+
+  if (state.finishing) {
+    if (action.time + step >= clip.duration) {
+      state.mixer.update(Math.max(0, clip.duration - action.time));
+      stopPlayback();
+      notifyPlaybackDone();
       return;
     }
-    state.mixer.update(clip.duration - state.action.time);
-    stopPlayback();
-    notifyPlaybackDone();
+    state.mixer.update(step);
     return;
   }
-  state.mixer.update(dt * state.speed);
+
+  if (action.time + step >= boundary) {
+    // Un dt grande (la app volvió del background, p.ej.) no debe teletransportar
+    // la mezcla a mitad de camino: se avanza solo hasta la frontera.
+    state.mixer.update(Math.max(0, boundary - action.time));
+    advanceQueue();
+    return;
+  }
+  state.mixer.update(step);
 }
 
 // ── Render loop ───────────────────────────────────────────────────────────────
@@ -534,9 +683,10 @@ window.SignAI = {
     const from = Number(startIndex) || 0;
     if (from < 0 || from >= state.queue.length) return false;
     state.queueIdx = from;
-    loadQueueItem(from).then(ok => {
-      if (!ok) { stopPlayback(); notifyPlaybackDone(); }
-    });
+    // Sin fundición (D4): si algo se estuviera yendo, `startClip` lo mata antes
+    // de arrancar la nueva. El corte de `stopPlayback` no hace falta porque acá
+    // no hay nada sonando.
+    loadQueueItem(from);
     return true;
   },
 
@@ -563,9 +713,7 @@ window.SignAI = {
     if (state.queue.length) {
       // El asset puede no estar en caché todavía (recién descargado del
       // backend), así que la carga es asíncrona y el loop arranca al resolver.
-      loadQueueItem(0).then(ok => {
-        if (!ok) { stopPlayback(); notifyPlaybackDone(); }
-      });
+      loadQueueItem(0);
       return;
     }
     // Sin cola: se repite la seña de arranque.
@@ -573,6 +721,19 @@ window.SignAI = {
   },
 
   setDebug(on) { Debug.enabled = !!on; Debug.render(); },
+
+  /**
+   * Accesibilidad: con el ajuste prendido no hay fundición entre señas y cada
+   * transición es un corte seco (spec `ACC-*`).
+   *
+   * Lo que se reduce es el movimiento de la transición, que es parte de cómo se
+   * lee la seña y no un efecto. Prenderse a mitad de una fundición no la
+   * interrumpe — corta el turno que viene — así que no hay nada que reconciliar.
+   */
+  setReduceMotion(on) {
+    state.reduceMotion = !!on;
+    if (Debug.enabled) console.log("[SignAI] fundición:", crossfade() > 0 ? "on" : "off");
+  },
 
   setSpeed(v) {
     // v en 0..1 (0.5 = velocidad normal) → factor 0.1..3

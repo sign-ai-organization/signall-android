@@ -35,9 +35,28 @@
   [`README.md`](rendimiento/README.md) tiene las recetas y las trampas.
 - **`split_signs.py`** — **el pipeline de assets 3D de la app**. Separa los
   exports del modelador (`GLB Senas/`, con el muñeco adentro en cada archivo) en
-  `assets/web/models/avatar.glb` + `assets/web/signs/<id>.glb`, y regenera
-  `SignsCatalog.kt`. Corre cada vez que llegan señas nuevas. Sin dependencias
+  `assets/web/models/avatar.glb` + `assets/web/signs/<id>.glb`, regenera
+  `SignsCatalog.kt` y, **al final**, hornea la pose de descanso con
+  `rest_pose.py`. Corre cada vez que llegan señas nuevas. Sin dependencias
   externas (no necesita Blender ni Node).
+- **`glb_pose.py`** — leer un `.glb`, recorrer el esqueleto (FK), samplear un
+  clip y reconstruir la pose de bind desde las `inverseBindMatrices`. Es la
+  base de las dos herramientas siguientes y el **único lector de GLB del repo**
+  (el de `split_signs.py` se mudó acá). Sin dependencias.
+- **`rest_pose.py`** — deja el avatar con los **brazos abajo** en reposo,
+  copiando las rotaciones de la cadena de brazos del primer keyframe de
+  `signs/0029_0000_0000.glb`. Idempotente, y frena la corrida si el export no es
+  la pose de bind (ahí deformaría la malla en silencio).
+
+  ```bash
+  python3 tools/rest_pose.py --dry-run   # el informe, sin escribir
+  ```
+
+- **`preview_pose.py`** — render offline de una pose (skinning lineal + el mismo
+  `pivot` y la misma cámara que `app.js`, que además lee del archivo): mirar una
+  pose sin instalar la app. Genera las comparaciones de
+  `openspec/changes/reposo-y-crossfade/img/`. Es el único de los tres que pide
+  `numpy` y `PIL`; el pipeline de assets no.
 - **`local_stt.py`** — transcripción local con `whisper.cpp`, para probar el
   micrófono sin backend (`--stt` en `mock_backend.py`).
 

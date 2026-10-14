@@ -84,23 +84,6 @@ def f32(x):
     """Un float de Python por el ida y vuelta de float32 (glTF no tiene double)."""
     return struct.unpack("<f", struct.pack("<f", x))[0]
 
-
-def fmt_f32(x):
-    """El decimal más corto que vuelve a dar **el mismo** float32.
-
-    Sin esto, escribir un quaternion con `repr` produce 17 dígitos y el `.glb`
-    crece de a poco en cada regeneration, sin que nadie sepa por qué. Los
-    exportadores de Blender escriben la forma corta; esto devuelve la misma
-    forma corta y el archivo queda del mismo tamaño.
-    """
-    value = f32(x)
-    for digits in range(1, 10):
-        text = f"{value:.{digits}g}"
-        if f32(float(text)) == value:
-            return text
-    return repr(value)
-
-
 # ── Accessors ─────────────────────────────────────────────────────────────────
 
 def read_accessor(js, binary, index):

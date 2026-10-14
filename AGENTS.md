@@ -123,7 +123,12 @@ Lo que hay que saber antes de tocar esto:
   top of the user's setting, it does not replace it.
 - **`turnStartedAt` starts when the mic opens**, not at the first fragment, so
   `rt_turn_total_ms` includes the silence before the first word. That is the number
-  a user perceives.
+  a user perceives. It measures **speech → last fragment**, i.e. the STT and the
+  backend: **nothing in the scene moves it**, and in particular the sign-to-sign
+  crossfade does not. The number that measures the avatar is `firmado:`
+  (`SignAiMetrics.onPlayback`), added 2026-10-14 with the crossfade — same reason
+  the research expected a turn total to drop 8%: two names for one quantity would
+  have made the second one look broken.
 - **Release the mic without speaking**: returns to Idle immediately with "No se
   escuchó nada." Waiting the full 15 s transcription timeout and then reporting a
   failure that did not happen is the old behaviour. `heardAnythingThisTurn`
@@ -172,10 +177,10 @@ instrument is a number you cannot claim improved.
 |---|---|---|
 | STT | `:8000/metrics` | inference ms per model, GPU queue wait, audio lag, drops by reason |
 | Backend | `:8080/metrics` | `rt_first_sign_ms`, `rt_utterance_ms`, `rt_chunk_delay_ms`, `audio_bytes_total` |
-| Device | `adb logcat -s SignAiMetrics` | fragment→queue ms, turn duration, p50/p95/max, dictated phrases and words |
+| Device | `adb logcat -s SignAiMetrics` | fragment→queue ms, turn duration, **signing duration** (`firmado:`), p50/p95/max, dictated phrases and words |
 | Backend | `:8080/metrics` | `dictation_utterances_total`, `capture_mode_*_total`, `session_capture_dictation` |
 | Device | `adb logcat -s SignAiNet` | every segment the backend sent, with `stream`/`provisional` |
-| Scene | `adb logcat -s SignAIWeb` | JS console (needs debug mode on in Settings → AVATAR) |
+| Scene | `adb logcat -s SignAIWeb` | JS console (needs debug mode on in Settings → AVANZADO) |
 
 `rt_first_sign_ms` is the one that decides whether this feels real time. `rt_utterance_ms` and `rt_chunk_delay_ms` explain it when it does not. In the STT, `stt_partial_queue_ms` is the regression guard for the old 4–8 s GPU contention spikes, and `stt_dropped_total{reason="logprob"}` catches the filter eating audio that Whisper transcribed correctly.
 
@@ -223,7 +228,7 @@ WebView loads via `WebViewAssetLoader` at `https://appassets.androidplatform.net
 
 Contract (`window.SignAI` in `app.js`), **backward compatible** — keep the `?.` guard and these exact names:
 - Original 5: `play()`, `setDebug(bool)`, `setFreeCamera(bool)`, `setGrid(bool)`, `setBackground(bool)`.
-- Added (additive): `setSpeed(factor 0..1)` (0.5 ≈ normal), `setTheme(dark)` (canvas background follows the app theme).
+- Added (additive): `setSpeed(factor 0..1)` (0.5 ≈ normal), `setTheme(dark)` (canvas background follows the app theme), `setReduceMotion(bool)` (0 = corte seco entre señas en vez de fundición).
 Kotlin calls them with `evaluateJavascript("window.SignAI?.<method>(...)")`.
 
 JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when the queue finishes, and `postMessage("avatarReady")` once the character is parsed and in the scene (that second one is what hides the splash — `onPageFinished` fires while the 10 MB GLB is still downloading). Kotlin registers the listener with `WebViewCompat.addWebMessageListener` (feature-guarded) and drives the playback state machine; when the feature is missing, `onPageFinished` falls back to hiding the splash and `SignAiSplash`'s 8 s timeout covers the rest.
@@ -234,6 +239,8 @@ JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when the queu
 - **The character is loaded once** from `models/avatar.glb`; every sign is an animation-only GLB in `signs/<SSSS_VVVV_RRRR>.glb` replayed with `THREE.AnimationMixer`. All files load via **relative paths** — keep the `models/` + `signs/` layout.
 - **Do not put the normalization (scale/offset) on the loaded scene root.** The Cascadeur exports animate the armature root (`HG_Branden001`) in position, rotation *and* scale, so the mixer overwrites it every frame. Put the scale/offset on a parent pivot object instead, or the character renders unscaled and off-centre with no error in the console.
 - `app.js` regenerates with `python3 tools/split_signs.py`, which reads the model's raw exports from `GLB Senas/` (gitignored, ~315 MB), writes `models/avatar.glb` + `signs/*.glb`, writes `manifest.json`, and rewrites `domain/SignsCatalog.kt` so the list and the disk cannot drift. **Adding a sign = drop the new `.glb` in `GLB Senas/` and rerun that script** — never hand-edit `SignsCatalog.kt`.
+- **The rest pose is baked into `models/avatar.glb` and comes from a sign clip**, not from Blender: the first keyframe of `signs/0029_0000_0000.glb` (variant 0, t = 0.0417 s), rotations of the 46 arm-chain bones only. `split_signs.py` calls `tools/rest_pose.py` **last**, because the reference frame is a file it just wrote. It works because the node TRS *is* the bind pose (`bind_pose_error` ≈ 6e-6 over the 102 bones, re-checked every run): changing those rotations re-poses the character, the BIN chunk stays byte-identical and the pivot/bbox don't move. **Never hand-edit `avatar.glb`** — regenerate it. `rest_pose.check_bind()` stops the run if a new export is not bind-shaped, because a deformed mesh is invisible otherwise.
+- **Between signs there is nothing: no frozen pose, no gap.** The 46 clips already chain (median direct jump 5.9 cm; 79% of pairs are continuous), so `app.js` starts the next clip `CROSSFADE_MS = 100` before the current one ends and lets three.js `crossFadeTo` the two live actions. Things that bite: `fadeOut` returns to the rest pose for free (`PropertyMixer.apply` fills in the node TRS when the weight hits 0); `_scheduleFading` runs on `mixer.time`, so the fade follows catch-up speed by itself; **`fadeIn(0)` is not "no fade"** — the weight interpolant starts and ends at the same instant and three.js disables the action, which is why `reduceMotion` takes a separate branch; and the *same* sign twice in a row cannot be faded (three.js caches one action per clip) so it is a hard cut, which is fine.
 - `shouldInterceptRequest` forces `Cache-Control: no-store` so edits to `app.js` show on reload; don't remove it.
 - `renderer.setPixelRatio` is **capped at 1.75** on purpose. Uncapped, the Redmi Note 9S (dpr 2.75) renders 19.6 MP/frame and the GPU sits at ~37 ms/frame — 99% jank. Measured with `tools/rendimiento/gfxinfo.py`. Do not also force `DoubleSide` on the meshes: it is pure overdraw on closed meshes and cost another 4% of jank for zero visual change.
 
@@ -244,10 +251,10 @@ JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when the queu
 - The two edge drawers are one component (`ui/designsystem/components/EdgeDrawer.kt`, `side = Start/End`) with tap + drag + drag-preview; Conversation is `Start`, Settings is `End`, and opening one closes the other.
 - **Drawer layering is fragile — read the `ORO` comment at the top of `EdgeDrawer.kt` before touching it** (spec `EDG-22`/`EDG-23`). Three rules: (1) a `draggable`/`clickable` with `enabled = false` STILL registers a Compose input node and stays the topmost hit route, so an inactive full-screen drawer silently swallows the active drawer's taps — never attach the gesture at all when it may not act; (2) the `AndroidView` WebView is a real child View and takes every touch inside its bounds, so it must be the bottom child with the drawers composed above it, and its `pointerInteropFilter` returns true while a drawer is open; (3) the backdrop is a full-screen node composed BEFORE the panel and the handle. The two drawers are siblings (not nested) and an inactive one composes no interactive overlay at all.
 - One drawer at a time is enforced twice: reactively by `otherDrawerOpen`, and synchronously by `MainScreenState.claimDrawerGesture` (an `AtomicReference`, deliberately not Compose state) claimed on the first pointer event, so two fingers cannot open both panels in the same frame (`EDG-19`).
-- Settings sidebar sends `setDebug/setFreeCamera/setGrid/setBackground/setTheme` toggles; blur overlay uses `RenderEffect` (Android 12+ only, guarded) and only while a drawer is open. The `#status` overlay text is part of debug mode and only shows when debug is on.
+- Settings sidebar sends `setDebug/setFreeCamera/setGrid/setBackground/setTheme/setReduceMotion` toggles; blur overlay uses `RenderEffect` (Android 12+ only, guarded) and only while a drawer is open. The `#status` overlay text is part of debug mode and only shows when debug is on.
 - Known device quirk: on MIUI the status-bar icon appearance does not follow the light theme (`isAppearanceLightStatusBars` + legacy flag ignored).
 - **MIUI "smart dark" (force-dark) MUST stay off** (`android:forceDarkAllowed=false` in `res/values/themes.xml`). With it on, MIUI inverts content drawn inside hardware layers — text inside `verticalScroll` containers and drawers renders **white** while solid boxes stay correct (bug found 2026-09-23). Do not remove that item.
-- Bone naming that matters for `app.js`: fingers have no `DEF-` prefix (`thumb01L`, `f_index01L`…), arms use `DEF-` (`DEF-upper_armL`…), face is camelCase without dots (`DEF-browTL`, `DEF-lipTL`, `DEF-lidTL`, `DEF-jaw_master`). Right brow `DEF-browTR` has ~4 weighted verts vs ~32 left → right brow barely moves (rig issue, not JS).
+- Bone naming that matters for `app.js`: the Cascadeur exports use **dots** in the fingers and palm (`thumb.01.L`, `f_index.01.L`, `palm.04.L`), **no prefix** on the arm chain (`shoulder.L`, `upper_arm.L`, `forearm.L`, `hand.L`), and `DEF-` camelCase on the long bones and the face (`DEF-browTL`, `DEF-lipTL`, `DEF-lidTL`, `DEF-jaw_master`). The armature root `HG_Branden.001` is animated too but is **not** a skin joint — counting only bones makes 138 tracks look unresolved when they are not. Right brow `DEF-browTR` has ~4 weighted verts vs ~32 left → right brow barely moves (rig issue, not JS).
 
 ## Context engineering (OpenSpec)
 
