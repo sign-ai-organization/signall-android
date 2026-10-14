@@ -10,6 +10,15 @@
 
 ## Contenido
 
+- **`verificar-tiempo-real.sh`** — **empezá por acá** si tocás el pipeline de
+  voz. Un comando que corre la verificación completa: salud de los dos
+  servicios, las suites de lógica incremental y de protocolo, los 28 fixtures
+  de audio de punta a punta, las métricas y los chequeos del teléfono.
+  Falla si la primera seña se pasa del presupuesto de 2500 ms p95.
+- **`TIEMPO-REAL.md`** — la guía de pruebas del modo tiempo real: qué se midió y
+  cómo repetirlo, qué frases decir, cuáles de las 50 señas tienen animación,
+  qué significa cada métrica, los problemas ya pisados y **qué no se verificó y
+  por qué**.
 - **`dev.sh`** — wrapper sobre `mobilecli` (mobile-next) para manejar el
   emulador Android. Lista, captura, toca, escribe, instala el APK,
   lanza/termina la app, lee logs, dump del UI tree.

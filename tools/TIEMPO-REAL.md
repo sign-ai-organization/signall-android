@@ -225,6 +225,7 @@ curl -s 127.0.0.1:8080/metrics | less      # STT igual, en :8000
 | `rt_utterance_ms` | primer texto → última seña | p50 960 ms / p95 2918 ms |
 | `rt_chunk_delay_ms` | cada fragmento por separado | p50 0.4 ms / p95 367 ms |
 | `audio_bytes_total` | audio reenviado al STT | 32 000 B/s mientras se escucha |
+| `session_audio_rms` | nivel del audio entrante. Bytes que crecen con RMS en el piso = micrófono capturing silencio. | 0.002 en una habitación en silencio |
 
 `rt_first_sign_ms` da **0.4 ms** porque el fragmento que llega primero es casi
 siempre una palabra suelta del catálogo o un acierto de caché, y las dos rutas son
@@ -309,23 +310,53 @@ texto produce el mismo WAV, así que las cifras son comparables entre corridas.
 | El avatar firma una seña y después otra rara | glosa fuera de LSC50 | encendé **Ajustes → AVATAR → depurar** y mirá `SignAiNet` |
 | El primer `check_latency` tarda el doble | caché semántica vacía | es normal: la primera pasada paga el LLM. Corré dos veces. |
 | Un test falla con `httpx2` faltante | ese test necesita el entorno del servicio | corré los tests **dentro** del contenedor |
+| `session failed: null` en logcat, en bucle | el backend se reinició y una sesión quedó colgada | reiniciá la app: `adb shell am force-stop com.signai.webview` |
+
+### El micrófono no se puede probar con el audio del propio teléfono
+
+Se intentó: push de un WAV al teléfono, reproducción con el Reproductor
+Multimedia y grabación con el micrófono de la app al mismo tiempo. **No
+funciona, y no por un bug.**
+
+La app usa `AudioSource.VOICE_RECOGNITION`, que es la fuente que Android afina
+para reconocimiento de voz y que **cancela el eco del propio altavoz**. Es
+justamente la elección correcta (con `MIC` el STT escucha la AGC bombeando en vez
+de la voz), pero significa que un bucle de retorno acústico es imposible.
+
+Se puede ver en un `curl`:
+
+```bash
+# en una habitación silenciosa, con la app grabando
+curl -s 127.0.0.1:8080/metrics.json | python3 -c "
+import json,sys; d=json.load(sys.stdin)
+print('bytes:', d['counters']['audio_bytes_total'])
+print('rms:  ', d['histograms']['audio_rms']['p50'])"
+# bytes: 395520   <- el audio llega entero
+# rms:   0.002    <- pero es el piso de ruido, no voz
+```
+
+Esos dos números juntos son el diagnóstico: bytes que crecen con RMS en el piso
+significa "el micrófono está capturing silencio", que es distinto de "el STT
+está caído". Para probar con voz hace falta una persona.
 
 ---
 
 ## 8. Qué NO se verificó, y por qué
 
-- **El micrófono real.** Un agente no tiene voz. Se verificó que el audio sale
-  del teléfono a 32 000 B/s exactos por el WebSocket hasta el STT, y que el
-  camino del segmento hacia el avatar funciona con un `stream: true` real. Lo
-  que falta es el tramo "hablo y me transcriben bien", que depende del micrófono
-  y la voz de una persona. Por eso la sección 2 tiene los pasos exactos.
+- **El micrófono real con voz humana.** Un agente no tiene voz, y el
+  `VOICE_RECOGNITION` del teléfono cancela su propio altavoz, así que tampoco se
+  puede con un bucle acústico (ver arriba). **Sí** se verificó que el audio sale
+  del teléfono a 32 000 B/s exactos por el WebSocket hasta el STT, que su nivel
+  es coherente con el de una habitación en silencio, y que un `stream: true`
+  real llega al avatar y se reproduce. Lo que falta es el tramo "hablo y me
+  transcriben bien", que necesita una persona. La sección 2 tiene los pasos.
 - **Varios clientes a la vez.** El código lo contempla (un `IncrementalTranslator`
   por sesión, un contador por sesión) pero no se probó con dos conexiones
   simultáneas.
 - **Traducción de fragmentos de dos palabras con contexto.** El contexto ya está
   en el prompt y arregla el caso obvio (`estudiante` → ESTUDIANTE en vez de
   NIÑO), pero un fragmento de dos palabras sin contenido semántico todavía puede
-  producir una glosa raro. Es una limitación conocida del prompt, no del
+  producir una glosa rara. Es una limitación conocida del prompt, no del
   transporte.
 
 ---
