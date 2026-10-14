@@ -38,6 +38,7 @@ import com.signai.webview.ui.designsystem.components.SignAiEdgeDrawer
 import com.signai.webview.ui.designsystem.components.Surface
 import com.signai.webview.ui.designsystem.foundation.LocalReduceMotion
 import com.signai.webview.ui.designsystem.foundation.SignAiMotion
+import com.signai.webview.ui.designsystem.foundation.rememberKeyboardDismissAction
 import com.signai.webview.ui.screens.about.AboutScreen
 import com.signai.webview.ui.screens.bottombar.SignAiBottomBar
 import com.signai.webview.ui.screens.conversation.ConversationPanel
@@ -65,6 +66,9 @@ fun MainScreen(state: MainScreenState) {
     var conversationFraction by remember { mutableFloatStateOf(0f) }
     var settingsFraction by remember { mutableFloatStateOf(0f) }
     val density = LocalDensity.current
+    // Tocar cualquier control fuera del campo deja el teclado cerrado. El panel
+    // lo hace por su cuenta; acá alcanza para los tiradores de los drawers.
+    val dismissKeyboard = rememberKeyboardDismissAction()
 
     // El mic es la única función que necesita permiso en tiempo de ejecución.
     // Se pide la primera vez que se toca cualquiera de los dos interruptores, no
@@ -215,7 +219,15 @@ fun MainScreen(state: MainScreenState) {
                             side = DrawerSide.Start,
                             isOpen = showConversation,
                             onOpenChange = { open ->
-                                if (open) state.openDrawer(DrawerSide.Start) else state.closeDrawer()
+                                // Abrir un drawer también es tocar un control
+                                // fuera del campo: el teclado se cierra, y
+                                // cierra de verdad.
+                                if (open) {
+                                    dismissKeyboard()
+                                    state.openDrawer(DrawerSide.Start)
+                                } else {
+                                    state.closeDrawer()
+                                }
                             },
                             drawerWidth = panelWidth,
                             edgeStripBottomExclusion = bottomBarHeight,
@@ -243,7 +255,15 @@ fun MainScreen(state: MainScreenState) {
                             side = DrawerSide.End,
                             isOpen = showSettings,
                             onOpenChange = { open ->
-                                if (open) state.openDrawer(DrawerSide.End) else state.closeDrawer()
+                                // Abrir un drawer también es tocar un control
+                                // fuera del campo: el teclado se cierra, y
+                                // cierra de verdad.
+                                if (open) {
+                                    dismissKeyboard()
+                                    state.openDrawer(DrawerSide.End)
+                                } else {
+                                    state.closeDrawer()
+                                }
                             },
                             drawerWidth = panelWidth,
                             edgeStripBottomExclusion = bottomBarHeight,

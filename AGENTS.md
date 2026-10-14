@@ -142,6 +142,8 @@ Dependency rule: screens → components → state/webview → data/domain, **nev
 
 **`RECORD_AUDIO` is a runtime permission and is not pre-granted.** Tapping the mic with it missing says "No se pudo abrir el micrófono", which reads like an STT failure but is not. `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO`.
 
+**El teclado se cierra sacándole el foco al campo, no solo escondiéndolo.** `rememberKeyboardDismissAction()` (`ui/designsystem/foundation/`) hace `focusManager.clearFocus(force = true)` y después `keyboard?.hide()`. Con solo `hide()` el teclado se iba un segundo y **volvía**, porque el `TextField` seguía con el foco y la siguiente recomposición lo mostraba de nuevo; el `force = true` es porque un campo `readOnly` (mic prendido, o el texto retenido) ignora el cierre normal. Regla general: **tocar un control cierra el teclado, no manda la frase** — el texto se queda en el campo. Y el `onDone` del teclado cierra **siempre**, aunque no haya nada que mandar: si dependiera de `sendEnabled`, con el mic prendido el botón de aceptar no haría nada y el usuario no tendría salida.
+
 No tests, no CI, no lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2024.12.01. Bumped from 8.7.3/2.1.0/35 → 8.9.3/2.3.21/36 in `ui-migration-lumo` Fase 0 (Phosphor 1.0.5 requires compileSdk 36 + Kotlin 2.3+ metadata).
 
 ## Observability

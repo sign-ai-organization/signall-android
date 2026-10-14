@@ -112,7 +112,8 @@ Main.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | CTL-1 | Campo de texto | `[P][A]` | Entrada de frase en español, placeholder "Escribe una frase...". |
-| CTL-2 | Enviar con **Enter** | `[P]` | Enter dispara `send()`, con guard de composición IME (`isComposing`/`keyCode 229`). |
+| CTL-2 | Enviar con **Enter** | `[P]` | El botón de acción del teclado (`ImeAction.Done`) **siempre cierra el teclado**, y además manda `send()` si la frase se puede mandar. Son dos cosas separadas a propósito: si el `onDone` dependiera de `sendEnabled`, con el micrófono prendido —donde el campo es de solo lectura y no hay nada que mandar— el botón no cerraba nada y el usuario se quedaba sin salida. Guard de composición IME (`isComposing`/`keyCode 229`). |
+| CTL-12 | Tocar un control cierra el teclado | `[N]` | **2026-10-14.** Micrófono, TR, Traducir, Historial y los tiradores de los drawers cierran el teclado **y no vuelve**: `rememberKeyboardDismissAction()` hace `focusManager.clearFocus(force = true)` y después `keyboard?.hide()`. **Con solo `keyboard?.hide()` el teclado se iba un segundo y volvía**, porque el `TextField` seguía con el foco y la siguiente recomposición lo volvía a mostrar; el `force = true` es porque un campo `readOnly` ignora el cierre normal. Cerrar el teclado **no manda la frase**: el texto se queda en el campo. |
 | CTL-3 | Botón **Historial** | `[P][A]` | Ícono a la derecha del input; abre el bottom sheet (o dropdown). |
 | CTL-4 | Botón **Traducir** | `[P][A]` | Ícono + label; ancho 75%. Deshabilitado si input vacío o estado translating/signing. |
 | CTL-5 | Botón **Micrófono** | `[P][A]` | Ancho 25%. Alterna estado `listening`; visual "activo" mientras escucha. |

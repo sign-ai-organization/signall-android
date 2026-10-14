@@ -25,7 +25,6 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
@@ -41,6 +40,7 @@ import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextField
 import com.signai.webview.ui.designsystem.components.textfield.OutlinedTextFieldDefaults
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
+import com.signai.webview.ui.designsystem.foundation.rememberKeyboardDismissAction
 import com.signai.webview.ui.icons.SignAiIcons
 import com.signai.webview.ui.state.PlaybackState
 import com.signai.webview.ui.theme.SignAiTheme
@@ -84,7 +84,7 @@ fun SignAiBottomBar(
     micAvailable: Boolean = true,
     enabled: Boolean = true,
 ) {
-    val keyboard = LocalSoftwareKeyboardController.current
+    val dismissKeyboard = rememberKeyboardDismissAction()
 
     // `Signing` **no** bloquea el panel. En tiempo real la cola se llena más
     // rápido de lo que el avatar la consume —en una prueba de 30 s eran 38
@@ -138,13 +138,23 @@ fun SignAiBottomBar(
     val realtimeEnabled = enabled && micAvailable && !dictationActive
 
 
+    // Mandar es una cosa y cerrar el teclado es otra: el botón **siempre** cierra el
+    // teclado, y solo manda si además la frase se puede mandar. Si el `onDone`
+    // dependiera de `sendEnabled`, con el micrófono prendido —donde el campo es
+    // de solo lectura y no hay nada que mandar— el botón del teclado no
+    // cerraba nada y el usuario se quedaba sin ninguna salida.
     val send: () -> Unit = {
         val text = query.trim()
-        if (text.isNotEmpty() && sendEnabled) {
-            keyboard?.hide()
-            onSend(text)
-        }
+        dismissKeyboard()
+        if (text.isNotEmpty() && sendEnabled) onSend(text)
     }
+
+    // Cada control del panel cierra el teclado antes de hacer lo suyo. Con solo
+    // `keyboard?.hide()` el teclado se iba un segundo y volvía, porque el campo
+    // seguía con el foco; `dismissKeyboard()` se lo saca primero.
+    val mic: () -> Unit = { dismissKeyboard(); onMic() }
+    val realtime: () -> Unit = { dismissKeyboard(); onRealtime() }
+    val openHistory: () -> Unit = { dismissKeyboard(); onOpenHistory() }
 
     Column(
         modifier = Modifier
@@ -219,7 +229,7 @@ fun SignAiBottomBar(
                 ControlIconButton(
                     icon = SignAiIcons.Mic,
                     contentDescription = "Entrada por voz",
-                    onClick = onMic,
+                    onClick = mic,
                     active = dictationActive,
                     enabled = micEnabled,
                     toggle = true,
@@ -234,7 +244,7 @@ fun SignAiBottomBar(
                 ControlIconButton(
                     icon = SignAiIcons.History,
                     contentDescription = "Historial reciente",
-                    onClick = onOpenHistory,
+                    onClick = openHistory,
                     // Con el micrófono prendido el panel se ocupa solo de
                     // escuchar: texto, Traducir e Historial quedan fuera. La
                     // conversación en curso ya se ve en el escenario, así que
@@ -300,7 +310,7 @@ fun SignAiBottomBar(
                     else -> SignAiTheme.colors.text
                 }
                 Surface(
-                    onClick = onRealtime,
+                    onClick = realtime,
                     enabled = realtimeEnabled,
                     shape = SignAiShapes.cornerControl,
                     color =

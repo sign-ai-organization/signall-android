@@ -463,6 +463,31 @@ no se puede observar no se puede verificar.
 - Pasados los 1,5 s, escribir en el campo habilitó Traducir: el campo y el botón
   están utilizables juntos.
 
+## Cuarta vuelta: el teclado que volvía solo
+
+Dos cosas del teclado, reportadas en el Redmi.
+
+**Tocar TR con el teclado abierto lo hacía desaparecer un segundo y volvía.**
+No era un parpadeo del sistema: `keyboard?.hide()` solo le pide al IME que se
+esconda, y el `TextField` **seguía con el foco**, así que la siguiente
+recomposición lo volvía a mostrar. La corrección es quitarle el foco
+primero y esconder después, y con `force = true` porque un campo `readOnly`
+—el micrófono prendido o el texto retenido— ignora el cierre normal. Quedó en
+`rememberKeyboardDismissAction()` (`ui/designsystem/foundation/`) y no en la
+pantalla, porque la regla es de toda la app: **tocar un control cierra el teclado,
+no manda la frase.** El texto se queda en el campo.
+
+**El botón de acción del teclado a veces no cerraba nada.** `onDone` llamaba a
+`send()`, y `send()` solo hace algo si `sendEnabled`: con el micrófono prendido el
+campo es de solo lectura y Traducir no manda, así que apretar "aceptar" no
+cerraba el teclado y el usuario se quedaba sin ninguna salida de él. Ahora el
+`onDone` **siempre** cierra el teclado y solo además manda si corresponde:
+cerrar y mandar son dos cosas separadas.
+
+De paso quedó confirmado en el dispositivo que tocar el campo con el
+micrófono prendido **no abre el teclado**: `readOnly` no lo pide, y no hay nada
+que escribir.
+
 ## Pendiente
 
 1. ~~**Probarlo con voz humana.**~~ **Hecho**: tiempo real y dictado, los dos, en
