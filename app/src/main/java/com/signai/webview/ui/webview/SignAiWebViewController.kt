@@ -16,6 +16,18 @@ interface SignAiWebViewController {
 
     fun setQueue(items: List<SignQueueItem>)
 
+    /**
+     * Agrega [items] al final de la cola en curso, sin reiniciarla.
+     *
+     * Es lo que hace posible firmar mientras la persona sigue hablando: el
+     * backend no espera a tener la frase entera, manda un fragmento y esto lo
+     * encadena detrás de lo que ya está sonando.
+     */
+    fun appendQueue(items: List<SignQueueItem>)
+
+    /** Arranca a firmar desde [index]; no hace nada si ya hay algo sonando. */
+    fun playFrom(index: Int)
+
     fun setDefaultSign(url: String)
 
     fun setDebug(on: Boolean)
@@ -48,20 +60,28 @@ class WebViewSignAiController : SignAiWebViewController {
 
     override fun setQueue(items: List<SignQueueItem>) {
         if (items.isEmpty()) return
-        val json = JSONArray().apply {
-            items.forEach { item ->
-                put(
-                    JSONObject().apply {
-                        put("gloss", item.gloss)
-                        put("type", item.type.wire)
-                        put("url", item.url)
-                        put("available", item.available)
-                    },
-                )
-            }
-        }.toString()
-        js(SignAiCommands.setQueue(json))
+        js(SignAiCommands.setQueue(serialize(items)))
     }
+
+    override fun appendQueue(items: List<SignQueueItem>) {
+        if (items.isEmpty()) return
+        js(SignAiCommands.appendQueue(serialize(items)))
+    }
+
+    override fun playFrom(index: Int) = js(SignAiCommands.playFrom(index))
+
+    private fun serialize(items: List<SignQueueItem>): String = JSONArray().apply {
+        items.forEach { item ->
+            put(
+                JSONObject().apply {
+                    put("gloss", item.gloss)
+                    put("type", item.type.wire)
+                    put("url", item.url)
+                    put("available", item.available)
+                },
+            )
+        }
+    }.toString()
 
     override fun setDefaultSign(url: String) = js(SignAiCommands.setDefaultSign(url))
 
