@@ -231,6 +231,10 @@ modos**: frase entera y fragmentado.
   throughput. Está anotado como tal en `session.py`.
 - **TLS y autenticación** en el WebSocket (`RF-INT-COM-M-03`/`DEC-14` del
   backend). Sigue siendo `cleartext` y sin auth.
+- **La cola bloquea el panel.** Ya no: `STA-18`. Sigue siendo cierto que mandar
+  una frase con el avatar firmando **reemplaza** la cola, así que una
+  conversación larga pierde el resto de la cola si el usuario manda otra cosa.
+  Es el mismo comportamiento que ya tenía el camino de frases escritas.
 - **Las 18 señas sin animación** (`0032`–`0049`). Sigue siendo el gap más grande
   de calidad: el catálogo las anuncia con `available: true` y no hay `.glb`.
 
@@ -350,13 +354,60 @@ segment=3 done=1, primero a los 1793ms (el corte fue a los 1092ms)
   que firmar del otro lado. El corte va en el medio de la **voz**
   (`words[-1].end_ms`), no del archivo.
 
+## Segunda vuelta del owner: el dictado manda solo y la interfaz se libera
+
+Lo que faltaba después de la primera entrega de los dos modos, reportado en el
+dispositivo:
+
+1. **Dictado: apagar el interruptor tiene que mandar solo.** El diseño anterior
+   dejaba el texto en el campo y esperaba un toque en Traducir. Con un
+   interruptor, apagar *es* mandar; pedir un segundo toque después de haber
+   hablado es la fricción que el modo vino a sacar.
+2. **Apagar TR dejaba el panel entero deshabilitado**, a veces por segundos.
+
+### El segundo bug era más interesante
+
+El panel se quedaba bloqueado con "Procesando..." porque `stopCapture` ponía ese
+estado esperando una transcripción que ya no podía llegar: la captura se cortó y
+el `end` cerró el utterance. Se estaba esperando algo que no existía.
+
+Y el motivo de fondo era peor: **"el `done` del backend ya llegó" y "el avatar ya
+terminó de firmar" son cosas distintas**. En modo tiempo real la cola se llena más
+rápido de lo que el avatar la consume; en una prueba de 30 s había **38
+fragmentos**, casi 40 s de señas por delante. Cuando el `done` cerraba el turno,
+`playbackState` volvía a `Listening` mientras el muñeco seguía firmando, así que
+al apagar el micrófono la app leía "no hay nada en curso" y se ponía a esperar.
+
+La corrección tiene dos partes, y las dos importan:
+
+- `queuePlaying` es la fuente de verdad de "el avatar está firmando", y la
+  alimenta el puente `onPlaybackDone`. Apagar el mic deja el estado en `signing`
+  si queda cola, o en `done` si no. Nunca más en `processing` por un turno de voz.
+- **`signing` no bloquea el panel.** Lo que no se puede tocar es lo que está *en
+  vuelo* (`translating`, `processing`). Con la cola bloqueando, una conversación
+  de 30 s dejaba al usuario mirando un panel muerto medio minuto; ahora puede
+  seguir escribiendo mientras el avatar firma, y mandar otra frase reemplaza la
+  cola, que es lo que ya hacía la escena. `play()` y `replayTurn()` dejaron de
+  rechazar en `signing` también: un botón habilitado que hace nada es peor que
+  uno deshabilitado.
+
+El timeout de 15 s quedó solo para el único caso en que de verdad hay algo
+esperando: el dictado con la frase del STT todavía abierta.
+
+### Verificación en el dispositivo
+
+- Dictado: `dictado → envío: 25 caracteres, 4 palabras`, y 520 ms después firmó
+  `HOLA · COMO ESTAS` sin que nadie tocara Traducir.
+- TR apagado: `Reproducción completada`, Repetir visible, campo editable, mic,
+  Historial y Traducir habilitados, todo en el instante.
+- Con el avatar firmando una frase larga y el hint mostrando las glosas, **nada
+  del panel estaba deshabilitado** — leído del árbol de accesibilidad en ese
+  momento, no después.
+
 ## Pendiente
 
 1. ~~**Probarlo con voz humana.**~~ **Hecho**: tiempo real y dictado, los dos, en
    el Redmi. Ver "Verificación en el dispositivo".
-2. **Dos clientes a la vez.** El código lo contempla (un `IncrementalTranslator`
-   por sesión, contadores por sesión) pero no se probó con dos conexiones
-   simultáneas.
 2. **Dos clientes a la vez.** El código lo contempla (un `IncrementalTranslator`
    por sesión, contadores por sesión) pero no se probó con dos conexiones
    simultáneas.

@@ -84,9 +84,18 @@ fun SignAiBottomBar(
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
 
+    // `Signing` **no** bloquea el panel. En tiempo real la cola se llena más
+    // rápido de lo que el avatar la consume —en una prueba de 30 s eran 38
+    // fragmentos, casi 40 s de señas por delante—, y bloquear todo el panel
+    // mientras el muñeco finishes dejaba al usuario mirando un formulario muerto
+    // sin ninguna señal de por qué. Lo que realmente no se puede tocar es lo que
+    // está **en vuelo**: una traducción pedida y todavía sin firmar.
+    //
+    // Mandar otra frase con el avatar firmando la anterior no pisa la animación:
+    // la escena reemplaza la cola, que es lo mismo que pasa con cualquier frase
+    // nueva.
     val busy =
         playbackState == PlaybackState.Translating ||
-            playbackState == PlaybackState.Signing ||
             playbackState == PlaybackState.Processing
     val controlsEnabled = enabled && !busy
 
@@ -106,6 +115,12 @@ fun SignAiBottomBar(
     // `playbackState`: con el micrófono prendido el muñeco firma al mismo tiempo,
     // así que el estado de la reproducción pasa a `Signing` y el botón se vería
     // apagado justo cuando está captando.
+    //
+    // Y el micrófono se habilita con una regla sola: nunca se deshabilita
+    // mientras esté prendido, porque si la única forma de pararlo quedara
+    // bloqueada durante una seña no habría forma de pararlo. Esa regla es la que
+    // lo dejaba tocable mientras el resto del panel estaba deshabilitado, y no
+    // es un descuido: es el botón de parar.
     val micEnabled = enabled && micAvailable && !realtimeActive
     val realtimeEnabled = enabled && micAvailable
 
