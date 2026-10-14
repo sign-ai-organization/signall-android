@@ -330,10 +330,11 @@ class MainScreenState(
      * Resolves the glosses to assets and hands the queue to the scene.
      *
      * A gloss the catalog doesn't know is not played (RF-CAT-03), unless
-     * [Settings.demoSignFallback] is on: while the catalog is empty every gloss
-     * is unknown, and that switch keeps the multi-sign queue visible using the
-     * single sign baked into the APK. It is a development crutch to be turned
-     * off once the backend serves real animations.
+     * [Settings.demoSignFallback] is on. That switch is what makes the 18 LSC50
+     * signs whose animation is not exported yet (0032–0049) show something
+     * instead of "Seña no disponible": the catalog announces them, but we have
+     * no clip for them, so the queue falls back to the single sign baked into
+     * the APK.
      */
     private fun startQueue(segments: List<TranslationSegment>) {
         val text = pendingText.orEmpty()
