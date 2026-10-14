@@ -176,6 +176,12 @@ for name, snapshot in sorted(d['histograms'].items()):
 for name, value in sorted(d['counters'].items()):
     if any(name.startswith(k) for k in keys):
         print(f'  {name:<34} {value}')
+for name, value in sorted(d['gauges'].items()):
+    # El nivel del audio entrante: bytes que crecen con RMS en el piso es
+    # 'el micrófono está capturing silencio', que se ve distinto de 'el STT
+    # está caído'.
+    if 'rms' in name:
+        print(f'  {name:<34} {value:.4f}')
 " 2>/dev/null || echo "  (sin métricas del backend)"
 
   echo "  --- stt ---"
