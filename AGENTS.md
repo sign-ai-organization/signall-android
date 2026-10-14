@@ -3,6 +3,58 @@
 Thesis: Spanish speech → LSC via 3D avatar. This repo is **only** the WebView app.
 Old approaches (Flask server, Kotlin+Filament native, Unity) are dead — ignore any docs referencing them.
 
+## Real-time mode (branch `tiempo-real`, 2026-10-14)
+
+The app signs **while the user speaks**, not after they stop. The pipeline is:
+mic → PCM16/16 kHz → WebSocket → backend → STT → fragments of glosses → appended
+to the avatar's queue as they arrive.
+
+Measured on a Redmi Note 9S with the real backend and real Whisper, over 28 audio
+fixtures replayed through the socket at 1x: **first sign p50 913 ms / p95 1336 ms**
+from the first audio sample. Before: the avatar waited ~2.4–4.8 s after the user
+stopped talking. Full detail, phrase list, sign list and troubleshooting in
+[`tools/TIEMPO-REAL.md`](tools/TIEMPO-REAL.md).
+
+**Read that file before changing anything in this area.** Then:
+
+```bash
+tools/verificar-tiempo-real.sh        # everything: services, tests, 28 fixtures, metrics, device
+tools/verificar-tiempo-real.sh incremental   # no services needed; runs in the backend container
+```
+
+### How streaming works
+
+- The backend sends each fragment with `stream: true, total: 0`. `total: 0` means
+  "not known yet" — in an utterance still open, nobody knows how many fragments
+  there will be. A backend without the flag lands on the whole-phrase path, which
+  is the safe default.
+- `MainScreenState.onStreamedSegment` appends to the queue; the first fragment uses
+  `setQueue` + `playFrom(0)`. `play()` could not be reused: it assumes the queue is
+  complete and jumps to index 0.
+- Fragments pass through a `Mutex`. Resolving a gloss may suspend (remote asset
+  download) and two racing fragments would append out of order.
+- `REALTIME_ENABLED=false` on the backend restores the old whole-phrase behaviour
+  exactly. Both modes are covered in the backend's `verify_client_frames.py`.
+
+### Gotchas specific to real-time
+
+- **The 32 exported signs average 2.15 s each** (2.08–2.75 s, from `manifest.json`).
+  Spanish runs at 2–3 words/second and each word is a sign, so at normal speed the
+  avatar is two signs behind before the first phrase ends and never catches up.
+  That is why `app.js` has auto catch-up (`CATCHUP_BACKLOG = 2`, `CATCHUP_FACTOR =
+  1.6`) and why `setSpeed` stores `baseSpeed` separately — catch-up multiplies on
+  top of the user's setting, it does not replace it.
+- **`turnStartedAt` starts when the mic opens**, not at the first fragment, so
+  `rt_turn_total_ms` includes the silence before the first word. That is the number
+  a user perceives.
+- **Release the mic without speaking**: returns to Idle immediately with "No se
+  escuchó nada." Waiting the full 15 s transcription timeout and then reporting a
+  failure that did not happen is the old behaviour. `heardAnythingThisTurn`
+  separates "user said nothing" from "we lost the audio".
+- **`streamedSegments` is per-turn state in `MainScreenState`**, cleared by
+  `resetStreamingTurn()` on every new phrase and on `fail()`. A turn that died
+  halfway must not leak fragments into the next one.
+
 ## What it is
 
 Single-module Gradle project (`SignAI-WebView`, `:app` only). Compose shell + WebView that renders a local Three.js avatar. No backend, no network API.
@@ -24,11 +76,34 @@ Dependency rule: screens → components → state/webview → data/domain, **nev
 
 **MANDATORY after every change**: compile/verify the code and then run `./gradlew installDebug` on the connected device/emulator so the user can test immediately — never end a work item without installing. If no device is present, say so explicitly.
 
+**Physical device over USB**: the default `BACKEND_WS_URL` is `ws://10.0.2.2:8080/ws/translate`, which is the *emulator* loopback alias. On a real phone use `adb reverse tcp:8080 tcp:8080` and build with `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. Without it the app shows "Sin conexión con el servidor" and it looks like a backend problem.
+
+**`RECORD_AUDIO` is a runtime permission and is not pre-granted.** Tapping the mic with it missing says "No se pudo abrir el micrófono", which reads like an STT failure but is not. `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO`.
+
 No tests, no CI, no lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2024.12.01. Bumped from 8.7.3/2.1.0/35 → 8.9.3/2.3.21/36 in `ui-migration-lumo` Fase 0 (Phosphor 1.0.5 requires compileSdk 36 + Kotlin 2.3+ metadata).
+
+## Observability
+
+Every service in the stack exposes Prometheus metrics at `/metrics` and JSON at
+`/metrics.json`; the device logs its own under logcat. When changing the
+pipeline, **add a metric before adding the feature** — a number you did not
+instrument is a number you cannot claim improved.
+
+| Where | Tag / endpoint | What |
+|---|---|---|
+| STT | `:8000/metrics` | inference ms per model, GPU queue wait, audio lag, drops by reason |
+| Backend | `:8080/metrics` | `rt_first_sign_ms`, `rt_utterance_ms`, `rt_chunk_delay_ms`, `audio_bytes_total` |
+| Device | `adb logcat -s SignAiMetrics` | fragment→queue ms, turn duration, p50/p95/max |
+| Device | `adb logcat -s SignAiNet` | every segment the backend sent, with `stream`/`provisional` |
+| Scene | `adb logcat -s SignAIWeb` | JS console (needs debug mode on in Settings → AVATAR) |
+
+`rt_first_sign_ms` is the one that decides whether this feels real time. `rt_utterance_ms` and `rt_chunk_delay_ms` explain it when it does not. In the STT, `stt_partial_queue_ms` is the regression guard for the old 4–8 s GPU contention spikes, and `stt_dropped_total{reason="logprob"}` catches the filter eating audio that Whisper transcribed correctly.
 
 ## Git workflow
 
 **Este repo es del owner: commit y push directo a `main`, sin PR ni rama de feature** (decidido 2026-09-30). No abrir PRs acá ni pedir confirmación para commitear. Los repos hermanos (`../sign-ai-backend`, `../sign-ai-stt`) sí usan PR contra `develop`, y el `CLAUDE.md` de ese repo manda no commitear sin que el usuario lo pida explícitamente.
+
+**Branch `tiempo-real`**: the real-time work is in this branch and in the matching `tiempo-real` branch of `sign-ai-backend` and `sign-ai-stt` (both cut from `develop`). The user authorised commit and push on those three branches.
 
 ## Neon
 
@@ -85,7 +160,7 @@ JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when the queu
 ## Gotchas
 
 - All Compose state lives in `ui/state/MainScreenState.kt`; there is no ViewModel/DI/navigation. History is `SharedPreferences "signai"/"history"` (max 20, top-5 never reorder) behind `data/SignHistoryRepository.kt`; settings user choices persist in the same file behind `data/SettingsRepository.kt`.
-- Playback state machine (`ui/state/PlaybackState.kt`): `idle → translating → signing → done`; `signing → done` is driven by the real `onPlaybackDone` bridge event, not a timer. Mic is a placeholder that toggles `listening` and auto-fills a demo phrase (`OM-4`) — no real speech recognition.
+- Playback state machine (`ui/state/PlaybackState.kt`): `idle → translating → signing → done`; `signing → done` is driven by the real `onPlaybackDone` bridge event, not a timer. The mic is **real**, not a placeholder: `data/AudioCapture.kt` does `AudioRecord` on `VOICE_RECOGNITION` (not `MIC`, so the STT hears the voice instead of the AGC pumping) and streams 30 ms PCM16/16 kHz chunks. **Spec `CTL-6`, `STA-9` and `OM-4` in `openspec/specs/ui/spec.md` still describe the old placeholder and are wrong** — see the real-time session log.
 - The two edge drawers are one component (`ui/designsystem/components/EdgeDrawer.kt`, `side = Start/End`) with tap + drag + drag-preview; Conversation is `Start`, Settings is `End`, and opening one closes the other.
 - **Drawer layering is fragile — read the `ORO` comment at the top of `EdgeDrawer.kt` before touching it** (spec `EDG-22`/`EDG-23`). Three rules: (1) a `draggable`/`clickable` with `enabled = false` STILL registers a Compose input node and stays the topmost hit route, so an inactive full-screen drawer silently swallows the active drawer's taps — never attach the gesture at all when it may not act; (2) the `AndroidView` WebView is a real child View and takes every touch inside its bounds, so it must be the bottom child with the drawers composed above it, and its `pointerInteropFilter` returns true while a drawer is open; (3) the backdrop is a full-screen node composed BEFORE the panel and the handle. The two drawers are siblings (not nested) and an inactive one composes no interactive overlay at all.
 - One drawer at a time is enforced twice: reactively by `otherDrawerOpen`, and synchronously by `MainScreenState.claimDrawerGesture` (an `AtomicReference`, deliberately not Compose state) claimed on the first pointer event, so two fingers cannot open both panels in the same frame (`EDG-19`).
