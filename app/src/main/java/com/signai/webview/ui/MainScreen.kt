@@ -168,7 +168,12 @@ fun MainScreen(state: MainScreenState) {
                         AvatarStage(
                             status = state.statusLine,
                             doneVisible = state.playbackState == PlaybackState.Done,
-                            onRepeat = state::replay,
+                            // Repetir es un control más: cierra el teclado, y cierra
+                            // de verdad, como todos los demás.
+                            onRepeat = {
+                                dismissKeyboard()
+                                state.replay()
+                            },
                             bottomInset = bottomBarHeight,
                             modifier = Modifier.fillMaxSize(),
                         ) {
@@ -206,10 +211,10 @@ fun MainScreen(state: MainScreenState) {
                                 // prendido pasa a `Signing` mientras firma.
                                 dictationActive = state.dictationActive,
                                 realtimeActive = state.realtimeActive,
-                                // El campo tiene la frase que la voz ya mandó: se
-                                // la puede leer, pero no se la puede volver a
-                                // mandar (`STA-20`).
-                                voiceTextLocked = state.voiceTextLocked,
+                                // El campo tiene la frase que la app ya mandó: se la
+                                // puede leer, pero no se la puede volver a mandar
+                                // (`STA-20`).
+                                sentTextLocked = state.sentTextLocked,
                                 micAvailable = state.backendConnected,
                                 enabled = !state.replayPending,
                             )

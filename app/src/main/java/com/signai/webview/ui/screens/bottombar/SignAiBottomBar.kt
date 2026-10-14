@@ -80,7 +80,7 @@ fun SignAiBottomBar(
     onRealtime: () -> Unit,
     dictationActive: Boolean = false,
     realtimeActive: Boolean = false,
-    voiceTextLocked: Boolean = false,
+    sentTextLocked: Boolean = false,
     micAvailable: Boolean = true,
     enabled: Boolean = true,
 ) {
@@ -112,10 +112,11 @@ fun SignAiBottomBar(
             // en que llegaron y el avatar firmaría la frase al revés. Son dos
             // formas de mandar, no dos a la vez.
             !micActive &&
-            // Tampoco si el campo tiene la frase que la voz acaba de mandar: el
-            // botón ofrecería reenviar lo que ya se firmó, y el avatar firmaría
-            // la frase dos veces seguidas por un solo toque.
-            !voiceTextLocked
+            // Tampoco si el campo tiene la frase que la app acaba de mandar —el
+            // dictado, el TR, un Traducir a mano o el Repetir—: el botón
+            // ofrecería reenviar lo que ya se firmó, y el avatar firmaría la
+            // frase dos veces seguidas por un solo toque.
+            !sentTextLocked
 
     // El estado visual de los dos interruptores viene de su propio flag y no de
     // `playbackState`: con el micrófono prendido el muñeco firma al mismo tiempo,
@@ -194,11 +195,11 @@ fun SignAiBottomBar(
                     // Y lo mismo con la frase que la voz acaba de mandar: está
                     // para que se lea, no para que se mande. Se va sola, así que
                     // dejarla editable 1,5 s solo serviría para que el teclado
-                    // salte sin motivo. Cuando se borra, `sentVoiceText` vuelve
+                    // salte sin motivo. Cuando se borra, `sentText` vuelve
                     // a `null` en la misma asignación, y con ella el campo y
                     // Traducir quedan utilizables en el mismo fotograma.
-                    enabled = controlsEnabled || micActive || voiceTextLocked,
-                    readOnly = micActive || voiceTextLocked,
+                    enabled = controlsEnabled || micActive || sentTextLocked,
+                    readOnly = micActive || sentTextLocked,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = { send() }),
