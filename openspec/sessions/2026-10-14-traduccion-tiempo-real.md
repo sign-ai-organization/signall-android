@@ -546,6 +546,41 @@ Lo único que no se pudo probar sin voz es el dictado: su retención cambió de
 lugar, pero sigue pasando por el mismo `requestTranslation` que Traducir y
 Repetir, que es lo que sí se verificó.
 
+## Sexta vuelta: la cámara un poco más alta
+
+El owner: *"subamos un poco la cámara, en verticalidad, es como subirla, como
+ponernos más altas… solo un poco… tengo activado el modo boost para ver todos los
+valores, quiero que suba solo un poco la cámara sin alterar el ángulo en el que
+se mira el tipo"*.
+
+**"Sin alterar el ángulo" es la clave, y descarta la lectura intuitiva.** Subir
+la cámara y el punto de mira **juntos** por el mismo delta es una traslación
+rígida: el pitch no cambia, el fov no cambia, y lo único que se mueve es el
+encuadre —el muñeco baja en el cuadro y aparece aire arriba de la cabeza—.
+Subir sólo la cámara habría inclinado la mirada; subir sólo el target habría
+corrido el encuadre **al revés** (más cabeza pegada al borde de arriba), que es
+justo lo que había que arreglar.
+
+```
+FRAME_LIFT = 0.15
+FRAME_CAMERA = [0, 1.35 + FRAME_LIFT, 2.3]
+FRAME_TARGET = [0, 0.95 + FRAME_LIFT, 0]
+```
+
+Los dos números mágicos estaban duplicados —en el arranque y en el reset por
+long-press— y hoy salen de una función (`frameCamera()`) que usan los dos. No era
+coste: cambiar el encuadre en un lado y no en el otro dejaba el reset volviendo
+al viejo.
+
+### Verificado en el Redmi Note 9S
+
+- Arranque: `cam: (0.00, 1.50, 2.30)  target: (0.00, 1.10, 0.00)`.
+- Por píxel, el pelo arranca en **y≈320 px** en vez de y≈150: ~215 px de aire
+  arriba de la cabeza, que antes rozaba el borde superior y tenía el aviso de
+  estado encima.
+- Reset por long-press después de un pellizco: de `cam: (0.00, 1.34, 1.38)` (con
+  zoom) vuelve a `(0.00, 1.50, 2.30)`.
+
 ## Pendiente
 
 1. ~~**Probarlo con voz humana.**~~ **Hecho**: tiempo real y dictado, los dos, en
