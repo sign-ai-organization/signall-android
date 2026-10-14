@@ -295,7 +295,7 @@ curl -s 127.0.0.1:8080/metrics | less      # STT igual, en :8000
 | `dictation_utterances_total` | frases dictadas que el STT cerró por silencio o por el `end` | crece solo en dictado |
 | `capture_mode_dictation_total` | veces que el cliente prendió el dictado | 1 por sesión de dictado |
 | `session_capture_dictation` | 1 si la sesión está en dictado, 0 si está en TR o sin micro | cambia con el interruptor |
-| `capture_mode_switch_open_utterance_total` | cambios de modo con una frase abierta | 0 en uso normal; >0 = un cliente que cambia a mitad de frase |
+| `capture_mode_switch_open_utterance_total` | cambios de modo con una frase todavía abierta | crece normal: cambiar de dictado a TR mientras se habla es justamente ese caso, y es lo que el latch por utterance resuelve |
 | `session_audio_rms` | nivel del audio entrante. Bytes que crecen con RMS en el piso = micrófono capturing silencio. | 0.002 en una habitación en silencio |
 
 `rt_first_sign_ms` da **0.4 ms** porque el fragmento que llega primero es casi
