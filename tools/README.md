@@ -29,8 +29,30 @@
   `assets/web/models/avatar.glb` + `assets/web/signs/<id>.glb`, y regenera
   `SignsCatalog.kt`. Corre cada vez que llegan señas nuevas. Sin dependencias
   externas (no necesita Blender ni Node).
-- **`mock_backend.py`**, `local_stt.py` — backend falso y STT local para probar
-  sin Neon ni Whisper.
+- **`local_stt.py`** — transcripción local con `whisper.cpp`, para probar el
+  micrófono sin backend (`--stt` en `mock_backend.py`).
+
+- **`mock_backend.py`** — backend falso para probar sin Neon. Resuelve **glosa → seña contra la misma tabla LSC50**
+  que `seed_catalog.py` siembra en Neon, así que se parece a producción en vez
+  de inventar rutas: una glosa de las 50 siempre trae su `signs/<id>.glb`
+  —incluso si la animación todavía no está exportada— y una que no está en
+  LSC50 viene `available: false`. Antes mapeaba las glosas a los `.glb` que había
+  en disco, lo que hacía **imposible reproducir el caso de las 18 sin
+  animación**, y por eso el 404 garantizado de esas rutas nunca se vio en el
+  dispositivo (ver `GLS-10` en el spec).
+
+  ```bash
+  # glosas fijas para un caso puntual, sin LLM
+  python3 -u tools/mock_backend.py --glosses "POR FAVOR,MUCHO,¿CÓMO ESTÁS?"
+
+  # asset remoto en vez del path dentro del APK (ejercita la descarga)
+  python3 -u tools/mock_backend.py --assets-remote
+  ```
+
+  El `-u` no es opcional cuando redirigís la salida a un archivo: sin él Python
+  bloquea el stdout y el log aparece vacío aunque el backend esté sirviendo.
+  Y loguea los `GET` de `.glb` que no sirve, que es la evidencia de si la app
+  está pidiendo animaciones que no existen.
 
 ### Pipeline viejo (ya no lo consume la app)
 

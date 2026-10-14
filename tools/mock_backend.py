@@ -147,6 +147,31 @@ def sign_bytes(sign_id: str) -> bytes | None:
     return path.read_bytes()
 
 
+# ── catálogo ──────────────────────────────────────────────────────────────────
+# El backend real resuelve glosa → seña contra la tabla `catalog` de Neon, que
+# ya tiene las 50 glosas de LSC50 sembradas por tools/seed_catalog.py. Acá se
+# usa la misma tabla para que el mock se parezca a producción: es lo único que
+# permite ver el caso de una glosa anunciada SIN animación (0032–0049), que
+# antes no se podía reproducir porque el mock solo anunciaba lo que había en
+# disco, y por eso el 404 garantizado de esas 18 nunca se vio en el dispositivo.
+sys.path.insert(0, str(REPO / "tools"))
+from seed_catalog import LSC50, canonical  # noqa: E402
+
+# Copia de normalize_gloss de ../sign-ai-backend/app/validation/catalog_repository.py.
+# Mismo criterio que el SYSTEM_PROMPT de más arriba: si el backend lo cambia, hay
+# que cambiarlo acá también.
+_ACCENTS = str.maketrans({"Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U", "Ü": "U"})
+_PUNCTUATION = str.maketrans("", "", "¿?")
+
+
+def normalize_gloss(gloss: str) -> str:
+    return " ".join(gloss.strip().upper().translate(_ACCENTS).translate(_PUNCTUATION).split())
+
+
+# glosa canónica -> id de seña, los 50.
+CATALOG: dict[str, str] = {canonical(gloss): f"{n:04d}_0000_0000" for n, gloss, _ in LSC50}
+
+
 def glosses_from_ollama(text: str) -> list[str]:
     """Traduce con el LLM local, igual que el backend real."""
     body = json.dumps(
@@ -177,28 +202,27 @@ def build_result(text: str) -> list[dict]:
         glosses = glosses_from_ollama(text)
     else:
         glosses = list(FIXED_GLOSSES)
-    # Cada glosa recibe una seña DISTINTA de las horneadas. No es lo que hace
-    # el backend real (que mapea glosa → seña por el catálogo, hoy vacío), pero
-    # así la app recorre 50 URLs distintas, y que cada glosa dé un movimiento
-    # distinto es justo lo que faltaba para ver que la cola avanza.
-    signs = available_signs() or ["0000_0000_0000"]
-    return [
-        {
-            "type": "AFFIRMATIVE",
-            "glosses": [
-                {
-                    "text": g,
-                    "available": True,
-                    "glb_path": (
-                        f"signs/{signs[i % len(signs)]}.glb"
-                        if ASSETS_LOCAL
-                        else f"/static/{signs[i % len(signs)]}.glb"
-                    ),
-                }
-                for i, g in enumerate(glosses)
-            ],
-        }
-    ]
+    # Glosa → seña por el catálogo, igual que el backend real. Una glosa fuera
+    # de LSC50 viene `available: false` y sin ruta; una glosa de LSC50 siempre
+    # trae su ruta, incluso si la animación todavía no está exportada (0032–0049),
+    # porque la tabla las anuncia igual. Que la app se entere de eso es el
+    # propósito: reproduce el caso que hace caer al sign por defecto.
+    entries = []
+    for g in glosses:
+        sign_id = CATALOG.get(normalize_gloss(g))
+        if sign_id is None:
+            entries.append({"text": g, "available": False, "glb_path": ""})
+            continue
+        entries.append(
+            {
+                "text": g,
+                "available": True,
+                "glb_path": (
+                    f"signs/{sign_id}.glb" if ASSETS_LOCAL else f"/static/{sign_id}.glb"
+                ),
+            }
+        )
+    return [{"type": "AFFIRMATIVE", "glosses": entries}]
 
 
 def handle_http(connection, request) -> Response | None:
@@ -224,10 +248,18 @@ def handle_http(connection, request) -> Response | None:
         sign_id = path[len("/static/"):].removesuffix(".glb")
         data = sign_bytes(sign_id)
         if data is None:
+            print(f"[mock] GET {path} -> 404 (no servida)")
             return Response(404, "Not Found", Headers(), b"no such sign")
         return Response(
             200, "OK", Headers([("Content-Type", "model/gltf-binary")]), data
         )
+    # Cualquier otra cosa que parezca un asset. Loguearlo es lo que permite
+    # comprobar que la app NO pide los `.glb` que ya no existen en el APK: antes
+    # de isOwnAssetPath los pedía siempre y salía un 404 por cada glosa sin
+    # animación, sin dejar rastro visible desde acá.
+    if path.endswith(".glb"):
+        print(f"[mock] GET {path} -> 404 (pedido de un asset que no servimos)")
+        return Response(404, "Not Found", Headers(), b"not found")
     return Response(404, "Not Found", Headers(), b"not found")
 
 
@@ -403,6 +435,10 @@ if __name__ == "__main__":
         USE_STT = True
     if "--assets-remote" in sys.argv:
         ASSETS_LOCAL = False
+    if "--glosses" in sys.argv:
+        FIXED_GLOSSES = [
+            g.strip() for g in sys.argv[sys.argv.index("--glosses") + 1].split(",") if g.strip()
+        ]
     try:
         asyncio.run(main())
     except KeyboardInterrupt:

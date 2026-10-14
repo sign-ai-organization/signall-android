@@ -234,8 +234,11 @@ def write_catalog(manifest):
  * this list fall back to [DEFAULT] rather than failing (RF-CAT-03).
  *
  * These are *animation* assets, not glosses. What a sign *means* still comes
- * from the backend's catalog, which is still empty: `available` on a
- * translation is about the gloss, not about whether we have the movement.
+ * from the backend's catalog, which holds all 50 LSC50 glosses: `available` on
+ * a translation is about the gloss, not about whether we have the movement. A
+ * gloss whose animation is not in this list is announced anyway, and
+ * [localAssetOrNull] returns null for it so the caller falls back without
+ * asking the backend for a file nobody serves.
  */
 object SignsCatalog {{
     val available: List<String> = listOf(
@@ -268,6 +271,24 @@ object SignsCatalog {{
         if (!clean.endsWith(".glb")) return null
         val id = clean.removePrefix("signs/").removeSuffix(".glb")
         return if (id in available) clean else null
+    }}
+
+    /**
+     * True when [path] is one of *our* asset paths, whether or not we ship it.
+     *
+     * The counterpart of [localAssetOrNull]: that one says "we have it", this
+     * one says "nobody is going to serve it over HTTP either". The catalog
+     * announces all 50 LSC50 glosses but only {len(ids)} have an export, so the
+     * rest come back with a `signs/<id>.glb` we do not ship. Asking the backend
+     * for those is a guaranteed 404 that costs a round trip on every utterance
+     * and changes nothing, so the caller skips straight to the fallback. A path
+     * that is *not* in this layout is a real remote asset and still goes down
+     * the download path.
+     */
+    fun isOwnAssetPath(path: String): Boolean {{
+        val clean = path.trim()
+        return clean.startsWith("signs/") && clean.endsWith(".glb") &&
+            !clean.contains("..") && !clean.contains("//")
     }}
 }}
 """

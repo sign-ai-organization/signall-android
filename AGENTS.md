@@ -38,6 +38,14 @@ Credenciales en `.envJulian` (`DATABASE_URL`, gitignored) — si `psql` dice `pa
 
 La app **no habla con Neon**: la base es del backend. Neon se usa para leer/seedear el `catalog` (ver `openspec/specs/ui/spec.md`).
 
+`catalog` **ya está sembrada** con las 50 glosas de LSC50 (`tools/seed_catalog.py --apply`, 2026-10-14). Reejecutarla es seguro: es idempotente. Tres cosas que no están a la vista:
+
+- Las glosas van **sin tilde y sin `¿`/`?`**, pero **la `Ñ` se conserva** (`NIÑO`, no `NINO`). El backend pliega los dos lados de la búsqueda con `normalize_gloss()`, que usa una tabla explícita y no `unicodedata`, justamente para no separar la `Ñ` en `N` + tilde combinante.
+- El catálogo anuncia **las 50**, pero solo **32** tienen animación exportada. Las otras 18 (`0032`–`0049`) llegan con `available: true` y un path que no existe: es lo que dispara `GLS-10` / `SignsCatalog.isOwnAssetPath()`. **No "arreglar" eso en la app** pidiéndolas por HTTP: son un 404 garantizado.
+- `glb_animation_path` es **siempre** un path same-origin dentro del APK (`signs/<id>.glb`), nunca una URL. Es lo que permite que la app resuelva sin red.
+
+El backend carga `catalog` **una sola vez al arrancar** (`load_all()`): después de un seed hay que reiniciarlo, no hay invalidación.
+
 ## UI direction
 
 - Jetpack Compose is the UI framework. New components use **Lumo UI by Noman R** (https://github.com/nomanr/lumo-ui, docs https://www.lumoui.com/) — NOT Vaadin's Lumo Design System. It is Compose-specific and shadcn-like: adopt its components as a base, then customize them into our own SignAI Design System. Consult its current docs before making Lumo decisions; don't assume it works like a conventional component library.
