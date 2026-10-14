@@ -1,14 +1,21 @@
 package com.signai.webview.domain
 
 /**
- * Signs baked into the APK, from `tools/build_signs.py`.
+ * Signs shipped inside the APK, from `tools/split_signs.py`.
  *
- * One entry per vocabulary sign of LSC50 (rep 0, angle 0); each maps to
- * `assets/web/signs/<id>.json`.
+ * One entry per sign of LSC50 that has an exported animation (rep 0, angle 0);
+ * each maps to `assets/web/signs/<id>.glb`.
  *
- * This file is GENERATED — `tools/build_signs.py` rewrites it from the assets
- * it just wrote, so the list and the files on disk cannot drift apart. Editing
- * it by hand will be undone on the next generator run.
+ * This file is GENERATED — `tools/split_signs.py` rewrites it from the assets it
+ * just wrote, so the list and the files on disk cannot drift apart. Editing it
+ * by hand will be undone on the next generator run.
+ *
+ * The character itself is NOT per sign: `assets/web/models/avatar.glb` is loaded
+ * once and every sign is an animation-only clip retargeted to that same
+ * skeleton. Replacing the avatar therefore needs no re-export of the signs.
+ *
+ * Only 32 of the 50 vocabulary signs are here — 0032–0049 still have no export. Signs outside
+ * this list fall back to [DEFAULT] rather than failing (RF-CAT-03).
  *
  * These are *animation* assets, not glosses. What a sign *means* still comes
  * from the backend's catalog, which is still empty: `available` on a
@@ -24,16 +31,33 @@ object SignsCatalog {
         "0020_0000_0000", "0021_0000_0000", "0022_0000_0000", "0023_0000_0000",
         "0024_0000_0000", "0025_0000_0000", "0026_0000_0000", "0027_0000_0000",
         "0028_0000_0000", "0029_0000_0000", "0030_0000_0000", "0031_0000_0000",
-        "0032_0000_0000", "0033_0000_0000", "0034_0000_0000", "0035_0000_0000",
-        "0036_0000_0000", "0037_0000_0000", "0038_0000_0000", "0039_0000_0000",
-        "0040_0000_0000", "0041_0000_0000", "0042_0000_0000", "0043_0000_0000",
-        "0044_0000_0000", "0045_0000_0000", "0046_0000_0000", "0047_0000_0000",
-        "0048_0000_0000", "0049_0000_0000",
     )
 
     /** The sign the app opens on, and the one it falls back to. */
     const val DEFAULT: String = "0000_0000_0000"
 
     /** Where a sign's animation lives, as a same-origin asset path. */
-    fun assetUrl(id: String): String = "signs/$id.json"
+    fun assetUrl(id: String): String = "signs/$id.glb"
+
+    /**
+     * Resolves a `glb_animation_path` coming from the backend to a local asset,
+     * or null when that path is not one of ours.
+     *
+     * The backend answers with the path we seeded in `catalog`, and since the
+     * assets ship inside the APK the path is already same-origin: the scene
+     * loads it directly. Only a path that matches a sign we actually ship is
+     * accepted, so a sign whose animation is not exported yet (0032–0049)
+     * returns null and the caller falls back instead of requesting a file that
+     * does not exist.
+     *
+     * Anything else — a remote URL, a traversal, a name we do not ship — is
+     * refused, and the caller treats it as "download it instead".
+     */
+    fun localAssetOrNull(path: String): String? {
+        val clean = path.trim()
+        if (!clean.startsWith("signs/") || clean.contains("..") || clean.contains("//")) return null
+        if (!clean.endsWith(".glb")) return null
+        val id = clean.removePrefix("signs/").removeSuffix(".glb")
+        return if (id in available) clean else null
+    }
 }

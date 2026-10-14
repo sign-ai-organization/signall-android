@@ -4,7 +4,7 @@
 Habla exactamente el mismo protocolo que el backend real, en un solo puerto:
 
 - `GET /health` → `{"status": "ok"}`
-- `GET /static/<sign_id>.json` → una animación real de las 50 horneadas en
+- `GET /static/<sign_id>.glb` → una animación real de las horneadas en
   `app/src/main/assets/web/signs/`, para que la app tenga algo real que
   descargar y reproducir
 - `WS /ws/translate` → acepta `{"type": "text", "text": "<frase>"}` y `{"type":
@@ -76,7 +76,7 @@ OLLAMA_MODEL = "qwen3:4b-instruct"
 OLLAMA_TIMEOUT_S = 180
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
-# Las 50 animaciones horneadas en el APK (tools/build_signs.py). El mock sirve
+# Las animaciones horneadas en el APK (tools/split_signs.py). El mock sirve
 # estos mismos archivos, así lo que se ve en la app es exactamente lo que se
 # grabó — y cada glosa recibe una seña DISTINTA, que antes no pasaba: había un
 SIGNS_DIR = REPO / "app/src/main/assets/web/signs"
@@ -85,7 +85,7 @@ def available_signs() -> list[str]:
     """Ids de las señas horneadas, ordenados."""
     if not SIGNS_DIR.is_dir():
         return []
-    return sorted(p.stem for p in SIGNS_DIR.glob("*.json"))
+    return sorted(p.stem for p in SIGNS_DIR.glob("*.glb"))
 
 # Copia del SYSTEM_PROMPT de ../sign-ai-backend/app/nlp/llm_client.py. Si el
 # backend lo cambia, hay que cambiarlo acá también.
@@ -125,13 +125,23 @@ FAIL_WITH = "FALLA"
 
 # Puesto por --ollama.
 USE_OLLAMA = False
+
+# Dónde viven las animaciones que anuncia el catálogo.
+#
+# "local"  -> `signs/<id>.glb`, un path same-origin DENTRO del APK. Es lo que va
+#             a devolver el backend real después de sembrar `catalog`, y la app
+#             lo carga directo de sus assets sin descargar nada.
+# "remote" -> `/static/<id>.glb`, que la app sí baja por HTTP y cachea. Sirve
+#             para ejercitar el camino de descarga (el de un asset futuro que
+#             viva en el backend).
+ASSETS_LOCAL = True
 # Puesto por --stt: transcribe el audio con whisper.cpp local.
 USE_STT = False
 
 
 def sign_bytes(sign_id: str) -> bytes | None:
     """Contenido del asset de una seña horneada, o `None` si no existe."""
-    path = SIGNS_DIR / f"{sign_id}.json"
+    path = SIGNS_DIR / f"{sign_id}.glb"
     if not path.is_file():
         return None
     return path.read_bytes()
@@ -179,7 +189,11 @@ def build_result(text: str) -> list[dict]:
                 {
                     "text": g,
                     "available": True,
-                    "glb_path": f"/static/{signs[i % len(signs)]}.json",
+                    "glb_path": (
+                        f"signs/{signs[i % len(signs)]}.glb"
+                        if ASSETS_LOCAL
+                        else f"/static/{signs[i % len(signs)]}.glb"
+                    ),
                 }
                 for i, g in enumerate(glosses)
             ],
@@ -207,12 +221,12 @@ def handle_http(connection, request) -> Response | None:
         )
     if path.startswith("/static/"):
         # El nombre es el id de la seña, tal cual lo puso `build_result`.
-        sign_id = path[len("/static/"):].removesuffix(".json")
+        sign_id = path[len("/static/"):].removesuffix(".glb")
         data = sign_bytes(sign_id)
         if data is None:
             return Response(404, "Not Found", Headers(), b"no such sign")
         return Response(
-            200, "OK", Headers([("Content-Type", "application/json")]), data
+            200, "OK", Headers([("Content-Type", "model/gltf-binary")]), data
         )
     return Response(404, "Not Found", Headers(), b"not found")
 
@@ -354,7 +368,7 @@ async def main() -> None:
     if not available_signs():
         sys.exit(
             f"No hay señas horneadas en {SIGNS_DIR}.\n"
-            "Generá las con:  python3 tools/build_signs.py --vocab --no-face"
+            "Generá las con:  python3 tools/split_signs.py"
         )
 
     async with serve(handle_session, HOST, PORT, process_request=handle_http):
@@ -373,6 +387,11 @@ async def main() -> None:
         else:
             print("[mock] STT apagado: el audio se ignora (--stt para transcribirlo)")
         print(f"[mock] {len(available_signs())} animaciones servidas desde {SIGNS_DIR.name}/")
+        print(
+            "[mock] rutas: signs/ (local, dentro del APK)"
+            if ASSETS_LOCAL
+            else "[mock] rutas: /static/ (remoto, la app las descarga)"
+        )
         print("[mock] Ctrl+C para salir")
         await asyncio.Future()
 
@@ -382,6 +401,8 @@ if __name__ == "__main__":
         USE_OLLAMA = True
     if "--stt" in sys.argv:
         USE_STT = True
+    if "--assets-remote" in sys.argv:
+        ASSETS_LOCAL = False
     try:
         asyncio.run(main())
     except KeyboardInterrupt:

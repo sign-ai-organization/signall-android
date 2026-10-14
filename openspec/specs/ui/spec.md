@@ -96,7 +96,7 @@ Main.
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| STG-1 | Avatar 3D | `[A]` | `avatar.glb` renderizado con Three.js en el WebView (protagonista visual). |
+| STG-1 | Avatar 3D | `[A]` | `models/avatar.glb` renderizado con Three.js en el WebView (protagonista visual). Se carga una sola vez; las señas son `signs/<id>.glb` con la animación ya horneada, reproducidas con `THREE.AnimationMixer` sobre el mismo esqueleto. La normalización de escala/offset va en un pivot **padre**, porque el clip anima la raíz del armature. |
 | STG-2 | **Hint de estado** | `[P]` | Arriba a la izquierda, dot "live" + texto del estado (`STA-*`). |
 | STG-3 | **Caption** | `[P]` | Abajo al centro: `LSC · Avatar 3D` (dot separador). |
 | STG-4 | Botón **Repetir** | `[P]` | Visible solo en estado `done`; repite la última frase. |
@@ -261,7 +261,8 @@ placeholder local se eliminó.
 | GLS-2 | Tipo de frase | `[N]` | `PhraseType` (los 5 valores del backend) + `UNKNOWN` para no crashear ante un valor nuevo. Alimenta los marcadores no manuales. |
 | GLS-3 | Glosa no disponible | `[N]` | `available == false` → la glosa no se reproduce y se reporta en el caption (RF-CAT-03). |
 | GLS-4 | Transcripción del backend | `[N]` | El evento `transcript` se refleja en el input, para poder corregirlo antes de reenviar (RF-UI-02). |
-| GLS-5 | Fallback de seña de prueba | `[N]` | Con el catálogo vacío toda glosa llega desconocida. El ajuste "Seña de prueba si falta en el catálogo" hace que use la seña horneada del APK, para poder ver la cola. Se apaga cuando el backend sirva animaciones. |
+| GLS-5 | Fallback de seña de prueba | `[N]` | Con el catálogo vacío toda glosa llega desconocida. El ajuste "Seña de prueba si falta en el catálogo" hace que use la seña horneada del APK, para poder ver la cola. **Sigue en `true` por defecto aunque el catálogo ya esté sembrado**: es lo que hace que las 18 señas sin animación (`0032`–`0049`) muestren algo en vez de "Seña no disponible". Apagarlo activa `GLS-3` para ellas. |
+| GLS-9 | Resolución de la ruta del asset | `[N]` | `glb_animation_path` del backend es un path **same-origin dentro del APK** (`signs/<id>.glb`), porque las animaciones se empaquetan y no se sirven por HTTP. `SignsCatalog.localAssetOrNull()` lo reconoce —validándolo contra `available`— y devuelve el path tal cual para que la escena lo cargue directo; cualquier otra cosa cae al camino de descarga de `SignAssetRepository`, que es donde viviría un asset futuro alojado en el backend. Sin esto el backend devolvería una ruta que su propio servidor no tiene, la descarga daría 404 y **todas** las glosas caerían al sign por defecto. Verificado en el Redmi: cola de 3 señas reproducida con **cero** peticiones HTTP y sin directorio de caché. |
 | GLS-6 | Placeholder eliminado | `[N]` | `domain/Gloss.kt` (`glossFor`) se borró: era una aproximación que ya no se usa. |
 | GLS-7 | Frames desconocidos | `[N]` | Cualquier `type` que la app no conozca se ignora en silencio, sin tumbar la sesión. Así el backend puede añadir `trace`/`sentence_trace` u otros sin romper clientes ya instalados. |
 | GLS-8 | Cierre del micrófono | `[N]` | Al soltar el micrófono la app manda `{"type":"end"}`; el backend lo reenvía al STT como un frame `end`. Sin esto, soltar a mitad de una frase la pierde, porque el silencio que cierra el segmento nunca llega. |
@@ -272,7 +273,7 @@ placeholder local se eliminó.
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| BRG-1 | `window.SignAI.play()` | `[A]` | Reproduce el sign.json. Guard `?.`. |
+| BRG-1 | `window.SignAI.play()` | `[A]` | Reproduce la seña actual (clip GLB). Guard `?.`. Sin cola, repite `signs/<default>.glb`. |
 | BRG-2 | `setDebug(bool)` | `[A]` | Activa overlay de debug + `#status`. El texto del overlay usa colores oscuros en tema claro (clase `light` en `<html>`) y coloca `#debug` arriba y `#status` abajo para no solaparse. |
 | BRG-3 | `setFreeCamera(bool)` | `[A]` | Cámara libre (orbitar/zoom sin límite). |
 | BRG-4 | `setGrid(bool)` | `[A]` | Grilla/suelo. |
@@ -282,7 +283,9 @@ placeholder local se eliminó.
 | BRG-8 | Contrato retrocompatible | `[A]` | Los 5 comandos actuales y el guard `?.` no cambian. |
 | BRG-9 | `setTheme(dark)` | `[N]` | Aditivo. Hace que el fondo del canvas 3D siga el tema claro/oscuro (mitiga el riesgo de light mode) y alterna la clase `light` en `<html>` para contrastar el texto de debug/estado. |
 | BRG-10 | `setQueue(json)` | `[N]` | Aditivo. Recibe la secuencia de glosas como **string** (Kotlin lo entrecomilla con `JSONObject.quote` y el JS hace `JSON.parse`), nunca datos crudos en el script. `play()` recorre la cola y `onPlaybackDone` salta al terminar la última. |
-| BRG-11 | Marcadores no manuales | `[N]` | `app.js` aplica ceja por `PhraseType` **encima** de la pose del frame (parte de la dirección actual del hueso, no de la de reposo, porque `FACE_ALPHA = 1.0` reemplaza la rotación). Solo ceja: el rig no tiene huesos de cuello. |
+| BRG-11 | Marcadores no manuales | `[N]` | Reemplazado el 2026-10-13: el motor procedural que aplicaba ceja por `PhraseType` ya no existe. Los cues vienen horneados en el clip. El rig nuevo sí tiene huesos faciales (28: ceja, párpado, mandíbula, boca, mirada), así que la expresión facial y MNM **vuelven a ser posibles** — es el pendiente que abre esto. |
+| BRG-12 | `avatarReady` (JS→Kotlin) | `[N]` | La escena avisa cuando el personaje está parseado y en escena. `onPageFinished` dispara mientras el GLB de 10 MB todavía baja, así que usarlo para esconder el splash dejaba ver un canvas negro. Si el `WebMessageListener` no está soportado, se vuelve al fallback por `onPageFinished` y el timeout de 8 s de `SignAiSplash`. |
+| BRG-13 | Variantes de seña | `[N]` | 10 de las 32 señas traen 2–4 tomas. `play()` elige una al azar, así la misma glosa no se ve idéntica cada vez. |
 
 ---
 

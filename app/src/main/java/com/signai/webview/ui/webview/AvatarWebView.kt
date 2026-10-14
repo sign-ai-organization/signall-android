@@ -95,10 +95,14 @@ fun AvatarWebView(
                     }
                 }
 
-                // JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")`.
+                // JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")`
+                // y `postMessage("avatarReady")`.
                 // Only registered when the feature is supported (fallback: no
-                // event, the UI just stays in `signing`).
-                if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
+                // playback event, the UI just stays in `signing`; y el splash se
+                // destapa por el timeout de 8 s).
+                val bridgeSupported =
+                    WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
+                if (bridgeSupported) {
                     WebViewCompat.addWebMessageListener(
                         this,
                         BridgeObjectName,
@@ -111,7 +115,17 @@ fun AvatarWebView(
                                 isMainFrame: Boolean,
                                 replyProxy: androidx.webkit.JavaScriptReplyProxy,
                             ) {
-                                if (message.data == "onPlaybackDone") onPlaybackDone()
+                                when (message.data) {
+                                    "onPlaybackDone" -> onPlaybackDone()
+                                    // El avatar son ~10 MB: `onPageFinished` dispara
+                                    // antes de que termine de bajar y parsear, así
+                                    // que usarlo para esconder el splash dejaba ver
+                                    // un canvas negro. La escena avisa cuando la
+                                    // tiene en escena. Si el bridge no está
+                                    // soportado, el timeout de `SignAiSplash`
+                                    // (8 s) destapa igual.
+                                    "avatarReady" -> onLoaded()
+                                }
                             }
                         },
                     )
@@ -123,7 +137,11 @@ fun AvatarWebView(
                 webViewClient = object : WebViewClientCompat() {
                     override fun onPageFinished(view: WebView, url: String) {
                         super.onPageFinished(view, url)
-                        onLoaded()
+                        // Fallback: si el WebView no soporta el listener de
+                        // mensajes, la escena no puede avisar y hay que destapar
+                        // con el fin de la carga de la página. Cuando sí hay
+                        // listener, el aviso real es `avatarReady`.
+                        if (!bridgeSupported) onLoaded()
                     }
 
                     override fun shouldInterceptRequest(

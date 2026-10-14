@@ -14,3 +14,26 @@ env
 .env
 .env.*
 !.env.example
+# `.env.*` exige el punto, así que un archivo llamado `.envJulian` (credenciales
+# reales de Neon) no lo matcheaba y quedaba trackeable. Se cubre el prefijo.
+.env*
+
+# Material de trabajo del modelado 3D (fuente, ~1 GB). NO va al repo: son los
+# exports de Samuel y sus .blend/.fbx de trabajo. Lo que la app necesita ya
+# está en app/src/main/assets/web/ (16 MB, versionado).
+#
+#   GLB Senas/      32 exports por seña, con el muñeco adentro  (315 MB)
+#   Para Exportar/  .blend + .fbx de Cascadeur                 (660 MB)
+#   senas/          .glb viejos de Mixamo, ya superados       ( 76 MB)
+#   Base.glb, models/  armature suelto que dejó el modelador
+#
+# Para rearmar los assets desde cero: `python3 tools/split_signs.py`, que lee
+# `GLB Senas/` y escribe models/avatar.glb + signs/*.glb.
+#
+# El slash inicial ancla a la raíz del repo: sin él, `models/` también se
+# comería `app/src/main/assets/web/models/`, que sí tiene que versionarse.
+/GLB Senas/
+/Para Exportar/
+/senas/
+/Base.glb
+/models/

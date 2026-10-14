@@ -1,0 +1,560 @@
+[
+ {
+  "sign_id": "0000",
+  "gloss": "GRACIAS",
+  "gloss_key": "GRACIAS",
+  "path": "signs/0000_0000_0000.glb",
+  "variants": 3,
+  "variant_names": [
+   "0000",
+   "0000.001",
+   "0000.002"
+  ],
+  "fps": 24,
+  "frames": 59,
+  "duration_s": 2.417,
+  "bytes": 310776,
+  "sha256": "4947ed89bbafa74d6dd0a45daeaa0b76d647fa5dd8165560182a88ef554f0635",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0001",
+  "gloss": "BUENOS DÍAS",
+  "gloss_key": "BUENOS DIAS",
+  "path": "signs/0001_0000_0000.glb",
+  "variants": 2,
+  "variant_names": [
+   "0001",
+   "0001.001"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 237260,
+  "sha256": "5c392fab49653e768bd92d8420cd8d76fc50f45b96b1671f769c7cb4fcedef71",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0002",
+  "gloss": "BUENAS TARDES",
+  "gloss_key": "BUENAS TARDES",
+  "path": "signs/0002_0000_0000.glb",
+  "variants": 2,
+  "variant_names": [
+   "0002",
+   "0002.001"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 223068,
+  "sha256": "133dc8ba60e97b0581380d8c1e94f797a92b094423eb435aa8a08bd5184e5912",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0003",
+  "gloss": "BUENAS NOCHES",
+  "gloss_key": "BUENAS NOCHES",
+  "path": "signs/0003_0000_0000.glb",
+  "variants": 2,
+  "variant_names": [
+   "0003",
+   "0003.001"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 240072,
+  "sha256": "bc86fd8bd4cb4135a442331bf9b3daadad1b138444d947a812de05ffa13cc65f",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0004",
+  "gloss": "SEÑA",
+  "gloss_key": "SENA",
+  "path": "signs/0004_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0004"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 129836,
+  "sha256": "848b3d09df5b6224a5468e8750091c8011d253571c14987e973a9ea95f836a34",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0005",
+  "gloss": "NOMBRE",
+  "gloss_key": "NOMBRE",
+  "path": "signs/0005_0000_0000.glb",
+  "variants": 2,
+  "variant_names": [
+   "0005",
+   "0005.001"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 269948,
+  "sha256": "c8bdc5cf814948e51399fabbd15f4a94acf1777c5b49c55affdb2bd53eaf5c54",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0006",
+  "gloss": "TRABAJAR",
+  "gloss_key": "TRABAJAR",
+  "path": "signs/0006_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0006"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 154332,
+  "sha256": "9ecf48b5bef919566a1ec3f9e745e3cab67e6836e481fe94733fa4cb0a83b6c3",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0007",
+  "gloss": "COMER",
+  "gloss_key": "COMER",
+  "path": "signs/0007_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0007"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 142752,
+  "sha256": "679d595b53506c9fcc6bba145024b738f2b84dc2e42419007369e286b000164b",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0008",
+  "gloss": "VIVIR",
+  "gloss_key": "VIVIR",
+  "path": "signs/0008_0000_0000.glb",
+  "variants": 3,
+  "variant_names": [
+   "0008",
+   "0008.001",
+   "0008.002"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 385744,
+  "sha256": "baeb1589bc175adc56299f36bbb1cc16ccdf6432c91e3aaa97c02fc1f18eaf74",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0009",
+  "gloss": "POCO",
+  "gloss_key": "POCO",
+  "path": "signs/0009_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0009"
+  ],
+  "fps": 24,
+  "frames": 52,
+  "duration_s": 2.125,
+  "bytes": 143376,
+  "sha256": "7b8e2cb2ae1d33529376bc1da8e003c4396f565dd191bd97b5d11c21cf567876",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0010",
+  "gloss": "FAMILIA",
+  "gloss_key": "FAMILIA",
+  "path": "signs/0010_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0010"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 154460,
+  "sha256": "b6acf66efb6d8b6a1ecb20d7d56914091f42f6b35ea54df18b1275d1d46c3399",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0011",
+  "gloss": "PERSONAS",
+  "gloss_key": "PERSONAS",
+  "path": "signs/0011_0000_0000.glb",
+  "variants": 2,
+  "variant_names": [
+   "0011",
+   "0011.001"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 214320,
+  "sha256": "61f4fe514187576111b0304c836b69846e6dec6e52dcfd4cf084148c1c170dde",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0012",
+  "gloss": "MUJER",
+  "gloss_key": "MUJER",
+  "path": "signs/0012_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0012"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 131072,
+  "sha256": "f4f4b08d2fd0c9bcddd0fee2160e1019032bf94402dd1e21b30dfc8084292981",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0013",
+  "gloss": "HOMBRE",
+  "gloss_key": "HOMBRE",
+  "path": "signs/0013_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0013"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 142660,
+  "sha256": "066f1184b8362a11cd4e9df4c76f193f28e24c145071e6497c66e9c177d5e089",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0014",
+  "gloss": "NIÑO",
+  "gloss_key": "NINO",
+  "path": "signs/0014_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0014"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 142760,
+  "sha256": "e6681feca5f3945e3f58ef62950860b06ad71598f83bdf80770eb0e2bbd5b322",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0015",
+  "gloss": "NIÑA",
+  "gloss_key": "NINA",
+  "path": "signs/0015_0000_0000.glb",
+  "variants": 4,
+  "variant_names": [
+   "0015",
+   "0015.001",
+   "0015.002",
+   "0015.003"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 357504,
+  "sha256": "dbe4821f6698ee2968d0566fad7d6fcaf654a4803cc4cf904071d673b8c67587",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0016",
+  "gloss": "ABUELO",
+  "gloss_key": "ABUELO",
+  "path": "signs/0016_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0016"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 142648,
+  "sha256": "97a0027bbb22d4e2841722cd668614e046f299eb8d7380b89cc538bc2a278cea",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0017",
+  "gloss": "TÍO",
+  "gloss_key": "TIO",
+  "path": "signs/0017_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0017"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 154424,
+  "sha256": "0745959b126ddf1d204ba9dc345912010e8bea16dd88b4d89aa564ac2e70e013",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0018",
+  "gloss": "HERMANO",
+  "gloss_key": "HERMANO",
+  "path": "signs/0018_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0018"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 154092,
+  "sha256": "cad29cb096f3295d3f636885900003ab6cff2342b4c58ba750ba89860f1e8564",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0019",
+  "gloss": "HAMBRE",
+  "gloss_key": "HAMBRE",
+  "path": "signs/0019_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0019"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 154468,
+  "sha256": "277671ef88e7d3347e7f2eb627be811b47c982261266878454d277d7a799efe8",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0020",
+  "gloss": "FELIZ",
+  "gloss_key": "FELIZ",
+  "path": "signs/0020_0000_0000.glb",
+  "variants": 2,
+  "variant_names": [
+   "0020",
+   "0020.001"
+  ],
+  "fps": 24,
+  "frames": 54,
+  "duration_s": 2.208,
+  "bytes": 283096,
+  "sha256": "aceef67d7384a500f8132c7e45409549b76dcb540a501127a0f3eb96ebb387bd",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0021",
+  "gloss": "CONTENTO",
+  "gloss_key": "CONTENTO",
+  "path": "signs/0021_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0021"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 130860,
+  "sha256": "1100fe2beacb5e61b6defaa17db1a653acbcf147675ec93f134803d311366832",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0022",
+  "gloss": "TRISTE",
+  "gloss_key": "TRISTE",
+  "path": "signs/0022_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0022"
+  ],
+  "fps": 24,
+  "frames": 67,
+  "duration_s": 2.75,
+  "bytes": 158784,
+  "sha256": "80f5efd1ccd89e7bdacb0f406977ff5cede591037e271a3299d5636948477551",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0023",
+  "gloss": "ABURRIDO",
+  "gloss_key": "ABURRIDO",
+  "path": "signs/0023_0000_0000.glb",
+  "variants": 2,
+  "variant_names": [
+   "0023",
+   "0023.001"
+  ],
+  "fps": 24,
+  "frames": 57,
+  "duration_s": 2.333,
+  "bytes": 222508,
+  "sha256": "9bd6abb3fa6f6789b0132948919a45b4cd7dfff87114556cdb31ca47f30ef221",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0024",
+  "gloss": "BIEN",
+  "gloss_key": "BIEN",
+  "path": "signs/0024_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0024"
+  ],
+  "fps": 24,
+  "frames": 59,
+  "duration_s": 2.417,
+  "bytes": 147964,
+  "sha256": "9415e673735740750c9277d07ec05019fad01c9abe624b6d10d0c32e6e224983",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0025",
+  "gloss": "MAL",
+  "gloss_key": "MAL",
+  "path": "signs/0025_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0025"
+  ],
+  "fps": 24,
+  "frames": 55,
+  "duration_s": 2.25,
+  "bytes": 145232,
+  "sha256": "091fa9ad0be88eeb54d0923e85e3122c2ec562bf94469fce7f656107bca7f979",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0026",
+  "gloss": "CÓMO ESTÁS",
+  "gloss_key": "COMO ESTAS",
+  "path": "signs/0026_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0026"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 131080,
+  "sha256": "2e044b2941297d842f740c7ea567678baf7e2aaa6ad6245c78296d60b27083fd",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0027",
+  "gloss": "MÁS O MENOS",
+  "gloss_key": "MAS O MENOS",
+  "path": "signs/0027_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0027"
+  ],
+  "fps": 24,
+  "frames": 53,
+  "duration_s": 2.167,
+  "bytes": 131624,
+  "sha256": "cc649de383dbbd2b7b2c9e18b74f1788ad286bf43b513a99b4704afc097b4afb",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0028",
+  "gloss": "SENTIR",
+  "gloss_key": "SENTIR",
+  "path": "signs/0028_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0028"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 154196,
+  "sha256": "f6aeda2e6a8af3ea6bbd0c16f756874555e6f93bd67ac8e85f0420c1c8b78ccb",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0029",
+  "gloss": "JUICIOSO",
+  "gloss_key": "JUICIOSO",
+  "path": "signs/0029_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0029"
+  ],
+  "fps": 24,
+  "frames": 53,
+  "duration_s": 2.167,
+  "bytes": 131776,
+  "sha256": "ef1ed919ca8cd3a4f561ecf4acb43472e4da815f58f519d17b4e5b1e27f6ba89",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0030",
+  "gloss": "HOLA",
+  "gloss_key": "HOLA",
+  "path": "signs/0030_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0030"
+  ],
+  "fps": 24,
+  "frames": 52,
+  "duration_s": 2.125,
+  "bytes": 133440,
+  "sha256": "f1c094a4a4f1c147249012975ffda667a536e798dff6b63399fb8145fda001cf",
+  "tracks": 309,
+  "bones": 103
+ },
+ {
+  "sign_id": "0031",
+  "gloss": "ADIÓS",
+  "gloss_key": "ADIOS",
+  "path": "signs/0031_0000_0000.glb",
+  "variants": 1,
+  "variant_names": [
+   "0031"
+  ],
+  "fps": 24,
+  "frames": 51,
+  "duration_s": 2.083,
+  "bytes": 130724,
+  "sha256": "235f9062d0d497958045ba1b07c86778bd98670c37b4edda8ff894b6c9f3e72b",
+  "tracks": 309,
+  "bones": 103
+ }
+]
