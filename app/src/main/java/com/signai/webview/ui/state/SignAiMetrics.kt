@@ -24,6 +24,8 @@ class SignAiMetrics {
     private val turns = AtomicLong()
     private val glosses = AtomicLong()
     private val unavailable = AtomicLong()
+    private val dictationPhrases = AtomicLong()
+    private val dictationWords = AtomicLong()
 
     private val fragmentToQueue = Latency()
     private val turnTotal = Latency()
@@ -56,12 +58,30 @@ class SignAiMetrics {
         unavailable.incrementAndGet()
     }
 
+    /**
+     * Una frase del dictado se cerró, sea por el silencio que oyó el STT o
+     * porque el usuario apagó el micrófono.
+     *
+     * Es el equivalente del `turno` de tiempo real para el otro interruptor, y
+     * el número que dice si el dictado está sirviendo: si el usuario apaga el
+     * micrófono después de tres frases, hay tres líneas acá y una sola frase
+     * larga, y esas dos coisas se feltían distinto.
+     */
+    fun onDictationUtterance(text: String) {
+        val words = text.split(' ', '\n', '\t').count { it.isNotBlank() }
+        val index = dictationPhrases.incrementAndGet()
+        dictationWords.addAndGet(words.toLong())
+        Log.i(TAG, "dictado #$index: ${words} palabras, ${text.length} caracteres")
+    }
+
     /** One line with everything, for logcat after a test run. */
     fun snapshot(): String = buildString {
         append("fragmentos=").append(fragments.get())
         append(" turnos=").append(turns.get())
         append(" glosas=").append(glosses.get())
         append(" sin_seña=").append(unavailable.get())
+        append(" dictado_frases=").append(dictationPhrases.get())
+        append(" dictado_palabras=").append(dictationWords.get())
         append(" fragmento_a_cola=").append(fragmentToQueue.summarise())
         append(" duracion_turno=").append(turnTotal.summarise())
     }
@@ -72,6 +92,8 @@ class SignAiMetrics {
         turns.set(0)
         glosses.set(0)
         unavailable.set(0)
+        dictationPhrases.set(0)
+        dictationWords.set(0)
         fragmentToQueue.clear()
         turnTotal.clear()
     }

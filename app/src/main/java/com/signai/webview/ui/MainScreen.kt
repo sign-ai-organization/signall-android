@@ -66,22 +66,37 @@ fun MainScreen(state: MainScreenState) {
     var settingsFraction by remember { mutableFloatStateOf(0f) }
     val density = LocalDensity.current
 
-    // The mic is the only feature that needs a runtime permission. Asked the
-    // first time the user taps it, not on launch, so the dialog arrives with a
-    // reason attached (`RF-UI-04`).
+    // El mic es la única función que necesita permiso en tiempo de ejecución.
+    // Se pide la primera vez que se toca cualquiera de los dos interruptores, no
+    // al abrir la app, así que el diálogo llega con un motivo (`RF-UI-04`).
     val context = LocalContext.current
+    var pendingMicAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     val micPermission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { granted ->
-        if (granted) state.toggleMic() else state.onMicPermissionDenied()
+        val action = pendingMicAction
+        pendingMicAction = null
+        if (granted) action?.invoke() else state.onMicPermissionDenied()
     }
-    val onMic: () -> Unit = {
+
+    // Both voice switches go through here: the permission is the same one, and
+    // duplicating the check meant one of the two would eventually be the one
+    // that forgot.
+    fun withMicPermission(action: () -> Unit): () -> Unit = {
         val granted = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.RECORD_AUDIO,
         ) == PackageManager.PERMISSION_GRANTED
-        if (granted) state.toggleMic() else micPermission.launch(Manifest.permission.RECORD_AUDIO)
+        if (granted) {
+            action()
+        } else {
+            pendingMicAction = action
+            micPermission.launch(Manifest.permission.RECORD_AUDIO)
+        }
     }
+
+    val onMic: () -> Unit = withMicPermission(state::toggleDictation)
+    val onRealtime: () -> Unit = withMicPermission(state::toggleRealtime)
 
     val showConversation = state.openDrawer == DrawerSide.Start
     val showSettings = state.openDrawer == DrawerSide.End
@@ -179,12 +194,14 @@ fun MainScreen(state: MainScreenState) {
                                 onSend = state::play,
                                 onMic = onMic,
                                 onOpenHistory = { showHistory = true },
-                                // El micro es un interruptor: queda prendido
-                                // hasta que se lo toca de nuevo, así que su
-                                // estado visual y su habilitación vienen de acá
-                                // y no de `playbackState`, que con el micro
+                                onRealtime = onRealtime,
+                                // Los dos son interruptores: quedan prendidos
+                                // hasta que se los toca de nuevo, así que su
+                                // estado visual y su habilitación vienen de acá y
+                                // no de `playbackState`, que con el micrófono
                                 // prendido pasa a `Signing` mientras firma.
-                                micActive = state.micActive,
+                                dictationActive = state.dictationActive,
+                                realtimeActive = state.realtimeActive,
                                 micAvailable = state.backendConnected,
                                 enabled = !state.replayPending,
                             )
