@@ -84,7 +84,8 @@ class MainScreenState(
         private set
 
     /**
-     * Playback fallback while the backend's catalog is still empty — see
+     * Playback fallback for a gloss we have no animation for — either one of
+     * the 18 LSC50 signs still unexported, or an unknown gloss. See
      * [Settings.demoSignFallback].
      *
      * Always the sign picked in the settings menu, so the demo playback follows
@@ -345,11 +346,17 @@ class MainScreenState(
                     // downloading them would be a guaranteed 404 that lands us
                     // in the fallback below — and the fallback is the default
                     // sign, so every gloss would answer with the same movement.
-                    // Anything else keeps going down the download path, which is
-                    // where a future backend-hosted asset would come from.
+                    //
+                    // A `signs/*.glb` we do NOT ship (the catalog announces all
+                    // 50 glosses but only 32 have an export) is just as
+                    // undownloadable: it is our own layout, so nobody is
+                    // serving it over HTTP either. Skip the round trip and go
+                    // straight to the fallback. Anything else — a real remote
+                    // asset — still goes down the download path.
                     val local = SignsCatalog.localAssetOrNull(gloss.glbPath)
                     val url = when {
                         local != null -> local
+                        SignsCatalog.isOwnAssetPath(gloss.glbPath) -> null
                         gloss.available -> assets.resolve(gloss.text, gloss.glbPath)
                         else -> null
                     }
