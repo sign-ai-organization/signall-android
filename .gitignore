@@ -37,3 +37,9 @@ env
 /senas/
 /Base.glb
 /models/
+
+# Caché de bytecode de Python. Los .pyc se generan al importar los scripts de
+# tools/, y quedaron versionados por error desde 74fa3fb: son específicos de la
+# versión de Python (cpython-314) y de la máquina, no del proyecto.
+__pycache__/
+*.pyc
