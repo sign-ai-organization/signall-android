@@ -24,9 +24,29 @@
   historial, y una plantilla.
 - **`rendimiento/`** — medir de verdad si la app va lenta. Su propio
   [`README.md`](rendimiento/README.md) tiene las recetas y las trampas.
-- **`mock_backend.py`**, `local_stt.py`, `pose_filter.py`, `splice_movement.py`,
-  `build_signs.py`, `hand_corrector.py`, `patch_webview_glue.py` — el pipeline de
-  la app. Ver el header de cada uno.
+- **`split_signs.py`** — **el pipeline de assets 3D de la app**. Separa los
+  exports del modelador (`GLB Senas/`, con el muñeco adentro en cada archivo) en
+  `assets/web/models/avatar.glb` + `assets/web/signs/<id>.glb`, y regenera
+  `SignsCatalog.kt`. Corre cada vez que llegan señas nuevas. Sin dependencias
+  externas (no necesita Blender ni Node).
+- **`mock_backend.py`**, `local_stt.py` — backend falso y STT local para probar
+  sin Neon ni Whisper.
+
+### Pipeline viejo (ya no lo consume la app)
+
+Estos tres armaban el formato anterior —50 JSON de landmarks de MediaPipe que
+`app.js` reproducía con un motor procedural de retargeting. Desde el 2026-10-13
+la app carga **GLB con la pose horneada** y no los usa. Se conservan porque
+documentan cómo se armaron los datos de LSC50 (y `hand_corrector.py` sigue
+sirviendo como herramienta de dataset):
+
+- **`build_signs.py`** — horneaba landmarks a JSON. Reemplazado por
+  `split_signs.py`.
+- **`patch_webview_glue.py`** — parcheaba el `app.js` procedural. Ese
+  `app.js` ya no existe.
+- **`splice_movement.py`**, **`pose_filter.py`**, **`hand_corrector.py`** — prep
+  de datos de las CSVs de LSC50. siguen siendo válidos como herramienta de
+  dataset, no como camino de render.
 
 ## `dev.sh` rápido
 

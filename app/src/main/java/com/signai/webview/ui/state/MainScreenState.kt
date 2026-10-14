@@ -340,10 +340,18 @@ class MainScreenState(
             val queue = mutableListOf<SignQueueItem>()
             for (segment in segments) {
                 for (gloss in segment.glosses) {
-                    val url = if (gloss.available) {
-                        assets.resolve(gloss.text, gloss.glbPath)
-                    } else {
-                        null
+                    // First ask whether the path is one of the animations baked
+                    // into the APK. They are same-origin by construction, so
+                    // downloading them would be a guaranteed 404 that lands us
+                    // in the fallback below — and the fallback is the default
+                    // sign, so every gloss would answer with the same movement.
+                    // Anything else keeps going down the download path, which is
+                    // where a future backend-hosted asset would come from.
+                    val local = SignsCatalog.localAssetOrNull(gloss.glbPath)
+                    val url = when {
+                        local != null -> local
+                        gloss.available -> assets.resolve(gloss.text, gloss.glbPath)
+                        else -> null
                     }
                     when {
                         url != null -> queue += SignQueueItem(

@@ -8,7 +8,7 @@ Old approaches (Flask server, Kotlin+Filament native, Unity) are dead — ignore
 Single-module Gradle project (`SignAI-WebView`, `:app` only). Compose shell + WebView that renders a local Three.js avatar. No backend, no network API.
 
 - Kotlin UI: layered packages under `app/src/main/java/com/signai/webview/` — `data/` + `domain/` (business), `ui/state/` + `ui/webview/` (presentation), `ui/{theme,designsystem,icons,components}/` (reusable UI), `ui/screens/` + `ui/MainScreen.kt` (screens). `MainActivity.kt` is a ~27-line entry point.
-- Web scene: `app/src/main/assets/web/` — `index.html`, `app.js`, `avatar.glb`, `sign.json`, `bosque.jpg`
+- Web scene: `app/src/main/assets/web/` — `index.html`, `app.js`, `bosque.jpg`, `manifest.json` + `models/avatar.glb` (the character) + `signs/<id>.glb` (one per sign, animation only)
 - Package `com.signai.webview`, portrait-locked (`AndroidManifest.xml`)
 
 ## Layers (Clean Architecture, practical)
@@ -29,6 +29,14 @@ No tests, no CI, no lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target
 ## Git workflow
 
 **Este repo es del owner: commit y push directo a `main`, sin PR ni rama de feature** (decidido 2026-09-30). No abrir PRs acá ni pedir confirmación para commitear. Los repos hermanos (`../sign-ai-backend`, `../sign-ai-stt`) sí usan PR contra `develop`, y el `CLAUDE.md` de ese repo manda no commitear sin que el usuario lo pida explícitamente.
+
+## Neon
+
+**Org: `org-orange-surf-39007829` (`sign-ai`).** Ese es el proyecto de la tesis. La cuenta tiene una segunda organización, `org-steep-paper-48927149` (`Diego`), que es personal — no tocar. Por eso el MCP de Neon **exige pasar `org_id`**: sin él devuelve *"Multiple organizations found"* y no hace nada.
+
+Credenciales en `.envJulian` (`DATABASE_URL`, gitignored) — si `psql` dice `parse error near '&'` no es el archivo: es que la línea tiene `&` sin comillas. Usar `export $(grep -o '^DATABASE_URL=.*' .envJulian | head -1 | xargs)`.
+
+La app **no habla con Neon**: la base es del backend. Neon se usa para leer/seedear el `catalog` (ver `openspec/specs/ui/spec.md`).
 
 ## UI direction
 
@@ -55,14 +63,16 @@ Contract (`window.SignAI` in `app.js`), **backward compatible** — keep the `?.
 - Added (additive): `setSpeed(factor 0..1)` (0.5 ≈ normal), `setTheme(dark)` (canvas background follows the app theme).
 Kotlin calls them with `evaluateJavascript("window.SignAI?.<method>(...)")`.
 
-JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when `play()` finishes; Kotlin registers it with `WebViewCompat.addWebMessageListener` (feature-guarded) and drives the playback state machine.
+JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` when the queue finishes, and `postMessage("avatarReady")` once the character is parsed and in the scene (that second one is what hides the splash — `onPageFinished` fires while the 10 MB GLB is still downloading). Kotlin registers the listener with `WebViewCompat.addWebMessageListener` (feature-guarded) and drives the playback state machine; when the feature is missing, `onPageFinished` falls back to hiding the splash and `SignAiSplash`'s 8 s timeout covers the rest.
 
 ## Web asset rules
 
 - `index.html` loads Three.js r169 from jsDelivr CDN via importmap → **needs INTERNET permission + connectivity at runtime**, even though avatar/data are local.
-- `app.js` is self-contained (port of old Flask `app/static/app.js`, no video, no sign picker). `avatar.glb`, `sign.json`, `bosque.jpg` load via **relative paths** — keep all five files in the same `assets/web/` dir.
-- `shouldInterceptRequest` forces `Cache-Control: no-store` so edits to `app.js`/`sign.json` show on reload; don't remove it.
-- `sign.json` is a single baked sign (`stem 0000_0000_0000`, 59 frames @24fps). Adding a sign = regenerating/replacing this file (source CSVs in `data/LANDMARKS/`: BODY/FACE/HANDS) **and** extending `domain/SignsCatalog.kt` (`available`).
+- **The character is loaded once** from `models/avatar.glb`; every sign is an animation-only GLB in `signs/<SSSS_VVVV_RRRR>.glb` replayed with `THREE.AnimationMixer`. All files load via **relative paths** — keep the `models/` + `signs/` layout.
+- **Do not put the normalization (scale/offset) on the loaded scene root.** The Cascadeur exports animate the armature root (`HG_Branden001`) in position, rotation *and* scale, so the mixer overwrites it every frame. Put the scale/offset on a parent pivot object instead, or the character renders unscaled and off-centre with no error in the console.
+- `app.js` regenerates with `python3 tools/split_signs.py`, which reads the model's raw exports from `GLB Senas/` (gitignored, ~315 MB), writes `models/avatar.glb` + `signs/*.glb`, writes `manifest.json`, and rewrites `domain/SignsCatalog.kt` so the list and the disk cannot drift. **Adding a sign = drop the new `.glb` in `GLB Senas/` and rerun that script** — never hand-edit `SignsCatalog.kt`.
+- `shouldInterceptRequest` forces `Cache-Control: no-store` so edits to `app.js` show on reload; don't remove it.
+- `renderer.setPixelRatio` is **capped at 1.75** on purpose. Uncapped, the Redmi Note 9S (dpr 2.75) renders 19.6 MP/frame and the GPU sits at ~37 ms/frame — 99% jank. Measured with `tools/rendimiento/gfxinfo.py`. Do not also force `DoubleSide` on the meshes: it is pure overdraw on closed meshes and cost another 4% of jank for zero visual change.
 
 ## Gotchas
 
