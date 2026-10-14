@@ -103,7 +103,8 @@ Main.
 | STG-5 | Escena con glow/sombra de piso | `[P]` | Glow radial detrás + elipse de piso (en el prototipo; el 3D real los reemplaza). |
 | STG-6 | Animación "is-signing" | `[P]` | Feedback visual mientras reproduce (en la app: el propio avatar animándose). |
 | STG-7 | Área del avatar respeta el layout | `[P]` | Ocupa el alto disponible entre safe-area superior y el control panel. |
-| STG-8 | Long-press resetea pose/cámara | `[A]` | Long press (500 ms) en el canvas resetea pose + cámara (`app.js`). |
+| STG-8 | Long-press resetea pose/cámara | `[A]` | Long press (500 ms) en el canvas resetea pose + cámara (`app.js`). El reset usa la misma función que el arranque (`frameCamera()`), así que el encuadre por defecto está escrito **una sola vez** (`STG-9`): antes eran los mismos números mágicos duplicados en los dos lados y cambiarlos en uno dejaba el otro en el viejo. |
+| STG-9 | Encuadre por defecto | `[N]` | **2026-10-14.** Cámara en `(0, 1.50, 2.30)` y punto de mira en `(0, 1.10, 0.00)`, fov 45°. Los dos se suben **juntos** por el mismo `FRAME_LIFT` = **0.15** sobre los valores anteriores (1.35 / 0.95): una traslación rígida de la cámara deja **el ángulo con el que se mira al muñeco idéntico** y sólo corre el encuadre hacia abajo, que es lo que pidió el owner ("subamos un poco la cámara, como ponernos más altas… sin alterar el ángulo"). Antes la cabeza rozaba el borde superior y el aviso de estado le caía encima; ahora queda ~215 px de aire arriba de la cabeza. Medido: el pelo arranca en y≈320 px en vez de y≈150. |
 
 ---
 

@@ -101,19 +101,34 @@ renderer.toneMappingExposure = 1.0;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0d0f1a);
 
+// Encuadre por defecto. La cámara y el punto de mira se suben **juntos**, por
+// el mismo `FRAME_LIFT`: eso deja el ángulo con el que se mira al muñeco
+// exactamente igual (es una traslación rígida de la cámara) y sólo corre el
+// encuadre hacia abajo, que es lo pedido — "subamos la cámara, como ponernos más
+// altas" — sin angostar ni torcer la vista. Antes (1.35 / 0.95) la cabeza del
+// muñeco rozaba el borde superior y el aviso de estado le caía encima.
+const FRAME_LIFT = 0.15;
+const FRAME_CAMERA = [0, 1.35 + FRAME_LIFT, 2.3];
+const FRAME_TARGET = [0, 0.95 + FRAME_LIFT, 0];
+
 const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
-// Las señas son de torso y manos: se encuadra de la cadera para arriba y no el
-// cuerpo entero, que en un teléfono en vertical sería una figura diminuta.
-camera.position.set(0, 1.35, 2.3);
 
 const controls = new OrbitControls(camera, canvas);
-controls.target.set(0, 0.95, 0);
+/** Vuelve al encuadre por defecto (arranque y reset por long-press). */
+function frameCamera() {
+  camera.position.set(...FRAME_CAMERA);
+  controls.target.set(...FRAME_TARGET);
+  controls.update();
+}
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.enableRotate = false;  // solo zoom: sin orbitar ni pan
 controls.enablePan = false;
 controls.minDistance = 1.4;
 controls.maxDistance = 3.8;
+// Las señas son de torso y manos: se encuadra de la cadera para arriba y no el
+// cuerpo entero, que en un teléfono en vertical sería una figura diminuta.
+frameCamera();
 
 scene.add(new THREE.HemisphereLight(0xffffff, 0x6b6b66, 1.0));
 const key = new THREE.DirectionalLight(0xffffff, 2.2);
@@ -450,9 +465,7 @@ canvas.addEventListener("pointerdown", (e) => {
   pressTimer = setTimeout(() => {
     pressTimer = null;
     stopPlayback();
-    camera.position.set(0, 1.35, 2.3);
-    controls.target.set(0, 0.95, 0);
-    controls.update();
+    frameCamera();
     Debug.lastTap = "reset (long press)";
   }, 500);
 });
