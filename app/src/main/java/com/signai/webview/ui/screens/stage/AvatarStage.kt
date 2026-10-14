@@ -42,6 +42,10 @@ import com.signai.webview.ui.theme.SignAiTheme
  * The WebView itself is passed as [content] so this stays a presentation
  * component and never touches the bridge directly.
  */
+
+/** Space between the Repetir button and the top edge of the control bar. */
+private val RepeatGap = 32.dp
+
 @Composable
 fun AvatarStage(
     status: String,
@@ -78,12 +82,15 @@ fun AvatarStage(
         }
 
         // Repetir: only after a completed playback, centered a little above the
-        // overlaid control bar.
+        // overlaid control bar. The gap is [bottomInset] (the measured bar
+        // height) plus [RepeatGap]: 64 dp and the owner asked for "half", so 32.
+        // Half, not nothing — glued to the bar it would read as part of it, and
+        // the bar's own top edge is where the input's focus ring draws.
         AnimatedVisibility(
             visible = doneVisible,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 64.dp + bottomInset),
+                .padding(bottom = RepeatGap + bottomInset),
             enter = fadeIn() + scaleIn(initialScale = 0.9f),
             exit = fadeOut() + scaleOut(targetScale = 0.9f),
         ) {

@@ -70,15 +70,30 @@ Lo que hay que saber antes de tocar esto:
   la etiqueta a `muted`, nunca bajándole el alfa a la superficie** (ver
   `SignAiBottomBar`). Prendido, cada uno es el único que puede cortar su modo, así
   que nunca se bloquea.
-- **Lo que la voz ya mandó no se puede volver a mandar.** Al apagar el TR (y al
-  autoenviar el dictado) el campo conserva la frase en `readOnly` con Traducir
-  deshabilitado durante `VoiceTextHoldMs` = **1500 ms** (`sentVoiceText` en
-  `MainScreenState`), y después se borra y el campo y Traducir vuelven **en la
-  misma asignación**: no hay estado con el campo vacío y el botón muerto. Sin eso
-  el botón invitaba a reenviar lo ya firmado. Hay log de los dos momentos
-  (`texto ya firmado` / `texto retenido borrado`): la ventana es más corta que el
-  ida y vuelta de `mobile-mcp`, así que el logcat es la prueba y el árbol de
-  accesibilidad la confirmación.
+- **Lo ya enviado no se puede volver a mandar, venga de donde venga.** El campo
+  conserva la frase en `readOnly` con Traducir deshabilitado durante
+  `SentTextHoldMs` = **1500 ms** (`sentText` en `MainScreenState`), y después se
+  borra y el campo y Traducir vuelven **en la misma asignación**: no hay estado
+  con el campo vacío y el botón muerto. Sin eso el botón invitaba a reenviar lo
+  ya firmado. Aplica a los **cuatro** caminos que firman una frase: el dictado al
+  apagarse, el TR mientras se hablaba, un Traducir a mano (botón o Enter) y el
+  Repetir — los dos últimos los agregó el owner con "es la misma situación que lo
+  que sucedía con el botón de tiempo real". La retención se prende en
+  `requestTranslation`, el único lugar por donde pasan los tres últimos, y **no en
+  cada llamador**: es el punto donde se sabe que la frase salió de verdad, y
+  retener antes dejaría el campo bloqueado ante un envío rechazado. Hay log de
+  los dos momentos (`texto ya enviado` / `texto retenido borrado`): la ventana es
+  más corta que el ida y vuelta de `mobile-mcp`, así que el logcat es la prueba
+  y el árbol de accesibilidad la confirmación.
+- **`replayPending` se prende adentro de `requestTranslation`, no en el llamador.**
+  El panel entero tiene que quedar deshabilitado desde el toque hasta que la seña
+  **termine** (`CTL-12`), para los dos Repetir. Se prendía en
+  `repeatTurnFromDrawer` —solo el del drawer— y lo soltaba **el primer
+  fragmento**, que es cuando la seña empieza: el panel se liberaba a los ~50 ms
+  del toque. Lo sueltan `onPlaybackDone`, `fail()` y el caso "no produjo ninguna
+  seña"; si se prendiera antes de los descartes tempranos de
+  `requestTranslation`, el panel quedaría muerto para siempre, sin Repetir que lo
+  vuelva a prender.
 - **El `end` va antes que el `mode`.** El cliente manda `end` y después el modo
   nuevo; el backend termina el utterance anterior con el modo con el que empezó.
   Invertir el orden rompe las dos direcciones.

@@ -95,7 +95,7 @@ se deshabilita, porque es el único botón que puede cortar el modo continuo.
 5. Al mandar, Traducir queda **deshabilitado 1,5 s** con el texto a la vista:
    no se puede reenviar lo que ya se firmó. Pasados 1,5 s el texto se borra solo
    y el campo y Traducir vuelven a quedar utilizables. En los logs son las dos
-   líneas `texto ya firmado` y `texto retenido borrado`.
+   líneas `texto ya enviado` y `texto retenido borrado`.
 6. Cuando termine de firmar, Traducir, Historial, el micrófono y el campo quedan
    **habilitados**.
 
@@ -190,6 +190,32 @@ Whisper de verdad:
 python scripts/verify_voice_modes.py --clips 3     # en sign-ai-backend
 tools/verificar-tiempo-real.sh voz                  # lo mismo + el bloque de servicios
 ```
+
+### D. Traducir y Repetir — la misma retención que el micrófono
+
+Esto se verifica **sin hablar**, y es la mitad de lo que el dueño報告aba: un
+Traducir a mano y el Repetir dejaban la frase en el campo con Traducir
+habilitado, así que un toque más firmaba la misma frase dos veces.
+
+1. Escribí una frase larga (5 o 6 señas, para tener ventana) y tocá **Traducir**.
+2. La frase queda en el campo y **Traducir se deshabilita 1,5 s**; a los 1,5 s el
+   texto se borra solo. En el log son `texto ya enviado` y `texto retenido borrado`
+   (la segunda línea, 1501 ms después de la primera).
+3. Cuando termine de firmar, tocá **Repetir** (el botón del escenario, abajo al
+   centro).tiene que pasar lo mismo: la frase a la vista, Traducir muerto 1,5 s,
+   y el texto que se va solo.
+4. **Durante toda la seña —no solo mientras traduce— el panel entero está
+   deshabilitado**: micrófono, Historial y TR se ven en `muted` y no responden.
+   Antes se liberaban a los ~50 ms del toque, cuando la seña recién arrancaba.
+   Cuando el muñeco termina, el panel vuelve solo.
+
+El punto 4 es el que se ve mejor mirando los tres iconos: pasan de `text`
+(244 en el gris del pixel más claro del glifo) a `muted` (148) y vuelven. Si
+quedaran prendidos mientras el muñeco firma, es que `replayPending` se soltó antes
+de `onPlaybackDone`.
+
+Repetir también baja 32 dp (a `AvatarStage.RepeatGap`): el botón quedó más
+cerca de la barra, sin pegarse.
 
 **La pausa entre palabras importa.** Un hangover de 600 ms parte la frase en dos
 si hablás corrido. Está deliberado: las señas se pueden encadenar, y partir más

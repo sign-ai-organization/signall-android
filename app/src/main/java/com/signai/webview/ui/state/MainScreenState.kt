@@ -52,19 +52,19 @@ private const val MaxReconnectAttempts = 5
 private const val StatusOverrideMs = 3_000L
 
 /**
- * Cuánto se deja a la vista la frase que la app ya mandó con la voz.
+ * Cuánto se deja a la vista la frase que la app ya mandó.
  *
- * El campo tiene que conservarla —es el texto que el usuario acaba de decir y
- * lo que el avatar está firmando— pero durante este tiempo Traducir está
- * deshabilitado: ofrecer el botón sería invitar a reenviar lo que ya se
- * envió. Al cumplirse, el texto se borra solo y el panel vuelve a quedar libre.
+ * El campo tiene que conservarla —es la frase que el avatar está firmando— pero
+ * durante este tiempo Traducir está deshabilitado: ofrecer el botón sería
+ * invitar a reenviar lo que ya se envió. Al cumplirse, el texto se borra solo y
+ * el panel vuelve a quedar libre.
  *
  * Corto a propósito, y a pedido del owner: medio minuto de texto viejo en el
  * campo se lee como un input trabado, y con 5 s el usuario llegaba a creer que
  * la app se había colgado. 1,5 s alcanza para ver que el texto se va solo, y la
  * frase no se pierde: ya está en el historial y en el panel de conversación.
  */
-private const val VoiceTextHoldMs = 1_500L
+private const val SentTextHoldMs = 1_500L
 
 private const val TAG = "SignAiState"
 
@@ -166,8 +166,15 @@ class MainScreenState(
         private set
 
     /**
-     * True from a conversation Repetir tap until the replayed sign ends: keeps
-     * the control panel disabled (`CNV-7`).
+     * True while a Repetir is in flight, from the tap to the end of the sign:
+     * keeps the whole control panel disabled (`CTL-12`).
+     *
+     * Both entry points go through [requestTranslation] —the stage button and
+     * the conversation drawer— and so does the release: [onPlaybackDone],
+     * `fail()`, and the "la frase no produjo ninguna seña" case. It used to be
+     * cleared by the first streamed fragment, which is when signing *starts*:
+     * that released the panel halfway through the sign the owner had asked to
+     * see it locked.
      */
     var replayPending by mutableStateOf(false)
         private set
@@ -291,27 +298,29 @@ class MainScreenState(
     private var dictationAutoSend = false
 
     /**
-     * La frase que la app ya mandó con la voz, a la vista pero no mandable.
+     * La frase que la app ya mandó, a la vista pero no mandable.
      *
-     * Cuando el micrófono manda solo —el dictado al apagarse, el tiempo real
-     * mientras se hablaba— el campo queda con lo que el avatar está firmando. Si
-     * Traducir volviera a estar habilitado ahí, el botón ofrecería mandar otra
-     * vez lo que ya se mandó y el muñeco firmaría la frase dos veces seguidas por
-     * un solo toque.
+     * El campo queda con lo que el avatar está firmando **siempre que la frase
+     * salió sin que nadie tocara Traducir**: el dictado al apagarse, el tiempo
+     * real mientras se hablaba, un Traducir a mano y el Repetir del escenario.
+     * Si Traducir volviera a estar habilitado ahí, el botón ofrecería mandar
+     * otra vez lo que ya se mandó y el muñeco firmaría la frase dos veces
+     * seguidas por un solo toque — que es lo mismo que pasó con el botón de
+     * tiempo real y el owner pidió arreglarlo igual para los cuatro.
      *
-     * Se borra sola a los [VoiceTextHoldMs]. Nada se pierde: la frase ya quedó
+     * Se borra sola a los [SentTextHoldMs]. Nada se pierde: la frase ya quedó
      * en el historial y en el panel de conversación.
      */
-    var sentVoiceText by mutableStateOf<String?>(null)
+    var sentText by mutableStateOf<String?>(null)
         private set
 
-    /** El campo tiene el texto ya firmado: no se puede mandar otra vez. */
-    val voiceTextLocked: Boolean get() = sentVoiceText != null
+    /** El campo tiene el texto ya enviado: no se puede mandar otra vez. */
+    val sentTextLocked: Boolean get() = sentText != null
 
-    private var sentVoiceTextJob: Job? = null
+    private var sentTextJob: Job? = null
 
     /**
-     * Deja a la vista la frase que la voz ya mandó, sin que se pueda reenviar.
+     * Deja a la vista la frase que la app ya mandó, sin que se pueda reenviar.
      *
      * El campo conserva el texto y Traducir queda deshabilitado mientras dure.
      * Los dos cambios —el texto que se borra y el botón que vuelve— ocurren en
@@ -319,36 +328,43 @@ class MainScreenState(
      * con el botón muerto, ni al revés: se va el texto y en el mismo fotograma
      * Traducir y el campo vuelven a estar utilizables.
      */
-    private fun holdSentVoiceText(text: String) {
+    private fun holdSentText(text: String) {
         val clean = text.trim()
         if (clean.isEmpty()) return
-        sentVoiceText = clean
+        sentText = clean
         // El aviso dura lo mismo que el texto: si viviera más, se leería
         // "el texto se borra solo" con el texto ya borrado.
-        showStatus("Ya está firmado.", VoiceTextHoldMs)
-        Log.i(TAG, "texto ya firmado: retenido ${VoiceTextHoldMs}ms, Traducir bloqueado. \"$clean\"")
-        sentVoiceTextJob?.cancel()
-        sentVoiceTextJob = scope.launch {
-            delay(VoiceTextHoldMs)
+        //
+        // Y solo cuando el avatar no está todavía en "Traduciendo": durante la
+        // traducción el campo ya está bloqueado por `busy`, que se explica solo,
+        // y pisar el estado con "Ya está firmado." antes de que la frase ni se
+        // haya traducido era una contradicción a la vista.
+        if (playbackState != PlaybackState.Translating) {
+            showStatus("Ya está firmado.", SentTextHoldMs)
+        }
+        Log.i(TAG, "texto ya enviado: retenido ${SentTextHoldMs}ms, Traducir bloqueado. \"$clean\"")
+        sentTextJob?.cancel()
+        sentTextJob = scope.launch {
+            delay(SentTextHoldMs)
             // Solo si sigue intacto: si llegó otro texto al campo, ya no es el
             // mismo y no hay que borrarlo.
-            if (sentVoiceText != clean || inputText != clean) return@launch
+            if (sentText != clean || inputText != clean) return@launch
             // Las dos asignaciones juntas: el texto desaparece y el campo y
             // Traducir vuelven a estar libres en el mismo fotograma.
             inputText = ""
             transcript = ""
-            sentVoiceText = null
+            sentText = null
             Log.i(TAG, "texto retenido borrado: Traducir y el campo vuelven a estar disponibles")
         }
     }
 
-    /** Suelta la retención: llegó al campo un texto que no es el ya firmado. */
-    private fun releaseSentVoiceText() {
-        if (sentVoiceText == null) return
+    /** Suelta la retención: llegó al campo un texto que no es el ya enviado. */
+    private fun releaseSentText() {
+        if (sentText == null) return
         Log.i(TAG, "texto retenido liberado: el campo tiene otro texto, ya es otra frase")
-        sentVoiceTextJob?.cancel()
-        sentVoiceTextJob = null
-        sentVoiceText = null
+        sentTextJob?.cancel()
+        sentTextJob = null
+        sentText = null
     }
 
     /**
@@ -448,7 +464,6 @@ class MainScreenState(
                 }
                 playbackState = PlaybackState.Signing
                 queuePlaying = true
-                replayPending = false
                 metrics.onFragment(SystemClock.elapsedRealtime() - startedAt, items.size)
             }
         }
@@ -705,9 +720,10 @@ class MainScreenState(
         Log.i(TAG, "dictado → envío: ${text.length} caracteres, ${text.split(' ').size} palabras")
         playbackState = PlaybackState.Idle
         play(text)
-        // El texto sigue en el campo, pero ya se mandó: quedaría habilitado para
-        // firmarlo otra vez por un toque.
-        holdSentVoiceText(text)
+        // La retención del texto ya la pone `requestTranslation`, que es el
+        // lugar donde se sabe que la frase salió de verdad: si el envío se
+        // rechaza —micrófono prendido, frase en vuelo, sin conexión— aquí no
+        // hubo nada que retener.
     }
 
     private fun joinWords(first: String, second: String): String =
@@ -787,6 +803,14 @@ class MainScreenState(
         pendingText = text
         lastText = text
         isReplay = replay
+        // El panel entero queda deshabilitado desde el toque hasta que la seña
+        // termina (`CTL-12`), para los dos Repetir: el del escenario y el de un
+        // turno del panel de conversación. Se prende **acá** y no en
+        // `replayTurn` porque arriba hay cuatro salidas tempranas —micrófono
+        // prendido, frase en vuelo, sin conexión— y desde cualquiera de ellas el
+        // panel se quedaría deshabilitado para siempre, sin Repetir que lo
+        // vuelva a prender. `fail()` y `onPlaybackDone()` lo apagan.
+        if (replay) replayPending = true
         inputText = text
         transcript = text
         statusOverride = null
@@ -795,6 +819,12 @@ class MainScreenState(
         pendingTotal = 0
         resetStreamingTurn()
         playbackState = PlaybackState.Translating
+        // Toda frase que sale de acá queda retenida en el campo, la mande quien
+        // la mande: el dictado al apagarse entra por acá, y también un Traducir
+        // a mano y el Repetir del escenario. Sin esto, Traducir y Repetir
+        // dejaban la frase en el campo con el botón habilitado y el avatar
+        // firmaba la misma frase dos veces por un solo toque.
+        holdSentText(text)
     }
 
     /**
@@ -830,9 +860,13 @@ class MainScreenState(
         audio.stop()
         micMode = MicMode.Off
         dictationAutoSend = false
-        // La frase no llegó a firmarse, así que no está "ya firmado": si el
+        // La frase no llegó a firmarse, así que no está "ya enviada": si el
         // campo la muestra, el usuario tiene que poder mandarla otra vez.
-        releaseSentVoiceText()
+        releaseSentText()
+        // Y si lo que se cayó era un Repetir, el panel estaba deshabilitado
+        // desde el toque esperando esta seña: sin esto se quedaba muerto, sin
+        // un Repetir que lo vuelva a prender.
+        replayPending = false
         queuePlaying = false
         resetStreamingTurn()
         caption = ""
@@ -999,7 +1033,7 @@ class MainScreenState(
         inputText = ""
         // Y la retención de lo ya firmado se cae con ella: la frase anterior ya
         // no está en el campo, así que no hay nada que proteger del reenvío.
-        releaseSentVoiceText()
+        releaseSentText()
         if (mode == MicMode.Dictation) {
             dictationBuffer = ""
             dictationOpen = false
@@ -1043,7 +1077,7 @@ class MainScreenState(
             dictationBuffer = ""
             dictationOpen = false
             dictationAutoSend = false
-            releaseSentVoiceText()
+            releaseSentText()
         }
         streamingTurn = false
         resetStreamingTurn()
@@ -1079,7 +1113,7 @@ class MainScreenState(
             // deja a la vista pero sin invitar a firmarla otra vez. Si hay
             // dictado sin mandar, en cambio, el campo es suyo y Traducir tiene
             // que estar disponible.
-            holdSentVoiceText(spokenText)
+            holdSentText(spokenText)
         }
 
         // Nothing came back at all: the user turned the mic off without saying
@@ -1231,12 +1265,15 @@ class MainScreenState(
         // Con el micrófono prendido el campo está en `readOnly`, pero un teclado
         // que ya estaba abierto puede entregar texto igual. Se ignora en vez de
         // pisar la transcripción en vivo, que es lo que el campo está mostrando.
-        if (micActive) return
+        // Con un Repetir en vuelo pasa lo mismo: el campo muestra la frase que se
+        // está firmando y un teclado olvidado la pisaría, soltando la retención
+        // antes de tiempo.
+        if (micActive || replayPending) return
         // El campo está en `readOnly` mientras el texto retenido está a la vista,
         // así que acá solo puede llegar un teclado que ya estaba abierto. Ese
-        // texto es otra frase, no la que la voz ya mandó, y por lo tanto no es un
+        // texto es otra frase, no la que la app ya mandó, y por lo tanto no es un
         // reenvío: la retención se suelta.
-        if (text != sentVoiceText) releaseSentVoiceText()
+        if (text != sentText) releaseSentText()
         inputText = text
     }
 

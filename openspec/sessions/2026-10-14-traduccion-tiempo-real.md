@@ -488,6 +488,64 @@ De paso quedó confirmado en el dispositivo que tocar el campo con el
 micrófono prendido **no abre el teclado**: `readOnly` no lo pide, y no hay nada
 que escribir.
 
+## Quinta vuelta: Repetir y Traducir, la misma retención que el micrófono
+
+El owner: "que el botón de repetir repita la última cosa enviada, y que se
+desactiven todos los botones mientras se está ejecutando la seña; bajá un poco
+el botón; y que el texto que se está repitiendo aparezca en el input pero se
+borre a los 1,5 s, igual que el de tiempo real. Y que funcione igual con el botón
+de enviar: el texto no se reaparece y que el botón de enviar reenvíe."
+
+Tres cosas, y una de ellas era un bug de verdad.
+
+**El panel se liberaba a mitad de seña.** `replayPending` —el flag que deshabilita
+todo el panel durante un Repetir— lo prendía `repeatTurnFromDrawer`, o sea solo el
+del drawer de conversación: el botón del escenario no lo prendía nunca. Y lo
+soltaba **el primer fragmento**, que es justo cuando la seña empieza a firmarse:
+el panel volvía a quedar habilitado a los ~50 ms del toque, con el muñeco todavía
+firmando. El `CTL-12` de la spec ya decía "hasta que la seña termina"; el código
+no lo cumplía. Ahora el flag se prende en `requestTranslation` cuando el replay es
+real (los dos caminos pasan por ahí) y lo sueltan `onPlaybackDone`, `fail()` y el
+caso "la frase no produjo ninguna seña". Se prende **después** de los cuatro
+descartes tempranos a propósito: si se prendiera en `replayTurn`, desde cualquiera
+de ellos el panel quedaría muerto para siempre, sin un Repetir que lo vuelva a
+prender.
+
+**El texto retenido era solo del micrófono.** La retención de 1,5 s vivía en
+`sendDictation()` y en el apagado del TR, así que un Traducir a mano y el Repetir
+dejaban la frase en el campo con Traducir habilitado —el avatar firmaba la misma
+frase dos veces por dos toques—. Ahora la retención se prende en
+`requestTranslation`, que es por donde pasan las tres últimas, y el nombre dejó de
+ser de la voz: `sentVoiceText` → `sentText`, `VoiceTextHoldMs` →
+`SentTextHoldMs`. Se prende **ahí** y no en cada llamador porque es el único punto
+donde se sabe que la frase salió de verdad: si `sendDictation` retuviera antes de
+`play()`, un envío rechazado (mic prendido, frase en vuelo, sin conexión) dejaría
+el campo bloqueado sin nada que firmar.
+
+De paso, el aviso "Ya está firmado." no se muestra si el estado es `Translating`:
+durante la traducción el campo ya está bloqueado por `busy` y se explica solo, y
+pisar el estado con "ya firmado" antes de que la frase ni se hubiera traducido
+era una contradicción a la vista.
+
+**El botón bajó 32 dp** (`AvatarStage.RepeatGap`, era 64 literal): el owner pidió
+la mitad del hueco, no cero.
+
+### Verificado en el Redmi Note 9S
+
+- **Traducir**: `texto ya enviado: retenido 1500ms, Traducir bloqueado. "hola que
+  tal"` y `texto retenido borrado` **1501 ms** después. Por píxel, el campo tiene
+  2030 píxeles claros a los ~1 s del envío (el texto a la vista) y 0 a los ~1,9 s.
+- **Repetir** de una frase de 5 señas: el texto aparece y desaparece en la misma
+  ventana de 1,5 s, y los tres iconos del panel (mic, Historial, TR) caen de
+  **244** (color `text`) a **148** (color `muted`) entre t+1,2 s y t+8 s, y vuelven
+  a 244 en t+10 s, que es justo cuando terminan las 5 señas (5 × 2,15 s). Con el
+  código anterior todos seguían en 244 desde los ~50 ms.
+- El botón quedó en y=1756 px en vez de y=1668: 88 px = los 32 dp de menos.
+
+Lo único que no se pudo probar sin voz es el dictado: su retención cambió de
+lugar, pero sigue pasando por el mismo `requestTranslation` que Traducir y
+Repetir, que es lo que sí se verificó.
+
 ## Pendiente
 
 1. ~~**Probarlo con voz humana.**~~ **Hecho**: tiempo real y dictado, los dos, en
