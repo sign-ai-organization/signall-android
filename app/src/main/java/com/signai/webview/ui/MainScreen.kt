@@ -179,6 +179,13 @@ fun MainScreen(state: MainScreenState) {
                                 onSend = state::play,
                                 onMic = onMic,
                                 onOpenHistory = { showHistory = true },
+                                // El micro es un interruptor: queda prendido
+                                // hasta que se lo toca de nuevo, así que su
+                                // estado visual y su habilitación vienen de acá
+                                // y no de `playbackState`, que con el micro
+                                // prendido pasa a `Signing` mientras firma.
+                                micActive = state.micActive,
+                                micAvailable = state.backendConnected,
                                 enabled = !state.replayPending,
                             )
                         }

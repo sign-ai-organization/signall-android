@@ -30,6 +30,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -56,6 +57,8 @@ fun SignAiBottomBar(
     onSend: (String) -> Unit,
     onMic: () -> Unit,
     onOpenHistory: () -> Unit,
+    micActive: Boolean = false,
+    micAvailable: Boolean = true,
     enabled: Boolean = true,
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
@@ -68,8 +71,23 @@ fun SignAiBottomBar(
 
     val sendEnabled =
         controlsEnabled &&
-            query.isNotBlank()
-    val listening = playbackState == PlaybackState.Listening
+            query.isNotBlank() &&
+            // Con el micro prendido no: texto y voz van por el mismo socket y el
+            // backend no puede saber de quién es cada fragmento. Intercalados, el
+            // `index` de los fragmentos de voz deja de corresponderse con el orden
+            // en que llegaron y el avatar firmaría la frase al revés. Son dos
+            // formas de mandar, no dos a la vez.
+            !micActive
+
+    // El micro es un interruptor, no un botón de un instante, así que su
+    // estado visual viene de [micActive] y no de `playbackState`: con el micro
+    // prendido el muñeco firma al mismo tiempo, así que el estado de la
+    // reproducción pasa a `Signing` y el botón se vería apagado justo cuando
+    // está captando. Y nunca se deshabilita mientras esté prendido: si la única
+    // forma de pararlo quedara bloqueada durante una seña, no habría forma de
+    // pararlo.
+    val listening = micActive
+    val micEnabled = enabled && micAvailable
 
     val send: () -> Unit = {
         val text = query.trim()
@@ -106,13 +124,25 @@ fun SignAiBottomBar(
                 OutlinedTextField(
                     value = query,
                     onValueChange = onQueryChange,
-                    enabled = controlsEnabled,
+                    // Con el mic prendido el campo se vuelve pantalla, no
+                    // teclado: sigue mostrando lo que se está transcribiendo en
+                    // vivo (`inputText` lo va llenando el handler de
+                    // `Transcript`), pero no acepta escritura ni abre el teclado.
+                    // Deliberadamente `readOnly` y no `enabled`: un campo
+                    // deshabilitado se atenúa y el texto se vuelve difícil de
+                    // leer, y acá el texto es justo lo que el usuario quiere ver.
+                    enabled = controlsEnabled || micActive,
+                    readOnly = micActive,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = { send() }),
                     placeholder = {
                         SignAiText(
-                            text = "Escribe una frase...",
+                            text = if (micActive) {
+                                "Escuchando..."
+                            } else {
+                                "Escribe una frase..."
+                            },
                             color = SignAiTheme.colors.muted,
                         )
                     },
@@ -134,7 +164,10 @@ fun SignAiBottomBar(
                     icon = SignAiIcons.History,
                     contentDescription = "Historial reciente",
                     onClick = onOpenHistory,
-                    enabled = controlsEnabled,
+                    // Con el mic prendido el panel se ocupa solo de escuchar:
+                    // texto, Traducir e Historial quedan fuera. La conversación en
+                    // curso ya se ve en el escenario, así que nada se pierde.
+                    enabled = controlsEnabled && !micActive,
                 )
             }
 
@@ -182,7 +215,10 @@ fun SignAiBottomBar(
                     contentDescription = "Entrada por voz",
                     onClick = onMic,
                     active = listening,
-                    enabled = controlsEnabled,
+                    enabled = micEnabled,
+                    toggle = true,
+                    activeDescription = "Escuchando. Tocar para dejar de escuchar.",
+                    inactiveDescription = "Apagado. Tocar para empezar a escuchar.",
                 )
             }
         }
@@ -196,6 +232,9 @@ private fun ControlIconButton(
     onClick: () -> Unit,
     active: Boolean = false,
     enabled: Boolean = true,
+    toggle: Boolean = false,
+    activeDescription: String = "",
+    inactiveDescription: String = "",
 ) {
     val shape = SignAiShapes.cornerControl
     val container = if (active) SignAiTheme.colors.strong else SignAiTheme.colors.soft
@@ -228,8 +267,16 @@ private fun ControlIconButton(
                 },
             )
             .semantics {
-                role = Role.Button
+                // El micrófono es un interruptor (queda prendido hasta que se
+                // toca de nuevo), no un botón. `stateDescription` es lo que
+                // lee TalkBack, y deja el `contentDescription` libre para los
+                // selectors de las pruebas, que no cambian al prenderlo.
+                role = if (toggle) Role.Switch else Role.Button
                 this.contentDescription = contentDescription
+                if (toggle) {
+                    this.stateDescription =
+                        if (active) activeDescription else inactiveDescription
+                }
             },
     ) {
         Box(

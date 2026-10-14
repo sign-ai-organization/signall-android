@@ -36,6 +36,34 @@ tools/verificar-tiempo-real.sh incremental   # no services needed; runs in the b
 - `REALTIME_ENABLED=false` on the backend restores the old whole-phrase behaviour
   exactly. Both modes are covered in the backend's `verify_client_frames.py`.
 
+### El micrófono es un interruptor, no un pulsador
+
+Desde el 2026-10-14 el mic **no se apaga solo**. Un toque lo prende, otro lo
+apaga, y en el medio el usuario sigue hablando sin tocar nada. Un `final` solo
+dice "esta frase se cerró"; el STT abre el utterance siguiente por su cuenta.
+
+Lo que hay que saber antes de tocar esto:
+
+- **`playbackState` ya no dice si el mic está prendido.** Antes un solo enum
+  decía dos cosas —"¿está el mic prendido?" y "¿qué hace el muñeco?"— y eso
+  solo funcionaba porque el mic se apagaba en cada frase. Ahora se superponen de
+  verdad y la fuente de verdad del mic es `MainScreenState.micActive`. Un método
+  nuevo que apague o encienda el mic tiene que tocar **los dos**.
+- **Nunca uses `playbackState == Listening` como "el mic está prendido".** Con el
+  mic prendido y el muñeco firmando, el estado es `Signing`.
+- **El botón de mic nunca se deshabilita mientras esté prendido.** Si la única
+  forma de pararlo quedara bloqueada durante una seña, no habría forma de
+  pararlo.
+- **Con el mic prendido, Traducir e Historial están deshabilitados y el input es
+  `readOnly`.** Texto y voz van por el mismo socket y el backend no puede saber
+  de quién es cada fragmento; mezclados, el avatar firma la frase al revés. El
+  input sigue mostrando la transcripción en vivo, que es lo que el usuario
+  quiere ver: por eso `readOnly` y no `enabled` (un campo deshabilitado se
+  atenúa y el texto se vuelve ilegible).
+- `resumeListeningIfMicOn()` es lo que devuelve la interfaz a "escuchando" al
+  cerrar una frase o una seña. Sin eso el botón se vería apagado mientras
+  captura.
+
 ### Gotchas specific to real-time
 
 - **The 32 exported signs average 2.15 s each** (2.08–2.75 s, from `manifest.json`).
