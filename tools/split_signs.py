@@ -21,16 +21,22 @@ Además de separar, el script:
     porque un esqueleto distinto es el único error que no se ve en pantalla: la
     seña carga bien y se queda quieta);
   * regenera `domain/SignsCatalog.kt` desde los archivos realmente escritos, para
-    que la lista y el disco no se puedan desincronizar.
+    que la lista y el disco no se puedan desincronizar;
+  * hornea la **pose de descanso** del avatar (`rest_pose.py`), al final y no
+    antes, porque sale de un clip de `signs/` que este mismo script acaba de
+    escribir. Sin esto, regenerar dejaría al muñeco con los brazos abiertos.
 
 Self-contained: no necesita `blender`, ni `npm`, ni `three`.
 """
 import hashlib
 import json
-import shutil
 import struct
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import glb_pose as gp  # noqa: E402  — el lector de GLB vive ahí para todos
+import rest_pose  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 SRC_DEFAULT = REPO / "GLB Senas"
@@ -40,40 +46,8 @@ CATALOG_PATH = REPO / "app/src/main/java/com/signai/webview/domain/SignsCatalog.
 # Componentes de accessor → stride en floats, para leer el bbox del personaje.
 COMPONENTS = {"VEC2": 2, "VEC3": 3, "VEC4": 4, "SCALAR": 1, "MAT4": 16}
 
-
-# ── GLB lectura/escritura ─────────────────────────────────────────────────────
-
-def read_glb(path):
-    """Devuelve (json, binario) de un .glb."""
-    raw = Path(path).read_bytes()
-    magic, version, _length = struct.unpack_from("<III", raw, 0)
-    if magic != 0x46546C67:
-        raise ValueError(f"{path}: no es un GLB")
-    offset, js, binary = 12, None, b""
-    while offset < len(raw):
-        chunk_len, chunk_type = struct.unpack_from("<II", raw, offset)
-        data = raw[offset + 8: offset + 8 + chunk_len]
-        if chunk_type == 0x4E4F534A:
-            js = json.loads(data.decode("utf-8"))
-        elif chunk_type == 0x004E4942:
-            binary = data
-        offset += 8 + chunk_len + ((4 - chunk_len % 4) % 4 if chunk_len % 4 else 0)
-    if js is None:
-        raise ValueError(f"{path}: sin chunk JSON")
-    return js, binary
-
-
-def write_glb(path, js, binary):
-    """Escribe un .glb. `binary` es exactamente el BIN chunk, sin padding extra."""
-    js_bytes = json.dumps(js, separators=(",", ":")).encode("utf-8")
-    js_bytes += b" " * ((4 - len(js_bytes) % 4) % 4)
-    bin_bytes = binary + b"\x00" * ((4 - len(binary) % 4) % 4)
-    total = 12 + 8 + len(js_bytes) + 8 + len(bin_bytes)
-    out = struct.pack("<III", 0x46546C67, 2, total)
-    out += struct.pack("<II", len(js_bytes), 0x4E4F534A) + js_bytes
-    out += struct.pack("<II", len(bin_bytes), 0x004E4942) + bin_bytes
-    Path(path).write_bytes(out)
-    return len(out)
+read_glb = gp.read_glb
+write_glb = gp.write_glb
 
 
 # ── Recortes ──────────────────────────────────────────────────────────────────
@@ -379,6 +353,17 @@ def main():
         json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
 
     n_catalog = write_catalog(manifest)
+
+    # La pose de descanso va **último**: sale de `signs/0029_0000_0000.glb`, que
+    # este script acaba de escribir. Va en el json del avatar y se vuelve a
+    # guardar; el archivo no cambia de tamaño (solo se sobrescriben rotaciones
+    # que ya estaban) ni de bbox (el alto/ancho sale de los accessors
+    # POSITION, que no se tocan).
+    rest_pose.check_bind(avatar_js, avatar_bin)
+    print()
+    for line in rest_pose.report_lines(rest_pose.bake_rest_pose(avatar_js, signs)):
+        print(line)
+    avatar_size = write_glb(models / "avatar.glb", avatar_js, avatar_bin)
 
     avatar_mb = (models / "avatar.glb").stat().st_size
     signs_mb = sum(m["bytes"] for m in manifest)
