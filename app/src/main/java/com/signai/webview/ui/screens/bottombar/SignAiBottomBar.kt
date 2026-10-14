@@ -46,8 +46,20 @@ import com.signai.webview.ui.state.PlaybackState
 import com.signai.webview.ui.theme.SignAiTheme
 
 /**
- * Control panel (spec `CTL-*`): phrase input + history, and the
- * `Traducir | Micrófono` action row from the prototype.
+ * Control panel (spec `CTL-*`), en dos filas:
+ *
+ * 1. `[ input de texto | 🎤 micrófono | 🕐 historial ]`
+ * 2. `[ ➤ Traducir | TR ]`
+ *
+ * Los dos botones de la derecha son cosas distintas y no se confunden:
+ *
+ * - **Micrófono (fila 1)** — dictado: convierte la voz en texto dentro del
+ *   input. Suelta y el texto queda ahí para mandarlo con Traducir.
+ * - **TR (fila 2)** — "tiempo real": el interruptor continuo, el que firman
+ *   mientras se habla sin cortar.
+ *
+ * El input usa `weight(1f)` y los dos botones son de ancho fijo, así que el
+ * micrófono le saca ancho al campo sin tocar ningún tamaño.
  */
 @Composable
 fun SignAiBottomBar(
@@ -161,10 +173,20 @@ fun SignAiBottomBar(
                     ),
                 )
                 ControlIconButton(
+                    icon = SignAiIcons.Mic,
+                    contentDescription = "Entrada por voz",
+                    onClick = onMic,
+                    active = listening,
+                    enabled = micEnabled,
+                    toggle = true,
+                    activeDescription = "Escuchando. Tocar para dejar de escuchar.",
+                    inactiveDescription = "Apagado. Tocar para empezar a escuchar.",
+                )
+                ControlIconButton(
                     icon = SignAiIcons.History,
                     contentDescription = "Historial reciente",
                     onClick = onOpenHistory,
-                    // Con el mic prendido el panel se ocupa solo de escuchar:
+                    // Con el micro prendido el panel se ocupa solo de escuchar:
                     // texto, Traducir e Historial quedan fuera. La conversación en
                     // curso ya se ve en el escenario, así que nada se pierde.
                     enabled = controlsEnabled && !micActive,
@@ -210,21 +232,72 @@ fun SignAiBottomBar(
                     }
                 }
 
-                ControlIconButton(
-                    icon = SignAiIcons.Mic,
-                    contentDescription = "Entrada por voz",
-                    onClick = onMic,
-                    active = listening,
-                    enabled = micEnabled,
-                    toggle = true,
-                    activeDescription = "Escuchando. Tocar para dejar de escuchar.",
-                    inactiveDescription = "Apagado. Tocar para empezar a escuchar.",
-                )
+                // TR = "tiempo real". Mitad y mitad con Traducir: los dos pesan 1f, así
+                // que el padding y el `spacedBy(9.dp)` de la fila los reparten
+                // solos y ningún ancho se calcula a mano.
+                //
+                // Todavía sin cablear: este paso es el front; el interruptor se
+                // conecta en el siguiente.
+                val realtimeActive = false
+                Surface(
+                    onClick = {},
+                    enabled = true,
+                    shape = SignAiShapes.cornerControl,
+                    color =
+                        if (realtimeActive) SignAiTheme.colors.strong
+                        else SignAiTheme.colors.soft,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(SignAiSizes.actionButtonHeight)
+                        .semantics {
+                            role = Role.Switch
+                            contentDescription = "Modo tiempo real"
+                            stateDescription =
+                                if (realtimeActive) {
+                                    "Encendido. Firmando mientras hablás."
+                                } else {
+                                    "Apagado. Tocar para firmar en tiempo real."
+                                }
+                        },
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(SignAiSizes.actionButtonHeight),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        SignAiIcon(
+                            imageVector = SignAiIcons.Lightning,
+                            contentDescription = null,
+                            size = 18.dp,
+                            tint =
+                                if (realtimeActive) SignAiTheme.colors.onStrong
+                                else SignAiTheme.colors.text,
+                        )
+                        Box(Modifier.size(9.dp))
+                        SignAiText(
+                            text = "TR",
+                            style =
+                                SignAiTheme.typography.body1
+                                    .copy(fontWeight = FontWeight.Bold),
+                            color =
+                                if (realtimeActive) SignAiTheme.colors.onStrong
+                                else SignAiTheme.colors.text,
+                        )
+                    }
+                }
             }
         }
     }
 }
 
+/**
+ * Botón cuadrado de la fila de arriba: micrófono e historial.
+ *
+ * Mismo `actionButtonSize` y mismo anillo activo para los dos, así las filas
+ * miden igual. Lo que hace cada uno va por su propio callback.
+ */
 @Composable
 private fun ControlIconButton(
     icon: ImageVector,

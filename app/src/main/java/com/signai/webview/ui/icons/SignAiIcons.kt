@@ -12,6 +12,7 @@ import com.phosphor.icons.regular.Clock
 import com.phosphor.icons.regular.ClockCounterClockwise
 import com.phosphor.icons.regular.Gear
 import com.phosphor.icons.regular.Info
+import com.phosphor.icons.regular.Lightning
 import com.phosphor.icons.regular.Microphone
 import com.phosphor.icons.regular.Minus
 import com.phosphor.icons.regular.Moon
@@ -43,6 +44,10 @@ object SignAiIcons {
     val ClockCounterClockwise: ImageVector = PhIcons.Regular.ClockCounterClockwise
     val CircleHalf: ImageVector = PhIcons.Regular.CircleHalf
     val Info: ImageVector = PhIcons.Regular.Info
+    // El TR de tiempo real. Se eligió a propósito del micrófono: los dos
+    // botones toman voz, así que dos micrófonos en la misma barra eran
+    // indistinguibles. El rayo dice "instantáneo" sin parecerse al micrófono.
+    val Lightning: ImageVector = PhIcons.Regular.Lightning
     val Minus: ImageVector = PhIcons.Regular.Minus
     val Microphone: ImageVector = PhIcons.Regular.Microphone
     val Moon: ImageVector = PhIcons.Regular.Moon
