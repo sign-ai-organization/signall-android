@@ -23,7 +23,7 @@ La línea de tiempo era: hablar → 1500 ms de hangover de silencio → 350–80
 Whisper → ~200 ms de caché en Neon o 300–1900 ms de LLM → el avatar firma.
 Entre 2.4 y 4.8 segundos después de que dejabas de hablar.
 
-## Los cuatroostos que había en el camino
+## Los cuatro cuellos de botella que había en el camino
 
 Cada uno estaba medido, no supuesto. Los números están en
 `../sign-ai-backend/docs/performance.md` y `../sign-ai-stt/docs/performance.md`.
@@ -152,6 +152,61 @@ Detalle completo, lista de frases y de señas, y troubleshooting:
   nada.". Antes esperaba el timeout completo de 15 s y después reportaba un fallo
   que no había pasado.
 
+- **Voz real (owner, 2026-10-14 tarde).** Un turno de **22 s con 4 fragmentos**
+  y el micrófono **nunca apagado**: `está probando -> PROBAR`, `¿cordo? -> CORDO`,
+  `acuerdo? -> ACUERDO`, y `anotaste -> ANOTAR` en el turno siguiente. Los
+  fragmentos llegan `provisional=true` mientras la frase está abierta y `false`
+  en el último, que es el contrato. Esto cerró el último hueco de "qué no se
+  verificó": el tramo "hablo y me transcriben bien" ya no está pendiente.
+
+## Micrófono continuo (2026-10-14, pedido del owner)
+
+El mic era pulsador-hablar sin quererlo: se apagaba solo en cada `final`, así que
+había que volver a tocar después de cada frase. Para una conversación eso es al
+revés de lo que hace falta.
+
+El cambio no fue "no apagar el audio" sino **separar dos estados que estaban
+fusionados en uno**. `playbackState` decía a la vez "¿está el mic prendido?" y
+"¿qué hace el muñeco?", y eso solo funcionaba *porque* el mic se apagaba en cada
+frase. Con el mic prendido el avatar firma mientras el mic está caliente, así que
+los dos se superponen de verdad y necesitan banderas propias: `micActive` pasó a
+ser la fuente de verdad del mic y `toggleMic()` decide por ahí.
+
+Lo que hubo que tocar por consecuencia:
+
+- `onPlaybackDone` y el cierre de cada frase vuelven a `Listening`, no a `Done`:
+  el botón tiene que verse prendido mientras captura, o el usuario no sabe si
+  tocarlo.
+- El botón de mic nunca se deshabilita mientras esté prendido. Si la única forma
+  de pararlo quedara bloqueada durante una seña, no habría forma de pararlo.
+- Con el mic prendido, **Traducir e Historial quedan deshabilitados** y el campo
+  de texto pasa a `readOnly` (sigue mostrando la transcripción en vivo, que es
+  justo lo que el usuario quiere ver). Texto y voz van por el mismo socket y el
+  backend no puede saber de quién es cada fragmento; mezclados, el `index` de voz
+  deja de corresponderse con el orden de llegada y el avatar firmaría la frase al
+  revés. Son dos formas de mandar, no dos a la vez.
+- El botón pasó a `Role.Switch` con `stateDescription`, que es lo que lee
+  TalkBack. El `contentDescription` quedó igual porque es el selector de las
+  pruebas de Maestro.
+
+## La métrica que mentía
+
+Justo en esa prueba con voz real apareció `stt_partial_lag_ms` con p95 = 13091 ms
+y max = 27332 ms, con la espera por la GPU en 0.4 ms. Los dos no pueden ser
+ciertos a la vez, y el culpable era la métrica: medía *tiempo real desde el
+primer frame menos audio recibido*, o sea que contaba como saturación los
+segundos en que el micrófono estaba apagado y no llegaba nada que procesar.
+Reproducir un fixture la hacía salir negativa.
+
+Ahora es *audio recibido menos el que estaba en el buffer cuando arrancó la
+inferencia*. Con los 28 fixtures: p50 360 ms, p95 390 ms, max 630 ms, que es
+literalmente lo que dura una inferencia.
+
+Vale la pena anotarlo porque es la misma clase de error que ya apareció dos veces
+en este trabajo (vectores sin normalizar, umbral de similitud cruzando
+fragmentos): **un número mal definido es peor que ningún número**, porque después
+se cita como si fuera verdad.
+
 ## Archivos nuevos
 
 | Dónde | Qué |
@@ -181,10 +236,9 @@ modos**: frase entera y fragmentado.
 
 ## Pendiente
 
-1. **Probarlo con voz humana.** Un agente no tiene voz. Lo verificado es que el
-   audio sale del teléfono a la tasa correcta y que el camino del segmento hacia
-   el avatar funciona con un `stream: true` real. Los pasos exactos están en
-   §2 de `tools/TIEMPO-REAL.md`.
+1. ~~**Probarlo con voz humana.**~~ **Hecho** el 2026-10-14 tarde: un turno de
+   22 s con 4 fragmentos y el micrófono sin apagarse (ver "Verificación en el
+   dispositivo").
 2. **Dos clientes a la vez.** El código lo contempla (un `IncrementalTranslator`
    por sesión, contadores por sesión) pero no se probó con dos conexiones
    simultáneas.

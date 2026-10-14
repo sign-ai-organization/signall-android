@@ -191,8 +191,33 @@ class MainScreenState(
      * between "the user released the mic without speaking" and "we spoke and
      * never got a word back", which need opposite handling: the first goes back
      * to idle immediately, the second is a real failure worth reporting.
+     *
+     * Per **session**, not per utterance: with the mic left on, one silence at
+     * the end of a phrase would otherwise look like "nothing was said".
      */
-    private var heardAnythingThisTurn = false
+    private var heardAnythingThisSession = false
+
+    /**
+     * Whether the microphone is capturing right now.
+     *
+     * This is deliberately separate from [playbackState]. Before, one enum said
+     * two unrelated things — "is the mic on" and "what is the avatar doing" —
+     * and that only worked because the mic used to switch itself off at the end
+     * of every utterance. Leaving it on (as it should be: one turn of the hand
+     * to start, one to stop) means the avatar signs *while* the mic is hot, so
+     * the two genuinely overlap and need their own flags.
+     */
+    var micActive by mutableStateOf(false)
+        private set
+
+    /**
+     * Whether the backend session is up.
+     *
+     * The mic button greys out without it, because tapping it otherwise produces
+     * a status message and nothing else. Exposed as Compose state because the
+     * connection can drop while the app is open (`RF-INT-COM-01`).
+     */
+    val backendConnected: Boolean get() = backend.isConnected
 
     /**
      * Keeps streamed fragments in the order the backend sent them.
@@ -302,8 +327,15 @@ class MainScreenState(
         if (segments.isEmpty()) {
             streamingTurn = false
             pendingText = null
-            playbackState = PlaybackState.Done
-            showStatus("Esa frase no produjo ninguna seña.")
+            if (micActive) {
+                // Nada que firmar, pero el mic sigue prendido: se sigue
+                // escuchando, no terminó nada.
+                showStatus("Esa frase no produjo ninguna seña.")
+                resumeListeningIfMicOn()
+            } else {
+                playbackState = PlaybackState.Done
+                showStatus("Esa frase no produjo ninguna seña.")
+            }
             return
         }
 
@@ -329,6 +361,25 @@ class MainScreenState(
         streamedSegments.clear()
         streamingGlosses.clear()
         pendingText = null
+        resumeListeningIfMicOn()
+    }
+
+    /**
+     * Devuelve la interfaz a "escuchando" cuando el mic sigue abierto.
+     *
+     * Una frase terminó y el avatar va a terminar de firmarla, pero el mic sigue
+     * prendido: el siguiente `done` tiene que devolver el estado a `Listening`
+     * y no a `Done`, o el botón de micrófono se vería apagado mientras está
+     * capturando, y el usuario no sabría si tiene que tocarlo.
+     *
+     * También reinicia el reloj del turno. Con el mic prendido, una sesión son
+     * varias frases y cada una mide por separado: el tiempo desde que terminó
+     * la anterior hasta que terminó esta.
+     */
+    private fun resumeListeningIfMicOn() {
+        if (!micActive) return
+        resetStreamingTurn()
+        playbackState = PlaybackState.Listening
     }
 
     /** Whole-phrase mode: collect every sentence, then sign the phrase as a unit. */
@@ -389,7 +440,7 @@ class MainScreenState(
                 // Anything coming back means the round trip is alive, so the
                 // "no transcript arrived" guard is no longer needed.
                 processingJob?.cancel()
-                heardAnythingThisTurn = true
+                heardAnythingThisSession = true
                 transcript = event.text
                 inputText = event.text
                 // The utterance starts at the *first* text, not at the final:
@@ -401,10 +452,15 @@ class MainScreenState(
                     lastText = event.text
                 }
                 if (event.final) {
-                    // The backend closed the segment, so this utterance is
-                    // over: stop recording even if the user never toggled the
-                    // mic off. Anything after this belongs to the next phrase.
-                    audio.stop()
+                    // El micrófono **no** se apaga acá.
+                    //
+                    // Antes lo hacía, y obligaba a tocar de nuevo para seguir
+                    // hablando: una frase por pulsación. Con el modo tiempo real
+                    // eso es al revés de lo que se quiere, porque el STT abre
+                    // solo el siguiente utterance en cuanto hears silencio y el
+                    // avatar puede seguir firmando sin que nadie toque nada.
+                    // Un `final` solo dice "esta frase se cerró"; la siguiente
+                    // empieza sola con el próximo audio.
                     if (!streamingTurn) playbackState = PlaybackState.Translating
                 }
             }
@@ -452,8 +508,13 @@ class MainScreenState(
             // current turn here would kill it.
             if (pendingText != null) {
                 pendingText = null
-                playbackState = PlaybackState.Done
-                showStatus("Esa frase no produjo ninguna seña.")
+                if (micActive) {
+                    showStatus("Esa frase no produjo ninguna seña.")
+                    resumeListeningIfMicOn()
+                } else {
+                    playbackState = PlaybackState.Done
+                    showStatus("Esa frase no produjo ninguna seña.")
+                }
             }
             return
         }
@@ -465,6 +526,14 @@ class MainScreenState(
      * be recorded again as a new turn.
      */
     private fun requestTranslation(text: String, replay: Boolean = false) {
+        // El botón ya está deshabilitado con el mic prendido, pero `play` también
+        // entra por la tecla Enter y por el "Repetir" del escenario. Texto y voz
+        // van por el mismo socket y el backend no puede saber de quién es cada
+        // fragmento: intercalados, el avatar firmaría la frase al revés.
+        if (micActive) {
+            showStatus("Apagá el micrófono para escribir una frase.")
+            return
+        }
         if (playbackState == PlaybackState.Translating ||
             playbackState == PlaybackState.Signing ||
             playbackState == PlaybackState.Connecting ||
@@ -496,12 +565,15 @@ class MainScreenState(
      * died halfway cannot leak its fragments into the next one. `streamingTurn`
      * itself is left alone by [resetStreamingTurn] because the caller decides
      * whether a turn is starting or ending.
+     *
+     * [SignAiMetrics] is deliberately **not** reset here: with the mic left on,
+     * one session is many turns, and the percentiles are more useful across the
+     * whole session than per sentence. They reset when the mic is switched on.
      */
     private fun resetStreamingTurn() {
         streamedSegments.clear()
         streamingGlosses.clear()
         turnStartedAt = SystemClock.elapsedRealtime()
-        metrics.reset()
     }
 
     private fun fail(message: String) {
@@ -511,6 +583,7 @@ class MainScreenState(
         pendingSegments.clear()
         pendingTotal = 0
         streamingTurn = false
+        micActive = false
         resetStreamingTurn()
         caption = ""
         playbackState = PlaybackState.Idle
@@ -629,30 +702,48 @@ class MainScreenState(
      * The prototype's auto-fill is gone: it only made the app look like it was
      * listening while nothing was captured.
      */
+    /**
+     * Starts or stops the microphone, and that is the **only** thing that does.
+     *
+     * The mic is a switch, not a push-to-talk. One touch to turn it on, one to
+     * turn it off, and everything in between is the app talking and the avatar
+     * signing. It used to be push-to-talk by accident: it switched itself off
+     * on every `final`, so continuing meant tapping again after every sentence.
+     *
+     * See [micActive] for why that flag is not [playbackState].
+     */
     fun toggleMic() {
-        if (playbackState == PlaybackState.Listening) {
+        if (micActive) {
             stopListening()
-            return
+        } else {
+            startListening()
         }
-        if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
-            return
-        }
+    }
+
+    private fun startListening() {
         if (!backend.isConnected) {
             showStatus("Sin conexión: no puedo escuchar.")
             return
         }
         statusOverride = null
         transcript = ""
+        // El campo pasa a mostrar la transcripción en vivo, así que arranca
+        // vacío: si quedara la frase anterior se leería como parte de lo que
+        // está diciendo.
+        inputText = ""
         playbackState = PlaybackState.Listening
         // The turn clock starts when the mic opens, so `rt_turn_total_ms`
         // includes the silence before the first word — which is the number a
         // user actually perceives.
         streamingTurn = false
         resetStreamingTurn()
-        heardAnythingThisTurn = false
+        heardAnythingThisSession = false
+        micActive = true
+        metrics.reset()
         audio.start(scope)
         if (!audio.isRecording) {
             // The device refused to open the mic (usually a missing permission).
+            micActive = false
             playbackState = PlaybackState.Idle
             showStatus("No se pudo abrir el micrófono.")
         }
@@ -660,25 +751,27 @@ class MainScreenState(
 
     /** Mic blocked by the user (RF-UI-04: say so, the app can't work without it). */
     fun onMicPermissionDenied() {
+        micActive = false
         playbackState = PlaybackState.Idle
         showStatus("Sin permiso de micrófono la app no puede traducir voz.")
     }
 
     private fun stopListening() {
         audio.stop()
+        micActive = false
         // The transcriber closes a segment by hearing silence. Stopping the
         // capture means that silence never arrives, so the segment has to be
         // closed explicitly — otherwise the app waits for a transcript that
         // will never come.
         backend.sendEnd()
 
-        // Nothing came back at all: the user released the mic without saying
+        // Nothing came back at all: the user turned the mic off without saying
         // anything (or in a room so quiet the VAD never fired). Going to
         // "Procesando..." here is fifteen seconds of waiting for a transcript
         // that does not exist, ending in an error about a failure that did not
         // happen. Back to Idle with a plain message instead.
-        if (!heardAnythingThisTurn) {
-            Log.i(TAG, "el micrófono se soltó sin transcripción: no hay nada que traducir")
+        if (!heardAnythingThisSession) {
+            Log.i(TAG, "el micrófono se apagó sin transcripción: no hay nada que traducir")
             streamingTurn = false
             resetStreamingTurn()
             playbackState = PlaybackState.Idle
@@ -691,9 +784,9 @@ class MainScreenState(
         // and "Procesando..." has to be a wait, not a hang.
         //
         // In streamed mode this is much less likely than it was: the avatar is
-        // already signing by the time the user is allowed to release the mic, so
-        // by this point a transcript has almost certainly landed. It stays
-        // because "already signing" is not a guarantee.
+        // already signing by the time the user turns the mic off, so by this
+        // point a transcript has almost certainly landed. It stays because
+        // "already signing" is not a guarantee.
         processingJob?.cancel()
         processingJob = scope.launch {
             delay(TranscriptionTimeoutMs)
@@ -768,6 +861,10 @@ class MainScreenState(
     }
 
     fun setInput(text: String) {
+        // Con el mic prendido el campo está en `readOnly`, pero un teclado que ya
+        // estaba abierto puede entregar texto igual. Se ignora en vez de pisar la
+        // transcripción en vivo, que es lo que el campo está mostrando.
+        if (micActive) return
         inputText = text
     }
 
@@ -802,7 +899,10 @@ class MainScreenState(
     /** Called by the JS bridge (`onPlaybackDone`, spec `BRG-7`/`STA-8`). */
     fun onPlaybackDone() {
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
-            playbackState = PlaybackState.Done
+            // Con el mic prendido no "terminó todo": terminó esta seña y el
+            // usuario sigue hablando. Volver a `Listening` es lo que deja el
+            // botón de micrófono mostrando que sigue abierto.
+            playbackState = if (micActive) PlaybackState.Listening else PlaybackState.Done
         }
         caption = ""
         // The control panel stays disabled until the sign ends (`CNV-7`); clear

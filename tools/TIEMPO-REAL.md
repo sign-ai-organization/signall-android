@@ -76,7 +76,8 @@ adb logcat -c
 1. Abrí la app, tocá el **micrófono**.
 2. Decí **"hola"** y hacé una pausa de un segundo antes de seguir.
 3. Seguí con **"cómo estás"**.
-4. Soltá el micrófono.
+4. **Seguí hablando todo lo que quieras** — el micrófono **no se apaga solo**.
+5. Cuando te boredas, tocá el micrófono de nuevo para apagarlo.
 
 Deberías ver al muñeco firmar HOLA mientras todavía estás hablando, no después.
 Mientras tanto:
@@ -86,6 +87,12 @@ adb logcat -s SignAiMetrics      # latencias del teléfono
 adb logcat -s SignAiNet          # cada segmento que llega del backend
 adb logcat -s SignAiWeb          # consola del JS (modo depuración)
 ```
+
+**Con el micrófono prendido el resto se apaga:** el campo de texto queda de
+solo lectura (muestra lo que se está transcribiendo en vivo), y **Traducir** e
+**Historial** quedan deshabilitados. Es a propósito: texto y voz van por el
+mismo socket y el backend no puede saber de quién es cada fragmento; mezclados,
+el avatar firmaría la frase al revés.
 
 **La pausa entre palabras importa.** Un hangover de 600 ms parte la frase en dos
 si hablás corrido. Está deliberado: las señas se pueden encadenar, y partir más
@@ -240,8 +247,8 @@ es prácticamente gratis.
 | `stt_end_to_final_ms` | dejar de hablar → transcripción final | p50 839 ms / p95 958 ms |
 | `stt_inference_ms{model="small"}` | inferencia de un parcial | p50 92 ms / p95 172 ms |
 | `stt_inference_ms{model="medium"}` | inferencia de un final | p50 249 ms / p95 338 ms |
-| `stt_partial_queue_ms` | **espera por la GPU**. Antes daba picos de 4–8 s. | p50 0.4 ms / p95 0.8 ms |
-| `stt_partial_lag_ms` | audio recibido sin procesar. Sube = saturación. | p50 −21 ms / p95 13 ms |
+| `stt_partial_lag_ms` | **atraso real**: audio que llegó mientras se transcribía y todavía no está transcrito. Sube = el avatar va detrás de la voz. | p50 360 ms / p95 390 ms |
+| `stt_partial_queue_ms` | **espera por la GPU**. Antes daba picos de 4–8 s. | p50 0.4 ms / p95 0.6 ms |
 | `stt_dropped_total{reason=…}` | transiciones descartadas: `rms`, `no_speech`, `logprob` | ver abajo |
 
 `stt_dropped_total` merece atención: `reason="logprob"` cuenta veces que **el
@@ -249,6 +256,24 @@ modelo transcribió bien y el filtro lo tiró igual**. Antes pasaba con
 `AVG_LOGPROB_THRESHOLD=-0.8`; dos frases de los fixtures ("cómo estás", "estoy
 triste") salían como transcripción vacía. Volvió a `-1.0`, el default de
 Whisper. Si este número sube mucho, el filtro se está comiendo audio real.
+
+### `stt_partial_lag_ms` no es lo que sugiere el nombre
+
+Ojo con esta: se llama "lag" pero **no** es "reloj de sesión menos audio
+recibido". Se define como *audio recibido menos el audio que ya estaba en el
+buffer cuando arrancó la inferencia*, o sea cuánto se acumuló mientras Whisper
+trabajaba.
+
+La diferencia no es cosmética. Con la definición anterior, 20 s de micrófono
+apagado daban `lag = 20000 ms` y se leían como "GPU saturada" cuando en realidad
+no estaba llegando nada que procesar. En la primera prueba con voz real eso era
+justo lo que más números había: p95 = 13091 ms, max = 27332 ms, todos segundos
+en que el micro estaba apagado. Ahora está acotado y mide algo: p50 360 ms,
+p95 390 ms, max 630 ms.
+
+Si sube de verdad, el avatar va visible detrás de la voz, y ahí sí hay que mirar
+`stt_inference_ms` y `stt_partial_queue_ms` para saber si el culpable es el
+modelo o la cola.
 
 ### Teléfono (logcat)
 
@@ -343,21 +368,28 @@ está caído". Para probar con voz hace falta una persona.
 
 ## 8. Qué NO se verificó, y por qué
 
-- **El micrófono real con voz humana.** Un agente no tiene voz, y el
-  `VOICE_RECOGNITION` del teléfono cancela su propio altavoz, así que tampoco se
-  puede con un bucle acústico (ver arriba). **Sí** se verificó que el audio sale
-  del teléfono a 32 000 B/s exactos por el WebSocket hasta el STT, que su nivel
-  es coherente con el de una habitación en silencio, y que un `stream: true`
-  real llega al avatar y se reproduce. Lo que falta es el tramo "hablo y me
-  transcriben bien", que necesita una persona. La sección 2 tiene los pasos.
+### Verificado con voz humana (2026-10-14, con el owner)
+
+- **Micrófono continuo.** Un turno de **22 s con 4 fragmentos** y el micrófono
+  **nunca apagado**: `luta → LUTA`, `está probando → PROBAR`, `¿cordo? → CORDO`,
+  `acuerdo? → ACUERDO`, y después `anotaste → ANOTAR` en otro turno. Los
+  fragmentos llegan con `provisional=true` mientras la frase está abierta y
+  `false` en el último, que es exactamente el contrato.
+- **Traducción y avatar** sobre audio real, no fixtures.
+- **El micro sobrevive a los `final`.** Antes se apagaba solo en cada frase;
+  ahora queda prendido y el STT abre el utterance siguiente solo.
+
+### Lo que sigue sin verificarse
+
 - **Varios clientes a la vez.** El código lo contempla (un `IncrementalTranslator`
   por sesión, un contador por sesión) pero no se probó con dos conexiones
   simultáneas.
-- **Traducción de fragmentos de dos palabras con contexto.** El contexto ya está
-  en el prompt y arregla el caso obvio (`estudiante` → ESTUDIANTE en vez de
-  NIÑO), pero un fragmento de dos palabras sin contenido semántico todavía puede
-  producir una glosa rara. Es una limitación conocida del prompt, no del
-  transporte.
+- **Traducción de fragmentos de dos palabras sin contenido semántico.** El
+  contexto ya arregla el caso obvio (`estudiante` → ESTUDIANTE en vez de NIÑO),
+  pero un fragmento suelto todavía puede dar una glosa rara. Es una limitación
+  del prompt, no del transporte.
+- **Bucle acústico en el teléfono.** No se puede: `VOICE_RECOGNITION` cancela el
+  eco del altavoz (ver §7). Con voz humana no hace falta.
 
 ---
 
