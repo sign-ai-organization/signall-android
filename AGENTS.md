@@ -62,8 +62,23 @@ Lo que hay que saber antes de tocar esto:
   verdad. Un método nuevo que apague o encienda el mic tiene que tocar **los dos**.
 - **Nunca uses `playbackState == Listening` como "el mic está prendido".** Con el
   mic prendido y el muñeco firmando, el estado es `Signing`.
-- **TR nunca se deshabilita, ni prendido.** El mic sí se deshabilita mientras TR
-  está prendido, porque el otro es el único que puede apagar el modo continuo.
+- **Los dos interruptores se deshabilitan por el otro, en los dos sentidos, y
+  ninguno se deshabilita mientras está prendido.** Antes solo se cumplía en un
+  sentido (el mic se apagaba con TR prendido, pero TR seguía disponible con el
+  mic prendido) y el otro no se veía: `soft` al 35 % de alfa sobre `surface` son
+  los dos casi blancos. **Un control deshabilitado se marca apagando el icono y
+  la etiqueta a `muted`, nunca bajándole el alfa a la superficie** (ver
+  `SignAiBottomBar`). Prendido, cada uno es el único que puede cortar su modo, así
+  que nunca se bloquea.
+- **Lo que la voz ya mandó no se puede volver a mandar.** Al apagar el TR (y al
+  autoenviar el dictado) el campo conserva la frase en `readOnly` con Traducir
+  deshabilitado durante `VoiceTextHoldMs` = **1500 ms** (`sentVoiceText` en
+  `MainScreenState`), y después se borra y el campo y Traducir vuelven **en la
+  misma asignación**: no hay estado con el campo vacío y el botón muerto. Sin eso
+  el botón invitaba a reenviar lo ya firmado. Hay log de los dos momentos
+  (`texto ya firmado` / `texto retenido borrado`): la ventana es más corta que el
+  ida y vuelta de `mobile-mcp`, así que el logcat es la prueba y el árbol de
+  accesibilidad la confirmación.
 - **El `end` va antes que el `mode`.** El cliente manda `end` y después el modo
   nuevo; el backend termina el utterance anterior con el modo con el que empezó.
   Invertir el orden rompe las dos direcciones.

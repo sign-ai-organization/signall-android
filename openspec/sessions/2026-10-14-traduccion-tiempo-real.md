@@ -404,6 +404,65 @@ esperando: el dictado con la frase del STT todavía abierta.
   del panel estaba deshabilitado** — leído del árbol de accesibilidad en ese
   momento, no después.
 
+## Tercera vuelta del owner: los dos interruptores se excluyen de verdad
+
+Dos cosas del panel, reportadas en el Redmi.
+
+### 1. El otro interruptor no se deshabilitaba
+
+El owner dijo que al prender el micrófono, TR seguía disponible. Una parte era
+un bug real y la otra era un bug de **apariencia**, y las dos había que
+arreglarlas:
+
+- **Real, en un sentido**: `realtimeEnabled` no miraba `dictationActive`. El mic
+  sí se apagaba con TR prendido, pero al revés no: con el micrófono dictando, TR
+  quedaba habilitado, y tocarlo arrancaba el modo continuo encima de una captura
+  de voz que ya venía corriendo. El backend lo rechaza, así que lo que pasaba en
+  el teléfono era un botón que no hacía nada.
+- **De apariencia, en el otro sentido**: el mic sí estaba deshabilitado con TR
+  prendido, y sin embargo no se veía. Estos dos botones se rellenan con `soft`
+  sobre una barra `surface`, y el apagado era `alpha(0.35f)` sobre la superficie
+  entera: `#F8F8F5` sobre `#FEFEFC`. Dos colores que a simple vista son el mismo.
+  Traducir sí se notaba, porque su relleno es `strong` y atenuado queda gris
+  medio. **El estado de deshabilitado de un control se marca en el icono y la
+  etiqueta (`muted`), no bajándole el alfa a la superficie** — esa es la regla que
+  queda escrita en `AGENTS.md`, porque el error se repite cada vez que se agrega
+  un control claro sobre una barra clara.
+
+### 2. Traducir podía reenviar lo que la voz ya mandó
+
+Al apagar el TR, el campo queda con lo último que firmaba el muñeco. Traducir se
+habilitaba y era un botón para mandarlo otra vez: el avatar firmaba la frase dos
+veces seguidas por un solo toque. El mismo problema tenía el dictado, que ahora
+manda solo.
+
+La solución es una retención de **1,5 s** (`VoiceTextHoldMs`,
+`MainScreenState.sentVoiceText`): el campo conserva el texto en `readOnly` y
+Traducir queda deshabilitado; al cumplirse, el texto se borra y el campo y el
+botón vuelven **en la misma asignación**, así que no existe el estado de "campo
+vacío con Traducir muerto". La frase no se pierde: ya está en el historial y en el
+panel de conversación.
+
+El tiempo lo pidió el owner: con 5 s se quejó de que era mucho rato. Y el motivo
+de fondo es el mismo de siempre en esta app: una espera sin explicación se lee
+como un cuelgue, y 1,5 s alcanzan a ver que el texto se va solo.
+
+Un detalle de la implementación que salió de probarlo: la ventana es **más corta
+que el ida y vuelta de `mobile-mcp`**, así que el árbol de accesibilidad nunca
+llega a verla. Por eso los dos momentos llevan log (`texto ya firmado` /
+`texto retenido borrado`) y la verificación se hizo con el logcat. Un número que
+no se puede observar no se puede verificar.
+
+### Verificación en el dispositivo
+
+- Micrófono prendido → TR `disabled`; TR prendido → micrófono `disabled`. Los dos
+  leídos del árbol, y el icono del micrófono en `#777773` (`muted`) con TR prendido.
+- Apagar TR: `texto ya firmado ... retenido 1500ms` a los **74 ms**, y
+  `texto retenido borrado` a los **1501 ms**. En la ventana, el árbol mostró el
+  texto en el campo, Traducir `disabled`, y mic/Historial/TR habilitados.
+- Pasados los 1,5 s, escribir en el campo habilitó Traducir: el campo y el botón
+  están utilizables juntos.
+
 ## Pendiente
 
 1. ~~**Probarlo con voz humana.**~~ **Hecho**: tiempo real y dictado, los dos, en
