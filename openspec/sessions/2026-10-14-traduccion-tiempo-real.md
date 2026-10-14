@@ -234,11 +234,129 @@ modos**: frase entera y fragmentado.
 - **Las 18 señas sin animación** (`0032`–`0049`). Sigue siendo el gap más grande
   de calidad: el catálogo las anuncia con `available: true` y no hay `.glb`.
 
+---
+
+# Los dos modos del micrófono (2026-10-14, tarde)
+
+## Qué se pidió
+
+El mic es un interruptor, y ya lo era. Lo que faltaba era el otro: que el
+**dictado** fuera una cosa y el **tiempo real** otra, con dos botones distintos y
+no uno que hacía las dos cosas.
+
+- 🎤 (fila 1) = **dictado**. Se toca, se habla, se toca de nuevo. Solo
+  transcribe: el texto se acumula en el campo y el muñeco no se mueve hasta que
+  toques Traducir.
+- ◢◢ TR (fila 2) = **tiempo real**. Se toca, firma mientras hablás, se toca de
+  nuevo para apagar.
+
+Los dos son interruptores, ninguno se mantiene apretado. Y **no pueden estar
+prendidos a la vez**: hay un `AudioRecord` y un WebSocket.
+
+## El problema que no es obvio: el cambio de modo
+
+Los dos modos mandan el mismo audio por el mismo socket, así que el único modo de
+separarlos es pedirle algo distinto al backend: `{"type":"mode","mode":...}`.
+
+Y ahí aparece la trampa. El cliente manda `end` (para cerrar la frase que estaba
+abierta) y **después** el modo nuevo. El `final` de esa frase llega cuando la
+sesión ya está en el modo que se acaba de prender. Sin más, al prender TR se
+firmaba lo que el usuario solo quería dictar; y si el orden fuera el inverso, la
+última frase de TR quedaba sin firmar.
+
+La regla que lo resuelve: **el modo es por utterance**. El backend lo fija con la
+primera transcripción de la frase y dura hasta su `final`. Un utterance es de un
+solo modo de punta a punta.
+
+De ahí sale el segundo problema, que apareció en el dispositivo: el `final` de lo
+dictado llega **después** de que el usuario apagó el dictado, así que la app ya
+se cree con el micro apagado. Lo tomaba por una frase de tiempo real, esperaba
+fragmentos que no iban a llegar y quedaba en **"Traduciendo..." para siempre**.
+Por eso el `final` de dictado viaja con `dictation: true` y el cliente rutea por
+ese flag, no por su propio estado. Aditivo: un cliente viejo lee los mismos tres
+campos de siempre.
+
+Y una tercera cosa, más chica: `handle_text` **no** mira el modo. Si lo mirara,
+Traducir no funcionaría después de dictar, que es justo cuando más se usa.
+
+## Lo que se cambió
+
+**Backend** (`cc0156b`):
+
+- `CAPTURE_REALTIME`/`CAPTURE_DICTATION` + `Controller.set_mode`, con
+  `_utterance_mode` como latch por utterance.
+- `send_transcript(..., dictation=)` y `handle_text` por fuera del camino de voz.
+- Frame `{"type":"mode"}` en el router, con `MODE_FRAME` y validación.
+- Métricas: `dictation_utterances_total`, `dictation_utterance_words`,
+  `capture_mode_{dictation,realtime}_total`, `session_capture_dictation`,
+  `capture_mode_switch_open_utterance_total`.
+
+**Android**:
+
+- `MicMode` (`Off`/`Dictation`/`Realtime`). Enum y no dos flags: "los dos prendidos"
+  es un estado que la app no puede representar.
+- `toggleDictation()` / `toggleRealtime()` sobre un `changeMicMode()` único. Los
+  cuatro casos (prender, apagar, cambiar, ya estaba) en un solo lugar.
+- Cambiar de modo **no reinicia la captura**: `AudioRecord` tarda cientos de ms y
+  el usuario ya estaba hablando.
+- `onDictationTranscript` acumula en `dictationBuffer`. El STT cierra cada frase
+  por silencio y alguien que dicta hace pausas: conservar solo la última perdería
+  todo lo anterior.
+- `PlaybackState.Dictating` y `resumeListeningIfMicOn()` eligen la etiqueta del
+  modo activo.
+- Al apagar TR, si hubo dictado, el input vuelve a mostrar lo dictado.
+- `AudioCapture.stop()` distingue "paré de grabar" de "no había nada grabado": con
+  el log viejo, un `stop()` de a poco se veía igual que un corte real.
+- `fail()` ahora corta la captura, no solo la bandera. Antes dejaba el
+  `AudioRecord` corriendo con el botón apagado.
+
+## Verificación
+
+**Determinista, sin hablar** — `verify_voice_modes.py` (nuevo, en el backend)
+reproduce los fixtures por el socket contra el Whisper de verdad, en los dos modos
+y en el cambio de uno al otro. 48 checks sobre 3 clips. La línea que resume el
+contrato, del escenario del cambio:
+
+```
+ 1002ms  transcript  final=0 dictation=1  'Me llamo Ana.'
+ 1330ms  transcript  final=1 dictation=1  'Me llamo Ana'      <- NO se firmó
+ 1792ms  transcript  final=0 dictation=0  '¡Viva Hamburger!'  <- ya en TR
+ 2889ms  transcript  final=0 dictation=0  'Vivo en Bogotá, soy estudiante.'
+ 3851ms  transcript  final=1 dictation=0  'Vivo en Bogotá, soy estudiante.'
+segment=3 done=1, primero a los 1793ms (el corte fue a los 1092ms)
+```
+
+`verify_client_frames.py` pasó de 33 a 57 checks, todo con dobles de prueba.
+
+**Con voz humana, en el Redmi** (owner, 2026-10-14):
+
+- *Dictado*: 4 frases en 30 s (`dictado #1..#4`, 53 palabras), **cero** `Sending
+  segment` en el backend, y al apagar el micro las 4 frases quedaron concatenadas
+  en el campo. Traducir después firmó `BUENOS DIAS · NUNCA · TRABAJAR ·
+  TRABAJAR`.
+- *Tiempo real*: 5 turnos en una sola sesión con el micro siempre prendido;
+  primeras señas a 239 ms, 241 ms, 268 ms, 476 ms.
+- El bug de "Traduciendo..." para siempre se vio **en el dispositivo** antes de
+  arreglarse, no en un test: por eso el `dictation: true`.
+
+## Dos cosas que costaron tiempo y conviene no repetir
+
+- **`mobile-mcp` con coordenadas de esquina.** El botón del micro empieza en
+  (729, 2019) y termina en (867, 2157): un tap en (729, 2019) es el borde exacto
+  y a veces no registra. Usar el **centro**.
+- **Los fixtures traen segundos de silencio al final.** `conversacion_2` dura
+  5.7 s pero su última palabra termina en los 2.2 s, así que "la mitad del
+  archivo" cae después de toda la voz y un test de cambio de modo no tiene nada
+  que firmar del otro lado. El corte va en el medio de la **voz**
+  (`words[-1].end_ms`), no del archivo.
+
 ## Pendiente
 
-1. ~~**Probarlo con voz humana.**~~ **Hecho** el 2026-10-14 tarde: un turno de
-   22 s con 4 fragmentos y el micrófono sin apagarse (ver "Verificación en el
-   dispositivo").
+1. ~~**Probarlo con voz humana.**~~ **Hecho**: tiempo real y dictado, los dos, en
+   el Redmi. Ver "Verificación en el dispositivo".
+2. **Dos clientes a la vez.** El código lo contempla (un `IncrementalTranslator`
+   por sesión, contadores por sesión) pero no se probó con dos conexiones
+   simultáneas.
 2. **Dos clientes a la vez.** El código lo contempla (un `IncrementalTranslator`
    por sesión, contadores por sesión) pero no se probó con dos conexiones
    simultáneas.

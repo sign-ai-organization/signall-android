@@ -73,11 +73,51 @@ adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO
 adb logcat -c
 ```
 
-1. Abrí la app, tocá el **micrófono**.
+El micrófono tiene **dos interruptores** y los dos son de tocar una vez, no de
+mantener apretado. Mismo micrófono, misma captura, distinto resultado.
+
+| | Qué toca | Qué hace | Qué firma |
+|---|---|---|---|
+| 🎤 **Dictado** (fila 1) | el micrófono | escribe tu voz como texto en el campo | **nada** hasta que toques Traducir |
+| ◢◢ **TR** (fila 2) | el botón TR | traduce y firma mientras hablás | cada fragmento, en el acto |
+
+No pueden estar prendidos a la vez: comparten el `AudioRecord` y el WebSocket.
+Por eso el micrófono se ve deshabilitado mientras TR está prendido — y TR nunca
+se deshabilita, porque es el único botón que puede cortar el modo continuo.
+
+### A. Dictado — probar que la voz se vuelve texto
+
+1. Tocá el **micrófono** (se prende solo).
+2. Hablá con una pausa en el medio: *"hola"* … *(1 s)* … *"¿cómo estás?"*.
+3. Tocá el micrófono de nuevo para dejar de dictar.
+4. El campo tiene que tener **las dos frases** y el muñeco **no se movió**.
+5. Tocá **Traducir**: ahora sí firma la frase entera.
+
+Las pausas son el punto de la prueba: el STT cierra cada frase por silencio, y
+dictar son varias frases, no una. Si solo apareciera la última, el buffer no se
+está acumulando.
+
+En los logs:
+
+```
+SignAiState: micrófono prendido en modo Dictation
+SignAiMetrics: dictado #1: 24 palabras, 136 caracteres
+SignAiMetrics: dictado #2: 9 palabras, 46 caracteres      <- el STT cerró por silencio
+SignAiMetrics: dictado #3: 10 palabras, 59 caracteres
+SignAiState: micrófono apagado (venía de Dictation)
+SignAiMetrics: dictado #4: 10 palabras, 60 caracteres      <- el `end` forzó el final
+```
+
+Y en el backend, `capture mode -> dictation` y `dictated: '...'`, **sin** ningún
+`Sending segment`: esa es la prueba de que no firmó.
+
+### B. Tiempo real — probar que firma mientras hablás
+
+1. Tocá **TR**.
 2. Decí **"hola"** y hacé una pausa de un segundo antes de seguir.
 3. Seguí con **"cómo estás"**.
 4. **Seguí hablando todo lo que quieras** — el micrófono **no se apaga solo**.
-5. Cuando te boredas, tocá el micrófono de nuevo para apagarlo.
+5. Cuando te boredes, tocá TR de nuevo para apagarlo.
 
 Deberías ver al muñeco firmar HOLA mientras todavía estás hablando, no después.
 Mientras tanto:
@@ -85,14 +125,34 @@ Mientras tanto:
 ```bash
 adb logcat -s SignAiMetrics      # latencias del teléfono
 adb logcat -s SignAiNet          # cada segmento que llega del backend
+adb logcat -s SignAiState        # en qué modo está el micrófono y por qué
 adb logcat -s SignAiWeb          # consola del JS (modo depuración)
 ```
 
-**Con el micrófono prendido el resto se apaga:** el campo de texto queda de
-solo lectura (muestra lo que se está transcribiendo en vivo), y **Traducir** e
-**Historial** quedan deshabilitados. Es a propósito: texto y voz van por el
-mismo socket y el backend no puede saber de quién es cada fragmento; mezclados,
-el avatar firmaría la frase al revés.
+**Con cualquiera de los dos prendido el resto se apaga:** el campo de texto
+queda de solo lectura (muestra lo que se está transcribiendo en vivo), y
+**Traducir** e **Historial** quedan deshabilitados. Es a propósito: texto y voz
+van por el mismo socket y el backend no puede saber de quién es cada fragmento;
+mezclados, el avatar firmaría la frase al revés. En TR, Traducir se rehabilita
+apagando TR.
+
+### C. Cambiar de uno al otro sin soltar nada
+
+1. Dictá algo y **sin soltar el micrófono** tocá TR.
+2. Cambia de modo y sigue: lo que ya dictaste **no** se firma, lo que digas
+   después sí.
+
+Y al revés: si dictaste algo y después probaste TR, al apagar TR el campo vuelve
+a mostrar lo que habías dictado. Perder tres frases porque quisiste probar el
+modo continuo sería la peor forma de que esto salga mal.
+
+Esto se puede verificar sin hablar, con los fixtures de audio reales contra el
+Whisper de verdad:
+
+```bash
+python scripts/verify_voice_modes.py --clips 3     # en sign-ai-backend
+tools/verificar-tiempo-real.sh voz                  # lo mismo + el bloque de servicios
+```
 
 **La pausa entre palabras importa.** Un hangover de 600 ms parte la frase en dos
 si hablás corrido. Está deliberado: las señas se pueden encadenar, y partir más
@@ -232,6 +292,10 @@ curl -s 127.0.0.1:8080/metrics | less      # STT igual, en :8000
 | `rt_utterance_ms` | primer texto → última seña | p50 960 ms / p95 2918 ms |
 | `rt_chunk_delay_ms` | cada fragmento por separado | p50 0.4 ms / p95 367 ms |
 | `audio_bytes_total` | audio reenviado al STT | 32 000 B/s mientras se escucha |
+| `dictation_utterances_total` | frases dictadas que el STT cerró por silencio o por el `end` | crece solo en dictado |
+| `capture_mode_dictation_total` | veces que el cliente prendió el dictado | 1 por sesión de dictado |
+| `session_capture_dictation` | 1 si la sesión está en dictado, 0 si está en TR o sin micro | cambia con el interruptor |
+| `capture_mode_switch_open_utterance_total` | cambios de modo con una frase abierta | 0 en uso normal; >0 = un cliente que cambia a mitad de frase |
 | `session_audio_rms` | nivel del audio entrante. Bytes que crecen con RMS en el piso = micrófono capturing silencio. | 0.002 en una habitación en silencio |
 
 `rt_first_sign_ms` da **0.4 ms** porque el fragmento que llega primero es casi
@@ -284,7 +348,12 @@ adb logcat -s SignAiMetrics
 ```
 fragmento #1: 2 señas en 5ms (p50=5ms p95=5ms max=5ms n=1)
 turno #1: 822ms, 1 fragmentos, 3 glosas (p50=822ms ...)
+dictado #1: 24 palabras, 136 caracteres
 ```
+
+`fragmento`/`turno` son de tiempo real; `dictado` es del otro interruptor. Si
+`dictado` crece mientras TR está prendido, o `fragmento` crece mientras se
+dicta, los dos modos se mezclaron.
 
 ---
 
@@ -295,9 +364,15 @@ turno #1: 822ms, 1 fragmentos, 3 glosas (p50=822ms ...)
 docker compose -f ../sign-ai-backend/docker-compose.yml exec backend \
     python scripts/verify_incremental.py
 
-# ¿el protocolo sigue igual? frase entera Y fragmentado
+# ¿el protocolo sigue igual? frase entera, fragmentado y los dos modos
+# del micrófono (57 checks, sin servicios de por medio)
 docker compose -f ../sign-ai-backend/docker-compose.yml exec backend \
     python scripts/verify_client_frames.py
+
+# ¿dictado no firma y tiempo real sí, contra el Whisper de verdad?
+# Reproduce los fixtures por el socket en los dos modos y en el cambio de uno
+# al otro. Es lo único que verifica el contrato entero sin hablar.
+../sign-ai-backend/scripts/verify_voice_modes.py --clips 3
 
 # latencia de punta a punta
 ../sign-ai-backend/scripts/verify_realtime_latency.py --all-fixtures
@@ -336,6 +411,11 @@ texto produce el mismo WAV, así que las cifras son comparables entre corridas.
 | El primer `check_latency` tarda el doble | caché semántica vacía | es normal: la primera pasada paga el LLM. Corré dos veces. |
 | Un test falla con `httpx2` faltante | ese test necesita el entorno del servicio | corré los tests **dentro** del contenedor |
 | `session failed: null` en logcat, en bucle | el backend se reinició y una sesión quedó colgada | reiniciá la app: `adb shell am force-stop com.signai.webview` |
+| Queda en "Traduciendo..." para siempre después de dictar | el cliente tomó el `final` de lo dictado por una frase de tiempo real | el `final` de dictado tiene que llegar con `dictation: true`; si falta, actualizá el backend |
+| Al dictar, el muñeco firma igual | el cliente no mandó `{"type":"mode","mode":"dictation"}` | mirá `capture mode -> dictation` en los logs del backend |
+| Al prender TR no pasa nada hasta la pausa | el cambio de modo no cerró el utterance anterior | el `end` tiene que ir **antes** del `mode`; el backend lo lacha por utterance |
+| Solo aparece la última frase dictada | el STT cierra por silencio y el app no acumuló | es el buffer (`dictationBuffer`), no el STT: fijate si hay varias líneas `dictado #` |
+| Tocar un botón no hace nada | el tap cayó en el borde de la superficie | `mobile-mcp` hay que usarlo con el **centro** del elemento, no con la esquina |
 
 ### El micrófono no se puede probar con el audio del propio teléfono
 

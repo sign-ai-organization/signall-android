@@ -49,14 +49,21 @@ import com.signai.webview.ui.theme.SignAiTheme
  * Control panel (spec `CTL-*`), en dos filas:
  *
  * 1. `[ input de texto | 🎤 micrófono | 🕐 historial ]`
- * 2. `[ ➤ Traducir | TR ]`
+ * 2. `[ ➤ Traducir | ◢◢ TR ]`
  *
- * Los dos botones de la derecha son cosas distintas y no se confunden:
+ * Los dos de la derecha son cosas distintas y no se confunden:
  *
- * - **Micrófono (fila 1)** — dictado: convierte la voz en texto dentro del
- *   input. Suelta y el texto queda ahí para mandarlo con Traducir.
- * - **TR (fila 2)** — "tiempo real": el interruptor continuo, el que firman
- *   mientras se habla sin cortar.
+ * - **Micrófono (fila 1)** — dictado: se toca, se habla, se toca de nuevo. El
+ *   texto se va escribiendo en el input y el muñeco no se mueve. Traducirlo es
+ *   un paso aparte, el botón Traducir.
+ * - **TR (fila 2)** — "tiempo real": el interruptor continuo, el que firma
+ *   mientras se habla sin esperar a que termine la frase.
+ *
+ * Los dos son interruptores, ninguno se mantiene apretado, y **no pueden estar
+ * prendidos a la vez**: comparten una sola captura de micrófono y un solo socket.
+ * Por eso el micrófono queda deshabilitado mientras TR está prendido, pero TR
+ * nunca se deshabilita: si la única forma de cortar el modo continuo estuviera
+ * bloqueada durante una seña, no habría forma de cortarlo.
  *
  * El input usa `weight(1f)` y los dos botones son de ancho fijo, así que el
  * micrófono le saca ancho al campo sin tocar ningún tamaño.
@@ -69,7 +76,9 @@ fun SignAiBottomBar(
     onSend: (String) -> Unit,
     onMic: () -> Unit,
     onOpenHistory: () -> Unit,
-    micActive: Boolean = false,
+    onRealtime: () -> Unit,
+    dictationActive: Boolean = false,
+    realtimeActive: Boolean = false,
     micAvailable: Boolean = true,
     enabled: Boolean = true,
 ) {
@@ -81,25 +90,25 @@ fun SignAiBottomBar(
             playbackState == PlaybackState.Processing
     val controlsEnabled = enabled && !busy
 
+    val micActive = dictationActive || realtimeActive
+
     val sendEnabled =
         controlsEnabled &&
             query.isNotBlank() &&
-            // Con el micro prendido no: texto y voz van por el mismo socket y el
+            // Con el micrófono prendido no: texto y voz van por el mismo socket y el
             // backend no puede saber de quién es cada fragmento. Intercalados, el
             // `index` de los fragmentos de voz deja de corresponderse con el orden
             // en que llegaron y el avatar firmaría la frase al revés. Son dos
             // formas de mandar, no dos a la vez.
             !micActive
 
-    // El micro es un interruptor, no un botón de un instante, así que su
-    // estado visual viene de [micActive] y no de `playbackState`: con el micro
-    // prendido el muñeco firma al mismo tiempo, así que el estado de la
-    // reproducción pasa a `Signing` y el botón se vería apagado justo cuando
-    // está captando. Y nunca se deshabilita mientras esté prendido: si la única
-    // forma de pararlo quedara bloqueada durante una seña, no habría forma de
-    // pararlo.
-    val listening = micActive
-    val micEnabled = enabled && micAvailable
+    // El estado visual de los dos interruptores viene de su propio flag y no de
+    // `playbackState`: con el micrófono prendido el muñeco firma al mismo tiempo,
+    // así que el estado de la reproducción pasa a `Signing` y el botón se vería
+    // apagado justo cuando está captando.
+    val micEnabled = enabled && micAvailable && !realtimeActive
+    val realtimeEnabled = enabled && micAvailable
+
 
     val send: () -> Unit = {
         val text = query.trim()
@@ -150,10 +159,10 @@ fun SignAiBottomBar(
                     keyboardActions = KeyboardActions(onDone = { send() }),
                     placeholder = {
                         SignAiText(
-                            text = if (micActive) {
-                                "Escuchando..."
-                            } else {
-                                "Escribe una frase..."
+                            text = when {
+                                dictationActive -> "Dictando..."
+                                realtimeActive -> "Escuchando..."
+                                else -> "Escribe una frase..."
                             },
                             color = SignAiTheme.colors.muted,
                         )
@@ -176,19 +185,25 @@ fun SignAiBottomBar(
                     icon = SignAiIcons.Mic,
                     contentDescription = "Entrada por voz",
                     onClick = onMic,
-                    active = listening,
+                    active = dictationActive,
                     enabled = micEnabled,
                     toggle = true,
-                    activeDescription = "Escuchando. Tocar para dejar de escuchar.",
-                    inactiveDescription = "Apagado. Tocar para empezar a escuchar.",
+                    activeDescription = "Dictando. Tocar para dejar de dictar.",
+                    inactiveDescription =
+                        if (realtimeActive) {
+                            "Apagado. El modo tiempo real está usando el micrófono."
+                        } else {
+                            "Apagado. Tocar para dictar."
+                        },
                 )
                 ControlIconButton(
                     icon = SignAiIcons.History,
                     contentDescription = "Historial reciente",
                     onClick = onOpenHistory,
-                    // Con el micro prendido el panel se ocupa solo de escuchar:
-                    // texto, Traducir e Historial quedan fuera. La conversación en
-                    // curso ya se ve en el escenario, así que nada se pierde.
+                    // Con el micrófono prendido el panel se ocupa solo de
+                    // escuchar: texto, Traducir e Historial quedan fuera. La
+                    // conversación en curso ya se ve en el escenario, así que
+                    // nada se pierde.
                     enabled = controlsEnabled && !micActive,
                 )
             }
@@ -236,12 +251,12 @@ fun SignAiBottomBar(
                 // que el padding y el `spacedBy(9.dp)` de la fila los reparten
                 // solos y ningún ancho se calcula a mano.
                 //
-                // Todavía sin cablear: este paso es el front; el interruptor se
-                // conecta en el siguiente.
-                val realtimeActive = false
+                // Nunca se deshabilita, ni siquiera prendido: es el único botón
+                // que puede apagar el modo continuo, así que bloquearlo sería
+                // dejar al usuario sin salida.
                 Surface(
-                    onClick = {},
-                    enabled = true,
+                    onClick = onRealtime,
+                    enabled = realtimeEnabled,
                     shape = SignAiShapes.cornerControl,
                     color =
                         if (realtimeActive) SignAiTheme.colors.strong

@@ -100,6 +100,10 @@ class AudioCapture(private val onChunk: (ByteArray) -> Unit) {
     }
 
     fun stop() {
+        // `stop()` is called from several places and most of the time the
+        // recorder is already idle. Saying "recording stopped" when nothing was
+        // recording turns a no-op into a mystery in logcat.
+        val wasRecording = isRecording
         job?.cancel()
         job = null
         record?.let { recorder ->
@@ -107,7 +111,7 @@ class AudioCapture(private val onChunk: (ByteArray) -> Unit) {
             recorder.release()
         }
         record = null
-        Log.i(TAG, "recording stopped")
+        Log.i(TAG, if (wasRecording) "recording stopped" else "stop() sin grabación activa")
     }
 
     companion object {

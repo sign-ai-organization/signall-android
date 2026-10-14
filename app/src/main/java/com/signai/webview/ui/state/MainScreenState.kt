@@ -198,17 +198,44 @@ class MainScreenState(
     private var heardAnythingThisSession = false
 
     /**
-     * Whether the microphone is capturing right now.
+     * Cuál de los dos interruptores del micrófono está prendido, si alguno.
      *
-     * This is deliberately separate from [playbackState]. Before, one enum said
-     * two unrelated things — "is the mic on" and "what is the avatar doing" —
-     * and that only worked because the mic used to switch itself off at the end
-     * of every utterance. Leaving it on (as it should be: one turn of the hand
-     * to start, one to stop) means the avatar signs *while* the mic is hot, so
-     * the two genuinely overlap and need their own flags.
+     * Es un enum y no dos flags a propósito: los dos modos usan la misma
+     * captura y el mismo socket, así que "los dos prendidos" es un estado
+     * imposible y el que hay que dejar sin representar (ver [MicMode]).
+     *
+     * Deliberadamente aparte de [playbackState]. Antes un solo enum decía dos
+     * cosas distintas —"¿está el mic prendido?" y "¿qué hace el muñeco?"— y
+     * eso solo funcionaba porque el micro se apagaba en cada frase. Ahora el
+     * muñeco firma con el micrófono prendido, así que los dos se superponen de
+     * verdad y necesitan su propio estado.
      */
-    var micActive by mutableStateOf(false)
+    var micMode by mutableStateOf(MicMode.Off)
         private set
+
+    /** El micrófono está capturando, en cualquiera de los dos modos. */
+    val micActive: Boolean get() = micMode != MicMode.Off
+
+    /** El micrófono de la fila de arriba: dictado, solo transcribe. */
+    val dictationActive: Boolean get() = micMode == MicMode.Dictation
+
+    /** El interruptor `TR` de la fila de abajo: firma mientras se habla. */
+    val realtimeActive: Boolean get() = micMode == MicMode.Realtime
+
+    /**
+     * Texto acumulado del dictado en curso.
+     *
+     * El STT cierra cada frase cuando oye silencio, así que una sesión de
+     * dictado son varias transcripciones `final`. Si solo se conservara la
+     * última, dictar "holá" / "cómo estás" con una pausa en el medio perdería
+     * la primera frase.
+     *
+     * Sobrevive a que se apague el micrófono: es lo que quedó escrito, y si
+     * después se prende el modo tiempo real el campo vuelve a mostrar esto al
+     * apagarlo. Perder un dictado de tres frases porque el usuario quiso probar
+     * el tiempo real sería la peor forma de que esto salga mal.
+     */
+    private var dictationBuffer = ""
 
     /**
      * Whether the backend session is up.
@@ -365,11 +392,12 @@ class MainScreenState(
     }
 
     /**
-     * Devuelve la interfaz a "escuchando" cuando el mic sigue abierto.
+     * Devuelve la interfaz a "escuchando" o "dictando" cuando el mic sigue
+     * abierto.
      *
      * Una frase terminó y el avatar va a terminar de firmarla, pero el mic sigue
-     * prendido: el siguiente `done` tiene que devolver el estado a `Listening`
-     * y no a `Done`, o el botón de micrófono se vería apagado mientras está
+     * prendido: el siguiente `done` tiene que devolver el estado a la etiqueta
+     * del modo que está activo, o el botón se vería apagado mientras está
      * capturando, y el usuario no sabría si tiene que tocarlo.
      *
      * También reinicia el reloj del turno. Con el mic prendido, una sesión son
@@ -379,7 +407,8 @@ class MainScreenState(
     private fun resumeListeningIfMicOn() {
         if (!micActive) return
         resetStreamingTurn()
-        playbackState = PlaybackState.Listening
+        playbackState =
+            if (realtimeActive) PlaybackState.Listening else PlaybackState.Dictating
     }
 
     /** Whole-phrase mode: collect every sentence, then sign the phrase as a unit. */
@@ -441,6 +470,18 @@ class MainScreenState(
                 // "no transcript arrived" guard is no longer needed.
                 processingJob?.cancel()
                 heardAnythingThisSession = true
+                // Dictado y tiempo real parten exactamente del mismo sitio —los
+                // mismos chunks de audio y el mismo STT— y se separan acá: en
+                // dictado el texto es el resultado, en tiempo real es el material
+                // del que salen las señas.
+                //
+                // Manda el backend, no el estado local: el `final` de lo dictado
+                // llega después de que el usuario apagó el micrófono, y para
+                // entonces esta app ya cree que no está dictando.
+                if (event.dictation) {
+                    onDictationTranscript(event)
+                    return
+                }
                 transcript = event.text
                 inputText = event.text
                 // The utterance starts at the *first* text, not at the final:
@@ -486,6 +527,39 @@ class MainScreenState(
     }
 
     /**
+     * Una transcripción en modo dictado: va al input y a ningún otro lado.
+     *
+     * Acá no se arma cola ni se toca la escena: el resultado del dictado es
+     * **texto**, y qué hacer con ese texto —firmarlo, corregirlo, borrarlo— es
+     * del usuario. Lo que llega es la hipótesis creciente de la frase que el
+     * STT tiene abierta, así que se muestra en vivo pero solo se suma al
+     * acumulado cuando llega su `final`.
+     *
+     * También funciona cuando el dictado ya se apagó: ese `final` es el texto
+     * que el usuario estaba esperando, y es lo único que le faltaba para
+     * apretar Traducir.
+     */
+    private fun onDictationTranscript(event: BackendEvent.Transcript) {
+        val live = joinWords(dictationBuffer, event.text)
+        inputText = live
+        transcript = live
+        if (!event.final) return
+
+        dictationBuffer = live
+        metrics.onDictationUtterance(event.text)
+        // Con el micrófono ya apagado no hay nada más que esperar: el texto
+        // quedó en el input. Si sigue prendido, el estado es el del modo y no
+        // hay que tocarlo.
+        if (!dictationActive) playbackState = PlaybackState.Idle
+    }
+
+    private fun joinWords(first: String, second: String): String =
+        listOf(first, second)
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .joinToString(" ")
+
+    /**
      * Turns the collected segments into a playback queue and starts signing.
      *
      * Reached both when the last segment lands and when `done` does, so it has
@@ -526,12 +600,12 @@ class MainScreenState(
      * be recorded again as a new turn.
      */
     private fun requestTranslation(text: String, replay: Boolean = false) {
-        // El botón ya está deshabilitado con el mic prendido, pero `play` también
+        // El botón ya está deshabilitado mientras se escucha, pero `play` también
         // entra por la tecla Enter y por el "Repetir" del escenario. Texto y voz
         // van por el mismo socket y el backend no puede saber de quién es cada
         // fragmento: intercalados, el avatar firmaría la frase al revés.
         if (micActive) {
-            showStatus("Apagá el micrófono para escribir una frase.")
+            showStatus("Apagá el micrófono o el TR para mandar una frase escrita.")
             return
         }
         if (playbackState == PlaybackState.Translating ||
@@ -577,13 +651,19 @@ class MainScreenState(
     }
 
     private fun fail(message: String) {
+        Log.i(TAG, "fallo: $message")
         pendingText = null
         // The phrase this was building for is dead: its partial segments must
         // not be picked up by the next phrase.
         pendingSegments.clear()
         pendingTotal = 0
         streamingTurn = false
-        micActive = false
+        // Cut the capture too, not just the flag: with the mic off in the UI but
+        // `AudioRecord` still running, the next tap would find a recorder
+        // already open and the app would look like it were listening while the
+        // button says it is off.
+        audio.stop()
+        micMode = MicMode.Off
         resetStreamingTurn()
         caption = ""
         playbackState = PlaybackState.Idle
@@ -692,78 +772,122 @@ class MainScreenState(
         segments.flatMap { it.glosses }.joinToString(" ") { it.text }
 
     // ── Micrófono ───────────────────────────────────────────────────────────
+    //
+    // Dos interruptores sobre una sola captura (spec `STA-16`/`STA-17`):
+    //
+    // - 🎤 **dictado** — se toca, se habla, se toca de nuevo. El texto se
+    //   acumula en el input y el muñeco no se mueve hasta que se aprieta
+    //   Traducir.
+    // - ◢◢ **tiempo real** — se toca, el muñeco firma mientras se habla, se toca
+    //   de nuevo para apagar.
+    //
+    // Ninguno de los dos es mantener apretado, y no pueden estar prendidos
+    // juntos: comparten el `AudioRecord` y el WebSocket.
+
+    /** El micrófono de la fila de arriba: dictado. */
+    fun toggleDictation() =
+        changeMicMode(if (dictationActive) MicMode.Off else MicMode.Dictation)
+
+    /** El interruptor `TR` de la fila de abajo: tiempo real. */
+    fun toggleRealtime() =
+        changeMicMode(if (realtimeActive) MicMode.Off else MicMode.Realtime)
 
     /**
-     * Microphone capture (spec `CTL-5`/`STA-9`, paso 5 del plan). While
-     * `listening` the raw PCM16 chunks go out on the same session as the typed
-     * phrases; the backend transcribes them and the final transcript drives the
-     * same path a typed phrase takes.
+     * Todo cambio de estado del micrófono pasa por acá.
      *
-     * The prototype's auto-fill is gone: it only made the app look like it was
-     * listening while nothing was captured.
+     * Son cuatro casos y no cinco porque cambiar de un modo al otro **no**
+     * reinicia la captura: `AudioRecord` tarda cientos de ms en abrir y el
+     * usuario ya estaba hablando. Se manda un `end` para que el backend cierre
+     * el utterance del modo que se está dejando y se le avisa el modo nuevo;
+     * el `end` va primero a propósito, porque el backend termina ese utterance
+     * con el modo con el que empezó.
      */
-    /**
-     * Starts or stops the microphone, and that is the **only** thing that does.
-     *
-     * The mic is a switch, not a push-to-talk. One touch to turn it on, one to
-     * turn it off, and everything in between is the app talking and the avatar
-     * signing. It used to be push-to-talk by accident: it switched itself off
-     * on every `final`, so continuing meant tapping again after every sentence.
-     *
-     * See [micActive] for why that flag is not [playbackState].
-     */
-    fun toggleMic() {
-        if (micActive) {
-            stopListening()
-        } else {
-            startListening()
+    private fun changeMicMode(mode: MicMode) {
+        val previous = micMode
+        if (mode == previous) return
+
+        if (!backend.isConnected) {
+            if (mode != MicMode.Off) showStatus("Sin conexión: no puedo escuchar.")
+            return
+        }
+
+        when {
+            previous == MicMode.Off -> startCapture(mode)
+            mode == MicMode.Off -> stopCapture(previous)
+            else -> switchMode(previous, mode)
         }
     }
 
-    private fun startListening() {
-        if (!backend.isConnected) {
-            showStatus("Sin conexión: no puedo escuchar.")
-            return
-        }
+    /** Enciende la captura en un modo. */
+    private fun startCapture(mode: MicMode) {
         statusOverride = null
         transcript = ""
         // El campo pasa a mostrar la transcripción en vivo, así que arranca
         // vacío: si quedara la frase anterior se leería como parte de lo que
         // está diciendo.
         inputText = ""
-        playbackState = PlaybackState.Listening
+        if (mode == MicMode.Dictation) dictationBuffer = ""
+        micMode = mode
+        backend.sendMode(realtime = mode == MicMode.Realtime)
+        playbackState = labelFor(mode)
         // The turn clock starts when the mic opens, so `rt_turn_total_ms`
         // includes the silence before the first word — which is the number a
         // user actually perceives.
         streamingTurn = false
         resetStreamingTurn()
         heardAnythingThisSession = false
-        micActive = true
         metrics.reset()
+        Log.i(TAG, "micrófono prendido en modo ${mode.name}")
+
         audio.start(scope)
         if (!audio.isRecording) {
             // The device refused to open the mic (usually a missing permission).
-            micActive = false
+            micMode = MicMode.Off
             playbackState = PlaybackState.Idle
             showStatus("No se pudo abrir el micrófono.")
         }
     }
 
-    /** Mic blocked by the user (RF-UI-04: say so, the app can't work without it). */
-    fun onMicPermissionDenied() {
-        micActive = false
-        playbackState = PlaybackState.Idle
-        showStatus("Sin permiso de micrófono la app no puede traducir voz.")
+    /** Cambia de modo sin cortar la captura. */
+    private fun switchMode(from: MicMode, to: MicMode) {
+        // El `end` va primero: cierra el utterance del modo que se deja y el
+        // backend lo termina con ese mismo modo, así que la última frase de
+        // tiempo real se firma igual y lo dictado no se firma solo.
+        backend.sendEnd()
+        backend.sendMode(realtime = to == MicMode.Realtime)
+        Log.i(TAG, "micrófono: ${from.name} -> ${to.name}")
+
+        micMode = to
+        if (to == MicMode.Dictation) {
+            // El campo pasa a ser la pantalla del dictado.
+            inputText = ""
+            transcript = ""
+            dictationBuffer = ""
+        }
+        streamingTurn = false
+        resetStreamingTurn()
+        heardAnythingThisSession = false
+        metrics.reset()
+        playbackState = labelFor(to)
     }
 
-    private fun stopListening() {
+    /** Apaga el micrófono por completo. */
+    private fun stopCapture(previous: MicMode) {
+        Log.i(TAG, "micrófono apagado (venía de ${previous.name})")
         audio.stop()
-        micActive = false
-        // The transcriber closes a segment by hearing silence. Stopping the
-        // capture means that silence never arrives, so the segment has to be
-        // closed explicitly — otherwise the app waits for a transcript that
-        // will never come.
+        micMode = MicMode.Off
+        // El STT cierra una frase cuando oye silencio, pero la captura se cortó
+        // justo antes de que ese silencio llegara, así que hay que cerrarla a la
+        // fuerza: si no, el `final` con lo que el usuario dijo nunca llega.
         backend.sendEnd()
+
+        // Con TR apagado, lo que quedó en el campo es lo último que firmaba el
+        // muñeco. Si hubo dictado, lo que el usuario escribió tiene más
+        // interest: es lo único que puede volver a mandar.
+        if (previous == MicMode.Realtime && dictationBuffer.isNotBlank()) {
+            inputText = dictationBuffer
+            transcript = dictationBuffer
+        }
 
         // Nothing came back at all: the user turned the mic off without saying
         // anything (or in a room so quiet the VAD never fired). Going to
@@ -790,15 +914,26 @@ class MainScreenState(
         processingJob?.cancel()
         processingJob = scope.launch {
             delay(TranscriptionTimeoutMs)
-            if (playbackState == PlaybackState.Processing) {
+            if (playbackState == PlaybackState.Processing && micMode == MicMode.Off) {
                 fail("No llegó la transcripción. Probá de nuevo.")
             }
         }
     }
 
+    /** La etiqueta de la pista para un modo: lo que el usuario está haciendo. */
+    private fun labelFor(mode: MicMode): PlaybackState =
+        if (mode == MicMode.Realtime) PlaybackState.Listening else PlaybackState.Dictating
+
+    /** Mic blocked by the user (RF-UI-04: say so, the app can't work without it). */
+    fun onMicPermissionDenied() {
+        micMode = MicMode.Off
+        playbackState = PlaybackState.Idle
+        showStatus("Sin permiso de micrófono la app no puede traducir voz.")
+    }
+
     private fun sendAudio(chunk: ByteArray) {
         if (!backend.sendAudio(chunk)) {
-            stopListening()
+            changeMicMode(MicMode.Off)
             fail("Se cortó la conexión mientras escuchaba.")
         }
     }
@@ -861,9 +996,9 @@ class MainScreenState(
     }
 
     fun setInput(text: String) {
-        // Con el mic prendido el campo está en `readOnly`, pero un teclado que ya
-        // estaba abierto puede entregar texto igual. Se ignora en vez de pisar la
-        // transcripción en vivo, que es lo que el campo está mostrando.
+        // Con el micrófono prendido el campo está en `readOnly`, pero un teclado
+        // que ya estaba abierto puede entregar texto igual. Se ignora en vez de
+        // pisar la transcripción en vivo, que es lo que el campo está mostrando.
         if (micActive) return
         inputText = text
     }
@@ -899,10 +1034,15 @@ class MainScreenState(
     /** Called by the JS bridge (`onPlaybackDone`, spec `BRG-7`/`STA-8`). */
     fun onPlaybackDone() {
         if (playbackState == PlaybackState.Translating || playbackState == PlaybackState.Signing) {
-            // Con el mic prendido no "terminó todo": terminó esta seña y el
+            // Con el micrófono prendido no "terminó todo": terminó esta seña y el
             // usuario sigue hablando. Volver a `Listening` es lo que deja el
             // botón de micrófono mostrando que sigue abierto.
-            playbackState = if (micActive) PlaybackState.Listening else PlaybackState.Done
+            playbackState =
+                when (micMode) {
+                    MicMode.Realtime -> PlaybackState.Listening
+                    MicMode.Dictation -> PlaybackState.Dictating
+                    MicMode.Off -> PlaybackState.Done
+                }
         }
         caption = ""
         // The control panel stays disabled until the sign ends (`CNV-7`); clear

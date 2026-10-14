@@ -36,33 +36,52 @@ tools/verificar-tiempo-real.sh incremental   # no services needed; runs in the b
 - `REALTIME_ENABLED=false` on the backend restores the old whole-phrase behaviour
   exactly. Both modes are covered in the backend's `verify_client_frames.py`.
 
-### El micrófono es un interruptor, no un pulsador
+### El micrófono son dos interruptores, no un pulsador
 
-Desde el 2026-10-14 el mic **no se apaga solo**. Un toque lo prende, otro lo
-apaga, y en el medio el usuario sigue hablando sin tocar nada. Un `final` solo
-dice "esta frase se cerró"; el STT abre el utterance siguiente por su cuenta.
+Desde el 2026-10-14 el mic **no se apaga solo**, y hay **dos** interruptores
+encima de la misma captura:
+
+| | Botón | Qué hace | Qué firma |
+|---|---|---|---|
+| 🎤 | microfono (fila 1) | **dictado**: escribe tu voz como texto en el campo | nada, hasta que toques Traducir |
+| ◢◢ | TR (fila 2) | **tiempo real**: traduce y firma mientras hablás | cada fragmento, en el acto |
+
+Los dos se tocan una vez y quedan prendidos; ninguno se mantiene apretado. **No
+pueden estar prendidos a la vez**: comparten el `AudioRecord` y el WebSocket.
 
 Lo que hay que saber antes de tocar esto:
 
+- **El estado del mic es `MainScreenState.micMode`**, un enum de tres valores
+  (`Off`/`Dictation`/`Realtime`), y no un booleano. Dos flags dejarían
+  "los dos prendidos" como un estado representable, y en ese estado la app se
+  rompe. Todo cambio pasa por `changeMicMode()`, que tiene los cuatro casos
+  (prender, apagar, cambiar de modo, ya estaba en ese modo).
 - **`playbackState` ya no dice si el mic está prendido.** Antes un solo enum
   decía dos cosas —"¿está el mic prendido?" y "¿qué hace el muñeco?"— y eso
   solo funcionaba porque el mic se apagaba en cada frase. Ahora se superponen de
-  verdad y la fuente de verdad del mic es `MainScreenState.micActive`. Un método
-  nuevo que apague o encienda el mic tiene que tocar **los dos**.
+  verdad. Un método nuevo que apague o encienda el mic tiene que tocar **los dos**.
 - **Nunca uses `playbackState == Listening` como "el mic está prendido".** Con el
   mic prendido y el muñeco firmando, el estado es `Signing`.
-- **El botón de mic nunca se deshabilita mientras esté prendido.** Si la única
-  forma de pararlo quedara bloqueada durante una seña, no habría forma de
-  pararlo.
+- **TR nunca se deshabilita, ni prendido.** El mic sí se deshabilita mientras TR
+  está prendido, porque el otro es el único que puede apagar el modo continuo.
+- **El `end` va antes que el `mode`.** El cliente manda `end` y después el modo
+  nuevo; el backend termina el utterance anterior con el modo con el que empezó.
+  Invertir el orden rompe las dos direcciones.
+- **El backend manda `dictation: true` en las transcripciones de dictado, y el
+  cliente rutea por ese flag, no por su propio `micMode`.** El `final` de lo
+  dictado llega después de que el usuario apagó el dictado: sin el flag, la app
+  lo tomaría por tiempo real y quedaría en "Traduciendo..." para siempre.
 - **Con el mic prendido, Traducir e Historial están deshabilitados y el input es
   `readOnly`.** Texto y voz van por el mismo socket y el backend no puede saber
   de quién es cada fragmento; mezclados, el avatar firma la frase al revés. El
   input sigue mostrando la transcripción en vivo, que es lo que el usuario
   quiere ver: por eso `readOnly` y no `enabled` (un campo deshabilitado se
   atenúa y el texto se vuelve ilegible).
-- `resumeListeningIfMicOn()` es lo que devuelve la interfaz a "escuchando" al
-  cerrar una frase o una seña. Sin eso el botón se vería apagado mientras
-  captura.
+- **Lo dictado se acumula en `dictationBuffer`**, no se reemplaza. El STT cierra
+  cada frase por silencio y alguien que dicta hace pausas.
+- `resumeListeningIfMicOn()` es lo que devuelve la interfaz a "escuchando" o
+  "dictando" al cerrar una frase o una seña. Sin eso el botón se vería apagado
+  mientras captura.
 
 ### Gotchas specific to real-time
 
@@ -121,7 +140,8 @@ instrument is a number you cannot claim improved.
 |---|---|---|
 | STT | `:8000/metrics` | inference ms per model, GPU queue wait, audio lag, drops by reason |
 | Backend | `:8080/metrics` | `rt_first_sign_ms`, `rt_utterance_ms`, `rt_chunk_delay_ms`, `audio_bytes_total` |
-| Device | `adb logcat -s SignAiMetrics` | fragment→queue ms, turn duration, p50/p95/max |
+| Device | `adb logcat -s SignAiMetrics` | fragment→queue ms, turn duration, p50/p95/max, dictated phrases and words |
+| Backend | `:8080/metrics` | `dictation_utterances_total`, `capture_mode_*_total`, `session_capture_dictation` |
 | Device | `adb logcat -s SignAiNet` | every segment the backend sent, with `stream`/`provisional` |
 | Scene | `adb logcat -s SignAIWeb` | JS console (needs debug mode on in Settings → AVATAR) |
 

@@ -11,6 +11,7 @@
 #   tools/verificar-tiempo-real.sh latencia        # solo la medición grande
 #   tools/verificar-tiempo-real.sh dispositivo     # solo lo del teléfono
 #   tools/verificar-tiempo-real.sh fixtures        # solo transcripción
+#   tools/verificar-tiempo-real.sh voz            # solo los dos modos del micro
 #
 # Requisitos: docker compose corriendo en sign-ai-backend, el backend en 8080,
 # el STT en 8000 y un dispositivo adb conectado para el bloque de dispositivo.
@@ -129,7 +130,27 @@ check_fixtures() {
   echo "  (la transcripción se verifica dentro de la corrida de latencia, que los reproduce)"
 }
 
-# ── 4. Latencia real, extremo a extremo ──────────────────────────────────────
+# ── 4. Los dos modos del micrófono ───────────────────────────────────────────
+# Dictado y tiempo real mandan el mismo audio por el mismo socket y se separan
+# solo en qué le piden al backend. Este bloque reproduce los fixtures en los dos
+# modos y en el cambio de uno al otro: es lo que verifica que dictar no firma
+# nada y que cambiar a tiempo real firma.
+check_voice_modes() {
+  banner "4. Modos del micrófono (dictado y tiempo real)"
+  local out=/tmp/verify_voice_modes.out
+  py "$BACKEND_DIR/scripts/verify_voice_modes.py" \
+    --url "$BACKEND_URL" --fixtures-dir "$FIXTURES" --clips 3 --timeout 60 >"$out" 2>&1
+  grep -E '^  (dictado|tiempo real|cambio) ' "$out" | sed 's/^/  /'
+
+  if grep -q 'todo OK' "$out"; then
+    record "los dos modos se comportan como deben" 0
+  else
+    tail -20 "$out" | sed 's/^/  /'
+    record "los dos modos se comportan como deben" 1 "el detalle está en $out"
+  fi
+}
+
+# ── 5. Latencia real, extremo a extremo ──────────────────────────────────────
 check_latency() {
   banner "4. Latencia extremo a extremo (audio -> seña en pantalla)"
   local out=/tmp/verify_latency.out
@@ -162,7 +183,7 @@ check_latency() {
   fi
 }
 
-# ── 5. Métricas de los dos servicios ─────────────────────────────────────────
+# ── 6. Métricas de los dos servicios ─────────────────────────────────────────
 check_metrics() {
   banner "5. Métricas"
   echo "  --- backend ---"
@@ -197,7 +218,7 @@ for name, value in sorted(d['counters'].items()):
 " 2>/dev/null || echo "  (sin métricas del STT)"
 }
 
-# ── 6. El teléfono ───────────────────────────────────────────────────────────
+# ── 7. El teléfono ───────────────────────────────────────────────────────────
 check_device() {
   banner "6. Dispositivo"
   if ! adb get-state >/dev/null 2>&1; then
@@ -230,13 +251,28 @@ check_device() {
   adb shell am start -n "$PKG/.MainActivity" >/dev/null 2>&1
   sleep 10
   echo "  app relanzada. Probá vos con la voz:"
-  echo "    1. tocá el micrófono"
-  echo "    2. decí 'hola' y esperá un segundo antes de seguir"
-  echo "    3. seguí con 'cómo estás'"
-  echo "    4. soltá el micrófono cuando termines"
+  echo
+  echo "  A. Dictado (el micrófono de la fila de arriba)"
+  echo "    1. tocá el micrófono — se prende solo, no hay que mantenerlo apretado"
+  echo "    2. decí 'holá' / 'cómo estás' con una pausa en el medio"
+  echo "    3. volvé a tocarlo para dejar de dictar"
+  echo "    4. el texto tiene que quedar en el campo y el muñeco NO se movió"
+  echo "    5. tocá Traducir: ahora sí firma la frase entera"
+  echo
+  echo "  B. Tiempo real (el TR de la fila de abajo)"
+  echo "    1. tocá TR — el micrófono queda deshabilitado, es el mismo"
+  echo "    2. hablá largo: el muñeco tiene que ir firmando mientras hablás"
+  echo "    3. hacé una pausa de un segundo: tiene que seguir escuchando solo"
+  echo "    4. tocá TR de nuevo para apagarlo"
+  echo
+  echo "  C. Los dos juntos"
+  echo "    1. dictá algo, y sin soltar nada tocá TR: cambia de modo, no se pisa"
+  echo "    2. al apagar TR, el campo vuelve a mostrar lo dictado"
   echo
   echo "  mientras tanto, los logs:"
-  echo "    adb logcat -s SignAiMetrics SignAiNet SignAiState"
+  echo "    adb logcat -s SignAiState SignAiNet SignAiMetrics"
+  echo "  en el backend:"
+  echo "    docker compose -f $BACKEND_DIR/docker-compose.yml logs -f backend | grep -E 'capture mode|dictated|fragmento'"
   record "app relanzada" 0
 }
 
@@ -248,11 +284,12 @@ main() {
   case "$what" in
     incremental) check_health; check_incremental ;;
     fixtures)    check_fixtures; check_latency ;;
+    voz)         check_health; check_voice_modes ;;
     latencia)    check_health; check_latency; check_metrics ;;
     dispositivo) check_device ;;
     metricas)    check_metrics ;;
-    todo|"")     check_health; check_incremental; check_fixtures; check_latency; check_metrics; check_device ;;
-    *) echo "bloque desconocido: $what"; echo "usá: incremental | fixtures | latencia | metricas | dispositivo | todo"; exit 2 ;;
+    todo|"")     check_health; check_incremental; check_fixtures; check_voice_modes; check_latency; check_metrics; check_device ;;
+    *) echo "bloque desconocido: $what"; echo "usá: incremental | fixtures | voz | latencia | metricas | dispositivo | todo"; exit 2 ;;
   esac
 
   banner "Resumen"

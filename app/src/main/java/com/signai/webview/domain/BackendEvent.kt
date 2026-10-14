@@ -28,7 +28,23 @@ package com.signai.webview.domain
 sealed interface BackendEvent {
     data object Connected : BackendEvent
 
-    data class Transcript(val text: String, val final: Boolean) : BackendEvent
+    data class Transcript(
+        val text: String,
+        val final: Boolean,
+        /**
+         * True when the backend transcribed this in dictation mode: it is text
+         * for the input, not a phrase to sign.
+         *
+         * It has to be the server saying it, not this client guessing. Turning
+         * the mic off sends `end`, and the `final` of what was dictated comes
+         * back **after** the switch is off — by then the app already believes the
+         * mic is off and would take that phrase for real time, wait for fragments
+         * that are never coming and sit in "Traduciendo..." forever. A backend
+         * older than this field sends nothing, which reads as false: real time,
+         * the behaviour before the two switches existed.
+         */
+        val dictation: Boolean = false,
+    ) : BackendEvent
 
     /**
      * One translated piece of the phrase in flight.

@@ -30,6 +30,8 @@ import okio.ByteString.Companion.toByteString
  * - [sendText] sends a phrase typed instead of spoken.
  * - [sendEnd] tells the backend the utterance is over, so it can close the
  *   segment the STT has open (see [sendEnd]).
+ * - [sendMode] says what to do with the voice: only transcribe it (dictation)
+ *   or sign it while it is being spoken (real time).
  *
  * [events] is a function, not a property: every call is a fresh cold flow, so
  * reconnecting means collecting it again.
@@ -112,6 +114,26 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         return socket?.send(payload) ?: false
     }
 
+    /**
+     * Dice qué hacer con lo que llega por el micrófono (spec `STA-16`).
+     *
+     * `false` es dictado: el backend devuelve la transcripción y nada más, el
+     * texto queda en el input y el usuario decide cuándo mandarlo a traducir.
+     * `true` es tiempo real: cada fragmento se traduce y se firma mientras la
+     * persona habla.
+     *
+     * El `end` de un cambio de modo va **antes** que este frame, para que el
+     * backend termine el utterance anterior con el modo con el que empezó
+     * (`Controller._utterance_mode`) y no con el que se acaba de prender.
+     */
+    fun sendMode(realtime: Boolean): Boolean {
+        val payload = JSONObject()
+            .put("type", "mode")
+            .put("mode", if (realtime) "realtime" else "dictation")
+            .toString()
+        return socket?.send(payload) ?: false
+    }
+
     fun close() {
         socket?.close(NORMAL_CLOSURE, "client closing")
         socket = null
@@ -147,6 +169,7 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         "transcript" -> BackendEvent.Transcript(
             text = obj.optString("text"),
             final = obj.optBoolean("final"),
+            dictation = obj.optBoolean("dictation"),
         )
 
         "segment" -> {
