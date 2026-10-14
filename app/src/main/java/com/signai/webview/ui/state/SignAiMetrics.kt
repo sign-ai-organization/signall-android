@@ -29,6 +29,7 @@ class SignAiMetrics {
 
     private val fragmentToQueue = Latency()
     private val turnTotal = Latency()
+    private val signTotal = Latency()
 
     /** A streamed fragment arrived and became queue items. */
     fun onFragment(latencyMs: Long, queuedSigns: Int) {
@@ -50,6 +51,28 @@ class SignAiMetrics {
             TAG,
             "turno #${turns.get()}: ${totalMs}ms, $fragmentCount fragmentos, $glossCount glosas " +
                 "(${turnTotal.summarise()})",
+        )
+    }
+
+    /**
+     * A turn finished signing: first sign started, last sign done.
+     *
+     * The only one of the three that measures the **animation**, and the one that
+     * says whether the avatar is keeping up or signing into the past: a phrase
+     * whose signs take 9 s to play is already wrong by the third one.
+     *
+     * It is deliberately not `rt_turn_total_ms`. That one runs from the mic
+     * opening to the last fragment, so it measures the speech and the pipeline
+     * (STT + backend) and does not move at all when the scene changes: the
+     * crossfade shortens how long the queue takes to play, not how long the
+     * backend takes to send it. Measuring the same thing twice with two names
+     * would make the second one look broken.
+     */
+    fun onPlayback(totalMs: Long, signCount: Int) {
+        signTotal.record(totalMs)
+        Log.i(
+            TAG,
+            "firmado: $signCount señas en ${totalMs}ms (${signTotal.summarise()})",
         )
     }
 
@@ -84,6 +107,7 @@ class SignAiMetrics {
         append(" dictado_palabras=").append(dictationWords.get())
         append(" fragmento_a_cola=").append(fragmentToQueue.summarise())
         append(" duracion_turno=").append(turnTotal.summarise())
+        append(" duracion_firmado=").append(signTotal.summarise())
     }
 
     /** Zeros every counter, so a snapshot describes one test run and not the session. */
@@ -96,6 +120,7 @@ class SignAiMetrics {
         dictationWords.set(0)
         fragmentToQueue.clear()
         turnTotal.clear()
+        signTotal.clear()
     }
 
     private companion object {

@@ -115,16 +115,25 @@ def bake(avatar_js, pose, names):
 
 
 def compact(avatar_js, names):
-    """Reescribe las rotaciones pisadas con el decimal más corto del float32.
+    """Deja las rotaciones pisadas como float32, ready para el JSON.
 
-    Sin esto `json.dumps` escribe los 17 dígitos de un double y el `.glb` crece
-    en cada regeneración. El exportador de Blender escribe la forma corta, así
-    que después de esto el archivo queda del mismo tamaño.
+    No existe: el punto de esto es que quede escrito acá. Se documenta la
+    trampa porque es cara y no avisa — `tools/rest_pose.py` lo hizo mal una vez
+    y el síntoma fue un avatar invisible:
+
+    > Escribir el quaternion como **string** con un decimal corto deja el `.glb`
+    > un 1% más chico, pero `GLTFLoader` no coerciona: `Quaternion.fromArray()`
+    > copia el string tal cual, la matriz del hueso queda con NaN y el
+    > personaje no se ve, sin un error en la consola.
+
+    Los floats van como float de Python: `json.dumps` los escribe con la
+    representación más corta que vuelve a dar el mismo float32, que es
+    exactamente como los grabó el exportador de Blender. Por eso el archivo no
+    cambia de tamaño.
     """
-    by_name = gp.node_by_name(avatar_js)
     for name in names:
-        node = by_name[name]
-        node["rotation"] = [gp.fmt_f32(c) for c in node["rotation"]]
+        node = gp.node_by_name(avatar_js)[name]
+        node["rotation"] = [gp.f32(c) for c in node["rotation"]]
 
 
 def hand_positions(js, pose=None):
@@ -135,19 +144,39 @@ def hand_positions(js, pose=None):
 
 
 def check_bind(js, binary):
-    """Falla si el TRS de los nodos ya no es la pose de bind.
+    """Verifica que el archivo sea un avatar sano antes de tocarlo.
 
-    La pose horneada **deja** de ser la pose de bind — para eso está. La
-    comprobación es para el otro sentido: si un export nuevo no cumple la
-    identidad, cambiar las rotaciones de los huesos deformaría la malla en vez de
-    re-posarla, y eso no se ve en ningún error.
+    Lo que se comprueba es que el TRS de los nodos sea la pose de bind
+    (reconstruida desde las IBM), **salvo en la cadena de brazos**, que puede
+    estar ya horneada: correr el script dos veces sobre el mismo archivo tiene
+    que dar lo mismo, y no fallar.
+
+    Por fuera de la cadena de brazos, cualquier desviación significa que el
+    export no es el que esperamos, y ahí hornear deformaría la malla en vez de
+    re-posarla — que es un fallo que no aparece en ningún error.
     """
-    error = gp.bind_pose_error(js, binary)
-    if error > 1e-3:
+    bind = gp.bind_pose(js, binary)
+    arm = set(arm_chain(js))
+    worst_out, worst_arm = 0.0, 0.0
+    for name, node in gp.node_by_name(js).items():
+        if name not in bind:
+            continue
+        got, want = gp.node_trs(node), bind[name]
+        # q y −q son el mismo giro: `bind_pose` puede devolver el signo
+        # contrario al del archivo y no sería ninguna diferencia.
+        if sum(a * b for a, b in zip(got[1], want[1])) < 0:
+            want = (want[0], tuple(-c for c in want[1]), want[2])
+        delta = max(max(abs(a - b) for a, b in zip(branch_x, branch_y))
+                    for branch_x, branch_y in zip(got, want))
+        if name in arm:
+            worst_arm = max(worst_arm, delta)
+        else:
+            worst_out = max(worst_out, delta)
+    if worst_out > 1e-4:
         raise SystemExit(
-            f"el TRS de los nodos no es la pose de bind (error {error:.2e}). "
-            "Hornear la pose de descanso deformaría la malla: revisá el export.")
-    return error
+            f"el TRS de {worst_out:.2e} de los nodos que no son brazo no es la pose "
+            "de bind. Revisar el export antes de hornear la pose de descanso.")
+    return worst_arm
 
 
 def bake_rest_pose(js, signs_dir=WEB / "signs"):
@@ -188,7 +217,7 @@ def main():
     args = parser.parse_args()
 
     js, binary = gp.read_glb(args.avatar)
-    error = check_bind(js, binary)
+    check_bind(js, binary)
     before_size = args.avatar.stat().st_size
     report = bake_rest_pose(js, args.signs)
     print("\n".join(report_lines(report)))
@@ -197,8 +226,6 @@ def main():
         print("    --dry-run: no se escribió nada")
         return
     size = gp.write_glb(args.avatar, js, binary)
-    print(f"    TRS de los nodos = pose de bind antes (error {error:.2e}): "
-          "eso es lo que permite re-posar sin deformar la malla")
     print(f"    escrito {args.avatar.name} ({size / 1e6:.2f} MB, "
           f"{size - before_size:+d} bytes)")
 

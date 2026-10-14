@@ -283,6 +283,21 @@ conversacion_4  bien, muchas gracias, hasta manana
 adb logcat -s SignAiNet
 ```
 
+### Qué mirar además del ritmo
+
+- **El reposo**: al abrir la app, después de que termine una frase y con el
+  micrófono prendido esperando, el muñeco tiene que estar **con los brazos abajo,
+  al lado de los muslos**. Antes tenía los brazos abiertos como de maniquí.
+- **El paso de una seña a otra**: es lo que cambió. Las 46 variantes de clip ya
+  se encadenan solas; la app no mete nada en el medio y las funde durante 100 ms.
+  Se nota sobre todo en el par de señas de una frase corta ("hola gracias"), que
+  es donde el salto directo es más visible.
+- **Para verlo en números**: Ajustes → AVANZADO → Modo depurar, y el panel
+  muestra la fundición y cuántas actions están vivas (`2` mientras se funde).
+  En logcat sale una línea por seña: `fundición -> 0000.001` o `corte seco -> …`
+  (el corte seco es correcto para la primera seña, para una seña repetida y con
+  "reducir animaciones" prendido).
+
 ---
 
 ## 4. Qué señas hay
@@ -411,12 +426,21 @@ adb logcat -s SignAiMetrics
 ```
 fragmento #1: 2 señas en 5ms (p50=5ms p95=5ms max=5ms n=1)
 turno #1: 822ms, 1 fragmentos, 3 glosas (p50=822ms ...)
+firmado: 3 señas en 6841ms (p50=6841ms p95=6841ms max=6841ms n=1)
 dictado #1: 24 palabras, 136 caracteres
 ```
 
 `fragmento`/`turno` son de tiempo real; `dictado` es del otro interruptor. Si
 `dictado` crece mientras TR está prendido, o `fragmento` crece mientras se
 dicta, los dos modos se mezclaron.
+
+**`turno` y `firmado` son dos cosas distintas y conviene no confundirlas.**
+`turno` (`rt_turn_total_ms`) corre del primer texto al último fragmento: mide el
+STT y el backend, y el avatar no aparece. `firmado` mide **la animación** — de
+la primera seña a la última — y es el número que se mueve cuando cambia la
+escena. Con el crossfade de 100 ms, dos señas pasaron de 4708 ms a 4544 ms
+medido en el Redmi, que es lo que predice el diseño (menos los 100 ms de cola
+del clip anterior, más los 100 ms de pose congelada que ya no hay).
 
 ---
 

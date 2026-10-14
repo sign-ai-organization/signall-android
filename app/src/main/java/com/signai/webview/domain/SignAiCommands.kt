@@ -17,6 +17,15 @@ object SignAiCommands {
 
     fun setSpeed(factor: Float) = "window.SignAI?.setSpeed(${factor.coerceIn(0f, 1f)})"
 
+    /**
+     * Turns the sign-to-sign crossfade off (accessibility `ACC-*`).
+     *
+     * The scene mixes two clips over 100 ms so one sign flows into the next. That
+     * movement is part of reading the sign, so with the setting on every
+     * transition is a hard cut instead.
+     */
+    fun setReduceMotion(on: Boolean) = jsToggle("setReduceMotion", on)
+
     fun jsToggle(prop: String, on: Boolean) = "window.SignAI?.$prop(!!$on)"
 
     /**

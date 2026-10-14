@@ -1,132 +1,165 @@
-# Avatar 3D — Especificación técnica del rig y animación
+# Avatar 3D — Especificación técnica del rig y la animación
 
-## Origen (prototipo web → WebView)
+## Qué es hoy
 
-El avatar y la lógica de animación vienen del prototipo web Flask
-(`../app/static/` — referencia, proyecto muerto, no desarrollar ahí):
+Un `THREE.AnimationMixer` sobre un export de Cascadeur. No hay retargeting, ni
+IK, ni landmarks, ni interpretación de nada: los `.glb` traen la pose ya
+horneada por hueso y la escena solo la reproduce.
 
-- `../app/static/avatar.glb` → copiado a `app/src/main/assets/web/avatar.glb`
-- `../app/static/app.js` (634 líneas: video + selector de señas vía `/api/*`)
-  → portado a `app/src/main/assets/web/app.js` (581 líneas)
+| | |
+|---|---|
+| Personaje | `models/avatar.glb` (~10.3 MB), 102 huesos, 11 mallas, texturas PBR |
+| Señas | `signs/<id>.glb`, un archivo por glosa, **solo animación** (~180 KB) |
+| Escena | `app.js` + `index.html`, three r169 por CDN |
+| Catálogo | `domain/SignsCatalog.kt`, generado |
 
-Diferencias del port (WebView): sin `<video>`, sin selector de señas, sin
-fetch a `/api/*`. Los frames vienen de `sign.json` local (fetch relativo) y
-la reproducción la dispara Kotlin vía `window.SignAI.play()`.
+Esto reemplazó (2026-10-13) al motor procedural que venía del prototipo web:
+landmarks de MediaPipe, `BONE_MAP`, `solveIKElbow`, `applyHandOrientation` y
+`sign.json`. **Nada de eso existe ya.** Si un documento o una sesión lo
+menciona, es historia: está en `openspec/sessions/2026-10-13-glb-animation-mixer.md`.
 
-## Archivos en este repo
+## Los dos archivos y por qué están separados
 
-- GLB: `app/src/main/assets/web/avatar.glb` (~1.4 MB)
-- Escena: `app/src/main/assets/web/{index.html, app.js, sign.json, bosque.jpg}`
-  (mismo directorio, paths relativos — no separar)
+Cada export de Cascadeur trae el personaje entero adentro, así que sin separar
+el muñeco estaría duplicado 32 veces (329.7 MB). `tools/split_signs.py` lo
+escribe una vez en `models/` y deja en `signs/` solo la animación, que es todo lo
+que el mixer necesita: **resuelve los tracks por nombre de nodo contra el root
+que se le pase**, no contra los nodos del propio archivo del clip.
 
-## Estado actual del GLB
+Cambiar el personaje no requiere re-exportar las señas, y cambiar una seña no
+requiere tocar el personaje.
 
-| Aspecto            | Estado                                                      |
-|--------------------|-------------------------------------------------------------|
-| Meshes             | female_v006lowresUV (cuerpo), male_v008Eyes ×2 (globos)    |
-| Vértices           | 12010 cuerpo + 2×2176 ojos = 16362 total                    |
-| Material/Textura   | **NINGUNO** — se ve como maniquí gris                        |
-| Skins              | rig (918 joints DEF-*) + metarig (174 joints)               |
-| Morph targets      | Ninguno exportado                                           |
-| Rig tipo           | Rigify completo (vertex weights asignados automáticamente)  |
+## La pose de descanso está horneada en `avatar.glb`
 
-**Prioridad**: Reemplazar mesh por uno con textura de piel. Recomendación: mantener el rig
-Rigify actual y solo cambiar el mesh visual (opción más segura y rápida).
+El reposo **no** es una T-pose ni un default de three.js: es el TRS de los nodos
+del `.glb`, que es la pose que Cascadeur dejó en el export — brazos a 35° bajo
+la horizontal, manos a 52 cm del eje, de maniquí.
 
-Al cargar, `app.js` oculta `WGT-*` y `metarig` con `obj.visible = false`
-(nunca `removeFromParent()`).
+La que hay ahora sale de `signs/0029_0000_0000.glb` (JUICIOSO), variante 0,
+primer keyframe (`t = 0.0417 s`), y son las rotaciones de **46 huesos**: la
+cadena de brazos entera de los dos lados (`shoulder`, `upper_arm`, `forearm`,
+`hand`, `palm.*`, `f_*`, `thumb*`). Ni la cara, ni el torso, ni las piernas.
 
-## Nombres de huesos — regla de oro (verificado en `app.js` + GLB)
+Por qué ese frame y no otro:
 
-**NINGÚN hueso usa puntos.** Dedos sin prefijo `DEF-`, cara en camelCase sin
-separadores. Lo que usa `app.js` es lo correcto:
+- de los 2424 keyframes de las 32 señas, **851 tienen los dos brazos colgando**;
+- es una pose por la que el personaje **ya pasó**, así que el skinning, la ropa
+  y el pelo son válidos por construcción — no hay que confiar en que un giro de
+  hueso a ojo no rompa la malla;
+- es simétrico a 1.2 cm y **no toca ningún hueso de expresión**: la cara queda
+  neutra;
+- es idempotente y repetible: el mismo archivo da el mismo resultado.
+
+Descartados con evidencia, no reabrir: el promedio de los 46 inicios de clip
+(asimétrico, cabeza girada) y su versión espejada (**rompe la malla**; en el
+rig la rotación local de `.R` es el espejo de la de `.L` solo en la pose de
+bind, y promediar una pose de animación con su espejo cae fuera del rango para
+el que la malla fue tejida — se ve en
+[`img/`](../changes/reposo-y-crossfade/img/)).
+
+### Por qué re-posa y no deforma
+
+El TRS de los nodos del avatar **es** la pose de bind: se verifica en cada
+corrida del pipeline con `glb_pose.bind_pose_error`, y da ~6e-6 sobre los 102
+huesos (`max |invers(IBM[k]) − mundo_del_hueso(k)|`). Cambiar esas rotaciones
+deja intactas las `inverseBindMatrices` y los accessors `POSITION`, así que:
+
+- el skinning sigue siendo válido (misma pose de bind, distinta pose de reposo);
+- el `bbox` que reporta `split_signs.py` no cambia;
+- el `pivot` que calcula `app.js` no cambia, así que el encuadre tampoco;
+- el BIN chunk del `.glb` queda byte a byte igual: solo cambian 46 números del
+  JSON.
+
+Si algún día un export nuevo no cumple la identidad, `rest_pose.check_bind()`
+frena la corrida: deformar la malla no da ningún error en pantalla.
+
+### Cómo se regenera
+
+`tools/rest_pose.py`, llamado **al final** de `tools/split_signs.py` (después de
+escribir `signs/`, porque el frame de referencia sale de ahí). **`avatar.glb` no
+se edita a mano**: se regenera, y la pose viene sola.
+
+```bash
+python3 tools/rest_pose.py --dry-run   # solo el informe: manos antes/después
+python3 tools/preview_pose.py --sheet  # las 4 poses de la comparación
+```
+
+`preview_pose.py` renderiza una pose sin three.js ni instalar la app (skinning
+lineal con las IBM del export, el mismo `pivot` y la misma cámara que `app.js`,
+que lee del propio archivo). Necesita `numpy` y `PIL`; el pipeline de assets no.
+
+## Nombres de huesos
+
+**Los export de Cascadeur usan puntos en los dedos y en la palma, y `DEF-` en
+los huesos largos y de la cara.** Los nombres que existen (verificados contra el
+`.glb`):
 
 ```
-thumb01L, f_index01L, f_middle01L, f_ring01L, f_pinky01L   (+ lados R)
-DEF-upper_armL, DEF-upper_armL001, DEF-forearmL, DEF-forearmL001, DEF-handL
+shoulder.L, upper_arm.L, forearm.L, hand.L        (+ lados R, sin DEF-)
+palm.01.L … palm.04.L   f_index.01.L … f_pinky.03.L   thumb.01.L … thumb.03.L
+DEF-upper_armL, DEF-forearmL, DEF-handL
 DEF-browTL / DEF-browTR        ← cejas superiores
 DEF-lipTL  / DEF-lipTR         ← labio superior
-DEF-lidTL  / DEF-lidTR         ← párpado superior (etc. con L/R/001…)
-DEF-jaw_master                 ← mandíbula (con guión bajo)
+DEF-lidTL  / DEF-lidTR         ← párpado superior
+DEF-jaw_master                 ← mandíbula
 DEF-eyeL / DEF-eyeR, DEF-eye_irisL / DEF-eye_irisR
+HG_Branden.001                 ← raíz del armature (NO es un hueso)
 ```
 
-⚠️ El spec anterior (pre-WebView) documentaba nombres con puntos
-(`DEF-brow.T.L`) — **incorrectos, no existen en el GLB**. No reintroducirlos.
+Dos detalles que no son obvios y ya costaron tiempo:
+
+- **Los tracks también animan la raíz del armature** (`HG_Branden.001`, en
+  posición, rotación y escala). Por eso `app.js` cuenta nodos resueltos y no
+  huesos: marcar 138 tracks "sin resolver" sería un falso positivo.
+- **La normalización va en un `pivot` padre, nunca sobre la raíz.** El mixer
+  sobrescribe la raíz frame a frame: la escala se perdería en el primer frame y
+  el muñeco aparecería descolocado y sin escalar, sin ningún error.
+
+## Animación entre señas
+
+Los 46 clips de animación **arrancan y terminan en el mismo cluster** (mano
+izquierda en `(+30, +91, +19) cm`, desviación estándar 2.5–6 cm): el salto
+directo del final de una seña al inicio de la siguiente es de **5.9 cm de
+mediana** y el 79% de los pares ya es continuo. Los exports de Cascadeur están
+escritos para encadenarse.
+
+Por eso `app.js` **no** pone nada entre las señas: el clip siguiente entra 100 ms
+antes de que termine el actual y las dos `AnimationAction` viven juntas sobre el
+mismo esqueleto mientras three.js las mezcla (`crossFadeTo` / `fadeIn` /
+`fadeOut`). Lo que hay que saber para no romperlo:
+
+- **`fadeOut` vuelve al reposo sin escribir un keyframe.** Cuando el peso de una
+  action llega a 0, `PropertyMixer.apply()` completa con el valor guardado
+  cuando se creó el binding, que es el TRS del nodo — la pose horneada.
+- **`_scheduleFading` usa `mixer.time` como reloj**, y `app.js` avanza el mixer
+  con `dt * speed`: la fundición sigue sola al factor de adelanto automático.
+- **Una fundición de duración 0 no es "sin fundición"**: el interpolant de peso
+  arranca y termina en el mismo instante y three.js **deshabilita la action**.
+  Con `reduceMotion` el 0 se maneja como un caso aparte, sin llamar a
+  `fadeIn`/`fadeOut`.
+- **La misma seña dos veces seguidas no se puede fundir**: three.js cachea una
+  action por clip, así que es la misma y no hay dos que mezclar. Es corte seco,
+  y está bien — los clips son continuos consigo mismos.
+
+Detalle, duración y la cuenta de por qué 100 ms: `openspec/changes/reposo-y-crossfade/investigacion.md`.
 
 ## Bugs conocidos
 
-### Bug 1 — Nombres con puntos (spec viejo, NO es bug del código)
-El spec antiguo llamaba "bug" a los nombres sin puntos de `app.js`. Al revés:
-los correctos son sin puntos (`DEF-browTL`), verificados en ambos `app.js`
-(prototipo y WebView) y en el GLB.
+### Ceja derecha casi estática (rig, no código)
 
-### Bug 2 — Ceja derecha casi estática (vigente, rig)
-- `DEF-browTL`: 32 vértices pesados (correcto)
-- `DEF-browTR`: solo ~4 vértices (pesos bajos ~0.12) → movimiento casi invisible
-- Fix: Weight Paint en Blender sobre el `.blend` original + re-exportar el GLB
+`DEF-browTL` tiene ~32 vértices pesados y `DEF-browTR` solo ~4 (pesos ~0.12): el
+movimiento es casi invisible. Es un problema de pesos en el rig de origen; se
+arrrega en Blender con Weight Paint sobre el `.blend` y re-exportando.
 
-### Face/body sync — resuelto en tiempo de horneado
-Face venía a 50fps y body/hands a 24fps (ratio ~2.9×). En WebView no hay
-remuestreo en runtime: `sign.json` ya trae la cara sincronizada a 24fps
-(59 frames). Si se re-hornea `sign.json`, aplicar
-`face_idx = round(i * len(face_frames) / len(body_frames))` al generarlo.
+### La normalización sobre la raíz (arriba)
 
-## Estado de animación por parte del cuerpo
+Va en el `pivot` padre. Si alguna vez aparece el muñeco descolocado y sin
+escalar después de un cambio en `app.js`, es esto.
 
-| Parte               | Estado      | Implementación                        |
-|---------------------|-------------|---------------------------------------|
-| Dedos (30 huesos)   | ✅ Funciona  | BONE_MAP + rotateBone()               |
-| Muñeca roll (palma) | ✅ Funciona  | applyHandOrientation()                |
-| Muñeca flex/ext     | ⚠️ Parcial   | Solo vía IK, no hueso independiente   |
-| Codo                | ✅ Funciona  | IK 2-huesos (solveIKElbow)            |
-| Hombro              | ✅ Funciona  | IK 2-huesos                           |
-| Mandíbula (boca)    | ✅ Funciona  | DEF-jaw_master, FACE_ALPHA=1.0        |
-| Cejas               | ✅ Nombres OK| DEF-browTL/TR (pendiente Bug 2: pesos)|
-| Párpados            | ❌ No impl.  | Huesos existen, datos disponibles     |
-| Labios (comisuras)  | ❌ No impl.  | DEF-lipTL/TR existen, datos listos   |
-| Cabeza (inclinación)| ❌ No impl.  | Pendiente (lm1/168 de FaceMesh)       |
+## Lo que NO hace la escena
 
-## Expresiones faciales prioritarias
-
-| Expresión  | Huesos principales              | Landmark fuente       |
-|-----------|----------------------------------|------------------------|
-| Duda       | DEF-browTL (asimétrico)          | lm70/107/55, lm300/336 |
-| Felicidad  | DEF-browTL/TR + DEF-lipTL/TR     | lm70/300 + lm78/308    |
-| Pregunta   | DEF-browTL/TR + DEF-jaw_master   | lm70/300 + lm13/14     |
-
-Todos los huesos faciales deben usar `FACE_ALPHA = 1.0` (sin slerp).
-`sign.json` actual trae 16 landmarks de cara:
-`1, 13, 14, 55, 70, 78, 107, 145, 159, 168, 285, 300, 308, 336, 374, 386`.
-
-## Retargeting — fórmula correcta
-
-```js
-// rotateBone: alinea el eje Y del hueso a targetDir
-// 1. deltaQ: rotación mínima desde restDir hasta targetDir
-_dQ.setFromUnitVectors(restDir, targetDir.normalized());
-// 2. targetWorldQ: aplicar delta sobre rest world quaternion
-_tWQ.multiplyQuaternions(_dQ, restWorldQ);
-// 3. localQ: convertir de world a espacio local del padre
-bone.parent.getWorldQuaternion(_pWQ);
-_tLQ.multiplyQuaternions(_pWQ.invert(), _tWQ);
-bone.quaternion.slerp(_tLQ, alpha);
-```
-
-NUNCA hacer `quaternion.identity()` para resetear — rompe el avatar. Usar `boneRestLocalQ`.
-
-## Conversión de ejes landmark → Three.js
-
-```js
-// Body landmarks (imagen normalizada, y=0 arriba):
-lmDir(a, b) = Vector3(b.x-a.x, -(b.y-a.y), -(b.z-a.z))
-
-// Hand landmarks, relativo a muñeca (port WebView: z = 0):
-mpToThree(lm, wrist) = Vector3(lm.x-wrist.x, -(lm.y-wrist.y), 0)
-```
-
-## Escala de coordenadas de cuerpo
-
-- `bodyScale()`: usa separación entre hombros (lm11-lm12) como ancla
-- `Z_SCALE = 0.40`: factor empírico para profundidad del brazo (eje Z de imagen normalizada)
-- Polo del IK: `pole.y -= (L1+L2)*0.35` (bias hacia abajo) + `pole.z += (L1+L2)*0.10` (frontal)
+- No hay IK, ni cinemática inversa, ni reintentos de pose: los `.glb` traen la
+  pose.
+- No hay sincronización de cara: viene horneada en el mismo clip.
+- No hay morph targets ni blendshapes.
+- El peso por vértice lo pone Cascadeur, no la app.

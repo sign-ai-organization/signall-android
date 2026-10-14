@@ -42,6 +42,9 @@ interface SignAiWebViewController {
 
     fun setSpeed(factor: Float)
 
+    /** Sin fundición entre señas: cada transición es un corte seco (`ACC-*`). */
+    fun setReduceMotion(on: Boolean)
+
     fun applyBlur(enabled: Boolean)
 }
 
@@ -96,6 +99,8 @@ class WebViewSignAiController : SignAiWebViewController {
     override fun setTheme(dark: Boolean) = js(SignAiCommands.setTheme(dark))
 
     override fun setSpeed(factor: Float) = js(SignAiCommands.setSpeed(factor))
+
+    override fun setReduceMotion(on: Boolean) = js(SignAiCommands.setReduceMotion(on))
 
     override fun applyBlur(enabled: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
