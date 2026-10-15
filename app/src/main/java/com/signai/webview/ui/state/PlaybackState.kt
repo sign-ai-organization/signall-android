@@ -11,7 +11,7 @@ enum class PlaybackState(val label: String) {
     Idle("Listo para traducir"),
     /** 🎤 Dictado: se está transcribiendo la voz a texto y no se firma nada. */
     Dictating("Dictando..."),
-    /** ◢◢ Tiempo real: se está firmando mientras la persona habla. */
+    /** ◢◢ En vivo: el mic sigue prendido y cada frase se manda al cerrarse. */
     Listening("Escuchando..."),
     Processing("Procesando..."),
     Translating("Traduciendo..."),

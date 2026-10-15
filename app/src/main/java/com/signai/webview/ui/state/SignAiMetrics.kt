@@ -4,12 +4,12 @@ import android.util.Log
 import java.util.concurrent.atomic.AtomicLong
 
 /**
- * Latency numbers only the device can produce.
+     * Latency numbers only the device can produce.
  *
  * The backend and the STT each measure their own leg (`/metrics` on both), and
  * between them they know everything except what happens after the message lands
- * on the phone: how long a fragment took to become queue items, and how long a
- * whole turn took from the first text to the last fragment.
+ * on the phone: how long a whole phrase took from the moment the user sent it to
+ * the last sentence coming back, and how long the avatar took to sign it.
  *
  * Those two are what decide whether the avatar feels like it is keeping up with
  * the speaker, so they are worth having without a debugger attached. Everything
@@ -20,36 +20,36 @@ import java.util.concurrent.atomic.AtomicLong
  */
 class SignAiMetrics {
 
-    private val fragments = AtomicLong()
-    private val turns = AtomicLong()
+    private val phrases = AtomicLong()
+    private val sentences = AtomicLong()
     private val glosses = AtomicLong()
     private val unavailable = AtomicLong()
     private val dictationPhrases = AtomicLong()
     private val dictationWords = AtomicLong()
 
-    private val fragmentToQueue = Latency()
     private val turnTotal = Latency()
     private val signTotal = Latency()
 
-    /** A streamed fragment arrived and became queue items. */
-    fun onFragment(latencyMs: Long, queuedSigns: Int) {
-        fragments.incrementAndGet()
-        fragmentToQueue.record(latencyMs)
-        Log.i(
-            TAG,
-            "fragmento #${fragments.get()}: $queuedSigns señas en ${latencyMs}ms " +
-                "(${fragmentToQueue.summarise()})",
-        )
-    }
-
-    /** A streamed turn closed: first text through last fragment. */
-    fun onTurn(totalMs: Long, fragmentCount: Int, glossCount: Int) {
-        turns.incrementAndGet()
+    /**
+     * Una frase se firmó: desde que el usuario la mandó hasta que el backend
+     * devolvió su última oración.
+     *
+     * El punto de partida es el **envío**, no el primer texto: es la "confirmación
+     * de envío del usuario" de RNF-DES-01, o sea el reloj que el usuario percibe.
+     * En el modo en vivo la frase la manda la propia app al cerrarse, y ahí lo que
+     * se cuenta es desde ese `final`.
+     *
+     * No incluye lo que se firma después: para eso está [onPlayback], que mide la
+     * animación y solo se mueve cuando cambia la escena.
+     */
+    fun onTurn(totalMs: Long, sentenceCount: Int, glossCount: Int) {
+        phrases.incrementAndGet()
+        sentences.addAndGet(sentenceCount.toLong())
         glosses.addAndGet(glossCount.toLong())
         turnTotal.record(totalMs)
         Log.i(
             TAG,
-            "turno #${turns.get()}: ${totalMs}ms, $fragmentCount fragmentos, $glossCount glosas " +
+            "frase #$phrases: ${totalMs}ms, $sentenceCount oraciones, $glossCount glosas " +
                 "(${turnTotal.summarise()})",
         )
     }
@@ -57,16 +57,15 @@ class SignAiMetrics {
     /**
      * A turn finished signing: first sign started, last sign done.
      *
-     * The only one of the three that measures the **animation**, and the one that
+     * The only one of the two that measures the **animation**, and the one that
      * says whether the avatar is keeping up or signing into the past: a phrase
      * whose signs take 9 s to play is already wrong by the third one.
      *
-     * It is deliberately not `rt_turn_total_ms`. That one runs from the mic
-     * opening to the last fragment, so it measures the speech and the pipeline
-     * (STT + backend) and does not move at all when the scene changes: the
-     * crossfade shortens how long the queue takes to play, not how long the
-     * backend takes to send it. Measuring the same thing twice with two names
-     * would make the second one look broken.
+     * It is deliberately not [onTurn]. That one runs from the user sending the
+     * phrase to the last sentence coming back, so it measures the NLP and does
+     * not move at all when the scene changes: the crossfade shortens how long the
+     * queue takes to play, not how long the backend takes to send it. Measuring
+     * the same thing twice with two names would make the second one look broken.
      */
     fun onPlayback(totalMs: Long, signCount: Int) {
         signTotal.record(totalMs)
@@ -99,26 +98,24 @@ class SignAiMetrics {
 
     /** One line with everything, for logcat after a test run. */
     fun snapshot(): String = buildString {
-        append("fragmentos=").append(fragments.get())
-        append(" turnos=").append(turns.get())
+        append("frases=").append(phrases.get())
+        append(" oraciones=").append(sentences.get())
         append(" glosas=").append(glosses.get())
         append(" sin_seña=").append(unavailable.get())
         append(" dictado_frases=").append(dictationPhrases.get())
         append(" dictado_palabras=").append(dictationWords.get())
-        append(" fragmento_a_cola=").append(fragmentToQueue.summarise())
-        append(" duracion_turno=").append(turnTotal.summarise())
+        append(" duracion_frase=").append(turnTotal.summarise())
         append(" duracion_firmado=").append(signTotal.summarise())
     }
 
     /** Zeros every counter, so a snapshot describes one test run and not the session. */
     fun reset() {
-        fragments.set(0)
-        turns.set(0)
+        phrases.set(0)
+        sentences.set(0)
         glosses.set(0)
         unavailable.set(0)
         dictationPhrases.set(0)
         dictationWords.set(0)
-        fragmentToQueue.clear()
         turnTotal.clear()
         signTotal.clear()
     }

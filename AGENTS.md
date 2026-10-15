@@ -48,10 +48,13 @@ el mensaje y lo manda el owner, por PR contra `develop`.
 - `.env` (gitignored) tiene `DATABASE_URL` (Neon), `LLM_*` (`LLM_BASE_URL` vacío =
   OpenAI; apuntarlo a uno local con `host.docker.internal`) y
   `STT_WS_URL=ws://stt:8000/ws/transcribe` — dentro de Docker el host es `stt`, no
-  `localhost` — más `REALTIME_ENABLED`.
+  `localhost`. **`REALTIME_ENABLED` ya no existe** (2026-10-15): no hay dos modos de
+  backend, hay dos modos de cliente.
 - `scripts/verify_*.py` son las pruebas: se corren **como módulo** desde la raíz del
   repo (`python -m scripts.verify_client_frames`), sin pytest. `verify_client_frames.py`
-  es el que cubre **los dos modos** (tiempo real y frase entera) desde el lado del cliente.
+  cubre el contrato del cliente (frase mandada como `text`, `end` y que **la voz no se
+  traduzca**) y es el que fija que no haya eco: `read_exactly(ws, 3)` con
+  `THREE_MESSAGES = ["segment", "segment", "done"]`.
 
 ### `../sign-ai-stt`
 
@@ -115,19 +118,22 @@ Sin git y sin reglas: material compartido o restos.
 Un único WebSocket, de la app **solo al backend**: `:8080/ws/translate`. La app nunca
 habla con el STT ni con Neon. De ahí salen los acoples que hay que tocar de los dos lados:
 
-- **Fragmentos**: el backend manda `stream: true, total: 0` y la app lo rutea por
-  `onStreamedSegment`. `total: 0` es lo que distingue "utterance abierto" de "frase entera".
-- **`dictation: true`** en las transcripciones de dictado: sin el flag la app queda en
-  "Traduciendo..." para siempre, porque el `final` de lo dictado llega después de que el
-  usuario apagó el mic.
-- **Orden `end` antes de `mode`**: el backend cierra el utterance anterior con el modo con
-  el que empezó. Invertirlo rompe las dos direcciones.
-- **`REALTIME_ENABLED=false`** devuelve el backend al comportamiento de frase entera, y la
-  app tiene un camino entero para ese modo: no es una bandera de debug, es un segundo modo
-  soportado.
+- **Solo se traduce lo que el cliente manda como `text`.** La voz entra por el mismo
+  socket pero vuelve como `transcript`, y esa transcripción **no se traduce**. Si el
+  backend hiciera eco de la frase escrita, la app lo tomaría por una frase de voz y la
+  reenviaría: ese bucle existió y quemó el proceso (una frase repetida ~2.900 veces, 44 %
+  de CPU). `handle_text` no manda ningún `transcript` y `verify_client_frames.py` lo fija.
+- **`segment` es una oración, con `index` y `total` reales desde el primero.** Ya no
+  existen `stream`, `provisional` ni `source_text`, y la app no encadena: arma la cola
+  entera cuando llega el último. El backend manda las oraciones **en orden** aunque las
+  traduzca en paralelo.
+- **El `final` siempre llega**, incluso vacío: el STT responde a todo `end`
+  (`flush()`). Un `final` sin texto es "no se escuchó nada", no un error.
 - **Los mismos nombres de métrica en los dos lados** (`rt_*` en el backend,
   `SignAiMetrics` en el device): un número que no se instrumentó en las dos partes no se
-  puede comparar con nada.
+  puede comparar con nada. `rt_first_sign_ms` conserva el nombre aunque cambiara lo que
+  mide, para que se pueda comparar contra la línea base — aunque **no** sea comparable:
+  la línea base es del camino por palabras.
 
 Y tres herramientas de este repo que **dependen del código de los hermanos**:
 
@@ -158,139 +164,124 @@ Y tres herramientas de este repo que **dependen del código de los hermanos**:
 7. **Cuando algo no se pueda resolver leyendo, preguntar.** Las decisiones abiertas están
    marcadas como tales en los `CLAUDE.md`/`docs/` de cada repo; no rellenarlas por inferencia.
 
-## Real-time mode (rama `develop`, 2026-10-14)
+## Modo en vivo (rama `flujo-oraciones`, 2026-10-15)
 
-The app signs **while the user speaks**, not after they stop. The pipeline is:
-mic → PCM16/16 kHz → WebSocket → backend → STT → fragments of glosses → appended
-to the avatar's queue as they arrive.
+The app signs **while the user speaks**, and the unit is the **sentence**. The pipeline is:
+mic → PCM16/16 kHz → WebSocket → backend → STT → the phrase is split into sentences →
+sentences are translated → the avatar signs them in order.
 
-Measured on a Redmi Note 9S with the real backend and real Whisper, over 28 audio
-fixtures replayed through the socket at 1x: **first sign p50 913 ms / p95 1336 ms**
-from the first audio sample. Before: the avatar waited ~2.4–4.8 s after the user
-stopped talking. Full detail, phrase list, sign list and troubleshooting in
-[`tools/TIEMPO-REAL.md`](tools/TIEMPO-REAL.md).
+El cambio grande de esta rama (auditoría `../sign-ai-docs/auditoria-flujo-2026-10-15.md`
+§6): antes el backend mandaba fragmentos (`stream: true, total: 0`) y el avatar firmaba
+**a mitad de frase**. Ahora solo hay oraciones, con `total` conocido desde el primero. El
+efecto es que el avatar **no** empieza a firmar hasta que termina la primera oración, y
+`rt_first_sign_ms` sube por construcción. Es el costo consciente de la opción A (§7 de la
+auditoría): la línea base publicada —913 ms p50 / 1336 ms p95— es del camino por palabras
+y **no es comparable**. Falta remedir.
 
-**Read that file before changing anything in this area.** Then:
+**Leé `../sign-ai-docs/auditoria-flujo-2026-10-15.md` §6.3 antes de tocar esta área**, y
+después `tools/TIEMPO-REAL.md`.
 
 ```bash
-tools/verificar-tiempo-real.sh        # everything: services, tests, 28 fixtures, metrics, device
-tools/verificar-tiempo-real.sh incremental   # no services needed; runs in the backend container
+tools/verificar-tiempo-real.sh        # todo: servicios, tests, 28 fixtures, métricas, device
+tools/verificar-tiempo-real.sh incremental
+tools/medir-retraso.py                # ¿hace falta el adelanto automático? (ver abajo)
 ```
 
-### How streaming works
+### How it works
 
-- The backend sends each fragment with `stream: true, total: 0`. `total: 0` means
-  "not known yet" — in an utterance still open, nobody knows how many fragments
-  there will be. A backend without the flag lands on the whole-phrase path, which
-  is the safe default.
-- `MainScreenState.onStreamedSegment` appends to the queue; the first fragment uses
-  `setQueue` + `playFrom(0)`. `play()` could not be reused: it assumes the queue is
-  complete and jumps to index 0.
-- Fragments pass through a `Mutex`. Resolving a gloss may suspend (remote asset
-  download) and two racing fragments would append out of order.
-- `REALTIME_ENABLED=false` on the backend restores the old whole-phrase behaviour
-  exactly. Both modes are covered in the backend's `verify_client_frames.py`.
+- **El backend solo traduce `{"type":"text"}`.** El cliente manda la frase una sola vez
+  cuando decide mandarla, y recibe un `segment` por oración con `index`/`total` reales.
+- `MainScreenState.pendingSegments` es un `sortedMap` por `index` y la cola se arma en
+  `flushSegments()` cuando `size >= total`. **No hay `streamMutex`** y no hace falta: el
+  backend manda en orden.
+- **`REALTIME_ENABLED` ya no existe.** No hay dos modos de backend: hay dos modos de
+  **cliente**. El client manda `text` y el backend responde; el client manda voz y el
+  backend transcribe. Un backend viejo que mande `stream`/`provisional` no rompe el parser,
+  que es tolerante.
 
-### El micrófono son dos interruptores, no un pulsador
+### El micrófono son dos interruptores, y apagado no es mandar
 
-Desde el 2026-10-14 el mic **no se apaga solo**, y hay **dos** interruptores
-encima de la misma captura:
-
-| | Botón | Qué hace | Qué firma |
+| | Botón | Qué hace al tocarlo | Qué firma |
 |---|---|---|---|
-| 🎤 | microfono (fila 1) | **dictado**: escribe tu voz como texto en el campo | nada, hasta que toques Traducir |
-| ◢◢ | TR (fila 2) | **tiempo real**: traduce y firma mientras hablás | cada fragmento, en el acto |
+| 🎤 | microfono (fila 1) | **dictado**: dicta, el silencio cierra la frase, el mic se apaga solo y **el texto espera** | nada, hasta que toques Traducir |
+| ◢◢ | TR (fila 2) | **en vivo**: el interruptor continuo, el mic queda prendido | cada frase, en el acto |
 
-Los dos se tocan una vez y quedan prendidos; ninguno se mantiene apretado. **No
-pueden estar prendidos a la vez**: comparten el `AudioRecord` y el WebSocket.
+Los dos se tocan una vez y quedan prendidos; ninguno se mantiene apretado. **No pueden
+estar prendidos a la vez**: comparten el `AudioRecord` y el WebSocket.
 
 Lo que hay que saber antes de tocar esto:
 
 - **El estado del mic es `MainScreenState.micMode`**, un enum de tres valores
-  (`Off`/`Dictation`/`Realtime`), y no un booleano. Dos flags dejarían
-  "los dos prendidos" como un estado representable, y en ese estado la app se
-  rompe. Todo cambio pasa por `changeMicMode()`, que tiene los cuatro casos
-  (prender, apagar, cambiar de modo, ya estaba en ese modo).
-- **`playbackState` ya no dice si el mic está prendido.** Antes un solo enum
-  decía dos cosas —"¿está el mic prendido?" y "¿qué hace el muñeco?"— y eso
-  solo funcionaba porque el mic se apagaba en cada frase. Ahora se superponen de
-  verdad. Un método nuevo que apague o encienda el mic tiene que tocar **los dos**.
-- **Nunca uses `playbackState == Listening` como "el mic está prendido".** Con el
-  mic prendido y el muñeco firmando, el estado es `Signing`.
-- **Los dos interruptores se deshabilitan por el otro, en los dos sentidos, y
-  ninguno se deshabilita mientras está prendido.** Antes solo se cumplía en un
-  sentido (el mic se apagaba con TR prendido, pero TR seguía disponible con el
-  mic prendido) y el otro no se veía: `soft` al 35 % de alfa sobre `surface` son
-  los dos casi blancos. **Un control deshabilitado se marca apagando el icono y
-  la etiqueta a `muted`, nunca bajándole el alfa a la superficie** (ver
-  `SignAiBottomBar`). Prendido, cada uno es el único que puede cortar su modo, así
-  que nunca se bloquea.
-- **Lo ya enviado no se puede volver a mandar, venga de donde venga.** El campo
-  conserva la frase en `readOnly` con Traducir deshabilitado durante
-  `SentTextHoldMs` = **1500 ms** (`sentText` en `MainScreenState`), y después se
-  borra y el campo y Traducir vuelven **en la misma asignación**: no hay estado
-  con el campo vacío y el botón muerto. Sin eso el botón invitaba a reenviar lo
-  ya firmado. Aplica a los **cuatro** caminos que firman una frase: el dictado al
-  apagarse, el TR mientras se hablaba, un Traducir a mano (botón o Enter) y el
-  Repetir — los dos últimos los agregó el owner con "es la misma situación que lo
-  que sucedía con el botón de tiempo real". La retención se prende en
-  `requestTranslation`, el único lugar por donde pasan los tres últimos, y **no en
-  cada llamador**: es el punto donde se sabe que la frase salió de verdad, y
-  retener antes dejaría el campo bloqueado ante un envío rechazado. Hay log de
-  los dos momentos (`texto ya enviado` / `texto retenido borrado`): la ventana es
-  más corta que el ida y vuelta de `mobile-mcp`, así que el logcat es la prueba
-  y el árbol de accesibilidad la confirmación.
-- **`replayPending` se prende adentro de `requestTranslation`, no en el llamador.**
-  El panel entero tiene que quedar deshabilitado desde el toque hasta que la seña
-  **termine** (`CTL-12`), para los dos Repetir. Se prendía en
-  `repeatTurnFromDrawer` —solo el del drawer— y lo soltaba **el primer
-  fragmento**, que es cuando la seña empieza: el panel se liberaba a los ~50 ms
-  del toque. Lo sueltan `onPlaybackDone`, `fail()` y el caso "no produjo ninguna
-  seña"; si se prendiera antes de los descartes tempranos de
-  `requestTranslation`, el panel quedaría muerto para siempre, sin Repetir que lo
-  vuelva a prender.
-- **El `end` va antes que el `mode`.** El cliente manda `end` y después el modo
-  nuevo; el backend termina el utterance anterior con el modo con el que empezó.
-  Invertir el orden rompe las dos direcciones.
-- **El backend manda `dictation: true` en las transcripciones de dictado, y el
-  cliente rutea por ese flag, no por su propio `micMode`.** El `final` de lo
-  dictado llega después de que el usuario apagó el dictado: sin el flag, la app
-  lo tomaría por tiempo real y quedaría en "Traduciendo..." para siempre.
+  (`Off`/`Dictation`/`Live` — `Live`, no `Realtime`: es el vocabulario de `trazabilidad.md`),
+  y no un booleano. Dos flags dejarían "los dos prendidos" como un estado representable, y
+  en ese estado la app se rompe. Todo cambio pasa por `changeMicMode()`.
+- **`playbackState` ya no dice si el mic está prendido.** Un método nuevo que apague o
+  encienda el mic tiene que tocar **los dos**.
+- **Nunca uses `playbackState == Listening` como "el mic está prendido".** Con el mic
+  prendido y el muñeco firmando, el estado es `Signing`.
+- **Solo `Live` es continuo.** En `Dictation` el `final` del STT apaga la captura, y por eso
+  `dictationBuffer` ya no acumula entre frases: el STT corta a los 1,5 s de silencio.
+- **Los dos interruptores se deshabilitan por el otro, en los dos sentidos, y ninguno se
+  deshabilita mientras está prendido.** Prendido, cada uno es el único que puede cortar su
+  modo. **Un control deshabilitado se marca apagando el icono y la etiqueta a `muted`, nunca
+  bajándole el alfa a la superficie** (ver `SignAiBottomBar`).
+- **Apagar el TR deja el campo limpio** (`stopCapture`), no retenido: para entonces lo que
+  decía el campo ya se firmó. Lo único que sobrevive es el texto de un dictado sin mandar.
+  **Apagar el TR tampoco manda nada**: el en vivo manda cada frase al cerrarse, no al
+  apagarse.
+- **Lo ya enviado no se puede volver a mandar.** El campo conserva la frase en `readOnly`
+  con Traducir deshabilitado durante `SentTextHoldMs` = **1500 ms** (`sentText`), y después
+  se borra y el campo y Traducir vuelven **en la misma asignación**. Son **tres** los
+  caminos que firman sin que nadie toque Traducir (en vivo, Traducir a mano y el Repetir);
+  el dictado ya no es uno, porque su texto es del usuario. La retención se prende en
+  `requestTranslation`, el punto donde se sabe que la frase salió de verdad. Hay log de los
+  dos momentos: la ventana es más corta que el ida y vuelta de `mobile-mcp`, así que el
+  logcat es la prueba y el árbol de accesibilidad la confirmación.
+- **El tercer estado de RF-UI-01 se descartó** (decisión del owner el 2026-10-15, después
+  de probarlo en el Redmi): el micrófono **no** cambia de icono y sigue siendo la única
+  forma de dictar de nuevo. El aviso va en el **hint del escenario** ("Texto listo. Toca
+  Traducir para firmarlo."), no en el campo, porque con la frase escrita arriba un
+  placeholder no se ve nunca. Tocar 🎤 con texto esperando **lo descarta**: es cancelación
+  explícita, lo único que RNF-REL-04 permite como pérdida. **Esto es una desviación del
+  documento de requisitos** — RF-UI-01 sigue diciendo tres iconos — y hay que decirlo.
+- **La ruta del `final` la decide el cliente, no un flag.** El `dictation: true` que usaba
+  el backend ya no existe: con el disparador del envío en la app, `micMode == Dictation ||
+  dictationAwaitingFinal` alcanza. Un `final` vacío va a `onEmptyFinal` y no rompe nada.
 - **Con el mic prendido, Traducir e Historial están deshabilitados y el input es
-  `readOnly`.** Texto y voz van por el mismo socket y el backend no puede saber
-  de quién es cada fragmento; mezclados, el avatar firma la frase al revés. El
-  input sigue mostrando la transcripción en vivo, que es lo que el usuario
-  quiere ver: por eso `readOnly` y no `enabled` (un campo deshabilitado se
-  atenúa y el texto se vuelve ilegible).
-- **Lo dictado se acumula en `dictationBuffer`**, no se reemplaza. El STT cierra
-  cada frase por silencio y alguien que dicta hace pausas.
-- `resumeListeningIfMicOn()` es lo que devuelve la interfaz a "escuchando" o
-  "dictando" al cerrar una frase o una seña. Sin eso el botón se vería apagado
-  mientras captura.
+  `readOnly`.** Texto y voz van por el mismo socket y el backend no puede saber de quién
+  es cada fragmento. El input sigue mostrando la transcripción en vivo, que es lo que el
+  usuario quiere ver: por eso `readOnly` y no `enabled`.
+- **En vivo, una frase que llega con otra en vuelo espera en `livePhraseBacklog`** — un
+  único lugar, a propósito. Con más de uno sería una cola que hay que vaciar, y una cola
+  que hay que vaciar es una cola que se pierde en algún `fail()`.
 
-### Gotchas specific to real-time
+### Gotchas
 
-- **The 32 exported signs average 2.15 s each** (2.08–2.75 s, from `manifest.json`).
-  Spanish runs at 2–3 words/second and each word is a sign, so at normal speed the
-  avatar is two signs behind before the first phrase ends and never catches up.
-  That is why `app.js` has auto catch-up (`CATCHUP_BACKLOG = 2`, `CATCHUP_FACTOR =
-  1.6`) and why `setSpeed` stores `baseSpeed` separately — catch-up multiplies on
-  top of the user's setting, it does not replace it.
-- **`turnStartedAt` starts when the mic opens**, not at the first fragment, so
-  `rt_turn_total_ms` includes the silence before the first word. That is the number
-  a user perceives. It measures **speech → last fragment**, i.e. the STT and the
-  backend: **nothing in the scene moves it**, and in particular the sign-to-sign
-  crossfade does not. The number that measures the avatar is `firmado:`
-  (`SignAiMetrics.onPlayback`), added 2026-10-14 with the crossfade — same reason
-  the research expected a turn total to drop 8%: two names for one quantity would
-  have made the second one look broken.
-- **Release the mic without speaking**: returns to Idle immediately with "No se
-  escuchó nada." Waiting the full 15 s transcription timeout and then reporting a
-  failure that did not happen is the old behaviour. `heardAnythingThisTurn`
-  separates "user said nothing" from "we lost the audio".
-- **`streamedSegments` is per-turn state in `MainScreenState`**, cleared by
-  `resetStreamingTurn()` on every new phrase and on `fail()`. A turn that died
-  halfway must not leak fragments into the next one.
+- **El adelanto automático se queda, pero hay que saber por qué**
+  (`tools/medir-retraso.py`, 2026-10-15). Las 32 señas duran 2,15 s de media y cada palabra
+  es una seña: el avatar no termina antes de que el usuario termine de hablar en **17 de
+  28** frases de prueba, y con el adelanto (`CATCHUP_BACKLOG = 2`, `CATCHUP_FACTOR = 1.6`)
+  todavía en 7. Firma/habla da 1,26× de mediana, que 1,6× cruza. **Lo que cambió es la
+  forma de la cola**: está vacía mientras el usuario habla y se llena de golpe al cerrar
+  cada frase, así que el adelanto ya no está prendido todo el tiempo. Como el umbral se
+  mide después de que arranque la seña en curso, hace falta una frase de 3+ señas para
+  dispararlo. **No prometer que el avatar firme al ritmo de la voz**: harían falta ~5×,
+  que es un fast-forward. `setSpeed` guarda `baseSpeed` aparte porque el adelanto
+  multiplica sobre el ajuste del usuario, no lo reemplaza.
+- **`turnStartedAt` arranca cuando se manda la frase**, no al abrir el micrófono. La
+  unidad es la frase completa, así que el tiempo que el usuario tarda en hablarla no es del
+  turno de traducción. Lo que sí incluye es la espera por la frase anterior en vuelo.
+  `turnStartedAt` mide **el pipeline**, no la escena: el número que mide el avatar es
+  `firmado:` (`SignAiMetrics.onPlayback`).
+- **Release the mic without speaking**: returns to Idle immediately with "No se escuchó
+  nada." Waiting the full 15 s transcription timeout and then reporting a failure that did
+  not happen is the old behaviour. `heardAnythingThisSession` separates "user said nothing"
+  from "we lost the audio".
+- **`pendingSegments`/`pendingTotal` son estado de turno**, los limpia `resetTurn()` en
+  cada frase nueva y en `fail()`. Un turno que murió a mitad no puede filtrar oraciones al
+  siguiente.
+- **`fail()` limpia `dictationAwaitingFinal` pero no el texto**: un fallo de envío no es
+  motivo para perder lo que el usuario dijo.
 
 ## What it is
 
@@ -331,19 +322,31 @@ instrument is a number you cannot claim improved.
 | Where | Tag / endpoint | What |
 |---|---|---|
 | STT | `:8000/metrics` | inference ms per model, GPU queue wait, audio lag, drops by reason |
-| Backend | `:8080/metrics` | `rt_first_sign_ms`, `rt_utterance_ms`, `rt_chunk_delay_ms`, `audio_bytes_total` |
-| Device | `adb logcat -s SignAiMetrics` | fragment→queue ms, turn duration, **signing duration** (`firmado:`), p50/p95/max, dictated phrases and words |
-| Backend | `:8080/metrics` | `dictation_utterances_total`, `capture_mode_*_total`, `session_capture_dictation` |
-| Device | `adb logcat -s SignAiNet` | every segment the backend sent, with `stream`/`provisional` |
-| Scene | `adb logcat -s SignAIWeb` | JS console (needs debug mode on in Settings → AVANZADO) |
+| Backend | `:8080/metrics` | `rt_first_sign_ms`, `rt_phrase_total_ms`, `rt_sentence_delay_ms`, `rt_phrases_total`, `rt_sentences_total`, `rt_glosses_total`, `rt_phrase_sentences`, `audio_bytes_total` |
+| Device | `adb logcat -s SignAiMetrics` | sentences per phrase, gloss count, **signing duration** (`firmado:`), p50/p95/max, dictated phrases and words |
+| Device | `adb logcat -s SignAiNet` | every `segment` the backend sent, with `index`/`total` |
+| Scene | `adb logcat -s SignAIWeb` | JS console (needs debug mode on in Settings → AVANZADO). Con depurar prendido también imprime la cola y el adelanto: `cola N/M, adelanto on/off` |
 
-`rt_first_sign_ms` is the one that decides whether this feels real time. `rt_utterance_ms` and `rt_chunk_delay_ms` explain it when it does not. In the STT, `stt_partial_queue_ms` is the regression guard for the old 4–8 s GPU contention spikes, and `stt_dropped_total{reason="logprob"}` catches the filter eating audio that Whisper transcribed correctly.
+`rt_first_sign_ms` is the one that decides whether this feels real time. `rt_phrase_total_ms`
+and `rt_sentence_delay_ms` explain it when it does not. In the STT, `stt_partial_queue_ms` is
+the regression guard for the old 4–8 s GPU contention spikes, and
+`stt_dropped_total{reason="logprob"}` catches the filter eating audio that Whisper transcribed
+correctly.
+
+**Ojo con `rt_first_sign_ms`**: el nombre se conservó aunque cambiara lo que mide, para poder
+compararlo contra la línea base, pero **la línea base es del camino por palabras**. Con
+oraciones la primera seña sale al terminar la primera oración, así que la cifra sube por
+construcción. Antes de citarla hay que remedirla con las 28 frases
+(`tools/verificar-tiempo-real.sh`).
+
 
 ## Git workflow
 
 **Este repo es del owner: commit y push directo a `main`, sin PR ni rama de feature** (decidido 2026-09-30). No abrir PRs acá ni pedir confirmación para commitear. Los repos hermanos (`../sign-ai-backend`, `../sign-ai-stt`) sí usan PR contra `develop`, y el `CLAUDE.md` de ese repo manda no commitear sin que el usuario lo pida explícitamente. Ver § Mapa del sistema para las reglas de git de cada hermano.
 
 **Ya no existe la rama `tiempo-real`** (2026-10-14): el trabajo de tiempo real quedó mergeado en **`develop`** en los tres repos — acá, en `sign-ai-backend` y en `sign-ai-stt` — y `main` es un commit adelante con la nota al respecto. Si una sesión encuentra referencias a `tiempo-real` en documentación o mensajes viejos, están desactualizadas: la rama actual es `develop`.
+
+**Hay trabajo en vuelo en `flujo-oraciones`** (los tres repos, desde el 2026-10-15, **sin mergear**): el flujo por oraciones de la auditoría `../sign-ai-docs/auditoria-flujo-2026-10-15.md`. Si una sesión arranca en esa rama, esa es la que manda sobre `develop` hasta que el owner mergee, y hay que leer `docs/CAMBIOS.md` / `docs/CAMBIOSBACKEND.md` / `docs/CAMBIOSSTT.md` antes de tocar el pipeline.
 
 ## Neon
 

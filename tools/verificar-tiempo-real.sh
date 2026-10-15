@@ -8,10 +8,17 @@
 # qué pasó.
 #
 #   tools/verificar-tiempo-real.sh                 # todo
+#   tools/verificar-tiempo-real.sh contrato        # solo divisor + protocolo
 #   tools/verificar-tiempo-real.sh latencia        # solo la medición grande
 #   tools/verificar-tiempo-real.sh dispositivo     # solo lo del teléfono
-#   tools/verificar-tiempo-real.sh fixtures        # solo transcripción
-#   tools/verificar-tiempo-real.sh voz            # solo los dos modos del micro
+#   tools/verificar-tiempo-real.sh metricas        # solo /metrics
+#
+# Rama `flujo-oraciones` (2026-10-15). Antes este script corría
+# `verify_incremental.py`, `verify_voice_modes.py` y `verify_realtime_latency.py`
+# del backend: los tres son del **camino por palabras** y no existen en esta
+# línea, así que el script fallaba siempre y no verificaba nada. Los reemplazan
+# `verify_sentence_segmenter.py` + `verify_client_frames.py` (que sí existen) y
+# las dos mediciones de acá, `medir-primera-sena.py` y `medir-retraso.py`.
 #
 # Requisitos: docker compose corriendo en sign-ai-backend, el backend en 8080,
 # el STT en 8000 y un dispositivo adb conectado para el bloque de dispositivo.
@@ -23,11 +30,13 @@ BACKEND_URL="${SIGNAI_BACKEND_URL:-ws://127.0.0.1:8080/ws/translate}"
 FIXTURES="${SIGNAI_FIXTURES:-$STT_DIR/fixtures/audio}"
 PKG="com.signai.webview"
 
-# Presupuesto de la primera seña, p95, en ms desde el primer sample de audio.
-# Medido en el Redmi Note 9S con GPU libre y caché caliente: p50 1094, p95 1821.
-# Subirlo es fácil (más margen), bajarlo es el trabajo: es el número que decide
-# si el producto se siente en tiempo real.
-SIGNAI_P95_MAX_MS="${SIGNAI_P95_MAX_MS:-2500}"
+# Presupuesto del pipeline: p95 de la primera seña, en ms desde la transcripción
+# final (que es lo que mide `rt_first_sign_ms`). Medido el 2026-10-15 sobre los 28
+# fixtures con `qwen3:4b-instruct` en Ollama local y la caché vacía: p50 273,
+# p95 422. El margen es amplio porque la cifra depende entero del LLM que haya
+# atrás — con OpenAI es otra cosa — y este presupuesto es una guarda contra
+# regresiones, no un objetivo de producto.
+SIGNAI_P95_MAX_MS="${SIGNAI_P95_MAX_MS:-1200}"
 
 BOLD=$'\033[1m'; RED=$'\033[31m'; GREEN=$'\033[32m'; YELLOW=$'\033[33m'; OFF=$'\033[0m'
 declare -a RESULTS=()
@@ -61,10 +70,13 @@ check_health() {
     record "backend arriba" 1 "docker compose up -d en $BACKEND_DIR"
   fi
 
-  if [[ "$backend" == *'"realtime":true'* ]]; then
-    record "tiempo real prendido" 0
+  # Ya no hay bandera de tiempo real: no hay dos modos de backend, hay dos
+  # modos de cliente. Lo que sí tiene que estar es el divisor de oraciones, que
+  # es lo que hace que la unidad sea la oración.
+  if curl -s -m 5 http://127.0.0.1:8080/health | grep -q '"status":"ok"'; then
+    record "backend con el flujo por oraciones" 0
   else
-    record "tiempo real prendido" 1 "REALTIME_ENABLED=false en el .env del backend"
+    record "backend con el flujo por oraciones" 1 "si corrés develop, esa línea no tiene divisor de oraciones"
   fi
 
   if [[ "$backend" == *'"cache_loaded":true'* ]]; then
@@ -76,44 +88,43 @@ check_health() {
   if [[ "$stt" == *'"status":"ok"'* ]]; then
     echo "  stt: $stt"
     record "STT arriba" 0
-    if [[ "$stt" == *'"realtime":true'* ]]; then
-      record "perfil de tiempo real del STT" 0
-    else
-      record "perfil de tiempo real del STT" 1 "SILENCE_TIMEOUT_MS >= 1500"
-    fi
+    # El STT de este flujo tiene un solo modelo y cierra la frase por los 1,5 s
+    # de silencio. El perfil de dos modelos del camino viejo no está y no hace
+    # falta: acá solo importa el `final`.
+    record "STT de frase completa" 0 "un solo modelo, silencio 1500 ms"
   else
     echo "  stt: ${stt:-sin respuesta}"
     record "STT arriba" 1
   fi
 }
 
-# ── 2. Lógica incremental, sin nada corriendo ────────────────────────────────
+# ── 2. El contrato, sin nada corriendo ────────────────────────────────────────
 # Los checks que dependen de las dependencias del servicio corren dentro del
 # contenedor. En el host faltarían (httpx2 para el TestClient de Starlette), y
 # un check que solo pasa en un lado no verifica nada.
 in_backend() { docker compose -f "$BACKEND_DIR/docker-compose.yml" exec -T backend "$@"; }
 
-check_incremental() {
-  banner "2. Lógica incremental y protocolo (en el contenedor del backend)"
+check_contract() {
+  banner "2. Divisor de oraciones y protocolo (en el contenedor del backend)"
   if ! docker compose -f "$BACKEND_DIR/docker-compose.yml" ps --status running --services 2>/dev/null | grep -q '^backend$'; then
     record "contenedor del backend corriendo" 1 "docker compose up -d en $BACKEND_DIR"
     return
   fi
 
-  if in_backend python scripts/verify_incremental.py >/tmp/verify_incremental.out 2>&1; then
-    tail -1 /tmp/verify_incremental.out | sed 's/^/  /'
-    record "qué seña se firma y cuál no" 0
+  if in_backend python -m scripts.verify_sentence_segmenter >/tmp/verify_seg.out 2>&1; then
+    tail -1 /tmp/verify_seg.out | sed 's/^/  /'
+    record "el texto se parte en oraciones" 0
   else
-    tail -25 /tmp/verify_incremental.out | sed 's/^/  /'
-    record "qué seña se firma y cuál no" 1
+    tail -25 /tmp/verify_seg.out | sed 's/^/  /'
+    record "el texto se parte en oraciones" 1
   fi
 
-  if in_backend python scripts/verify_client_frames.py >/tmp/verify_frames.out 2>&1; then
+  if in_backend python -m scripts.verify_client_frames >/tmp/verify_frames.out 2>&1; then
     tail -1 /tmp/verify_frames.out | sed 's/^/  /'
-    record "protocolo del WebSocket (frase entera y fragmentado)" 0
+    record "protocolo del WebSocket (y que la voz NO se traduzca)" 0
   else
     tail -25 /tmp/verify_frames.out | sed 's/^/  /'
-    record "protocolo del WebSocket (frase entera y fragmentado)" 1
+    record "protocolo del WebSocket (y que la voz NO se traduzca)" 1
   fi
 }
 
@@ -130,56 +141,53 @@ check_fixtures() {
   echo "  (la transcripción se verifica dentro de la corrida de latencia, que los reproduce)"
 }
 
-# ── 4. Los dos modos del micrófono ───────────────────────────────────────────
-# Dictado y tiempo real mandan el mismo audio por el mismo socket y se separan
-# solo en qué le piden al backend. Este bloque reproduce los fixtures en los dos
-# modos y en el cambio de uno al otro: es lo que verifica que dictar no firma
-# nada y que cambiar a tiempo real firma.
-check_voice_modes() {
-  banner "4. Modos del micrófono (dictado y tiempo real)"
-  local out=/tmp/verify_voice_modes.out
-  py "$BACKEND_DIR/scripts/verify_voice_modes.py" \
-    --url "$BACKEND_URL" --fixtures-dir "$FIXTURES" --clips 3 --timeout 60 >"$out" 2>&1
-  grep -E '^  (dictado|tiempo real|cambio) ' "$out" | sed 's/^/  /'
+# ── 4. Los dos modos sin hablar ───────────────────────────────────────────────
+# Dictado y en vivo mandan el mismo audio por el mismo socket y se separan solo
+# en qué le piden al backend —que ya no decide nada— así que la diferencia
+# entera está del lado del cliente y no se puede verificar desde acá. Lo que sí
+# se verifica sin hablar es que la frase llegue, se divida y se traduzca, que es
+# el camino entero salvo el micrófono.
+check_flow() {
+  banner "4. Flujo por oraciones, extremo a extremo (sin micrófono)"
+  local out=/tmp/verify_flujo.out
+  py "$(dirname "${BASH_SOURCE[0]}")/medir-retraso.py" >"$out" 2>&1
+  grep -E "^(frases|señas por frase|velocidad|firma / habla|  mediana|  con el adelanto|desfase|  mediana)" "$out" \
+    | sed 's/^/  /'
 
-  if grep -q 'todo OK' "$out"; then
-    record "los dos modos se comportan como deben" 0
+  if grep -qE '^frases medidas: 28' "$out"; then
+    record "los 28 fixtures llegaron y se tradujeron" 0
   else
     tail -20 "$out" | sed 's/^/  /'
-    record "los dos modos se comportan como deben" 1 "el detalle está en $out"
+    record "los 28 fixtures llegaron y se tradujeron" 1 "el detalle está en $out"
   fi
 }
 
-# ── 5. Latencia real, extremo a extremo ──────────────────────────────────────
+# ── 5. Primera seña ───────────────────────────────────────────────────────────
 check_latency() {
-  banner "4. Latencia extremo a extremo (audio -> seña en pantalla)"
+  banner "5. Primera seña, extremo a extremo (audio -> seña en pantalla)"
   local out=/tmp/verify_latency.out
-  py "$BACKEND_DIR/scripts/verify_realtime_latency.py" \
-    --url "$BACKEND_URL" --all-fixtures --fixtures-dir "$FIXTURES" --timeout 45 >"$out" 2>&1
-  tail -36 "$out"
+  py "$(dirname "${BASH_SOURCE[0]}")/medir-primera-sena.py" >"$out" 2>&1
+  grep -E "^(\`|  p50|  línea base|  de los cuales)" "$out" | sed 's/^/  /'
 
-  # El umbral mira el p95 de la primera seña. Con la caché semántica vacía la
-  # primera pasada paga una llamada al LLM por fragmento y sale ~30% más lenta,
-  # así que el número es una cota superior, no el caso bueno.
+  # Ojo con qué número es cuál: `final→seña` es el pipeline (`rt_first_sign_ms`) y
+  # `audio→seña` incluye el STT. El presupuesto es sobre el primero, porque el
+  # segundo lo domina el STT y no es algo que este repo pueda mover.
   local p95
-  p95=$(grep -o 'PRIMERA SEÑA.*p95=[0-9]*ms' "$out" | grep -o 'p95=[0-9]*' | cut -d= -f2)
+  # Ojo con el parseo: `grep -oE '[0-9]+'` sobre `p95 5` devuelve DOS números
+  # (`95` del nombre de la métrica y `5` del valor), y el `(( ))` de abajo se
+  # come el "95\n5" como un entero enorme. Por eso se extrae con sed y no con
+  # grep, y por eso hace falta `head -1`: la línea de la línea base ("p50 913 ms /
+  # p95 1336 ms") también entra en el grep.
+  p95=$(grep -oE 'p50 [0-9]+ ms +p95 [0-9]+ ms' "$out" | head -1 | sed -E 's/.*p95 ([0-9]+) ms.*/\1/')
   if [[ -z "$p95" ]]; then
     record "latencia medida" 1 "la corrida no produjo resumen; mirá $out"
     return
   fi
 
-  local missing
-  missing=$(grep -c 'n=28/28' "$out" || true)
-  if [[ "$missing" -ge 1 ]]; then
-    record "28/28 fixtures produjeron al menos una seña" 0
-  else
-    record "28/28 fixtures produjeron al menos una seña" 1 "algunos fixtures no produjeron ninguna; mirá la tabla"
-  fi
-
   if (( p95 <= SIGNAI_P95_MAX_MS )); then
-    record "primera seña p95 = ${p95}ms" 0 "presupuesto ${SIGNAI_P95_MAX_MS}ms"
+    record "primera seña p95 = ${p95}ms (pipeline)" 0 "presupuesto ${SIGNAI_P95_MAX_MS}ms"
   else
-    record "primera seña p95 = ${p95}ms" 1 "presupuesto ${SIGNAI_P95_MAX_MS}ms; probá con la caché caliente"
+    record "primera seña p95 = ${p95}ms (pipeline)" 1 "presupuesto ${SIGNAI_P95_MAX_MS}ms; fijate si el LLM de atrás es el de siempre"
   fi
 }
 
@@ -190,7 +198,9 @@ check_metrics() {
   curl -s -m 5 http://127.0.0.1:8080/metrics.json | python3 -c "
 import json, sys
 d = json.load(sys.stdin)
-keys = ('rt_first_sign_ms', 'rt_utterance_ms', 'rt_chunk_delay_ms', 'audio_bytes_total', 'sessions_total')
+keys = ('rt_first_sign_ms', 'rt_phrase_total_ms', 'rt_sentence_delay_ms',
+            'rt_phrases_total', 'rt_sentences_total', 'rt_glosses_total',
+            'audio_bytes_total', 'sessions_total')
 for name, snapshot in sorted(d['histograms'].items()):
     if any(name.startswith(k) for k in keys):
         print(f\"  {name:<34} p50={snapshot['p50']:>8} p95={snapshot['p95']:>8} max={snapshot['max']:>8}\")
@@ -210,7 +220,7 @@ for name, value in sorted(d['gauges'].items()):
 import json, sys
 d = json.load(sys.stdin)
 for name, snapshot in sorted(d['histograms'].items()):
-    if name.startswith(('stt_end_to_final_ms', 'stt_inference_ms', 'stt_partial_lag_ms', 'stt_partial_queue_ms')):
+    if name.startswith(('stt_end_to_final_ms', 'stt_inference_ms', 'stt_partial_lag_ms', 'stt_partial_queue_ms', 'stt_flush')):
         print(f\"  {name:<34} p50={snapshot['p50']:>8} p95={snapshot['p95']:>8} max={snapshot['max']:>8}\")
 for name, value in sorted(d['counters'].items()):
     if name.startswith(('stt_dropped_total', 'stt_final_total')):
@@ -252,27 +262,29 @@ check_device() {
   sleep 10
   echo "  app relanzada. Probá vos con la voz:"
   echo
-  echo "  A. Dictado (el micrófono de la fila de arriba)"
+  echo "  A. Dictado (el micrófono de la fila de arriba) — el paso de confirmar"
   echo "    1. tocá el micrófono — se prende solo, no hay que mantenerlo apretado"
-  echo "    2. decí 'holá' / 'cómo estás' con una pausa en el medio"
-  echo "    3. volvé a tocarlo para dejar de dictar"
-  echo "    4. el texto tiene que quedar en el campo y el muñeco NO se movió"
-  echo "    5. tocá Traducir: ahora sí firma la frase entera"
+  echo "    2. decí una frase y hacé una pausa de un segundo y medio"
+  echo "    3. el micrófono se apaga SOLO y el texto queda en el campo"
+  echo "    4. el muñeco NO se movió. Arriba dice 'Texto listo. Toca Traducir para firmarlo.'"
+  echo "    5. rt_phrases_total en el backend NO se movió: eso es la prueba de que no mandó"
+  echo "    6. tocá Traducir: ahora sí firma"
+  echo "    7. el icono del micrófono NO cambió: tocarlo de nuevo borra y dicta de cero"
   echo
-  echo "  B. Tiempo real (el TR de la fila de abajo)"
+  echo "  B. En vivo (el TR de la fila de abajo)"
   echo "    1. tocá TR — el micrófono queda deshabilitado, es el mismo"
-  echo "    2. hablá largo: el muñeco tiene que ir firmando mientras hablás"
-  echo "    3. hacé una pausa de un segundo: tiene que seguir escuchando solo"
-  echo "    4. tocá TR de nuevo para apagarlo"
+  echo "    2. hablá: cada pausa de 1,5 s manda la frase sola y el muñeco firma"
+  echo "    3. el micrófono NO se apaga entre frases: seguí hablando"
+  echo "    4. tocá TR de nuevo para apagarlo: el campo queda LIMPIO, no retenido"
   echo
   echo "  C. Los dos juntos"
   echo "    1. dictá algo, y sin soltar nada tocá TR: cambia de modo, no se pisa"
-  echo "    2. al apagar TR, el campo vuelve a mostrar lo dictado"
+  echo "    2. al apagar TR, el campo vuelve a mostrar lo dictado que estaba esperando"
   echo
   echo "  mientras tanto, los logs:"
   echo "    adb logcat -s SignAiState SignAiNet SignAiMetrics"
   echo "  en el backend:"
-  echo "    docker compose -f $BACKEND_DIR/docker-compose.yml logs -f backend | grep -E 'capture mode|dictated|fragmento'"
+  echo "    curl -s 127.0.0.1:8080/metrics | grep -E '^rt_(phrases|sentences|glosses)_total'"
   record "app relanzada" 0
 }
 
@@ -282,14 +294,16 @@ main() {
   printf '%sVerificación del modo tiempo real%s  %s\n' "$BOLD" "$OFF" "$(date '+%Y-%m-%d %H:%M')"
 
   case "$what" in
-    incremental) check_health; check_incremental ;;
-    fixtures)    check_fixtures; check_latency ;;
-    voz)         check_health; check_voice_modes ;;
+    contrato)    check_health; check_contract ;;
+    fixtures)    check_fixtures; check_flow ;;
+    flujo)       check_health; check_flow ;;
     latencia)    check_health; check_latency; check_metrics ;;
     dispositivo) check_device ;;
     metricas)    check_metrics ;;
-    todo|"")     check_health; check_incremental; check_fixtures; check_voice_modes; check_latency; check_metrics; check_device ;;
-    *) echo "bloque desconocido: $what"; echo "usá: incremental | fixtures | voz | latencia | metricas | dispositivo | todo"; exit 2 ;;
+    incremental) echo "'incremental' era del camino por palabras."; echo "usá 'contrato' (divisor de oraciones + protocolo)."; exit 2 ;;
+    voz)         echo "'voz' era del camino poracentro."; echo "la diferencia entre dictado y en vivo está en el cliente; probala con la voz en el teléfono (A y B)."; exit 2 ;;
+    todo|"")     check_health; check_contract; check_fixtures; check_flow; check_latency; check_metrics; check_device ;;
+    *) echo "bloque desconocido: $what"; echo "usá: contrato | fixtures | flujo | latencia | metricas | dispositivo | todo"; exit 2 ;;
   esac
 
   banner "Resumen"

@@ -226,16 +226,33 @@ class MainScreenState(
     /** True when the turn in flight is a Repetir, which must not be re-recorded. */
     private var isReplay = false
 
-    // ── Modo fragmentado (tiempo real) ───────────────────────────────────────
-    // El backend ya no espera a tener la frase entera: manda un fragmento
-    // apenas el transcriber confirma que esas palabras se dijeron. Estos campos
-    // son el estado del turno en curso; se limpian en el `done`.
-    private var streamingTurn = false
-    private val streamedSegments = mutableListOf<TranslationSegment>()
-    private val streamingGlosses = mutableListOf<String>()
+    // ── Turno en curso ───────────────────────────────────────────────────────
+    //
+    // El backend divide la frase en oraciones y manda una `segment` por
+    // oración, con `index` y `total` reales. No hay fragmentos: lo que hay son
+    // oraciones, y todas son de la misma frase, así que la app las junta
+    // ([pendingSegments]) y firma la frase entera. El reloj del turno es lo único
+    // que se lleva entre una frase y la siguiente.
 
     /** Wall clock of the current turn, for the timing logs and `metrics`. */
     private var turnStartedAt = SystemClock.elapsedRealtime()
+
+    /**
+     * La captura en curso —o la que el usuario acaba de cortar— es de dictado.
+     *
+     * Es lo que decide a dónde va cada transcripción, y tiene que existir porque
+     * el `final` de lo dictado llega **después** de que el micrófono se apagó: el
+     * usuario tocó el botón, la app mandó `end`, y recién ahí vuelve el texto.
+     * Si la ruta se decidiera solo con [micMode], ese `final` caería en el camino
+     * de en vivo y la frase se firmaría sola, que es justo lo que RF-STT-03
+     * prohíbe.
+     *
+     * Antes lo decidía un flag `dictation` que mandaba el backend. El backend ya
+     * no lo manda —y no debería: adivinar el modo es la forma de equivocarse en
+     * el sentido que firma lo que el usuario no confirmó— así que el que sabe es
+     * esta app.
+     */
+    private var dictationAwaitingFinal = false
 
     /**
      * Whether anything at all came back during the current listening session.
@@ -258,10 +275,10 @@ class MainScreenState(
      * imposible y el que hay que dejar sin representar (ver [MicMode]).
      *
      * Deliberadamente aparte de [playbackState]. Antes un solo enum decía dos
-     * cosas distintas —"¿está el mic prendido?" y "¿qué hace el muñeco?"— y
-     * eso solo funcionaba porque el micro se apagaba en cada frase. Ahora el
-     * muñeco firma con el micrófono prendido, así que los dos se superponen de
-     * verdad y necesitan su propio estado.
+     * cosas distintas —"¿está el mic prendido?" y "¿qué hace el muñeco?"— y eso
+     * solo funcionaba porque el micro se apagaba en cada frase. En vivo el muñeco
+     * firma con el micrófono prendido, así que los dos se superponen de verdad y
+     * necesitan su propio estado.
      */
     var micMode by mutableStateOf(MicMode.Off)
         private set
@@ -272,56 +289,70 @@ class MainScreenState(
     /** El micrófono de la fila de arriba: dictado, solo transcribe. */
     val dictationActive: Boolean get() = micMode == MicMode.Dictation
 
-    /** El interruptor `TR` de la fila de abajo: firma mientras se habla. */
-    val realtimeActive: Boolean get() = micMode == MicMode.Realtime
+    /** El interruptor `TR` de la fila de abajo: en vivo, cada frase sale sola. */
+    val liveActive: Boolean get() = micMode == MicMode.Live
 
     /**
-     * Texto acumulado del dictado en curso.
+     * Texto del dictado, lo que el usuario dijo y todavía no mandó.
      *
-     * El STT cierra cada frase cuando oye silencio, así que una sesión de
-     * dictado son varias transcripciones `final`. Si solo se conservara la
-     * última, dictar "holá" / "cómo estás" con una pausa en el medio perdería
-     * la primera frase.
+     * Es lo que sobrevive a que se apague el micrófono: es lo que quedó escrito,
+     * editable, a la espera de que el usuario confirme el envío (RF-STT-03). Si
+     * después se prende el modo en vivo y se apaga, el campo vuelve a mostrar
+     * esto: perder un dictado porque el usuario quiso probar el otro interruptor
+     * sería la peor forma de que esto salga mal.
      *
-     * Sobrevive a que se apague el micrófono: es lo que quedó escrito, y si
-     * después se prende el modo tiempo real el campo vuelve a mostrar esto al
-     * apagarlo. Perder un dictado de tres frases porque el usuario quiso probar
-     * el tiempo real sería la peor forma de que esto salga mal.
+     * Antes esto se llamaba `dictationBuffer` y acumula más de una frase, porque
+     * el micrófono quedaba prendido entre ellas. Ya no: el dictado se cierra con
+     * la frase (RF-STT-03 dice que la captura se detiene al detectar el
+     * silencio), así que una sesión de dictado es una frase y este es el texto
+     * que espera confirmación.
      */
     private var dictationBuffer = ""
 
     /**
-     * El STT tiene una frase abierta del dictado: llegó transcripción pero no su
-     * `final`.
+     * Hay texto dictado en el campo a la espera de que el usuario confirme.
      *
-     * Es lo que decide si apagar el micrófono manda el texto ya o si tiene que
-     * esperar a que cierre la frase. Un dictado con pausas ya cerrado por el
-     * silencio no tiene nada pendiente, y hacer esperar al usuario por un `final`
-     * que no va a llegar sería dejarlo mirando "Procesando..." hasta el timeout.
+     * Es el tercer estado de RF-UI-01 ("texto listo para enviar") y lo que
+     * mantiene el texto en RNF-REL-04: mientras esté en `true` el campo sigue
+     * editable y Traducir disponible, y una caída de red breve no lo borra.
+     *
+     * Se apaga cuando la frase sale —la retención de [sentText] pasa a tenerla en
+     * pantalla— y cuando el campo queda vacío. Editar el texto **no** lo apaga:
+     * sigue siendo lo que el usuario va a confirmar.
      */
-    private var dictationOpen = false
+    var dictationPending by mutableStateOf(false)
+        private set
 
     /**
-     * El texto dictado se manda solo en cuanto llegue el `final`.
+     * Tercer estado del botón de voz: hay una frase dictated que se puede mandar.
      *
-     * Apagar el micrófono **es** mandar: es lo que el usuario espera de un
-     * interruptor, y exigirle un segundo toque después de haber hablado es
-     * exactamente la fricción que este modo vino a sacar. El envío espera al
-     * `final` solo porque las últimas palabras todavía no están transcritas; si
-     * el STT ya cerró la frase por silencio, se manda en el acto.
+     * Exige que el campo tenga algo: si el usuario borró lo que se transcribió, ya
+     * no hay nada listo para enviar y el botón vuelve a ser el de empezar a dictar.
+     *
+     * Y exige que el micrófono esté apagado. Con el TR prendido el campo muestra
+     * la transcripción en vivo, no lo que quedó pendiente: marcar "listo para
+     * enviar" ahí sería señalar un texto que el usuario no está viendo. Lo que sí
+     * se conserva es el pendiente —[dictationBuffer]—, y vuelve al campo cuando
+     * el TR se apaga.
      */
-    private var dictationAutoSend = false
+    val dictationReadyToSend: Boolean
+        get() = dictationPending && !micActive && inputText.isNotBlank() && !sentTextLocked
 
     /**
      * La frase que la app ya mandó, a la vista pero no mandable.
      *
-     * El campo queda con lo que el avatar está firmando **siempre que la frase
-     * salió sin que nadie tocara Traducir**: el dictado al apagarse, el tiempo
-     * real mientras se hablaba, un Traducir a mano y el Repetir del escenario.
-     * Si Traducir volviera a estar habilitado ahí, el botón ofrecería mandar
-     * otra vez lo que ya se mandó y el muñeco firmaría la frase dos veces
-     * seguidas por un solo toque — que es lo mismo que pasó con el botón de
-     * tiempo real y el owner pidió arreglarlo igual para los cuatro.
+     * El campo queda con lo que el avatar está firmando siempre que la frase
+     * salió sin que nadie tocara Traducir: un Traducir a mano y el Repetir del
+     * escenario. Si Traducir volviera a estar habilitado ahí, el botón ofrecería
+     * mandar otra vez lo que ya se mandó y el muñeco firmaría la frase dos veces
+     * seguidas por un solo toque.
+     *
+     * El modo en vivo **no** la usa, y es a propósito: ahí el micrófono está
+     * prendido, así que Traducir ya está deshabilitado por `micActive` y la
+     * retención solo cambiaría el texto del campo por el de la frase anterior
+     * mientras el usuario sigue hablando. Apagar el TR tampoco la usa: deja el
+     * campo limpio [stopCapture], porque para entonces lo que decía el campo ya
+     * se firmó y no hay nada que impedir reenviar.
      *
      * Se borra sola a los [SentTextHoldMs]. Nada se pierde: la frase ya quedó
      * en el historial y en el panel de conversación.
@@ -391,15 +422,6 @@ class MainScreenState(
      */
     val backendConnected: Boolean get() = backend.isConnected
 
-    /**
-     * Keeps streamed fragments in the order the backend sent them.
-     *
-     * Resolving a gloss may suspend (a remote asset has to be downloaded), and
-     * without this two fragments racing would append out of order and the avatar
-     * would sign the phrase backwards.
-     */
-    private val streamMutex = Mutex()
-
     /** What the stage hint shows: the glosses while signing, else state or message. */
     val statusLine: String
         get() = when {
@@ -434,111 +456,6 @@ class MainScreenState(
     }
 
     /**
-     * A streamed fragment: sign it now, do not wait for the rest of the phrase.
-     *
-     * This is the whole point of the real-time mode. The backend sends a
-     * fragment as soon as the transcriber confirmed those words had been said,
-     * so by the time it arrives the person may already be on their second word.
-     * The queue is appended to instead of replaced, and playback starts from the
-     * first fragment's index, which is what lets the avatar sign the phrase
-     * while it is still being spoken.
-     */
-    private fun onStreamedSegment(event: BackendEvent.Segment) {
-        val startedAt = SystemClock.elapsedRealtime()
-        streamingTurn = true
-        streamedSegments += event.segment
-        streamingGlosses += event.segment.glosses.map { it.text }
-
-        // Resolving a remote asset is a suspending download, and the queue is
-        // order-dependent: appending fragment 2 before fragment 1 would sign the
-        // phrase backwards. The mutex makes the fragments queue up in the order
-        // the backend sent them.
-        scope.launch {
-            streamMutex.withLock {
-                val items = queueItemsFor(event.segment)
-                if (items.isEmpty()) {
-                    // A fragment of words the catalog does not cover. Not an error:
-                    // the turn keeps going and the next fragment may resolve to
-                    // real signs.
-                    metrics.onUnavailableGloss()
-                    Log.i(TAG, "fragmento ${event.index} sin señas disponibles: ${event.sourceText}")
-                    return@withLock
-                }
-
-                if (playbackState != PlaybackState.Signing) {
-                    // First fragment: nothing is playing yet, so this starts the
-                    // queue.
-                    webView.setQueue(items)
-                    webView.playFrom(0)
-                    startPlaybackClock(items.size)
-                    caption = items.joinToString(" · ") { it.gloss }
-                } else {
-                    // Mid-playback: append. `playFrom` is deliberately not
-                    // called, the scene advances on its own as the queue grows.
-                    webView.appendQueue(items)
-                    playbackSigns += items.size
-                    caption = (caption + " · " + items.joinToString(" · ") { it.gloss }).trim('·', ' ')
-                }
-                playbackState = PlaybackState.Signing
-                queuePlaying = true
-                metrics.onFragment(SystemClock.elapsedRealtime() - startedAt, items.size)
-            }
-        }
-    }
-
-    /**
-     * Closes a streamed turn once the backend says `done`.
-     *
-     * The avatar keeps signing whatever is left in the queue: `done` means the
-     * backend stopped sending, not that the animation ended. Recording the turn
-     * happens here rather than per fragment, because only now is the phrase
-     * complete and only now is it worth a history entry.
-     */
-    private fun finishStreamedTurn() {
-        val text = pendingText.orEmpty()
-        val segments = streamedSegments.toList()
-
-        if (segments.isEmpty()) {
-            streamingTurn = false
-            pendingText = null
-            if (micActive) {
-                // Nada que firmar, pero el mic sigue prendido: se sigue
-                // escuchando, no terminó nada.
-                showStatus("Esa frase no produjo ninguna seña.")
-                resumeListeningIfMicOn()
-            } else {
-                playbackState = PlaybackState.Done
-                showStatus("Esa frase no produjo ninguna seña.")
-            }
-            return
-        }
-
-        if (text.isNotBlank() && !isReplay) {
-            syncHistory(history.record(text))
-            conversation.add(
-                ConversationTurn(
-                    id = turnCounter++,
-                    text = text,
-                    gloss = formatGlosses(segments),
-                ),
-            )
-        }
-
-        metrics.onTurn(
-            totalMs = SystemClock.elapsedRealtime() - turnStartedAt,
-            fragmentCount = segments.size,
-            glossCount = streamingGlosses.size,
-        )
-        Log.i(TAG, "resumen: ${metrics.snapshot()}")
-
-        streamingTurn = false
-        streamedSegments.clear()
-        streamingGlosses.clear()
-        pendingText = null
-        resumeListeningIfMicOn()
-    }
-
-    /**
      * Devuelve la interfaz a "escuchando" o "dictando" cuando el mic sigue
      * abierto, y la libera cuando ya no.
      *
@@ -561,11 +478,11 @@ class MainScreenState(
             playbackState = if (queuePlaying) PlaybackState.Signing else PlaybackState.Done
             return
         }
-        resetStreamingTurn()
+        resetTurn()
         playbackState = labelFor(micMode)
     }
 
-    /** Whole-phrase mode: collect every sentence, then sign the phrase as a unit. */
+    /** Una oración traducida: se junta con las de su frase y se firma la frase. */
     private fun onWholePhraseSegment(event: BackendEvent.Segment) {
         transcript = pendingText ?: transcript
         pendingTotal = maxOf(pendingTotal, event.total)
@@ -577,10 +494,33 @@ class MainScreenState(
         if (pendingTotal > 0 && pendingSegments.size >= pendingTotal) flushSegments()
     }
 
-    /** Resolves one fragment's glosses to queue items, same rules as a whole phrase. */
+    /**
+     * Resolves one sentence's glosses to queue items.
+     *
+     * Suspende: resolver una glosa puede ser una descarga de un asset remoto. Por
+     * eso todas las oraciones de una frase se resuelven juntas y en orden, en
+     * [startQueue], y la cola nunca se arma a mitad de camino.
+     *
+     * Una glosa que el catálogo no tiene no se firma (RF-CAT-03) salvo que
+     * [Settings.demoSignFallback] esté prendido. Ese interruptor es lo que hace
+     * que las 18 señas de LSC50 sin animación exportada (0032–0049) muestren
+     * algo en vez de "Seña no disponible": el catálogo las anuncia, pero no hay
+     * clip, así que la cola cae en la única seña que viene dentro del APK.
+     */
     private suspend fun queueItemsFor(segment: TranslationSegment): List<SignQueueItem> {
         val items = mutableListOf<SignQueueItem>()
         for (gloss in segment.glosses) {
+            // Primero se pregunta si el path es una de las animaciones que ya
+            // vienen dentro del APK. Son same-origin por construcción, así que
+            // descargarlas sería un 404 garantizado que caería en el fallback de
+            // abajo — y el fallback es la seña por defecto, o sea que todas las
+            // glosas responderían con el mismo movimiento.
+            //
+            // Un `signs/*.glb` que **no** tenemos (el catálogo anuncia las 50
+            // glosas pero solo 32 tienen export) es igual de indescargable: es
+            // nuestro propio layout, así que tampoco lo sirve nadie por HTTP. Se
+            // saltea el viaje de red y se va derecho al fallback. Cualquier otra
+            // cosa —un asset remoto de verdad— sí baja por la red.
             val local = SignsCatalog.localAssetOrNull(gloss.glbPath)
             val url = when {
                 local != null -> local
@@ -602,7 +542,12 @@ class MainScreenState(
                     url = fallbackSignUrl,
                     available = gloss.available,
                 )
-                // Unknown gloss, no fallback: not queued. See startQueue for why.
+
+                else -> {
+                    // Sin seña y sin fallback: no se firma, pero se cuenta para que
+                    // `sin_seña` diga la verdad.
+                    metrics.onUnavailableGloss()
+                }
             }
         }
         return items
@@ -619,77 +564,147 @@ class MainScreenState(
             }
 
             is BackendEvent.Transcript -> {
-                // An empty transcript is only ever meaningful as a `final`, and
-                // only in dictation: it is the STT saying "the utterance closed
-                // and it held no words", which is exactly what comes back when
-                // the mic goes off over noise. Dropping it here would leave
-                // `dictationOpen` set with nothing to clear it, so "Procesando..."
-                // would sit through the whole transcription timeout and then
-                // report a lost transcript for a phrase that never existed. It
-                // still has to reach the block below to cancel that timeout and
-                // send whatever the user did manage to dictate.
-                //
-                // Realtime keeps discarding it: there an empty frame closes
-                // nothing and would only blank the input.
-                if (event.text.isBlank() && !(event.dictation && event.final)) return
-                // Anything coming back means the round trip is alive, so the
-                // "no transcript arrived" guard is no longer needed.
-                processingJob?.cancel()
-                heardAnythingThisSession = true
-                // Dictado y tiempo real parten exactamente del mismo sitio —los
-                // mismos chunks de audio y el mismo STT— y se separan acá: en
-                // dictado el texto es el resultado, en tiempo real es el material
-                // del que salen las señas.
-                //
-                // Manda el backend, no el estado local: el `final` de lo dictado
-                // llega después de que el usuario apagó el micrófono, y para
-                // entonces esta app ya cree que no está dictando.
-                if (event.dictation) {
-                    onDictationTranscript(event)
+                // Un `final` vacío es una respuesta, no una frase perdida: el STT
+                // cerró el utterance sobre audio que su filtro de descarte no
+                // encontró. Descartarlo dejaría el micrófono creyendo que la
+                // frase sigue abierta y "Procesando..." aguantaría hasta el
+                // timeout, que después reportaría como fallida una frase que
+                // nunca existió. No escribe nada en el campo: un `final` vacío
+                // **no** puede vaciar lo que el usuario escribió a mano.
+                if (event.text.isBlank()) {
+                    if (event.final) onEmptyFinal()
                     return
                 }
-                transcript = event.text
-                inputText = event.text
-                // The utterance starts at the *first* text, not at the final:
-                // in streamed mode the avatar is already signing by then, and
-                // `pendingText` has to exist before the first fragment so the
-                // turn is recorded against the right phrase.
-                if (pendingText == null) {
-                    pendingText = event.text
-                    lastText = event.text
-                }
-                if (event.final) {
-                    // El micrófono **no** se apaga acá.
-                    //
-                    // Antes lo hacía, y obligaba a tocar de nuevo para seguir
-                    // hablando: una frase por pulsación. Con el modo tiempo real
-                    // eso es al revés de lo que se quiere, porque el STT abre
-                    // solo el siguiente utterance en cuanto hears silencio y el
-                    // avatar puede seguir firmando sin que nadie toque nada.
-                    // Un `final` solo dice "esta frase se cerró"; la siguiente
-                    // empieza sola con el próximo audio.
-                    if (!streamingTurn) playbackState = PlaybackState.Translating
-                }
-            }
-
-            is BackendEvent.Segment ->
-                if (event.stream) {
-                    onStreamedSegment(event)
+                // Cualquier cosa que vuelva prueba que el viaje de ida y vuelta
+                // funciona, así que la red de seguridad de "no llegó la
+                // transcripción" ya no hace falta.
+                processingJob?.cancel()
+                heardAnythingThisSession = true
+                // Dictado y en vivo parten del mismo sitio —los mismos chunks y
+                // el mismo STT— y se separan acá. Lo decide esta app, no el
+                // backend: el `final` de lo dictado llega después de que el
+                // usuario apagó el micrófono, así que el flag tiene que
+                // sobrevivir al apagado ([dictationAwaitingFinal]).
+                if (micMode == MicMode.Dictation || dictationAwaitingFinal) {
+                    onDictationTranscript(event)
                 } else {
-                    onWholePhraseSegment(event)
+                    onLiveTranscript(event)
                 }
-
-            is BackendEvent.PhraseDone -> {
-                // En modo fragmentado la cola ya se fue firmando; acá solo queda
-                // cerrar el turno. En modo frase completa, `flushSegments` arma la
-                // cola de una.
-                if (streamingTurn) finishStreamedTurn() else flushSegments()
             }
+
+            is BackendEvent.Segment -> onWholePhraseSegment(event)
+
+            is BackendEvent.PhraseDone -> flushSegments()
 
             is BackendEvent.Failure -> fail(event.message)
 
             is BackendEvent.Disconnected -> Unit
         }
+    }
+
+    /**
+     * Un `final` sin palabras.
+     *
+     * Llega cuando el STT cerró un utterance sobre ruido, o cuando el usuario
+     * soltó el micrófono sin haber hablado. En los dos casos no hay frase que
+     * firmar y lo único que hay que hacer es **cerrar lo que estaba abierto**:
+     *
+     * - Si venía un dictado, la captura se apaga y el texto que sí se haya
+     *   transcrito queda esperando confirmación.
+     * - Si venía en vivo, el micrófono sigue prendido y no pasó nada.
+     * - Si no había nada, no se toca nada: el campo conserva lo que el usuario
+     *   escribió.
+     */
+    private fun onEmptyFinal() {
+        processingJob?.cancel()
+        Log.i(TAG, "final vacío: el utterance se cerró sin palabras")
+        if (dictationAwaitingFinal || dictationActive) {
+            dictationAwaitingFinal = false
+            // Lo que haya en el campo es del dictado —a esta altura solo puede
+            // serlo—, y el `final` vacío no lo borra: llegó un filtro que se comió
+            // el audio, no una decisión del usuario (RNF-REL-04).
+            dictationPending = inputText.isNotBlank()
+            // El silencio ya cerró la frase, así que la captura se va sin `end`:
+            // no hay utterance abierto que cerrar y mandarlo solo agrega un viaje.
+            if (dictationActive) stopDictation(endIsRedundant = true)
+            playbackState = if (micActive) labelFor(micMode) else PlaybackState.Idle
+        }
+    }
+
+    /**
+     * Una transcripción en modo en vivo: se muestra mientras habla y, cuando la
+     * frase se cierra, sale sola.
+     *
+     * El interruptor `TR` es la confirmación: el usuario lo prendió y lo que
+     * quiere es que lo que habla se firme frase por frase. Por eso la frase se
+     * manda como `text` —que es lo único que el backend traduce— y por eso no
+     * hay ningún paso de "decidir" como en el dictado.
+     *
+     * El micrófono **no** se apaga en el `final`: es la excepción que hace TR
+     * distinto del resto. Un `final` solo dice "esta frase se cerró"; la
+     * siguiente empieza sola con el próximo audio.
+     */
+    private fun onLiveTranscript(event: BackendEvent.Transcript) {
+        transcript = event.text
+        inputText = event.text
+        lastText = event.text
+        if (!event.final) {
+            // Parcial: solo se ve. `pendingText` lo pone el envío, no el texto.
+            return
+        }
+        // La frase se manda sola. Si ya hay una en vuelo —el LLM tardar más que la
+        // pausa de 1,5 s— queda esperando en un lugar, no se pierde: RNF-REL-01 no
+        // es solo para el STT.
+        queueLivePhrase(event.text)
+    }
+
+    /**
+     * Una frase en vivo esperando hueco para salir.
+     *
+     * Un solo lugar, a propósito. El caso real es que la frase anterior siga
+     * traduciéndose: con 1,5 s de pausa entre frases y ~0,8 s de traducción, es
+     * raro pero pasa, y en ese caso lo que el usuario acaba de decir importa más
+     * que la frase anterior. Con más de uno sería una cola que hay que vaciar, y
+     * una cola que hay que vaciar es una cola que se pierde en algún `fail()`.
+     */
+    private var livePhraseBacklog = ""
+
+    private fun queueLivePhrase(text: String) {
+        val clean = text.trim()
+        if (clean.isEmpty()) return
+        if (sendLivePhrase(clean)) {
+            livePhraseBacklog = ""
+            return
+        }
+        livePhraseBacklog = joinWords(livePhraseBacklog, clean)
+        Log.i(TAG, "frase en vivo en espera (hay una en vuelo): $clean")
+    }
+
+    /**
+     * Manda una frase en vivo. Devuelve false si no se pudo y hay que esperar.
+     *
+     * Es [requestTranslation] con dos diferencias, y las dos importan: no exige
+     * apagar el micrófono —el modo en vivo se caracteriza por tenerlo prendido— y
+     * no deja el texto retenido en el campo, porque Traducir ya está
+     * deshabilitado mientras el micrófono captura y la retención solo haría que
+     * el campo mostrara la frase anterior mientras el usuario sigue hablando.
+     */
+    private fun sendLivePhrase(text: String): Boolean {
+        if (playbackState == PlaybackState.Translating || pendingText != null) return false
+        if (!backend.sendText(text)) {
+            fail("No hay conexión con el servidor.")
+            return false
+        }
+        pendingText = text
+        isReplay = false
+        // Un turno anterior no puede filtrarse a este.
+        pendingSegments.clear()
+        pendingTotal = 0
+        resetTurn()
+        turnStartedAt = SystemClock.elapsedRealtime()
+        playbackState = PlaybackState.Translating
+        Log.i(TAG, "en vivo → envío: $text")
+        return true
     }
 
     /**
@@ -701,67 +716,55 @@ class MainScreenState(
      * STT tiene abierta, así que se muestra en vivo pero solo se suma al
      * acumulado cuando llega su `final`.
      *
-     * También funciona cuando el dictado ya se apagó: ese `final` es el texto
-     * que el usuario estaba esperando, y es lo único que le faltaba para
-     * apretar Traducir.
+     * Cuando llega el `final` la frase está cerrada y **aca termina el
+     * dictado**: la captura se apaga y el texto queda a la espera de que el
+     * usuario confirme el envío (RF-STT-03, y el tercer estado de RF-UI-01).
+     * Antes el `final` solo Guardaba el texto y quien disparaba el envío era
+     * apagar el micrófono —"apagar es mandar"— y no había ningún instante entre
+     * "se detuvo la captura" y "ya se mandó". Ese instante es el requisito.
+     *
+     * También funciona cuando el micrófono ya se apagó a mano: ese `final` es
+     * el texto que el usuario estaba esperando, y es lo único que le faltaba
+     * para poder apretar Traducir.
      */
     private fun onDictationTranscript(event: BackendEvent.Transcript) {
         val live = joinWords(dictationBuffer, event.text)
-        // Only put words in the input. An empty final brings none, and writing
-        // "" over the field would wipe whatever the user had typed before
-        // turning dictation on and saying nothing into it — text they never
-        // sent, and there is no other way to get it back.
+        // Solo palabras nuevas en el campo. Un `final` vacío no trae ninguna, y
+        // escribir "" encima borraría lo que el usuario había tipeado antes de
+        // prender el micrófono y no dijo nada: texto que nunca mandó y que no
+        // tiene otra forma de recuperarse.
         if (live.isNotBlank()) {
             inputText = live
             transcript = live
         }
-        if (!event.final) {
-            dictationOpen = true
-            return
-        }
+        if (!event.final) return
 
         dictationBuffer = live
-        dictationOpen = false
-        // An empty final closes the phrase without adding anything to it, and a
-        // dictated phrase of zero words is not a phrase: counting it would put a
-        // phantom turn in the snapshot and in `dictated_frases`.
-        if (event.text.isNotBlank()) metrics.onDictationUtterance(event.text)
-        // Sigue dictando: el texto queda en el input y nada más. El envío lo
-        // dispara apagar el micrófono, no cada frase.
-        if (dictationActive) return
-
-        if (dictationAutoSend) {
-            sendDictation()
-            return
-        }
-        // Con el micrófono ya apagado y sin envío pendiente no hay nada más que
-        // esperar: el texto quedó en el input y la interfaz se puede volver a
-        // usar.
+        dictationAwaitingFinal = false
+        // Un `final` vacío ya no llega acá —lo maneja [onEmptyFinal]—, así que
+        // esto es una frase con palabras. Se cuenta igual para que el número de
+        // frases dictadas siga siendo el de frases, no el de transcripciones.
+        metrics.onDictationUtterance(event.text)
+        // El silencio cerró la frase, así que la captura se va sin mandar `end`:
+        // no hay utterance abierto que cerrar.
+        if (dictationActive) stopDictation(endIsRedundant = true)
+        // El texto queda en el campo esperando confirmación. No se manda nada:
+        // el envío es del usuario (RF-STT-03) y el que lo dispara es Traducir.
+        dictationPending = live.isNotBlank()
         playbackState = PlaybackState.Idle
-    }
-
-    /**
-     * Manda lo dictado, sin que nadie toque Traducir.
-     *
-     * El texto sigue en el input después de mandarlo: queda a la vista, se puede
-     * corregir y volver a firmar si hizo falta.
-     */
-    private fun sendDictation() {
-        val text = dictationBuffer.trim()
-        dictationBuffer = ""
-        dictationAutoSend = false
-        if (text.isEmpty()) {
-            playbackState = PlaybackState.Idle
+        // El aviso va en el hint del escenario y no en el campo: con la frase
+        // escrita arriba, un placeholder no se ve nunca, que es justo cuando
+        // hace falta. El hint es el lugar donde ya viven los mensajes
+        // transitorios ("Ya está firmado.").
+        if (dictationPending) {
+            showStatus("Texto listo. Toca Traducir para firmarlo.")
+        } else {
             showStatus("No se escuchó nada.")
-            return
         }
-        Log.i(TAG, "dictado → envío: ${text.length} caracteres, ${text.split(' ').size} palabras")
-        playbackState = PlaybackState.Idle
-        play(text)
-        // La retención del texto ya la pone `requestTranslation`, que es el
-        // lugar donde se sabe que la frase salió de verdad: si el envío se
-        // rechaza —micrófono prendido, frase en vuelo, sin conexión— aquí no
-        // hubo nada que retener.
+        Log.i(
+            TAG,
+            "dictado cerrado: ${event.text.length} caracteres a la espera de confirmación",
+        )
     }
 
     private fun joinWords(first: String, second: String): String =
@@ -809,20 +812,22 @@ class MainScreenState(
     /**
      * Sends a phrase to the backend. [replay] marks a Repetir, which must not
      * be recorded again as a new turn.
+     *
+     * Es el camino de todo lo que el usuario confirma: el Traducir del campo con
+     * una frase escrita, el Traducir del campo con lo que dictó —el tercer estado
+     * de RF-UI-01—, y el Repetir. El modo en vivo no pasa por acá: manda solo,
+     * sin intervención del usuario, y lo hace en [sendLivePhrase].
      */
     private fun requestTranslation(text: String, replay: Boolean = false) {
         // El botón ya está deshabilitado mientras se escucha, pero `play` también
         // entra por la tecla Enter y por el "Repetir" del escenario. Texto y voz
-        // van por el mismo socket y el backend no puede saber de quién es cada
-        // fragmento: intercalados, el avatar firmaría la frase al revés.
+        // van por el mismo socket: intercalados, el `index` de las oraciones deja
+        // de corresponder al orden en que llegaron y el avatar firmaría la frase
+        // al revés. Son dos formas de mandar, no dos a la vez.
         if (micActive) {
             showStatus("Apagá el micrófono o el TR para mandar una frase escrita.")
             return
         }
-        // Un Traducir a mano cancela el envío automático pendiente: si el usuario
-        // ya lo mandó, mandarlo otra vez al llegar el `final` firmaría la misma
-        // frase dos veces seguidas.
-        dictationAutoSend = false
         if (playbackState == PlaybackState.Translating ||
             playbackState == PlaybackState.Processing ||
             playbackState == PlaybackState.Connecting ||
@@ -852,34 +857,32 @@ class MainScreenState(
         inputText = text
         transcript = text
         statusOverride = null
+        // The phrase left the field: it is not waiting for confirmation any more.
+        dictationPending = false
+        dictationBuffer = ""
         // Nothing of a previous phrase may survive into this one.
         pendingSegments.clear()
         pendingTotal = 0
-        resetStreamingTurn()
+        resetTurn()
         playbackState = PlaybackState.Translating
-        // Toda frase que sale de acá queda retenida en el campo, la mande quien
-        // la mande: el dictado al apagarse entra por acá, y también un Traducir
-        // a mano y el Repetir del escenario. Sin esto, Traducir y Repetir
-        // dejaban la frase en el campo con el botón habilitado y el avatar
+        // Toda frase que sale de acá queda retenida en el campo: el Traducir con
+        // lo dictado, el Traducir a mano y el Repetir. Sin esto, Traducir y
+        // Repetir dejaban la frase en el campo con el botón habilitado y el avatar
         // firmaba la misma frase dos veces por un solo toque.
         holdSentText(text)
     }
 
     /**
-     * Clears everything a streamed turn accumulated.
+     * Reinicia el reloj del turno y lo que el turno anterior dejó juntando.
      *
-     * Called at the start of every new phrase and on failure, so a turn that
-     * died halfway cannot leak its fragments into the next one. `streamingTurn`
-     * itself is left alone by [resetStreamingTurn] because the caller decides
-     * whether a turn is starting or ending.
+     * Se llama al empezar cada frase y en el fallo, para que un turno que murió a
+     * la mitad no se filtre en el siguiente.
      *
-     * [SignAiMetrics] is deliberately **not** reset here: with the mic left on,
-     * one session is many turns, and the percentiles are more useful across the
-     * whole session than per sentence. They reset when the mic is switched on.
+     * [SignAiMetrics] **no** se reinicia acá: con el micrófono prendido una
+     * sesión son varias frases, y los percentiles sirven más sobre la sesión
+     * entera que por oración. Se reinician cuando se prende el micrófono.
      */
-    private fun resetStreamingTurn() {
-        streamedSegments.clear()
-        streamingGlosses.clear()
+    private fun resetTurn() {
         turnStartedAt = SystemClock.elapsedRealtime()
     }
 
@@ -890,23 +893,25 @@ class MainScreenState(
         // not be picked up by the next phrase.
         pendingSegments.clear()
         pendingTotal = 0
-        streamingTurn = false
         // Cut the capture too, not just the flag: with the mic off in the UI but
         // `AudioRecord` still running, the next tap would find a recorder
         // already open and the app would look like it were listening while the
         // button says it is off.
         audio.stop()
         micMode = MicMode.Off
-        dictationAutoSend = false
-        // La frase no llegó a firmarse, así que no está "ya enviada": si el
-        // campo la muestra, el usuario tiene que poder mandarla otra vez.
+        // El texto dictado a la espera **no** se borra (RNF-REL-04): sigue en el
+        // campo, editable, y Traducir vuelve a estar disponible cuando la
+        // conexión se restablece. Lo que sí se cae es el enrutado de un `final`
+        // que ya no va a llegar, y la retención del texto ya firmado, que no llegó
+        // a firmarse y tiene que poder mandarse otra vez.
+        dictationAwaitingFinal = false
         releaseSentText()
         // Y si lo que se cayó era un Repetir, el panel estaba deshabilitado
         // desde el toque esperando esta seña: sin esto se quedaba muerto, sin
         // un Repetir que lo vuelva a prender.
         replayPending = false
         queuePlaying = false
-        resetStreamingTurn()
+        resetTurn()
         caption = ""
         playbackState = PlaybackState.Idle
         showStatus(message)
@@ -933,47 +938,9 @@ class MainScreenState(
      */
     private fun startQueue(segments: List<TranslationSegment>) {
         val text = pendingText.orEmpty()
+        val sentences = segments.size
         scope.launch {
-            val queue = mutableListOf<SignQueueItem>()
-            for (segment in segments) {
-                for (gloss in segment.glosses) {
-                    // First ask whether the path is one of the animations baked
-                    // into the APK. They are same-origin by construction, so
-                    // downloading them would be a guaranteed 404 that lands us
-                    // in the fallback below — and the fallback is the default
-                    // sign, so every gloss would answer with the same movement.
-                    //
-                    // A `signs/*.glb` we do NOT ship (the catalog announces all
-                    // 50 glosses but only 32 have an export) is just as
-                    // undownloadable: it is our own layout, so nobody is
-                    // serving it over HTTP either. Skip the round trip and go
-                    // straight to the fallback. Anything else — a real remote
-                    // asset — still goes down the download path.
-                    val local = SignsCatalog.localAssetOrNull(gloss.glbPath)
-                    val url = when {
-                        local != null -> local
-                        SignsCatalog.isOwnAssetPath(gloss.glbPath) -> null
-                        gloss.available -> assets.resolve(gloss.text, gloss.glbPath)
-                        else -> null
-                    }
-                    when {
-                        url != null -> queue += SignQueueItem(
-                            gloss = gloss.text,
-                            type = segment.type,
-                            url = url,
-                            available = true,
-                        )
-
-                        settings.demoSignFallback -> queue += SignQueueItem(
-                            gloss = gloss.text,
-                            type = segment.type,
-                            url = fallbackSignUrl,
-                            available = gloss.available,
-                        )
-                        // Unknown gloss, no fallback: reported in the caption.
-                    }
-                }
-            }
+            val queue = segments.flatMap { queueItemsFor(it) }
 
             // A replay is not a new turn: the phrase is already in the history
             // and already has a conversation entry, so recording it again would
@@ -988,6 +955,12 @@ class MainScreenState(
                     ),
                 )
             }
+            metrics.onTurn(
+                totalMs = SystemClock.elapsedRealtime() - turnStartedAt,
+                sentenceCount = sentences,
+                glossCount = segments.sumOf { it.glosses.size },
+            )
+            Log.i(TAG, "resumen: ${metrics.snapshot()}")
             pendingText = null
             caption = queue.joinToString(" · ") { it.gloss }.ifBlank { "Seña no disponible" }
             showStatus(
@@ -1001,6 +974,7 @@ class MainScreenState(
             if (queue.isEmpty()) {
                 playbackState = PlaybackState.Done
                 replayPending = false
+                releaseLiveBacklog()
                 return@launch
             }
 
@@ -1009,6 +983,27 @@ class MainScreenState(
             startPlaybackClock(queue.size)
             playbackState = PlaybackState.Signing
             queuePlaying = true
+            // Hay una frase en espera de salida (el TR habló más rápido que el
+            // LLM). Sale ahora que esta ya no está en vuelo.
+            releaseLiveBacklog()
+        }
+    }
+
+    /**
+     * Manda la frase en vivo que quedó esperando, si hay alguna.
+     *
+     * Se llama cuando la frase anterior dejó de estar en vuelo, que es lo único
+     * que la bloqueaba. Un solo lugar de espera, así que "la anterior" es una.
+     */
+    private fun releaseLiveBacklog() {
+        val waiting = livePhraseBacklog.trim()
+        if (waiting.isEmpty()) return
+        livePhraseBacklog = ""
+        if (!sendLivePhrase(waiting)) {
+            // Sigue sin poder salir: no hay dónde esperarlo, y una frase que no
+            // se manda sin que el usuario lo decida es exactamente lo que
+            // RF-STT-03 prohíbe. Se muestra para que la pueda mandar a mano.
+            showStatus("No se pudo firmar la última frase. Toca Traducir.")
         }
     }
 
@@ -1032,19 +1027,17 @@ class MainScreenState(
     fun toggleDictation() =
         changeMicMode(if (dictationActive) MicMode.Off else MicMode.Dictation)
 
-    /** El interruptor `TR` de la fila de abajo: tiempo real. */
-    fun toggleRealtime() =
-        changeMicMode(if (realtimeActive) MicMode.Off else MicMode.Realtime)
+    /** El interruptor `TR` de la fila de abajo: en vivo. */
+    fun toggleLive() =
+        changeMicMode(if (liveActive) MicMode.Off else MicMode.Live)
 
     /**
      * Todo cambio de estado del micrófono pasa por acá.
      *
      * Son cuatro casos y no cinco porque cambiar de un modo al otro **no**
      * reinicia la captura: `AudioRecord` tarda cientos de ms en abrir y el
-     * usuario ya estaba hablando. Se manda un `end` para que el backend cierre
-     * el utterance del modo que se está dejando y se le avisa el modo nuevo;
-     * el `end` va primero a propósito, porque el backend termina ese utterance
-     * con el modo con el que empezó.
+     * usuario ya estaba hablando. Se manda un `end` para que el STT cierre el
+     * utterance del modo que se está dejando.
      */
     private fun changeMicMode(mode: MicMode) {
         val previous = micMode
@@ -1073,19 +1066,24 @@ class MainScreenState(
         // Y la retención de lo ya firmado se cae con ella: la frase anterior ya
         // no está en el campo, así que no hay nada que proteger del reenvío.
         releaseSentText()
+        // Prender el micrófono con texto dictado esperando **lo descarta**, y es
+        // una cancelación explícita del usuario: tocó el micrófono para dictar de
+        // nuevo, no para mandar lo anterior. RNF-REL-04 solo permite perder el
+        // texto si el usuario lo borra o cancela a propósito, y esto es lo segundo.
+        //
+        // En el modo en vivo el texto NO se descarta: el campo pasa a mostrar la
+        // transcripción en vivo y lo que quedó pendiente vuelve cuando el
+        // interruptor se apaga ([stopCapture]). Ahí tocar el micrófono no es
+        // "empezar de nuevo", es prender otro modo.
         if (mode == MicMode.Dictation) {
             dictationBuffer = ""
-            dictationOpen = false
-            dictationAutoSend = false
+            dictationPending = false
         }
         micMode = mode
-        backend.sendMode(realtime = mode == MicMode.Realtime)
         playbackState = labelFor(mode)
-        // The turn clock starts when the mic opens, so `rt_turn_total_ms`
-        // includes the silence before the first word — which is the number a
-        // user actually perceives.
-        streamingTurn = false
-        resetStreamingTurn()
+        // The turn clock starts when the mic opens, so the turn total includes the
+        // silence before the first word — which is the number a user perceives.
+        resetTurn()
         heardAnythingThisSession = false
         metrics.reset()
         Log.i(TAG, "micrófono prendido en modo ${mode.name}")
@@ -1101,25 +1099,30 @@ class MainScreenState(
 
     /** Cambia de modo sin cortar la captura. */
     private fun switchMode(from: MicMode, to: MicMode) {
-        // El `end` va primero: cierra el utterance del modo que se deja y el
-        // backend lo termina con ese mismo modo, así que la última frase de
-        // tiempo real se firma igual y lo dictado no se firma solo.
+        // El `end` va primero: cierra el utterance del modo que se deja. Lo que
+        // Contestó después decide el modo al que va, y para eso está
+        // `dictationAwaitingFinal`, que sobrevive al apagado.
         backend.sendEnd()
-        backend.sendMode(realtime = to == MicMode.Realtime)
         Log.i(TAG, "micrófono: ${from.name} -> ${to.name}")
 
         micMode = to
+        // Un cambio de modo entre los dos interruptores no borra nada de lo que el
+        // usuario dijo: el texto pendiente sigue en `dictationBuffer` y la frase en
+        // vivo que esperaba salida se manda sola con el interruptor que la pidió.
+        dictationAwaitingFinal = false
+        livePhraseBacklog = ""
         if (to == MicMode.Dictation) {
-            // El campo pasa a ser la pantalla del dictado.
+            // El campo pasa a ser la pantalla del dictado. Tocar el micrófono para
+            // cambiar a este modo sí es empezar a dictar de nuevo, así que acá el
+            // texto pendiente se va: es la cancelación explícita del usuario, la
+            // misma que hay en `startCapture`.
             inputText = ""
             transcript = ""
             dictationBuffer = ""
-            dictationOpen = false
-            dictationAutoSend = false
+            dictationPending = false
             releaseSentText()
         }
-        streamingTurn = false
-        resetStreamingTurn()
+        resetTurn()
         heardAnythingThisSession = false
         metrics.reset()
         playbackState = labelFor(to)
@@ -1128,6 +1131,14 @@ class MainScreenState(
     /** Apaga el micrófono por completo. */
     private fun stopCapture(previous: MicMode) {
         Log.i(TAG, "micrófono apagado (venía de ${previous.name})")
+
+        if (previous == MicMode.Dictation) {
+            // El dictado tiene su propio cierre porque necesita saber si hay un
+            // `final` esperando, y el `end` lo manda él.
+            stopDictation()
+            return
+        }
+
         audio.stop()
         micMode = MicMode.Off
         // El STT cierra una frase cuando oye silencio, pero la captura se cortó
@@ -1135,24 +1146,30 @@ class MainScreenState(
         // fuerza: si no, el `final` con lo que el usuario dijo nunca llega.
         backend.sendEnd()
 
-        if (previous == MicMode.Dictation) {
-            stopDictation()
-            return
-        }
-
-        // Con TR apagado, lo que quedó en el campo es lo último que firmaba el
-        // muñeco. Si hubo dictado, lo que el usuario escribió tiene más
-        // interest: es lo único que puede volver a mandar.
-        val spokenText = inputText
+        // Apagar el TR deja el campo **limpio**.
+        //
+        // Lo que había ahí era la transcripción en vivo de lo que el micrófono
+        // estaba oyendo, y para cuando se apaga el interruptor eso ya se mandó y
+        // se firmó: dejarlo puesto tapaba el campo con una frase que nadie puede
+        // volver a mandar, y con el TR apagado Traducir vuelve a estar
+        // disponible, así que el botón invitaba a reenviar lo que el avatar
+        // acababa de firmar. No hace falta retenerse para evitar eso —no hay nada
+        // que retener si no hay texto— y el campo queda como el de un turno
+        // recién empezado.
+        //
+        // Lo único que se conserva es lo que el usuario dijo **y no se mandó**: el
+        // texto de un dictado anterior que seguía esperando confirmación. Ese no
+        // es residuo de la sesión en vivo, es suyo y sin mandar, así que vuelve
+        // al campo con su estado de "esperando confirmación" intacto.
         if (dictationBuffer.isNotBlank()) {
             inputText = dictationBuffer
             transcript = dictationBuffer
-        } else if (heardAnythingThisSession) {
-            // Y esa frase del tiempo real ya se mandó mientras se hablaba: se la
-            // deja a la vista pero sin invitar a firmarla otra vez. Si hay
-            // dictado sin mandar, en cambio, el campo es suyo y Traducir tiene
-            // que estar disponible.
-            holdSentText(spokenText)
+            dictationPending = true
+        } else {
+            inputText = ""
+            transcript = ""
+            releaseSentText()
+            Log.i(TAG, "campo limpio: el TR se apagó y lo que había ya se firmó")
         }
 
         // Nothing came back at all: the user turned the mic off without saying
@@ -1162,73 +1179,89 @@ class MainScreenState(
         // happen. Back to Idle with a plain message instead.
         if (!heardAnythingThisSession) {
             Log.i(TAG, "el micrófono se apagó sin transcripción: no hay nada que traducir")
-            streamingTurn = false
-            resetStreamingTurn()
+            resetTurn()
             playbackState = PlaybackState.Idle
             showStatus("No se escuchó nada.")
             return
         }
 
-        // Aquí no hay nada que esperar. La captura se cortó, el backend ya cerró
-        // el utterance con el `end`, y si no volvió nada fue porque no quedaba
-        // nada pendiente: quedarse en "Procesando..." y el avatar firmando lo
-        // que le sobraba era el estado real, no una espera.
+        // Aquí no hay nada que esperar. La captura se cortó, el `end` ya cerró el
+        // utterance, y si no volvió nada fue porque no quedaba nada pendiente:
+        // quedarse en "Procesando..." y el avatar firmando lo que le sobraba era
+        // el estado real, no una espera.
         //
-        // La cola manda sobre el enum: en tiempo real el `done` del último turno
-        // llega mucho antes de que el avatar termine de firmarlo, así que el
-        // `playbackState` ya decía "escuchando" con medio minuto de señas por
-        // delante. Con la cola como fuente de verdad, apagar el micro devuelve la
-        // interfaz enseguida y el `onPlaybackDone` la deja en `done` al terminar.
+        // La cola manda sobre el enum: el `done` de la última frase llega mucho
+        // antes de que el avatar termine de firmarla, así que el `playbackState`
+        // ya diría "escuchando" con señas por delante. Con la cola como fuente de
+        // verdad, apagar el micro devuelve la interfaz enseguida y el
+        // `onPlaybackDone` la deja en `done` al terminar.
         playbackState = if (queuePlaying) PlaybackState.Signing else PlaybackState.Done
         processingJob?.cancel()
     }
 
     /**
-     * Se apagó el dictado, y **apagar es mandar**.
+     * El dictado se apagó. **Apagar no es mandar**: el texto espera.
      *
-     * El texto se manda solo: es lo que el usuario espera de un interruptor, y
-     * pedirle un segundo toque después de haber hablado es la fricción que este
-     * modo vino a sacar. El envío espera al `final` solo si el STT todavía tiene
-     * la frase abierta; si ya la cerró por una pausa, se manda en el acto.
+     * El `final` del STT es lo único que dice que la frase terminó de transcribirse,
+     * así que hay que esperarlo: mientras no llegue, el campo muestra la hipótesis
+     * que se está formando y el texto todavía puede cambiar. Cuando llegue, la
+     * frase queda a la espera de que el usuario confirme el envío (RF-STT-03), que
+     * es el paso que antes no existía.
+     *
+     * [endIsRedundant] es `true` cuando el `final` ya llegó —el silencio cerró la
+     * frase—: ahí no hay utterance abierto que cerrar y mandarlo solo sumaría un
+     * viaje de ida y vuelta y un `final` vacío de ruido.
      */
-    private fun stopDictation() {
+    private fun stopDictation(endIsRedundant: Boolean = false) {
+        audio.stop()
+        micMode = MicMode.Off
+        // Queda pendiente de `final`: aunque el usuario apague el micrófono sin
+        // hablar, el STT responde siempre, y ese `final` tiene que seguir yendo al
+        // camino del dictado. Con el silencio ya cerrado no hay nada que esperar.
+        dictationAwaitingFinal = !endIsRedundant
+        if (!endIsRedundant) backend.sendEnd()
+        Log.i(
+            TAG,
+            "dictado detenido${if (endIsRedundant) " (el silencio ya lo había cerrado)" else ""}: " +
+                "esperando el final de la frase",
+        )
+
         if (!heardAnythingThisSession) {
             Log.i(TAG, "el dictado se apagó sin transcripción")
-            streamingTurn = false
-            resetStreamingTurn()
+            dictationAwaitingFinal = false
+            resetTurn()
             playbackState = PlaybackState.Idle
             showStatus("No se escuchó nada.")
             return
         }
 
-        if (dictationOpen) {
-            dictationAutoSend = true
-            playbackState = PlaybackState.Processing
-            armTranscriptionTimeout()
-            Log.i(TAG, "dictado: esperando el final de la frase abierta para mandarla")
-            return
-        }
-        sendDictation()
+        playbackState = PlaybackState.Processing
+        armTranscriptionTimeout()
     }
 
     /**
      * Red de seguridad de "Procesando...": si en 15 s no volvió nada, es un
      * fallo (STT caído, audio perdido) y "Procesando..." tiene que ser una
      * espera, no un cuelgue.
+     *
+     * Lo que se pierde en ese caso es el `final`, no el texto: lo que se alcanzó a
+     * transcribir ya está en el campo, así que el usuario puede mandarlo a mano.
      */
     private fun armTranscriptionTimeout() {
         processingJob?.cancel()
         processingJob = scope.launch {
             delay(TranscriptionTimeoutMs)
             if (playbackState == PlaybackState.Processing && micMode == MicMode.Off) {
-                fail("No llegó la transcripción. Probá de nuevo.")
+                dictationAwaitingFinal = false
+                dictationPending = dictationBuffer.isNotBlank()
+                fail("No llegó el final de la transcripción.")
             }
         }
     }
 
     /** La etiqueta de la pista para un modo: lo que el usuario está haciendo. */
     private fun labelFor(mode: MicMode): PlaybackState =
-        if (mode == MicMode.Realtime) PlaybackState.Listening else PlaybackState.Dictating
+        if (mode == MicMode.Live) PlaybackState.Listening else PlaybackState.Dictating
 
     /** Mic blocked by the user (RF-UI-04: say so, the app can't work without it). */
     fun onMicPermissionDenied() {
@@ -1314,6 +1347,11 @@ class MainScreenState(
         // reenvío: la retención se suelta.
         if (text != sentText) releaseSentText()
         inputText = text
+        // Si el usuario borra lo que se transcribió, ya no hay nada listo para
+        // enviar y el botón de voz tiene que volver al estado de "empezar a
+        // dictar" (RF-UI-01). Editarlo sin vaciarlo no lo apaga: sigue siendo la
+        // frase que va a confirmar.
+        if (text.isBlank()) dictationPending = false
     }
 
     fun attachWebView(webView: WebView) {
@@ -1357,11 +1395,15 @@ class MainScreenState(
             }
             playbackState =
                 when (micMode) {
-                    MicMode.Realtime -> PlaybackState.Listening
+                    MicMode.Live -> PlaybackState.Listening
                     MicMode.Dictation -> PlaybackState.Dictating
                     // El micrófono apagado no tiene a quién volver: el turno
-                    // terminó y la interfaz queda libre.
-                    MicMode.Off -> PlaybackState.Done
+                    // terminó y la interfaz queda libre. Si además hay un dictado
+                    // esperando confirmación, el campo es lo que hay que mirar y el
+                    // estado es "listo", no "reproducción completada".
+                    MicMode.Off ->
+                        if (dictationPending) PlaybackState.Idle
+                        else PlaybackState.Done
                 }
         }
         caption = ""

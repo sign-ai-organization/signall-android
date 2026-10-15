@@ -3,23 +3,17 @@ package com.signai.webview.domain
 /**
  * Everything the backend can tell us over `ws://…/ws/translate`.
  *
- * The backend speaks two shapes of the same message, and [Segment.stream] is
- * what tells them apart:
+ * One shape per message, tagged with a `type`: the client sends the phrase to
+ * translate as `{"type":"text","text":"…"}`, and the backend answers with one
+ * [Segment] per **sentence** of that phrase, `index` and `total` real, then
+ * [PhraseDone].
  *
- * - **Whole phrase** (`stream = false`, the default): the backend waited for the
- *   full transcript and sends one `segment` per sentence with `total` known
- *   from the first message. The app collects them all and signs the phrase as a
- *   unit, so it never signs half a sentence.
- * - **Streamed** (`stream = true`): the backend translated a fragment as soon as
- *   the transcriber confirmed those words had been said, and sends it straight
- *   away. `total` is 0 because, in an utterance still open, nobody knows yet how
- *   many fragments there will be. The app appends to the playback queue instead
- *   of waiting, so the avatar signs while the user is still talking.
- *
- * Both shapes are the same `segment` frame with additive fields, and both are
- * produced by the same backend: `REALTIME_ENABLED=false` gives the first,
- * `true` the second. A backend older than this client sends neither `stream` nor
- * `total: 0`, and lands on the whole-phrase path, which is the safe default.
+ * Audio and text are the same socket, but they are not the same thing: the
+ * backend forwards transcripts ([Transcript]) and translates only what the client
+ * sent as `text`. That is what makes RF-STT-03 hold by construction — there is no
+ * way for a dictated phrase to reach the language module without the app having
+ * sent it — and it is why this client has no "capture mode" to tell the backend
+ * about. See `docs/android-integration.md` §3.1 in the backend repo.
  *
  * Frames tagged with a `type` this client does not know (`trace` and
  * `sentence_trace`, both debug-only) are dropped by the parser, so the backend
@@ -28,43 +22,41 @@ package com.signai.webview.domain
 sealed interface BackendEvent {
     data object Connected : BackendEvent
 
+    /**
+     * What the STT made of the audio so far.
+     *
+     * [final] true means the utterance closed: by the silence the STT heard, or
+     * by the `end` the client sent when the user released the microphone. It can
+     * come with an empty [text], which is an answer and not a lost phrase: the
+     * utterance closed and held no words (noise, or the microphone was released
+     * over silence). An empty transcript never blanks the input.
+     *
+     * Whether a transcript is input text or the source of a phrase to sign is
+     * **this client's** decision, decided by [MicMode] and not by a flag from
+     * the server. The backend does not know which mode the app is in, and it must
+     * not: a flag it has to guess is a flag it can get wrong, and getting it
+     * wrong signs a dictated phrase before the user confirmed it.
+     */
     data class Transcript(
         val text: String,
         val final: Boolean,
-        /**
-         * True when the backend transcribed this in dictation mode: it is text
-         * for the input, not a phrase to sign.
-         *
-         * It has to be the server saying it, not this client guessing. Turning
-         * the mic off sends `end`, and the `final` of what was dictated comes
-         * back **after** the switch is off — by then the app already believes the
-         * mic is off and would take that phrase for real time, wait for fragments
-         * that are never coming and sit in "Traduciendo..." forever. A backend
-         * older than this field sends nothing, which reads as false: real time,
-         * the behaviour before the two switches existed.
-         */
-        val dictation: Boolean = false,
     ) : BackendEvent
 
     /**
-     * One translated piece of the phrase in flight.
+     * One translated sentence of the phrase in flight.
      *
-     * [index] is its position. [total] is how many pieces the phrase has, and is
-     * 0 while that is still unknown — which is the normal case for a streamed
-     * fragment. [provisional] marks a fragment computed from a hypothesis the
-     * transcriber could still revise; [sourceText] is the text it came from,
-     * which is what the caption and the history record.
+     * [index] is its position and [total] how many sentences the phrase has. The
+     * app collects all of them and signs the phrase as one queue, so a sentence
+     * that needs an extra LLM round trip cannot leave the avatar signing half a
+     * phrase.
      */
     data class Segment(
         val index: Int,
         val total: Int,
         val segment: TranslationSegment,
-        val stream: Boolean = false,
-        val provisional: Boolean = false,
-        val sourceText: String = "",
     ) : BackendEvent
 
-    /** End of the phrase: every fragment has been sent. */
+    /** End of the phrase: every sentence has been sent. */
     data object PhraseDone : BackendEvent
 
     data class Failure(val message: String) : BackendEvent

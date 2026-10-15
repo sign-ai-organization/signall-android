@@ -53,11 +53,15 @@ import com.signai.webview.ui.theme.SignAiTheme
  *
  * Los dos de la derecha son cosas distintas y no se confunden:
  *
- * - **Micrófono (fila 1)** — dictado: se toca, se habla, se toca de nuevo y el
- *   texto se manda solo. Lo que se escribió queda a la vista, pero Traducir no
- *   queda disponible para firmarlo otra vez.
- * - **TR (fila 2)** — "tiempo real": el interruptor continuo, el que firma
- *   mientras se habla sin esperar a que termine la frase.
+ * - **Micrófono (fila 1)** — dictado: se toca, se habla, y la frase se cierra sola
+ *   cuando el STT oye la pausa (o cuando se toca de nuevo). Lo que se escribió
+ *   queda a la vista **editable** y mandarlo es un paso aparte: Traducir. Es el
+ *   paso de confirmación de RF-STT-03. Tocar el micrófono con texto esperando lo
+ *   descarta y vuelve a dictar de cero.
+ * - **TR (fila 2)** — "en vivo": el interruptor continuo. El micrófono queda
+ *   prendido entre frases y cada frase sale sola al cerrarse, sin que nadie toque
+ *   nada. Es el **único** modo que manda solo. Ya no firma a mitad de frase: la
+ *   unidad es la oración.
  *
  * Los dos son interruptores, ninguno se mantiene apretado, y **no pueden estar
  * prendidos a la vez**: comparten una sola captura de micrófono y un solo socket.
@@ -77,45 +81,42 @@ fun SignAiBottomBar(
     onSend: (String) -> Unit,
     onMic: () -> Unit,
     onOpenHistory: () -> Unit,
-    onRealtime: () -> Unit,
+    onLive: () -> Unit,
     dictationActive: Boolean = false,
-    realtimeActive: Boolean = false,
+    liveActive: Boolean = false,
+    dictationReadyToSend: Boolean = false,
     sentTextLocked: Boolean = false,
     micAvailable: Boolean = true,
     enabled: Boolean = true,
 ) {
     val dismissKeyboard = rememberKeyboardDismissAction()
 
-    // `Signing` **no** bloquea el panel. En tiempo real la cola se llena más
-    // rápido de lo que el avatar la consume —en una prueba de 30 s eran 38
-    // fragmentos, casi 40 s de señas por delante—, y bloquear todo el panel
-    // mientras el muñeco finishes dejaba al usuario mirando un formulario muerto
-    // sin ninguna señal de por qué. Lo que realmente no se puede tocar es lo que
-    // está **en vuelo**: una traducción pedida y todavía sin firmar.
+    // `Signing` **no** bloquea el panel. Bloquear todo el panel mientras el muñeco
+    // firma dejaba al usuario mirando un formulario muerto sin ninguna señal de
+    // por qué. Lo que realmente no se puede tocar es lo que está **en vuelo**: una
+    // traducción pedida y todavía sin firmar.
     //
-    // Mandar otra frase con el avatar firmando la anterior no pisa la animación:
-    // la escena reemplaza la cola, que es lo mismo que pasa con cualquier frase
-    // nueva.
+    // Mandar otra frase con el avatar firmando la anterior no pisa la animación: la
+    // escena reemplaza la cola, que es lo mismo que pasa con cualquier frase nueva.
     val busy =
         playbackState == PlaybackState.Translating ||
             playbackState == PlaybackState.Processing
     val controlsEnabled = enabled && !busy
 
-    val micActive = dictationActive || realtimeActive
+    val micActive = dictationActive || liveActive
 
     val sendEnabled =
         controlsEnabled &&
             query.isNotBlank() &&
-            // Con el micrófono prendido no: texto y voz van por el mismo socket y el
-            // backend no puede saber de quién es cada fragmento. Intercalados, el
-            // `index` de los fragmentos de voz deja de corresponderse con el orden
-            // en que llegaron y el avatar firmaría la frase al revés. Son dos
+            // Con el micrófono prendido no: texto y voz van por el mismo socket, así
+            // que intercalados el `index` de las oraciones deja de corresponder al
+            // orden en que llegaron y el avatar firmaría la frase al revés. Son dos
             // formas de mandar, no dos a la vez.
             !micActive &&
-            // Tampoco si el campo tiene la frase que la app acaba de mandar —el
-            // dictado, el TR, un Traducir a mano o el Repetir—: el botón
-            // ofrecería reenviar lo que ya se firmó, y el avatar firmaría la
-            // frase dos veces seguidas por un solo toque.
+            // Tampoco si el campo tiene la frase que la app acaba de mandar —un
+            // Traducir a mano o el Repetir—: el botón ofrecería reenviar lo que ya
+            // se firmó, y el avatar firmaría la frase dos veces seguidas por un solo
+            // toque.
             !sentTextLocked
 
     // El estado visual de los dos interruptores viene de su propio flag y no de
@@ -131,12 +132,9 @@ fun SignAiBottomBar(
     //
     // La misma regla para los dos, y **en los dos sentidos**: comparten el
     // `AudioRecord` y el socket, así que no pueden estar prendidos a la vez y el
-    // que está prendido tiene que dejar al otro deshabilitado. Antes solo pasaba
-    // en un sentido —el micrófono se apagaba con TR prendido, pero TR seguía
-    // habilitado con el micrófono prendido—, así que un estado que el código sí
-    // representa y el backend rechaza aparecía en pantalla como disponible.
-    val micEnabled = enabled && micAvailable && !realtimeActive
-    val realtimeEnabled = enabled && micAvailable && !dictationActive
+    // que está prendido tiene que dejar al otro deshabilitado.
+    val micEnabled = enabled && micAvailable && !liveActive
+    val liveEnabled = enabled && micAvailable && !dictationActive
 
 
     // Mandar es una cosa y cerrar el teclado es otra: el botón **siempre** cierra el
@@ -154,7 +152,7 @@ fun SignAiBottomBar(
     // `keyboard?.hide()` el teclado se iba un segundo y volvía, porque el campo
     // seguía con el foco; `dismissKeyboard()` se lo saca primero.
     val mic: () -> Unit = { dismissKeyboard(); onMic() }
-    val realtime: () -> Unit = { dismissKeyboard(); onRealtime() }
+    val live: () -> Unit = { dismissKeyboard(); onLive() }
     val openHistory: () -> Unit = { dismissKeyboard(); onOpenHistory() }
 
     Column(
@@ -207,7 +205,7 @@ fun SignAiBottomBar(
                         SignAiText(
                             text = when {
                                 dictationActive -> "Dictando..."
-                                realtimeActive -> "Escuchando..."
+                                liveActive -> "Escuchando..."
                                 else -> "Escribe una frase..."
                             },
                             color = SignAiTheme.colors.muted,
@@ -227,6 +225,19 @@ fun SignAiBottomBar(
                         unfocusedContainerColor = SignAiTheme.colors.background,
                     ),
                 )
+                // El micrófono **no** cambia de icono cuando hay texto esperando.
+                //
+                // La versión 0.2 de RF-UI-01 pide tres estados visuales y que el
+                // tercero mande la frase. Se probó en el dispositivo y se
+                // descartó: con un icono distinto el botón deja de leerse como
+                // "micrófono", y la primera reacción de quien lo usa es querer
+                // dictar otra vez, no confirmar. Lo que hace falta —un aviso de
+                // que hay texto listo— lo da el placeholder del campo, que está
+                // justo al lado y no reemplaza ninguna función.
+                //
+                // Tocarlo con texto esperando vuelve a dictar **de cero**: el
+                // texto anterior se descarta. Es una cancelación explícita, que
+                // es lo único que RNF-REL-04 permite como pérdida.
                 ControlIconButton(
                     icon = SignAiIcons.Mic,
                     contentDescription = "Entrada por voz",
@@ -236,10 +247,13 @@ fun SignAiBottomBar(
                     toggle = true,
                     activeDescription = "Dictando. Tocar para dejar de dictar.",
                     inactiveDescription =
-                        if (realtimeActive) {
-                            "Apagado. El modo tiempo real está usando el micrófono."
-                        } else {
-                            "Apagado. Tocar para dictar."
+                        when {
+                            dictationReadyToSend ->
+                                "Apagado. Hay texto esperando: tocar lo borra y vuelve a dictar."
+                            liveActive ->
+                                "Apagado. El modo en vivo está usando el micrófono."
+                            else ->
+                                "Apagado. Tocar para dictar."
                         },
                 )
                 ControlIconButton(
@@ -293,7 +307,7 @@ fun SignAiBottomBar(
                     }
                 }
 
-                // TR = "tiempo real". Mitad y mitad con Traducir: los dos pesan 1f, así
+                // TR = "en vivo". Mitad y mitad con Traducir: los dos pesan 1f, así
                 // que el padding y el `spacedBy(9.dp)` de la fila los reparten
                 // solos y ningún ancho se calcula a mano.
                 //
@@ -306,29 +320,31 @@ fun SignAiBottomBar(
                 // etiqueta: atenuar la superficie entera —`soft` sobre `surface`,
                 // los dos casi blancos— no se veía.
                 val trContentColor = when {
-                    realtimeActive -> SignAiTheme.colors.onStrong
-                    !realtimeEnabled -> SignAiTheme.colors.muted
+                    liveActive -> SignAiTheme.colors.onStrong
+                    !liveEnabled -> SignAiTheme.colors.muted
                     else -> SignAiTheme.colors.text
                 }
                 Surface(
-                    onClick = realtime,
-                    enabled = realtimeEnabled,
+                    onClick = live,
+                    enabled = liveEnabled,
                     shape = SignAiShapes.cornerControl,
                     color =
-                        if (realtimeActive) SignAiTheme.colors.strong
+                        if (liveActive) SignAiTheme.colors.strong
                         else SignAiTheme.colors.soft,
                     modifier = Modifier
                         .weight(1f)
                         .height(SignAiSizes.actionButtonHeight)
                         .semantics {
                             role = Role.Switch
-                            contentDescription = "Modo tiempo real"
+                            contentDescription = "Modo en vivo"
                             stateDescription =
                                 when {
-                                    realtimeActive -> "Encendido. Firmando mientras hablás."
-                                    !realtimeEnabled ->
+                                    liveActive ->
+                                        "Encendido. Cada frase se firma sola al terminar."
+                                    !liveEnabled ->
                                         "Apagado. El micrófono está dictando."
-                                    else -> "Apagado. Tocar para firmar en tiempo real."
+                                    else ->
+                                        "Apagado. Tocar para firmar cada frase al terminar."
                                 }
                         },
                 ) {

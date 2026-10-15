@@ -1,125 +1,199 @@
-# Modo tiempo real — cómo probarlo, qué mirar y qué esperar
+# Modo en vivo — cómo probarlo, qué mirar y qué esperar
 
-Branch `tiempo-real` en los tres repos. Este documento es la guía de pruebas
-del trabajo: qué se midió, cómo repetirlo, qué frases usar, qué señas hay y
-qué significa cada número.
+Rama `flujo-oraciones` en los tres repos (2026-10-15, **sin mergear**). Este
+documento es la guía de pruebas del modo: qué se midió, cómo repetirlo, qué
+frases usar, qué señas hay y qué significa cada número.
+
+> **Si llegaste desde `develop`:** este archivo cambió entero con el flujo por
+> oraciones. Lo que aquí dice "antes" es el camino por palabras, que ya no
+> existe. El plan del cambio está en
+> `../sign-ai-docs/auditoria-flujo-2026-10-15.md` §6, y el resumen de qué
+> cambió en cada repo está en `docs/CAMBIOS.md`, `../sign-ai-backend/docs/CAMBIOSBACKEND.md`
+> y `../sign-ai-stt/docs/CAMBIOSSTT.md`.
 
 ---
 
 ## 1. Qué cambió, en una frase
 
-Antes, el avatar firmaba **después** de que terminaras de hablar. Ahora firma
-**mientras** hablas: el STT va diciendo qué palabras ya terminó de pronunciar, el
-backend traduce solo esa cola nueva y la app la encadena detrás de lo que ya
-está sonando.
+Antes el avatar firmaba **a mitad de frase**: el STT iba diciendo qué palabras ya
+terminó de pronunciar, el backend traducía esa cola nueva y la app la encadenaba
+detrás de lo que ya sonaba. Ahora la unidad es la **oración**: el STT cierra la
+frase, el backend la divide en oraciones, las traduce y el avatar firma oración
+por oración.
 
 ```
-ANTES   hablar ────── silencio ────── 1.5s ── Whisper ── LLM ──▶ avatar firma
-                                       ≈ 2.4 – 4.8 s de espera total
+ANTES   hablar ─┬─ "hola"     ─▶ HOLA        (el avatar firmaba a mitad de frase)
+                ├─ "cómo"     ─▶ COMO
+                └─ "estás"    ─▶ ESTAS      (el `final` solo confirmaba)
 
-AHORA  hablar ─┬─ "hola"     ─▶ HOLA        (el avatar ya empezó)
-               ├─ "cómo"     ─▶ COMO
-               └─ "estás"    ─▶ ESTAS      (el `final` solo confirma)
+AHORA  hablar ─────── 1,5s de silencio ── Whisper ── divide en oraciones ──▶ avatar
+        (aquí no se firma nada)                                                  (recién acá)
 ```
 
-Medido sobre los 28 fixtures de audio reproducidos por el WebSocket real a
-velocidad 1x, con GPU libre:
+**La pérdida es la primera seña, y es deliberada** (opción A, §7 de la
+auditoría): firmar a mitad de frase obligaría a partir los clips de dos palabras
+en glosas sueltas y a mantener el `||` de dos barras en la caché semántica, que
+es justamente el camino que la auditoría desarma. Lo que se gana es que **el
+avatar nunca firma media oración** y que la clave de caché es una oración
+limpia, la misma en los dos modos.
 
-| | antes | después |
+### Lo que se midió (28 fixtures, backend + STT reales, 2026-10-15)
+
+Las 28 frases de `../sign-ai-stt/fixtures/audio` reproducidas por el WebSocket a
+velocidad 1x, con `qwen3:4b-instruct` en Ollama local (`127.0.0.1:11434`) y la
+caché semántica vacía:
+
+| | p50 | p95 |
 |---|---|---|
-| Primera seña (p50) | — | **913 ms** |
-| Primera seña (p95) | — | **1336 ms** |
-| Dejar de hablar → transcripción final | 1813 – 2099 ms | **p50 839 ms / p95 958 ms** |
-| Inferencia de un parcial | 350 – 630 ms | **p50 92 ms / p95 172 ms** |
-| Espera por la GPU | picos de 4 – 8 s | **p95 0.8 ms** |
+| **`rt_first_sign_ms`** (transcripción final → primera oración enviada) | **273 ms** | **422 ms** |
+| Ídem con la caché caliente | 1 ms | 4 ms |
+| Del primer sample de audio a la primera seña (**lo que percibe el usuario**) | **4010 ms** | — |
+| …de los cuales el STT | 3709 ms | — |
 
-El reloj arranca en el primer sample de audio, que es lo que hace el micrófono.
-La primera palabra de cada clip termina alrededor de los 400 – 500 ms, así que
-la latencia **por palabra** es bastante menor que el número de la tabla.
+**El pipeline no es el cuello de botella: el STT lo es.** De los 4,0 s que pasan
+desde que el usuario empieza a hablar hasta que aparece la primera seña, 3,7 s
+son el STT esperando a que la frase se cierre por los 1,5 s de silencio y
+transcribiéndola. Traducir cuesta 273 ms.
+
+Esto **no se puede comparar** con la línea base publicada (p50 913 ms / p95
+1336 ms): esa era del camino por palabras y medía otra cosa. El nombre
+`rt_first_sign_ms` se conservó a propósito para que la comparación sea visible,
+pero la comparación no vale.
+
+Las 28 frases son cortas —mediana de 2 palabras, 1 seña y 1 oración— así que
+**no dicen nada de una conversación real**. Para eso están las cuatro
+`conversacion_*.wav`, que tienen 5–8 palabras.
+
+### Repetir la medición
+
+```bash
+tools/medir-primera-sena.py     # primera seña, frío y caliente
+tools/medir-retraso.py           # ¿el avatar alcanza a firmar mientras hablás?
+```
+
+`medir-primera-sena.py` reproduce los fixtures, espera el `final`, manda la frase
+como `text` —que es lo que hace la app— y mide dos tiempos: del primer sample de
+audio a la primera seña, y de la transcripción final a la primera seña.
+
+**Para medir en frío hay que reiniciar el backend.** `SEMANTIC_CACHE_PRELOAD=true`
+precarga la caché en memoria al arrancar, así que `DELETE FROM semantic_cache;`
+no alcanza: el proceso sigue con la copia en memoria y la segunda pasada sigue
+saliendo a 1 ms.
+
+```bash
+cd ../sign-ai-backend
+export $(grep -o '^DATABASE_URL=.*' .env | head -1 | xargs)
+psql "$DATABASE_URL" -c "DELETE FROM semantic_cache;"
+docker compose restart backend        # <- sin esto no es una medición en frío
+```
 
 ---
 
 ## 2. Correr todo
 
 ```bash
-# un comando: servicios, tests, los 28 fixtures, métricas y dispositivo
+# un comando: servicios, tests, fixtures, métricas y dispositivo
 tools/verificar-tiempo-real.sh
 
 # o por partes
-tools/verificar-tiempo-real.sh incremental    # lógica de fragmentado + protocolo
-tools/verificar-tiempo-real.sh latencia       # los 28 fixtures de punta a punta
+tools/verificar-tiempo-real.sh incremental    # divisor de oraciones + protocolo
 tools/verificar-tiempo-real.sh metricas       # /metrics de los dos servicios
 tools/verificar-tiempo-real.sh dispositivo    # teléfono: permiso, adb reverse, relanzar
+tools/medir-primera-sena.py                   # primera seña, extremo a extremo
+tools/medir-retraso.py                        # adelanto automático: ¿hace falta?
 ```
-
-El script **falla solo** si algo se rompe, y en el paso de latencia falla si la
-primera seña se pasa del presupuesto (2500 ms p95 por default, ajustable con
-`SIGNAI_P95_MAX_MS`).
 
 ### Requisitos previos
 
 ```bash
 cd ../sign-ai-backend && docker compose up -d --build   # backend + STT
-curl -s 127.0.0.1:8080/health   # {"status":"ok","realtime":true,...}
-curl -s 127.0.0.1:8000/health   # {...,"partial_model":"small","realtime":true}
+curl -s 127.0.0.1:8080/health   # {"status":"ok","cache_loaded":true,"cache_rows":0}
+curl -s 127.0.0.1:8000/health   # {...}
 ```
+
+**No hay bandera de tiempo real.** En `main` del backend no existen
+`REALTIME_ENABLED`, ni el modo por fragmentos, ni el perfil de dos modelos del
+STT: el flujo por oraciones nunca se mezcló con el camino viejo, y en `develop`
+quedó la otra línea. Lo que hay son **dos modos de cliente**: el cliente manda
+`{"type":"text"}` y el backend traduce; el cliente manda audio y el backend
+transcribe.
 
 ### Probar con tu propia voz (esto no lo puede hacer un agente)
 
 ```bash
 ./gradlew installDebug -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate
-adb reverse tcp:8080 tcp:8080        # hace que el teléfono llegue al backend por USB
+adb reverse tcp:8080 tcp:8080
 adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO
 adb logcat -c
+adb logcat -s SignAiState SignAiMetrics SignAiNet SignAIWeb
 ```
 
-El micrófono tiene **dos interruptores** y los dos son de tocar una vez, no de
-mantener apretado. Mismo micrófono, misma captura, distinto resultado.
+Los logs:
 
-| | Qué toca | Qué hace | Qué firma |
-|---|---|---|---|
-| 🎤 **Dictado** (fila 1) | el micrófono | escribe tu voz como texto en el campo | **nada** hasta que toques Traducir |
-| ◢◢ **TR** (fila 2) | el botón TR | traduce y firma mientras hablás | cada fragmento, en el acto |
+```bash
+adb logcat -s SignAiMetrics      # latencias del teléfono
+adb logcat -s SignAiNet          # cada oración que llega del backend
+adb logcat -s SignAiState        # en qué modo está el micrófono y por qué
+adb logcat -s SignAIWeb          # consola del JS (modo depuración prendido)
+```
 
-No pueden estar prendidos a la vez: comparten el `AudioRecord` y el WebSocket.
-Por eso el micrófono se ve deshabilitado mientras TR está prendido — y TR nunca
-se deshabilita, porque es el único botón que puede cortar el modo continuo.
+> **Un agente no puede hablarle al micrófono.** La app usa
+> `AudioSource.VOICE_RECOGNITION`, que es la fuente que Android afina para
+> reconocimiento y que **cancela el eco del propio altavoz** — la elección
+> correcta, porque con `MIC` el STT escucha la AGC bombeando en vez de la voz, pero
+> que hace imposible un bucle de retorno acústico. Todo lo que se pruebe con voz
+> necesita una persona. Para el resto están los fixtures.
 
-### A. Dictado — probar que la voz se vuelve texto y se manda sola
+---
+
+## 3. Qué probar en el teléfono
+
+### A. Dictado — la voz se vuelve texto y **espera**
 
 1. Tocá el **micrófono** (se prende solo).
-2. Hablá con una pausa en el medio: *"hola"* … *(1 s)* … *"¿cómo estás?"*.
-3. Tocá el micrófono de nuevo para dejar de dictar.
-4. **Firma solo, sin tocar Traducir.** El texto queda en el campo y el muñeco
-   firma `HOLA · COMO ESTAS` en medio segundo.
-5. Al mandar, Traducir queda **deshabilitado 1,5 s** con el texto a la vista:
-   no se puede reenviar lo que ya se firmó. Pasados 1,5 s el texto se borra solo
-   y el campo y Traducir vuelven a quedar utilizables. En los logs son las dos
-   líneas `texto ya enviado` y `texto retenido borrado`.
-6. Cuando termine de firmar, Traducir, Historial, el micrófono y el campo quedan
-   **habilitados**.
+2. Hablá una frase y hacé una pausa de un segundo y medio. **No toques nada más.**
+3. El micrófono **se apaga solo** cuando el STT cierra la frase.
+4. **El muñeco no se mueve.** El texto queda en el campo, editable.
+5. Arriba del avatar aparece el aviso *"Texto listo. Toca Traducir para firmarlo."*
+6. Recién ahí tocá **Traducir**, y ahí sí firma.
 
-Las pausas son el punto de la prueba: el STT cierra cada frase por silencio, y
-dictar son varias frases, no una. Si solo apareciera la última, el buffer no se
-está acumulando.
+El punto de la prueba es el paso 4: **apagar no es mandar**. Antes sí lo era
+(`sendDictation`), y por eso `trazabilidad.md` §2.1 tenía RF-STT-03 y RNF-REL-04
+en "No implementado".
+
+Dos cosas más que hay que comprobar:
+
+- **El icono del micrófono no cambia.** Hay texto esperando y el botón sigue
+  siendo el micrófono, porque volver a tocarlo **descarta lo que está escrito y
+  dicta de cero**. Es cancelación explícita, que es lo único que RNF-REL-04
+  permite como pérdida.
+- **El backend no recibe nada.** Mientras está esperando, `rt_phrases_total` en
+  `curl -s 127.0.0.1:8080/metrics` **no se mueve**. Es la prueba más directa de
+  que la app no mandó nada.
 
 En los logs:
 
 ```
 SignAiState: micrófono prendido en modo Dictation
-SignAiMetrics: dictado #1: 1 palabras, 6 caracteres
-SignAiMetrics: dictado #2: 3 palabras, 18 caracteres      <- el STT cerró por silencio
-SignAiState: micrófono apagado (venía de Dictation)
-SignAiMetrics: dictado #3: 4 palabras, 25 caracteres      <- el `end` forzó el final
-SignAiState: dictado → envío: 25 caracteres, 4 palabras   <- y sale solo
-SignAiNet: segment 0 ... de=hola ¿cómo estás? -> HOLA,COMO ESTAS
+SignAiNet: recording 16000Hz mono, chunks of 30ms
+SignAiMetrics: dictado #1: 6 palabras, 35 caracteres
+SignAiNet: recording stopped                                   <- el mic se apagó solo
+SignAiState: dictado cerrado: 35 caracteres a la espera de confirmación
 ```
 
-Y en el backend, `capture mode -> dictation` y `dictated: '...'`, **sin** ningún
-`Sending segment` antes del envío: esa es la prueba de que no firmó mientras
-dictabas.
+Y si tocás el micrófono **sin** haber esperados el silencio:
 
-### B. Tiempo real — probar que firma mientras hablás
+```
+SignAiState: micrófono apagado (venía de Dictation)
+SignAiState: dictado detenido: esperando el final de la frase   <- el `end` abrió el cierre
+```
+
+Ese es el otro camino del `end`: la captura se cortó antes de que la pausa del
+STT llegara, así que hay que esperar el `final` igual. Cuando llega con texto, se
+suma; cuando llega vacío (ruido de fondo), es `final vacío: el utterance se cerró
+sin palabras` y no rompe nada.
+
+### B. En vivo — firma mientras hablás
 
 1. Tocá **TR**.
 2. Decí **"hola"** y hacé una pausa de un segundo antes de seguir.
@@ -127,42 +201,34 @@ dictabas.
 4. **Seguí hablando todo lo que quieras** — el micrófono **no se apaga solo**.
 5. Cuando te boredes, tocá TR de nuevo para apagarlo.
 
-Deberías ver al muñeco firmar HOLA mientras todavía estás hablando, no después.
+Cada vez que el STT cierra una frase por silencio, esa frase **sale sola**. El
+interruptor solo apaga el micrófono; no es el que manda.
 
-Y al apagarlo hay que mirar **qué pasa en los 1,5 s siguientes**, porque no todo
-se libera en el acto:
+Y al apagarlo:
 
-| | al apagar TR | 1,5 s después |
-|---|---|---|
-| Micrófono, Historial, TR | habilitados al instante | habilitados |
-| El campo | **solo lectura**, con lo último que firmaba el muñeco | vacío y escribible |
-| Traducir | **deshabilitado** | habilitado |
+| | al apagar TR |
+|---|---|
+| Micrófono, Historial, TR | habilitados al instante |
+| El campo | **vacío** |
+| Traducir | habilitado |
 
-El campo no se libera enseguida a propósito: muestra lo que la voz acaba de
-mandar y ya se firmó, y si Traducir estuviera disponible sería un botón para
-reenviarlo. Por eso el texto se va solo, y **el texto que se borra, el campo y
-el botón vuelven en el mismo instante** — nunca se ve el campo vacío con Traducir
-muerto, que es lo que hace que la app parezca trabada.
+**El campo queda limpio a propósito.** Lo que había ahí era la transcripción en
+vivo de lo que el micrófono estaba oyendo, y para cuando se apaga el interruptor
+eso ya se mandó y se firmó. Dejarlo puesto tapaba el campo con una frase que
+nadie puede volver a mandar, y con Traducir de vuelta a estar disponible el
+botón invitaba a reenviar lo que el avatar acababa de firmar. Lo único que
+sobrevive es el texto de un dictado sin mandar, que es del usuario.
 
 Mientras tanto, aunque al avatar todavía le falte cola, el resto del panel no se
-bloquea: en tiempo real la cola se llena más rápido de lo que el muñeco la
-consume, y dejar todo deshabilitado mientras termina esconde al usuario una app
-muerta sin explicación.
+bloquea: una oración larga son ~19 s de animación contra los ~2 s que tarda en
+traducirse, y dejar todo deshabilitado mientras termina esconde al usuario una
+app muerta sin explicación.
 
-Mientras tanto:
-
-```bash
-adb logcat -s SignAiMetrics      # latencias del teléfono
-adb logcat -s SignAiNet          # cada segmento que llega del backend
-adb logcat -s SignAiState        # en qué modo está el micrófono y por qué
-adb logcat -s SignAiWeb          # consola del JS (modo depuración)
-```
-
-**Con cualquiera de los dos prendido el resto se apaga:** el campo de texto
-queda de solo lectura (muestra lo que se está transcribiendo en vivo), y
-**Traducir** e **Historial** quedan deshabilitados. Es a propósito: texto y voz
-van por el mismo socket y el backend no puede saber de quién es cada fragmento;
-mezclados, el avatar firmaría la frase al revés.
+**Con cualquiera de los dos prendido el resto se apaga:** el campo de texto queda
+de solo lectura (muestra lo que se está transcribiendo en vivo), y **Traducir** e
+**Historial** quedan deshabilitados. Es a propósito: texto y voz van por el mismo
+socket y el backend no puede saber de quién es cada fragmento; mezclados, el
+avatar firmaría la frase al revés.
 
 **Y el otro interruptor también se apaga, en los dos sentidos:** con el
 micrófono prendido, TR queda deshabilitado, y con TR prendido, el micrófono. No
@@ -180,54 +246,37 @@ habilitado.
    después sí.
 
 Y al revés: si dictaste algo y después probaste TR, al apagar TR el campo vuelve
-a mostrar lo que habías dictado. Perder tres frases porque quisiste probar el
-modo continuo sería la peor forma de que esto salga mal.
+a mostrar lo que habías dictado, con su aviso de "esperando confirmación".
+Perder tres frases porque quisiste probar el otro modo sería la peor forma de
+que esto salga mal.
 
-Esto se puede verificar sin hablar, con los fixtures de audio reales contra el
-Whisper de verdad:
+Esto se puede verificar **sin hablar**, con los fixtures de audio reales contra
+el Whisper de verdad y el Ollama local:
 
 ```bash
-python scripts/verify_voice_modes.py --clips 3     # en sign-ai-backend
-tools/verificar-tiempo-real.sh voz                  # lo mismo + el bloque de servicios
+python3 tools/medir-retraso.py        # manda los 28 fixtures por el socket
 ```
 
-### D. Traducir y Repetir — la misma retención que el micrófono
-
-Esto se verifica **sin hablar**, y es la mitad de lo que el dueño報告aba: un
-Traducir a mano y el Repetir dejaban la frase en el campo con Traducir
-habilitado, así que un toque más firmaba la misma frase dos veces.
+### D. Traducir y Repetir — la misma retención
 
 1. Escribí una frase larga (5 o 6 señas, para tener ventana) y tocá **Traducir**.
 2. La frase queda en el campo y **Traducir se deshabilita 1,5 s**; a los 1,5 s el
    texto se borra solo. En el log son `texto ya enviado` y `texto retenido borrado`
-   (la segunda línea, 1501 ms después de la primera).
+   (la segunda línea, ~1500 ms después de la primera).
 3. Cuando termine de firmar, tocá **Repetir** (el botón del escenario, abajo al
-   centro).tiene que pasar lo mismo: la frase a la vista, Traducir muerto 1,5 s,
-   y el texto que se va solo.
+   centro). Tiene que pasar lo mismo.
 4. **Durante toda la seña —no solo mientras traduce— el panel entero está
    deshabilitado**: micrófono, Historial y TR se ven en `muted` y no responden.
-   Antes se liberaban a los ~50 ms del toque, cuando la seña recién arrancaba.
-   Cuando el muñeco termina, el panel vuelve solo.
 
-El punto 4 es el que se ve mejor mirando los tres iconos: pasan de `text`
-(244 en el gris del pixel más claro del glifo) a `muted` (148) y vuelven. Si
-quedaran prendidos mientras el muñeco firma, es que `replayPending` se soltó antes
-de `onPlaybackDone`.
-
-Repetir también baja 32 dp (a `AvatarStage.RepeatGap`): el botón quedó más
-cerca de la barra, sin pegarse.
-
-**La pausa entre palabras importa.** Un hangover de 600 ms parte la frase en dos
-si hablás corrido. Está deliberado: las señas se pueden encadenar, y partir más
-agresivamente rompe palabras.
+El punto 4 es el que se ve mejor mirando los tres iconos: pasan de `text` a
+`muted` y vuelven. Si quedaran prendidos mientras el muñeco firma, es que
+`replayPending` se soltó antes de `onPlaybackDone`.
 
 ---
 
-## 3. Qué frases usar
+## 4. Qué frases usar
 
-### Para ver el modo tiempo real (una palabra a la vez)
-
-Estas están pensadas para que el avatar empiece a firmar antes de que terminés:
+### Para ver una sola oración
 
 | Decí | Esperado |
 |---|---|
@@ -238,7 +287,10 @@ Estas están pensadas para que el avatar empiece a firmar antes de que terminés
 | "bien" | BIEN |
 | "nunca" | NUNCA |
 
-### Para ver el flujo completo (encadenadas)
+### Para ver varias oraciones
+
+Acá es donde se nota el cambio: la pausa de 1,5 s es lo que parte la frase, y cada
+oración se traduce por separado.
 
 | Decí | Esperado |
 |---|---|
@@ -248,15 +300,9 @@ Estas están pensadas para que el avatar empiece a firmar antes de que terminés
 | "estoy contenta" | CONTENTO |
 | "estoy triste" | SENTIR, TRISTE |
 | "mi familia" | FAMILIA |
-| "mi hermano" | HERMANO |
-| "buenas tardes" | BUENAS TARDES |
-| "por favor" | POR FAVOR |
-| "bien más o menos" | BIEN, MAS O MENOS |
-| "cómo estás, bien" | COMO ESTAS, BIEN |
 | "dónde vives" | DONDE, VIVIR |
 | "quién es ella" | QUIEN, MUJER |
-| "cuánto ganas" | CUANTO, TRABAJAR |
-| "hola, buenos días, cómo estás" | HOLA, BUENOS DIAS, COMO ESTAS |
+| "hola, buenos días, cómo estás" | HOLA · BUENOS DIAS · COMO ESTAS (3 oraciones) |
 
 ### Conversaciones completas (lo que de verdad prueba el modo)
 
@@ -272,14 +318,8 @@ conversacion_4  bien, muchas gracias, hasta manana
 ### Probar sin hablar
 
 ```bash
-# frase escrita: recorre el mismo camino del backend
-../sign-ai-backend/scripts/verify_realtime_latency.py --phrase "hola" --phrase "cómo estás"
-
-# reproducir un WAV por el WebSocket, a velocidad real
-../sign-ai-backend/scripts/verify_realtime_latency.py \
-    --replay-audio ../sign-ai-stt/fixtures/audio/conversacion_2.wav
-
-# ver la línea de tiempo de un fragmento
+# reproducir un WAV por el WebSocket, a velocidad real, y ver la línea de tiempo
+python3 tools/medir-primera-sena.py
 adb logcat -s SignAiNet
 ```
 
@@ -287,20 +327,23 @@ adb logcat -s SignAiNet
 
 - **El reposo**: al abrir la app, después de que termine una frase y con el
   micrófono prendido esperando, el muñeco tiene que estar **con los brazos abajo,
-  al lado de los muslos**. Antes tenía los brazos abiertos como de maniquí.
-- **El paso de una seña a otra**: es lo que cambió. Las 46 variantes de clip ya
-  se encadenan solas; la app no mete nada en el medio y las funde durante 100 ms.
-  Se nota sobre todo en el par de señas de una frase corta ("hola gracias"), que
-  es donde el salto directo es más visible.
-- **Para verlo en números**: Ajustes → AVANZADO → Modo depurar, y el panel
-  muestra la fundición y cuántas actions están vivas (`2` mientras se funde).
-  En logcat sale una línea por seña: `fundición -> 0000.001` o `corte seco -> …`
-  (el corte seco es correcto para la primera seña, para una seña repetida y con
-  "reducir animaciones" prendido).
+  al lado de los muslos**.
+- **El paso de una seña a otra**: las 46 variantes de clip ya se encadenan solas;
+  la app no mete nada en el medio y las funde durante 100 ms. Se nota sobre todo
+  en el par de señas de una frase corta ("hola gracias"), que es donde el salto
+  directo es más visible.
+- **El adelanto automático**: con Ajustes → AVANZADO → depurar prendido, la
+  consola del JS imprime `cola N/M, adelanto on/off` cada vez que cambia. Con el
+  flujo por oraciones la cola está **vacía mientras hablás** y se llena de golpe al
+  cerrar la frase, así que el adelanto **prende y apaga** dentro de una misma
+  conversación. Eso es normal y es lo que cambió (ver `medir-retraso.py`).
+- **Para verlo en números**: el panel de depurar muestra la fundición y cuántas
+  actions están vivas (`2` mientras se funde). En logcat sale una línea por seña:
+  `fundición -> 0000.001` o `corte seco -> …`.
 
 ---
 
-## 4. Qué señas hay
+## 5. Qué señas hay
 
 **32 con animación exportada** (las que el avatar puede firmar de verdad). La
 columna `id` es el índice de LSC50 que empareja con `signs/<id>.glb`.
@@ -339,9 +382,29 @@ Las 18 marcadas **no tienen animación**: el catálogo de Neon las anuncia con
 por HTTP (sería un 404 garantizado, `GLS-10`) y cae a la seña de prueba si el
 ajuste está prendido, o las reporta en el caption si está apagado.
 
-**Promedio 2.15 s por seña.** Es el número que explica por qué el avatar se
-atrasa al hablar rápido, y por qué el modo tiempo real suma *adelanto
-automático* (firmar 1.6× mientras haya dos o más señas en cola).
+**Promedio 2.15 s por seña.** Es el número que explica por qué el avatar no
+alcanza a firmar al ritmo de la voz, y por qué existe el adelanto automático.
+
+### El adelanto automático, remedido
+
+`tools/medir-retraso.py` responde una pregunta concreta: con entrega por oraciones,
+¿el desfase entre habla y animación desapareció? **No**, y no porque el modo de
+entrega lo causara:
+
+- El avatar no termina de firmar antes de que el usuario termine de hablar en
+  **17 de las 28** frases; con el adelanto puesto, todavía en **7**.
+- Firma/haba da **1,26× de mediana** (máx. 3,72×), que el factor 1,6× cruza
+  (mediana 0,79×).
+- El desfase absoluto es de **+0,4 s de mediana**, no de segundos.
+
+Lo que **sí** cambió es la forma: la cola está vacía mientras el usuario habla y
+se llena de golpe al cerrar cada frase. Como el umbral se mide después de que
+arranque la seña en curso, hace falta una frase de **3 señas o más** para
+disparar el adelanto, y con las 28 frases de prueba —cortas, de mediana 2 palabras
+y 1 seña— solo una lo dispara.
+
+**Lo que no se puede es prometer que el avatar firme al ritmo de la voz**: harían
+falta ~5×, que es un fast-forward, no una seña.
 
 ### Palabras que el catálogo no cubre
 
@@ -353,7 +416,7 @@ avatar.
 
 ---
 
-## 5. Métricas
+## 6. Métricas
 
 Los tres servicios exponen lo mismo: Prometheus en `/metrics` y JSON en
 `/metrics.json`.
@@ -364,212 +427,122 @@ curl -s 127.0.0.1:8080/metrics | less      # STT igual, en :8000
 
 ### Backend (`:8080`) — lo que el usuario percibe
 
-| Métrica | Qué es | Medido |
-|---|---|---|
-| `rt_first_sign_ms` | primer texto del STT → **primera seña enviada**. La latencia que siente el usuario. | p50 0.4 ms / p95 394 ms |
-| `rt_utterance_ms` | primer texto → última seña | p50 960 ms / p95 2918 ms |
-| `rt_chunk_delay_ms` | cada fragmento por separado | p50 0.4 ms / p95 367 ms |
-| `audio_bytes_total` | audio reenviado al STT | 32 000 B/s mientras se escucha |
-| `dictation_utterances_total` | frases dictadas que el STT cerró por silencio o por el `end` | crece solo en dictado |
-| `capture_mode_dictation_total` | veces que el cliente prendió el dictado | 1 por sesión de dictado |
-| `session_capture_dictation` | 1 si la sesión está en dictado, 0 si está en TR o sin micro | cambia con el interruptor |
-| `capture_mode_switch_open_utterance_total` | cambios de modo con una frase todavía abierta | crece normal: cambiar de dictado a TR mientras se habla es justamente ese caso, y es lo que el latch por utterance resuelve |
-| `session_audio_rms` | nivel del audio entrante. Bytes que crecen con RMS en el piso = micrófono capturing silencio. | 0.002 en una habitación en silencio |
+| Métrica | Qué es |
+|---|---|
+| `rt_first_sign_ms` | frase recibida → **primera oración enviada**. La latencia que siente el usuario. Ver §1 para los valores y para por qué no se compara con la línea base. |
+| `rt_phrase_total_ms` | frase recibida → última oración enviada |
+| `rt_sentence_delay_ms` | por oración: cuándo salió cada una respecto de la frase |
+| `rt_phrases_total` / `rt_sentences_total` / `rt_glosses_total` | cuántas frases, oraciones y glosas salieron |
+| `rt_phrase_sentences` | histograma de cuántas oraciones tiene cada frase |
+| `audio_bytes_total` / `audio_chunks_total` | audio reenviado al STT |
+| `session_audio_rms` | nivel del audio entrante. Bytes que crecen con RMS en el piso = micrófono captando silencio. |
 
-`rt_first_sign_ms` da **0.4 ms** porque el fragmento que llega primero es casi
-siempre una palabra suelta del catálogo o un acierto de caché, y las dos rutas son
-un lookup en memoria. Los ~900 ms de la tabla de arriba son el camino completo
-audio → Whisper → traducción; el trabajo del backend una vez que tiene el texto
-es prácticamente gratis.
+`rt_first_sign_ms` es la que decide si el producto se siente en tiempo real;
+`rt_phrase_total_ms` y `rt_sentence_delay_ms` la explican cuando no.
 
-### STT (`:8000`)
+En el STT (`:8000`) están los tiempos de inferencia, la espera por la GPU, el
+atraso del audio y los descartes por motivo: `stt_dropped_total{reason=...}`.
+`stt_partial_queue_ms` es el guard de regresión de los picos viejos de 4–8 s de
+contención de GPU, y `stt_dropped_total{reason="logprob"}` caza al filtro
+comiéndose audio que Whisper transcribió bien.
 
-| Métrica | Qué es | Medido |
-|---|---|---|
-| `stt_end_to_final_ms` | dejar de hablar → transcripción final | p50 839 ms / p95 958 ms |
-| `stt_inference_ms{model="small"}` | inferencia de un parcial | p50 92 ms / p95 172 ms |
-| `stt_inference_ms{model="medium"}` | inferencia de un final | p50 249 ms / p95 338 ms |
-| `stt_partial_lag_ms` | **atraso real**: audio que llegó mientras se transcribía y todavía no está transcrito. Sube = el avatar va detrás de la voz. | p50 360 ms / p95 390 ms |
-| `stt_partial_queue_ms` | **espera por la GPU**. Antes daba picos de 4–8 s. | p50 0.4 ms / p95 0.6 ms |
-| `stt_dropped_total{reason=…}` | transiciones descartadas: `rms`, `no_speech`, `logprob` | ver abajo |
-
-`stt_dropped_total` merece atención: `reason="logprob"` cuenta veces que **el
-modelo transcribió bien y el filtro lo tiró igual**. Antes pasaba con
-`AVG_LOGPROB_THRESHOLD=-0.8`; dos frases de los fixtures ("cómo estás", "estoy
-triste") salían como transcripción vacía. Volvió a `-1.0`, el default de
-Whisper. Si este número sube mucho, el filtro se está comiendo audio real.
-
-### `stt_partial_lag_ms` no es lo que sugiere el nombre
-
-Ojo con esta: se llama "lag" pero **no** es "reloj de sesión menos audio
-recibido". Se define como *audio recibido menos el audio que ya estaba en el
-buffer cuando arrancó la inferencia*, o sea cuánto se acumuló mientras Whisper
-trabajaba.
-
-La diferencia no es cosmética. Con la definición anterior, 20 s de micrófono
-apagado daban `lag = 20000 ms` y se leían como "GPU saturada" cuando en realidad
-no estaba llegando nada que procesar. En la primera prueba con voz real eso era
-justo lo que más números había: p95 = 13091 ms, max = 27332 ms, todos segundos
-en que el micro estaba apagado. Ahora está acotado y mide algo: p50 360 ms,
-p95 390 ms, max 630 ms.
-
-Si sube de verdad, el avatar va visible detrás de la voz, y ahí sí hay que mirar
-`stt_inference_ms` y `stt_partial_queue_ms` para saber si el culpable es el
-modelo o la cola.
-
-### Teléfono (logcat)
+### Teléfono
 
 ```bash
 adb logcat -s SignAiMetrics
 ```
 
-```
-fragmento #1: 2 señas en 5ms (p50=5ms p95=5ms max=5ms n=1)
-turno #1: 822ms, 1 fragmentos, 3 glosas (p50=822ms ...)
-firmado: 3 señas en 6841ms (p50=6841ms p95=6841ms max=6841ms n=1)
-dictado #1: 24 palabras, 136 caracteres
-```
+El resumen (`resumen:`) trae `frases`, `oraciones`, `glosas`, `sin_seña`,
+`dictado_frases`, `dictado_palabras`, `duracion_frase` y `duracion_firmado`.
+`duracion_firmado` (`firmado:`) es lo único que mide la escena; lo demás mide el
+pipeline.
 
-`fragmento`/`turno` son de tiempo real; `dictado` es del otro interruptor. Si
-`dictado` crece mientras TR está prendido, o `fragmento` crece mientras se
-dicta, los dos modos se mezclaron.
-
-**`turno` y `firmado` son dos cosas distintas y conviene no confundirlas.**
-`turno` (`rt_turn_total_ms`) corre del primer texto al último fragmento: mide el
-STT y el backend, y el avatar no aparece. `firmado` mide **la animación** — de
-la primera seña a la última — y es el número que se mueve cuando cambia la
-escena. Con el crossfade de 100 ms, dos señas pasaron de 4708 ms a 4544 ms
-medido en el Redmi, que es lo que predice el diseño (menos los 100 ms de cola
-del clip anterior, más los 100 ms de pose congelada que ya no hay).
+**`firmado:` y `duracion_frase` son dos nombres para cosas distintas y no se
+mezclan.** El primero es el tiempo que el avatar estuvo firmando; el segundo, el
+del turno de traducción. Con dos nombres para una sola cantidad, el segundo
+habría parecido roto.
 
 ---
 
-## 6. Tests sueltos
+## 7. Tests sueltos
 
 ```bash
-# ¿qué seña se firma y cuál no? 31 aserciones, sin servicios ni red
-docker compose -f ../sign-ai-backend/docker-compose.yml exec backend \
-    python scripts/verify_incremental.py
-
-# ¿el protocolo sigue igual? frase entera, fragmentado y los dos modos
-# del micrófono (57 checks, sin servicios de por medio)
+# ¿el contrato del WebSocket sigue igual? qué se traduce, qué no, y el `end`
 docker compose -f ../sign-ai-backend/docker-compose.yml exec backend \
     python scripts/verify_client_frames.py
 
-# ¿dictado no firma y tiempo real sí, contra el Whisper de verdad?
-# Reproduce los fixtures por el socket en los dos modos y en el cambio de uno
-# al otro. Es lo único que verifica el contrato entero sin hablar.
-../sign-ai-backend/scripts/verify_voice_modes.py --clips 3
+# ¿el divisor de oraciones parte bien?
+docker compose -f ../sign-ai-backend/docker-compose.yml exec backend \
+    python scripts/verify_sentence_segmenter.py
 
-# latencia de punta a punta
-../sign-ai-backend/scripts/verify_realtime_latency.py --all-fixtures
-../sign-ai-backend/scripts/verify_realtime_latency.py --phrase "hola" -n 5
-
-# ¿Whisper transcribe bien los fixtures? (sirve para separar un problema de
-# audio de un problema de traducción)
-../sign-ai-stt/venv/bin/python ../sign-ai-stt/scripts/make_audio_fixtures.py --all
+# extremo a punta, sin hablar
+tools/medir-primera-sena.py
+tools/medir-retraso.py
 ```
+
+Los de Python se corren **dentro del contenedor**: en el host faltarían las
+dependencias del servicio (httpx2 para el `TestClient` de Starlette), y un check
+que solo pasa en un lado no verifica nada.
 
 ### Generar los fixtures de audio otra vez
 
-Los `.wav` **no están en el repo** (son 1.5 MB de binario); sí están los `.json`
-con el texto, la duración y los timestamps por palabra. Para reconstruirlos:
+Los `.wav` **no están en el repo** (son 1,5 MB de binario); sí están los `.json`.
+Se generan con Piper:
 
 ```bash
-python3 -m venv .venv-tts && .venv-tts/bin/pip install piper-tts numpy
-.venv-tts/bin/python ../sign-ai-stt/scripts/make_audio_fixtures.py --all
+cd ../sign-ai-stt
+./venv/bin/python scripts/make_audio_fixtures.py --all
 ```
-
-La voz se descarga sola la primera vez (~75 MB de `sharvard/medium`). El mismo
-texto produce el mismo WAV, así que las cifras son comparables entre corridas.
 
 ---
 
-## 7. Problemas ya pisados
+## 8. Problemas ya pisados
 
 | Síntoma | Causa | Qué hacer |
 |---|---|---|
 | "No se pudo abrir el micrófono" | falta el permiso en runtime | `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO` |
 | "Sin conexión con el servidor" en el teléfono | el `10.0.2.2` del build es para emulador | `adb reverse tcp:8080 tcp:8080` y compilar con `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate` |
 | Transcripción vacía | filtro de confianza de Whisper | mirá `stt_dropped_total{reason="logprob"}` |
-| La frase se parte en dos | hangover de 600 ms | normal si hablás corrido; hacé pausas |
-| Todos los fragmentos salen iguales | caché semántica con coincidencia por similitud | ya corregido: los fragmentos usan coincidencia literal |
-| El avatar firma una seña y después otra rara | glosa fuera de LSC50 | encendé **Ajustes → AVATAR → depurar** y mirá `SignAiNet` |
-| El primer `check_latency` tarda el doble | caché semántica vacía | es normal: la primera pasada paga el LLM. Corré dos veces. |
-| Un test falla con `httpx2` faltante | ese test necesita el entorno del servicio | corré los tests **dentro** del contenedor |
+| La frase se parte en dos | dos oraciones separadas por 1,5 s de silencio | normal: es el divisor de oraciones haciendo su trabajo |
+| El avatar firma una seña y después otra rara | glosa fuera de LSC50 | encendé **Ajustes → AVANZADO → depurar** y mirá `SignAiNet` |
+| La medición sale a 1 ms y no es creíble | la caché semántica está caliente | `DELETE FROM semantic_cache;` **y reiniciar el backend** (§1) |
 | `session failed: null` en logcat, en bucle | el backend se reinició y una sesión quedó colgada | reiniciá la app: `adb shell am force-stop com.signai.webview` |
-| Queda en "Traduciendo..." para siempre después de dictar | el cliente tomó el `final` de lo dictado por una frase de tiempo real | el `final` de dictado tiene que llegar con `dictation: true`; si falta, actualizá el backend |
-| Al dictar, el muñeco firma igual | el cliente no mandó `{"type":"mode","mode":"dictation"}` | mirá `capture mode -> dictation` en los logs del backend |
-| Al prender TR no pasa nada hasta la pausa | el cambio de modo no cerró el utterance anterior | el `end` tiene que ir **antes** del `mode`; el backend lo lacha por utterance |
-| Solo aparece la última frase dictada | el STT cierra por silencio y el app no acumuló | es el buffer (`dictationBuffer`), no el STT: fijate si hay varias líneas `dictado #` |
-| Tocar un botón no hace nada | el tap cayó en el borde de la superficie | `mobile-mcp` hay que usarlo con el **centro** del elemento, no con la esquina |
-| Al apagar TR queda todo deshabilitado y dice "Procesando..." | se confundió "el `done` ya llegó" con "el avatar ya terminó": en tiempo real la cola va 30-40 s por detrás | la fuente de verdad es `queuePlaying`, no `playbackState` (`STA-18`) |
+| Al apagar TR queda todo deshabilitado y dice "Procesando..." | se confundió "el `done` ya llegó" con "el avatar ya terminó": una oración larga deja cola | la fuente de verdad es `queuePlaying`, no `playbackState` (`STA-18`) |
 | El otro interruptor no se ve deshabilitado | el relleno `soft` atenuado al 35 % sobre `surface` da dos colores casi iguales | se apaga el icono y la etiqueta a `muted`, nunca la superficie (`STA-17`) |
 | Traducir manda dos veces lo mismo | el campo tiene la frase que la voz ya firmó | 1,5 s de retención: el texto se ve, Traducir no, y después se borra solo (`STA-20`) |
-| Al dictar hay que apretar Traducir a mano | versión anterior a que apagar el interruptor mandara solo | el envío automático es `sendDictation()` |
+| **La misma frase se firma una y otra vez, el backend al 40 % de CPU** | el backend hacía eco de la frase escrita como un `transcript` y la app lo tomaba por voz | **ya está corregido**: `handle_text` no manda `transcript`. Si vuelve a pasar, mirá `rt_phrases_total` subiendo solo |
+| Queda en "Dictando..." para siempre con el micrófono prendido | el ambiente tiene ruido por debajo del umbral de energía y el VAD nunca abre frase | apagá el micrófono a mano: el `end` siempre produce un `final` |
+| Tocar un botón no hace nada | el tap cayó en el borde de la superficie | `mobile-mcp` hay que usarlo con el **centro** del elemento, no con la esquina |
+| Un test falla con `httpx2` faltante | ese test necesita el entorno del servicio | corré los tests **dentro** del contenedor |
 
 ### El micrófono no se puede probar con el audio del propio teléfono
 
-Se intentó: push de un WAV al teléfono, reproducción con el Reproductor
-Multimedia y grabación con el micrófono de la app al mismo tiempo. **No
-funciona, y no por un bug.**
+Ya está arriba y conviene no volver a intentarlo: la app usa
+`AudioSource.VOICE_RECOGNITION`, que **cancela el eco del propio altavoz**. Es la
+elección correcta —con `MIC` el STT escucha la AGC bombeando en vez de la voz—,
+pero significa que un bucle de retorno acústico es imposible.
 
-La app usa `AudioSource.VOICE_RECOGNITION`, que es la fuente que Android afina
-para reconocimiento de voz y que **cancela el eco del propio altavoz**. Es
-justamente la elección correcta (con `MIC` el STT escucha la AGC bombeando en vez
-de la voz), pero significa que un bucle de retorno acústico es imposible.
-
-Se puede ver en un `curl`:
+### Cómo se ve que el micrófono está capturing silencio
 
 ```bash
 # en una habitación silenciosa, con la app grabando
 curl -s 127.0.0.1:8080/metrics.json | python3 -c "
 import json,sys; d=json.load(sys.stdin)
-print('bytes:', d['counters']['audio_bytes_total'])
-print('rms:  ', d['histograms']['audio_rms']['p50'])"
-# bytes: 395520   <- el audio llega entero
-# rms:   0.002    <- pero es el piso de ruido, no voz
+print('rms de sesión:', d['gauges']['session_audio_rms'])
+"
 ```
 
-Esos dos números juntos son el diagnóstico: bytes que crecen con RMS en el piso
-significa "el micrófono está capturing silencio", que es distinto de "el STT
-está caído". Para probar con voz hace falta una persona.
+`audio_bytes_total` subiendo con `session_audio_rms` en el piso es el micrófono
+funcionando y el umbral de energía filtrando todo: el VAD nunca abre frase, no
+hay `final` por silencio y el dictado queda esperando. Es el comportamiento
+correcto, no un bug — pero es la razón por la que el micrófono solo se prueba
+hablando.
 
----
+### Dónde tocar cuando algo no cierra
 
-## 8. Qué NO se verificó, y por qué
-
-### Verificado con voz humana (2026-10-14, con el owner)
-
-- **Micrófono continuo.** Un turno de **22 s con 4 fragmentos** y el micrófono
-  **nunca apagado**: `luta → LUTA`, `está probando → PROBAR`, `¿cordo? → CORDO`,
-  `acuerdo? → ACUERDO`, y después `anotaste → ANOTAR` en otro turno. Los
-  fragmentos llegan con `provisional=true` mientras la frase está abierta y
-  `false` en el último, que es exactamente el contrato.
-- **Traducción y avatar** sobre audio real, no fixtures.
-- **El micro sobrevive a los `final`.** Antes se apagaba solo en cada frase;
-  ahora queda prendido y el STT abre el utterance siguiente solo.
-
-### Lo que sigue sin verificarse
-
-- **Varios clientes a la vez.** El código lo contempla (un `IncrementalTranslator`
-  por sesión, un contador por sesión) pero no se probó con dos conexiones
-  simultáneas.
-- **Traducción de fragmentos de dos palabras sin contenido semántico.** El
-  contexto ya arregla el caso obvio (`estudiante` → ESTUDIANTE en vez de NIÑO),
-  pero un fragmento suelto todavía puede dar una glosa rara. Es una limitación
-  del prompt, no del transporte.
-- **Bucle acústico en el teléfono.** No se puede: `VOICE_RECOGNITION` cancela el
-  eco del altavoz (ver §7). Con voz humana no hace falta.
-
----
-
-## 9. Dónde tocar para mover cada número
-
-| Querés… | Tocá |
+| Síntoma | Variable |
 |---|---|
-| que la primera seña llegue antes | `SILENCE_TIMEOUT_MS` y `PARTIAL_INTERVAL_MS` (STT), `REALTIME_SETTLE_MARGIN_MS` (backend) |
-| que el avatar no se atrase | `CATCHUP_FACTOR` y `CATCHUP_BACKLOG` en `app.js`, o el ajuste de velocidad en Ajustes |
-| menos llamadas al LLM | `SEMANTIC_CACHE_SIMILARITY_THRESHOLD`, `REALTIME_BATCH_WORDS` |
-| Traducción más precisa a costa de latencia | `REALTIME_SETTLE_MARGIN_MS` más alto, `PARTIAL_MODEL_SIZE=medium` |
-| volver al comportamiento viejo | `REALTIME_ENABLED=false` en el `.env` del backend |
+| Que la frase se cierre más rápido o más tarde | `SILENCE_TIMEOUT_MS` (STT) |
+| Que una frase larga se parta en más oraciones | el divisor de oraciones del backend, `verify_sentence_segmenter.py` |
+| Qué es un acierto de caché | `SEMANTIC_CACHE_SIMILARITY_THRESHOLD` (backend) |
+| Que el STT use más o menos GPU | `MODEL_SIZE` (STT; en este flujo hay **un solo** modelo) |
