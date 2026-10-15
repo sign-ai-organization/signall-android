@@ -1,9 +1,164 @@
 # SignAI WebView — Agent Instructions
 
-Thesis: Spanish speech → LSC via 3D avatar. This repo is **only** the WebView app.
+Thesis: Spanish speech → LSC via 3D avatar. This repo holds **only the WebView app code**; the rest of the system lives in sibling repos — see § Mapa del sistema below before touching anything in the pipeline.
 Old approaches (Flask server, Kotlin+Filament native, Unity) are dead — ignore any docs referencing them.
 
-## Real-time mode (branch `tiempo-real`, 2026-10-14)
+## Mapa del sistema: los repositorios hermanos
+
+Esta app es **una de las piezas** del sistema SignAI (tesis, Ingeniería de Sistemas,
+PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
+`sign-ai-organization` de GitHub. **Cualquier sesión que toque el pipeline tiene que
+mirar los hermanos antes de decidir**: el contrato entre ellos son frames de
+WebSocket, no imports, así que un cambio acá rompe allá sin que el compilador avise.
+
+```
+../sign-ai-stt ──PCM16/WS──▶ ../sign-ai-backend ──WS/JSON──▶ ../sign-ai-android (esta app)
+                                      │
+                                      └──▶ Neon (Postgres 16 + pgvector): catalog, semantic_cache
+
+../sign-ai-docs  ← requerimientos, diagramas del SDD, plan de pruebas (nada corre)
+../signai-avatar ← demo vieja en Flask del pipeline de landmarks (dormida)
+```
+
+| Repo | Qué es | Rama | Puerto | Se levanta con |
+|---|---|---|---|---|
+| `../sign-ai-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `develop` | 8080 | `docker compose up --build` (levanta **también** el STT) |
+| `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 | incluido en el compose del backend, o solo desde su repo |
+| `../sign-ai-docs` | Requerimientos consolidados, diagramas del SDD (drawio + png), plan de pruebas, cambios pendientes | `main` | — | no corre nada |
+| `../signai-avatar` | Demo Flask del pipeline de landmarks de LSC50 (`HandCorrector`, `PoseFilter`, WiLoR) | `main` | — | inactiva desde 2026-09-19 |
+
+### `../sign-ai-backend`
+
+**Leé `CLAUDE.md` (147 líneas) antes de tocarlo.** Tiene las reglas que no están
+acá: código y comentarios **en inglés sin excepción**, los nombres de clases tienen que
+coincidir con los del SDD, y **nunca hacer `git commit` ni `git push`** — se sugiere
+el mensaje y lo manda el owner, por PR contra `develop`.
+
+- **Contrato con la app**: `docs/android-integration.md` (461 líneas) es la fuente de
+  verdad del WebSocket `/ws/translate`: qué campos manda cada frame, qué espera la
+  app, y el ejemplo completo de una frase. **Es lo primero que hay que leer si se toca
+  el protocolo**, y hay que actualizarlo en el mismo cambio.
+- Arquitectura: `Controller` → `Orchestrator` → `NLPService`/`ValidatorService` → Neon.
+  `CatalogRepository.load_all()` deja el catálogo entero **en memoria al arrancar**:
+  después de un seed hay que reiniciar el backend, no hay invalidación.
+- **`semantic_cache` es la trampa**: cambiar el prompt o el modelo **no la invalida**,
+  y las glosas viejas siguen saliendo por `HIT`, así que el arreglo parece no haber
+  servido. `DELETE FROM semantic_cache;` (es caché derivado, se reconstruye solo con
+  la primera frase de cada una).
+- `.env` (gitignored) tiene `DATABASE_URL` (Neon), `LLM_*` (`LLM_BASE_URL` vacío =
+  OpenAI; apuntarlo a uno local con `host.docker.internal`) y
+  `STT_WS_URL=ws://stt:8000/ws/transcribe` — dentro de Docker el host es `stt`, no
+  `localhost` — más `REALTIME_ENABLED`.
+- `scripts/verify_*.py` son las pruebas: se corren **como módulo** desde la raíz del
+  repo (`python -m scripts.verify_client_frames`), sin pytest. `verify_client_frames.py`
+  es el que cubre **los dos modos** (tiempo real y frase entera) desde el lado del cliente.
+
+### `../sign-ai-stt`
+
+Sin AGENTS.md ni CLAUDE.md: su documentación es el `README.md` (235 líneas), muy
+completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contra
+`develop`**.
+
+- **Protocolo**: el cliente manda frames **binarios** PCM16LE mono 16 kHz sin cabecera
+  WAV (el servidor los reagrupa en 30 ms para el VAD) y el STT responde con **JSON de
+  texto**. Un frame de texto plano `"end"` fuerza el cierre del segmento.
+- `words` y `audio_ms` son **aditivos** (2026-10-14): el backend los usa para decidir
+  qué seña firmar y cuándo, pero el STT no depende de que alguien los lea.
+- Perfil de tiempo real: **dos modelos** (`PARTIAL_MODEL_SIZE=small` para los
+  parciales, `MODEL_SIZE=medium` para los finales) + `InferenceScheduler` +
+  `SILENCE_TIMEOUT_MS=600`. `REALTIME=false` devuelve los defaults previos.
+- **Los 28 fixtures de `fixtures/audio/*.wav` no están en git** (los binarios no; los
+  `.json` sí). Se generan con `python -m scripts.make_audio_fixtures.py --all` en un
+  venv aparte con Piper. Los números de latencia solo son comparables entre corridas
+  porque el script produce siempre el mismo WAV para el mismo texto.
+- De `fixtures/` saca el audio `tools/verificar-tiempo-real.sh` para las pruebas end-to-end.
+
+### `../sign-ai-docs`
+
+Documentación de la tesis: `documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.15.md`
+(el documento formal), `diagramas/` (los `.drawio` editables y los `.png` del SDD:
+lógica, despliegue, procesos, clases, secuencia, persistencia y **estados de la UI**) y
+`plan-pruebas/` (el plan de pruebas del proyecto, con su `trazabilidad.md`).
+
+- **`modificaciones/requerimientos.md` es una bandeja de cambios pendientes**, con
+  estados **Propuesto / Acordado / Hecho**: ahí caen las cosas que la app ya hace y el
+  documento todavía no dice (modo en vivo, entrada de texto, historial, apagado del mic…).
+  Si se implementa algo sin requisito, se anota ahí.
+- Los `.drawio` y el `.md` de requerimientos los edita el owner: los cambios grandes
+  se proponen, no se aplican en silencio.
+
+### `../signai-avatar`
+
+**No es la fuente de los GLB de esta app.** Es la demo anterior en Flask que servía un
+avatar desde landmarks de LSC50 (`HandCorrector`, `PoseFilter`, script WiLoR para
+manos) y tiene su propio `openspec/` con `specs/avatar|dataset|pipeline`. Está
+**inactiva desde 2026-09-19**. Los assets de acá salen de otro pipeline: exportaciones
+de Cascadeur en `GLB Senas/` → `tools/split_signs.py`. No mezclar los dos pipelines ni
+copiar scripts entre ellos.
+
+### Carpetas hermanas que **no** son repositorios
+
+Sin git y sin reglas: material compartido o restos.
+
+- `../openspec/` — specs de `avatar`/`dataset`/`pipeline` y `changes/` con trabajo de
+  avatar. Es el OpenSpec **compartido, distinto** del `openspec/` de esta app (que además
+  tiene `specs/ui` y `sessions/`); las copias de `avatar`/`dataset` divergen entre sí, así
+  que saber cuál manda requiere preguntar.
+- `../data/` — `LSC50.pdf` y `LANDMARKS/`: el dataset de origen (las 50 señas).
+- `../Resources/` — scripts viejos y docs (ADR, documento maestro, backlog). Incluye
+  `split_avatar_for_filament.py` y `retarget_blender.py`, que son del **approach
+  abandonado**: no sirven de referencia para nada de acá.
+- `../signai_env/` — un venv de Python, no un repo.
+
+### El contrato entre repos (lo que se rompe en silencio)
+
+Un único WebSocket, de la app **solo al backend**: `:8080/ws/translate`. La app nunca
+habla con el STT ni con Neon. De ahí salen los acoples que hay que tocar de los dos lados:
+
+- **Fragmentos**: el backend manda `stream: true, total: 0` y la app lo rutea por
+  `onStreamedSegment`. `total: 0` es lo que distingue "utterance abierto" de "frase entera".
+- **`dictation: true`** en las transcripciones de dictado: sin el flag la app queda en
+  "Traduciendo..." para siempre, porque el `final` de lo dictado llega después de que el
+  usuario apagó el mic.
+- **Orden `end` antes de `mode`**: el backend cierra el utterance anterior con el modo con
+  el que empezó. Invertirlo rompe las dos direcciones.
+- **`REALTIME_ENABLED=false`** devuelve el backend al comportamiento de frase entera, y la
+  app tiene un camino entero para ese modo: no es una bandera de debug, es un segundo modo
+  soportado.
+- **Los mismos nombres de métrica en los dos lados** (`rt_*` en el backend,
+  `SignAiMetrics` en el device): un número que no se instrumentó en las dos partes no se
+  puede comparar con nada.
+
+Y tres herramientas de este repo que **dependen del código de los hermanos**:
+
+- `tools/verificar-tiempo-real.sh` levanta el compose de `../sign-ai-backend` (que incluye
+  `../sign-ai-stt`) y usa sus fixtures.
+- `tools/mock_backend.py` importa `../sign-ai-backend/app/nlp/llm_client.py` y replica su
+  `catalog_repository`: renombrar o mover esos módulos rompe el mock.
+- `tools/local_stt.py` arranca el STT desde `../sign-ai-stt`.
+
+### Reglas para que las sesiones se entiendan entre repos
+
+1. **Un contrato se lee en los dos lados antes de cambiarlo.** Frames del WS, nombres de
+   glosas, columnas del catálogo, nombres de métricas: primero el repo hermano (con su
+   `CLAUDE.md`/`README.md`), después el cambio acá.
+2. **Un cambio que cruza el contrato no está terminado hasta que el otro lado está
+   actualizado**, y hay que decirlo explícitamente al owner: qué se cambió, en qué repos y
+   qué falta del otro lado. Pendiente de otro lado es deuda visible, no un detalle.
+3. **Cada sesión deja rastro donde corresponde**: `openspec/sessions/YYYY-MM-DD-<slug>.md`
+   acá y en el repo hermano que se tocó. Cuando el dato venga de afuera, dejar **de qué
+   repo y de qué commit** salió: sin eso la próxima sesión no puede reproducirlo.
+4. **Nada de commits en los hermanos sin que el owner lo pida** (PR contra `develop`). Acá
+   sí se commitea directo. Un cambio de contrato commiteado en un solo lado es un cambio a medias.
+5. **Referenciá los hermanos por ruta relativa** (`../sign-ai-backend`), nunca con rutas
+   absolutas de esta máquina: las sesiones se corren en directorios distintos.
+6. **Los números se miden donde están.** Latencias del device acá (`adb logcat -s
+   SignAiMetrics`), del STT y del backend allá. Un p50 del avatar mezclado con un p50 del
+   STT no es un p50 de nada.
+7. **Cuando algo no se pueda resolver leyendo, preguntar.** Las decisiones abiertas están
+   marcadas como tales en los `CLAUDE.md`/`docs/` de cada repo; no rellenarlas por inferencia.
+
+## Real-time mode (rama `develop`, 2026-10-14)
 
 The app signs **while the user speaks**, not after they stop. The pipeline is:
 mic → PCM16/16 kHz → WebSocket → backend → STT → fragments of glosses → appended
@@ -186,9 +341,9 @@ instrument is a number you cannot claim improved.
 
 ## Git workflow
 
-**Este repo es del owner: commit y push directo a `main`, sin PR ni rama de feature** (decidido 2026-09-30). No abrir PRs acá ni pedir confirmación para commitear. Los repos hermanos (`../sign-ai-backend`, `../sign-ai-stt`) sí usan PR contra `develop`, y el `CLAUDE.md` de ese repo manda no commitear sin que el usuario lo pida explícitamente.
+**Este repo es del owner: commit y push directo a `main`, sin PR ni rama de feature** (decidido 2026-09-30). No abrir PRs acá ni pedir confirmación para commitear. Los repos hermanos (`../sign-ai-backend`, `../sign-ai-stt`) sí usan PR contra `develop`, y el `CLAUDE.md` de ese repo manda no commitear sin que el usuario lo pida explícitamente. Ver § Mapa del sistema para las reglas de git de cada hermano.
 
-**Branch `tiempo-real`**: the real-time work is in this branch and in the matching `tiempo-real` branch of `sign-ai-backend` and `sign-ai-stt` (both cut from `develop`). The user authorised commit and push on those three branches.
+**Ya no existe la rama `tiempo-real`** (2026-10-14): el trabajo de tiempo real quedó mergeado en **`develop`** en los tres repos — acá, en `sign-ai-backend` y en `sign-ai-stt` — y `main` es un commit adelante con la nota al respecto. Si una sesión encuentra referencias a `tiempo-real` en documentación o mensajes viejos, están desactualizadas: la rama actual es `develop`.
 
 ## Neon
 
