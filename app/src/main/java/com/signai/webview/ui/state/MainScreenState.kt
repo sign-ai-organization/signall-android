@@ -619,7 +619,19 @@ class MainScreenState(
             }
 
             is BackendEvent.Transcript -> {
-                if (event.text.isBlank()) return
+                // An empty transcript is only ever meaningful as a `final`, and
+                // only in dictation: it is the STT saying "the utterance closed
+                // and it held no words", which is exactly what comes back when
+                // the mic goes off over noise. Dropping it here would leave
+                // `dictationOpen` set with nothing to clear it, so "Procesando..."
+                // would sit through the whole transcription timeout and then
+                // report a lost transcript for a phrase that never existed. It
+                // still has to reach the block below to cancel that timeout and
+                // send whatever the user did manage to dictate.
+                //
+                // Realtime keeps discarding it: there an empty frame closes
+                // nothing and would only blank the input.
+                if (event.text.isBlank() && !(event.dictation && event.final)) return
                 // Anything coming back means the round trip is alive, so the
                 // "no transcript arrived" guard is no longer needed.
                 processingJob?.cancel()
@@ -695,8 +707,14 @@ class MainScreenState(
      */
     private fun onDictationTranscript(event: BackendEvent.Transcript) {
         val live = joinWords(dictationBuffer, event.text)
-        inputText = live
-        transcript = live
+        // Only put words in the input. An empty final brings none, and writing
+        // "" over the field would wipe whatever the user had typed before
+        // turning dictation on and saying nothing into it — text they never
+        // sent, and there is no other way to get it back.
+        if (live.isNotBlank()) {
+            inputText = live
+            transcript = live
+        }
         if (!event.final) {
             dictationOpen = true
             return
@@ -704,7 +722,10 @@ class MainScreenState(
 
         dictationBuffer = live
         dictationOpen = false
-        metrics.onDictationUtterance(event.text)
+        // An empty final closes the phrase without adding anything to it, and a
+        // dictated phrase of zero words is not a phrase: counting it would put a
+        // phantom turn in the snapshot and in `dictated_frases`.
+        if (event.text.isNotBlank()) metrics.onDictationUtterance(event.text)
         // Sigue dictando: el texto queda en el input y nada más. El envío lo
         // dispara apagar el micrófono, no cada frase.
         if (dictationActive) return
