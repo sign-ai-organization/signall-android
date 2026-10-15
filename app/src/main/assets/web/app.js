@@ -54,15 +54,40 @@ let defaultSignUrl = DEFAULT_SIGN_URL;
 // ── Adelanto automático ──────────────────────────────────────────────────────
 //
 // Las 32 señas que hay exportadas duran 2.08-2.75 s cada una (promedio 2.15 s,
-// medido contra el manifest.json). Una persona habla a razón de 2-3 palabras
-// por segundo y cada palabra se traduce en una seña: si el muñeco firmara a
-// velocidad normal, con la primera frase ya está dos señas de atraso y nunca
-// alcanza. La traduzco-interpretación es rápida; la animación es el cuello de
-// botella.
+// medido contra el manifest.json) y cada palabra se traduce en una seña. La
+// traducción es rápida; la animación es el cuello de botella: si el muñeco
+// firmara siempre a velocidad normal, terminaría la frase después de que el
+// usuario terminó de decirla. Así que cuando la cola se acumula, el muñeco firma
+// más rápido. Dos señas de cola es el umbral: con una sola todavía se está al
+// día, y acelerar antes solo quitaría claridad a los movimientos.
 //
-// Así que cuando la cola se acumula, el muñeco firma más rápido. Dos señas de
-// cola es el umbral: con una sola todavía se está al día, y acelerar antes solo
-// quitaría claridad a los movimientos.
+// **Remedido con el flujo por oraciones** (2026-10-15, `tools/medir-retraso.py`,
+// las 28 frases de `../sign-ai-stt/fixtures/audio`): el adelanto **se queda**,
+// pero por un motivo distinto al que tenía este comentario.
+//
+// Lo que no cambió es el origen del desfase, que no es el modo de entrega sino
+// 2,15 s de animación contra la velocidad del habla. Medido: el avatar no
+// termina de firmar antes de que el usuario termine de hablar en 17 de las 28
+// frases, y con el adelanto puesto todavía en 7. Es la misma cuenta que antes,
+// porque cada palabra sigue siendo una seña.
+//
+// Lo que sí cambió es la forma de la cola. Con entrega por fragmento las señas
+// llegaban de a una durante el habla y la cola crecía sin parar; con entrega por
+// oración **la cola está vacía mientras el usuario habla y se llena de golpe al
+// cerrar la frase**. De ahí dos cosas:
+//
+//   - El adelanto ya no está prendido todo el tiempo, y está bien que no lo
+//     esté: acelerar un clip que ya va solo no aporta nada. Prende al caer el
+//     primer lote y se apaga cuando la cola baja de 2.
+//   - El umbral de 2 se mide **después** de que arranque la seña en curso
+//     (`queue.length - queueIdx - 1`), así que hace falta una frase de 3 señas o
+//     más para dispararlo. Con las 28 frases de prueba solo una lo dispara:
+//     son 28 frases cortas, de mediana 2 palabras y 1 seña.
+//
+// La conclusión es que **no hay que cambiar los números**: 1,26x de mediana está
+// justo en el borde y 1,6x lo cruza (mediana 0,79x con adelanto). Lo que no se
+// puede es prometer que el avatar firme al ritmo de la voz, y eso no lo arregla
+// este archivo: harían falta ~5x, que es un fast-forward, no una seña.
 const CATCHUP_BACKLOG = 2;
 const CATCHUP_FACTOR = 1.6;
 

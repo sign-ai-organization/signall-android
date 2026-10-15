@@ -12,13 +12,25 @@
 
 - **`verificar-tiempo-real.sh`** — **empezá por acá** si tocás el pipeline de
   voz. Un comando que corre la verificación completa: salud de los dos
-  servicios, las suites de lógica incremental y de protocolo, los 28 fixtures
-  de audio de punta a punta, las métricas y los chequeos del teléfono.
-  Falla si la primera seña se pasa del presupuesto de 2500 ms p95.
-- **`TIEMPO-REAL.md`** — la guía de pruebas del modo tiempo real: qué se midió y
+  servicios, el divisor de oraciones y el protocolo del WebSocket, los 28
+  fixtures de audio de punta a punta, las métricas y los chequeos del teléfono.
+  Falla si la primera seña del pipeline se pasa del presupuesto de 1200 ms p95.
+  Bloques: `contrato`, `fixtures`, `flujo`, `latencia`, `metricas`,
+  `dispositivo`, `todo`.
+- **`TIEMPO-REAL.md`** — la guía de pruebas del modo en vivo: qué se midió y
   cómo repetirlo, qué frases decir, cuáles de las 50 señas tienen animación,
   qué significa cada métrica, los problemas ya pisados y **qué no se verificó y
   por qué**.
+- **`medir-primera-sena.py`** — de dónde sale la primera seña. Reproduce los 28
+  fixtures por el socket, espera el `final`, manda la frase como `text` (lo que
+  hace la app) y mide dos tramos: del primer sample de audio a la seña, y de la
+  transcripción final a la seña — este último es `rt_first_sign_ms`. **Para
+  medir en frío hay que reiniciar el backend**: `SEMANTIC_CACHE_PRELOAD` deja la
+  caché en memoria y `DELETE FROM semantic_cache;` solo no alcanza.
+- **`medir-retraso.py`** — ¿el avatar alcanza a firmar mientras el usuario habla?
+  Compara, con las duraciones reales del `manifest.json`, cuánto tarda el usuario
+  en decir cada frase contra cuánto tarda el avatar en firmarla. Es lo que
+  sostiene (o no) el adelanto automático de `app.js`.
 - **`dev.sh`** — wrapper sobre `mobilecli` (mobile-next) para manejar el
   emulador Android. Lista, captura, toca, escribe, instala el APK,
   lanza/termina la app, lee logs, dump del UI tree.

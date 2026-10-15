@@ -100,7 +100,7 @@ fun MainScreen(state: MainScreenState) {
     }
 
     val onMic: () -> Unit = withMicPermission(state::toggleDictation)
-    val onRealtime: () -> Unit = withMicPermission(state::toggleRealtime)
+    val onLive: () -> Unit = withMicPermission(state::toggleLive)
 
     val showConversation = state.openDrawer == DrawerSide.Start
     val showSettings = state.openDrawer == DrawerSide.End
@@ -203,14 +203,17 @@ fun MainScreen(state: MainScreenState) {
                                 onSend = state::play,
                                 onMic = onMic,
                                 onOpenHistory = { showHistory = true },
-                                onRealtime = onRealtime,
+                                onLive = onLive,
                                 // Los dos son interruptores: quedan prendidos
                                 // hasta que se los toca de nuevo, así que su
                                 // estado visual y su habilitación vienen de acá y
                                 // no de `playbackState`, que con el micrófono
                                 // prendido pasa a `Signing` mientras firma.
                                 dictationActive = state.dictationActive,
-                                realtimeActive = state.realtimeActive,
+                                liveActive = state.liveActive,
+                                // Hay texto dictado esperando que el usuario
+                                // confirme el envío: el tercer estado de RF-UI-01.
+                                dictationReadyToSend = state.dictationReadyToSend,
                                 // El campo tiene la frase que la app ya mandó: se la
                                 // puede leer, pero no se la puede volver a mandar
                                 // (`STA-20`).

@@ -27,11 +27,16 @@ import okio.ByteString.Companion.toByteString
  *
  * - [sendAudio] streams the microphone as binary PCM; the backend owns the STT
  *   connection and answers with transcripts.
- * - [sendText] sends a phrase typed instead of spoken.
+ * - [sendText] sends the phrase to translate. **This is the only thing that gets
+ *   translated**: a transcript coming back the other way is text for the input,
+ *   and turning it into a phrase is this app's decision, not the server's (see
+ *   `BackendEvent.Transcript`).
  * - [sendEnd] tells the backend the utterance is over, so it can close the
  *   segment the STT has open (see [sendEnd]).
- * - [sendMode] says what to do with the voice: only transcribe it (dictation)
- *   or sign it while it is being spoken (real time).
+ *
+ * There is no "capture mode" frame. The app used to send one so the backend would
+ * know whether to transcribe or to sign; the backend does not need to know, and
+ * guessing wrong signed dictated phrases before the user confirmed them.
  *
  * [events] is a function, not a property: every call is a fresh cold flow, so
  * reconnecting means collecting it again.
@@ -85,7 +90,14 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         }
     }
 
-    /** Sends a typed phrase. Returns false when there is no live session. */
+    /**
+     * Sends the phrase to translate.
+     *
+     * Everything the avatar signs goes through here, whatever produced it: a
+     * phrase typed in the field, one the user confirmed from dictation, or one
+     * the `TR` switch sent on its own when the phrase closed. The backend only
+     * translates what arrives in this frame, which is what keeps RF-STT-03 true.
+     */
     fun sendText(text: String): Boolean {
         val payload = JSONObject().put("type", "text").put("text", text).toString()
         return socket?.send(payload) ?: false
@@ -111,26 +123,6 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
      */
     fun sendEnd(): Boolean {
         val payload = JSONObject().put("type", "end").toString()
-        return socket?.send(payload) ?: false
-    }
-
-    /**
-     * Dice qué hacer con lo que llega por el micrófono (spec `STA-16`).
-     *
-     * `false` es dictado: el backend devuelve la transcripción y nada más, el
-     * texto queda en el input y el usuario decide cuándo mandarlo a traducir.
-     * `true` es tiempo real: cada fragmento se traduce y se firma mientras la
-     * persona habla.
-     *
-     * El `end` de un cambio de modo va **antes** que este frame, para que el
-     * backend termine el utterance anterior con el modo con el que empezó
-     * (`Controller._utterance_mode`) y no con el que se acaba de prender.
-     */
-    fun sendMode(realtime: Boolean): Boolean {
-        val payload = JSONObject()
-            .put("type", "mode")
-            .put("mode", if (realtime) "realtime" else "dictation")
-            .toString()
         return socket?.send(payload) ?: false
     }
 
@@ -169,7 +161,6 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         "transcript" -> BackendEvent.Transcript(
             text = obj.optString("text"),
             final = obj.optBoolean("final"),
-            dictation = obj.optBoolean("dictation"),
         )
 
         "segment" -> {
@@ -178,14 +169,10 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
                 index = obj.optInt("index"),
                 total = obj.optInt("total"),
                 segment = parseSegment(segment),
-                stream = obj.optBoolean("stream"),
-                provisional = obj.optBoolean("provisional"),
-                sourceText = obj.optString("source_text"),
             )
             Log.d(
                 TAG,
-                "segment ${event.index} total=${event.total} stream=${event.stream} " +
-                    "provisional=${event.provisional} de=${event.sourceText} -> " +
+                "segment ${event.index}/${event.total} -> " +
                     event.segment.glosses.joinToString(",") { it.text },
             )
             event
@@ -197,9 +184,10 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
             message = obj.optString("message").ifBlank { DEFAULT_ERROR },
         )
 
-        // `trace` / `sentence_trace` are the debug-only pipeline timings.
-        // Ignoring every unknown type is what lets the backend add messages
-        // without breaking this client.
+        // `trace` / `sentence_trace` are the debug-only pipeline timings. Ignoring
+        // every unknown type is what lets the backend add messages without
+        // breaking this client — including the `mode` frame an older backend
+        // expects, which is now simply not sent and, if it arrives, not read.
         else -> null
     }
 
