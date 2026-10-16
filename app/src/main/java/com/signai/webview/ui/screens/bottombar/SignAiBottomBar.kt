@@ -320,7 +320,7 @@ fun SignAiBottomBar(
                 // etiqueta: atenuar la superficie entera —`soft` sobre `surface`,
                 // los dos casi blancos— no se veía.
                 val trContentColor = when {
-                    liveActive -> SignAiTheme.colors.onStrong
+                    liveActive -> SignAiTheme.colors.onLive
                     !liveEnabled -> SignAiTheme.colors.muted
                     else -> SignAiTheme.colors.text
                 }
@@ -329,7 +329,7 @@ fun SignAiBottomBar(
                     enabled = liveEnabled,
                     shape = SignAiShapes.cornerControl,
                     color =
-                        if (liveActive) SignAiTheme.colors.strong
+                        if (liveActive) SignAiTheme.colors.live
                         else SignAiTheme.colors.soft,
                     modifier = Modifier
                         .weight(1f)
@@ -394,7 +394,7 @@ private fun ControlIconButton(
     inactiveDescription: String = "",
 ) {
     val shape = SignAiShapes.cornerControl
-    val container = if (active) SignAiTheme.colors.strong else SignAiTheme.colors.soft
+    val container = if (active) SignAiTheme.colors.live else SignAiTheme.colors.soft
     // El apagado se marca apagando el **icono**, no la superficie entera.
     //
     // El relleno de estos dos botones es `soft` sobre una barra `surface`: al
@@ -403,7 +403,7 @@ private fun ControlIconButton(
     // pareciendo habilitado siendo que no lo estaba. Attenuar solo el contenido
     // deja el bloque gris bien visible y el icono se ve apagado.
     val tint = when {
-        active -> SignAiTheme.colors.onStrong
+        active -> SignAiTheme.colors.onLive
         !enabled -> SignAiTheme.colors.muted
         else -> SignAiTheme.colors.text
     }

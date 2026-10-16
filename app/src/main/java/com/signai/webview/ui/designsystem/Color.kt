@@ -92,6 +92,11 @@ data class Colors(
     val strong: Color,
     val onStrong: Color,
     val soft: Color,
+    // `live` marks "the app is capturing right now" (mic on, TR on). It is the one
+    // warm color in the palette, so the brand blue stays reserved for the main
+    // action and the controls instead of painting every active state.
+    val live: Color,
+    val onLive: Color,
 ) {
     // The prototype exposes `muted` separately from any Lumo token; map it to
     // the existing `textSecondary` so there is a single source of truth.
@@ -103,16 +108,17 @@ data class Colors(
 // overridden here:
 //   light  — background #f4f4f2, foreground #171717, muted #777773,
 //            line #deded9, surface rgba(255,255,253,.92), soft #e8e8e3
-// `primary` follows `strong` because the prototype has no blue accent and every
-// filled control uses the monochrome `strong`.
+// Exception (2026-10-16): the accent (`strong`/`primary`/`tertiary`) is the brand blue
+// #1c4cfc, as in dark, so both modes read as the same brand (5.47:1 on the
+// background, white on it 6.02:1). Everything else stays the prototype's.
 internal val LightColors =
     Colors(
-        primary = Color(0xFF171717),
-        onPrimary = Color(0xFFF4F4F2),
+        primary = Color(0xFF1C4CFC),
+        onPrimary = White,
         secondary = Color(0xFFDEDED9),
         onSecondary = Color(0xFF171717),
-        tertiary = Color(0xFF171717),
-        onTertiary = Color(0xFFF4F4F2),
+        tertiary = Color(0xFF1C4CFC),
+        onTertiary = White,
         // Prototype `--surface: rgba(255,255,253,.92)` is translucent because it
         // sits over a `backdrop-filter: blur(14px)` panel. Compose has no cheap
         // region blur, so we use the opaque composite over `background`
@@ -137,64 +143,64 @@ internal val LightColors =
         textDisabled = Color(0xFFB9B9B4),
         scrim = Black.copy(alpha = 0.28f),
         elevation = Black,
-        strong = Color(0xFF171717),
-        onStrong = Color(0xFFF4F4F2),
+        strong = Color(0xFF1C4CFC),
+        onStrong = White,
         soft = Color(0xFFE8E8E3),
+        live = Color(0xFFF2B84B),
+        onLive = Color(0xFF1C1503),
     )
 
-// Dark is the SignALL brand palette (rebrand 2026-10-16, owner approved). Only two
-// colors were given: `background` #0c142c and the accent #1c4cfc. The rest are
-// derived from them keeping the relationships the old dark palette had, so the UI
-// keeps its depth instead of turning into one flat navy:
+// Dark: graphite surfaces, brand blue only on the main action, amber for "live".
+// The 2026-10-16 rebrand first made every surface navy (#0c142c) and the team found
+// the app "too blue". The blue now lives only in `strong`/`primary` (Traducir,
+// switches, slider, cursor, splash bar); backgrounds are near-neutral graphite so
+// the avatar and the content carry the screen.
 //
-//   token      value      vs background   was (old dark, vs #111110)
-//   background  #0c142c        —          #111110
-//   surface     #141d3a      1.10:1       #1e1e1c   (1.13:1)
-//   soft        #1e2a4d      1.30:1       #292926   (1.30:1)
-//   outline     #263463      1.52:1       #32322f   (1.47:1)
-//   text        #ffffff     18.23:1       #f5f5f1  (16.10:1)
-//   muted       #a7b0c7      8.40:1       #969690   (6.35:1)
-//   strong      #1c4cfc      3.03:1       #f5f5f1  (16.10:1)
+//   token      value      vs background
+//   background  #121316        —          graphite, barely cool so it sits with the navy logo ink
+//   surface     #1a1b1f      1.08:1
+//   soft        #25272c      1.24:1
+//   outline     #33363d      1.54:1
+//   text        #f5f4f0     16.88:1       warm white
+//   muted       #a5a7ae      7.73:1
+//   strong      #1c4cfc      3.09:1       white on it is 6.02:1, so `onStrong = white`
+//   live        #f2b84b      10.38:1       dark `onLive` #1c1503 on it is 10.13:1
 //
-// `strong` is the accent and `primary` follows it, which moves the whole accent
-// role (filled CTA, active pill, switch, live dot, focused ring) to blue. Two
-// consequences to keep in mind:
-//   * White on the accent is 6.02:1, so filled controls keep `onStrong = white`.
-//   * The accent as a *thin mark* on a dark surface is only 2.3–2.8:1, so anywhere
-//     it is an icon or a hairline it reads better as `text`. That is why the
-//     character picker's checkmark is white and not `strong`.
+// The accent as a *thin mark* on a dark surface is only ~2.3-2.8:1, so icons and
+// hairlines read better as `text` (that is why the character picker's checkmark is
+// white and not `strong`).
 internal val DarkColors =
     Colors(
         primary = Color(0xFF1C4CFC),
         onPrimary = White,
-        secondary = Color(0xFF1E2A4D),
-        onSecondary = White,
+        secondary = Color(0xFF25272C),
+        onSecondary = Color(0xFFF5F4F0),
         tertiary = Color(0xFF1C4CFC),
         onTertiary = White,
-        surface = Color(0xFF141D3A),
-        onSurface = White,
+        surface = Color(0xFF1A1B1F),
+        onSurface = Color(0xFFF5F4F0),
         error = Red400,
         onError = Black,
         success = Green700,
         onSuccess = Black,
-        disabled = Color(0xFF1B2440),
-        onDisabled = Color(0xFF8E99B8),
-        background = Color(0xFF0C142C),
-        onBackground = White,
-        outline = Color(0xFF263463),
+        disabled = Color(0xFF1E2024),
+        onDisabled = Color(0xFF8A8D95),
+        background = Color(0xFF121316),
+        onBackground = Color(0xFFF5F4F0),
+        outline = Color(0xFF33363D),
         transparent = Color.Transparent,
         white = White,
         black = Black,
-        text = White,
-        textSecondary = Color(0xFFA7B0C7),
-        textDisabled = Color(0xFF5A6588),
-        // The old 0.28 black scrim barely dims a navy background; 0.40 does the job
-        // the backdrop dimmer did before.
+        text = Color(0xFFF5F4F0),
+        textSecondary = Color(0xFFA5A7AE),
+        textDisabled = Color(0xFF5E6169),
         scrim = Black.copy(alpha = 0.40f),
         elevation = Black,
         strong = Color(0xFF1C4CFC),
         onStrong = White,
-        soft = Color(0xFF1E2A4D),
+        soft = Color(0xFF25272C),
+        live = Color(0xFFF2B84B),
+        onLive = Color(0xFF1C1503),
     )
 
 val LocalColors = staticCompositionLocalOf { LightColors }

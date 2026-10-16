@@ -165,7 +165,7 @@ const scene = new THREE.Scene();
 // `DarkColors.background` en ui/designsystem/Color.kt. El canvas es la
 // superficie mas grande de la app, asi que si queda en el color viejo la
 // paleta nueva se ve solo en los controles.
-scene.background = new THREE.Color(0x0c142c);
+scene.background = new THREE.Color(0x121316);
 
 // Encuadre por defecto. La cámara y el punto de mira se suben **juntos**, por
 // el mismo `FRAME_LIFT`: eso deja el ángulo con el que se mira al muñeco
@@ -205,13 +205,13 @@ fill.position.set(-2, 1, 1.5);
 scene.add(fill);
 // Grilla del suelo: `soft` de la misma paleta (#1e2a4d), que sobre el fondo
 // queda tan sutil como la #1e2130 lo era sobre el fondo anterior.
-const grid = new THREE.GridHelper(4, 8, 0x1e2a4d, 0x1e2a4d);
+const grid = new THREE.GridHelper(4, 8, 0x25272c, 0x25272c);
 grid.visible = false; // por defecto sin grilla (suelo)
 scene.add(grid);
 
 // Fondo opcional (bosque): se carga una vez, se activa vía SignAI.setBackground(true)
 // El mismo fondo que arriba; `setTheme` alterna entre este y el claro del prototipo.
-const BG_COLOR = new THREE.Color(0x0c142c);
+const BG_COLOR = new THREE.Color(0x121316);
 const BG_LIGHT = new THREE.Color(0xf4f4f2);
 let bgTexture = null;
 let showBg = false;
