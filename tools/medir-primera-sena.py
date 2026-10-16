@@ -124,10 +124,38 @@ def p50(vals):
     return statistics.median(vals)
 
 
+async def estado_cache() -> int | None:
+    """Filas que tiene la caché semántica ahora, para poder etiquetar la corrida.
+
+    Sin esto la salida no se puede interpretar: una corrida con la caché llena
+    mide el lookup y una con la caché vacía mide la llamada al LLM, y los dos
+    números se parecen (p50 1 ms contra p50 273 ms) pero significan cosas
+    distintas. Es exactamente la confusión que hace inútil un número suelto.
+    """
+    import urllib.request
+
+    url = URL.replace("ws://", "http://").replace("/ws/translate", "/health")
+    try:
+        with urllib.request.urlopen(url, timeout=5) as resp:
+            return json.load(resp).get("cache_rows")
+    except Exception:                                   # noqa: BLE001
+        return None
+
+
 async def main() -> None:
     print(f"=== primera seña, flujo por oraciones ({URL}) ===")
     if not AUDIO.exists():
         sys.exit(f"no están los fixtures en {AUDIO}")
+
+    filas_cache = await estado_cache()
+    if filas_cache == 0:
+        print("  caché semántica VACÍA — esto mide la llamada al LLM (frío)")
+    elif filas_cache:
+        print(f"  caché semántica con {filas_cache} filas — esto mide el lookup (caliente).")
+        print("  Para medir en frío: DELETE FROM semantic_cache; y `docker compose restart backend`,")
+        print("  porque SEMANTIC_CACHE_PRELOAD deja la copia en memoria (ver tools/TIEMPO-REAL.md §1).")
+    else:
+        print("  (no se pudo leer /health: el estado de la caché es desconocido)")
 
     filas = []
     fallos = []
@@ -173,8 +201,10 @@ async def main() -> None:
     print(f"oraciones por frase: p50 {p50([f['oraciones'] for f in filas]):.0f}, "
           f"máx {max(f['oraciones'] for f in filas)}")
 
-    json.dump(filas, open("/tmp/opencode/primera_sena.json", "w"), indent=1)
-    print("\nfilas crudas en /tmp/opencode/primera_sena.json")
+    destino = Path(f"/tmp/opencode/primera_sena_{'frio' if filas_cache == 0 else 'caliente'}.json")
+    json.dump({"cache_rows_al_empezar": filas_cache, "filas": filas},
+              destino.open("w"), indent=1)
+    print(f"\nfilas crudas en {destino}")
 
 
 if __name__ == "__main__":
