@@ -5,7 +5,7 @@
          Without this, MIUI inverts text drawn inside hardware layers (scroll
          containers, drawers): dark text renders white while solid boxes stay
          correct. Do not remove. -->
-    <style name="Theme.SignAIWebView" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.SignALL" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>

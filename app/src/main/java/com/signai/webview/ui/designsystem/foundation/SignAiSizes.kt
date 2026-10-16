@@ -29,7 +29,19 @@ object SignAiSizes {
     val logoTileSize = 68.dp
     val settingsLogoSize = 40.dp
     val miniAvatarSize = 42.dp
-    val characterTriggerHeight = 42.dp
+
+    /**
+     * Tamaño del dropdown de Personaje, en vez de "lo que sobra de la fila".
+     *
+     * Antes el ancho lo medía el espacio que dejaba la etiqueta de `SettingRow`, así
+     * que el control cambiaba de ancho según el texto de al lado ("Personaje" contra
+     * "Cámara libre (orbitar + zoom)"). El owner lo ajustó dos veces: primero −5%
+     * (208 dp medidos → 196), después −15% más (196 → 167 dp de ancho y 42 → 36 dp de
+     * alto, que además lo deja a la altura de los botones del stepper de ACCESIBILIDAD).
+     */
+    val characterTriggerWidth = 167.dp
+    val characterTriggerHeight = 36.dp
+
     val settingRowMinHeight = 50.dp
     val historyItemMinHeight = 55.dp
     val switchWidth = 43.dp

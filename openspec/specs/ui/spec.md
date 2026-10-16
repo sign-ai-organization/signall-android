@@ -50,15 +50,16 @@ Main.
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| SPL-1 | Logo tile "S" | `[P]` | Cuadrado redondeado oscuro con "S" blanca. |
-| SPL-2 | Eyebrow "SEÑA"*¹ | `[P]` | Texto pequeño en mayúsculas, tracking amplio, debajo del logo. |
+| SPL-1 | Wordmark "SignALL" | `[N]` | Logotipo **real** de la marca (`logo_signall_on_{light,dark}.png`), no una tile con la letra "S". Dos variantes: azul marino para tema claro, blanca para oscuro, elegidas por `LocalIsDarkTheme`. Ver `BRD-1`/`BRD-5`. |
+| SPL-2 | Eyebrow "SEÑA"*¹ | `[N]` | **Quitado** del splash (owner, 2026-10-16): el wordmark ya dice el nombre y el eyebrow competía con él. Sigue en About (`BRD-2`). |
 | SPL-3 | Barra de progreso | `[P]` | Track + valor que avanza de 0% a 100%. |
 | SPL-4 | Porcentaje numérico | `[P]` | `{n}%` debajo de la barra. |
 | SPL-5 | Progreso real | `[N]` | En la app el progreso se ata a `WebChromeClient.onProgressChanged` (no fake). |
-| SPL-6 | Timeout de seguridad | `[A]` | Si el WebView no carga (sin internet para el CDN), salir del splash a los 8 s. |
+| SPL-6 | Timeout de seguridad | `[A]` | Si el WebView no carga (sin internet para el CDN), salir del splash a los 8 s. El timeout se **rearma en cada arranque del splash**, no solo en el primero: volver de Acerca de vuelve a poner `loading = true` y su propio timeout tiene que cubrir esa recarga (`SPL-8`). |
 | SPL-7 | Fade de salida | `[A]` | El splash se desvanece (400 ms) al terminar; el contenido entra con fade (500 ms). |
+| SPL-8 | Splash también al volver de About | `[A]` | Acerca de saca el `AvatarWebView` de la composición (es exclusivo, `NAV-8`), así que al volver se crea uno nuevo y hay que volver a descargar y parsear el GLB de 10 MB: se veía el canvas vacío durante segundos. Al volver de About se levanta el splash otra vez y se espera al `avatarReady` real (owner, 2026-10-16). |
 
-\*¹ El texto del branding está **abierto** (ver `BRD-1`).
+\*¹ El texto del branding ya no está abierto: es **"SignALL"** (ver `BRD-1`). El texto de la fila es lo que el prototipo traía y lo que el owner quitó del splash (`SPL-2`).
 
 ---
 
@@ -69,6 +70,7 @@ Main.
 | EDG-1 | Pestaña borde **izquierdo** | `[P]` | Abre Conversación; visible con drawer cerrado. |
 | EDG-2 | Pestaña borde **derecho** | `[P][A]` | Abre Ajustes; visible con drawer cerrado. |
 | EDG-3 | Click en pestaña abre drawer | `[P]` | Tap directo (sin arrastrar) abre el drawer correspondiente. |
+| EDG-3b | Hitbox de la pestaña ≠ dibujo | `[A]` | El tab **se dibuja** de 20 dp pegado al borde (el diseño no cambia), pero el nodo que recibe el toque es mucho más ancho: +28 dp hacia adentro del ancho del strip (`handleHitPadding`), o sea 76 dp cerrado y 100 dp con el panel abierto. Motivo: MIUI se come los primeros ~15 dp de cada lado con sus gestos de sistema y 48 dp de zona útil no se acertaban en el Redmi Note 9S (owner, 2026-10-16). El `contentAlignment` mantiene el tab pegado al borde, así que el extra queda invisible. |
 | EDG-4 | **Drag** desde pestaña | `[P]` | Arrastrar la pestaña sigue el dedo; offset acotado 0–300. |
 | EDG-5 | Umbral de apertura por drag | `[P]` | Soltar con offset `> 90` abre; si no, vuelve. |
 | EDG-6 | **Drag preview** | `[P]` | Panel translúcido que sigue el dedo con label "Conversación"/"Ajustes". |
@@ -163,9 +165,9 @@ Main.
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| SET-1 | Header con logo | `[P]` | Logo tile "S"*¹ + cerrar. |
+| SET-1 | Header con logo | `[N]` | Tile con el **icono real de la marca** (`ic_signall.png`) + cerrar. Ver `BRD-5`. |
 | SET-2 | Sección **AVATAR** | `[P]` | Título de sección. |
-| SET-3 | **Personaje** (picker) | `[P]` | Dropdown con Julián, Samuel, Ximena, Gris + dots de color + check del seleccionado. Ver `PER-*`. |
+| SET-3 | **Personaje** (picker) | `[P]` | Dropdown con Julián, Samuel, Ximena + dots de color + check del seleccionado. Ver `PER-*`. |
 | SET-4 | **Velocidad de señas** | `[P]` | Slider 10–100 (ícono SpeakerHigh). |
 | SET-5 | Sección **ACCESIBILIDAD** | `[P]` | Ver `ACC-*`. |
 | SET-6 | Sección **APARIENCIA** | `[P]` | Ver `APP-*`. |
@@ -173,14 +175,16 @@ Main.
 | SET-8 | Sección **AVANZADO** | `[A][N]` | Al final: Modo debug, Cámara libre, Suelo (grilla), Fondo bosque, selector de Seña. |
 | SET-9 | Fila de setting reutilizable | `[N]` | Ícono + label + control (switch/slider), min-height 50. |
 | SET-10 | Dropdown de personaje | `[P]` | Trigger con chevron que rota al abrir; menú anclado con animación `dropdown-in`. |
+| SET-11 | Menú **debajo** del trigger | `[A]` | Las opciones se abren **debajo** del botón y con su mismo ancho, no flotando descuadrado. El `Popup` de Compose ignora `alignment`/`offset` en Android 11: la ventana se estira a `fillMaxSize()` y el menú seUbica con un `offset` normal medido contra `view.rootView.getLocationOnScreen`. Si no cabe abajo, **sube**. |
+| SET-12 | Menú largo scrolleable | `[A]` | El selector de Seña tiene 32 opciones y no entraban todas: la lista interna lleva `verticalScroll`. Es el mismo `Dropdown` del picker de Personaje (`SET-11`), que por eso no podía llegar a la opción 27+. |
 
 ### 8.1 Personajes (picker UI-only)
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| PER-1 | 4 personajes | `[P]` | Julián, Samuel, Ximena, Gris; default **Gris**. |
-| PER-2 | Dots de color | `[P]` | Cada personaje con su color (Julián `#765044`, Samuel `#303843`, Ximena `#a46b54`, Gris `#9a9a94`). |
-| PER-3 | Check del seleccionado | `[P]` | Ícono check en la opción activa. |
+| PER-1 | 3 personajes | `[N]` | Julián, Samuel, Ximena; default **Julián**. Se ofreció un cuarto, "Gris", que no correspondía a nada: `Character` nunca llega a la escena 3D (el avatar es siempre `models/avatar.glb`), así que la opción además era el **default** y la primera pantalla anunciaba un muñeco que no se veía (owner, 2026-10-16). |
+| PER-2 | Dots de color | `[P]` | Cada personaje con su color (Julián `#765044`, Samuel `#303843`, Ximena `#a46b54`). |
+| PER-3 | Check del seleccionado | `[P]` | Ícono check en la opción activa. En **dark** el check va en `colors.text` (blanco) y no en `strong`: el acento `#1c4cfc` sobre la superficie oscura da 2.8:1, por debajo de 3:1. |
 | PER-4 | **UI-only** | `[N]` | La selección **no** cambia el GLB todavía; queda lista para futuros avatares. Persistir la elección. |
 | PER-5 | Semántica listbox | `[P]` | Roles listbox/option, `aria-expanded`, `aria-selected`. |
 
@@ -190,7 +194,7 @@ Main.
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| ACC-1 | **Tamaño de interfaz** (slider) | `[P]` | Escala de la UI. En el prototipo no estaba cableado; en la app debe tener efecto real. |
+| ACC-1 | **Tamaño de interfaz** (stepper) | `[P]` | Escala de la UI (`interfaceSize` 0–100 → `uiScale` 0.9–1.1). El owner cambió la barra por **botones − / +** el 2026-10-16: en un drawer angosto y con la fuente escalada apuntar a un valor exacto es difícil, y no había forma de saber en qué punto se estaba. Pasa de a 5 (0.01 de densidad) con el valor actual en negrita **centrado entre los dos botones**; `−` deshabilitado en 0 y `+` en 100, con `contentDescription` propio en cada botón. |
 | ACC-2 | **Texto en negrita** | `[P]` | Aumenta el peso tipográfico global. |
 | ACC-3 | **Contraste aumentado** | `[P]` | Sube el contraste de líneas/bordes (`--line`). |
 | ACC-4 | **Texto más grande** | `[P]` | Aumenta el tamaño base de fuente. |
@@ -205,11 +209,11 @@ Main.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | APP-1 | **Modo claro** | `[P]` | Tema claro con su paleta. |
-| APP-2 | **Modo oscuro** | `[P][A]` | Tema oscuro con la paleta oscura del prototipo. **El default de la app es claro** (`Settings.darkTheme = false`). |
+| APP-2 | **Modo oscuro** | `[P][A]` | Tema oscuro con **la paleta de marca SignALL** (`#0c142c` fondo, `#1c4cfc` acento, texto blanco), no la del prototipo. **El default de la app ahora es oscuro** (`Settings.darkTheme = true`, owner 2026-10-16). El tema claro conserva los tokens del prototipo tal cual. |
 | APP-3 | **Switch de tema** | `[P]` | Alterna; el ícono/label cambia (Moon ↔ Sun, "Modo oscuro" ↔ "Modo claro"). |
 | APP-4 | Tokens de color temables | `[P]` | `background`, `foreground/text`, `muted`, `line/outline`, `surface`, `strong`, `soft`, `primary`. |
 | APP-5 | Transición de tema | `[P]` | Cambio de color suave (250 ms). |
-| APP-6 | Branding centralizado | `[N]` | Wordmark en un único lugar para cambiar "SignAI" ↔ "Seña" trivialmente (ver `BRD-1`). |
+| APP-6 | Branding centralizado | `[N]` | Nombre, iconos y wordmark en **un solo lugar** (`SignAiBranding`): `Name`, `Eyebrow`, `Icon`, `logo(darkTheme)`. Ver `BRD-1`. |
 | APP-7 | Persistencia del tema | `[N]` | Recordar la elección entre sesiones. |
 
 ### 10.1 Paleta del prototipo (referencia)
@@ -271,7 +275,7 @@ placeholder local se eliminó.
 | GLS-2 | Tipo de frase | `[N]` | `PhraseType` (los 5 valores del backend) + `UNKNOWN` para no crashear ante un valor nuevo. Alimenta los marcadores no manuales. |
 | GLS-3 | Glosa no disponible | `[N]` | `available == false` → la glosa no se reproduce y se reporta en el caption (RF-CAT-03). |
 | GLS-4 | Transcripción del backend | `[N]` | El evento `transcript` se refleja en el input, para poder corregirlo antes de reenviar (RF-UI-02). |
-| GLS-5 | Fallback de seña de prueba | `[N]` | Con el catálogo vacío toda glosa llega desconocida. El ajuste "Seña de prueba si falta en el catálogo" hace que use la seña horneada del APK, para poder ver la cola. **Sigue en `true` por defecto aunque el catálogo ya esté sembrado**: es lo que hace que las 18 señas sin animación (`0032`–`0049`) muestren algo en vez de "Seña no disponible". Apagarlo activa `GLS-3` para ellas. |
+| GLS-5 | Fallback de seña de prueba | `[N]` | Con el catálogo vacío toda glosa llega desconocida. El ajuste "Seña de prueba si falta en el catálogo" hace que use la seña horneada del APK, para poder ver la cola. **Apagado por defecto** (`Settings.demoSignFallback = false`) desde el 2026-10-16: con el catálogo sembrado el fallback solo alcanzaba a las 18 señas sin animación (`0032`–`0049`), y el owner lo pidió así de corto — "Seña de prueba si falta", sin "en el catálogo" (la fila se partía en dos líneas y el switch se encima). Encendido, esas 18 glosas firman con la seña horneada; apagado cae al sign por defecto vía `GLS-10`. |
 | GLS-9 | Resolución de la ruta del asset | `[N]` | `glb_animation_path` del backend es un path **same-origin dentro del APK** (`signs/<id>.glb`), porque las animaciones se empaquetan y no se sirven por HTTP. `SignsCatalog.localAssetOrNull()` lo reconoce —validándolo contra `available`— y devuelve el path tal cual para que la escena lo cargue directo; cualquier otra cosa cae al camino de descarga de `SignAssetRepository`, que es donde viviría un asset futuro alojado en el backend. Sin esto el backend devolvería una ruta que su propio servidor no tiene, la descarga daría 404 y **todas** las glosas caerían al sign por defecto. Verificado en el Redmi: cola de 3 señas reproducida con **cero** peticiones HTTP y sin directorio de caché. |
 | GLS-10 | Anunciada pero no exportada | `[N]` | `SignsCatalog.isOwnAssetPath()` distingue "no es un path nuestro" de "es nuestro pero todavía no lo exportamos". Una glosa de las 18 sin animación (`0032`–`0049`) llega con `available == true` y un `signs/<id>.glb` que no tenemos: es nuestro layout, así que **nadie** lo va a servir por HTTP, y pedirlo es un 404 garantizado en cada frase que la mencione. Va directo al sign por defecto sin tocar la red. Solo un path fuera del layout `signs/*.glb` baja por `SignAssetRepository`. Medido en el Redmi contra el mock: **2 peticiones y 2 × 404 sin este requisito, 0 con él**, sobre la misma frase y las mismas glosas. |
 | GLS-6 | Placeholder eliminado | `[N]` | `domain/Gloss.kt` (`glossFor`) se borró: era una aproximación que ya no se usa. |
@@ -368,11 +372,12 @@ se instrumentó es un número que no se puede afirmar que mejoró.
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
-| BRD-1 | Nombre de la app — **ABIERTO** | `[P]` | Se mantiene **"SignAI"** por ahora; **seguramente cambiará** (prototipo: "Seña"). Debe ser una **constante/string resource única** (logo, eyebrow, títulos). |
-| BRD-2 | Pantalla About | `[P]` | Logo, título, copy "Una herramienta que transforma tus frases en español a Lengua de Señas Colombiana mediante un avatar 3D." |
-| BRD-3 | Meta del About | `[P]` | "Proyecto de tesis" · "Pontificia Universidad Javeriana" · "Versión 1.0". |
-| BRD-4 | Versión dinámica | `[N]` | "Versión 1.0" debe leer de `BuildConfig.VERSION_NAME`, no hardcodeado. |
-| BRD-5 | Icono de lanzador propio | `[N]` | La app tenía el icono por defecto de Android. Ahora usa la "S" de `SignAiBranding.LogoLetter` como trazo geométrico: adaptive icon (`mipmap-anydpi-v26`, tile `#171717` + S `#F5F5F1`) y fallback plano para API < 26 (`drawable/ic_launcher.xml`). Ver `drawable/ic_launcher_foreground.xml`. |
+| BRD-1 | Nombre de la app | `[N]` | **"SignALL"**, decidido por el owner el 2026-10-16 (cierra el "ABIERTO" que decía "SignAI … seguramente cambiará"). Vive en **un solo lugar**: `SignAiBranding.Name` dentro de la app y `strings.xml/app_name` para el lanzador, que no puede leer Kotlin. El paquete `com.signai.webview` **no** se renombró: no es visible para el usuario y renombrarlo cambia la identidad de la app instalada. |
+| BRD-2 | Pantalla About | `[P]` | Tile con el icono de la marca, eyebrow, título y copy "Una herramienta que transforma tus frases en español a Lengua de Señas Colombiana mediante un avatar 3D." |
+| BRD-3 | Meta del About | `[P]` | "Proyecto de tesis" · "Pontificia Universidad Javeriana" · "Versión 1.0.0". |
+| BRD-4 | Versión dinámica | `[N]` | "Versión 1.0.0" lee de `BuildConfig.VERSION_NAME`, no hardcodeado. `versionName` pasó de `1.0.0-webview` a `1.0.0` con el rename: ese sufijo era la última aparición de "WebView" que el usuario podía leer. |
+| BRD-5 | Icono de lanzador propio | `[N]` | Icono de marca real (mano blanca sobre azul `#1c4cfc`), generado por `tools/generar-marca.py` desde el PNG maestro. Adaptive icon con `<foreground>` (malla vectorizada con potrace, viewport 108 con la mano dentro del 18..90) y `<monochrome>` para el tema monocromático de Android 13+, `ic_launcher_background = #1C4CFC`, y fallback plano para API < 26 (`drawable-xxhdpi/ic_signall.png` → `drawable/ic_launcher.xml`). El **mismo** PNG es la tile del header de Ajustes y del About. |
+| BRD-6 | Sin la palabra "WebView" | `[N]` | El owner pidió no volver a verla (2026-10-16): se fue de `versionName`, del tema (`Theme.SignAIWebView` → `Theme.SignALL`) y de la documentación visible. Queda solo en el paquete/`applicationId`, que el usuario no ve (ver `BRD-1`). |
 
 ---
 

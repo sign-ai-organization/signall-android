@@ -17,6 +17,12 @@ import com.signai.webview.ui.theme.SignAiTheme
 /**
  * Reusable settings row (spec `SET-9`): optional icon + label on the left, any
  * control on the right. Min height 50.
+ *
+ * La etiqueta lleva `weight(1f)` y por dentro el texto también, así que es lo único
+ * que cede espacio: sin eso una etiqueta larga ("Seña de prueba si falta en el
+ * catálogo") se pasaba de largo y el switch quedaba **encima** del texto, porque
+ * `SpaceBetween` sin pesos no recorta a nadie. Con el peso, la etiqueta envuelve y el
+ * control queda siempre de tamaño natural y pegado a la derecha.
  */
 @Composable
 fun SettingRow(
@@ -33,6 +39,7 @@ fun SettingRow(
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Row(
+            modifier = Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(11.dp),
         ) {
@@ -48,6 +55,7 @@ fun SettingRow(
                 text = label,
                 style = SignAiTheme.typography.body2,
                 color = SignAiTheme.colors.text,
+                modifier = Modifier.weight(1f),
             )
         }
         content()

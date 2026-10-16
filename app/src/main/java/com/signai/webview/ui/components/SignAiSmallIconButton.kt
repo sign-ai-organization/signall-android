@@ -23,6 +23,11 @@ import com.signai.webview.ui.theme.SignAiTheme
  * The prototype has two sizes: `.icon-button.small` (36dp, radius 12) and the
  * plain `.icon-button` (50dp, radius 16, used as About's back button), hence
  * [shape] is configurable.
+ *
+ * [enabled] exists for the steppers: a button that has nothing left to do (the "−" at
+ * the minimum) should not look or behave like a live control, and `contentDescription`
+ * alone is not enough for a screen reader either — the node goes to
+ * `disabled`/`notEnabled` and stops being clickable.
  */
 @Composable
 fun SignAiSmallIconButton(
@@ -32,9 +37,11 @@ fun SignAiSmallIconButton(
     modifier: Modifier = Modifier,
     size: Dp = SignAiSizes.iconButtonSmall,
     shape: Shape = SignAiShapes.cornerIcon,
+    enabled: Boolean = true,
 ) {
     Surface(
         onClick = onClick,
+        enabled = enabled,
         shape = shape,
         color = SignAiTheme.colors.soft,
         modifier = modifier
@@ -49,7 +56,11 @@ fun SignAiSmallIconButton(
                 imageVector = icon,
                 contentDescription = null,
                 size = 18.dp,
-                tint = SignAiTheme.colors.text,
+                tint = if (enabled) {
+                    SignAiTheme.colors.text
+                } else {
+                    SignAiTheme.colors.textDisabled
+                },
             )
         }
     }

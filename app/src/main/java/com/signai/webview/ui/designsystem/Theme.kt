@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
@@ -25,6 +26,17 @@ object SignAiTheme {
 }
 
 private val HighContrastLine = Color(0xFF777777)
+
+/**
+ * Whether the app is currently in the dark theme.
+ *
+ * It exists because one asset changes with the theme and cannot be a token: the
+ * wordmark is a raster whose "Sign" half is navy, and navy disappears on the dark
+ * background. Components read this instead of taking a `darkTheme` parameter, which
+ * would have to be threaded down from `MainActivity` through every screen for one
+ * image.
+ */
+val LocalIsDarkTheme = staticCompositionLocalOf { false }
 
 @Composable
 fun SignAiTheme(
@@ -51,6 +63,7 @@ fun SignAiTheme(
 
     CompositionLocalProvider(
         LocalColors provides colors,
+        LocalIsDarkTheme provides isDarkTheme,
         LocalTypography provides typography,
         LocalIndication provides rippleIndication,
         LocalTextSelectionColors provides selectionColors,

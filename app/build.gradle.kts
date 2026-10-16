@@ -23,7 +23,7 @@ android {
         minSdk = 26
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0.0-webview"
+        versionName = "1.0.0"
         buildConfigField("String", "BACKEND_WS_URL", "\"$backendWsUrl\"")
     }
 

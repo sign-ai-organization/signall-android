@@ -59,6 +59,20 @@
   copiando las rotaciones de la cadena de brazos del primer keyframe de
   `signs/0029_0000_0000.glb`. Idempotente, y frena la corrida si el export no es
   la pose de bind (ahí deformaría la malla en silencio).
+- **`generar-marca.py`** — genera **los assets de la marca** desde los dos PNG
+  maestros de la raíz (`Icono-SingALL.png`, `Logo-SingALL.png`). Escribe el
+  adaptive icon (`ic_launcher_foreground.xml` + `ic_launcher_monochrome.xml` +
+  `ic_launcher{,_legacy,_round}.xml`), `drawable-xxhdpi/ic_signall.png`, las dos
+  variantes del wordmark (`logo_signall_on_light/on_dark.png`), y parchea
+  `ic_launcher_background` en `values/colors.xml` y `app_name` en
+  `values/strings.xml`. **Correrlo solo si cambian los maestros**: ni
+  `ic_launcher_foreground.xml` ni los PNG se editan a mano. Necesita **potrace**
+  y **Pillow** (los vectoriza); verifica solo que la curva trazada caiga dentro
+  de la máscara y que la mano entre en el recuadro 18..90 del viewport.
+  ⚠️ potrace escribe **polybezier**: un path con muchas groups, y **cada group es
+  relativo a su propio arranque**, no encadenado con el anterior, en un espacio
+  `y` para arriba (`translate(0,H) scale(1,-1)`). Interpretarlo mal da una mano
+  plausible y equivocada — por eso están los asserts del bbox.
 
   ```bash
   python3 tools/rest_pose.py --dry-run   # el informe, sin escribir
