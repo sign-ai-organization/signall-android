@@ -113,6 +113,16 @@ fun SignAiEdgeDrawer(
     // Grab strip of the OPEN drawer: wider than the closed-side strip, since
     // this one is an actual drag handle and not just a screen-edge swipe zone.
     handleDragWidth: Dp = 72.dp,
+    // ZONA TÁCTIL INVISIBLE de la pestaña, extra **hacia adentro de la pantalla**.
+    //
+    // El dibujo del tab son 20dp pegados al borde, y MIUI se come los primeros ~15dp
+    // de cada lado con sus gestos de sistema: del ancho útil quedaban muy poco y en el
+    // Redmi Note 9S el owner no lograba abrir los paneles (2026-10-16). Esto suma ancho
+    // solo al nodo que recibe el toque — el tab sigue siendo 20x62dp, con la misma
+    // sombra y el mismo grip, y `contentAlignment` lo mantiene pegado al borde porque el
+    // Box crece hacia el interior. Es el mismo truco que en un iPhone: la Diana es chica
+    // a la vista y grande al dedo.
+    handleHitPadding: Dp = 28.dp,
     edgeStripBottomExclusion: Dp = 0.dp,
     previewLabel: String = "",
     // The other drawer is the one on screen. The open gestures (edge strip and
@@ -491,7 +501,10 @@ fun SignAiEdgeDrawer(
                         tabOffsetY.roundToPx(),
                     )
                 }
-                .width(if (isOpen) handleDragWidth else edgeStripWidth)
+                // La zona táctil es más ancha que el dibujo: el tab se sigue
+                // dibujando con `contentAlignment` pegado al borde y el ancho extra
+                // queda hacia adentro de la pantalla (ver [handleHitPadding]).
+                .width((if (isOpen) handleDragWidth else edgeStripWidth) + handleHitPadding)
                 .height(160.dp)
                 .graphicsLayer { alpha = enabledFraction }
                 .then(

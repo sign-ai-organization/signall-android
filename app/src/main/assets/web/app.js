@@ -159,7 +159,11 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0d0f1a);
+// Fondo del tema oscuro = la marca (SignALL): el mismo #0c142c que
+// `DarkColors.background` en ui/designsystem/Color.kt. El canvas es la
+// superficie mas grande de la app, asi que si queda en el color viejo la
+// paleta nueva se ve solo en los controles.
+scene.background = new THREE.Color(0x0c142c);
 
 // Encuadre por defecto. La cámara y el punto de mira se suben **juntos**, por
 // el mismo `FRAME_LIFT`: eso deja el ángulo con el que se mira al muñeco
@@ -197,12 +201,15 @@ scene.add(key);
 const fill = new THREE.DirectionalLight(0xffffff, 0.6);
 fill.position.set(-2, 1, 1.5);
 scene.add(fill);
-const grid = new THREE.GridHelper(4, 8, 0x1e2130, 0x1e2130);
+// Grilla del suelo: `soft` de la misma paleta (#1e2a4d), que sobre el fondo
+// queda tan sutil como la #1e2130 lo era sobre el fondo anterior.
+const grid = new THREE.GridHelper(4, 8, 0x1e2a4d, 0x1e2a4d);
 grid.visible = false; // por defecto sin grilla (suelo)
 scene.add(grid);
 
 // Fondo opcional (bosque): se carga una vez, se activa vía SignAI.setBackground(true)
-const BG_COLOR = new THREE.Color(0x0d0f1a);
+// El mismo fondo que arriba; `setTheme` alterna entre este y el claro del prototipo.
+const BG_COLOR = new THREE.Color(0x0c142c);
 const BG_LIGHT = new THREE.Color(0xf4f4f2);
 let bgTexture = null;
 let showBg = false;

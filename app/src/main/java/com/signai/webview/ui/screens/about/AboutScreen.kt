@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.signai.webview.BuildConfig
 import com.signai.webview.ui.SignAiBranding
+import com.signai.webview.ui.components.SignAiBrandTile
 import com.signai.webview.ui.components.SignAiSmallIconButton
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
@@ -55,22 +56,10 @@ fun AboutScreen(
                 .padding(start = 26.dp, end = 26.dp, top = 115.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Box(
-                modifier = Modifier
-                    .size(68.dp)
-                    .background(SignAiTheme.colors.strong, SignAiShapes.cornerLogoTile),
-                contentAlignment = Alignment.Center,
-            ) {
-                SignAiText(
-                    text = SignAiBranding.LogoLetter,
-                    style = SignAiTheme.typography.h1.copy(
-                        fontSize = 38.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = (-3).sp,
-                    ),
-                    color = SignAiTheme.colors.white,
-                )
-            }
+            SignAiBrandTile(
+                size = 68.dp,
+                contentDescription = SignAiBranding.Name,
+            )
 
             Spacer(Modifier.height(17.dp))
 

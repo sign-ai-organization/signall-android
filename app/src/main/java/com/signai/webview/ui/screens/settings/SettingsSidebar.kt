@@ -20,19 +20,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.signai.webview.ui.SignAiBranding
 import com.signai.webview.ui.components.CharacterPicker
 import com.signai.webview.ui.components.SettingRow
+import com.signai.webview.ui.components.SignAiBrandTile
 import com.signai.webview.ui.components.SignAiSmallIconButton
+import com.signai.webview.ui.components.SignAiStepper
 import com.signai.webview.ui.components.SignPickerDropdown
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiSlider
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Switch
-import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
 import com.signai.webview.ui.icons.SignAiIcons
 import com.signai.webview.domain.Character
@@ -71,21 +70,10 @@ fun SettingsSidebar(
             verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Box(
-                modifier = Modifier
-                    .size(SignAiSizes.settingsLogoSize)
-                    .background(SignAiTheme.colors.strong, SignAiShapes.cornerTile),
-                contentAlignment = Alignment.Center,
-            ) {
-                SignAiText(
-                    text = SignAiBranding.LogoLetter,
-                    style = SignAiTheme.typography.h3.copy(
-                        fontSize = 23.sp,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    color = SignAiTheme.colors.onStrong,
-                )
-            }
+            SignAiBrandTile(
+                size = SignAiSizes.settingsLogoSize,
+                contentDescription = SignAiBranding.Name,
+            )
             SignAiSmallIconButton(
                 icon = SignAiIcons.X,
                 contentDescription = "Cerrar",
@@ -105,12 +93,11 @@ fun SettingsSidebar(
 
         Section("ACCESIBILIDAD") {
             SettingRow(label = "Tamaño de interfaz", icon = SignAiIcons.TextAa) {
-                Box(modifier = Modifier.width(66.dp)) {
-                    SignAiSlider(
-                        value = settings.interfaceSize / 100f,
-                        onValueChange = { onInterfaceSize((it * 100).toInt()) },
-                    )
-                }
+                SignAiStepper(
+                    value = settings.interfaceSize,
+                    onValue = onInterfaceSize,
+                    label = "el tamaño de la interfaz",
+                )
             }
             SettingRow(label = "Texto en negrita", icon = SignAiIcons.TextAa) {
                 Switch(checked = settings.bold, onCheckedChange = { onToggle(Setting.Bold, it) })
@@ -151,7 +138,7 @@ fun SettingsSidebar(
                 Switch(checked = settings.bg, onCheckedChange = { onToggle(Setting.Background, it) })
             }
             SettingRow(
-                label = "Seña de prueba si falta en el catálogo",
+                label = "Seña de prueba si falta",
                 icon = SignAiIcons.Gear,
             ) {
                 Switch(

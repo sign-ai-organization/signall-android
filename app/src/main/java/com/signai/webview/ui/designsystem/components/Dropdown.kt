@@ -11,10 +11,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,9 +29,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
@@ -40,7 +47,15 @@ import com.signai.webview.ui.theme.SignAiTheme
 // CUSTOMIZED — no re-generate with `lumo --add Dropdown` (Lumo doesn't have one).
 // Replaces material3.DropdownMenu with foundation Popup + manual outside-click
 // handling (focusable=true triggers onDismissRequest on outside click).
-// The popup anchors to the trigger's boundsInWindow (bottom-left aligned).
+//
+// **El menu se posiciona adentro de la ventana, no con `alignment`/`offset` del Popup.**
+// El `Popup` de Compose abre su propia ventana, y en Android 11 esa ventana ignora
+// el gravity y el x/y de `LayoutParams`: la deja centrada en la pantalla. Medido en
+// el Redmi Note 9S (Android 11, build del 16/10/2026): con el trigger en
+// `IntRect.fromLTRB(445, 522, 1019, 638)`, el menu aparecía en x≈12, y≈1158; poner
+// `offset = (0, 1800)` lo movió 50 px, o sea no loHonoró. Por eso la ventana se estira
+// a pantalla completa (`fillMaxSize`) y el menu se posiciona con un `offset` normal de
+// Compose, medido contra el origen real de la ventana.
 //
 // Usage:
 //   SignAiDropdown(
@@ -57,10 +72,18 @@ fun SignAiDropdown(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
     maxHeight: Dp = SignAiSizes.dropdownMaxHeight,
+    /** Ancho del menu. Por defecto, el mismo que el trigger. */
+    menuWidth: Dp? = null,
     trigger: @Composable () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     var triggerBounds by remember { mutableStateOf(IntRect.Zero) }
+    // Alto del menu una vez medido: sin esto no se puede saber si cabe abajo del
+    // trigger o si hay que abrirlo hacia arriba, que es lo que pasa con el desplegable
+    // de señas, que está al final de un panel con scroll.
+    var menuSize by remember { mutableStateOf(IntSize.Zero) }
+    val density = LocalDensity.current
+
     Box(modifier = modifier) {
         Box(
             modifier = Modifier.onGloballyPositioned { coordinates ->
@@ -77,14 +100,10 @@ fun SignAiDropdown(
         }
         if (expanded) {
             Popup(
-                alignment = Alignment.TopStart,
-                offset = IntOffset(
-                    x = triggerBounds.left,
-                    y = triggerBounds.bottom,
-                ),
                 onDismissRequest = onDismissRequest,
                 properties = PopupProperties(focusable = true),
             ) {
+                val view = LocalView.current
                 val visibleState = remember { MutableTransitionState(false) }.apply { targetState = true }
                 AnimatedVisibility(
                     visibleState = visibleState,
@@ -99,18 +118,43 @@ fun SignAiDropdown(
                                 )
                         },
                 ) {
-                    Surface(
-                        color = SignAiTheme.colors.surface,
-                        border = BorderStroke(1.dp, SignAiTheme.colors.outline),
-                        shape = SignAiShapes.cornerControl,
+                    Box(
                         modifier = Modifier
-                            .widthIn(min = 168.dp)
-                            .heightIn(max = maxHeight),
+                            .fillMaxSize()
+                            .offset {
+                                val origin = IntArray(2)
+                                view.rootView.getLocationOnScreen(origin)
+                                val below = triggerBounds.bottom + menuSize.height
+                                val y =
+                                    if (below <= view.rootView.height) {
+                                        triggerBounds.bottom
+                                    } else {
+                                        (triggerBounds.top - menuSize.height).coerceAtLeast(0)
+                                    }
+                                IntOffset(triggerBounds.left - origin[0], y - origin[1])
+                            },
+                        contentAlignment = Alignment.TopStart,
                     ) {
-                        Column(
-                            modifier = Modifier.padding(6.dp),
-                            content = content,
-                        )
+                        Surface(
+                            color = SignAiTheme.colors.surface,
+                            border = BorderStroke(1.dp, SignAiTheme.colors.outline),
+                            shape = SignAiShapes.cornerControl,
+                            modifier = Modifier
+                                .width(menuWidth ?: with(density) { triggerBounds.width.toDp() })
+                                .heightIn(max = maxHeight)
+                                .onGloballyPositioned { menuSize = it.size },
+                        ) {
+                            // Con scroll, no sin: el desplegable de señas tiene 32
+                            // opciones y sin esto las últimas no se alcanzan nunca
+                            // (la Column recortaba en `maxHeight` y no había forma de
+                            // bajar).
+                            Column(
+                                modifier = Modifier
+                                    .verticalScroll(rememberScrollState())
+                                    .padding(6.dp),
+                                content = content,
+                            )
+                        }
                     }
                 }
             }

@@ -98,14 +98,12 @@ data class Colors(
     val muted: Color get() = textSecondary
 }
 
-// Palette mirrors the Vercel prototype exactly (PrototipoFrontend/app/globals.css
-// `:root` and `.theme-dark`). The prototype is the visual source of truth in
-// light mode, so the Lumo defaults were overridden:
+// Light still mirrors the Vercel prototype exactly (PrototipoFrontend/app/globals.css
+// `:root`), which is the visual source of truth for it, so the Lumo defaults stay
+// overridden here:
 //   light  — background #f4f4f2, foreground #171717, muted #777773,
 //            line #deded9, surface rgba(255,255,253,.92), soft #e8e8e3
-//   dark   — background #111110, foreground #f5f5f1, muted #969690,
-//            line #32322f, surface rgba(30,30,28,.94), soft #292926
-// `primary` follows `strong` because the prototype has no blue accent; every
+// `primary` follows `strong` because the prototype has no blue accent and every
 // filled control uses the monochrome `strong`.
 internal val LightColors =
     Colors(
@@ -137,43 +135,66 @@ internal val LightColors =
         text = Color(0xFF171717),
         textSecondary = Color(0xFF777773),
         textDisabled = Color(0xFFB9B9B4),
-        scrim = Color.Black.copy(alpha = 0.28f),
+        scrim = Black.copy(alpha = 0.28f),
         elevation = Black,
         strong = Color(0xFF171717),
         onStrong = Color(0xFFF4F4F2),
         soft = Color(0xFFE8E8E3),
     )
 
+// Dark is the SignALL brand palette (rebrand 2026-10-16, owner approved). Only two
+// colors were given: `background` #0c142c and the accent #1c4cfc. The rest are
+// derived from them keeping the relationships the old dark palette had, so the UI
+// keeps its depth instead of turning into one flat navy:
+//
+//   token      value      vs background   was (old dark, vs #111110)
+//   background  #0c142c        —          #111110
+//   surface     #141d3a      1.10:1       #1e1e1c   (1.13:1)
+//   soft        #1e2a4d      1.30:1       #292926   (1.30:1)
+//   outline     #263463      1.52:1       #32322f   (1.47:1)
+//   text        #ffffff     18.23:1       #f5f5f1  (16.10:1)
+//   muted       #a7b0c7      8.40:1       #969690   (6.35:1)
+//   strong      #1c4cfc      3.03:1       #f5f5f1  (16.10:1)
+//
+// `strong` is the accent and `primary` follows it, which moves the whole accent
+// role (filled CTA, active pill, switch, live dot, focused ring) to blue. Two
+// consequences to keep in mind:
+//   * White on the accent is 6.02:1, so filled controls keep `onStrong = white`.
+//   * The accent as a *thin mark* on a dark surface is only 2.3–2.8:1, so anywhere
+//     it is an icon or a hairline it reads better as `text`. That is why the
+//     character picker's checkmark is white and not `strong`.
 internal val DarkColors =
     Colors(
-        primary = Color(0xFFF5F5F1),
-        onPrimary = Color(0xFF111110),
-        secondary = Color(0xFF32322F),
-        onSecondary = Color(0xFFF5F5F1),
-        tertiary = Color(0xFFF5F5F1),
-        onTertiary = Color(0xFF111110),
-        surface = Color(0xFF1E1E1C), // opaque composite of rgba(30,30,28,.94)
-        onSurface = Color(0xFFF5F5F1),
+        primary = Color(0xFF1C4CFC),
+        onPrimary = White,
+        secondary = Color(0xFF1E2A4D),
+        onSecondary = White,
+        tertiary = Color(0xFF1C4CFC),
+        onTertiary = White,
+        surface = Color(0xFF141D3A),
+        onSurface = White,
         error = Red400,
         onError = Black,
         success = Green700,
         onSuccess = Black,
-        disabled = Color(0xFF292926),
-        onDisabled = Color(0xFF969690),
-        background = Color(0xFF111110),
-        onBackground = Color(0xFFF5F5F1),
-        outline = Color(0xFF32322F),
+        disabled = Color(0xFF1B2440),
+        onDisabled = Color(0xFF8E99B8),
+        background = Color(0xFF0C142C),
+        onBackground = White,
+        outline = Color(0xFF263463),
         transparent = Color.Transparent,
         white = White,
         black = Black,
-        text = Color(0xFFF5F5F1),
-        textSecondary = Color(0xFF969690),
-        textDisabled = Color(0xFF6B6B66),
-        scrim = Color.Black.copy(alpha = 0.28f),
+        text = White,
+        textSecondary = Color(0xFFA7B0C7),
+        textDisabled = Color(0xFF5A6588),
+        // The old 0.28 black scrim barely dims a navy background; 0.40 does the job
+        // the backdrop dimmer did before.
+        scrim = Black.copy(alpha = 0.40f),
         elevation = Black,
-        strong = Color(0xFFF5F5F1),
-        onStrong = Color(0xFF111110),
-        soft = Color(0xFF292926),
+        strong = Color(0xFF1C4CFC),
+        onStrong = White,
+        soft = Color(0xFF1E2A4D),
     )
 
 val LocalColors = staticCompositionLocalOf { LightColors }

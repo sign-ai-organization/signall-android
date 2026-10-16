@@ -121,7 +121,13 @@ fun MainScreen(state: MainScreenState) {
 
     // Safety net: never leave the app stuck on the splash if the WebView fails
     // to load (e.g. no internet for the Three.js CDN).
-    LaunchedEffect(Unit) {
+    //
+    // Keyed on [loading] and not on `Unit`: Acerca de swaps the whole main subtree out
+    // of composition, so returning recreates the WebView and turns `loading` back on
+    // (see `onBack` below). With a `Unit` key that second wait never existed and a
+    // failed reload would leave the splash up forever.
+    LaunchedEffect(loading) {
+        if (!loading) return@LaunchedEffect
         delay(SplashTimeoutMs)
         loading = false
     }
@@ -144,7 +150,18 @@ fun MainScreen(state: MainScreenState) {
     Box(Modifier.fillMaxSize()) {
         if (showAbout) {
             // About is exclusive: Main and drawers are not shown (spec `NAV-8`).
-            AboutScreen(onBack = { showAbout = false })
+            AboutScreen(
+                onBack = {
+                    showAbout = false
+                    // Salir de Acerca de **destruye** el WebView (está dentro del
+                    // `else` de este `if`), así que volver a la escena lo crea de cero
+                    // y hay que volver a descargar y parsear el GLB de 10 MB: se veía el
+                    // canvas vacío durante segundos (owner, 2026-10-16). Se vuelve a
+                    // levantar el splash, que es lo que ya hay para el primer arranque y
+                    // espera al `avatarReady` real, no a un tiempo fijo.
+                    loading = true
+                },
+            )
         } else {
             Surface(
                 modifier = Modifier
