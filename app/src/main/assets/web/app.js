@@ -14,9 +14,15 @@
 // Contrato con Android (`window.SignAI`) — no cambiar sin tocar el lado Kotlin:
 //   setQueue, appendQueue, playFrom, queuePending, queueState, play, setDebug,
 //   setFreeCamera, setGrid, setBackground, setReduceMotion,
-//   setSpeed, setTheme, setDefaultSign
-// Hacia Android: `window.SignAIBridge.postMessage("onPlaybackDone")` y
-// `postMessage("avatarReady")`.
+//   setSpeed, setTheme, setDefaultSign, setSilenceTimeoutMs
+// Hacia Android: `window.SignAIBridge.postMessage("onPlaybackDone")`,
+// `postMessage("avatarReady")` y `postMessage("signStart:<idx>:<jsMs>")`.
+//
+// `signStart` es la primera seña del turno moviéndose en pantalla. Sin él, el
+// tramo desde que el backend manda una oración hasta que el muñeco se mueve no
+// tenía reloj en ninguno de los dos lados: el backend cronometraba hasta mandar
+// el `segment` y el device cronometraba desde `play()`, que es antes de que el
+// `.glb` termine de bajar. El número que falta es el que percibe el usuario.
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -35,65 +41,61 @@ const state = {
   reduceMotion: false,   // ACC-*: sin fundición, corte seco
   nodeCount: 0,
   nodeNames: new Set(),
-  // Cola que envía Android con setQueue(); cada ítem es
+  // Cola que envía Android con setQueue()/appendQueue(); cada ítem es
   // {gloss, type, url, available} y `url` es siempre same-origin.
   queue: [],
   queueIdx: 0,
+  // Si esta cola llegó a arrancar. `setQueue` lo baja y `play`/`playFrom` lo
+  // suben: es lo que le dice a `appendQueue` si hay que arrancar desde el
+  // principio o seguir después de la última seña que sonó.
+  queueStarted: false,
   currentType: "",
-  // Velocidad pedida por el usuario (setSpeed) y velocidad realmente aplicada.
-  // Se separan porque el adelanto automático multiplica sobre la primera y
-  // tiene que poder deshacerse sin perder el ajuste del usuario.
+  // Velocidad pedida por el usuario (setSpeed) y velocidad aplicada.
   baseSpeed: 1,
-  catchUp: false,
+  speed: 1,
+  // `SILENCE_TIMEOUT_MS` del STT, que Android copia desde `/health`. `null` = no
+  // se sabe todavía; el overlay de depuración lo muestra igual, con "?".
+  silenceTimeoutMs: null,
 };
 
 const AVATAR_URL = "models/avatar.glb";
 const DEFAULT_SIGN_URL = "signs/0000_0000_0000.glb";
 let defaultSignUrl = DEFAULT_SIGN_URL;
 
-// ── Adelanto automático ──────────────────────────────────────────────────────
+// ── Velocidad ────────────────────────────────────────────────────────────────
 //
-// Las 32 señas que hay exportadas duran 2.08-2.75 s cada una (promedio 2.15 s,
-// medido contra el manifest.json) y cada palabra se traduce en una seña. La
-// traducción es rápida; la animación es el cuello de botella: si el muñeco
-// firmara siempre a velocidad normal, terminaría la frase después de que el
-// usuario terminó de decirla. Así que cuando la cola se acumula, el muñeco firma
-// más rápido. Dos señas de cola es el umbral: con una sola todavía se está al
-// día, y acelerar antes solo quitaría claridad a los movimientos.
+// La velocidad es **un parámetro, no un resultado**: la fija el usuario en
+// Ajustes y `setSpeed` la aplica tal cual. Antes este archivo multiplicaba 1,6×
+// por su cuenta cuando había dos o más señas en la fila (`CATCHUP_BACKLOG` y
+// `CATCHUP_FACTOR`), y esa función se quitó el 2026-10-16: decisión D-5 de
+// `openspec/sessions/2026-10-16-latencia-y-decisiones.md`.
 //
-// **Remedido con el flujo por oraciones** (2026-10-15, `tools/medir-retraso.py`,
-// las 28 frases de `../sign-ai-stt/fixtures/audio`): el adelanto **se queda**,
-// pero por un motivo distinto al que tenía este comentario.
+// Los tres porqués de quitarla, en orden de peso:
 //
-// Lo que no cambió es el origen del desfase, que no es el modo de entrega sino
-// 2,15 s de animación contra la velocidad del habla. Medido: el avatar no
-// termina de firmar antes de que el usuario termine de hablar en 17 de las 28
-// frases, y con el adelanto puesto todavía en 7. Es la misma cuenta que antes,
-// porque cada palabra sigue siendo una seña.
+//   1. **Alteraba la variable que había que medir.** La prueba obligatoria
+//      PR-PER-04 (`../sign-ai-docs/plan-pruebas/01-diseno/personas/pruebas.md`)
+//      pregunta a usuarios con LSC si la velocidad es adecuada, en una escala de
+//      1 a 5. Con el adelanto prendido la misma respuesta mezcla dos cosas —la
+//      velocidad que eligió la persona y un factor que nadie le dijo— y la
+//      prueba deja de poder separarlas.
+//   2. **La carrera que venía a empatar no existe.** Quien lee el avatar es una
+//      persona sorda que no está mirando a quien habla. Que el muñeco termine
+//      después de que el hablante termine no le hace nada a quien lee.
+//   3. **No estaba en ningún documento de la tesis.** No aparece en el documento
+//      de requerimientos, ni en el plan de pruebas, ni en los doce diagramas del
+//      SDD; solo en este archivo y en la auditoría del 15 de octubre. Y dos
+//      números mágicos sin criterio escrito (`2` y `1.6`) contradicen la regla
+//      del backend de que ningún umbral numérico va hardcodeado en la lógica
+//      funcional (`../sign-ai-backend/CLAUDE.md`).
 //
-// Lo que sí cambió es la forma de la cola. Con entrega por fragmento las señas
-// llegaban de a una durante el habla y la cola crecía sin parar; con entrega por
-// oración **la cola está vacía mientras el usuario habla y se llena de golpe al
-// cerrar la frase**. De ahí dos cosas:
-//
-//   - El adelanto ya no está prendido todo el tiempo, y está bien que no lo
-//     esté: acelerar un clip que ya va solo no aporta nada. Prende al caer el
-//     primer lote y se apaga cuando la cola baja de 2.
-//   - El umbral de 2 se mide **después** de que arranque la seña en curso
-//     (`queue.length - queueIdx - 1`), así que hace falta una frase de 3 señas o
-//     más para dispararlo. Con las 28 frases de prueba solo una lo dispara:
-//     son 28 frases cortas, de mediana 2 palabras y 1 seña.
-//
-// La conclusión es que **no hay que cambiar los números**: 1,26x de mediana está
-// justo en el borde y 1,6x lo cruza (mediana 0,79x con adelanto). Lo que no se
-// puede es prometer que el avatar firme al ritmo de la voz, y eso no lo arregla
-// este archivo: harían falta ~5x, que es un fast-forward, no una seña.
-const CATCHUP_BACKLOG = 2;
-const CATCHUP_FACTOR = 1.6;
+// Lo que sí era cierto y sigue siendo cierto: las 32 señas duran 2,15 s de
+// media y una frase larga tarda más en representarse de lo que se dice. Eso ya
+// no es una falla del sistema, es la consecuencia de que el lector no compita
+// con el hablante.
 
-/** Aplica el factor de adelanto sobre la velocidad pedida. */
+/** Aplica la velocidad pedida. Sin factores ocultos: lo que se pide es lo que corre. */
 function applySpeed() {
-  state.speed = Math.max(0.1, Math.min(3, state.baseSpeed * (state.catchUp ? CATCHUP_FACTOR : 1)));
+  state.speed = Math.max(0.1, Math.min(3, state.baseSpeed));
 }
 
 /** Cuántas señas quedaron por detrás de la que está sonando. */
@@ -241,6 +243,15 @@ const Debug = {
       // son 2 (la que entra y la que sale) y el resto del tiempo 1.
       `fundición: ${state.finishing ? "salida" : state.outgoing ? "saliendo" : "-"}` +
         `  ${CROSSFADE_MS}ms  actions vivas: ${state.mixer?.stats.actions.inUse ?? 0}`,
+    ],
+    // El tiempo de silencio vive en el STT, no en el backend ni en la app, y es
+    // el segundo bloque más grande de la latencia de punta a punta: con 1500 ms
+    // son 1,5 s de espera entre que la persona deja de hablar y que la frase
+    // exista. Está acá para que cada corrida de pruebas lo lea de la pantalla en
+    // vez de acordarse de anotarlo (decisión D-6): lo manda Android con
+    // `setSilenceTimeoutMs` y sin conexión sale "?", que es la verdad.
+    stt: () => [
+      `silencio STT: ${state.silenceTimeoutMs != null ? state.silenceTimeoutMs + "ms" : "?"}`,
     ],
     avatar: () => [
       `nodos: ${state.nodeCount}`,
@@ -408,6 +419,27 @@ function notifyPlaybackDone() {
 }
 
 /**
+ * Avisa que el muñeco se está moviendo de verdad, con su reloj.
+ *
+ * `signStart:<idx de la cola>:<performance.now()>`. Va desde `loadQueueItem`
+ * —no desde `startClip`— porque entre una cosa y la otra está la carga del
+ * `.glb`, y esa carga es justamente parte de lo que hay que medir: la oración
+ * puede estar lista hace un segundo y el avatar no moverse hasta que bajan tres
+ * megabytes.
+ *
+ * El reloj propio viaja en el mensaje para poder leer los tres tramos por
+ * separado: cuánto tardó Android en entregar la cola (`performance.now()` menos
+ * el `setQueue`), cuánto tardó la escena en arrancar el clip, y cuánto tardó
+ * Kotlin en enterarse. Los dos relojes tienen épocas distintas y no se restan
+ * entre sí, así que el número que se compara es el que calcula cada lado.
+ */
+function notifySignStart(index) {
+  const msg = `signStart:${index}:${Math.round(performance.now())}`;
+  try { window.SignAIBridge?.postMessage(msg); } catch (e) { /* no bridge */ }
+  if (Debug.enabled) console.log(`[SignAI] signStart ${msg}`);
+}
+
+/**
  * Detiene lo que esté sonando y deja al muñeco en pose de reposo.
  * `stopAllAction()` llama a `restoreOriginalDirection()` sobre cada binding,
  * así que los huesos vuelven a los quaterniones con los que se cargó el avatar:
@@ -529,11 +561,12 @@ async function loadQueueItem(index) {
     if (index !== state.queueIdx || epoch !== state.epoch) return false;
     state.loading = false;
     startClip(pickVariant(clips));
+    notifySignStart(index);
     return true;
   } catch (err) {
     console.error("No se pudo cargar la seña", item.url, err);
     state.loading = false;
-    // Un ítem que no carga no puede dejar el turno colgado en "firmando": el
+    // Un ítem que no carga no puede dejar el turno colgado en "representando": el
     // muñeco vuelve al reposo y se avisa que terminó, que es lo que espera el
     // lado Kotlin para liberar el panel y el micrófono.
     stopPlayback();
@@ -570,20 +603,6 @@ function advanceQueue() {
 /** Avanza el mixer un frame y resuelve la frontera entre clips. */
 function tickPlayback(dt) {
   if (!state.playing) return;
-
-  // El adelanto se decide acá y no cuando llega un fragmento: la cola crece
-  // por dos vías (la app y el propio avance) y el dato bueno es "cuántas me
-  // faltan", que solo existe en este punto.
-  const backlog = queueBacklog();
-  const shouldCatchUp = backlog >= CATCHUP_BACKLOG;
-  if (shouldCatchUp !== state.catchUp) {
-    state.catchUp = shouldCatchUp;
-    applySpeed();
-    if (Debug.enabled) {
-      console.log(`[SignAI] cola ${state.queueIdx + 1}/${state.queue.length}, ` +
-                  `adelanto ${state.catchUp ? "on" : "off"} (velocidad ${state.speed.toFixed(2)})`);
-    }
-  }
 
   if (state.loading) return;           // el mixer espera al clip
   const action = state.action;
@@ -673,19 +692,36 @@ window.SignAI = {
       if (!Array.isArray(items) || items.length === 0) return;
       state.queue = items;
       state.queueIdx = 0;
+      // Cola nueva: si más adelante hay que reanudarla, se arranca desde 0 y no
+      // desde donde terminó la anterior.
+      state.queueStarted = false;
     } catch (e) {
       console.error("setQueue: payload inválido", e);
     }
   },
 
   /**
-   * Agrega ítems al final de la cola sin tocar lo que ya se está firmando.
+   * Agrega ítems al final de la cola sin tocar lo que ya se está representando.
    *
-   * Es la mitad en tiempo real de `setQueue`. El backend ya no espera a tener
-   * la frase entera: manda un fragmento, la app lo agrega a la cola y el
-   * muñeco lo firma mientras la persona sigue hablando. `setQueue` sigue
-   * existiendo y sigue reemplazando, porque una frase escrita o un "Repetir"
-   * llegan completos de una.
+   * Es la mitad en tiempo real de `setQueue`. Con la frase por oraciones el
+   * backend manda una oración apenas está traducida —no espera a tenerlas
+   * todas—, así que esto es lo que encadena cada oración detrás de la anterior
+   * mientras el usuario sigue hablando. `setQueue` sigue existiendo y sigue
+   * reemplazando, porque una frase nueva arranca su propia cola.
+   *
+   * Si la cola ya se había vaciado mientras estas oraciones se traducían, la
+   * vuelve a arrancar desde donde quedó. Sin eso, la oración que llegó tarde se
+   * quedaría encolada para siempre esperando a un `play()` que nadie vuelve a
+   * mandar. La decisión va **dentro** de este método y no en Kotlin a propósito:
+   * acá no hay dos hilos que puedan intercalarse entre "la cola está vacía" y
+   * "arranco", que es la forma más barata de que esa oración quede sin cubrir.
+   *
+   * El índice de reanudación depende de en cuál de los dos estados esté la cola:
+   *
+   *   - **nunca arrancó** (`state.queueStarted` falso): se representa desde 0.
+   *   - **ya se vació**: se sigue en el ítem siguiente al último que sonó, o sea
+   *     `queueIdx + 1`. `advanceQueue` deja `queueIdx` en el último índice que
+   *     llegó a sonar, así que `queueIdx` a secas haría repetir esa seña.
    *
    * Aditivo: no cambia `setQueue` ni el guard `?.` (BRG-8).
    */
@@ -694,6 +730,8 @@ window.SignAI = {
       const items = JSON.parse(json);
       if (!Array.isArray(items) || items.length === 0) return 0;
       state.queue.push(...items);
+      if (state.playing || state.loading) return state.queue.length;
+      this.playFrom(state.queueStarted ? state.queueIdx + 1 : 0);
       return state.queue.length;
     } catch (e) {
       console.error("appendQueue: payload inválido", e);
@@ -702,18 +740,24 @@ window.SignAI = {
   },
 
   /**
-   * Empieza a firmar sin reiniciar la cola.
+   * Empieza a representar sin reiniciar la cola.
    *
    * `play()` es correcto solo cuando la cola está completa: salta al índice 0.
    * En streaming se llama cuando llega el primer fragmento y la cola puede
    * seguir creciendo, así que tiene que arrancar desde donde esté y no volver
    * al principio. Si ya está sonando no hace nada, que es justo lo que quiere
    * un fragmento que llega mientras el anterior se reproduce.
+   *
+   * `state.loading` también corta: una carga en vuelo significa que ese mismo
+   * ítem ya está en camino, y arrancarlo otra vez lo reinicia — el `mixer`
+   * vuelve a aplicar el clip desde el primer keyframe y el `signStart` sale dos
+   * veces para la misma seña.
    */
   playFrom(startIndex) {
-    if (state.playing || !state.mixer) return false;
+    if (state.playing || state.loading || !state.mixer) return false;
     const from = Number(startIndex) || 0;
     if (from < 0 || from >= state.queue.length) return false;
+    state.queueStarted = true;
     state.queueIdx = from;
     // Sin fundición (D4): si algo se estuviera yendo, `startClip` lo mata antes
     // de arrancar la nueva. El corte de `stopPlayback` no hace falta porque acá
@@ -722,7 +766,7 @@ window.SignAI = {
     return true;
   },
 
-  /** Cola pendiente de firmar; lo usa la app para mostrar el texto en vivo. */
+  /** Cola pendiente de representar; lo usa la app para mostrar el texto en vivo. */
   queuePending() {
     if (!state.playing) return state.queue.length;
     return queueBacklog();
@@ -734,15 +778,15 @@ window.SignAI = {
       idx: state.queueIdx,
       length: state.queue.length,
       backlog: queueBacklog(),
-      catchUp: state.catchUp,
       speed: state.speed,
       baseSpeed: state.baseSpeed,
     };
   },
 
   play() {
-    if (state.playing || !state.mixer) return;
+    if (state.playing || state.loading || !state.mixer) return;
     if (state.queue.length) {
+      state.queueStarted = true;
       // El asset puede no estar en caché todavía (recién descargado del
       // backend), así que la carga es asíncrona y el loop arranca al resolver.
       loadQueueItem(0);
@@ -771,6 +815,22 @@ window.SignAI = {
     // v en 0..1 (0.5 = velocidad normal) → factor 0.1..3
     state.baseSpeed = Math.max(0.1, Math.min(3, (Number(v) || 0.5) * 2));
     applySpeed();
+    if (Debug.enabled) Debug.render();
+  },
+
+  /**
+   * El `SILENCE_TIMEOUT_MS` que está usando el STT, para el overlay de depurar.
+   *
+   * No es un ajuste de la app: la app nunca habla con el STT, y el valor decide
+   * en qué momento se cierra una frase. Se muestra para que quien corre una
+   * prueba lo lea, no para cambiarlo. `null` o un valor no numérico dejan el
+   * overlay con "?".
+   */
+  setSilenceTimeoutMs(ms) {
+    const value = Number(ms);
+    state.silenceTimeoutMs = Number.isFinite(value) && value > 0 ? value : null;
+    if (Debug.enabled) Debug.render();
+    return state.silenceTimeoutMs;
   },
 
   setFreeCamera(on) {

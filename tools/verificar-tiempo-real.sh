@@ -151,7 +151,7 @@ check_flow() {
   banner "4. Flujo por oraciones, extremo a extremo (sin micrófono)"
   local out=/tmp/verify_flujo.out
   py "$(dirname "${BASH_SOURCE[0]}")/medir-retraso.py" >"$out" 2>&1
-  grep -E "^(frases|señas por frase|velocidad|firma / habla|  mediana|  con el adelanto|desfase|  mediana)" "$out" \
+  grep -E "^(frases|señas por frase|velocidad|representa / habla|  mediana|  con el adelanto|desfase|  mediana)" "$out" \
     | sed 's/^/  /'
 
   if grep -qE '^frases medidas: 28' "$out"; then
@@ -167,7 +167,7 @@ check_latency() {
   banner "5. Primera seña, extremo a extremo (audio -> seña en pantalla)"
   local out=/tmp/verify_latency.out
   py "$(dirname "${BASH_SOURCE[0]}")/medir-primera-sena.py" >"$out" 2>&1
-  grep -E "^(\`|  p50|  línea base|  de los cuales)" "$out" | sed 's/^/  /'
+  grep -E "^(\`|  p50|  línea base|  de los cuales|  caché semántica)" "$out" | sed 's/^/  /'
 
   # Ojo con qué número es cuál: `final→seña` es el pipeline (`rt_first_sign_ms`) y
   # `audio→seña` incluye el STT. El presupuesto es sobre el primero, porque el
@@ -184,10 +184,22 @@ check_latency() {
     return
   fi
 
+  # **Con la caché caliente este control no mide nada.** `final→seña` es el
+  # pipeline, y con la caché llena no hay pipeline: hay una consulta de
+  # embeddings que responde en milisegundos. El número sale p95 ≈ 5 ms, pasa
+  # cualquier presupuesto, y parece una mejora enorme. Por eso la corrida se
+  # declara no medible en vez de Approved: un control que pasa sin medir es peor
+  # que uno que no existe, porque la próxima regresión también "pasa".
+  if grep -qE 'caché semántica con [0-9]+ filas' "$out"; then
+    record "primera seña p95 = ${p95}ms NO es una medición" 1 \
+      "la caché semántica estaba llena: midió el lookup, no el LLM. Para medir en frío: DELETE FROM semantic_cache; y docker compose restart backend"
+    return
+  fi
+
   if (( p95 <= SIGNAI_P95_MAX_MS )); then
-    record "primera seña p95 = ${p95}ms (pipeline)" 0 "presupuesto ${SIGNAI_P95_MAX_MS}ms"
+    record "primera seña p95 = ${p95}ms (pipeline, caché vacía)" 0 "presupuesto ${SIGNAI_P95_MAX_MS}ms"
   else
-    record "primera seña p95 = ${p95}ms (pipeline)" 1 "presupuesto ${SIGNAI_P95_MAX_MS}ms; fijate si el LLM de atrás es el de siempre"
+    record "primera seña p95 = ${p95}ms (pipeline, caché vacía)" 1 "presupuesto ${SIGNAI_P95_MAX_MS}ms; fijate si el LLM de atrás es el de siempre"
   fi
 }
 
@@ -200,7 +212,14 @@ import json, sys
 d = json.load(sys.stdin)
 keys = ('rt_first_sign_ms', 'rt_phrase_total_ms', 'rt_sentence_delay_ms',
             'rt_phrases_total', 'rt_sentences_total', 'rt_glosses_total',
-            'audio_bytes_total', 'sessions_total')
+            'audio_bytes_total', 'sessions_total',
+            # Las tres que separan "el modelo tardó" de "el socket estaba trabado".
+            # `llm_ms` es la llamada al modelo de lenguaje, que antes solo se veía
+            # en el log con DEBUG_TRACE_ENABLED; `cache_lookup_ms` es lo que hace
+            # que un HIT parezca una mejora; `rt_read_loop_busy_ms` es el tiempo
+            # que el bucle de lectura del socket no estuvo leyendo, y es el que
+            # que cayó a milisegundos con D-2 (decisión del 2026-10-16).
+            'llm_ms', 'cache_lookup_ms', 'rt_read_loop_busy_ms')
 for name, snapshot in sorted(d['histograms'].items()):
     if any(name.startswith(k) for k in keys):
         print(f\"  {name:<34} p50={snapshot['p50']:>8} p95={snapshot['p95']:>8} max={snapshot['max']:>8}\")
@@ -266,14 +285,14 @@ check_device() {
   echo "    1. tocá el micrófono — se prende solo, no hay que mantenerlo apretado"
   echo "    2. decí una frase y hacé una pausa de un segundo y medio"
   echo "    3. el micrófono se apaga SOLO y el texto queda en el campo"
-  echo "    4. el muñeco NO se movió. Arriba dice 'Texto listo. Toca Traducir para firmarlo.'"
+  echo "    4. el muñeco NO se movió. Arriba dice 'Texto listo. Toca Traducir para representarlo.'"
   echo "    5. rt_phrases_total en el backend NO se movió: eso es la prueba de que no mandó"
-  echo "    6. tocá Traducir: ahora sí firma"
+  echo "    6. tocá Traducir: ahora sí representa"
   echo "    7. el icono del micrófono NO cambió: tocarlo de nuevo borra y dicta de cero"
   echo
   echo "  B. En vivo (el TR de la fila de abajo)"
   echo "    1. tocá TR — el micrófono queda deshabilitado, es el mismo"
-  echo "    2. hablá: cada pausa de 1,5 s manda la frase sola y el muñeco firma"
+  echo "    2. hablá: cada pausa de 1,5 s manda la frase sola y el muñeco representa"
   echo "    3. el micrófono NO se apaga entre frases: seguí hablando"
   echo "    4. tocá TR de nuevo para apagarlo: el campo queda LIMPIO, no retenido"
   echo

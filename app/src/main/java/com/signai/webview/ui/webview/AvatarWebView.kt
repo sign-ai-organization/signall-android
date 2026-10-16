@@ -21,6 +21,9 @@ private const val BridgeObjectName = "SignAIBridge"
 private const val BridgeOrigin = SignAssetRepository.WEB_ORIGIN
 private const val AssetsPath = "/assets/"
 
+/** Prefix of the scene's "the avatar is moving" message (`notifySignStart`). */
+const val SignStartPrefix = "signStart:"
+
 /**
  * Serves the sign assets the app downloaded from the backend, so the 3D scene can
  * `fetch()` them on its own origin (plan paso 4).
@@ -48,6 +51,18 @@ fun AvatarWebView(
     onReady: (WebView) -> Unit,
     onProgress: (Int) -> Unit = {},
     onPlaybackDone: () -> Unit = {},
+    /**
+     * The avatar is actually moving: `signStart:<queueIndex>:<jsMillis>` from the
+     * scene (`notifySignStart` in `app.js`).
+     *
+     * This is the leg nothing measured: the backend's clock stops when the
+     * `segment` goes out, and `play()` on the Kotlin side is *before* the `.glb`
+     * finishes loading. Between those two is the time the user actually waits
+     * staring at a still avatar. The two clocks cannot be subtracted from each
+     * other, so each side reports its own and this one is the difference between
+     * the segment arriving here and the bridge message arriving here.
+     */
+    onSignStart: (queueIndex: Int, jsMillis: Long) -> Unit = { _, _ -> },
     onLoaded: () -> Unit = {},
     // While a drawer is open the WebView must not take any touch: it is an
     // embedded Android View and would otherwise win the whole screen, leaving
@@ -95,8 +110,8 @@ fun AvatarWebView(
                     }
                 }
 
-                // JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")`
-                // y `postMessage("avatarReady")`.
+                // JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")`,
+                // `postMessage("avatarReady")` y `postMessage("signStart:<i>:<ms>")`.
                 // Only registered when the feature is supported (fallback: no
                 // playback event, the UI just stays in `signing`; y el splash se
                 // destapa por el timeout de 8 s).
@@ -125,6 +140,21 @@ fun AvatarWebView(
                                     // soportado, el timeout de `SignAiSplash`
                                     // (8 s) destapa igual.
                                     "avatarReady" -> onLoaded()
+                                    // `startsWith` y no igualdad exacta: el mensaje
+                                    // trae índice de cola y reloj propio, para que
+                                    // los tres tramos (Android -> escena, escena ->
+                                    // primer fotograma, escena -> Kotlin) se puedan
+                                    // leer por separado en logcat.
+                                    else -> message.data
+                                        ?.takeIf { it.startsWith(SignStartPrefix) }
+                                        ?.removePrefix(SignStartPrefix)
+                                        ?.split(":")
+                                        ?.let { parts ->
+                                            onSignStart(
+                                                parts.getOrNull(0)?.toIntOrNull() ?: 0,
+                                                parts.getOrNull(1)?.toLongOrNull() ?: 0L,
+                                            )
+                                        }
                                 }
                             }
                         },

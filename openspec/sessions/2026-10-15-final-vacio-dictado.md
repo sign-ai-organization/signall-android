@@ -39,7 +39,7 @@ Está en el contrato entre los tres repos, y arreglarlo en uno solo lo cambiaba 
    antes del `return` por texto vacío (línea 251 vs 253), pero `self._utterance_mode = None`
    está **después** (línea 271). Con un `final` vacío de dictado, el modo quedaba pegado.
    Eso es lo peligroso: si el cliente ya había pasado a tiempo real, el utterance
-   siguiente heredaba `dictation` y sus frases se iban al input **en vez de firmarse**,
+   siguiente heredaba `dictation` y sus frases se iban al input **en vez de representarse**,
    sin nada en pantalla que lo explicara. Por eso el arreglo del punto 1 sin este era
    cambiar un bug por otro.
 
@@ -59,7 +59,7 @@ El tiempo real ya tenía la salida correcta (`heardAnythingThisSession` →
   con un log (`dictated: empty final, releasing capture mode`) para que el camino sea
   diagnosticable. Dos checks nuevos en `scripts/verify_client_frames.py`: que el `final`
   vacío se reenvía con `final`/`dictation` correctos, y que el utterance siguiente en
-  tiempo real **sí se firma**.
+  tiempo real **sí se representa**.
 - **`sign-ai-android`**: el `final` vacío pasa cuando viene marcado como dictado; en tiempo
   real se sigue descartando. `onDictationTranscript` ya tenía el resto del camino
   (`sendDictation()`, que con texto vacío muestra "No se escuchó nada."), así que solo
@@ -86,7 +86,7 @@ solo escribe en el input cuando hay palabras. No hay otra forma de recuperar ese
   cambios.
 - Script contra el backend real (`ws://127.0.0.1:8080/ws/translate`): el `final` vacío llega
   como `{"type":"transcript","text":"","final":true,"dictation":true}`, y el utterance
-  siguiente en tiempo real se firma (`BIEN, BIEN`).
+  siguiente en tiempo real se representa (`BIEN, BIEN`).
 - En el físico: con el ambiente real, `final (flush): descartado=logprob texto=''` y la app
   volvió a `Idle` en menos de un segundo con "No se escuchó nada.".
 

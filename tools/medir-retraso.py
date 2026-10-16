@@ -1,15 +1,27 @@
-"""¿Hace falta el adelanto automático con entrega por oración?
+"""¿Cuánto tarda el avatar en representar una frase frente a cuánto tarda en decirse?
 
-El adelanto de `app.js` (`CATCHUP_BACKLOG = 2`, `CATCHUP_FACTOR = 1.6`) existe
-por un desfase: cada seña dura ~2,15 s y el español corre a 2-3 palabras por
-segundo, y cada palabra es una seña. El punto 5 de §6.3 de la auditoría dice que
-ese desfase "desaparece en su mayor parte" con entrega por oración, y que hay que
-**remedirlo, no borrarlo a ciegas**.
+Para cada una de las 28 frases de prueba: cuánto tarda la persona en decirla
+(incluida la pausa) y cuánto tarda el muñeco en representar sus glosas a
+velocidad 1,0. La salida es el desfase y su razón.
 
-Lo que mide esto es exactamente lo que importa: para cada una de las 28 frases de
-prueba, cuánto tarda el usuario en decirla y cuánto tarda el muñeco en firmarla.
-Si firma < habla, hay cola que absorber y el adelanto hace falta. Si firma < habla
-con el adelanto puesto, el factor sirve; si no, no alcanza y hay que decirlo.
+**Antes este script servía para otra pregunta.** Mientras `app.js` tuvo el
+adelanto automático (`CATCHUP_BACKLOG = 2`, `CATCHUP_FACTOR = 1.6`), la razón
+"animación / habla" respondía a "¿el adelanto necesita ser más grande?". Esa
+función se quitó el 2026-10-16 (decisión D-5 de
+`openspec/sessions/2026-10-16-latencia-y-decisiones.md`) y este script ya no
+calcula las columnas "con el adelanto".
+
+Por qué cambió la pregunta: el adelanto existía para que el avatar terminara
+antes que el hablante, pero quien lee el avatar no está mirando a quien habla —esa
+carrera no la corre nadie—. Y la prueba obligatoria **PR-PER-04** pregunta a
+usuarios con LSC si la velocidad es adecuada, en una escala de 1 a 5; un avatar
+que salta solo a 1,6x convierte esa respuesta en una mezcla de dos cosas. Así que
+la velocidad es ahora un parámetro que fija la persona y nada en el sistema la
+cambia.
+
+Lo que queda acá sigue valiendo: es el número que dice cuánto de una frase se
+sigue representando después de que el hablante terminó, que es lo que va a
+experimentar quien conteste PR-PER-04.
 
 No hace falta el dispositivo: el lado de la producción (glosas por frase) sale del
 backend real y el de la animación sale del `manifest.json` de la app, que es lo
@@ -26,12 +38,12 @@ from pathlib import Path
 import websockets
 
 URL = "ws://127.0.0.1:8080/ws/translate"
-AUDIO = Path("/home/diegocachy/tesisTesteos/SignAI/sign-ai-stt/fixtures/audio")
-MANIFEST = Path(
-    "/home/diegocachy/tesisTesteos/SignAI/sign-ai-android"
-    "/app/src/main/assets/web/manifest.json"
-)
-CATCHUP_FACTOR = 1.6
+# Rutas relativas al repo, nunca absolutas: las sesiones se corren en directorios
+# distintos y una ruta de esta máquina deja de existir en la siguiente (AGENTS.md).
+RAIZ = Path(__file__).resolve().parents[1]
+STT = RAIZ.parent / "sign-ai-stt"
+AUDIO = STT / "fixtures" / "audio"
+MANIFEST = RAIZ / "app" / "src" / "main" / "assets" / "web" / "manifest.json"
 
 
 def pcm16(path: Path) -> bytes:
@@ -118,7 +130,7 @@ async def main() -> None:
 
         glosas, oraciones = await glosas_de(texto)
 
-        # Cuánto tarda en firmarse: cada glosa es un clip del manifest.
+        # Cuánto tarda en representarse: cada glosa es un clip del manifest.
         desconocida = [g for g in glosas if clave(g) not in manifest]
         animación = sum(manifest.get(clave(g), 0.0) for g in glosas)
 
@@ -136,7 +148,7 @@ async def main() -> None:
         })
 
     print(f"{'frase':24} {'palabras':>8} {'oraciones':>9} {'señas':>5} "
-          f"{'habla':>7} {'firma':>7} {'desfase':>8}")
+          f"{'habla':>7} {'representa':>7} {'desfase':>8}")
     print("─" * 78)
     for f in filas:
         desfase = (f["animacion_ms"] - f["habla_ms"]) / 1000
@@ -162,34 +174,21 @@ async def main() -> None:
           f"{statistics.median(p / (f['habla_ms']/1000) for f, p in zip(filas, palabras)):.2f}"
           f" palabras/s")
     print()
-    print("firma / habla (la cola que hay que absorber):")
+    print("velocidad 1,0x (la que hay): representa / habla")
     print(f"  mediana {statistics.median(ratios):.2f}x   "
           f"min {min(ratios):.2f}x   max {max(ratios):.2f}x")
-    print(f"  con el adelanto de {CATCHUP_FACTOR}x: mediana "
-          f"{statistics.median(ratios)/CATCHUP_FACTOR:.2f}x  "
-          f"max {max(ratios)/CATCHUP_FACTOR:.2f}x")
-    print()
-    print(f"desfase absoluto (se firma N s después de terminar de hablar):")
+    print(f"desfase absoluto (se representa N s después de terminar de hablar):")
     print(f"  mediana {statistics.median(desfases):+.1f}s   "
           f"min {min(desfases):+.1f}s   max {max(desfases):+.1f}s")
-    print(f"  con el adelanto: mediana "
-          f"{statistics.median(desfases)/CATCHUP_FACTOR:+.1f}s  "
-          f"max {max(desfases)/CATCHUP_FACTOR:+.1f}s")
     print()
-    print("frases que el avatar NO alcanza a terminar mientras el usuario habla: "
+    print(f"frases que el avatar no alcanza a terminar mientras el usuario habla: "
           f"{sum(1 for r in ratios if r > 1)} de {len(ratios)}")
-    print(f"frases que tampoco alcanza con el adelanto: "
-          f"{sum(1 for r in ratios if r > CATCHUP_FACTOR)} de {len(ratios)}")
-
-    # ¿Qué factor haría falta? Es el inverso del ratio, y hay que decirlo aunque
-    # sea un número que no se va a usar.
-    necesarios = sorted(r for r in ratios if r > 1)
-    if necesarios:
-        print()
-        print(f"factor necesario para no acumular cola (mediana de las que "
-              f"acumulan): {statistics.median(necesarios):.1f}x")
-        print("  (2,15 s por seña contra 2-3 palabras por segundo: la animación es "
-              "el cuello de botella, no el pipeline)")
+    print()
+    print("Esto ya no lo corrige el sistema por su cuenta: la velocidad es un")
+    print("ajuste de la persona y nada la multiplica por detrás (D-5). Si estos")
+    print("números molestan, la respuesta es PR-PER-04 —la prueba con personas con")
+    print("LSC que pregunta si la velocidad es adecuada—, no un factor escondido en")
+    print("`app.js`.")
 
     sin_seña = sum(f["sin_seña"] for f in filas)
     print()

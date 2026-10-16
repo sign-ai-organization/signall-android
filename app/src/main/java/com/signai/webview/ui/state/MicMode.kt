@@ -17,13 +17,13 @@ package com.signai.webview.ui.state
  *   usuario —RF-STT-03, y el tercer estado de RF-UI-01—, que es el botón Traducir.
  * - [Live] — el interruptor `TR` de la fila de abajo. El micrófono **queda
  *   prendido** entre frases: cada frase que cierra por la pausa se manda sola y
- *   el avatar la firma oración por oración, sin que nadie toque nada.
+ *   el avatar la representa oración por oración, sin que nadie toque nada.
  *
  * [Off] además significa "no hay captura": el micrófono no manda audio, el
  * backend recibe solo frases escritas.
  *
  * Lo que el valor se llama dice qué hace: antes este valor era `Realtime` y
- * significaba "el avatar firma mientras la persona habla, sin esperar al final de
+ * significaba "el avatar representa mientras la persona habla, sin esperar al final de
  * la frase". Eso se desarmó —la unidad de traducción es la oración y el STT
  * corta por pausas de 1,5 s—, así que hoy *en vivo* quiere decir otra cosa: la
  * frase sale sola cuando termina, no a mitad de camino. Ver

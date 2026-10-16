@@ -9,7 +9,7 @@ package com.signai.webview.ui.state
  */
 enum class PlaybackState(val label: String) {
     Idle("Listo para traducir"),
-    /** 🎤 Dictado: se está transcribiendo la voz a texto y no se firma nada. */
+    /** 🎤 Dictado: se está transcribiendo la voz a texto y no se representa nada. */
     Dictating("Dictando..."),
     /** ◢◢ En vivo: el mic sigue prendido y cada frase se manda al cerrarse. */
     Listening("Escuchando..."),

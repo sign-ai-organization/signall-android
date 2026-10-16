@@ -29,6 +29,18 @@ object SignAiCommands {
     fun jsToggle(prop: String, on: Boolean) = "window.SignAI?.$prop(!!$on)"
 
     /**
+     * Le dice a la escena cuánto silencio está usando el STT, para el overlay de
+     * depurar.
+     *
+     * No es un ajuste: la app nunca habla con el STT, así que el valor llega
+     * desde `/health` del backend (que lo copia del STT). Va como número
+     * porque el JS lo valida; `null` deja el overlay con "?", que es lo que
+     * hay que ver cuando no se sabe.
+     */
+    fun setSilenceTimeoutMs(ms: Int?) =
+        "window.SignAI?.setSilenceTimeoutMs(${ms ?: "null"})"
+
+    /**
      * Hands the scene the signs to play, in order (plan paso 3). Additive: the
      * five original commands and the `?.` guard are unchanged (`BRG-8`).
      *
@@ -38,10 +50,10 @@ object SignAiCommands {
     fun setQueue(json: String) = "window.SignAI?.setQueue(${JSONObject.quote(json)})"
 
     /**
-     * Agrega señas al final de la cola sin reiniciar la que ya se está firmando.
+     * Agrega señas al final de la cola sin reiniciar la que ya se está representando.
      *
      * La mitad en tiempo real de [setQueue]: el backend manda un fragmento de la
-     * frase apenas confirma que esas palabras ya se dijeron, y el muñeco lo firma
+     * frase apenas confirma que esas palabras ya se dijeron, y el muñeco lo representa
      * mientras la persona sigue hablando. [setQueue] sigue reemplazando, que es
      * lo correcto para una frase escrita o un "Repetir".
      *
@@ -50,7 +62,7 @@ object SignAiCommands {
     fun appendQueue(json: String) = "window.SignAI?.appendQueue(${JSONObject.quote(json)})"
 
     /**
-     * Arranca a firmar desde [index] sin volver al principio de la cola.
+     * Arranca a representar desde [index] sin volver al principio de la cola.
      *
      * `play()` asume que la cola está completa y salta al ítem 0. En streaming
      * la cola recién empieza a llenarse, así que arrancar tiene que respetar

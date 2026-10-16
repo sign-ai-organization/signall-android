@@ -19,13 +19,13 @@ interface SignAiWebViewController {
     /**
      * Agrega [items] al final de la cola en curso, sin reiniciarla.
      *
-     * Es lo que hace posible firmar mientras la persona sigue hablando: el
+     * Es lo que hace posible representar mientras la persona sigue hablando: el
      * backend no espera a tener la frase entera, manda un fragmento y esto lo
      * encadena detrás de lo que ya está sonando.
      */
     fun appendQueue(items: List<SignQueueItem>)
 
-    /** Arranca a firmar desde [index]; no hace nada si ya hay algo sonando. */
+    /** Arranca a representar desde [index]; no hace nada si ya hay algo sonando. */
     fun playFrom(index: Int)
 
     fun setDefaultSign(url: String)
@@ -44,6 +44,15 @@ interface SignAiWebViewController {
 
     /** Sin fundición entre señas: cada transición es un corte seco (`ACC-*`). */
     fun setReduceMotion(on: Boolean)
+
+    /**
+     * El `SILENCE_TIMEOUT_MS` del STT, para el overlay de depurar.
+     *
+     * No cambia cómo se representa nada: el valor solo se muestra (decisión
+     * D-6), y `null` deja el overlay diciendo "?", que es lo que hay que ver
+     * cuando no se sabe.
+     */
+    fun setSilenceTimeoutMs(ms: Int?)
 
     fun applyBlur(enabled: Boolean)
 }
@@ -101,6 +110,8 @@ class WebViewSignAiController : SignAiWebViewController {
     override fun setSpeed(factor: Float) = js(SignAiCommands.setSpeed(factor))
 
     override fun setReduceMotion(on: Boolean) = js(SignAiCommands.setReduceMotion(on))
+
+    override fun setSilenceTimeoutMs(ms: Int?) = js(SignAiCommands.setSilenceTimeoutMs(ms))
 
     override fun applyBlur(enabled: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

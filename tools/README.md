@@ -27,9 +27,9 @@
   transcripción final a la seña — este último es `rt_first_sign_ms`. **Para
   medir en frío hay que reiniciar el backend**: `SEMANTIC_CACHE_PRELOAD` deja la
   caché en memoria y `DELETE FROM semantic_cache;` solo no alcanza.
-- **`medir-retraso.py`** — ¿el avatar alcanza a firmar mientras el usuario habla?
+- **`medir-retraso.py`** — ¿el avatar alcanza a representar mientras el usuario habla?
   Compara, con las duraciones reales del `manifest.json`, cuánto tarda el usuario
-  en decir cada frase contra cuánto tarda el avatar en firmarla. Es lo que
+  en decir cada frase contra cuánto tarda el avatar en representarla. Es lo que
   sostiene (o no) el adelanto automático de `app.js`.
 - **`dev.sh`** — wrapper sobre `mobilecli` (mobile-next) para manejar el
   emulador Android. Lista, captura, toca, escribe, instala el APK,

@@ -92,9 +92,9 @@ Estado del campo al apagar cada uno:
 | **En vivo** | el campo queda **limpio** |
 
 El campo limpio del en vivo es pedido del owner: para cuando se apaga el
-interruptor lo que decía el campo ya se mandó y se firmó, así que no hay nada
+interruptor lo que decía el campo ya se mandó y se representó, así que no hay nada
 que impedir reenviar — y con Traducir de vuelta a estar disponible, dejarlo
-puesto era una invitación a firmarlo otra vez. Lo único que sobrevive es el texto
+puesto era una invitación a representarlo otra vez. Lo único que sobrevive es el texto
 de un dictado sin mandar, que es del usuario.
 
 ---
@@ -127,7 +127,7 @@ Quedó:
 - El micrófono **no** cambia de icono y sigue siendo la única forma de dictar de
   cero. Tocarlo con texto esperando lo descarta y vuelve a dictar.
 - El aviso de que hay texto listo va en el **hint del escenario**:
-  *"Texto listo. Toca Traducir para firmarlo."* En el campo no sirve —el
+  *"Texto listo. Toca Traducir para representarlo."* En el campo no sirve —el
   placeholder solo se ve cuando el campo está vacío, que es justo cuando el
   aviso importa—.
 - El envío es Traducir.
@@ -155,7 +155,7 @@ frases=2 oraciones=3 glosas=11 sin_seña=0 dictado_frases=0 dictado_palabras=0
 duracion_frase=p50=1178ms p95=1178ms max=7802ms n=2 duracion_firmado=n/a
 ```
 
-`duracion_firmado` (`firmado:`) es lo único que mide la escena; `duracion_frase`
+`duracion_firmado` (`representado:`) es lo único que mide la escena; `duracion_frase`
 mide el turno de traducción. **Son dos cosas distintas** y no se mezclan.
 
 `turnStartedAt` ahora arranca **cuando se manda la frase**, no al abrir el
@@ -224,7 +224,7 @@ qué ya no existen.
 
 ```bash
 tools/medir-primera-sena.py   # de dónde sale la primera seña (frío y caliente)
-tools/medir-retraso.py        # ¿el avatar alcanza a firmar mientras hablás?
+tools/medir-retraso.py        # ¿el avatar alcanza a representar mientras hablás?
 ```
 
 Ambas corren los 28 fixtures de `../sign-ai-stt/fixtures/audio` por el WebSocket
@@ -244,6 +244,77 @@ Ollama local, caché semántica vacía):
 
 No se puede comparar con la línea base publicada (p50 913 ms / p95 1336 ms): esa
 es del camino por palabras.
+---
+
+## 2026-10-16 — Cada oración cuando llega, y sin adelanto automático
+
+Decisiones D-1, D-5 y D-6 de
+`openspec/sessions/2026-10-16-latencia-y-decisiones.md`, más la métrica del
+tramo que no lo tenía (oración recibida → avatar moviéndose).
+
+### El avatar representa cada oración apenas llega
+
+`flushSegments()` ya no espera a que la frase esté completa: entrega lo que
+haya. La escena recibe `setQueue` + `play()` con la primera oración y
+`appendQueue` con cada una de las siguientes — los dos comandos ya existían en
+el puente y no los llamaba nadie (`BRG-14`) —.
+
+Medido en el Redmi con una frase de tres oraciones: la primera seña se movió
+**95-114 ms** después de que llegara su `segment`, contra los ~569 ms que
+costaba esperar a las otras dos.
+
+Dos cosas que hubo que arreglar sobre la marcha, y que sólo aparecieron
+probando en el dispositivo:
+
+- `appendQueue` arrancaba el ítem que ya estaba cargando, así que la misma
+  seña arrancaba dos veces y su `signStart` salía duplicado. Ahora corta
+  también con `state.loading`.
+- Cuando la cola se había vaciado mientras la oración se traducía, el
+  reinicio usaba `queueIdx` a secas y **repetía la última seña** en vez de
+  seguir con la siguiente. Ahora reanuda en `queueIdx + 1` si la cola ya
+  arrancó, y en 0 si nunca arrancó. Reproducido en el Redmi con una tercera
+  oración que tardó 7,6 s.
+
+El `done` ya no arma la cola: cierra el turno, y ahí se mide `metrics.onTurn`
+y se suelta la frase en vivo que estuviera esperando. Soltarla con la primera
+oración dejaría pasar una segunda frase mientras la anterior todavía se
+traduce.
+
+### El adelanto automático se quitó
+
+`CATCHUP_BACKLOG`, `CATCHUP_FACTOR`, `state.catchUp` y la rama de
+`tickPlayback` ya no existen. `setSpeed` es el único ajuste de velocidad y se
+aplica tal cual. `BRG-15` queda marcada como eliminada.
+
+El motivo decisive no fue técnico: la prueba obligatoria **PR-PER-04** le
+pregunta a usuarios con LSC si la velocidad es adecuada, y con el adelanto esa
+respuesta mezclaba la velocidad que eligió la persona con un factor que nadie
+le dijo. `tools/medir-retraso.py` dejó de calcular las columnas "con el
+adelanto" y ahora responde otra pregunta: cuánto se sigue representando
+después de que el hablante terminó.
+
+### El tiempo de silencio, a la vista
+
+El overlay de depurar muestra `silencio STT: 1500ms` (`BRG-17`). El valor
+viene del `/health` del backend, que lo copia del STT cada 30 s; la app nunca
+habla con el STT.
+
+### La métrica que faltaba
+
+`signStart` (JS→Kotlin, `BRG-16`) avisa que el muñeco se está moviendo, con
+el reloj propio de JS. Con eso existe por primera vez el tramo de **oración
+recibida → avatar moviéndose**, que antes no lo medía nadie: ni el backend
+(cronometra hasta mandar el `segment`) ni el teléfono (`play()` se llama antes
+de que el `.glb` termine de bajar). Sale en `SignAiMetrics` como
+`oracion_a_avatar`.
+
+### Dos herramientas que faltaban
+
+- `tools/verificar-tiempo-real.sh` ya no da por buena una corrida de latencia
+  hecha con la caché semántica llena: en ese caso el p95 sale de 5 ms, pasa
+  cualquier presupuesto y no midió nada. Ahora esa corrida se declara **no
+  medible** con la instrucción para medir en frío.
+- `scripts/verify_session.py` del STT cubre la lógica de `session.py`.
 
 ---
 
@@ -257,6 +328,17 @@ es del camino por palabras.
 3. **Prueba de regresión del eco**: el auto-envío en vivo no debe poder dispararse
    por un frame que no venga del STT. El backend ya está arreglado y con test; en
    la app es una guarda de una línea.
-4. Ver el adelanto automático prenderse y apagarse dentro de una misma
-   conversación, con una frase de 3+ señas.
-5. Agregar las dos herramientas nuevas a `tools/README.md` y `tools/HERRAMIENTAS.md`.
+4. **Repetir la medición de las 28 frases** con la pila completa y la caché
+   vacía, ahora que el avatar representa oración por oración: la línea base
+   publicada (913 ms p50) sigue siendo del camino por palabras y no es
+   comparable.
+5. Agregar `tools/medir-retraso.py` y `tools/medir-primera-sena.py` a
+   `tools/README.md` y `tools/HERRAMIENTAS.md`.
+6. **Prueba de regresión del eco** en la app: el auto-envío en vivo no debe poder
+   dispararse por un frame que no venga del STT. El backend ya está arreglado y
+   con test; en la app es una guarda de una línea.
+7. `setQueue` resetea `queueIdx` a 0 aunque haya algo sonando: si una frase
+   entra mientras la anterior se representa, el índice 0 de la nueva no llega a
+   reproducirse. Es anterior a este trabajo y no se tocó, pero `appendQueue` lo
+   hace más visible porque ahora la cola crece durante la reproducción. Candidato
+   a la próxima sesión.

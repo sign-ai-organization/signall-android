@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.signai.webview.data.BackendHealth
 import com.signai.webview.data.SharedPrefsSettingsRepository
 import com.signai.webview.data.SharedPrefsSignHistoryRepository
 import com.signai.webview.data.SignAiBackendConfig
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
                 webView = WebViewSignAiController(),
                 backend = SignAiWebSocketClient(backendConfig),
                 assets = SignAssetRepository(cacheDir, backendConfig.httpOrigin),
+                health = BackendHealth(backendConfig.httpOrigin),
             )
         setContent {
             val settings = state.settings

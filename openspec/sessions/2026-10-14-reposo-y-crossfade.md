@@ -60,7 +60,7 @@ está abajo (§4).
 texto al último fragmento: STT y backend. El crossfade no lo mueve —ni un
 milisegundo—, porque el avatar no está en ese camino. La "~8% menos" de §4.5 de
 la investigación es real, pero es sobre la **animación**. Así que se agregó la
-métrica que sí la mide: `SignAiMetrics.onPlayback` (`firmado: N señas en Xms`),
+métrica que sí la mide: `SignAiMetrics.onPlayback` (`representado: N señas en Xms`),
 un reloj que arranca con la primera seña y para con `onPlaybackDone`. La
 documentación que decía "remedir `rt_turn_total_ms`" está corregida en
 `AGENTS.md` y en `tools/TIEMPO-REAL.md`.
@@ -123,7 +123,7 @@ Tres nuevas, para que las cifras de la investigación sean reproducibles:
 | | |
 |---|---|
 | `./gradlew build` + `installDebug` | ok |
-| Reposo en el dispositivo | al abrir, después de firmar y con el micro prendido |
+| Reposo en el dispositivo | al abrir, después de representar y con el micro prendido |
 | Fundición entre dos señas distintas | `fundición -> 0000.001` en logcat, `actions vivas: 2` en el panel |
 | Frontera | el clip entra a los 2.03–2.07 s de uno de 2.17 s = `dur − 100 ms` |
 | Long press en mitad de una seña | corte seco al reposo, **sin** `onPlaybackDone` (un reset no es una reproducción terminada) |
@@ -141,7 +141,7 @@ corrida, sola, clavó la línea base.
 
 - **Verlo con voz humana.** El paso de una seña a otra se comprobó por logcat,
   por la métrica y por capturas, pero la fundición es un efecto de 100 ms: la
-  confirmación de que "se ve bien" es del owner, mirando y firmando.
+  confirmación de que "se ve bien" es del owner, mirando y representando.
 - Las 18 señas que faltan (`0032`–`0049`) entran por el mismo pipeline; la pose
   de descanso no se toca, salvo que Samuel exports otra cosa.
 

@@ -3,6 +3,31 @@
 Thesis: Spanish speech → LSC via 3D avatar. This repo holds **only the WebView app code**; the rest of the system lives in sibling repos — see § Mapa del sistema below before touching anything in the pipeline.
 Old approaches (Flask server, Kotlin+Filament native, Unity) are dead — ignore any docs referencing them.
 
+## Cómo hablarle al owner
+
+El owner es la persona autora de la tesis. Cuando le expliques algo —un hallazgo, una
+decisión, un plan— tenés que poder hacerlo **en español neutro, como si se lo
+explicaras a alguien que nunca vio el proyecto**: frases cortas, sin jerga sin
+explicar, y el detalle técnico después de la idea, no antes.
+
+- **Nada de voseo.** "Toca", no "tocá".
+- **El término de la tesis es `representar`.** El avatar *representa* las señas: no
+  "firma" y no "signa". Y si el texto habla de mandar una frase, es `enviar`, no
+  `representar`. Desde el 2026-10-16 no aparece más `firmar` en este repositorio:
+  la palabra se inventó en documentos internos y confundía más de lo que aclaraba.
+  Los identificadores en inglés (`PlaybackState.Signing`, `signing`) **se quedan**:
+  `signing` es la palabra correcta en inglés para lengua de señas.
+- **Los números van con su Origen.** Una cifra sin decir de dónde salió no se puede
+  discutir, y una cifra de fixture no es una cifra de persona. Decí siempre
+  "medido con 28 frases reproducidas por el socket", no "medido".
+- **No inventes terminología.** Si una palabra no está en
+  `../sign-ai-docs/documentos/requerimientos/`, es palabra mía hasta que el owner la
+  avale. Preguntá antes de escribir una en un documento.
+- **Una decisión, una pregunta.** Cuando algo sea decisión del owner, presentá las
+  opciones con lo que se gana y lo que se pierde, y pará ahí. No advanced por las
+  opciones difíciles: preguntá.
+- **Separá lo medido de lo supuesto.** Si algo es una hipótesis, decí que lo es.
+
 ## Mapa del sistema: los repositorios hermanos
 
 Esta app es **una de las piezas** del sistema SignAI (tesis, Ingeniería de Sistemas,
@@ -66,7 +91,7 @@ completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contr
   WAV (el servidor los reagrupa en 30 ms para el VAD) y el STT responde con **JSON de
   texto**. Un frame de texto plano `"end"` fuerza el cierre del segmento.
 - `words` y `audio_ms` son **aditivos** (2026-10-14): el backend los usa para decidir
-  qué seña firmar y cuándo, pero el STT no depende de que alguien los lea.
+  qué seña representar y cuándo, pero el STT no depende de que alguien los lea.
 - Perfil de tiempo real: **dos modelos** (`PARTIAL_MODEL_SIZE=small` para los
   parciales, `MODEL_SIZE=medium` para los finales) + `InferenceScheduler` +
   `SILENCE_TIMEOUT_MS=600`. `REALTIME=false` devuelve los defaults previos.
@@ -171,9 +196,9 @@ mic → PCM16/16 kHz → WebSocket → backend → STT → the phrase is split i
 sentences are translated → the avatar signs them in order.
 
 El cambio grande de esta rama (auditoría `../sign-ai-docs/auditoria-flujo-2026-10-15.md`
-§6): antes el backend mandaba fragmentos (`stream: true, total: 0`) y el avatar firmaba
+§6): antes el backend mandaba fragmentos (`stream: true, total: 0`) y el avatar representaba
 **a mitad de frase**. Ahora solo hay oraciones, con `total` conocido desde el primero. El
-efecto es que el avatar **no** empieza a firmar hasta que termina la primera oración, y
+efecto es que el avatar **no** empieza a representar hasta que termina la primera oración, y
 `rt_first_sign_ms` sube por construcción. Es el costo consciente de la opción A (§7 de la
 auditoría): la línea base publicada —913 ms p50 / 1336 ms p95— es del camino por palabras
 y **no es comparable**. Falta remedir.
@@ -201,7 +226,7 @@ tools/medir-retraso.py                # ¿hace falta el adelanto automático? (v
 
 ### El micrófono son dos interruptores, y apagado no es mandar
 
-| | Botón | Qué hace al tocarlo | Qué firma |
+| | Botón | Qué hace al tocarlo | Qué representa |
 |---|---|---|---|
 | 🎤 | microfono (fila 1) | **dictado**: dicta, el silencio cierra la frase, el mic se apaga solo y **el texto espera** | nada, hasta que toques Traducir |
 | ◢◢ | TR (fila 2) | **en vivo**: el interruptor continuo, el mic queda prendido | cada frase, en el acto |
@@ -218,7 +243,7 @@ Lo que hay que saber antes de tocar esto:
 - **`playbackState` ya no dice si el mic está prendido.** Un método nuevo que apague o
   encienda el mic tiene que tocar **los dos**.
 - **Nunca uses `playbackState == Listening` como "el mic está prendido".** Con el mic
-  prendido y el muñeco firmando, el estado es `Signing`.
+  prendido y el muñeco representando, el estado es `Signing`.
 - **Solo `Live` es continuo.** En `Dictation` el `final` del STT apaga la captura, y por eso
   `dictationBuffer` ya no acumula entre frases: el STT corta a los 1,5 s de silencio.
 - **Los dos interruptores se deshabilitan por el otro, en los dos sentidos, y ninguno se
@@ -226,13 +251,13 @@ Lo que hay que saber antes de tocar esto:
   modo. **Un control deshabilitado se marca apagando el icono y la etiqueta a `muted`, nunca
   bajándole el alfa a la superficie** (ver `SignAiBottomBar`).
 - **Apagar el TR deja el campo limpio** (`stopCapture`), no retenido: para entonces lo que
-  decía el campo ya se firmó. Lo único que sobrevive es el texto de un dictado sin mandar.
+  decía el campo ya se representó. Lo único que sobrevive es el texto de un dictado sin mandar.
   **Apagar el TR tampoco manda nada**: el en vivo manda cada frase al cerrarse, no al
   apagarse.
 - **Lo ya enviado no se puede volver a mandar.** El campo conserva la frase en `readOnly`
   con Traducir deshabilitado durante `SentTextHoldMs` = **1500 ms** (`sentText`), y después
   se borra y el campo y Traducir vuelven **en la misma asignación**. Son **tres** los
-  caminos que firman sin que nadie toque Traducir (en vivo, Traducir a mano y el Repetir);
+  caminos que representan sin que nadie toque Traducir (en vivo, Traducir a mano y el Repetir);
   el dictado ya no es uno, porque su texto es del usuario. La retención se prende en
   `requestTranslation`, el punto donde se sabe que la frase salió de verdad. Hay log de los
   dos momentos: la ventana es más corta que el ida y vuelta de `mobile-mcp`, así que el
@@ -240,7 +265,7 @@ Lo que hay que saber antes de tocar esto:
 - **El tercer estado de RF-UI-01 se descartó** (decisión del owner el 2026-10-15, después
   de probarlo en el Redmi): el micrófono **no** cambia de icono y sigue siendo la única
   forma de dictar de nuevo. El aviso va en el **hint del escenario** ("Texto listo. Toca
-  Traducir para firmarlo."), no en el campo, porque con la frase escrita arriba un
+  Traducir para representarlo."), no en el campo, porque con la frase escrita arriba un
   placeholder no se ve nunca. Tocar 🎤 con texto esperando **lo descarta**: es cancelación
   explícita, lo único que RNF-REL-04 permite como pérdida. **Esto es una desviación del
   documento de requisitos** — RF-UI-01 sigue diciendo tres iconos — y hay que decirlo.
@@ -257,22 +282,32 @@ Lo que hay que saber antes de tocar esto:
 
 ### Gotchas
 
-- **El adelanto automático se queda, pero hay que saber por qué**
-  (`tools/medir-retraso.py`, 2026-10-15). Las 32 señas duran 2,15 s de media y cada palabra
-  es una seña: el avatar no termina antes de que el usuario termine de hablar en **17 de
-  28** frases de prueba, y con el adelanto (`CATCHUP_BACKLOG = 2`, `CATCHUP_FACTOR = 1.6`)
-  todavía en 7. Firma/habla da 1,26× de mediana, que 1,6× cruza. **Lo que cambió es la
-  forma de la cola**: está vacía mientras el usuario habla y se llena de golpe al cerrar
-  cada frase, así que el adelanto ya no está prendido todo el tiempo. Como el umbral se
-  mide después de que arranque la seña en curso, hace falta una frase de 3+ señas para
-  dispararlo. **No prometer que el avatar firme al ritmo de la voz**: harían falta ~5×,
-  que es un fast-forward. `setSpeed` guarda `baseSpeed` aparte porque el adelanto
-  multiplica sobre el ajuste del usuario, no lo reemplaza.
+- **El adelanto automático ya no existe** (2026-10-16, decisión D-5). `CATCHUP_BACKLOG`,
+  `CATCHUP_FACTOR` y `state.catchUp` se borraron de `app.js`: la velocidad es un parámetro
+  que fija el usuario y `setSpeed` la aplica tal cual. **Por qué**: (1) la prueba obligatoria
+  **PR-PER-04** pregunta a usuarios con LSC si la velocidad es adecuada, y con el adelanto esa
+  respuesta mezclaba la velocidad que eligió la persona con un factor que nadie le dijo;
+  (2) quien lee el avatar es una persona sorda que no está mirando a quien habla, así que la
+  carrera "terminar antes que el hablante" no la corre nadie; (3) no estaba en ningún documento
+  de la tesis. `BRG-15` queda marcada como eliminada. Lo que sí es cierto y se sigue midiendo
+  (`tools/medir-retraso.py`): las 32 señas duran 2,15 s de media, así que una frase larga se
+  sigue representando después de que el hablante terminó. Eso ya no lo corrige el sistema.
+- **La app representa cada oración apenas llega** (D-1). `flushSegments()` entrega lo pendiente
+  en vez de esperar a `pendingTotal`, y `flushedThrough` la hace idempotente. La escena recibe
+  `setQueue` + `play()` con la primera oración y `appendQueue` con cada una de las siguientes.
+  Dos trampas que solo aparecen en el dispositivo: `appendQueue` **no** debe arrancar un ítem
+  que ya se está cargando (`playFrom` corta con `state.loading`; si no, la misma seña arranca
+  dos veces y su `signStart` sale duplicado), y **el índice de reanudación es `queueIdx + 1`**,
+  no `queueIdx`: `advanceQueue` deja `queueIdx` en el último índice que llegó a sonar, así que
+  reanudar en `queueIdx` repite la última seña. El `done` ya no arma la cola: cierra el turno,
+  mide `metrics.onTurn` y suelta `livePhraseBacklog`. Medido en el Redmi: **95–114 ms** del
+  `segment` al primer movimiento, contra ~569 ms parado.
 - **`turnStartedAt` arranca cuando se manda la frase**, no al abrir el micrófono. La
   unidad es la frase completa, así que el tiempo que el usuario tarda en hablarla no es del
   turno de traducción. Lo que sí incluye es la espera por la frase anterior en vuelo.
-  `turnStartedAt` mide **el pipeline**, no la escena: el número que mide el avatar es
-  `firmado:` (`SignAiMetrics.onPlayback`).
+  `turnStartedAt` mide **el pipeline**, no la escena: los números que miden la escena son
+  `oracion→avatar:` (`SignAiMetrics.onSignStart`, el `segment` hasta que el muñeco se mueve) y
+  `representado:` (`SignAiMetrics.onPlayback`).
 - **Release the mic without speaking**: returns to Idle immediately with "No se escuchó
   nada." Waiting the full 15 s transcription timeout and then reporting a failure that did
   not happen is the old behaviour. `heardAnythingThisSession` separates "user said nothing"
@@ -323,7 +358,7 @@ instrument is a number you cannot claim improved.
 |---|---|---|
 | STT | `:8000/metrics` | inference ms per model, GPU queue wait, audio lag, drops by reason |
 | Backend | `:8080/metrics` | `rt_first_sign_ms`, `rt_phrase_total_ms`, `rt_sentence_delay_ms`, `rt_phrases_total`, `rt_sentences_total`, `rt_glosses_total`, `rt_phrase_sentences`, `audio_bytes_total` |
-| Device | `adb logcat -s SignAiMetrics` | sentences per phrase, gloss count, **signing duration** (`firmado:`), p50/p95/max, dictated phrases and words |
+| Device | `adb logcat -s SignAiMetrics` | sentences per phrase, gloss count, **signing duration** (`representado:`), p50/p95/max, dictated phrases and words |
 | Device | `adb logcat -s SignAiNet` | every `segment` the backend sent, with `index`/`total` |
 | Scene | `adb logcat -s SignAIWeb` | JS console (needs debug mode on in Settings → AVANZADO). Con depurar prendido también imprime la cola y el adelanto: `cola N/M, adelanto on/off` |
 

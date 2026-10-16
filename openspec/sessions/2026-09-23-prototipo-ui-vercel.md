@@ -174,7 +174,7 @@ Device disponible: **Redmi Note 9S (Android 11)**.
 ### Qué se hizo
 
 - **C.1 `EdgeDrawer.kt` generalizado** a `DrawerSide.Start/End` (`EDG-13`):
-  mismo modelo de gesto para ambos lados (offset firmado), pestaña visible
+  mismo modelo de gesto para ambos lados (offset representado), pestaña visible
   (grip) tappable y arrastrable (`EDG-3`/`EDG-8`/`EDG-11`), `EDG-6`
   **drag-preview** translúcido con label, scrim (`EDG-10`) y exclusión de la
   bottom bar (`EDG-12`).

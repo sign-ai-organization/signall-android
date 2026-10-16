@@ -15,26 +15,26 @@ frases usar, qué señas hay y qué significa cada número.
 
 ## 1. Qué cambió, en una frase
 
-Antes el avatar firmaba **a mitad de frase**: el STT iba diciendo qué palabras ya
+Antes el avatar representaba **a mitad de frase**: el STT iba diciendo qué palabras ya
 terminó de pronunciar, el backend traducía esa cola nueva y la app la encadenaba
 detrás de lo que ya sonaba. Ahora la unidad es la **oración**: el STT cierra la
-frase, el backend la divide en oraciones, las traduce y el avatar firma oración
+frase, el backend la divide en oraciones, las traduce y el avatar representa oración
 por oración.
 
 ```
-ANTES   hablar ─┬─ "hola"     ─▶ HOLA        (el avatar firmaba a mitad de frase)
+ANTES   hablar ─┬─ "hola"     ─▶ HOLA        (el avatar representaba a mitad de frase)
                 ├─ "cómo"     ─▶ COMO
                 └─ "estás"    ─▶ ESTAS      (el `final` solo confirmaba)
 
 AHORA  hablar ─────── 1,5s de silencio ── Whisper ── divide en oraciones ──▶ avatar
-        (aquí no se firma nada)                                                  (recién acá)
+        (aquí no se representa nada)                                                  (recién acá)
 ```
 
 **La pérdida es la primera seña, y es deliberada** (opción A, §7 de la
-auditoría): firmar a mitad de frase obligaría a partir los clips de dos palabras
+auditoría): representar a mitad de frase obligaría a partir los clips de dos palabras
 en glosas sueltas y a mantener el `||` de dos barras en la caché semántica, que
 es justamente el camino que la auditoría desarma. Lo que se gana es que **el
-avatar nunca firma media oración** y que la clave de caché es una oración
+avatar nunca representa media oración** y que la clave de caché es una oración
 limpia, la misma en los dos modos.
 
 ### Lo que se midió (28 fixtures, backend + STT reales, 2026-10-15)
@@ -68,7 +68,7 @@ Las 28 frases son cortas —mediana de 2 palabras, 1 seña y 1 oración— así 
 
 ```bash
 tools/medir-primera-sena.py     # primera seña, frío y caliente
-tools/medir-retraso.py           # ¿el avatar alcanza a firmar mientras hablás?
+tools/medir-retraso.py           # ¿el avatar alcanza a representar mientras hablás?
 ```
 
 `medir-primera-sena.py` reproduce los fixtures, espera el `final`, manda la frase
@@ -100,7 +100,7 @@ tools/verificar-tiempo-real.sh incremental    # divisor de oraciones + protocolo
 tools/verificar-tiempo-real.sh metricas       # /metrics de los dos servicios
 tools/verificar-tiempo-real.sh dispositivo    # teléfono: permiso, adb reverse, relanzar
 tools/medir-primera-sena.py                   # primera seña, extremo a extremo
-tools/medir-retraso.py                        # adelanto automático: ¿hace falta?
+tools/medir-retraso.py                        # cuánto se sigue representando tras hablar
 ```
 
 ### Requisitos previos
@@ -154,8 +154,8 @@ adb logcat -s SignAIWeb          # consola del JS (modo depuración prendido)
 2. Hablá una frase y hacé una pausa de un segundo y medio. **No toques nada más.**
 3. El micrófono **se apaga solo** cuando el STT cierra la frase.
 4. **El muñeco no se mueve.** El texto queda en el campo, editable.
-5. Arriba del avatar aparece el aviso *"Texto listo. Toca Traducir para firmarlo."*
-6. Recién ahí tocá **Traducir**, y ahí sí firma.
+5. Arriba del avatar aparece el aviso *"Texto listo. Toca Traducir para representarlo."*
+6. Recién ahí tocá **Traducir**, y ahí sí representa.
 
 El punto de la prueba es el paso 4: **apagar no es mandar**. Antes sí lo era
 (`sendDictation`), y por eso `trazabilidad.md` §2.1 tenía RF-STT-03 y RNF-REL-04
@@ -193,7 +193,7 @@ STT llegara, así que hay que esperar el `final` igual. Cuando llega con texto, 
 suma; cuando llega vacío (ruido de fondo), es `final vacío: el utterance se cerró
 sin palabras` y no rompe nada.
 
-### B. En vivo — firma mientras hablás
+### B. En vivo — representa mientras hablás
 
 1. Tocá **TR**.
 2. Decí **"hola"** y hacé una pausa de un segundo antes de seguir.
@@ -214,9 +214,9 @@ Y al apagarlo:
 
 **El campo queda limpio a propósito.** Lo que había ahí era la transcripción en
 vivo de lo que el micrófono estaba oyendo, y para cuando se apaga el interruptor
-eso ya se mandó y se firmó. Dejarlo puesto tapaba el campo con una frase que
+eso ya se mandó y se representó. Dejarlo puesto tapaba el campo con una frase que
 nadie puede volver a mandar, y con Traducir de vuelta a estar disponible el
-botón invitaba a reenviar lo que el avatar acababa de firmar. Lo único que
+botón invitaba a reenviar lo que el avatar acababa de representar. Lo único que
 sobrevive es el texto de un dictado sin mandar, que es del usuario.
 
 Mientras tanto, aunque al avatar todavía le falte cola, el resto del panel no se
@@ -228,7 +228,7 @@ app muerta sin explicación.
 de solo lectura (muestra lo que se está transcribiendo en vivo), y **Traducir** e
 **Historial** quedan deshabilitados. Es a propósito: texto y voz van por el mismo
 socket y el backend no puede saber de quién es cada fragmento; mezclados, el
-avatar firmaría la frase al revés.
+avatar representaría la frase al revés.
 
 **Y el otro interruptor también se apaga, en los dos sentidos:** con el
 micrófono prendido, TR queda deshabilitado, y con TR prendido, el micrófono. No
@@ -242,7 +242,7 @@ habilitado.
 ### C. Cambiar de uno al otro sin soltar nada
 
 1. Dictá algo y **sin soltar el micrófono** tocá TR.
-2. Cambia de modo y sigue: lo que ya dictaste **no** se firma, lo que digas
+2. Cambia de modo y sigue: lo que ya dictaste **no** se representa, lo que digas
    después sí.
 
 Y al revés: si dictaste algo y después probaste TR, al apagar TR el campo vuelve
@@ -263,13 +263,13 @@ python3 tools/medir-retraso.py        # manda los 28 fixtures por el socket
 2. La frase queda en el campo y **Traducir se deshabilita 1,5 s**; a los 1,5 s el
    texto se borra solo. En el log son `texto ya enviado` y `texto retenido borrado`
    (la segunda línea, ~1500 ms después de la primera).
-3. Cuando termine de firmar, tocá **Repetir** (el botón del escenario, abajo al
+3. Cuando termine de representar, tocá **Repetir** (el botón del escenario, abajo al
    centro). Tiene que pasar lo mismo.
 4. **Durante toda la seña —no solo mientras traduce— el panel entero está
    deshabilitado**: micrófono, Historial y TR se ven en `muted` y no responden.
 
 El punto 4 es el que se ve mejor mirando los tres iconos: pasan de `text` a
-`muted` y vuelven. Si quedaran prendidos mientras el muñeco firma, es que
+`muted` y vuelven. Si quedaran prendidos mientras el muñeco representa, es que
 `replayPending` se soltó antes de `onPlaybackDone`.
 
 ---
@@ -332,20 +332,21 @@ adb logcat -s SignAiNet
   la app no mete nada en el medio y las funde durante 100 ms. Se nota sobre todo
   en el par de señas de una frase corta ("hola gracias"), que es donde el salto
   directo es más visible.
-- **El adelanto automático**: con Ajustes → AVANZADO → depurar prendido, la
-  consola del JS imprime `cola N/M, adelanto on/off` cada vez que cambia. Con el
-  flujo por oraciones la cola está **vacía mientras hablás** y se llena de golpe al
-  cerrar la frase, así que el adelanto **prende y apaga** dentro de una misma
-  conversación. Eso es normal y es lo que cambió (ver `medir-retraso.py`).
-- **Para verlo en números**: el panel de depurar muestra la fundición y cuántas
-  actions están vivas (`2` mientras se funde). En logcat sale una línea por seña:
-  `fundición -> 0000.001` o `corte seco -> …`.
+- **El tiempo de silencio del STT**: el panel de depurar lo muestra
+  (`silencio STT: 1500ms`). Es el segundo bloque más grande de la latencia de
+  punta a punta, así que cada corrida de pruebas debería anotarlo de la pantalla
+  en vez de acordarse (decisión D-6). Sale de `/health` del backend, que lo copia
+  del STT; si no se pudo leer, dice `?`.
+- **Para verlo en números**: el panel de depurar muestra la fundición, cuántas
+  actions están vivas (`2` mientras se funde) y la cola. En logcat sale una línea
+  por seña: `fundición -> 0000.001` o `corte seco -> …`, más
+  `signStart: oración→avatar Nms` por cada seña que arranca.
 
 ---
 
 ## 5. Qué señas hay
 
-**32 con animación exportada** (las que el avatar puede firmar de verdad). La
+**32 con animación exportada** (las que el avatar puede representar de verdad). La
 columna `id` es el índice de LSC50 que empareja con `signs/<id>.glb`.
 
 | glosa | id | duración | glosa | id | duración |
@@ -382,36 +383,44 @@ Las 18 marcadas **no tienen animación**: el catálogo de Neon las anuncia con
 por HTTP (sería un 404 garantizado, `GLS-10`) y cae a la seña de prueba si el
 ajuste está prendido, o las reporta en el caption si está apagado.
 
-**Promedio 2.15 s por seña.** Es el número que explica por qué el avatar no
-alcanza a firmar al ritmo de la voz, y por qué existe el adelanto automático.
+**Promedio 2.15 s por seña.** Es el número que explica por qué una frase larga
+se sigue representando después de que el hablante terminó de hablar.
 
-### El adelanto automático, remedido
+### El adelanto automático: se quitó (2026-10-16, D-5)
 
-`tools/medir-retraso.py` responde una pregunta concreta: con entrega por oraciones,
-¿el desfase entre habla y animación desapareció? **No**, y no porque el modo de
-entrega lo causara:
+`app.js` multiplicaba la velocidad por 1,6 cuando había 2 o más señas en la fila
+(`CATCHUP_BACKLOG = 2`, `CATCHUP_FACTOR = 1.6`). Ya no existe, y `BRG-15` en
+`openspec/specs/ui/spec.md` queda marcada como eliminada.
 
-- El avatar no termina de firmar antes de que el usuario termine de hablar en
-  **17 de las 28** frases; con el adelanto puesto, todavía en **7**.
-- Firma/haba da **1,26× de mediana** (máx. 3,72×), que el factor 1,6× cruza
-  (mediana 0,79×).
-- El desfase absoluto es de **+0,4 s de mediana**, no de segundos.
+Por qué, en orden de peso:
 
-Lo que **sí** cambió es la forma: la cola está vacía mientras el usuario habla y
-se llena de golpe al cerrar cada frase. Como el umbral se mide después de que
-arranque la seña en curso, hace falta una frase de **3 señas o más** para
-disparar el adelanto, y con las 28 frases de prueba —cortas, de mediana 2 palabras
-y 1 seña— solo una lo dispara.
+1. **Alteraba la variable que había que medir.** La prueba obligatoria **PR-PER-04**
+   (`../sign-ai-docs/plan-pruebas/01-diseno/personas/pruebas.md`) pregunta a
+   usuarios con LSC si la velocidad es adecuada, de 1 a 5. Con el adelanto prendido
+   la respuesta mezclaba la velocidad que eligió la persona con un factor que
+   nadie le dijo, y la prueba no podía separarlas.
+2. **La carrera que venía a empatar no existe.** Quien lee el avatar es una persona
+   sorda que no está mirando a quien habla.
+3. **No estaba en ningún documento de la tesis.** Ni en requerimientos, ni en el
+   plan de pruebas, ni en los doce diagramas del SDD. Y dos números mágicos sin
+   criterio escrito contradicen la regla del backend de que ningún umbral numérico
+   va hardcodeado en la lógica funcional.
 
-**Lo que no se puede es prometer que el avatar firme al ritmo de la voz**: harían
-falta ~5×, que es un fast-forward, no una seña.
+Las cifras que Justificaban mantenerlo siguen siendo ciertas y `medir-retraso.py`
+sigue midiéndolas (ya sin las columnas "con el adelanto"): el avatar no termina de
+representar antes de que el usuario termine de hablar en **17 de las 28** frases,
+representación/habla da **1,26× de mediana** y el desfase absoluto es de **+0,4 s
+de mediana**, no de segundos.
+
+**Eso ya no lo corrige el sistema.** Si molesta, la respuesta es PR-PER-04 y no
+un factor escondido en la escena.
 
 ### Palabras que el catálogo no cubre
 
 `estudiante`, `médica`, `restaurante`, `aqui`, `trabajo` (como sustantivo) y
 cualquier nombre propio no tienen glosa. La respuesta correcta es que **no se
-firmen** y queden en el caption, no que el avatar improvise una seña. Si pedís
-"soy estudiante" y el muñeco firma NIÑO, eso es un error de traducción, no del
+representen** y queden en el caption, no que el avatar improvise una seña. Si pedís
+"soy estudiante" y el muñeco representa NIÑO, eso es un error de traducción, no del
 avatar.
 
 ---
@@ -454,11 +463,11 @@ adb logcat -s SignAiMetrics
 
 El resumen (`resumen:`) trae `frases`, `oraciones`, `glosas`, `sin_seña`,
 `dictado_frases`, `dictado_palabras`, `duracion_frase` y `duracion_firmado`.
-`duracion_firmado` (`firmado:`) es lo único que mide la escena; lo demás mide el
+`duracion_firmado` (`representado:`) es lo único que mide la escena; lo demás mide el
 pipeline.
 
-**`firmado:` y `duracion_frase` son dos nombres para cosas distintas y no se
-mezclan.** El primero es el tiempo que el avatar estuvo firmando; el segundo, el
+**`representado:` y `duracion_frase` son dos nombres para cosas distintas y no se
+mezclan.** El primero es el tiempo que el avatar estuvo representando; el segundo, el
 del turno de traducción. Con dos nombres para una sola cantidad, el segundo
 habría parecido roto.
 
@@ -504,13 +513,13 @@ cd ../sign-ai-stt
 | "Sin conexión con el servidor" en el teléfono | el `10.0.2.2` del build es para emulador | `adb reverse tcp:8080 tcp:8080` y compilar con `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate` |
 | Transcripción vacía | filtro de confianza de Whisper | mirá `stt_dropped_total{reason="logprob"}` |
 | La frase se parte en dos | dos oraciones separadas por 1,5 s de silencio | normal: es el divisor de oraciones haciendo su trabajo |
-| El avatar firma una seña y después otra rara | glosa fuera de LSC50 | encendé **Ajustes → AVANZADO → depurar** y mirá `SignAiNet` |
+| El avatar representa una seña y después otra rara | glosa fuera de LSC50 | encendé **Ajustes → AVANZADO → depurar** y mirá `SignAiNet` |
 | La medición sale a 1 ms y no es creíble | la caché semántica está caliente | `DELETE FROM semantic_cache;` **y reiniciar el backend** (§1) |
 | `session failed: null` en logcat, en bucle | el backend se reinició y una sesión quedó colgada | reiniciá la app: `adb shell am force-stop com.signai.webview` |
 | Al apagar TR queda todo deshabilitado y dice "Procesando..." | se confundió "el `done` ya llegó" con "el avatar ya terminó": una oración larga deja cola | la fuente de verdad es `queuePlaying`, no `playbackState` (`STA-18`) |
 | El otro interruptor no se ve deshabilitado | el relleno `soft` atenuado al 35 % sobre `surface` da dos colores casi iguales | se apaga el icono y la etiqueta a `muted`, nunca la superficie (`STA-17`) |
-| Traducir manda dos veces lo mismo | el campo tiene la frase que la voz ya firmó | 1,5 s de retención: el texto se ve, Traducir no, y después se borra solo (`STA-20`) |
-| **La misma frase se firma una y otra vez, el backend al 40 % de CPU** | el backend hacía eco de la frase escrita como un `transcript` y la app lo tomaba por voz | **ya está corregido**: `handle_text` no manda `transcript`. Si vuelve a pasar, mirá `rt_phrases_total` subiendo solo |
+| Traducir manda dos veces lo mismo | el campo tiene la frase que la voz ya representó | 1,5 s de retención: el texto se ve, Traducir no, y después se borra solo (`STA-20`) |
+| **La misma frase se representa una y otra vez, el backend al 40 % de CPU** | el backend hacía eco de la frase escrita como un `transcript` y la app lo tomaba por voz | **ya está corregido**: `handle_text` no manda `transcript`. Si vuelve a pasar, mirá `rt_phrases_total` subiendo solo |
 | Queda en "Dictando..." para siempre con el micrófono prendido | el ambiente tiene ruido por debajo del umbral de energía y el VAD nunca abre frase | apagá el micrófono a mano: el `end` siempre produce un `final` |
 | Tocar un botón no hace nada | el tap cayó en el borde de la superficie | `mobile-mcp` hay que usarlo con el **centro** del elemento, no con la esquina |
 | Un test falla con `httpx2` faltante | ese test necesita el entorno del servicio | corré los tests **dentro** del contenedor |

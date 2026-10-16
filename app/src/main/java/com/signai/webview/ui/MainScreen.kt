@@ -132,6 +132,18 @@ fun MainScreen(state: MainScreenState) {
         loading = false
     }
 
+    // The STT's `SILENCE_TIMEOUT_MS`, for the scene's debug overlay (D-6).
+    //
+    // Keyed on `!loading` because it is the WebView that shows it, and the WebView
+    // is destroyed and recreated when Acerca de is opened and closed: reading it
+    // before the scene exists would leave the new one showing "?". Best effort —
+    // `silenceTimeoutMs()` returns null when /health can't be read, and the overlay
+    // says "?", which is the truth.
+    LaunchedEffect(!loading) {
+        if (loading) return@LaunchedEffect
+        state.pushSilenceTimeout()
+    }
+
     val contentAlpha by animateFloatAsState(
         targetValue = if (loading) 0f else 1f,
         animationSpec = SignAiMotion.motionTween(
@@ -199,6 +211,7 @@ fun MainScreen(state: MainScreenState) {
                                 onReady = state::attachWebView,
                                 onProgress = { progress = it },
                                 onPlaybackDone = state::onPlaybackDone,
+                                onSignStart = state::onSignStart,
                                 onLoaded = {
                                     loading = false
                                     state.syncWebSettings()
@@ -225,7 +238,7 @@ fun MainScreen(state: MainScreenState) {
                                 // hasta que se los toca de nuevo, así que su
                                 // estado visual y su habilitación vienen de acá y
                                 // no de `playbackState`, que con el micrófono
-                                // prendido pasa a `Signing` mientras firma.
+                                // prendido pasa a `Signing` mientras representa.
                                 dictationActive = state.dictationActive,
                                 liveActive = state.liveActive,
                                 // Hay texto dictado esperando que el usuario

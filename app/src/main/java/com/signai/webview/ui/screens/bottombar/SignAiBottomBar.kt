@@ -60,7 +60,7 @@ import com.signai.webview.ui.theme.SignAiTheme
  *   descarta y vuelve a dictar de cero.
  * - **TR (fila 2)** — "en vivo": el interruptor continuo. El micrófono queda
  *   prendido entre frases y cada frase sale sola al cerrarse, sin que nadie toque
- *   nada. Es el **único** modo que manda solo. Ya no firma a mitad de frase: la
+ *   nada. Es el **único** modo que manda solo. Ya no representa a mitad de frase: la
  *   unidad es la oración.
  *
  * Los dos son interruptores, ninguno se mantiene apretado, y **no pueden estar
@@ -92,11 +92,11 @@ fun SignAiBottomBar(
     val dismissKeyboard = rememberKeyboardDismissAction()
 
     // `Signing` **no** bloquea el panel. Bloquear todo el panel mientras el muñeco
-    // firma dejaba al usuario mirando un formulario muerto sin ninguna señal de
+    // representa dejaba al usuario mirando un formulario muerto sin ninguna señal de
     // por qué. Lo que realmente no se puede tocar es lo que está **en vuelo**: una
-    // traducción pedida y todavía sin firmar.
+    // traducción pedida y todavía sin representar.
     //
-    // Mandar otra frase con el avatar firmando la anterior no pisa la animación: la
+    // Mandar otra frase con el avatar representando la anterior no pisa la animación: la
     // escena reemplaza la cola, que es lo mismo que pasa con cualquier frase nueva.
     val busy =
         playbackState == PlaybackState.Translating ||
@@ -110,17 +110,17 @@ fun SignAiBottomBar(
             query.isNotBlank() &&
             // Con el micrófono prendido no: texto y voz van por el mismo socket, así
             // que intercalados el `index` de las oraciones deja de corresponder al
-            // orden en que llegaron y el avatar firmaría la frase al revés. Son dos
+            // orden en que llegaron y el avatar representaría la frase al revés. Son dos
             // formas de mandar, no dos a la vez.
             !micActive &&
             // Tampoco si el campo tiene la frase que la app acaba de mandar —un
             // Traducir a mano o el Repetir—: el botón ofrecería reenviar lo que ya
-            // se firmó, y el avatar firmaría la frase dos veces seguidas por un solo
+            // se representó, y el avatar representaría la frase dos veces seguidas por un solo
             // toque.
             !sentTextLocked
 
     // El estado visual de los dos interruptores viene de su propio flag y no de
-    // `playbackState`: con el micrófono prendido el muñeco firma al mismo tiempo,
+    // `playbackState`: con el micrófono prendido el muñeco representa al mismo tiempo,
     // así que el estado de la reproducción pasa a `Signing` y el botón se vería
     // apagado justo cuando está captando.
     //
@@ -340,11 +340,11 @@ fun SignAiBottomBar(
                             stateDescription =
                                 when {
                                     liveActive ->
-                                        "Encendido. Cada frase se firma sola al terminar."
+                                        "Encendido. Cada frase se representa sola al terminar."
                                     !liveEnabled ->
                                         "Apagado. El micrófono está dictando."
                                     else ->
-                                        "Apagado. Tocar para firmar cada frase al terminar."
+                                        "Apagado. Tocar para representar cada frase al terminar."
                                 }
                         },
                 ) {
