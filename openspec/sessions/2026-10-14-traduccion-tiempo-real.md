@@ -9,7 +9,7 @@
 ## Qué se pidió
 
 Que la app traduzca **en tiempo real**: decís "hola", el micrófono lo escucha, y
-el avatar firma HOLA mientras todavía estás hablando. Con la menor latencia
+el avatar representa HOLA mientras todavía estás hablando. Con la menor latencia
 posible. El objetivo no era "más rápido que antes" sino que se sintiera en vivo.
 
 ## Qué estaba ahí
@@ -20,7 +20,7 @@ en la sesión anterior. Lo que faltaba era la **cadencia**: todo esperaba al
 `final`.
 
 La línea de tiempo era: hablar → 1500 ms de hangover de silencio → 350–800 ms de
-Whisper → ~200 ms de caché en Neon o 300–1900 ms de LLM → el avatar firma.
+Whisper → ~200 ms de caché en Neon o 300–1900 ms de LLM → el avatar representa.
 Entre 2.4 y 4.8 segundos después de que dejabas de hablar.
 
 ## Los cuatro cuellos de botella que había en el camino
@@ -54,9 +54,9 @@ Cada uno estaba medido, no supuesto. Los números están en
 
 ## Decisiones de diseño
 
-**Qué se firma, y cuándo.** El STT manda una hipótesis que crece:
+**Qué se representa, y cuándo.** El STT manda una hipótesis que crece:
 `"hola"` → `"hola como"` → `"hola como estas"`. Traducir cada una entera produce
-trabajo duplicado y una salida incoherente: el avatar firmaría HOLA, después
+trabajo duplicado y una salida incoherente: el avatar representaría HOLA, después
 HOLA COMO, después HOLA COMO ESTAS. Así que se traduce **solo la cola nueva**.
 
 La regla de "qué es cola nueva" son los **timestamps por palabra** que ahora manda
@@ -67,9 +67,9 @@ pregunta que el texto solo no puede responder: ¿esta persona ya terminó de dec
 ("todo menos la última palabra"), que es peor y por eso los timestamps son el
 camino principal.
 
-**Append-only.** Una palabra firmada no se vuelve a mirar, ni aunque el STT la
-corrija después. Des-firmar una seña que ya se está animando en pantalla no es
-posible, y volver a firmarla sería peor que esperar un instante con el texto
+**Append-only.** Una palabra representada no se vuelve a mirar, ni aunque el STT la
+corrija después. Des-representar una seña que ya se está animando en pantalla no es
+posible, y volver a representarla sería peor que esperar un instante con el texto
 viejo. Se registra en log cuando pasa.
 
 **Contexto de solo lectura.** Sin contexto, el modelo responde un fragmento como
@@ -78,7 +78,7 @@ avatar firmaba con total confianza. Con "me llamo ana" de contexto, da
 ESTUDIANTE. El primer fragmento de un utterance no lleva contexto porque es el
 único que con suerte es una frase, y ese sí entra por el camino cacheable.
 
-**Solo gramática no se firma.** "me" a secas dio YO y "en" a secas dio DONDE. La
+**Solo gramática no se representa.** "me" a secas dio YO y "en" a secas dio DONDE. La
 lista de palabras funcionales es **corta a propósito** y el filtro es de todo-o-
 nada: solo descarta un fragmento cuando *todas* sus palabras son funcionales.
 "como", "donde", "cuando", "que" y "mas" son glosas del catálogo o parte de una
@@ -95,7 +95,7 @@ alcanza.
 segundo y cada palabra es una seña: a velocidad normal el avatar va dos señas
 atrasado antes de terminar la primera frase y nunca alcanza. La traducción es
 rápida; la animación es el cuello de botella. Con dos o más señas en cola la
-escena firma a 1.6× y vuelve atrás en cuanto se vacía.
+escena representa a 1.6× y vuelve atrás en cuanto se vacía.
 
 ## Tres bugs de corrección que solo se ven cuando corre
 
@@ -144,7 +144,7 @@ Detalle completo, lista de frases y de señas, y troubleshooting:
 ## Verificación en el dispositivo (Redmi Note 9S)
 
 - Frase escrita contra el backend real: llega `stream=true total=0`, se encolan
-  3 señas en **5 ms**, el avatar firma HAMBRE → POR FAVOR → DONDE y
+  3 señas en **5 ms**, el avatar representa HAMBRE → POR FAVOR → DONDE y
   `onPlaybackDone` deja la app en "Reproducción completada". Sin errores JS.
 - Captura de micrófono: 157 chunks × 960 bytes llegan al STT a 32 000 B/s
   exactos, que es lo que implica un stream PCM16 a 16 kHz.
@@ -168,7 +168,7 @@ revés de lo que hace falta.
 El cambio no fue "no apagar el audio" sino **separar dos estados que estaban
 fusionados en uno**. `playbackState` decía a la vez "¿está el mic prendido?" y
 "¿qué hace el muñeco?", y eso solo funcionaba *porque* el mic se apagaba en cada
-frase. Con el mic prendido el avatar firma mientras el mic está caliente, así que
+frase. Con el mic prendido el avatar representa mientras el mic está caliente, así que
 los dos se superponen de verdad y necesitan banderas propias: `micActive` pasó a
 ser la fuente de verdad del mic y `toggleMic()` decide por ahí.
 
@@ -183,7 +183,7 @@ Lo que hubo que tocar por consecuencia:
   de texto pasa a `readOnly` (sigue mostrando la transcripción en vivo, que es
   justo lo que el usuario quiere ver). Texto y voz van por el mismo socket y el
   backend no puede saber de quién es cada fragmento; mezclados, el `index` de voz
-  deja de corresponderse con el orden de llegada y el avatar firmaría la frase al
+  deja de corresponderse con el orden de llegada y el avatar representaría la frase al
   revés. Son dos formas de mandar, no dos a la vez.
 - El botón pasó a `Role.Switch` con `stateDescription`, que es lo que lee
   TalkBack. El `contentDescription` quedó igual porque es el selector de las
@@ -214,7 +214,7 @@ se cita como si fuera verdad.
 | `sign-ai-android/tools/verificar-tiempo-real.sh` | un comando para toda la verificación; **falla** si el p95 se pasa del presupuesto |
 | `sign-ai-android/tools/TIEMPO-REAL.md` | guía de pruebas: qué medir, qué frases, qué señas, troubleshooting |
 | `sign-ai-android/.../SignAiMetrics.kt` | latencias que solo el teléfono puede medir |
-| `sign-ai-backend/app/realtime/incremental.py` | la máquina de estados que decide qué seña se firma |
+| `sign-ai-backend/app/realtime/incremental.py` | la máquina de estados que decide qué seña se representa |
 | `sign-ai-backend/app/metrics.py`, `sign-ai-stt/app/metrics.py` | métricas Prometheus sin dependencias |
 | `sign-ai-backend/scripts/verify_incremental.py` | 31 aserciones sobre la lógica de fragmentado, sin servicios |
 | `sign-ai-backend/scripts/verify_realtime_latency.py` | cronómetro del tramo cliente→cliente |
@@ -232,7 +232,7 @@ modos**: frase entera y fragmentado.
 - **TLS y autenticación** en el WebSocket (`RF-INT-COM-M-03`/`DEC-14` del
   backend). Sigue siendo `cleartext` y sin auth.
 - **La cola bloquea el panel.** Ya no: `STA-18`. Sigue siendo cierto que mandar
-  una frase con el avatar firmando **reemplaza** la cola, así que una
+  una frase con el avatar representando **reemplaza** la cola, así que una
   conversación larga pierde el resto de la cola si el usuario manda otra cosa.
   Es el mismo comportamiento que ya tenía el camino de frases escritas.
 - **Las 18 señas sin animación** (`0032`–`0049`). Sigue siendo el gap más grande
@@ -251,7 +251,7 @@ no uno que hacía las dos cosas.
 - 🎤 (fila 1) = **dictado**. Se toca, se habla, se toca de nuevo. Solo
   transcribe: el texto se acumula en el campo y el muñeco no se mueve hasta que
   toques Traducir.
-- ◢◢ TR (fila 2) = **tiempo real**. Se toca, firma mientras hablás, se toca de
+- ◢◢ TR (fila 2) = **tiempo real**. Se toca, representa mientras hablás, se toca de
   nuevo para apagar.
 
 Los dos son interruptores, ninguno se mantiene apretado. Y **no pueden estar
@@ -266,7 +266,7 @@ Y ahí aparece la trampa. El cliente manda `end` (para cerrar la frase que estab
 abierta) y **después** el modo nuevo. El `final` de esa frase llega cuando la
 sesión ya está en el modo que se acaba de prender. Sin más, al prender TR se
 firmaba lo que el usuario solo quería dictar; y si el orden fuera el inverso, la
-última frase de TR quedaba sin firmar.
+última frase de TR quedaba sin representar.
 
 La regla que lo resuelve: **el modo es por utterance**. El backend lo fija con la
 primera transcripción de la frase y dura hasta su `final`. Un utterance es de un
@@ -323,7 +323,7 @@ contrato, del escenario del cambio:
 
 ```
  1002ms  transcript  final=0 dictation=1  'Me llamo Ana.'
- 1330ms  transcript  final=1 dictation=1  'Me llamo Ana'      <- NO se firmó
+ 1330ms  transcript  final=1 dictation=1  'Me llamo Ana'      <- NO se representó
  1792ms  transcript  final=0 dictation=0  '¡Viva Hamburger!'  <- ya en TR
  2889ms  transcript  final=0 dictation=0  'Vivo en Bogotá, soy estudiante.'
  3851ms  transcript  final=1 dictation=0  'Vivo en Bogotá, soy estudiante.'
@@ -336,7 +336,7 @@ segment=3 done=1, primero a los 1793ms (el corte fue a los 1092ms)
 
 - *Dictado*: 4 frases en 30 s (`dictado #1..#4`, 53 palabras), **cero** `Sending
   segment` en el backend, y al apagar el micro las 4 frases quedaron concatenadas
-  en el campo. Traducir después firmó `BUENOS DIAS · NUNCA · TRABAJAR ·
+  en el campo. Traducir después representó `BUENOS DIAS · NUNCA · TRABAJAR ·
   TRABAJAR`.
 - *Tiempo real*: 5 turnos en una sola sesión con el micro siempre prendido;
   primeras señas a 239 ms, 241 ms, 268 ms, 476 ms.
@@ -351,7 +351,7 @@ segment=3 done=1, primero a los 1793ms (el corte fue a los 1092ms)
 - **Los fixtures traen segundos de silencio al final.** `conversacion_2` dura
   5.7 s pero su última palabra termina en los 2.2 s, así que "la mitad del
   archivo" cae después de toda la voz y un test de cambio de modo no tiene nada
-  que firmar del otro lado. El corte va en el medio de la **voz**
+  que representar del otro lado. El corte va en el medio de la **voz**
   (`words[-1].end_ms`), no del archivo.
 
 ## Segunda vuelta del owner: el dictado manda solo y la interfaz se libera
@@ -372,21 +372,21 @@ estado esperando una transcripción que ya no podía llegar: la captura se cort�
 el `end` cerró el utterance. Se estaba esperando algo que no existía.
 
 Y el motivo de fondo era peor: **"el `done` del backend ya llegó" y "el avatar ya
-terminó de firmar" son cosas distintas**. En modo tiempo real la cola se llena más
+terminó de representar" son cosas distintas**. En modo tiempo real la cola se llena más
 rápido de lo que el avatar la consume; en una prueba de 30 s había **38
 fragmentos**, casi 40 s de señas por delante. Cuando el `done` cerraba el turno,
-`playbackState` volvía a `Listening` mientras el muñeco seguía firmando, así que
+`playbackState` volvía a `Listening` mientras el muñeco seguía representando, así que
 al apagar el micrófono la app leía "no hay nada en curso" y se ponía a esperar.
 
 La corrección tiene dos partes, y las dos importan:
 
-- `queuePlaying` es la fuente de verdad de "el avatar está firmando", y la
+- `queuePlaying` es la fuente de verdad de "el avatar está representando", y la
   alimenta el puente `onPlaybackDone`. Apagar el mic deja el estado en `signing`
   si queda cola, o en `done` si no. Nunca más en `processing` por un turno de voz.
 - **`signing` no bloquea el panel.** Lo que no se puede tocar es lo que está *en
   vuelo* (`translating`, `processing`). Con la cola bloqueando, una conversación
   de 30 s dejaba al usuario mirando un panel muerto medio minuto; ahora puede
-  seguir escribiendo mientras el avatar firma, y mandar otra frase reemplaza la
+  seguir escribiendo mientras el avatar representa, y mandar otra frase reemplaza la
   cola, que es lo que ya hacía la escena. `play()` y `replayTurn()` dejaron de
   rechazar en `signing` también: un botón habilitado que hace nada es peor que
   uno deshabilitado.
@@ -396,11 +396,11 @@ esperando: el dictado con la frase del STT todavía abierta.
 
 ### Verificación en el dispositivo
 
-- Dictado: `dictado → envío: 25 caracteres, 4 palabras`, y 520 ms después firmó
+- Dictado: `dictado → envío: 25 caracteres, 4 palabras`, y 520 ms después representó
   `HOLA · COMO ESTAS` sin que nadie tocara Traducir.
 - TR apagado: `Reproducción completada`, Repetir visible, campo editable, mic,
   Historial y Traducir habilitados, todo en el instante.
-- Con el avatar firmando una frase larga y el hint mostrando las glosas, **nada
+- Con el avatar representando una frase larga y el hint mostrando las glosas, **nada
   del panel estaba deshabilitado** — leído del árbol de accesibilidad en ese
   momento, no después.
 
@@ -449,7 +449,7 @@ como un cuelgue, y 1,5 s alcanzan a ver que el texto se va solo.
 
 Un detalle de la implementación que salió de probarlo: la ventana es **más corta
 que el ida y vuelta de `mobile-mcp`**, así que el árbol de accesibilidad nunca
-llega a verla. Por eso los dos momentos llevan log (`texto ya firmado` /
+llega a verla. Por eso los dos momentos llevan log (`texto ya representado` /
 `texto retenido borrado`) y la verificación se hizo con el logcat. Un número que
 no se puede observar no se puede verificar.
 
@@ -457,7 +457,7 @@ no se puede observar no se puede verificar.
 
 - Micrófono prendido → TR `disabled`; TR prendido → micrófono `disabled`. Los dos
   leídos del árbol, y el icono del micrófono en `#777773` (`muted`) con TR prendido.
-- Apagar TR: `texto ya firmado ... retenido 1500ms` a los **74 ms**, y
+- Apagar TR: `texto ya representado ... retenido 1500ms` a los **74 ms**, y
   `texto retenido borrado` a los **1501 ms**. En la ventana, el árbol mostró el
   texto en el campo, Traducir `disabled`, y mic/Historial/TR habilitados.
 - Pasados los 1,5 s, escribir en el campo habilitó Traducir: el campo y el botón
@@ -501,9 +501,9 @@ Tres cosas, y una de ellas era un bug de verdad.
 **El panel se liberaba a mitad de seña.** `replayPending` —el flag que deshabilita
 todo el panel durante un Repetir— lo prendía `repeatTurnFromDrawer`, o sea solo el
 del drawer de conversación: el botón del escenario no lo prendía nunca. Y lo
-soltaba **el primer fragmento**, que es justo cuando la seña empieza a firmarse:
+soltaba **el primer fragmento**, que es justo cuando la seña empieza a representarse:
 el panel volvía a quedar habilitado a los ~50 ms del toque, con el muñeco todavía
-firmando. El `CTL-12` de la spec ya decía "hasta que la seña termina"; el código
+representando. El `CTL-12` de la spec ya decía "hasta que la seña termina"; el código
 no lo cumplía. Ahora el flag se prende en `requestTranslation` cuando el replay es
 real (los dos caminos pasan por ahí) y lo sueltan `onPlaybackDone`, `fail()` y el
 caso "la frase no produjo ninguna seña". Se prende **después** de los cuatro
@@ -520,11 +520,11 @@ ser de la voz: `sentVoiceText` → `sentText`, `VoiceTextHoldMs` →
 `SentTextHoldMs`. Se prende **ahí** y no en cada llamador porque es el único punto
 donde se sabe que la frase salió de verdad: si `sendDictation` retuviera antes de
 `play()`, un envío rechazado (mic prendido, frase en vuelo, sin conexión) dejaría
-el campo bloqueado sin nada que firmar.
+el campo bloqueado sin nada que representar.
 
-De paso, el aviso "Ya está firmado." no se muestra si el estado es `Translating`:
+De paso, el aviso "Ya está representado." no se muestra si el estado es `Translating`:
 durante la traducción el campo ya está bloqueado por `busy` y se explica solo, y
-pisar el estado con "ya firmado" antes de que la frase ni se hubiera traducido
+pisar el estado con "ya representado" antes de que la frase ni se hubiera traducido
 era una contradicción a la vista.
 
 **El botón bajó 32 dp** (`AvatarStage.RepeatGap`, era 64 literal): el owner pidió

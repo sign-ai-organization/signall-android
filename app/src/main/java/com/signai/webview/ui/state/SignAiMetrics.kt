@@ -29,9 +29,10 @@ class SignAiMetrics {
 
     private val turnTotal = Latency()
     private val signTotal = Latency()
+    private val signStart = Latency()
 
     /**
-     * Una frase se firmó: desde que el usuario la mandó hasta que el backend
+     * Una frase se representó: desde que el usuario la mandó hasta que el backend
      * devolvió su última oración.
      *
      * El punto de partida es el **envío**, no el primer texto: es la "confirmación
@@ -39,7 +40,7 @@ class SignAiMetrics {
      * En el modo en vivo la frase la manda la propia app al cerrarse, y ahí lo que
      * se cuenta es desde ese `final`.
      *
-     * No incluye lo que se firma después: para eso está [onPlayback], que mide la
+     * No incluye lo que se representa después: para eso está [onPlayback], que mide la
      * animación y solo se mueve cuando cambia la escena.
      */
     fun onTurn(totalMs: Long, sentenceCount: Int, glossCount: Int) {
@@ -71,13 +72,34 @@ class SignAiMetrics {
         signTotal.record(totalMs)
         Log.i(
             TAG,
-            "firmado: $signCount señas en ${totalMs}ms (${signTotal.summarise()})",
+            "representado: $signCount señas en ${totalMs}ms (${signTotal.summarise()})",
         )
     }
 
     /** A fragment produced no playable sign, so nothing was queued for it. */
     fun onUnavailableGloss() {
         unavailable.incrementAndGet()
+    }
+
+    /**
+     * La primera oración del turno ya se está moviendo en pantalla.
+     *
+     * El tramo que hasta ahora no tenía número en ningún lado. El backend mide
+     * desde que recibe la frase hasta que manda el `segment` (`rt_first_sign_ms`),
+     * y acá [onTurn] mide desde el envío del usuario hasta la última oración de
+     * vuelta — pero entre que el `segment` llega al teléfono y que el muñeco se
+     * mueve hay resolver assets, mandar la cola a la escena y bajar el `.glb`,
+     * y nada de eso estaba cronometrado.
+     *
+     * Solo se cuenta la primera oración del turno: las siguientes llegan con el
+     * avatar ya sonando, y para esas lo que manda es cuánto tardó el backend.
+     */
+    fun onSignStart(segmentToMoveMs: Long) {
+        signStart.record(segmentToMoveMs)
+        Log.i(
+            TAG,
+            "oración→avatar: $segmentToMoveMs ms (${signStart.summarise()})",
+        )
     }
 
     /**
@@ -106,6 +128,7 @@ class SignAiMetrics {
         append(" dictado_palabras=").append(dictationWords.get())
         append(" duracion_frase=").append(turnTotal.summarise())
         append(" duracion_firmado=").append(signTotal.summarise())
+        append(" oracion_a_avatar=").append(signStart.summarise())
     }
 
     /** Zeros every counter, so a snapshot describes one test run and not the session. */
@@ -118,6 +141,7 @@ class SignAiMetrics {
         dictationWords.set(0)
         turnTotal.clear()
         signTotal.clear()
+        signStart.clear()
     }
 
     private companion object {

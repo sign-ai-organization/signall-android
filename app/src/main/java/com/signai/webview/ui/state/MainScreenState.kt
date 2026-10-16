@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.signai.webview.data.AudioCapture
+import com.signai.webview.data.BackendHealth
 import com.signai.webview.data.SettingsRepository
 import com.signai.webview.data.SignAiWebSocketClient
 import com.signai.webview.data.SignAssetRepository
@@ -54,7 +55,7 @@ private const val StatusOverrideMs = 3_000L
 /**
  * Cuánto se deja a la vista la frase que la app ya mandó.
  *
- * El campo tiene que conservarla —es la frase que el avatar está firmando— pero
+ * El campo tiene que conservarla —es la frase que el avatar está representando— pero
  * durante este tiempo Traducir está deshabilitado: ofrecer el botón sería
  * invitar a reenviar lo que ya se envió. Al cumplirse, el texto se borra solo y
  * el panel vuelve a quedar libre.
@@ -74,6 +75,7 @@ class MainScreenState(
     private val webView: SignAiWebViewController,
     private val backend: SignAiWebSocketClient,
     private val assets: SignAssetRepository,
+    private val health: BackendHealth,
     val signs: List<String> = SignsCatalog.available,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -142,18 +144,71 @@ class MainScreenState(
     private var queuePlaying = false
 
     /**
-     * Reloj de la animación: cuando arrancó la primera seña del turno y cuántas
-     * van. Es lo que mide `SignAiMetrics.onPlayback`, el número que dice si el
-     * muñeco termina la frase a tiempo — y el único que se mueve cuando cambia
-     * la escena (ver `rt_turn_total_ms`, que mide otra cosa).
+     * Reloj de la animación: cuándo llegó la primera oración del turno, cuándo
+     * arrancó de verdad el primer movimiento del muñeco, y cuántas señas van.
+     *
+     * Los tres relojes existen porque cada uno mide una etapa distinta y antes
+     * faltaba una: `play()` se llama desde Kotlin **antes** de que el `.glb`
+     * termine de bajar, así que el reloj de "representando" arrancaba con
+     * milisegundos de carga que no son del avatar. El mensaje `signStart` de la
+     * escena cierra ese hueco (ver [onSignStart]).
      */
     private var playbackStartedAt = 0L
-    private var playbackSigns = 0
 
-    /** Marca el arranque del turno de animación; el primer item es el que cuenta. */
-    private fun startPlaybackClock(firstSignCount: Int) {
+    /** Cuándo llegó la primera oración del turno, para medir el arranque real. */
+    private var firstSegmentAt = 0L
+
+    /** Ya se midió el arranque de este turno: las siguientes oraciones no cuentan. */
+    private var signStartReported = false
+
+    /**
+     * Marca el arranque de un tramo de animación.
+     *
+     * Sin argumentos a propósito: cuántas señas van no lo decide este reloj sino
+     * [turnQueueItems], que lleva todo lo que se le entregó a la escena. Antes se
+     * pasaba el tamaño del primer lote, y con la frase representándose oración por
+     * oración ese número se quedaba corto.
+     */
+    private fun startPlaybackClock() {
         playbackStartedAt = SystemClock.elapsedRealtime()
-        playbackSigns = firstSignCount
+    }
+
+    /**
+     * La escena avisó que el muñeco se está moviendo (`signStart:<i>:<jsMs>`).
+     *
+     * Mide el tramo que no tenía reloj en ningún lado: desde que llegó la
+     * oración hasta que el avatar se mueve en pantalla. El backend cronometra
+     * hasta mandar el `segment`; este es el número de esperar mirando un canvas
+     * quieto, que es lo que la persona percibe.
+     *
+     * Solo la **primera** oración del turno cuenta. Las siguientes llegan con el
+     * avatar ya sonando, y para esas lo que importa es cuánto tardó el backend,
+     * que ya mide `rt_sentence_delay_ms`.
+     */
+    fun onSignStart(queueIndex: Int, jsMillis: Long) {
+        if (firstSegmentAt == 0L) return
+        val elapsedMs = SystemClock.elapsedRealtime() - firstSegmentAt
+        Log.i(TAG, "signStart: oración→avatar $elapsedMs ms (seña $queueIndex, reloj JS $jsMillis ms)")
+        if (signStartReported) return
+        signStartReported = true
+        metrics.onSignStart(elapsedMs)
+    }
+
+    /**
+     * Le pasa a la escena el `SILENCE_TIMEOUT_MS` del STT, para el overlay de
+     * depurar (decisión D-6).
+     *
+     * Se dispara cuando la escena está lista, no al arrancar la app: antes de
+     * eso no hay WebView al que mandárselo. Es una lectura de red a `/health` y
+     * no bloquea nada —si falla, el overlay dice "?"— así que no hace falta
+     * mirar que la conexión esté arriba ni reintentar.
+     */
+    fun pushSilenceTimeout() {
+        scope.launch {
+            val ms = health.silenceTimeoutMs()
+            webView.setSilenceTimeoutMs(ms)
+            Log.i(TAG, "silencio del STT: ${ms?.let { "$it ms" } ?: "desconocido"}")
+        }
     }
 
     /** Glosses of the sequence being played, shown in the stage hint while signing. */
@@ -211,17 +266,53 @@ class MainScreenState(
     private var pendingText: String? = null
 
     /**
-     * Segments of the phrase being translated, keyed by their position.
+     * Segmentos de la frase en curso, por posición, y cuáles ya se reprezentaron.
      *
-     * The backend streams one segment per sentence and they all belong to the
-     * same phrase, so they are collected here instead of being played as they
-     * arrive: the avatar signs the phrase as one queue, and a sentence that
-     * needs an extra LLM round trip cannot leave it signing half a phrase.
+     * El backend manda una oración por `segment`, con `index` y `total` reales, y
+     * **cada oración se representa apenas llega** (decisión D-1 de
+     * `openspec/sessions/2026-10-16-latencia-y-decisiones.md`). Antes se juntaban
+     * todas y la cola se armaba cuando `size >= total`, con el avatar parado
+     * mientras tanto: medido, 569 ms parado con la primera seña ya disponible en
+     * una frase fría de tres oraciones.
+     *
+     * El mapa se queda igual porque hace falta lo otro: el caption, la entrada de
+     * conversación y `metrics.onTurn` son de la frase entera. Lo que cambió es
+     * [flushedThrough]: una oración ya entregada a la escena no se vuelve a
+     * entregar, así que llegar tarde no la representa dos veces.
      */
     private val pendingSegments = sortedMapOf<Int, TranslationSegment>()
 
     /** How many segments the phrase has; 0 until the first one says so. */
     private var pendingTotal = 0
+
+    /**
+     * Índice de la última oración ya entregada a la escena; -1 = ninguna.
+     *
+     * Es lo que hace idempotente a [flushSegments]: la primera llamada se lleva
+     * lo que había y sube el índice, y las siguientes encuentran la lista vacía.
+     */
+    private var flushedThrough = -1
+
+    /**
+     * La cola de este turno ya arrancó en la escena.
+     *
+     * Distingue el `setQueue` + `play()` del primer lote de los `appendQueue` de
+     * las oraciones siguientes. La escena lleva su propio estado, pero el de
+     * Kotlin es el que decide historial, caption y conversación, así que vive acá.
+     */
+    private var queueStarted = false
+
+    /** Ítems ya entregados a la escena en este turno, para armar el caption. */
+    private val turnQueueItems = mutableListOf<SignQueueItem>()
+
+    /**
+     * Posición en [conversation] de la entrada de este turno, o -1.
+     *
+     * Representando oración por oración la entrada se crea con la primera y se
+     * completa con las demás; sin este índice habría que buscarla por texto en
+     * cada oración, y dos frases iguales darían la misma entrada.
+     */
+    private var conversationTurnIndex = -1
 
     /** True when the turn in flight is a Repetir, which must not be re-recorded. */
     private var isReplay = false
@@ -230,9 +321,9 @@ class MainScreenState(
     //
     // El backend divide la frase en oraciones y manda una `segment` por
     // oración, con `index` y `total` reales. No hay fragmentos: lo que hay son
-    // oraciones, y todas son de la misma frase, así que la app las junta
-    // ([pendingSegments]) y firma la frase entera. El reloj del turno es lo único
-    // que se lleva entre una frase y la siguiente.
+    // oraciones, y **cada una se representa apenas llega** —el avatar no espera
+    // a que esté la frase entera (D-1). El reloj del turno es lo único que se
+    // lleva entre una frase y la siguiente.
 
     /** Wall clock of the current turn, for the timing logs and `metrics`. */
     private var turnStartedAt = SystemClock.elapsedRealtime()
@@ -244,12 +335,12 @@ class MainScreenState(
      * el `final` de lo dictado llega **después** de que el micrófono se apagó: el
      * usuario tocó el botón, la app mandó `end`, y recién ahí vuelve el texto.
      * Si la ruta se decidiera solo con [micMode], ese `final` caería en el camino
-     * de en vivo y la frase se firmaría sola, que es justo lo que RF-STT-03
+     * de en vivo y la frase se representaría sola, que es justo lo que RF-STT-03
      * prohíbe.
      *
      * Antes lo decidía un flag `dictation` que mandaba el backend. El backend ya
      * no lo manda —y no debería: adivinar el modo es la forma de equivocarse en
-     * el sentido que firma lo que el usuario no confirmó— así que el que sabe es
+     * el sentido que representa lo que el usuario no confirmó— así que el que sabe es
      * esta app.
      */
     private var dictationAwaitingFinal = false
@@ -277,7 +368,7 @@ class MainScreenState(
      * Deliberadamente aparte de [playbackState]. Antes un solo enum decía dos
      * cosas distintas —"¿está el mic prendido?" y "¿qué hace el muñeco?"— y eso
      * solo funcionaba porque el micro se apagaba en cada frase. En vivo el muñeco
-     * firma con el micrófono prendido, así que los dos se superponen de verdad y
+     * representa con el micrófono prendido, así que los dos se superponen de verdad y
      * necesitan su propio estado.
      */
     var micMode by mutableStateOf(MicMode.Off)
@@ -341,10 +432,10 @@ class MainScreenState(
     /**
      * La frase que la app ya mandó, a la vista pero no mandable.
      *
-     * El campo queda con lo que el avatar está firmando siempre que la frase
+     * El campo queda con lo que el avatar está representando siempre que la frase
      * salió sin que nadie tocara Traducir: un Traducir a mano y el Repetir del
      * escenario. Si Traducir volviera a estar habilitado ahí, el botón ofrecería
-     * mandar otra vez lo que ya se mandó y el muñeco firmaría la frase dos veces
+     * mandar otra vez lo que ya se mandó y el muñeco representaría la frase dos veces
      * seguidas por un solo toque.
      *
      * El modo en vivo **no** la usa, y es a propósito: ahí el micrófono está
@@ -352,7 +443,7 @@ class MainScreenState(
      * retención solo cambiaría el texto del campo por el de la frase anterior
      * mientras el usuario sigue hablando. Apagar el TR tampoco la usa: deja el
      * campo limpio [stopCapture], porque para entonces lo que decía el campo ya
-     * se firmó y no hay nada que impedir reenviar.
+     * se representó y no hay nada que impedir reenviar.
      *
      * Se borra sola a los [SentTextHoldMs]. Nada se pierde: la frase ya quedó
      * en el historial y en el panel de conversación.
@@ -383,10 +474,10 @@ class MainScreenState(
         //
         // Y solo cuando el avatar no está todavía en "Traduciendo": durante la
         // traducción el campo ya está bloqueado por `busy`, que se explica solo,
-        // y pisar el estado con "Ya está firmado." antes de que la frase ni se
+        // y pisar el estado con "Ya está representado." antes de que la frase ni se
         // haya traducido era una contradicción a la vista.
         if (playbackState != PlaybackState.Translating) {
-            showStatus("Ya está firmado.", SentTextHoldMs)
+            showStatus("Ya está representado.", SentTextHoldMs)
         }
         Log.i(TAG, "texto ya enviado: retenido ${SentTextHoldMs}ms, Traducir bloqueado. \"$clean\"")
         sentTextJob?.cancel()
@@ -459,7 +550,7 @@ class MainScreenState(
      * Devuelve la interfaz a "escuchando" o "dictando" cuando el mic sigue
      * abierto, y la libera cuando ya no.
      *
-     * Una frase terminó y el avatar va a terminar de firmarla, pero el mic sigue
+     * Una frase terminó y el avatar va a terminar de representarla, pero el mic sigue
      * prendido: el siguiente `done` tiene que devolver el estado a la etiqueta
      * del modo que está activo, o el botón se vería apagado mientras está
      * capturando, y el usuario no sabría si tiene que tocarlo.
@@ -482,16 +573,19 @@ class MainScreenState(
         playbackState = labelFor(micMode)
     }
 
-    /** Una oración traducida: se junta con las de su frase y se firma la frase. */
+    /** Una oración traducida: se representa apenas llega, sin esperar a las demás. */
     private fun onWholePhraseSegment(event: BackendEvent.Segment) {
         transcript = pendingText ?: transcript
         pendingTotal = maxOf(pendingTotal, event.total)
         pendingSegments[event.index] = event.segment
-        // Play as soon as the phrase is whole. `done` only arrives after
-        // the last segment, so once every segment is in there is nothing
-        // left to wait for — and a phrase the backend never closes with
-        // `done` still gets signed.
-        if (pendingTotal > 0 && pendingSegments.size >= pendingTotal) flushSegments()
+        // El reloj del arranque se prende con la **primera** oración del turno, no
+        // con la primera que se representa: es lo que separa "el backend tardó"
+        // de "el teléfono tardó".
+        if (firstSegmentAt == 0L) firstSegmentAt = SystemClock.elapsedRealtime()
+        // Cada oración entra a la cola por separado (D-1). `total` ya no decide
+        // nada: el avatar representa lo que haya, y lo que llegue después se
+        // encadena detrás con `appendQueue`.
+        flushSegments()
     }
 
     /**
@@ -501,7 +595,7 @@ class MainScreenState(
      * eso todas las oraciones de una frase se resuelven juntas y en orden, en
      * [startQueue], y la cola nunca se arma a mitad de camino.
      *
-     * Una glosa que el catálogo no tiene no se firma (RF-CAT-03) salvo que
+     * Una glosa que el catálogo no tiene no se representa (RF-CAT-03) salvo que
      * [Settings.demoSignFallback] esté prendido. Ese interruptor es lo que hace
      * que las 18 señas de LSC50 sin animación exportada (0032–0049) muestren
      * algo en vez de "Seña no disponible": el catálogo las anuncia, pero no hay
@@ -544,7 +638,7 @@ class MainScreenState(
                 )
 
                 else -> {
-                    // Sin seña y sin fallback: no se firma, pero se cuenta para que
+                    // Sin seña y sin fallback: no se representa, pero se cuenta para que
                     // `sin_seña` diga la verdad.
                     metrics.onUnavailableGloss()
                 }
@@ -594,7 +688,7 @@ class MainScreenState(
 
             is BackendEvent.Segment -> onWholePhraseSegment(event)
 
-            is BackendEvent.PhraseDone -> flushSegments()
+            is BackendEvent.PhraseDone -> finishTurn()
 
             is BackendEvent.Failure -> fail(event.message)
 
@@ -607,7 +701,7 @@ class MainScreenState(
      *
      * Llega cuando el STT cerró un utterance sobre ruido, o cuando el usuario
      * soltó el micrófono sin haber hablado. En los dos casos no hay frase que
-     * firmar y lo único que hay que hacer es **cerrar lo que estaba abierto**:
+     * representar y lo único que hay que hacer es **cerrar lo que estaba abierto**:
      *
      * - Si venía un dictado, la captura se apaga y el texto que sí se haya
      *   transcrito queda esperando confirmación.
@@ -698,10 +792,7 @@ class MainScreenState(
         pendingText = text
         isReplay = false
         // Un turno anterior no puede filtrarse a este.
-        pendingSegments.clear()
-        pendingTotal = 0
-        resetTurn()
-        turnStartedAt = SystemClock.elapsedRealtime()
+        clearTurnState()
         playbackState = PlaybackState.Translating
         Log.i(TAG, "en vivo → envío: $text")
         return true
@@ -711,7 +802,7 @@ class MainScreenState(
      * Una transcripción en modo dictado: va al input y a ningún otro lado.
      *
      * Acá no se arma cola ni se toca la escena: el resultado del dictado es
-     * **texto**, y qué hacer con ese texto —firmarlo, corregirlo, borrarlo— es
+     * **texto**, y qué hacer con ese texto —representarlo, corregirlo, borrarlo— es
      * del usuario. Lo que llega es la hipótesis creciente de la frase que el
      * STT tiene abierta, así que se muestra en vivo pero solo se suma al
      * acumulado cuando llega su `final`.
@@ -755,9 +846,9 @@ class MainScreenState(
         // El aviso va en el hint del escenario y no en el campo: con la frase
         // escrita arriba, un placeholder no se ve nunca, que es justo cuando
         // hace falta. El hint es el lugar donde ya viven los mensajes
-        // transitorios ("Ya está firmado.").
+        // transitorios ("Ya está representado.").
         if (dictationPending) {
-            showStatus("Texto listo. Toca Traducir para firmarlo.")
+            showStatus("Texto listo. Toca Traducir para enviarlo.")
         } else {
             showStatus("No se escuchó nada.")
         }
@@ -774,39 +865,26 @@ class MainScreenState(
             .joinToString(" ")
 
     /**
-     * Turns the collected segments into a playback queue and starts signing.
+     * Entrega a la escena las oraciones que todavía no se representararon.
      *
-     * Reached both when the last segment lands and when `done` does, so it has
-     * to be idempotent: the first caller takes the segments and every later one
-     * finds the map empty. It also drops anything left over from an abandoned
-     * phrase, so a failed turn cannot leak into the next one.
+     * Se llama con cada `segment` y otra vez con el `done`, así que tiene que
+     * ser idempotente: la primera llamada se lleva lo pendiente y sube
+     * [flushedThrough], y las siguientes encuentran la lista vacía. También
+     * descarta lo que haya quedado de una frase abandonada, para que un turno
+     * que murió a la mitad no se filtre al siguiente.
+     *
+     * Que no espere a `total` es la decisión D-1. Lo que obliga a esperar ya no
+     * aplica: la razón de GLS-1 —"para no ejecutar media frase"— venía del
+     * camino por fragmentos, donde el backend mandaba palabras sueltas a mitad de
+     * frase. Con oraciones, un `segment` **es** una oración completa, y esperar a
+     * las demás solo deja al avatar parado con la primera seña ya en la mano
+     * (medido: 569 ms con una frase fría de tres oraciones).
      */
     private fun flushSegments() {
-        val segments = pendingSegments.values.toList()
-        pendingSegments.clear()
-        pendingTotal = 0
-
-        if (segments.isEmpty()) {
-            // A `done` with nothing behind it. When a phrase really is in flight
-            // (`pendingText` is only set once the backend has committed to one)
-            // it means the phrase produced no segments at all, and without this
-            // the turn would sit in "Traduciendo" forever. Without a phrase in
-            // flight it is a `done` that arrived late or twice — the queue
-            // already started — so there is nothing to report and ending the
-            // current turn here would kill it.
-            if (pendingText != null) {
-                pendingText = null
-                if (micActive) {
-                    showStatus("Esa frase no produjo ninguna seña.")
-                    resumeListeningIfMicOn()
-                } else {
-                    playbackState = PlaybackState.Done
-                    showStatus("Esa frase no produjo ninguna seña.")
-                }
-            }
-            return
-        }
-        startQueue(segments)
+        val fresh = pendingSegments.filterKeys { it > flushedThrough }.values.toList()
+        if (fresh.isEmpty()) return
+        flushedThrough = pendingSegments.keys.max()
+        appendQueue(fresh)
     }
 
     /**
@@ -822,7 +900,7 @@ class MainScreenState(
         // El botón ya está deshabilitado mientras se escucha, pero `play` también
         // entra por la tecla Enter y por el "Repetir" del escenario. Texto y voz
         // van por el mismo socket: intercalados, el `index` de las oraciones deja
-        // de corresponder al orden en que llegaron y el avatar firmaría la frase
+        // de corresponder al orden en que llegaron y el avatar representaría la frase
         // al revés. Son dos formas de mandar, no dos a la vez.
         if (micActive) {
             showStatus("Apagá el micrófono o el TR para mandar una frase escrita.")
@@ -836,7 +914,7 @@ class MainScreenState(
             return
         }
         // `Signing` no bloquea: el panel deja al usuario mandar otra frase con el
-        // avatar firmando la anterior, y la escena reemplaza la cola. Si acá
+        // avatar representando la anterior, y la escena reemplaza la cola. Si acá
         // también se rechazara, el botón Traducir se vería habilitado y no haría
         // nada, que es peor que deshabilitarlo.
         if (!backend.sendText(text)) {
@@ -861,9 +939,7 @@ class MainScreenState(
         dictationPending = false
         dictationBuffer = ""
         // Nothing of a previous phrase may survive into this one.
-        pendingSegments.clear()
-        pendingTotal = 0
-        resetTurn()
+        clearTurnState()
         playbackState = PlaybackState.Translating
         // Toda frase que sale de acá queda retenida en el campo: el Traducir con
         // lo dictado, el Traducir a mano y el Repetir. Sin esto, Traducir y
@@ -884,6 +960,26 @@ class MainScreenState(
      */
     private fun resetTurn() {
         turnStartedAt = SystemClock.elapsedRealtime()
+        firstSegmentAt = 0L
+        signStartReported = false
+    }
+
+    /**
+     * Limpia lo que juntó el turno anterior: segmentos, cola entregada y conversación.
+     *
+     * Va junto con [resetTurn] y no dentro, porque no siempre que arranca un reloj
+     * hay una frase nueva: `resumeListeningIfMicOn` también reinicia el reloj al
+     * terminar una. Lo que no puede pasar es que las oraciones de un turno muerto
+     * aparezcan en la cola del siguiente, así que esto se llama en los dos sitios.
+     */
+    private fun clearTurnState() {
+        pendingSegments.clear()
+        pendingTotal = 0
+        flushedThrough = -1
+        queueStarted = false
+        turnQueueItems.clear()
+        conversationTurnIndex = -1
+        resetTurn()
     }
 
     private fun fail(message: String) {
@@ -891,8 +987,7 @@ class MainScreenState(
         pendingText = null
         // The phrase this was building for is dead: its partial segments must
         // not be picked up by the next phrase.
-        pendingSegments.clear()
-        pendingTotal = 0
+        clearTurnState()
         // Cut the capture too, not just the flag: with the mic off in the UI but
         // `AudioRecord` still running, the next tap would find a recorder
         // already open and the app would look like it were listening while the
@@ -902,8 +997,8 @@ class MainScreenState(
         // El texto dictado a la espera **no** se borra (RNF-REL-04): sigue en el
         // campo, editable, y Traducir vuelve a estar disponible cuando la
         // conexión se restablece. Lo que sí se cae es el enrutado de un `final`
-        // que ya no va a llegar, y la retención del texto ya firmado, que no llegó
-        // a firmarse y tiene que poder mandarse otra vez.
+        // que ya no va a llegar, y la retención del texto ya representado, que no llegó
+        // a representarse y tiene que poder mandarse otra vez.
         dictationAwaitingFinal = false
         releaseSentText()
         // Y si lo que se cayó era un Repetir, el panel estaba deshabilitado
@@ -936,57 +1031,117 @@ class MainScreenState(
      * no clip for them, so the queue falls back to the single sign baked into
      * the APK.
      */
-    private fun startQueue(segments: List<TranslationSegment>) {
+    private fun appendQueue(segments: List<TranslationSegment>) {
         val text = pendingText.orEmpty()
-        val sentences = segments.size
+        val first = !queueStarted
         scope.launch {
-            val queue = segments.flatMap { queueItemsFor(it) }
+            val items = segments.flatMap { queueItemsFor(it) }
 
-            // A replay is not a new turn: the phrase is already in the history
-            // and already has a conversation entry, so recording it again would
-            // duplicate both (`CNV-5`).
-            if (text.isNotBlank() && !isReplay) {
-                syncHistory(history.record(text))
-                conversation.add(
-                    ConversationTurn(
-                        id = turnCounter++,
-                        text = text,
-                        gloss = formatGlosses(segments),
-                    ),
-                )
+            if (first) {
+                queueStarted = true
+                turnQueueItems.clear()
+                // A replay is not a new turn: the phrase is already in the history
+                // and already has a conversation entry, so recording it again would
+                // duplicate both (`CNV-5`).
+                if (text.isNotBlank() && !isReplay) {
+                    syncHistory(history.record(text))
+                    conversation.add(
+                        ConversationTurn(
+                            id = turnCounter++,
+                            text = text,
+                            gloss = formatGlosses(pendingSegments.values.toList()),
+                        ),
+                    )
+                    conversationTurnIndex = conversation.size - 1
+                }
+            } else if (conversationTurnIndex >= 0) {
+                // La entrada de conversación del turno se **completa** con las
+                // oraciones que van llegando. Antes se armaba de una sola vez con
+                // la frase entera; ahora la primera oración arranca la cola, así
+                // que sin esto el panel quedaría mostrando solo la primera mitad
+                // de lo que el avatar ya está representando.
+                val turn = conversation[conversationTurnIndex]
+                conversation[conversationTurnIndex] =
+                    turn.copy(gloss = formatGlosses(pendingSegments.values.toList()))
             }
+
+            turnQueueItems += items
+            caption = turnQueueItems.joinToString(" · ") { it.gloss }.ifBlank { "Seña no disponible" }
+
+            if (items.isEmpty()) {
+                // Una oración que no produjo ninguna seña no es el fin del turno:
+                // las siguientes pueden sí, así que acá no se cierra nada. Solo
+                // avisa, y el cierre de verdad lo hace [finishTurn].
+                showStatus("Ninguna seña de esta frase está en el catálogo todavía")
+                return@launch
+            }
+
+            if (first) {
+                webView.setQueue(items)
+                webView.play()
+                startPlaybackClock()
+                queuePlaying = true
+            } else {
+                // La escena decide sola si hay que arrancar: `appendQueue` vuelve
+                // a llamar `playFrom` si la cola ya se había vaciado mientras esta
+                // oración se traducía (ver `app.js`). O viene sonando o arranca
+                // después de este comando, así que en los dos casos queda
+                // representing.
+                webView.appendQueue(items)
+                // El reloj solo se reinicia si venía de estar parado. Si venía
+                // sonando, reiniciarlo haría que `representado:` midiera solo el
+                // último tramo de la frase.
+                if (!queuePlaying) startPlaybackClock()
+                queuePlaying = true
+            }
+            playbackState = PlaybackState.Signing
+        }
+    }
+
+    /**
+     * El backend cerró la frase (`done`): el turno está completo.
+     *
+     * Acá es donde se mide la frase entera —`metrics.onTurn` va del envío del
+     * usuario a la última oración de vuelta— y donde se suelta la frase en vivo
+     * que estuviera esperando. No antes: si se soltara con la primera oración,
+     * en vivo podría mandar la frase siguiente mientras la anterior todavía se
+     * está traduciendo, y dos `index` de oraciones intercalados hacen que el
+     * avatar represente la frase al revés.
+     */
+    private fun finishTurn() {
+        val segments = pendingSegments.values.toList()
+        if (segments.isNotEmpty()) {
             metrics.onTurn(
                 totalMs = SystemClock.elapsedRealtime() - turnStartedAt,
-                sentenceCount = sentences,
+                sentenceCount = segments.size,
                 glossCount = segments.sumOf { it.glosses.size },
             )
             Log.i(TAG, "resumen: ${metrics.snapshot()}")
             pendingText = null
-            caption = queue.joinToString(" · ") { it.gloss }.ifBlank { "Seña no disponible" }
-            showStatus(
-                if (queue.isEmpty()) {
-                    "Ninguna seña de esta frase está en el catálogo todavía"
-                } else {
-                    ""
-                },
-            )
-
-            if (queue.isEmpty()) {
-                playbackState = PlaybackState.Done
-                replayPending = false
-                releaseLiveBacklog()
-                return@launch
-            }
-
-            webView.setQueue(queue)
-            webView.play()
-            startPlaybackClock(queue.size)
-            playbackState = PlaybackState.Signing
-            queuePlaying = true
-            // Hay una frase en espera de salida (el TR habló más rápido que el
-            // LLM). Sale ahora que esta ya no está en vuelo.
-            releaseLiveBacklog()
         }
+
+        if (!queueStarted) {
+            // Un `done` sin nada detrás. Cuando hay una frase en vuelo
+            // (`pendingText` solo se pone cuando el backend se comprometió con una) quiere
+            // decir que la frase no produjo ninguna oración, y sin esto el turno
+            // se quedaría en "Traduciendo" para siempre. Sin frase en vuelo es un
+            // `done` que llegó tarde o por segunda vez: la cola ya arrancó y no
+            // hay nada que informar, así que cerrar acá mataría el turno.
+            if (pendingText != null) {
+                pendingText = null
+                if (micActive) {
+                    showStatus("Esa frase no produjo ninguna seña.")
+                    resumeListeningIfMicOn()
+                } else {
+                    playbackState = PlaybackState.Done
+                    showStatus("Esa frase no produjo ninguna seña.")
+                }
+            }
+        }
+
+        // Hay una frase en espera de salida (el TR habló más rápido que el LLM).
+        // Sale ahora que esta ya no está en vuelo.
+        releaseLiveBacklog()
     }
 
     /**
@@ -1003,7 +1158,7 @@ class MainScreenState(
             // Sigue sin poder salir: no hay dónde esperarlo, y una frase que no
             // se manda sin que el usuario lo decida es exactamente lo que
             // RF-STT-03 prohíbe. Se muestra para que la pueda mandar a mano.
-            showStatus("No se pudo firmar la última frase. Toca Traducir.")
+            showStatus("No se pudo enviar la última frase. Toca Traducir.")
         }
     }
 
@@ -1017,7 +1172,7 @@ class MainScreenState(
     // - 🎤 **dictado** — se toca, se habla, se toca de nuevo. El texto se
     //   acumula en el input y el muñeco no se mueve hasta que se aprieta
     //   Traducir.
-    // - ◢◢ **tiempo real** — se toca, el muñeco firma mientras se habla, se toca
+    // - ◢◢ **tiempo real** — se toca, el muñeco representa mientras se habla, se toca
     //   de nuevo para apagar.
     //
     // Ninguno de los dos es mantener apretado, y no pueden estar prendidos
@@ -1063,7 +1218,7 @@ class MainScreenState(
         // vacío: si quedara la frase anterior se leería como parte de lo que
         // está diciendo.
         inputText = ""
-        // Y la retención de lo ya firmado se cae con ella: la frase anterior ya
+        // Y la retención de lo ya representado se cae con ella: la frase anterior ya
         // no está en el campo, así que no hay nada que proteger del reenvío.
         releaseSentText()
         // Prender el micrófono con texto dictado esperando **lo descarta**, y es
@@ -1150,10 +1305,10 @@ class MainScreenState(
         //
         // Lo que había ahí era la transcripción en vivo de lo que el micrófono
         // estaba oyendo, y para cuando se apaga el interruptor eso ya se mandó y
-        // se firmó: dejarlo puesto tapaba el campo con una frase que nadie puede
+        // se representó: dejarlo puesto tapaba el campo con una frase que nadie puede
         // volver a mandar, y con el TR apagado Traducir vuelve a estar
         // disponible, así que el botón invitaba a reenviar lo que el avatar
-        // acababa de firmar. No hace falta retenerse para evitar eso —no hay nada
+        // acababa de representar. No hace falta retenerse para evitar eso —no hay nada
         // que retener si no hay texto— y el campo queda como el de un turno
         // recién empezado.
         //
@@ -1169,7 +1324,7 @@ class MainScreenState(
             inputText = ""
             transcript = ""
             releaseSentText()
-            Log.i(TAG, "campo limpio: el TR se apagó y lo que había ya se firmó")
+            Log.i(TAG, "campo limpio: el TR se apagó y lo que había ya se representó")
         }
 
         // Nothing came back at all: the user turned the mic off without saying
@@ -1187,11 +1342,11 @@ class MainScreenState(
 
         // Aquí no hay nada que esperar. La captura se cortó, el `end` ya cerró el
         // utterance, y si no volvió nada fue porque no quedaba nada pendiente:
-        // quedarse en "Procesando..." y el avatar firmando lo que le sobraba era
+        // quedarse en "Procesando..." y el avatar representando lo que le sobraba era
         // el estado real, no una espera.
         //
         // La cola manda sobre el enum: el `done` de la última frase llega mucho
-        // antes de que el avatar termine de firmarla, así que el `playbackState`
+        // antes de que el avatar termine de representarla, así que el `playbackState`
         // ya diría "escuchando" con señas por delante. Con la cola como fuente de
         // verdad, apagar el micro devuelve la interfaz enseguida y el
         // `onPlaybackDone` la deja en `done` al terminar.
@@ -1338,7 +1493,7 @@ class MainScreenState(
         // que ya estaba abierto puede entregar texto igual. Se ignora en vez de
         // pisar la transcripción en vivo, que es lo que el campo está mostrando.
         // Con un Repetir en vuelo pasa lo mismo: el campo muestra la frase que se
-        // está firmando y un teclado olvidado la pisaría, soltando la retención
+        // está representando y un teclado olvidado la pisaría, soltando la retención
         // antes de tiempo.
         if (micActive || replayPending) return
         // El campo está en `readOnly` mientras el texto retenido está a la vista,
@@ -1389,7 +1544,7 @@ class MainScreenState(
             if (playbackStartedAt > 0L) {
                 metrics.onPlayback(
                     totalMs = SystemClock.elapsedRealtime() - playbackStartedAt,
-                    signCount = playbackSigns,
+                    signCount = turnQueueItems.size,
                 )
                 playbackStartedAt = 0L
             }

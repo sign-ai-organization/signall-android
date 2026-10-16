@@ -9,7 +9,7 @@ Estado: **implementada y verificada en el dispositivo** (2026-10-14).
 Tres cosas se apartaron del plan durante la implementación y están anotadas en
 §4 de la bitácora (`openspec/sessions/2026-10-14-reposo-y-crossfade.md`): la
 métrica que había que remedir (`rt_turn_total_ms`) no mide la animación y se
-agregó `firmado:`; la misma seña repetida no se puede fundir (three.js cachea
+agregó `representado:`; la misma seña repetida no se puede fundir (three.js cachea
 una action por clip) y va por corte seco; y `fadeIn(0)` no es "sin fundición"
 sino "action deshabilitada", así que `reduceMotion` toma una rama aparte.
 

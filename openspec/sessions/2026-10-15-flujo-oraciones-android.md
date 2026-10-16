@@ -36,7 +36,7 @@ Esto es lo central. Antes `stopDictation` llamaba `sendDictation()` → `play()`
 - El texto queda a la espera de que el usuario toque Traducir.
 - Aparecen `dictationAwaitingFinal`, `dictationPending`, `onEmptyFinal` y
   `stopDictation(endIsRedundant)`.
-- El aviso va al **hint del escenario** ("Texto listo. Toca Traducir para firmarlo."),
+- El aviso va al **hint del escenario** ("Texto listo. Toca Traducir para representarlo."),
   no al campo.
 
 `RNF-REL-04` también quedó cubierto: una caída de red con texto esperando no lo
@@ -74,18 +74,18 @@ Traducir.
 
 ### 2. El aviso no va en el placeholder
 
-La primera versión lo puso en el campo, con el texto "Tocá Traducir para firmar.".
+La primera versión lo puso en el campo, con el texto "Tocá Traducir para representar.".
 Es **invisible**: el placeholder solo se ve cuando el campo está vacío, y con la
 frase dictada arriba el campo nunca está vacío. Es exactamente el caso para el que
 el aviso existe. Va al hint del escenario, que es donde ya viven los mensajes
-transitorios ("Ya está firmado.").
+transitorios ("Ya está representado.").
 
 ### 3. Apagar el TR deja el campo limpio
 
 Pedido del owner a mitad de la sesión. `stopCapture(Live)` ya no hace
 `holdSentText()`: para cuando se apaga el interruptor lo que decía el campo ya se
-mandó y se firmó, así que no hay nada que impedir reenviar — y con Traducir de
-vuelta a estar disponible, dejarlo puesto era una invitación a firmarlo otra vez.
+mandó y se representó, así que no hay nada que impedir reenviar — y con Traducir de
+vuelta a estar disponible, dejarlo puesto era una invitación a representarlo otra vez.
 Lo único que sobrevive es el texto de un dictado sin mandar.
 
 ---
@@ -115,7 +115,7 @@ debe poder dispararse por un frame que no venga del STT.
 ### El adelanto automático: **se queda**
 
 `tools/medir-retraso.py` (nuevo) manda los 28 fixtures por el socket y compara
-cuánto tarda el usuario en decir cada frase con cuánto tarda el avatar en firmarla,
+cuánto tarda el usuario en decir cada frase con cuánto tarda el avatar en representarla,
 usando las duraciones reales del `manifest.json`.
 
 | | |
@@ -209,10 +209,10 @@ Efectos colaterales que sí hubo que arreglar, y que son bugs y no decisiones:
 - **Dictado con voz**: el texto va al campo, el mic se apaga solo en el silencio,
   el muñeco **no** se mueve y `rt_phrases_total` **no se mueve** en el backend.
   RF-STT-03 funcionando.
-- **En vivo**: la frase sale sola al cerrarse y firma.
+- **En vivo**: la frase sale sola al cerrarse y representa.
 - **`final` vacío** (el que devuelve el `end`): manejado en los dos modos, sin
   colgarse.
-- **Aviso "Texto listo. Toca Traducir para firmarlo."** en el hint del escenario.
+- **Aviso "Texto listo. Toca Traducir para representarlo."** en el hint del escenario.
 
 Las pruebas de voz necesitan una persona: la app usa `AudioSource.VOICE_RECOGNITION`,
 que **cancela el eco del propio altavoz**, así que un bucle de retorno acústico es

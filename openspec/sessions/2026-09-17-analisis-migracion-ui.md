@@ -359,7 +359,7 @@ uno, paridad visual confirmada en device (`Redmi Note 9S`, 1080×2168).
 ### 3.1 — Surface del top bar
 - `./gradlew lumo --add Surface` → `ui/designsystem/components/Surface.kt` (202 líneas, 4 overloads).
 - Import alias `import ...components.Surface as SignAiSurface` para coexistir con `androidx.compose.material3.Surface` (que sigue usándose en root y sidebar).
-- Reemplazo: `Surface(color = Bar)` → `SignAiSurface(color = SignAiTheme.colors.bar)`. Sin más cambios (la firma es idéntica).
+- Reemplazo: `Surface(color = Bar)` → `SignAiSurface(color = SignAiTheme.colors.bar)`. Sin más cambios (la representa es idéntica).
 - Build 9s, screenshot `/tmp/opencode/screen-fase3-1-surface.png`: top bar renderiza idéntico.
 
 ### 3.2 — IconButton × 2 del TopBar
@@ -415,7 +415,7 @@ uno, paridad visual confirmada en device (`Redmi Note 9S`, 1080×2168).
 ### 3.5 — Botones del BottomBar (mic + enviar) — DESVIACIÓN
 - `./gradlew lumo --add Button` → `ui/designsystem/components/Button.kt` (632 líneas, 14 variants).
 - **Problema**: Lumo `Button(variant = PrimaryFilled)` renderiza blanco/negro (Lumo SignAiTheme.colors.primary = White en dark). No expone colores custom en la signature. Editar 632 líneas para agregar `colors` param es invasivo.
-- **Decisión**: usar `SignAiSurface(onClick = ...)` (ya generado en 3.1) para ambos botones. La firma acepta `color`, `border`, `shape` — cubre nuestros casos.
+- **Decisión**: usar `SignAiSurface(onClick = ...)` (ya generado en 3.1) para ambos botones. La representa acepta `color`, `border`, `shape` — cubre nuestros casos.
 - **Mic**: `SignAiSurface(onClick = onMic, shape = RoundedCornerShape(6.dp), color = SignAiTheme.colors.input, border = BorderStroke(1.dp, SignAiTheme.colors.inputBorder), modifier = Modifier.weight(0.25f).height(56.dp))` + Box + Icon.
 - **Enviar**: `SignAiSurface(onClick = ..., shape = RoundedCornerShape(6.dp), color = SignAiTheme.colors.primary, modifier = Modifier.weight(0.75f).height(56.dp))` + Box + Icon(tint = White).
 - **Implicación**: el Lumo Button.kt queda generado pero sin uso real todavía. 5 botones en la app (mic, enviar, sign picker) usan `SignAiSurface`. Lo dejo como **pendiente para Fase 7 polish** — editar Button.kt para aceptar `colors: ButtonColors? = null` y migrar.
