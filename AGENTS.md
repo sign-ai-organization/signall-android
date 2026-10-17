@@ -36,6 +36,11 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
 mirar los hermanos antes de decidir**: el contrato entre ellos son frames de
 WebSocket, no imports, así que un cambio acá rompe allá sin que el compilador avise.
 
+Y antes de decidir, tiene que mirar también **los documentos**: los hermanos,
+`../sign-ai-docs` y el Overleaf de la tesis son las tres fuentes, y si el código y los
+documentos no coinciden, eso se reporta y se pregunta — no se resuelve solo. Ver
+§ El Overleaf de la tesis.
+
 ```
 ../sign-ai-stt ──PCM16/WS──▶ ../sign-ai-backend ──WS/JSON──▶ ../sign-ai-android (esta app)
                                       │
