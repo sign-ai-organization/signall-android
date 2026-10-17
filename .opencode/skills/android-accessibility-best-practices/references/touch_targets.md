@@ -31,5 +31,7 @@
 - Target size should be at least 24x24 CSS pixels — Android's 48dp exceeds this.
 - Exception: targets within a sentence of text (inline links).
 - Exception: user agent default controls (native checkboxes, radio buttons).
-- Material3 components meet this requirement — ensure custom components do too.
+- Audit every custom component a mano: en este proyecto no hay componentes de librería que
+  vengan con el target ensured. Los dos interruptores del micrófono y el check del selector
+  de personaje ya pasaron por acá.
 - For dense UIs (data tables, grids): use touch expansion techniques to reach 48dp without visual size increase.

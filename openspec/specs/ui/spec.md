@@ -10,7 +10,7 @@ actual de la app nativa (`Compose shell + WebView 3D`).
 > razón. Si aparece una feature nueva, se agrega aquí primero.
 
 - **Prototipo de referencia:** `PrototipoFrontend/app/page.tsx` + `app/globals.css`.
-- **Plan de ejecución:** `openspec/changes/prototipo-ui-vercel/tasks.md`.
+- **Plan de ejecución:** `openspec/changes/archive/2026-10-17-prototipo-ui-vercel/tasks.md`.
 - **Implementación:** Compose nativo (Lumo + Phosphor). El WebView es solo el
   canvas 3D.
 - **Estado:** **implementado** en la rama `feat/prototipo-ui-vercel` (fases A–G),
@@ -265,7 +265,7 @@ Modos: `.theme-dark`, `.font-bold` (w650), `.font-large` (17px),
 ## 12. Gloss (traducción español → LSC)
 
 Las glosas ya **no** se inventan en el cliente: las produce `../sign-ai-backend`
-(paso 2 del plan en `openspec/changes/integracion-backend/tasks.md`). El
+(paso 2 del plan en `openspec/changes/archive/2026-10-17-integracion-backend/tasks.md`). El
 placeholder local se eliminó.
 
 | ID | Feature | Origen | Descripción / criterio de aceptación |

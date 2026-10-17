@@ -5,9 +5,9 @@ Trabajo de la sesión: dejar al muñeco **con los brazos abajo en reposo** y que
 como base, pero que se vea normal, como un ser humano en descanso", y un
 crossfade entre animaciones.
 
-Plan completo en [`../changes/reposo-y-crossfade/tasks.md`](../changes/reposo-y-crossfade/tasks.md);
+Plan completo en [`../changes/archive/2026-10-17-reposo-y-crossfade/tasks.md`](../changes/archive/2026-10-17-reposo-y-crossfade/tasks.md);
 medidas y metodología en
-[`investigacion.md`](../changes/reposo-y-crossfade/investigacion.md).
+[`investigacion.md`](../changes/archive/2026-10-17-reposo-y-crossfade/investigacion.md).
 
 **Estado: implementado y verificado en el dispositivo.**
 
@@ -27,7 +27,7 @@ hay, sin volver a Blender. **Se puede**, y de un frame de seña:
   y su versión simetrizada: **rompe la malla**, se ve el desgarro en el hombro.
 - No hay Blender ni three.js headless en la máquina, así que se escribió un
   renderizador offline (skinning + el pivot y la cámara de la app) para verlo:
-  `changes/reposo-y-crossfade/img/`.
+  `changes/archive/2026-10-17-reposo-y-crossfade/img/`.
 
 Medido en el dispositivo: las manos pasaron de **52 cm del eje a 21/23 cm**, a la
 altura de la cadera, y el BIN chunk del `.glb` quedó **byte a byte igual** (solo
@@ -116,7 +116,7 @@ Tres nuevas, para que las cifras de la investigación sean reproducibles:
   si el export no es la pose de bind, frena en vez de deformar en silencio.
 - **`tools/preview_pose.py`** — render offline (skinning + el pivot y la cámara
   que `app.js` declara, leídos del archivo). Regenera las dos imágenes de
-  `changes/reposo-y-crossfade/img/`, incluida la del espejado que rompe la malla.
+  `changes/archive/2026-10-17-reposo-y-crossfade/img/`, incluida la del espejado que rompe la malla.
 
 ## 7. Verificado
 

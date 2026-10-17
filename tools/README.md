@@ -81,7 +81,7 @@
 - **`preview_pose.py`** — render offline de una pose (skinning lineal + el mismo
   `pivot` y la misma cámara que `app.js`, que además lee del archivo): mirar una
   pose sin instalar la app. Genera las comparaciones de
-  `openspec/changes/reposo-y-crossfade/img/`. Es el único de los tres que pide
+  `openspec/changes/archive/2026-10-17-reposo-y-crossfade/img/`. Es el único de los tres que pide
   `numpy` y `PIL`; el pipeline de assets no.
 - **`local_stt.py`** — transcripción local con `whisper.cpp`, para probar el
   micrófono sin backend (`--stt` en `mock_backend.py`).

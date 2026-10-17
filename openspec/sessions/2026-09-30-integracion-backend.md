@@ -80,7 +80,7 @@ RTX 3050 mientras esta máquina tiene una **RTX 4050 de 6 GB**.
 
 ## Qué quedó hecho
 
-- `openspec/changes/integracion-backend/tasks.md` — **reescrito en lenguaje simple**
+- `openspec/changes/archive/2026-10-17-integracion-backend/tasks.md` — **reescrito en lenguaje simple**
   como documento de trabajo: los tres repos en una línea, mapa de PRs, paso 0 de
   precondiciones, un control previo con la cadena probada desde la laptop, y los
   pasos 1-5 con "qué se toca" y "cómo se prueba".
