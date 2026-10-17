@@ -209,9 +209,10 @@ Main.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | APP-1 | **Modo claro** | `[P]` | Tema claro con su paleta. |
-| APP-2 | **Modo oscuro** | `[P][A]` | Tema oscuro con **la paleta de marca SignALL** (`#0c142c` fondo, `#1c4cfc` acento, texto blanco), no la del prototipo. **El default de la app ahora es oscuro** (`Settings.darkTheme = true`, owner 2026-10-16). El tema claro conserva los tokens del prototipo tal cual. |
+| APP-2 | **Modo oscuro** | `[P][A]` | Tema oscuro con **la paleta de marca SignALL en grafito** (`#121316` fondo, `#1a1b1f` superficie, `#25272c` suave, `#33363d` borde, `#f5f4f0` texto, `#a5a7ae` secundario, `#1c4cfc` azul de acción), no la del prototipo. Reemplaza la paleta navy que había quedado "demasiado azul" esa misma mañana (Samuel Osorio, 2026-10-16). **El default de la app es oscuro** (`Settings.darkTheme = true`, owner 2026-10-16). La referencia de marca es `docs/manual-identidad-visual.md`. |
+| APP-2b | **Ámbar de captura** | `[A]` | Los tokens `live`/`onLive` (`#f2b84b`/`#1c1503`) marcan **solo** cuando la app está escuchando: micrófono y TR encendidos. No es decoración ni se usa en botones que no capturan audio, y nunca es la única señal (el control también cambia de etiqueta o descripción para lectores de pantalla). |
 | APP-3 | **Switch de tema** | `[P]` | Alterna; el ícono/label cambia (Moon ↔ Sun, "Modo oscuro" ↔ "Modo claro"). |
-| APP-4 | Tokens de color temables | `[P]` | `background`, `foreground/text`, `muted`, `line/outline`, `surface`, `strong`, `soft`, `primary`. |
+| APP-4 | Tokens de color temables | `[P]` | `background`, `foreground/text`, `muted`, `line/outline`, `surface`, `strong`, `soft`, `primary`, `live`/`onLive` (`APP-2b`). |
 | APP-5 | Transición de tema | `[P]` | Cambio de color suave (250 ms). |
 | APP-6 | Branding centralizado | `[N]` | Nombre, iconos y wordmark en **un solo lugar** (`SignAiBranding`): `Name`, `Eyebrow`, `Icon`, `logo(darkTheme)`. Ver `BRD-1`. |
 | APP-7 | Persistencia del tema | `[N]` | Recordar la elección entre sesiones. |
