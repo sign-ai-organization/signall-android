@@ -69,10 +69,10 @@ y no llega a aparecer en un `dump`.
 
 ## Qué quedó pendiente
 
-- **Los otros seis ítems** del contraste: A1, A3, A4, A5, A7 y A13. El orden que sugiere
-  el documento es A13 (mecánico, no toca interfaz) y después **A4 + A7 juntos**, porque
-  los dos estados que le faltan a la app (*Error* y *Desconectado*) son los mismos que
-  pide el SRS.
+- **Los otros seis ítems** del contraste: A1, A3, A4, A5, A7 y A13. El owner los pidió
+  después, de menor a mayor complejidad: **A13 → A3 → A5 → A1 → A4 + A7**. El registro
+  de avance vive en `docs/CONTRASTE-APPvsDOCUMENTOS.md` §8 y §9, que es donde también se
+  anotan las diferencias y los problemas que aparecen.
 - **A4 tiene una decisión del owner sin resolver** (`CONTRASTE-APPvsDOCUMENTOS.md` §7):
   si la desconexión respeta el modo TR o corta el micrófono como cualquier error. `fail()`
   hoy lo apaga.
@@ -83,3 +83,9 @@ y no llega a aparecer en un `dump`.
   sin backend (`micAvailable = state.backendConnected`) y en esta sesión no había ninguno
   corriendo en `127.0.0.1:8080`. Ese camino no cambió de comportamiento —solo se le
   extrajo el chequeo a un helper—, así que no era necesario, pero queda dicho.
+
+## Continuación (2026-10-17, más tarde)
+
+La misma sesión siguió con el resto de los ítems, de menor a mayor complejidad. **A13**
+quedó en `openspec/sessions/2026-10-17-metrica-y-wss.md`, que además tiene el detalle de
+los dos últimos ítems.

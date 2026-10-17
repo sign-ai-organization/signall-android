@@ -24,20 +24,24 @@ documentos.
 Siete ítems. En todos, **el SRS ya está escrito y la app es la que está atrás.**
 Ninguno requiere inventar el requisito.
 
-| ID | Qué hay que cambiar | Dónde en la app | Qué lo pide el SRS |
-|---|---|---|---|
-| **A1** | Que el tercer estado del micrófono **se vea**, no solo se describa | `ui/screens/bottombar/SignAiBottomBar.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, filas *Texto listo* y *Grabando* (`main.tex:736-747`) |
-| **A2** | Pedir el permiso de micrófono **al abrir la app**, no al tocar el micrófono | `ui/MainScreen.kt:78-103` | §Interfaz con el Usuario (`main.tex:837`) |
-| **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt:35`, `res/xml/network_security_config.xml`, `app/build.gradle.kts:15` | §Interfaces de Comunicación (`main.tex:1095`, `:1100`) |
-| **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt:538-544`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:761-772`) |
-| **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt:604-648`, `:1069` | §Alcance (`main.tex:201`) y tabla, fila *Reproduciendo* (`main.tex:753`) |
-| **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:726-773`) |
-| **A13** | Armar la **métrica de latencia de punta a punta** | `ui/state/SignAiMetrics.kt`, `MainScreenState.kt:329` y `:188-195` | §Aspectos de medición (`main.tex:848-852`) |
+| ID | Qué hay que cambiar | Dónde en la app | Qué lo pide el SRS | Estado |
+|---|---|---|---|---|
+| **A1** | Que el tercer estado del micrófono **se vea**, no solo se describa | `ui/screens/bottombar/SignAiBottomBar.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, filas *Texto listo* y *Grabando* (`main.tex:736-747`) | ⬜ Pendiente |
+| **A2** | Pedir el permiso de micrófono **al abrir la app**, no al tocar el micrófono | `ui/MainScreen.kt:78-103` | §Interfaz con el Usuario (`main.tex:837`) | ✅ Hecho (`1c85ddd`) |
+| **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt:35`, `res/xml/network_security_config.xml`, `app/build.gradle.kts:15` | §Interfaces de Comunicación (`main.tex:1095`, `:1100`) | ⬜ Pendiente |
+| **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt:538-544`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:761-772`) | ⬜ Pendiente · **decisión abierta** (§7) |
+| **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt:604-648`, `:1069` | §Alcance (`main.tex:201`) y tabla, fila *Reproduciendo* (`main.tex:753`) | ⬜ Pendiente |
+| **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:726-773`) | ⬜ Pendiente · depende de A4 |
+| **A13** | Armar la **métrica de latencia de punta a punta** | `ui/state/SignAiMetrics.kt`, `MainScreenState.kt:329` y `:188-195` | §Aspectos de medición (`main.tex:848-852`) | ✅ Hecho (instrumento; falta medir con el backend real) |
 
 **Orden sugerido.** A2 es el más chico (un cambio de comportamiento) y sirve para
 verificar el ciclo completo compilar-instalar-probar. A13 es el más mecánico
 puro y no toca interfaz. **A4 y A7 son el mismo trabajo**: los dos estados que le
 faltan a la app (*Error* y *Desconectado*) son los dos que el SRS define.
+
+**Orden en que se están haciendo** (de menor a mayor complejidad, 2026-10-17):
+A2 → A13 → A3 → A5 → A1 → **A4 + A7**. El registro de cada uno, con lo que se
+midió y lo que quedó sin poder probar, está en **§8**.
 
 ---
 
@@ -332,3 +336,60 @@ a abrir.
   que faltan es trabajo de las señas.
 - **§6, los huecos del SRS.** Fuera del alcance de la app: los arregla el owner o
   el compañero.
+
+---
+
+## 8. Registro de avance (2026-10-17)
+
+Una entrada por ítem, en el orden en que se está haciendo: de menor a mayor
+complejidad. Cada una dice **qué se midió** y **qué quedó sin poder probar**, que
+es lo que otra sesión necesita para no dar algo por verificado sin serlo.
+
+### ✅ A2 — Permiso de micrófono al abrir la app
+
+Commit `1c85ddd`, instalado y verificado en el Redmi Note 9S (Android 11, MIUI).
+Cuatro casos: el diálogo aparece al abrir; al denegar sale el aviso de 3 s y el
+campo y Traducir siguen disponibles; el segundo arranque no pregunta ni avisa; con
+el permiso concedido no hay diálogo. Bitácora completa en
+`openspec/sessions/2026-10-17-a2-permiso-microfono-al-abrir.md`.
+
+**No se pudo probar:** el camino del toque del micrófono, porque sin backend el
+control queda deshabilitado (`micAvailable = state.backendConnected`). Ese camino
+no cambió de comportamiento, solo se le extrajo el chequeo a un helper.
+
+### ✅ A13 — Métrica de latencia de punta a punta
+
+`SignAiMetrics.onFirstSign()`, una muestra por frase, y el reloj `turnSentAt` en
+`MainScreenState` que arranca en los dos únicos lugares donde la app manda una
+frase (`requestTranslation` y `sendLivePhrase`).
+
+**Instrumento verificado en el device** contra un backend falso local
+(`/tmp/opencode/fake-backend.py`, fuera del repo): una frase de dos oraciones dio
+
+```
+oración→avatar: 130 ms          (el tramo del teléfono)
+envío→primera seña: 184 ms      (el total del SRS)
+frase #1: 313 ms, 2 oraciones, 3 glosas
+```
+
+**El número no es una medición de nada todavía**: el backend falso responde al
+instante y mete 150 ms entre oraciones, así que 184 ms es el funcionarial del
+instrumento, no la latencia del sistema. **La línea base real sigue pendiente**, y
+no es solo por el backend falso: la publicada (913 ms p50 / 1336 ms p95) es **del
+camino por palabras** y con oraciones la cifra sube por construcción, así que no
+es comparable. Hay que remedir con las 28 frases y el backend de verdad.
+
+---
+
+## 9. Diferencias y problemas que aparecieron
+
+No son ítems de la tabla: son cosas que se encontraron trabajando en ella. Se
+anotan acá para que no se pierdan, y se marcan las que necesitan una decisión.
+
+| # | Qué | Dónde | Qué hay que hacer |
+|---|---|---|---|
+| 1 | `shouldShowRequestPermissionRationale()` **no sirve** para saber si ya se preguntó: devuelve `false` tanto si nunca se preguntó como si ya no se va a preguntar. En MIUI **una sola negativa** deja el permiso en `USER_FIXED`, así que la app nunca avisaba que el micrófono quedó bloqueado — justo lo que `RF-UI-04` pide | `data/MicPermissionPrompt.kt` | **Resuelto en A2** con un flag propio. Se documentó en `openspec/specs/ui/spec.md` `CTL-14` |
+| 2 | El código sigue con `MaxReconnectAttempts = 5`, que contradice la decisión de §7 (reconexión **sin** límite) | `MainScreenState.kt:50` | Se corrige en **A4**. No se tocó antes |
+| 3 | El reloj del turno (`turnStartedAt`) **se reinicia** en `resumeListeningIfMicOn`, y el `done` puede llegar **antes** de que la escena se mueva: una frase habría medido desde el reloj de la siguiente, o no habría medido | `MainScreenState.kt` | **Resuelto en A13** con `turnSentAt`, que solo se pone al mandar una frase |
+| 4 | Hay **dos** casos de "glosa sin seña" y el SRS habla de uno solo: la glosa que **no está en el catálogo** (`main.tex:201` "cuando una glosa no existe en el catálogo") y la glosa que el catálogo anuncia pero **sin animación exportada** (`0032`–`0049`, §5 de este documento). Con la seña de prueba apagada las dos se saltan en silencio | `MainScreenState.kt:604-648` | **A5 necesita una decisión del owner**: ¿"Seña no disponible" también por las 18 que están en el catálogo pero no tienen clip? Si el aviso sale por esas, la app estaría diciendo que no están en el catálogo cuando sí están |
+| 5 | La clave `duracion_firmado` del `snapshot()` de `SignAiMetrics` sigue usando la palabra que `AGENTS.md` retiró el 2026-10-16 | `SignAiMetrics.kt:130` | Renombrar a `duracion_representada` cuando se toque ese archivo. Es una cadena de logcat, no un nombre de código, así que no rompe nada |
