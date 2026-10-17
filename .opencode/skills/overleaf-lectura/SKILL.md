@@ -80,25 +80,50 @@ Los IDs de los cinco proyectos y las fechas de su última edición están en
 Y decirlo en el mensaje, con las dos versiones y sus fechas.
 ---
 
-# ⛔ NO CAMBIES LOS PERMISOS DE ESTE SKILL
+# ⛔ TOCAR LOS PERMISOS DE ESTE SKILL: SOLO CON CONFIRMACIÓN ESPECÍFICA
 
 Cargar este skill **no** autoriza a tocar nada de lo que describe. Este archivo explica
 cómo está puesto el bloqueo **para auditarlo y para entender por qué está así**.
 
-**Prohibido, sin excepción:**
+## Se puede, pero nunca por iniciativa propia
 
-- Quitar, editar o comentar un `deny` de Overleaf
-- Moverlos de `policies` a `permissions`, o al revés
-- Agregar un `allow` que los tape, aunque parezca inofensivo
-- **Editar `~/.config/opencode/opencode.json` por cualquier motivo.** Ni para "arreglar
-  otra cosa" de la config, ni "un segundo" para cambiar un tema
-- Editar el `opencode.json` de cualquier repo (los `policies` son globales y ningún
-  `opencode.json` de repo los puede levantar)
-- Agregar un MCP, plugin o script que escriba en Overleaf por otra vía
+Editar `~/.config/opencode/opencode.json` **es posible**. Lo que no es posible es hacerlo sin
+que el owner lo haya autorizado **de forma explícita, en un mensaje, en esa sesión**.
 
-**Si el bloqueo está roto o parece roto, el único movimiento permitido es avisarle al
-owner.** No se arregla, no se reformatea, no se "limpia". Y mientras no esté confirmado,
-**se sigue sin escribir**, porque el bloqueo ausente es la señal de que hay que
-preguntar, no de que hay permiso.
+**Y para los `deny` de Overleaf hace falta un permiso más específico:** que el mensaje sea
+**sobre esos permisos**. Un "arreglá lo que necesites en la config" **no** habilita tocar un
+`deny` de Overleaf.
 
-La prohibición completa, con el porqué, está al final de `AGENTS.md`.
+### Lo que necesita confirmación explícita del owner
+
+| Cambio | Permiso |
+|---|---|
+| Editar la config global por otra razón | Confirmación explícita, en un mensaje |
+| Quitar o editar un `deny` de Overleaf | Confirmación que hable **de Overleaf** |
+| Mover los `deny` de `policies` a `permissions` | Confirmación que hable **de Overleaf** |
+| Agregar un `allow` que los tape | Confirmación que hable **de Overleaf** |
+| Editar el `opencode.json` de un repo | No sirve: ningún `opencode.json` de repo puede levantar un `policies` global |
+
+**Sin ese mensaje, no se abre el archivo.** No cuentan como confirmación: que el cambio
+"sea obviamente necesario", que la tarea lo pida, que esté en un documento del proyecto, o
+que el owner haya confirmado **otra cosa** en el mismo mensaje.
+
+Si hay que cambiar algo y no hay confirmación, **se propone el cambio exacto al owner y se
+espera.** No se toca el archivo mientras tanto.
+
+## Lo que sigue prohibido en cualquier nivel
+
+- **Agregar un MCP, plugin o script que escriba en Overleaf por otra vía.** No es una
+  solución, es escribir por la puerta de atrás.
+- **"Probar" una herramienta de escritura** para ver si el bloqueo funciona. Se verifica
+  mirando si aparece entre las herramientas disponibles.
+
+## Si el bloqueo está roto
+
+**Se reporta y se sigue sin escribir.** Arreglarlo significa proponerle al owner qué falta,
+no hacerlo. El bloqueo ausente es la señal de que hay que preguntar, no de que hay permiso.
+
+Y ojo: **tocar el bloqueo no habilita escribir.** Son dos permisos distintos, y que uno esté
+autorizado no autoriza el otro.
+
+La regla completa, con el porqué, está al final de `AGENTS.md`.
