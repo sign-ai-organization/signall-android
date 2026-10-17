@@ -114,8 +114,8 @@ lógica, despliegue, procesos, clases, secuencia, persistencia y **estados de la
   Si se implementa algo sin requisito, se anota ahí.
 - Los `.drawio` y el `.md` de requerimientos los edita el owner: los cambios grandes
   se proponen, no se aplican en silencio.
-- Los documentos en **Overleaf** son otra fuente, y el owner los considera **más
-  importante** que este repo. Ver § El Overleaf de la tesis.
+- Los documentos en **Overleaf** son **una de las fuentes de verdad** de la tesis, y el
+  owner los considera **más importante** que este repo. Ver § El Overleaf de la tesis.
 
 ### El Overleaf de la tesis
 
@@ -174,13 +174,44 @@ teniendo permiso de escritura sobre toda la cuenta, y Overleaf en plan gratis no
 tokens con alcance limitado. Dentro de opencode no hay forma de escribir; fuera de él,
 sí.
 
-#### Decisión pendiente: cuál de las dos fuentes manda
+#### Overleaf es fuente de verdad (decisión del owner, 2026-10-17)
 
-`../sign-ai-docs` y Overleaf tienen el **SDD en dos versiones** (los `.drawio` de
-`diagramas/` contra el proyecto SDD del 2026-08-30), y `AGENTS.md` sigue diciendo que la
-terminología sale de `../sign-ai-docs/documentos/requerimientos/`. **El owner todavía no
-dijo cuál manda.** Hasta que lo diga, una sesión que cite una fuente tiene que decirlo y
-señalar la fecha, porque las dos se contradicen.
+**El MCP de Overleaf es una de las fuentes de verdad de la tesis**, junto con
+`../sign-ai-docs` y los repos hermanos. Queda dicho de forma explícita: cuando se hable de
+una decisión técnica, y también cuando se implemente o revise una funcionalidad, hay que
+**revisar las tres** —este repo, `../sign-ai-docs` y el Overleaf de la tesis— y no solo el
+código.
+
+El flujo que pidió el owner:
+
+1. **Antes de decidir o de implementar**, leer qué dicen los documentos de las tres fuentes.
+2. **Al implementar o al revisar**, comprobar que lo que hace el código está **alineado**
+   con esos documentos.
+3. **Si no están alineados, no seguir por cuenta propia.** Primero determinar cuál de los
+   dos está mal —el **documento** o el **código**— y ahí preguntarle al owner. No se elige
+   en silencio.
+
+De aquí sale una consecuencia práctica que conviene no olvidar: **el MCP de Overleaf es de
+sólo lectura** (§ anterior). Si el documento que está mal es uno de Overleaf, **lo corrige
+el owner y no la sesión**. Anotarlo en
+`../sign-ai-docs/modificaciones/requerimientos.md` o en el log de la sesión es lo que
+puede hacer una sesión; el `.tex` no.
+
+Una divergencia entre el código y un documento es **un hallazgo que se reporta**, no un
+detalle que se tapa. Y como el MCP abre una ventana de Chromium cuando la cookie venció
+(~5 días), la revisión de Overleaf tiene un costo en tiempo: avisar de que se va a leer,
+no hacerlo por sorpresa a mitad de una implementación.
+
+#### Sigue pendiente: cuál de las dos fuentes de documento manda
+
+Resuelto **a medias** el 2026-10-17: Overleaf **es** fuente de verdad. Lo que el owner **no**
+dijo es qué hacer cuando `../sign-ai-docs` y Overleaf se contradicen **entre ellos** —no
+cuando el código se aparta de los dos—. `AGENTS.md` sigue diciendo que la terminología sale
+de `../sign-ai-docs/documentos/requerimientos/` (§ *No inventes terminología*), y eso no se
+tocó porque nadie lo tocó. Es el caso concreto del desempate que sigue abierto.
+
+Hasta que se diga, una sesión que cite una fuente tiene que **decir cuál está citando y de
+qué fecha**, porque las dos se contradicen.
 
 Detalle conocido al 2026-10-17: la Tabla `tab:estados-ui` del SRS (`main.tex`) lista
 **7** estados del indicador —Inactivo, Grabando, Texto listo, Procesando, Reproduciendo,
