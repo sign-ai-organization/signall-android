@@ -30,7 +30,7 @@ Ninguno requiere inventar el requisito.
 | **A2** | Pedir el permiso de micrófono **al abrir la app**, no al tocar el micrófono | `ui/MainScreen.kt:78-103` | §Interfaz con el Usuario (`main.tex:837`) | ✅ Hecho (`1c85ddd`) |
 | **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt:35`, `res/xml/network_security_config.xml`, `app/build.gradle.kts:15` | §Interfaces de Comunicación (`main.tex:1095`, `:1100`) | ✅ Hecho · **falta el dominio** (§9 #6) |
 | **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt:538-544`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:761-772`) | ⬜ Pendiente · **decisión abierta** (§7) |
-| **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt:604-648`, `:1069` | §Alcance (`main.tex:201`) y tabla, fila *Reproduciendo* (`main.tex:753`) | ⬜ Pendiente |
+| **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt:604-648`, `:1069` | §Alcance (`main.tex:201`) y tabla, fila *Reproduciendo* (`main.tex:753`) | ✅ Hecho |
 | **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:726-773`) | ⬜ Pendiente · depende de A4 |
 | **A13** | Armar la **métrica de latencia de punta a punta** | `ui/state/SignAiMetrics.kt`, `MainScreenState.kt:329` y `:188-195` | §Aspectos de medición (`main.tex:848-852`) | ✅ Hecho (instrumento; falta medir con el backend real) |
 
@@ -419,6 +419,34 @@ verificación de RF-INT-COM-03, cuyo criterio de aceptación es "verificable
 mediante inspección del tráfico de red": la app dice con qué ethernetos abrió, y
 en un build de release no puede decir otra cosa.
 
+### ✅ A5 — "Seña no disponible", glosa por glosa
+
+`queueItemsFor` ahora devuelve **qué glosas quedaron afuera** además de la cola
+(`ResolvedSentence`), y `appendQueue` avisa cuando esa lista no está vacía. Antes
+solo se contaban en `sin_seña` y el texto aparecía únicamente cuando una oración
+**entera** no produjo nada representable, así que una frase con dos glosas de cinco
+sin animación se saltaba en silencio lo que le faltaba.
+
+El aviso es **exactamente el texto del SRS**, sin la lista de glosas: lo pidió el
+owner el 2026-10-17 ("corto; si quieres más detalle, en el modo debug"), porque el
+hint es de una línea y se lee de reojo mientras el avatar representa. Cuáles
+fueron queda en el log (`SignAiState`), que es donde se mira al depurar:
+
+```
+SignAiState: glosas sin animación, avisadas: glosa-sin-seña
+```
+
+**Medido en el Redmi Note 9S** contra el backend falso, con la seña de prueba
+apagada (default) y encendida:
+
+| Seña de prueba | Resultado |
+|---|---|
+| Apagada | Hint **"Seña no disponible"**, `sin_seña=1`, el avatar no se mueve |
+| Encendida | **Ningún aviso**, la glosa se representa con la seña por defecto, turno completo |
+
+Las dos ramas son excluyentes por construcción, pero se comprobaron las dos. Al
+terminar se dejó el interruptor como estaba (apagado, el default).
+
 ---
 
 ## 9. Diferencias y problemas que aparecieron
@@ -431,6 +459,6 @@ anotan acá para que no se pierdan, y se marcan las que necesitan una decisión.
 | 1 | `shouldShowRequestPermissionRationale()` **no sirve** para saber si ya se preguntó: devuelve `false` tanto si nunca se preguntó como si ya no se va a preguntar. En MIUI **una sola negativa** deja el permiso en `USER_FIXED`, así que la app nunca avisaba que el micrófono quedó bloqueado — justo lo que `RF-UI-04` pide | `data/MicPermissionPrompt.kt` | **Resuelto en A2** con un flag propio. Se documentó en `openspec/specs/ui/spec.md` `CTL-14` |
 | 2 | El código sigue con `MaxReconnectAttempts = 5`, que contradice la decisión de §7 (reconexión **sin** límite) | `MainScreenState.kt:50` | Se corrige en **A4**. No se tocó antes |
 | 3 | El reloj del turno (`turnStartedAt`) **se reinicia** en `resumeListeningIfMicOn`, y el `done` puede llegar **antes** de que la escena se mueva: una frase habría medido desde el reloj de la siguiente, o no habría medido | `MainScreenState.kt` | **Resuelto en A13** con `turnSentAt`, que solo se pone al mandar una frase |
-| 4 | Hay **dos** casos de "glosa sin seña" y el SRS habla de uno solo: la glosa que **no está en el catálogo** (`main.tex:201` "cuando una glosa no existe en el catálogo") y la glosa que el catálogo anuncia pero **sin animación exportada** (`0032`–`0049`, §5 de este documento). Con la seña de prueba apagada las dos se saltan en silencio | `MainScreenState.kt:604-648` | **A5 necesita una decisión del owner**: ¿"Seña no disponible" también por las 18 que están en el catálogo pero no tienen clip? Si el aviso sale por esas, la app estaría diciendo que no están en el catálogo cuando sí están |
+| 4 | Hay **dos** casos de "glosa sin seña" y el SRS habla de uno solo: la glosa que **no está en el catálogo** (`main.tex:201` "cuando una glosa no existe en el catálogo") y la glosa que el catálogo anuncia pero **sin animación exportada** (`0032`–`0049`, §5 de este documento). Con la seña de prueba apagada las dos se saltaban en silencio | `MainScreenState.kt` | **Resuelto en A5**: el aviso sale en los dos casos, porque las dos terminan en la misma rama (`sin seña ni fallback`). Decirlo solo para la primera habría sido mentir en silencio al revés: el catálogo **sí** anuncia las 18, lo que no hay es el clip. Cuando se exporten, desaparece solo el aviso de esas |
 | 5 | La clave `duracion_firmado` del `snapshot()` de `SignAiMetrics` seguía usando la palabra que `AGENTS.md` retiró el 2026-10-16 | `SignAiMetrics.kt` | **Resuelto en A13**: ahora es `duracion_representada`. Era una cadena de logcat, no un nombre de código |
 | 6 | **No hay dominio del backend.** Ni el SRS (`main.tex:1095`, `:1100`) ni `../sign-ai-docs` nombran uno, así que no había con qué armar el `wss://` | `app/build.gradle.kts` | En A3 el default de release quedó en `wss://backend.invalid/ws/translate`: un host que por construcción no resuelve (`.invalid`, RFC 2606). Es deliberado —un APK sin configurar habla con nadie en vez de con el host de otra persona, y el fallo es ruidoso— pero **es una decisión del owner**: hace falta el dominio real para que release sirva para algo |

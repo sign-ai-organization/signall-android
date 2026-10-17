@@ -615,16 +615,22 @@ class MainScreenState(
      *
      * Suspende: resolver una glosa puede ser una descarga de un asset remoto. Por
      * eso todas las oraciones de una frase se resuelven juntas y en orden, en
-     * [startQueue], y la cola nunca se arma a mitad de camino.
+     * [appendQueue], y la cola nunca se arma a mitad de camino.
      *
      * Una glosa que el catálogo no tiene no se representa (RF-CAT-03) salvo que
      * [Settings.demoSignFallback] esté prendido. Ese interruptor es lo que hace
      * que las 18 señas de LSC50 sin animación exportada (0032–0049) muestren
      * algo en vez de "Seña no disponible": el catálogo las anuncia, pero no hay
      * clip, así que la cola cae en la única seña que viene dentro del APK.
+     *
+     * Devuelve **qué glosas quedaron afuera** además de la cola, porque el SRS
+     * (`main.tex:201`, `:753`) pide informar "Seña no disponible" en vez de
+     * mandar al avatar una instrucción inválida — y avisarlo por glosa, no solo
+     * cuando una oración entera no produjo nada, que era lo que pasaba antes.
      */
-    private suspend fun queueItemsFor(segment: TranslationSegment): List<SignQueueItem> {
+    private suspend fun queueItemsFor(segment: TranslationSegment): ResolvedSentence {
         val items = mutableListOf<SignQueueItem>()
+        val missing = mutableListOf<String>()
         for (gloss in segment.glosses) {
             // Primero se pregunta si el path es una de las animaciones que ya
             // vienen dentro del APK. Son same-origin por construcción, así que
@@ -661,13 +667,27 @@ class MainScreenState(
 
                 else -> {
                     // Sin seña y sin fallback: no se representa, pero se cuenta para que
-                    // `sin_seña` diga la verdad.
+                    // `sin_seña` diga la verdad y se anota para avisar.
                     metrics.onUnavailableGloss()
+                    missing += gloss.text
                 }
             }
         }
-        return items
+        return ResolvedSentence(items, missing)
     }
+
+    /**
+     * Una oración ya resuelta: lo que va a la cola y lo que quedó afuera.
+     *
+     * Antes [queueItemsFor] devolvía solo la cola, y las glosas que no tenían
+     * animación desaparecían: solo se contaban en `sin_seña` y el texto salía
+     * únicamente cuando una oración entera no produjo nada. Devolver las dos
+     * listas es lo que permite avisar por glosa.
+     */
+    private data class ResolvedSentence(
+        val items: List<SignQueueItem>,
+        val missing: List<String>,
+    )
 
     private fun handleEvent(event: BackendEvent) {
         when (event) {
@@ -1064,7 +1084,8 @@ class MainScreenState(
         val text = pendingText.orEmpty()
         val first = !queueStarted
         scope.launch {
-            val items = segments.flatMap { queueItemsFor(it) }
+            val resolved = segments.map { queueItemsFor(it) }
+            val items = resolved.flatMap { it.items }
 
             if (first) {
                 queueStarted = true
@@ -1097,11 +1118,26 @@ class MainScreenState(
             turnQueueItems += items
             caption = turnQueueItems.joinToString(" · ") { it.gloss }.ifBlank { "Seña no disponible" }
 
+            // Aviso por glosa, que es lo que pide el SRS (`main.tex:201` y `:753`):
+            // "Seña no disponible" en vez de mandar al avatar una instrucción
+            // inválida. Antes solo aparecía el texto cuando una oración entera no
+            // produjo nada, así que una frase con tres glosas de cinco y dos
+            // representables se saltaba en silencio lo que le faltaba.
+            //
+            // El texto es **exactamente** el del SRS, sin la lista de glosas: el
+            // hint es de una línea y el aviso se lee de reojo, mientras el avatar
+            // representa. Cuáles fueron queda en el log (`SignAiState`), que es
+            // donde se mira cuando se depura.
+            val missing = resolved.flatMap { it.missing }
+            if (missing.isNotEmpty()) {
+                showStatus("Seña no disponible")
+                Log.i(TAG, "glosas sin animación, avisadas: ${missing.joinToString(", ")}")
+            }
+
             if (items.isEmpty()) {
                 // Una oración que no produjo ninguna seña no es el fin del turno:
-                // las siguientes pueden sí, así que acá no se cierra nada. Solo
-                // avisa, y el cierre de verdad lo hace [finishTurn].
-                showStatus("Ninguna seña de esta frase está en el catálogo todavía")
+                // las siguientes pueden sí, así que acá no se cierra nada. El aviso
+                // de arriba ya dijo cuáles fueron, y acá solo se corta.
                 return@launch
             }
 
