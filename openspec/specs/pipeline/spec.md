@@ -1,89 +1,259 @@
 # Pipeline SignAI (WebView) — flujo de datos
 
+> **Este archivo se reescribió entero el 2026-10-17.** La versión anterior describía el
+> pipeline de landmarks con `sign.json`, que se reemplazó por clips GLB el 2026-10-13, y
+> decía que la app era "100 % local, sin servidor", que es exactamente lo contrario del
+> sistema actual. Los cuatro repos hermanos y el WebSocket ya existían. Si algo de acá
+> contradice al código, **el código manda** — y se reporta.
+
 ## Flujo real
 
+Hay **dos flujos distintos** y conviene no mezclarlos: uno es de assets, el otro es de
+runtime.
+
+### Flujo de assets — cómo llega una animación al APK
+
 ```
-data/LANDMARKS/ CSVs ──► sign.json ──► WebView ──► avatar animado
-(BODY 33, HANDS 21×2,     (horneado,     (app.js +
- FACE 468)                 1 seña)        avatar.glb)
-      ▲                        ▲                ▲
-      │                        │                │ Kotlin vía
- videos propios          script de horneado   window.SignAI
- (futuro)                (⚠️ pendiente          .play()
-                          documentar cuál)
+GLB Senas/*.glb                    exportaciones de Cascadeur (fuente, gitignored)
+      │
+      ▼
+tools/split_signs.py               separa el personaje de las animaciones
+      │  · models/avatar.glb        ← el personaje, con la pose de descanso horneada
+      │  · signs/<id>.glb           ← una animación por seña, solo animación
+      │  · manifest.json            ← inventario, con sha256 por seña
+      │  · domain/SignsCatalog.kt   ← reescrito, para que el disco y el código no divergan
+      │  · (llama al final a tools/rest_pose.py, que hornea la pose en avatar.glb)
+      ▼
+app/src/main/assets/web/           dentro del APK
 ```
 
-No hay servidor: la app es 100% local salvo el CDN de Three.js.
-Flask (`../app/`), Filament, Unity y Flutter están muertos — no documentar
-flujos hacia ellos.
+Todo se resuelve con **rutas relativas**, sin red: `models/avatar.glb` y
+`signs/<id>.glb`. El layout `models/` + `signs/` no se cambia.
 
-## `sign.json` — formato real (verificado del archivo)
+**Nunca se edita `models/avatar.glb` a mano.** Se regenera. **Nunca se edita
+`SignsCatalog.kt` a mano** tampoco: `split_signs.py` lo reescribe, justamente para que la
+lista de código y el disco no puedan divergir.
+
+**Agregar una seña** = soltar el `.glb` nuevo en `GLB Senas/` y correr `split_signs.py`.
+No es un paso más: es el único procedimiento.
+
+### Flujo de runtime — qué pasa cuando alguien habla
+
+```
+micrófono
+  │  AudioRecord sobre VOICE_RECOGNITION, chunks de 30 ms de PCM16 mono 16 kHz
+  ▼
+WebSocket  ws://<backend>:8080/ws/translate          ← la app SOLO habla con el backend
+  │                                                     nunca con el STT ni con Neon
+  ├─ texto escrito  ──► {"type":"text"}  ──► se traduce ──► segment × N ──► done
+  │
+  └─ voz  ──► frames binarios PCM16 ──► el backend reenvía al STT
+                     │
+                     ▼
+              ../sign-ai-stt  (faster-whisper + VAD)
+                     │  transcript (muestra en vivo, NO se traduce)
+                     │  final     (siempre llega, incluso vacío)
+                     ▼
+              el backend parte la frase en oraciones y traduce cada una
+                     │
+                     ▼
+              segment {index, total, ...}   uno por oración, EN ORDEN
+                     │
+                     ▼
+              MainScreenState.pendingSegments  (sortedMap por index)
+                     │  flushSegments() cuando size >= total
+                     ▼
+              escena: setQueue + play()  ·  appendQueue por cada oración siguiente
+                     │
+                     ▼
+              THREE.AnimationMixer reproduce signs/<id>.glb con crossfade de 100 ms
+                     │
+                     ▼
+              window.SignAIBridge.postMessage("onPlaybackDone")
+```
+
+**El contrato son frames de WebSocket, no imports.** Un cambio aquí rompe en el hermano sin
+que el compilador avise. El detalle está en [`docs/SISTEMA.md`](../../../docs/SISTEMA.md) y
+en el skill `contrato-websocket`.
+
+### Lo que la app **no** hace
+
+- **No habla con el STT.** El audio va al backend y el backend lo reenvía.
+- **No habla con Neon.** La base es del backend.
+- **No traduce la voz.** La voz entra por el mismo socket pero vuelve como `transcript`, y
+  esa transcripción no se traduce: solo lo que el cliente manda como `text`.
+- **No encadena.** Arma la cola entera cuando llega el último `segment`.
+- **No pide un `segment` a la vez para la primera oración.** Recibe todas.
+
+## Formato de `manifest.json`
+
+Lo escribe `split_signs.py`. Es el inventario de lo que hay en el APK:
 
 ```json
-{
-  "stem": "0000_0000_0000",
-  "fps": 24,
-  "total_frames": 59,
-  "frames": [
-    {
-      "hands": [
-        { "hand": "Left",  "landmarks": [{"x":0.59,"y":0.88,"z":0.0}, ...] },
-        { "hand": "Right", "landmarks": [...] }
-      ],
-      "body": [ {"x":0.45,"y":0.32,"z":-0.01}, ... ],
-      "face": { "13": {"x":0.5,"y":0.6,"z":0.01}, "14": {...}, ... }
-    }
-  ]
-}
+[{ "sign_id": "0000",
+   "gloss": "GRACIAS",
+   "gloss_key": "GRACIAS",
+   "path": "signs/0000_0000_0000.glb",
+   "variants": 3,
+   "variant_names": ["0000", "0000.001", "0000.002"],
+   "fps": 24, "frames": 59, "duration_s": 2.417,
+   "bytes": 310776, "sha256": "4947ed89…", "tracks": 309, "bones": 103 }]
 ```
 
-- `stem`: ID `SSSS_VVVV_RRRR` de la seña horneada (actual: `0000_0000_0000`)
-- `hands`: hasta 2 elementos, 21 landmarks MediaPipe Hands cada uno
-- `body`: 33 landmarks MediaPipe Pose, indexados directamente (body[11] = hombro izq)
-- `face`: dict con keys = string del índice FaceMesh, solo 16 landmarks
-  (`1, 13, 14, 55, 70, 78, 107, 145, 159, 168, 285, 300, 308, 336, 374, 386`)
-- Cara ya sincronizada a 24fps en el horneado (ver `specs/avatar`)
+El `sha256` es lo que permite cruzar el APK contra el catálogo sin abrir los binarios.
 
-## Agregar una seña
+## Nombres de los huesos — crítico
 
-1. Producir los CSVs en `data/LANDMARKS/` con el formato exacto LSC50
-   (ver "Captura de señas propias" abajo).
-2. Re-hornear `sign.json` (⚠️ script pendiente de documentar).
-3. Extender el `listOf("0000_0000_0000")` hardcodeado en `MainActivity.kt`.
+**Las exportaciones de Cascadeur usan PUNTOS.** Este es el dato que más se ha equivocado,
+y se equivocó en las dos direcciones.
 
-## Captura de señas propias — requisitos
+Verificado el **2026-10-17** contra `models/avatar.glb` **y** contra el export original de
+Cascadeur (`GLB Senas/0000 - GRACIAS.glb`): **102 articulaciones de skin en los dos
+archivos**.
 
-Para que videos propios sean compatibles con el pipeline:
+| Zona | Cómo es |
+|---|---|
+| Cadena del brazo | `shoulder.L`, `upper_arm.L`, `forearm.L`, `hand.L` — con punto, **sin prefijo** |
+| Dedos y palma | `thumb.01.L`, `f_index.01.L`, `palm.01.L` … `palm.04.L` |
+| Raíz del armature | `HG_Branden.001` |
 
-1. **Modelos**: MediaPipe Pose (33 lm) + Hands (21 lm) + FaceMesh (468 lm),
-   mismos que usó LSC50.
-2. **Output CSV**: exactamente el mismo formato de columnas que LSC50:
-   header `landmark_0_x, landmark_0_y, landmark_0_z, landmark_1_x, ...`
-3. **Estructura de carpetas**:
-   ```
-   data/LANDMARKS/BODY_LANDMARKS/<id>.csv
-   data/LANDMARKS/HANDS_LANDMARKS/LEFT_HAND_LANDMARKS/<id>.csv
-   data/LANDMARKS/HANDS_LANDMARKS/RIGHT_HAND_LANDMARKS/<id>.csv
-   data/LANDMARKS/FACE_LANDMARKS/<id>.csv
-   ```
-4. **ID**: mismo formato `SSSS_VVVV_RRRR`; señas propias en rango nuevo (0050+).
+La raíz `HG_Branden.001` también está animada, pero **no es una articulación de skin**:
+contar solo huesos hace que 138 tracks parezcan sin resolver cuando no lo están.
 
-## Integraciones futuras (carpetas hermanas en `..`)
+> ### Dos trampas, y las dos costaron trabajo
+>
+> **1. La versión anterior de este spec y `openspec/config.yaml` decían que NINGÚN hueso
+> usaba puntos**, y daban ejemplos como `DEF-upper_armL`. **Es falso**: los huesos de la
+> cadena del brazo se llaman `upper_arm.L`, con punto. Un agente que confiara en eso
+> renombraría huesos y rompería la animación sin ver ningún error.
+>
+> **2. Y después se inventó el otro extremo**: apareció una lista de huesos de cara
+> `DEF-browTL` / `DEF-lidTL` / `DEF-lipTL` / `DEF-jaw_master` como si fueran
+> articulaciones del rig. **Esos huesos no existen**: en el archivo hay **cero**
+> articulating con prefijo `DEF-`.
+>
+> **Verificá contra el archivo antes de confiar en cualquier lista de nombres.**
 
-- `sign-ai-backend`: **SÍ**. Plan en `openspec/changes/archive/2026-10-17-integracion-backend/tasks.md`.
-  Hoy el flujo de arriba sigue siendo 100% local. Cuando la integración aterrice, este
-  diagrama se reemplaza por: `micrófono → WS /ws/translate → glosas validadas →
-  assets descargados a cacheDir/signs → app.js reproduce la cola`. Decisiones 2026-09-30:
-  híbrido (frames de landmarks ahora, clips GLB después) y texto primero.
-- `sign-ai-gloss-engine`: **NO**, fuera de alcance.
+### La cara no la anima la app
 
-## Constantes de animación en `app.js` (valores reales)
+Los nodos de cara que existen usan nombres al estilo ARKit y **no son articulaciones de
+skin**:
 
-| Variable         | Valor | Descripción                              |
-|------------------|-------|------------------------------------------|
-| `smoothAlpha`    | 0.12  | Fracción de slerp por frame (1.0 = snap) |
-| `FACE_ALPHA`     | 1.0   | Alpha para huesos faciales (siempre snap)|
-| `Z_SCALE`        | 0.40  | Factor empírico para profundidad del brazo|
-| `FACE_REF_BROW`  | 0.47  | Altura de ceja neutra normalizada        |
-| `FACE_BROW_SCALE`| 6.0   | Amplificación del movimiento de ceja     |
-| `FACE_JAW_MAX`   | 1.2   | Apertura máxima de mandíbula, en rad     |
+```
+brow_dwn_L / brow_dwn_R   brow_outer_up_L / brow_outer_up_R   brow_inner_up
+eye_blink_open_L / eye_blink_open_R   eye_squint_L / eye_squint_R
+eyeball.L, eyeball.lookat.L, eyeball_lookat_master
+jaw, jaw_upper, jaw_dwn_mouth_clsd, jaw_open_lt_rt_frwd
+```
+
+Y **nada los mueve**: el GLB que va en el APK tiene **cero morph targets**, y `app.js` no
+menciona morph targets ni ninguno de esos nombres. La expresión facial **viene horneada en
+el clip**.
+
+Es el punto **A6** de `docs/CONTRASTE-DOCUMENTOS.md`, y está **en pausa**: RF-AVT-03 pide
+un marcador facial según el tipo de frase y no hay implementación. Si algún día se
+implementa, se toca acá y en `app.js` — no hay atajo con los huesos de cara, porque no
+existen.
+
+## Constantes de la escena en `app.js` (valores reales)
+
+Verificadas en `app/src/main/assets/web/app.js`:
+
+| Variable | Valor | Para qué |
+|---|---|---|
+| `CROSSFADE_MS` | `100` | Fundición entre dos señas. Entre señas **no hay pose congelada ni hueco** |
+| `MAX_DPR` | `1.75` | Tope de `setPixelRatio`. **A propósito** |
+| `AVATAR_URL` | `models/avatar.glb` | El personaje |
+| `DEFAULT_SIGN_URL` | `signs/0000_0000_0000.glb` | Seña de apertura y de reserva |
+| `BG_COLOR` | `#121316` | Fondo del canvas en oscuro (= `background` del tema) |
+| `BG_LIGHT` | `#f4f4f2` | Fondo del canvas en claro |
+
+### Por qué el tope de DPR, y por qué no `DoubleSide`
+
+Sin tope, el Redmi Note 9S (dpr 2.75) renderiza 19,6 MP por fotograma y el GPU queda en
+~37 ms/fotograma, con **99 % de jank**. Medido con `tools/rendimiento/gfxinfo.py`. Y no hay
+que forzar `DoubleSide` en las mallas: es overdraw puro en mallas cerradas y costó **4 % más
+de jank** para un cambio visual cero.
+
+### Lo que ya no existe
+
+Estas constantes pertenecían al **motor procedural** de landmarks, que se eliminó el
+2026-10-13. **No aparecen en `app.js`** (verificado: cero coincidencias):
+
+`smoothAlpha` · `FACE_ALPHA` · `Z_SCALE` · `FACE_REF_BROW` · `FACE_BROW_SCALE` ·
+`FACE_JAW_MAX`
+
+Si una tarea de avatar necesita ajustar algo así, no existe a qué ajustarlo: lo que se
+mueve ahora es el clip horneado en el GLB.
+
+## El puente Kotlin ↔ JS
+
+**La fuente de verdad es `domain/SignAiCommands.kt`.** No esta lista.
+
+### Kotlin → JS: `window.SignAI.<método>(…)`
+
+Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe en silencio.
+
+| Comando | Qué hace |
+|---|---|
+| `play()` | Arranca la cola desde el ítem 0 |
+| `playFrom(i)` | Arranca desde `i` |
+| `setQueue(json)` | **Reemplaza** la cola y la arranca |
+| `appendQueue(json)` | **Agrega** al final sin reiniciar lo que está sonando |
+| `setSpeed(f)` | Velocidad, `0..1`. La aplica tal cual: no hay adelanto automático |
+| `setReduceMotion(on)` | Corte seco entre señas en vez de fundición (accesibilidad) |
+| `setTheme(dark)` | El fondo del canvas sigue al tema de la app |
+| `setDefaultSign(url)` | Seña de apertura y de reserva |
+| `setDebug(on)` | Overlay `#status` |
+| `setFreeCamera(on)` · `setGrid(on)` · `setBackground(on)` | Ajustes de escena |
+| `setSilenceTimeoutMs(ms)` | Solo para el overlay de depurar; el valor llega desde `/health` del backend |
+
+### JS → Kotlin: `window.SignAIBridge.postMessage(…)`
+
+| Mensaje | Cuándo |
+|---|---|
+| `avatarReady` | El personaje ya está parseado y en escena |
+| `onPlaybackDone` | La cola terminó |
+| `signStart:<idx>:<jsMs>` | El muñeco se empezó a mover en la seña `<idx>` |
+
+`avatarReady` es lo que **tapa el splash** — no `onPageFinished`, que dispara mientras el
+GLB de 10 MB todavía se está bajando. `SignAiSplash` tiene además un timeout de 8 s.
+
+## El catálogo de Neon
+
+`catalog` lo maneja el backend, sembrada con las **50 glosas de LSC50**
+(`tools/seed_catalog.py`, idempotente). `glb_animation_path` es **siempre** un path
+same-origin dentro del APK (`signs/<id>.glb`), nunca una URL: eso es lo que permite que la
+app resuelva sin red.
+
+**Solo 32 de las 50 tienen animación exportada.** Las otras 18 (`0032`–`0049`) llegan con
+`available: true` y un path que no existe. `SignsCatalog.isOwnAssetPath()` distingue "no es
+un path nuestro" de "es nuestro pero todavía no lo exportamos" (`GLS-10`), y las manda
+directo al sign de reserva **sin tocar la red**: pedirlas por HTTP sería un 404
+garantizado en cada frase que las mencione.
+
+El backend carga el catálogo **una sola vez al arrancar**. Después de un seed hay que
+reiniciarlo: no hay invalidación.
+
+## Datos crudos de LSC50 (histórico)
+
+`../data/LANDMARKS/` tiene los CSVs originales del dataset (BODY 33, HANDS 21×2, FACE 468
+landmarks de MediaPipe) y `../data/LSC50.pdf`. **El pipeline de captura ya no alimenta la
+app** —la fuente de las animaciones es Cascadeur— pero el formato de los CSVs y el esquema
+de IDs `SSSS_VVVV_RRRR` se mantienen como referencia del dataset, y eso es lo que
+documenta `specs/dataset/spec.md`.
+
+Los scripts de captura de ese pipeline quedaron en `../signai-avatar`, **inactiva desde el
+2026-09-19**. No se copian scripts entre los dos pipelines.
+
+## Cómo se verifica un cambio de acá
+
+```bash
+tools/verificar-tiempo-real.sh    # servicios, tests, 28 fixtures, métricas, device
+tools/preview_pose.py <pose>      # ver una pose sin installDebug
+./gradlew build                   # el APK sigue compilando
+```
+
+Un número sin su origen no se puede afirmar: ver `AGENTS.md` § Observabilidad. Y
+`rt_first_sign_ms` de la línea base es **del camino por palabras** — con oraciones no es
+comparable.

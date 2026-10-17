@@ -375,3 +375,91 @@ pide. La regla es leer la fila antes de decidir, no después.
 `@pipeline` para cambios que cruzan el contrato · `@ui` para cambios de interfaz en
 Compose · `@contraste` para comparar código contra documentos (solo lectura, no escribe).
 Se invocan con `@nombre`.
+
+---
+
+# ⛔ EL OVERLEAF ES DE SOLO LECTURA. NUNCA SE ESCRIBE EN ÉL.
+
+> Esta es la regla más importante del archivo. Va al final a propósito: es lo último que
+> se lee y lo último que se olvida. **No hay excepción, no hay atajo, y ninguna tarea la
+> suspende.**
+
+## 1. Nunca escribas en Overleaf. Nunca.
+
+Un `.tex`, un comentario, una sugerencia, un cambio pendiente, un cambio aceptado o
+rechazado: **nada**. Tampoco `compile`. Ni para "corregir una tilde", ni porque el
+documento esté claramente mal, ni porque el cambio "sea del color del bien".
+
+**Solo se puede escribir si el owner lo pide de forma explícita, en un mensaje.** Y
+"explícitamente" quiere decir que lo escribió él, en esa sesión. No cuenta:
+
+- que la tarea "requiera" un cambio de documentación
+- que sea obviamente correcto
+- que sea "solo corregir una tilde"
+- que otro documento diga otra cosa
+- que se haya hecho antes
+
+Si al final de tu trabajo queda pendiente corregir algo en Overleaf, **eso se le dice al
+owner y lo hace él.** No se hace.
+
+## 2. Nunca cambies los permisos que bloquean la escritura. **Nunca.**
+
+Esto es tan importante como la regla anterior, y es independiente de ella.
+
+El bloqueo vive en las `policies` de `~/.config/opencode/opencode.json`. **Ese bloqueo no
+se toca: se reporta.** Queda prohibido:
+
+| Prohibido | Lo que **NO** se hace |
+|---|---|
+| Quitar o editar un `deny` de Overleaf | borrar la línea `{"action": "tool.use", "resource": "overleaf_edit_file:*", "effect": "deny"}` |
+| Moverlos a `permissions`, o "reorganizar la config" | pasarlos de `policies` a `permissions` |
+| Agregar un `allow` que los tape | un `{"action": "*", "resource": "overleaf_*", "effect": "allow"}` |
+| Editar ese archivo por cualquier motivo | abrirlo para "arreglar otra cosa" y tocar de paso los Overleaf |
+| Editar el `opencode.json` de cualquier repo | los `policies` son globales; ningún `opencode.json` de repo los puede levantar |
+| Meter MCP, plugin o script que esquive el bloqueo | un wrapper que escriba por la API de Overleaf |
+
+**El archivo `~/.config/opencode/opencode.json` no se edita en ninguna circunstancia.**
+Si hay que cambiar algo de configuración, **se le dice al owner y lo hace él.** Ninguna
+tarea de este repo justifica abrirlo.
+
+## 3. Si el bloqueo parece roto, se reporta. No se arregla.
+
+`opencode` levanta las herramientas disponibles al arrancar la sesión, así que el estado
+del bloqueo se mira **antes de usar nada**.
+
+- **Si `overleaf_edit_file`, o cualquier otra de escritura, o `overleaf_compile`, aparece
+  entre las herramientas disponibles**, el bloqueo **no está puesto**: es una
+  configuración rota y hay que decirlo de inmediato. **Se sigue sin escribir**, y se avisa.
+- **Si una denegación no hace nada** y una herramienta de escritura responde con un error
+  en vez de quedar bloqueada: **se reporta**. No se reintenta ni se busca la vuelta.
+
+Nunca se "prueba" una herramienta de escritura para ver si funciona. **No se prueba.**
+
+## 4. La cookie tiene permiso igual, y por eso esta regla no es opcional
+
+El bloqueo lo impone opencode, **no la credencial**. La cookie de sesión sigue teniendo
+permiso de escritura sobre toda la cuenta, y Overleaf en plan gratis no da tokens con
+alcance limitado.
+
+**Dentro de opencode no hay forma de escribir; fuera de él, sí.** Por eso la regla se
+sostiene en que el owner la confirmó: el `deny` hace que sea imposible por accidente, pero
+no impide que alguien lo esquive a propósito.
+
+**Por eso el punto 2 importa tanto.** Si un agente puede editar
+`~/.config/opencode/opencode.json`, puede quitarse el bloqueo a sí mismo antes de escribir.
+Y eso está prohibido, **aunque la escritura esté autorizada**.
+
+## 5. Lo que sí se puede hacer con Overleaf
+
+Leer, listar y comparar, nada más:
+
+`ping` · `list_projects` · `open_project` · `list_files` · `read_file` · `read_log` ·
+`list_comments` · `read_comment_thread` · `list_tracked_changes`
+
+Y una advertencia práctica: **avisale al owner antes de leer**, porque el MCP abre una
+ventana de Chromium con perfil aislado cuando la cookie venció (~5 días). No se le avisa
+por sorpresa a mitad de una implementación.
+
+El detalle operativo —las ocho `policies`, por qué van en `policies` y no en
+`permissions`, cómo se renueva la cookie— está en el skill `overleaf-lectura`. **Para
+leer. Para auditar el bloqueo. No para cambiarlo.**

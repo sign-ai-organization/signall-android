@@ -13,17 +13,28 @@ actual de la app nativa (`Compose shell + WebView 3D`).
 - **Plan de ejecución:** `openspec/changes/archive/2026-10-17-prototipo-ui-vercel/tasks.md`.
 - **Implementación:** Compose nativo (Lumo + Phosphor). El WebView es solo el
   canvas 3D.
-- **Estado:** **implementado** en la rama `feat/prototipo-ui-vercel` (fases A–G),
-  verificado en device (build + install). Pendiente de merge a `main`.
-- **Tema:** el **default es claro** con la paleta del prototipo
-  (`Settings.darkTheme = false`). El modo oscuro existe y usa la paleta oscura
-  del prototipo.
+- **Estado (2026-10-17):** implementado y **verificado en device**. Las fases A–G de
+  `prototipo-ui-vercel` y la Fase 0 de `ui-migration-lumo` están **terminadas**; ambas
+  están en `openspec/changes/archive/`. `grep -rl material3 app/src/main/java` da **cero**.
+- **Tema:** el **default es oscuro** (`Settings.darkTheme = true`). La paleta oscura es
+  **grafito**, no el navy del prototipo; el azul de marca `#1C4CFC` vive solo en la acción
+  principal y los controles. Valores en `ui/designsystem/Color.kt`, referencia de marca en
+  `docs/manual-identidad-visual.md`.
+- **Marca:** **SignALL** (rebranding del 2026-10-16), centralizada en
+  `ui/SignAiBranding.kt`.
 - **MIUI force-dark:** la app **debe** declarar `android:forceDarkAllowed=false`
   (`res/values/themes.xml`). Si no, MIUI "smart dark" invierte el contenido de
   las capas hardware y el texto dentro de `verticalScroll`/drawers se ve blanco.
 
-Leyenda de origen: `[P]` = del prototipo · `[A]` = ya existe en la app ·
-`[N]` = nueva/derivada.
+**Leyenda de origen** (verificada el 2026-10-17, contra el código):
+
+- `[P]` — viene del prototipo `PrototipoFrontend/` (solo referencia visual).
+- `[A]` — ya existía en la app antes de este spec.
+- `[N]` — nueva o derivada, no está en el prototipo.
+
+> Cuando un ID cambie de estado, la fila se actualiza con la **fecha** y el motivo, como
+> se hizo con `CTL-6`, `STA-9` y `OM-4`. Una fila que dice "pendiente de merge" cuando el
+> merge ya está hecho hace que un agente intente rehacer trabajo terminado.
 
 ---
 
@@ -289,7 +300,7 @@ de que llegó su `segment`, contra los ~569 ms que costaba esperar a que llegara
 | GLS-2 | Tipo de frase | `[N]` | `PhraseType` (los 5 valores del backend) + `UNKNOWN` para no crashear ante un valor nuevo. Alimenta los marcadores no manuales. |
 | GLS-3 | Glosa no disponible | `[N]` | `available == false` → la glosa no se reproduce y se reporta en el caption (RF-CAT-03). |
 | GLS-4 | Transcripción del backend | `[N]` | El evento `transcript` se refleja en el input, para poder corregirlo antes de reenviar (RF-UI-02). |
-| GLS-5 | Fallback de seña de prueba | `[N]` | Con el catálogo vacío toda glosa llega desconocida. El ajuste "Seña de prueba si falta en el catálogo" hace que use la seña horneada del APK, para poder ver la cola. **Apagado por defecto** (`Settings.demoSignFallback = false`) desde el 2026-10-16: con el catálogo sembrado el fallback solo alcanzaba a las 18 señas sin animación (`0032`–`0049`), y el owner lo pidió así de corto — "Seña de prueba si falta", sin "en el catálogo" (la fila se partía en dos líneas y el switch se encima). Encendido, esas 18 glosas firman con la seña horneada; apagado cae al sign por defecto vía `GLS-10`. |
+| GLS-5 | Fallback de seña de prueba | `[N]` | Con el catálogo vacío toda glosa llega desconocida. El ajuste "Seña de prueba si falta en el catálogo" hace que use la seña horneada del APK, para poder ver la cola. **Apagado por defecto** (`Settings.demoSignFallback = false`) desde el 2026-10-16: con el catálogo sembrado el fallback solo alcanzaba a las 18 señas sin animación (`0032`–`0049`), y el owner lo pidió así de corto — "Seña de prueba si falta", sin "en el catálogo" (la fila se partía en dos líneas y el switch se encima). Encendido, esas 18 glosas se representan con la seña horneada; apagado cae al sign por defecto vía `GLS-10`. |
 | GLS-9 | Resolución de la ruta del asset | `[N]` | `glb_animation_path` del backend es un path **same-origin dentro del APK** (`signs/<id>.glb`), porque las animaciones se empaquetan y no se sirven por HTTP. `SignsCatalog.localAssetOrNull()` lo reconoce —validándolo contra `available`— y devuelve el path tal cual para que la escena lo cargue directo; cualquier otra cosa cae al camino de descarga de `SignAssetRepository`, que es donde viviría un asset futuro alojado en el backend. Sin esto el backend devolvería una ruta que su propio servidor no tiene, la descarga daría 404 y **todas** las glosas caerían al sign por defecto. Verificado en el Redmi: cola de 3 señas reproducida con **cero** peticiones HTTP y sin directorio de caché. |
 | GLS-10 | Anunciada pero no exportada | `[N]` | `SignsCatalog.isOwnAssetPath()` distingue "no es un path nuestro" de "es nuestro pero todavía no lo exportamos". Una glosa de las 18 sin animación (`0032`–`0049`) llega con `available == true` y un `signs/<id>.glb` que no tenemos: es nuestro layout, así que **nadie** lo va a servir por HTTP, y pedirlo es un 404 garantizado en cada frase que la mencione. Va directo al sign por defecto sin tocar la red. Solo un path fuera del layout `signs/*.glb` baja por `SignAssetRepository`. Medido en el Redmi contra el mock: **2 peticiones y 2 × 404 sin este requisito, 0 con él**, sobre la misma frase y las mismas glosas. |
 | GLS-6 | Placeholder eliminado | `[N]` | `domain/Gloss.kt` (`glossFor`) se borró: era una aproximación que ya no se usa. |
@@ -322,7 +333,7 @@ de que llegó su `segment`, contra los ~569 ms que costaba esperar a que llegara
 
 ---
 
-## 13bis. Observabilidad (`tiempo-real`)
+## 13bis. Observabilidad (modo en vivo)
 
 Sin instrumentación no hay forma de afirmar que algo mejoró, así que estos
 requisitos son parte del trabajo y no un extra. Los tres servicios exponen

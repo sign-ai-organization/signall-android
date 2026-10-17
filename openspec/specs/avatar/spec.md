@@ -94,17 +94,38 @@ que lee del propio archivo). Necesita `numpy` y `PIL`; el pipeline de assets no.
 los huesos largos y de la cara.** Los nombres que existen (verificados contra el
 `.glb`):
 
+Verificado el 2026-10-17 contra `models/avatar.glb` **y** contra el export original de
+Cascadeur (`GLB Senas/0000 - GRACIAS.glb`). **102 articulaciones de skin en los dos
+archivos.**
+
 ```
-shoulder.L, upper_arm.L, forearm.L, hand.L        (+ lados R, sin DEF-)
+shoulder.L, upper_arm.L, forearm.L, hand.L        (+ lados R)
 palm.01.L … palm.04.L   f_index.01.L … f_pinky.03.L   thumb.01.L … thumb.03.L
-DEF-upper_armL, DEF-forearmL, DEF-handL
-DEF-browTL / DEF-browTR        ← cejas superiores
-DEF-lipTL  / DEF-lipTR         ← labio superior
-DEF-lidTL  / DEF-lidTR         ← párpado superior
-DEF-jaw_master                 ← mandíbula
-DEF-eyeL / DEF-eyeR, DEF-eye_irisL / DEF-eye_irisR
 HG_Branden.001                 ← raíz del armature (NO es un hueso)
 ```
+
+**No existe ningún hueso `DEF-` en este rig.** Verificado: cero coincidencias, tanto en el
+GLB que va en el APK como en el export original. Cualquier documento que liste
+`DEF-upper_armL`, `DEF-browTL`, `DEF-lidTL`, `DEF-lipTL` o `DEF-jaw_master` como huesos
+**está equivocado** — ver la corrección del 2026-10-17 más abajo.
+
+### La cara no la mueve la app
+
+Los nodos de cara que sí existen en el archivo usan nombres al estilo ARKit y **no son
+articulaciones de skin**:
+
+```
+brow_dwn_L / brow_dwn_R        brow_outer_up_L / brow_outer_up_R   brow_inner_up
+eye_blink_open_L / eye_blink_open_R    eye_squint_L / eye_squint_R
+eyeball.L, eyeball.lookat.L, eyeball_lookat_master
+jaw, jaw_upper, jaw_dwn_mouth_clsd, jaw_open_lt_rt_frwd
+```
+
+Y **no están driven por nada**: el GLB que va en el APK tiene **cero morph targets**, y `app.js`
+no menciona morph targets, blendshapes ni ninguno de esos nombres. La expresión facial no
+se anima en código — la cara viene horneada en el clip. Es el punto **A6** de
+`docs/CONTRASTE-DOCUMENTOS.md`, y está en pausa: RF-AVT-03 pide marcadores por tipo de
+frase y no hay implementación.
 
 Dos detalles que no son obvios y ya costaron tiempo:
 
@@ -145,11 +166,18 @@ Detalle, duración y la cuenta de por qué 100 ms: `openspec/changes/archive/202
 
 ## Bugs conocidos
 
-### Ceja derecha casi estática (rig, no código)
+### Ceja derecha casi estática — **sin confirmar, y probablemente mal described**
 
-`DEF-browTL` tiene ~32 vértices pesados y `DEF-browTR` solo ~4 (pesos ~0.12): el
-movimiento es casi invisible. Es un problema de pesos en el rig de origen; se
-arrrega en Blender con Weight Paint sobre el `.blend` y re-exportando.
+> **Corregido el 2026-10-17.** Este bug se describía con `DEF-browTL` y `DEF-browTR`, que
+> **no son huesos de este rig** (ver § Nombres de huesos). El síntoma se había visto en
+> pantalla, pero la causa atribuida a los pesos no se pudo verificar contra el archivo.
+>
+> **Lo que sí es cierto:** la app no anima la cara de ninguna manera, así que cualquier
+> asimetría de cejas viene **horneada en el clip**, no del runtime. Para corregirla hay que
+> tocar el `.blend` de origen en Blender y re-exportar; no se arregla en `app.js`.
+>
+> Para volver a ocuparse de esto hace falta medir los pesos reales en el export, con los
+> nombres que sí existen en el archivo.
 
 ### La normalización sobre la raíz (arriba)
 

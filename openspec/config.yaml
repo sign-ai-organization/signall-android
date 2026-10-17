@@ -1,118 +1,207 @@
 schema: spec-driven
 
 context: |
-  ## SignAI WebView — contexto técnico
+  ## SignAI — contexto técnico
 
-  **Objetivo**: Traducción de español hablado → Lengua de Señas Colombiana (LSC) mediante
-  un avatar 3D animado en una app Android WebView. Solo vive `webview/`;
-  Flask (`../app/`), Kotlin+Filament (`../appKotlin/`) y Unity (`../unity/`) están
-  muertos (solo referencia). El avatar y `app.js` se portaron del prototipo web
-  `../app/static/` (tenía video y `/api/*`; el port no).
+  **Objetivo**: traducir español hablado a Lengua de Señas Colombiana (LSC) con un avatar
+  3D, en una app Android. Esta app es **una pieza** del sistema: los repos hermanos viven
+  en `../sign-ai-backend`, `../sign-ai-stt` y `../sign-ai-docs`.
+
+  **Este archivo se reescribió entero el 2026-10-17.** La versión anterior describía un
+  pipeline de landmarks con `sign.json`, que se reemplazó por clips GLB el 2026-10-13, y
+  afirmaba que la app era local sin servidor, que es lo contrario del sistema actual. Dos
+  cosas que afirmaba **estaban mal**, y se verificaron contra el código: que
+  ningún hueso usara puntos, y que existieran las carpetas `../app/`, `../appKotlin/`,
+  `../unity/` y el repo `../sign-ai-gloss-engine`. **Ninguno existe.** Antes de usar algo
+  de acá como evidencia, contrastalo contra el código.
 
   ### Stack
   - Shell: Jetpack Compose + WebView (`WebViewAssetLoader`), paquete `com.signai.webview`
-  - UI nueva: Lumo UI de nomanr (Compose, NO el Lumo de Vaadin) + Phosphor Icons;
-    Material 3 solo legacy en migración. Ver `AGENTS.md`.
-  - Escena 3D: Three.js r169 (ES modules, CDN jsDelivr — requiere INTERNET en runtime)
-  - Puente Kotlin↔JS: `window.SignAI` (`play`, `setDebug`, `setFreeCamera`, `setGrid`,
-    `setBackground` + aditivos `setSpeed`, `setTheme`), llamadas con guard `?.`.
-    JS→Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")` vía
-    `WebViewCompat.addWebMessageListener`.
-  - Datos: `sign.json` horneado (1 seña `0000_0000_0000`, 59 frames @24fps)
-  - Dataset fuente: LSC50 (50 señas, 5 voluntarios, 4 reps = 1000 videos), CSVs en `data/LANDMARKS/`
+  - UI: **Lumo UI de Noman R** (Compose, NO el Lumo de Vaadin) + **Phosphor Icons**.
+    **Cero imports de `material3`** — no se agrega Material 3 nuevo.
+  - Tipografía: **Liberation Sans** incluida en `res/font/`, métricamente compatible con
+    Arial, para coincidir con el prototipo.
+  - Escena 3D: **Three.js r169** (ES modules, CDN jsDelivr → **requiere INTERNET en
+    runtime**, aunque el avatar y los datos sean locales)
+  - Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17,
+    Compose BOM 2024.12.01
 
-  ### Formato CSV de landmarks (crítico para señas propias)
-  Todos los CSVs tienen header: `landmark_0_x, landmark_0_y, landmark_0_z, landmark_1_x, ...`
-  - BODY: 33 landmarks MediaPipe Pose (x,y norm 0-1, y=0 arriba, z relativo pequeño)
-  - HANDS (LEFT/RIGHT): 21 landmarks MediaPipe Hands (x,y norm 0-1, z profundidad relativa a muñeca)
-  - FACE: 468 landmarks MediaPipe FaceMesh (x,y norm 0-1, z profundidad relativa a cabeza)
-  Videos propios deben producir CSVs con exactamente este mismo formato y modelos MediaPipe.
+  ### Assets: GLB, no `sign.json`
+  - El personaje es `models/avatar.glb`; cada seña es `signs/<SSSS_VVVV_RRRR>.glb`, **solo
+    animación**, reproducida con `THREE.AnimationMixer`.
+  - Los clips vienen de exportaciones de **Cascadeur** en `GLB Senas/` (gitignored).
+  - `tools/split_signs.py` separa personaje y animaciones, escribe `manifest.json`, y
+    **reescribe `domain/SignsCatalog.kt`** para que el disco y el código no diverjan.
+  - `split_signs.py` llama a `tools/rest_pose.py` **al final**: hornea en `avatar.glb` la
+    pose de descanso, que sale del primer keyframe de la seña `0029`.
+  - **Nunca editar `models/avatar.glb` ni `SignsCatalog.kt` a mano.**
+  - Entre señas hay una **fundición de 100 ms** (`CROSSFADE_MS`): no hay pose congelada ni
+    hueco. Entre lo que se mide y lo que se afirma: `specs/avatar/spec.md`.
+  - `manifest.json` lleva `sha256` por seña, para cruzar el APK contra el catálogo sin
+    abrir los binarios.
 
-  ### FPS por fuente (la sync se resuelve al hornear `sign.json`)
-  - BODY + HANDS: 24fps → ~59 frames típicos
-  - FACE: 50fps → ~163 frames típicos (ratio ~2.9× respecto a body)
-  Al re-hornear: `face_idx = round(i * len(face_frames) / len(body_frames))`.
-  `app.js` NO remuestrea en runtime.
+  ### Nombres de huesos — CRÍTICO (verificado contra `tools/glb_pose.py` y los GLB)
+  **Las exportaciones de Cascadeur SÍ usan puntos.** La versión anterior de este archivo
+  decía lo contrario y daba ejemplos como `DEF-upper_armL`: **eso es falso**, y un agente
+  que lo creyera renombraría huesos y rompería la animación sin ver ningún error.
+  Verificado el 2026-10-17 contra `models/avatar.glb` **y** contra el export original de
+  Cascadeur en `GLB Senas/`: **102 articulaciones de skin en los dos archivos.**
+  - Cadena del brazo: `shoulder.L`, `upper_arm.L`, `forearm.L`, `hand.L` — con punto, sin prefijo
+  - Dedos y palma: `thumb.01.L`, `f_index.01.L`, `palm.01.L` … `palm.04.L`
+  - Raíz del armature: `HG_Branden.001`. Está animada, pero **no es una articulación de
+    skin**: contar solo huesos hace que 138 tracks parezcan sin resolver cuando no lo están.
 
-  ### Nombres de huesos — CRÍTICO (verificado en `app.js` + GLB)
-  NINGÚN hueso usa puntos. Dedos sin `DEF-`, cara camelCase sin separadores.
-  Dedos: thumb01L, f_index01L, f_middle01L, f_ring01L, f_pinky01L (ídem R)
-  Brazos: DEF-upper_armL, DEF-upper_armL001, DEF-forearmL, DEF-forearmL001, DEF-handL (ídem R)
-  Cara: DEF-browTL/TR, DEF-lipTL/TR, DEF-lidTL/TR, DEF-jaw_master,
-        DEF-eyeL/R, DEF-eye_irisL/R
-  El spec pre-WebView con puntos (DEF-brow.T.L) es incorrecto — no reintroducirlo.
+  **No existe ningún hueso `DEF-` en este rig** — cero coincidencias en los dos archivos.
+  Cualquier documento que liste `DEF-upper_armL`, `DEF-browTL`, `DEF-lidTL` o
+  `DEF-jaw_master` **está equivocado**. Este mismo archivo afirmaba lo contrario hasta el
+  2026-10-17, y también lo afirmaban `specs/pipeline/spec.md` y `specs/avatar/spec.md`.
+
+  **La cara no la anima la app.** Los nodos de cara existen con nombres al estilo ARKit
+  (`brow_dwn_L`, `brow_outer_up_L`, `eye_blink_open_L`, `jaw_open_lt_rt_frwd`,
+  `eyeball.lookat.L`) pero **no son articulaciones de skin**, el GLB que va en el APK tiene
+  **cero morph targets**, y `app.js` no los menciona. La expresión facial viene horneada en
+  el clip. Es el punto **A6** de `docs/CONTRASTE-DOCUMENTOS.md`, en pausa: RF-AVT-03 pide
+  marcadores por tipo de frase y no hay implementación.
+
+  ### Constantes reales de la escena (`app/src/main/assets/web/app.js`)
+  `CROSSFADE_MS = 100` · `MAX_DPR = 1.75` (tope a propósito) ·
+  `AVATAR_URL = "models/avatar.glb"` · `DEFAULT_SIGN_URL = "signs/0000_0000_0000.glb"` ·
+  `BG_COLOR = #121316` · `BG_LIGHT = #f4f4f2`
+
+  **No existen**: `smoothAlpha`, `FACE_ALPHA`, `Z_SCALE`, `FACE_REF_BROW`,
+  `FACE_BROW_SCALE`, `FACE_JAW_MAX`. Eran del motor procedural de landmarks, eliminado el
+  2026-10-13 (cero coincidencias en `app.js`). Si una tarea de avatar necesita ajustar una
+  de esas, no hay a qué ajustarla: lo que se mueve está horneado en el clip.
 
   ### Problemas conocidos del rig
-  - DEF-browTR tiene solo ~4 vértices pesados vs 32 en DEF-browTL → ceja derecha casi estática
-  - Fix en Blender + re-exportar el GLB (ver `specs/avatar`)
+  - La **ceja derecha se ve casi estática**. El síntoma es real, pero se atribuyó a los
+    pesos de `DEF-browTL`/`DEF-browTR`, que **no son huesos de este rig**: la causa no se
+    pudo verificar contra el archivo. Lo que sí es cierto es que la app no anima la cara,
+    así que la asimetría viene **horneada en el clip**. Se corrige en Blender sobre el
+    `.blend` de origen y re-exportando; nunca en `app.js`.
 
-  ### Expresiones faciales requeridas (prioridad del proyecto)
-  1. Duda: cejas asimétricas (DEF-browTL + DEF-browTR)
-  2. Felicidad: cejas arriba + comisuras boca (DEF-browTL/TR + DEF-lipTL/TR)
-  3. Pregunta: cejas arriba + boca abierta (DEF-browTL/TR + DEF-jaw_master)
-  Párpados y dirección de mirada: no son prioridad en esta fase.
+  ### Puente Kotlin ↔ JS
+  **La fuente de verdad es `domain/SignAiCommands.kt`, no esta lista.**
+  - Kotlin → JS, `window.SignAI.<método>()` **siempre con guard `?.`**:
+    `play`, `playFrom`, `setQueue`, `appendQueue`, `setSpeed`, `setReduceMotion`,
+    `setTheme`, `setDefaultSign`, `setDebug`, `setFreeCamera`, `setGrid`, `setBackground`,
+    `setSilenceTimeoutMs`. Todo método nuevo es **aditivo**: borrar o renombrar uno rompe
+    en silencio.
+  - JS → Kotlin, `window.SignAIBridge.postMessage(...)` vía
+    `WebViewCompat.addWebMessageListener` (con feature-guard):
+    `onPlaybackDone`, `avatarReady`, `signStart:<idx>:<jsMs>`.
+  - `avatarReady` es lo que **tapa el splash**, no `onPageFinished`: ese dispara mientras
+    el GLB de 10 MB todavía baja. `SignAiSplash` tiene un timeout de 8 s de reserva.
+  - El canvas de Three.js **no publica nada a accesibilidad**: sale en el árbol como
+    `android.webkit.WebView` sin hijos. Para su estado, el tag `SignAIWeb` de logcat o el
+    modo debug de Ajustes → AVANZADO.
 
-  ### Landmarks de cara en `sign.json` (16 keys)
-  lm 13,14 = labio sup/inf (mandíbula)
-  lm 78,308 = comisura izq/der
-  lm 70,107,55 = ceja izq (exterior, centro, interior)
-  lm 300,336,285 = ceja der
-  lm 159,145 = párpado izq sup/inf
-  lm 386,374 = párpado der sup/inf
-  lm 1,168 = nariz (referencia estable)
+  ### Flujo de runtime (el que importa)
+  ```
+  micrófono ─PCM16/16 kHz─► WS :8080/ws/translate ─► backend ─► STT
+  texto escrito ─{"type":"text"}─► el mismo WS ─► se traduce ─► segment × N ─► done
+                                                                        │
+                                          MainScreenState.pendingSegments (sortedMap)
+                                                                        │
+                                              setQueue + play() · appendQueue por oración
+                                                                        │
+                                                    escena ─► onPlaybackDone
+  ```
+  - **La app solo habla con el backend.** Nunca con el STT ni con Neon.
+  - **Solo se traduce lo que el cliente manda como `text`.** La voz vuelve como
+    `transcript` y **no se traduce**.
+  - `segment` es una oración, con `index` y `total` reales desde el primero. Ya no existen
+    `stream`, `provisional` ni `source_text`, y la app no encadena.
+  - **El `final` siempre llega**, incluso vacío: el STT responde a todo `end`.
+  - El catálogo es de **Neon**, manejado por el backend. **Solo 32 de las 50 glosas de
+    LSC50 tienen animación**: las 18 restantes (`0032`–`0049`) llegan con `available: true`
+    y un path inexistente, y eso lo maneja `SignsCatalog.isOwnAssetPath()` (`GLS-10`) sin
+    tocar la red.
+  - El detalle del contrato está en `docs/SISTEMA.md` y en el skill `contrato-websocket`.
 
   ### UI / Features (fuente de verdad)
-  El catálogo completo de features de la app vive en `openspec/specs/ui/spec.md`
-  (IDs `NAV`, `SPL`, `EDG`, `STG`, `CTL`, `HIS`, `CNV`, `SET`, `PER`, `ACC`,
-  `APP`, `STA`, `GLS`, `BRG`, `ANI`, `SEM`, `RSP`, `BRD`, `OM`). Derivado del
-  prototipo `PrototipoFrontend/` (Next.js/Vercel, solo referencia visual). La
-  app se implementa en Compose nativo (Lumo + Phosphor); el WebView es solo el
-  canvas 3D. Plan de ejecución: `openspec/changes/archive/2026-10-17-prototipo-ui-vercel/tasks.md`.
+  El catálogo completo de features vive en `openspec/specs/ui/spec.md`, con IDs de
+  dominio: `NAV`, `SPL`, `EDG`, `STG`, `CTL`, `HIS`, `CNV`, `SET`, `PER`, `ACC`, `APP`,
+  `STA`, `GLS`, `BRG`, `ANI`, `SEM`, `RSP`, `BRD`, `OM`, `OBS`. Derivado del prototipo
+  `PrototipoFrontend/` (Next.js, **solo referencia visual**). La app es Compose nativo; el
+  WebView es solo el canvas 3D.
 
-  **Branding ABIERTO**: se mantiene "SignAI" por ahora, pero el nombre
-  seguramente cambiará (el prototipo usa "Seña"); el wordmark debe ser una
-  constante/string resource única.
+  - **Marca: SignALL** (rebranding del 2026-10-16). Centralizada en
+    `ui/SignAiBranding.kt`. **El nombre ya no está abierto.**
+  - **Tema: oscuro por defecto** (`Settings.darkTheme = true`). El oscuro es **grafito**
+    (`#121316` fondo, `#1A1B1F` superficie, `#33363D` borde) y el azul de marca `#1C4CFC`
+    vive **solo en la acción principal y los controles**. El ámbar `live`/`onLive`
+    (`#F2B84B`) es **lo único** que significa "escuchando ahora", y nunca es la única
+    señal. Los valores están en `ui/designsystem/Color.kt`; la referencia de marca es
+    `docs/manual-identidad-visual.md`.
+  - Los tokens de espaciado, tamaños, formas y motion están en
+    `ui/designsystem/foundation/`. Nada de `.dp` sueltos.
+  - **Estado de la UI (2026-10-17)**: las 7 fases de `prototipo-ui-vercel` y la Fase 0 de
+    `ui-migration-lumo` están **terminadas y verificadas en device**. Esa migración está
+    en `openspec/changes/archive/`. Los planes activos, si los hay, viven en
+    `openspec/changes/<nombre>/`.
 
-  **Contrato JS** se extiende de forma aditiva (`setSpeed`, `setTheme`, evento
-  `onPlaybackDone`); los 5 comandos actuales y el guard `?.` no cambian.
+  ### Repos hermanos
+  - `../sign-ai-backend` — FastAPI, NLP de glosas, catálogo, caché semántico, Neon. Rama
+    `develop`. **Código en inglés y nunca commit sin que lo pida el owner** (ver su
+    `CLAUDE.md`).
+  - `../sign-ai-stt` — faster-whisper + WebRTC VAD. Rama `develop`.
+  - `../sign-ai-docs` — requerimientos, diagramas del SDD, plan de pruebas. Rama `main`.
+    Los `.drawio` y el `.md` de requerimientos **los edita el owner**.
+  - `../signai-avatar` — demo Flask de landmarks, **inactiva desde el 2026-09-19**. **No
+    es** la fuente de los GLB de esta app y no se le copian scripts.
+  - **No existen**: `../app/`, `../appKotlin/`, `../unity/`, `../sign-ai-gloss-engine`.
 
-  **Estado UI (2026-09-23)**: las 7 fases del plan `prototipo-ui-vercel` (A–G)
-  están implementadas en `feat/prototipo-ui-vercel` y verificadas en device:
-  design system extendido, chrome (stage/panel/splash), drawers bidireccionales
-  (Conversación/Ajustes), historial en bottom sheet, About, máquina de estados
-  con bridge real, ajustes reales con persistencia y tema claro/oscuro. El
-  branding sigue centralizado en `ui/SignAiBranding.kt` (nombre abierto).
-
-  ### Integraciones futuras
-  - `../sign-ai-backend`: SÍ. Plan en `openspec/changes/archive/2026-10-17-integracion-backend/tasks.md`.
-    Decisiones 2026-09-30: (a) **híbrido** — el vertical slice reproduce frames de
-    landmarks servidos por HTTP, los clips GLB por seña se difieren; (b) **texto
-    primero**, el audio real (`AudioRecord`) es la Fase D. La red la posee Kotlin
-    (OkHttp), nunca el JS: el WebView corre en `https://appassets.androidplatform.net`
-    y un `fetch` a `http://` sería mixed content, así que los assets descargados se
-    sirven al JS como same-origin vía un `PathHandler` extra del `WebViewAssetLoader`.
-  - `../sign-ai-gloss-engine`: NO, fuera de alcance.
+  ### Enfoques muertos — no reintroducirlos
+  Servidor Flask, Kotlin+Filament nativo, Unity, Flutter, y el motor procedural de
+  landmarks. Tampoco existen las herramientas de ese pipeline
+  (`tools/build_signs.py`, `tools/patch_webview_glue.py`, `tools/splice_movement.py`
+  quedaron sin consumidor y se pueden eliminar).
 
 rules:
   proposal:
-    - Incluir sección de impacto en el pipeline de animación
-    - No reintroducir dependencias muertas (Flask, Filament, Unity, Flutter)
-    - Mencionar qué landmarks de LSC50 se usan
+    - "Incluir sección de impacto en el pipeline de animación o en el contrato, si aplica"
+    - "No reintroducir dependencias muertas (Flask, Filament, Unity, Flutter)"
+    - "Si el cambio cruza a otro repo, decir **qué falta del otro lado** en la propuesta"
+    - "No inventar terminología: una palabra que no esté en
+      `../sign-ai-docs/documentos/requerimientos/` es del owner hasta que la avale"
   tasks:
-    - Tareas de código separadas de tareas de Blender/assets
-    - Indicar si requiere re-exportar el GLB
-    - "Verificar nombres de huesos en `app.js` — cara: camelCase sin puntos (DEF-browTL), dedos: sin DEF- (thumb01L)"
+    - "Separar las tareas de código de las de assets/Blender"
+    - "Indicar si el cambio requiere **re-exportar el GLB** y por lo tanto correr
+      `tools/split_signs.py`"
+    - "Verificar los nombres de huesos contra `tools/glb_pose.py` — cadena del brazo con
+      punto y sin prefijo (`upper_arm.L`), dedos y palma con punto (`thumb.01.L`,
+      `palm.01.L`). **No hay huesos `DEF-` en este rig**"
+    - "Si toca UI, la tarea incluye **verificar en el device** en los dos modos"
   spec:
-    - Documentar el formato CSV exacto si se describe captura de landmarks
-    - Indicar la fuente (LSC50 vs video propio) para cada dato
+    - "Documentar el formato CSV exacto **solo si** se describe captura de landmarks del
+      dataset, que ya no alimenta la app"
+    - "Indicar la fuente de cada dato: **Cascadeur** para las animaciones, **LSC50** para
+      el dataset de origen"
+    - "Toda cifra nueva lleva **su origen**: cuántos fixtures, en qué device, en qué build"
 
 operations:
   apply:
     guidance:
-      - Contrastar nombres de huesos contra `app.js` (fuente de verdad), no contra specs viejos
-      - Usar FACE_ALPHA = 1.0 para huesos faciales (no slerp)
-      - No usar removeFromParent() en objetos WGT-*, solo obj.visible = false
-      - Los huesos de cara NO usan puntos: DEF-browTL, DEF-lipTL, DEF-lidTL (camelCase, sin separadores)
+      - "Contrastar los nombres de huesos contra `tools/glb_pose.py` y los GLB, **nunca**
+        contra los specs viejos: las listas de nombres de este repo se equivocaron en las
+        dos direcciones"
+      - "Para ver una pose sin instalar en el device: `tools/preview_pose.py`"
+      - "Un cambio de asset es: soltar el `.glb` en `GLB Senas/` y correr
+        `tools/split_signs.py`. **Nunca editar `avatar.glb` ni `SignsCatalog.kt` a mano**"
+      - "Si se toca el contrato, cargar el skill `contrato-websocket` y decir qué queda
+        pendiente del hermano"
+      - "Respetar `MAX_DPR = 1.75` y no forzar `DoubleSide` en las mallas: sin eso el
+        Redmi Note 9S va a 99 % de jank"
+      - "La cara no la anima la app: cero morph targets en el GLB del APK y `app.js` no
+        menciona ninguno de esos nodos. No prometer marcadores faciales (RF-AVT-03)"
   archive:
     guidance:
-      - Actualizar el estado actual del proyecto en config.yaml context si cambió algo relevante
+      - "Actualizar el `context` de este archivo si cambió algo relevante del proyecto"
+      - "Una carpeta de `changes/` terminada se mueve a `changes/archive/` con prefijo de
+        fecha, y se corrigen antes las casillas que mienten sobre el estado real"
+      - "Borrado no, archivado: las carpetas de septiembre de 2026 apuntan a un pipeline
+        inexistente, pero **registran que ese trabajo existió**"
+      - "El Overleaf es de **solo lectura**: si el documento que está mal es uno de
+        Overleaf, lo corrige el owner. Nunca se escribe en él, y **nunca se tocan los
+        permisos que bloquean la escritura**"
