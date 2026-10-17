@@ -124,8 +124,9 @@ jaw, jaw_upper, jaw_dwn_mouth_clsd, jaw_open_lt_rt_frwd
 Y **no están driven por nada**: el GLB que va en el APK tiene **cero morph targets**, y `app.js`
 no menciona morph targets, blendshapes ni ninguno de esos nombres. La expresión facial no
 se anima en código — la cara viene horneada en el clip. Es el punto **A6** de
-`docs/CONTRASTE-DOCUMENTOS.md`, y está en pausa: RF-AVT-03 pide marcadores por tipo de
-frase y no hay implementación.
+`docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores por tipo de frase y no hay
+implementación. Antes estaba en pausa; el SRS de Overleaf ahora sí lo pide, así que la
+decisión del owner está pendiente (2026-10-17).
 
 Dos detalles que no son obvios y ya costaron tiempo:
 

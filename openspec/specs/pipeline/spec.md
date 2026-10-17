@@ -150,8 +150,10 @@ Y **nada los mueve**: el GLB que va en el APK tiene **cero morph targets**, y `a
 menciona morph targets ni ninguno de esos nombres. La expresión facial **viene horneada en
 el clip**.
 
-Es el punto **A6** de `docs/CONTRASTE-DOCUMENTOS.md`, y está **en pausa**: RF-AVT-03 pide
-un marcador facial según el tipo de frase y no hay implementación. Si algún día se
+Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide un marcador facial
+según el tipo de frase y no hay implementación. **Decisión del owner pendiente** (2026-10-17).
+Antes estaba "en pausa" porque el documento no lo pedía; el SRS de Overleaf ahora sí lo pide,
+así que hay que decidir si se implementa o se saca del documento. Si algún día se
 implementa, se toca acá y en `app.js` — no hay atajo con los huesos de cara, porque no
 existen.
 
