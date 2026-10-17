@@ -202,16 +202,20 @@ detalle que se tapa. Y como el MCP abre una ventana de Chromium cuando la cookie
 (~5 días), la revisión de Overleaf tiene un costo en tiempo: avisar de que se va a leer,
 no hacerlo por sorpresa a mitad de una implementación.
 
-#### Sigue pendiente: cuál de las dos fuentes de documento manda
+#### No hay desempate entre las dos fuentes de documento (decisión del owner, 2026-10-17)
 
-Resuelto **a medias** el 2026-10-17: Overleaf **es** fuente de verdad. Lo que el owner **no**
-dijo es qué hacer cuando `../sign-ai-docs` y Overleaf se contradicen **entre ellos** —no
-cuando el código se aparta de los dos—. `AGENTS.md` sigue diciendo que la terminología sale
-de `../sign-ai-docs/documentos/requerimientos/` (§ *No inventes terminología*), y eso no se
-tocó porque nadie lo tocó. Es el caso concreto del desempate que sigue abierto.
+Cuando `../sign-ai-docs` y Overleaf se contradigan **entre ellos** —no cuando el código se
+aparta de los dos— **no hay ganador automático**. Una sesión **reporta la contradicción y
+pregunta**: no elige una fuente, no promedia las dos y no deja que ninguna gane por
+inercia. Las dos versiones se citan con su fecha.
 
-Hasta que se diga, una sesión que cite una fuente tiene que **decir cuál está citando y de
-qué fecha**, porque las dos se contradicen.
+Esto **no cambia** la regla de la terminología (§ *No inventes terminología*): una palabra
+que no está en `../sign-ai-docs/documentos/requerimientos/` sigue siendo del owner hasta que
+la avale. Lo que cambia es el estatus de la contradicción: es **un hallazgo que se reporta**,
+con las dos versiones y sus fechas, y no algo que se resuelve por costumbre.
+
+Igual de obligatorio: cuando una sesión cite una fuente, **dice cuál y de qué fecha**. Un
+"el SRS dice X" sin fecha no se puede discutir.
 
 Detalle conocido al 2026-10-17: la Tabla `tab:estados-ui` del SRS (`main.tex`) lista
 **7** estados del indicador —Inactivo, Grabando, Texto listo, Procesando, Reproduciendo,
