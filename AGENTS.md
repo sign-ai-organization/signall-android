@@ -114,6 +114,81 @@ lógica, despliegue, procesos, clases, secuencia, persistencia y **estados de la
   Si se implementa algo sin requisito, se anota ahí.
 - Los `.drawio` y el `.md` de requerimientos los edita el owner: los cambios grandes
   se proponen, no se aplican en silencio.
+- Los documentos en **Overleaf** son otra fuente, y el owner los considera **más
+  importante** que este repo. Ver § El Overleaf de la tesis.
+
+### El Overleaf de la tesis
+
+Cuenta `signai.tesis@gmail.com` (dedicada a la tesis, 10 proyectos, 5 sin archivar).
+Se lee con el MCP `@netique/overleaf-mcp` v0.3.6, registrado **global** en
+`~/.config/opencode/opencode.json` con `OL_BROWSER=/usr/bin/chromium`. La cookie de
+sesión vive en `~/.config/overleaf-mcp/cookie.json` (modo 600), dura ~5 días y se
+renueva sola: la próxima llamada abre una ventana de Chromium con perfil aislado para
+que el owner se loguee, y se cierra sola.
+
+| Proyecto | ID | Última edición cuando se conectó |
+|---|---|---|
+| SRS | `6a122a19bb9a5dd9d390ba3d` | 2026-10-17 18:45 |
+| Memoria | `6a7c98a30e11208333279f4a` | 2026-09-17 |
+| SDD - Documento de Diseño | `6a85c9a632974414503d9b82` | 2026-08-30 |
+| PMP | `6a11da204de1f4e676e9e59a` | 2026-05-26 |
+| PPP | `6a11f38ec7df3c45f6caee2d` | 2026-05-24 |
+
+Overleaf no tiene API pública: este MCP habla los endpoints internos que usa el editor
+web, con la cookie de sesión. En plan gratis es el único camino — el puente de Git es
+premium— así que **no hay MCP alternativo si este se rompe**: se actualiza el paquete
+o se baja el ZIP a mano.
+
+#### Sólo lectura. Prohibido escribir.
+
+**El MCP de Overleaf se usa para REVISAR. Prohibido escribir cualquier cosa — un `.tex`,
+un comentario, una sugerencia, un cambio aceptado o rechazado. Sólo lectura**, salvo
+que el owner lo diga **de forma explícita en un mensaje**. No alcanza con que la tarea
+parezca necesitarlo, ni con que el cambio sea "solo corregir una tilde": si la
+autorización no está escrita en un mensaje del owner, no se escribe.
+
+Está bloqueado a nivel de configuración, no por buena voluntad. **Ocho** `policies` en
+`~/.config/opencode/opencode.json` deniegan `overleaf_edit_file`,
+`overleaf_find_and_replace`, `overleaf_accept_changes`, `overleaf_reject_changes`,
+`overleaf_reply_comment`, `overleaf_resolve_comment`, `overleaf_reopen_comment` y
+**`overleaf_compile`** (17 herramientas en total; verificado una por una contra el
+catálogo instalado, porque el README del proyecto anuncia 16).
+
+**`compile` también está denegado** (decisión del owner el 2026-10-17): no se compila
+desde acá, ni aunque no escriba sobre el `.tex`. Quedan 9 herramientas usables y todas
+son de lectura o listado: `ping`, `list_projects`, `open_project`, `list_files`,
+`read_file`, `read_log`, `list_comments`, `read_comment_thread` y `list_tracked_changes`.
+El error de compilación se lee en el Overleaf del owner, no desde acá.
+
+Dos trampas al tocar esa config:
+
+- **Tiene que ser en `policies`, no en `permissions`.** Cada agente de la config global
+  termina con `{"action": "*", "resource": "*", "effect": "allow"}`, y las reglas de
+  agente se aplican **después** de las globales, ganando la última que coincide: un
+  `deny` en `permissions` lo pierde ese comodín en silencio.
+- **`policies` global no lo puede levantar el `opencode.json` de ningún repo.** Si
+  aparece `overleaf_edit_file` entre las herramientas, algo cambió la config.
+
+El límite honesto: **el bloqueo lo impone opencode, no la credencial.** La cookie sigue
+teniendo permiso de escritura sobre toda la cuenta, y Overleaf en plan gratis no da
+tokens con alcance limitado. Dentro de opencode no hay forma de escribir; fuera de él,
+sí.
+
+#### Decisión pendiente: cuál de las dos fuentes manda
+
+`../sign-ai-docs` y Overleaf tienen el **SDD en dos versiones** (los `.drawio` de
+`diagramas/` contra el proyecto SDD del 2026-08-30), y `AGENTS.md` sigue diciendo que la
+terminología sale de `../sign-ai-docs/documentos/requerimientos/`. **El owner todavía no
+dijo cuál manda.** Hasta que lo diga, una sesión que cite una fuente tiene que decirlo y
+señalar la fecha, porque las dos se contradicen.
+
+Detalle conocido al 2026-10-17: la Tabla `tab:estados-ui` del SRS (`main.tex`) lista
+**7** estados del indicador —Inactivo, Grabando, Texto listo, Procesando, Reproduciendo,
+Error, Desconectado, siendo Desconectado el único que se superpone a los demás— y la
+sección 3 (*Requerimientos Específicos*) está **vacía**: son encabezados sin contenido, así
+que esos estados no tienen requerimiento con ID, criterio de aceptación ni prioridad.
+Ese mismo SRS todavía describe el modelo por **fragmentos**, que es el anterior a la
+rama `flujo-oraciones`. No corregir nada sin que el owner lo pida.
 
 ### `../signai-avatar`
 
