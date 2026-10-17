@@ -78,3 +78,27 @@ Los IDs de los cinco proyectos y las fechas de su última edición están en
 2. Dejarla escrita y con fecha en el log de sesión (`openspec/sessions/`).
 
 Y decirlo en el mensaje, con las dos versiones y sus fechas.
+---
+
+# ⛔ NO CAMBIES LOS PERMISOS DE ESTE SKILL
+
+Cargar este skill **no** autoriza a tocar nada de lo que describe. Este archivo explica
+cómo está puesto el bloqueo **para auditarlo y para entender por qué está así**.
+
+**Prohibido, sin excepción:**
+
+- Quitar, editar o comentar un `deny` de Overleaf
+- Moverlos de `policies` a `permissions`, o al revés
+- Agregar un `allow` que los tape, aunque parezca inofensivo
+- **Editar `~/.config/opencode/opencode.json` por cualquier motivo.** Ni para "arreglar
+  otra cosa" de la config, ni "un segundo" para cambiar un tema
+- Editar el `opencode.json` de cualquier repo (los `policies` son globales y ningún
+  `opencode.json` de repo los puede levantar)
+- Agregar un MCP, plugin o script que escriba en Overleaf por otra vía
+
+**Si el bloqueo está roto o parece roto, el único movimiento permitido es avisarle al
+owner.** No se arregla, no se reformatea, no se "limpia". Y mientras no esté confirmado,
+**se sigue sin escribir**, porque el bloqueo ausente es la señal de que hay que
+preguntar, no de que hay permiso.
+
+La prohibición completa, con el porqué, está al final de `AGENTS.md`.

@@ -139,15 +139,98 @@ Antes de archivar se corrigieron las dos líneas que mentían en
 Los 18 enlaces a esas carpetas en 10 archivos se actualizaron al camino nuevo y se
 verificaron uno por uno: **ninguno quedó roto**.
 
+## Segunda vuelta: los archivos envenenados, arreglados
+
+El owner pidió arreglar los dos que se habían reportado, "también en el Legend", y agregar
+una regla explícita sobre los permisos de Overleaf.
+
+### Los nombres de huesos eran falsos en las dos direcciones
+
+Al verificar en vez de transcribir apareció algo más grande que lo reportado. Se comprobó
+contra `models/avatar.glb` **y contra el export original de Cascadeur**
+(`GLB Senas/0000 - GRACIAS.glb`), leyendo las articulaciones de skin con `tools/glb_pose.py`:
+
+- **102 articulaciones de skin** en los dos archivos.
+- La cadena del brazo usa **punto y sin prefijo**: `shoulder.L`, `upper_arm.L`,
+  `forearm.L`, `hand.L`.
+- Dedos y palma: `thumb.01.L`, `f_index.01.L`, `palm.01.L` … `palm.04.L`.
+- **Cero huesos con prefijo `DEF-`.** Ni en el GLB del APK, ni en el export de origen.
+
+Es decir: la lista `DEF-browTL` / `DEF-lidTL` / `DEF-lipTL` / `DEF-jaw_master` / `DEF-eyeL`
+que aparecía en **cuatro** archivos **no existe en este rig**. Estaba en `config.yaml`, en
+`specs/pipeline/spec.md` y en `specs/avatar/spec.md`. Los tres están corregidos y ahora
+dicen explícitamente que esa lista es falsa, para que nadie la vuelva a copiar.
+
+**Y la cara no la anima la app.** Los nodos de cara que sí existen usan nombres al estilo
+ARKit (`brow_dwn_L`, `brow_outer_up_L`, `eye_blink_open_L`, `jaw_open_lt_rt_frwd`,
+`eyeball.lookat.L`) pero **no son articulaciones de skin**, el GLB que va en el APK tiene
+**cero morph targets**, y `app.js` no menciona morph targets ni ninguno de esos nombres.
+La expresión facial viene **horneada en el clip**.
+
+Eso confirma el punto **A6** de `docs/CONTRASTE-DOCUMENTOS.md`, que ya decía "nada se anima
+en código" y lo tenía como **en pausa** (RF-AVT-03). Y obliga a matizar un "bug conocido":
+la **ceja derecha casi estática** es un síntoma real, pero la causa que se le atribuía —los
+pesos de `DEF-browTL` contra `DEF-browTR`— **no se puede verificar**, porque esos huesos no
+existen. Ahora está anotado como causa no confirmada en vez de como hecho.
+
+### Qué se reescribió
+
+- **`openspec/specs/pipeline/spec.md`** — entero, desde cero. La versión anterior decía "No
+  hay servidor: la app es 100 % local", documentaba el formato de `sign.json` como "formato
+  real (verificado del archivo)", y listaba seis constantes del motor procedural que ya no
+  existen. Ahora separa **flujo de assets** (Cascadeur → `split_signs.py` → el APK) de
+  **flujo de runtime** (mic → WS → backend → STT → oraciones → glosas → cola → escena), con
+  los cuatro invariantes del contrato, el puente completo y el caso de las 18 glosas sin
+  animación.
+- **`openspec/config.yaml`** — el bloque `context` entero y las secciones `rules` y
+  `operations`. Se fueron: el nombre de carpeta viejo (`webview/`), las cuatro rutas que no
+  existen (`../app/`, `../appKotlin/`, `../unity/`, `../sign-ai-gloss-engine`), `sign.json`,
+  el puente con 7 de 14 métodos, "Branding ABIERTO" (es SignALL), y el tema default
+  invertido. Las seis constantes procedurales quedan listadas como **inexistentes**, porque
+  saber que no están es lo que evita buscarlas.
+- **`openspec/specs/avatar/spec.md`** — la lista de huesos y el bug de la ceja.
+- **`openspec/specs/ui/spec.md`** — la rama `feat/prototipo-ui-vercel` que figuraba "pendiente
+  de merge" cuando ya está mergeada; el default del tema (decía **claro**, y
+  `Settings.kt:26` tiene `darkTheme = true`); el encabezado con la rama muerta
+  `tiempo-real`; y `GLS-5`, que decía que las 18 glosas "**firman**" — la palabra que la
+  propia regla del `AGENTS.md` prohíbe. La leyenda de origen pasó a ser una lista con la
+  fecha de verificación y una nota sobre por qué una fila que miente sobre el estado hace
+  que un agente rehaga trabajo terminado.
+
+### La regla de Overleaf
+
+Al final del `AGENTS.md`, con encabezado propio y en bloque de cita, va
+**§ EL OVERLEAF ES DE SOLO LECTURA. NUNCA SE ESCRIBE EN ÉL.** Está al final a propósito:
+es lo último que se lee y lo último que se olvida. Tiene cinco partes:
+
+1. **Nunca escribir**, con la lista de lo que *no* cuenta como autorización (que la tarea
+   lo requiera, que sea obviamente correcto, que sea "una tilde", que otro documento diga
+   otra cosa, que se haya hecho antes).
+2. **Nunca cambiar los permisos que bloquean la escritura.** Esta es la parte que pidió el
+   owner. Tabla con lo prohibido: quitar un `deny`, moverlos de `policies` a `permissions`,
+   agregar un `allow` que los tape, editar `~/.config/opencode/opencode.json` por
+   cualquier motivo, editar el `opencode.json` de un repo, o meter un MCP o script que
+   esquive el bloqueo. **Ese archivo no se edita en ninguna circunstancia.**
+3. **Si el bloqueo parece roto, se reporta, no se arregla** — y nunca se "prueba" una
+   herramienta de escritura para ver si funciona.
+4. **Por qué no es opcional**: el bloqueo lo impone opencode, no la credencial. La cookie sí
+   puede escribir, así que un agente que pueda editar la config **puede quitarse el bloqueo
+   a sí mismo**, y eso está prohibido aunque la escritura esté autorizada.
+5. **Lo que sí se puede hacer**: las nueve herramientas de lectura.
+
+La misma prohibición se repitió al final del skill `overleaf-lectura`, porque ese es
+justo el archivo que alguien cargaría si quisiera tocar el bloqueo: **cargarlo no autoriza a
+cambiar nada.**
+
+**Verificado: `~/.config/opencode/opencode.json` sigue intacto, con las ocho `policies` en
+`deny`.** No se tocó en ninguna de las dos vueltas.
+
 ## Qué quedó pendiente
 
 Esto es lo que se encontró y **no se tocó**, por la decisión de alcance:
 
 | # | Pendiente | Por qué importa |
 |---|---|---|
-| **1** | **`openspec/specs/pipeline/spec.md` hay que reescribirlo desde cero.** Dice "no hay servidor", documenta el formato de `sign.json` como "formato real (verificado del archivo)", y lista constantes del motor procedural que ya no existe. | Es el spec **del pipeline**, y describe el sistema opuesto al actual. Un agente que lo lea construye la arquitectura equivocada. |
-| **2** | **`openspec/config.yaml` hay que reescribirlo.** Nombres de huesos mal (con y sin puntos), `sign.json` en vez de GLB, cuatro carpetas que no existen, el puente con 7 de 14 métodos, y el branding todavía como "abierto" cuando ya es SignALL. | Un agente que le creyera renombraría huesos y rompería la animación sin ver un error. |
-| **3** | **`openspec/specs/ui/spec.md`**: `:292` dice "esas 18 glosas **firman**" (la propia regla del `AGENTS.md` lo prohíbe), `:16-20` cita la rama `feat/prototipo-ui-vercel` como "pendiente de merge" cuando ya está mergeada y dice que el default es el tema **claro** cuando `Settings.kt:26` tiene `darkTheme = true`, y `:325` tiene un encabezado con la rama muerta `tiempo-real`. | El spec de UI es la fuente de verdad de las features; sus errores se heredan. |
 | **4** | **`docs/CAMBIOS.md` §7 (`:167`, `:186`) contradice su propia sección del 2026-10-16** (`:283`): §7 dice que el adelanto automático "se queda" y que `CATCHUP_BACKLOG = 2` no se tocó, cuando D-5 lo eliminó. Los pendientes #3 y #6 de la lista están duplicados, y el #5 está a medio hacer. | Quien lea §7 después de §D-5 se queda con la respuesta equivocada. |
 | **5** | **`tools/` tiene tres scripts sin consumidor**: `build_signs.py`, `patch_webview_glue.py` y `splice_movement.py`, todos del pipeline de landmarks ya muerto. `tools/backup/` tiene un binario y un `sign.json` sin referenciar. | `tools/README.md:111-125` ya los marca como viejos, pero los archivos siguen ahí y el `README` no menciona `backup/`. |
 | **6** | **`../sign-ai-stt` no tiene archivo de agente**: solo `README.md`. Un agente que vaya a tocar el protocolo del STT no tiene ni una regla de git. | |
