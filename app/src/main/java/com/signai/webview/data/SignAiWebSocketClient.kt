@@ -61,6 +61,13 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         val request = Request.Builder().url(config.url).build()
         val listener = object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
+                // RF-INT-COM-03 se verifica "por inspección del tráfico de red", así
+                // que la app dice cuál de los dos ethernetos abrió. En un build de
+                // release esta línea nunca puede decir SIN CIFRAR.
+                Log.i(
+                    TAG,
+                    "sesión abierta: ${config.url} (${if (config.isEncrypted) "TLS" else "SIN CIFRAR"})",
+                )
                 trySend(BackendEvent.Connected)
             }
 

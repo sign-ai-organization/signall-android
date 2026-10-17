@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Solo para `debug`: permite tráfico en claro contra el backend de desarrollo,
+  que se habla en `ws://10.0.2.2:8080` desde el emulador o en la red local desde
+  un teléfono físico. Reemplaza al `network_security_config.xml` de `main`, que
+  lo prohíbe —release nunca hereda este archivo—, así que el texto en claro solo
+  existe en un build que no se firma.
+
+  El host no se puede enumerar aquí: es `10.0.2.2` en el emulador, la IP de la
+  red local en un teléfono y `127.0.0.1` con `adb reverse`. Por eso la
+  excepción es por build type y no por dominio.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

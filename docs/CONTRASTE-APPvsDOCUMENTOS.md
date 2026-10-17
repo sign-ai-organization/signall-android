@@ -28,7 +28,7 @@ Ninguno requiere inventar el requisito.
 |---|---|---|---|---|
 | **A1** | Que el tercer estado del micrófono **se vea**, no solo se describa | `ui/screens/bottombar/SignAiBottomBar.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, filas *Texto listo* y *Grabando* (`main.tex:736-747`) | ⬜ Pendiente |
 | **A2** | Pedir el permiso de micrófono **al abrir la app**, no al tocar el micrófono | `ui/MainScreen.kt:78-103` | §Interfaz con el Usuario (`main.tex:837`) | ✅ Hecho (`1c85ddd`) |
-| **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt:35`, `res/xml/network_security_config.xml`, `app/build.gradle.kts:15` | §Interfaces de Comunicación (`main.tex:1095`, `:1100`) | ⬜ Pendiente |
+| **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt:35`, `res/xml/network_security_config.xml`, `app/build.gradle.kts:15` | §Interfaces de Comunicación (`main.tex:1095`, `:1100`) | ✅ Hecho · **falta el dominio** (§9 #6) |
 | **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt:538-544`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:761-772`) | ⬜ Pendiente · **decisión abierta** (§7) |
 | **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt:604-648`, `:1069` | §Alcance (`main.tex:201`) y tabla, fila *Reproduciendo* (`main.tex:753`) | ⬜ Pendiente |
 | **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:726-773`) | ⬜ Pendiente · depende de A4 |
@@ -379,6 +379,46 @@ no es solo por el backend falso: la publicada (913 ms p50 / 1336 ms p95) es **de
 camino por palabras** y con oraciones la cifra sube por construcción, así que no
 es comparable. Hay que remedir con las 28 frases y el backend de verdad.
 
+### ✅ A3 — `wss://` por default, `ws://` solo como bypass de desarrollo
+
+El cifrado pasó a ser cosa del **build type**, que es lo único que puede
+distinguir "estoy mostrando la tesis" de "esto va a producción":
+
+| | URL | Texto en claro |
+|---|---|---|
+| `debug` | `-Psignai.backendWsUrl=…`, o `ws://10.0.2.2:8080/ws/translate` | Permitido |
+| `release` | Solo `wss://`. Una property que no sea `wss://` se **ignora con aviso** | **Prohibido** |
+
+Tres archivos: `app/build.gradle.kts` (la property pasa a leerse por build type y
+release la ignora si no es `wss://`), `res/xml/network_security_config.xml`
+(prohíbe texto en claro) y su gemelo en `src/debug/res/xml/` (lo permite). El
+host del bypass no se puede enumerar —`10.0.2.2` en el emulador, la IP de la red
+local en un teléfono, `127.0.0.1` con `adb reverse`—, por eso la excepción es
+por build type y no por dominio.
+
+**Medido:**
+
+```
+$ ./gradlew :app:assembleRelease -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate
+SignAI: release ignora -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate porque no es
+  wss://; usa wss://backend.invalid/ws/translate hasta que se pase una URL wss://.
+BUILD SUCCESSFUL
+
+# BuildConfig generado, uno por variante:
+debug   → BACKEND_WS_URL = "ws://10.0.2.2:8080/ws/translate"
+release → BACKEND_WS_URL = "wss://backend.invalid/ws/translate"
+
+# recurso empaquetado:
+debug   → cleartextTrafficPermitted="true"
+release → cleartextTrafficPermitted="false"
+```
+
+Y en el device, con el bypass: `SignAiNet: sesión abierta:
+ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)`. Esa línea es el hook de
+verificación de RF-INT-COM-03, cuyo criterio de aceptación es "verificable
+mediante inspección del tráfico de red": la app dice con qué ethernetos abrió, y
+en un build de release no puede decir otra cosa.
+
 ---
 
 ## 9. Diferencias y problemas que aparecieron
@@ -392,4 +432,5 @@ anotan acá para que no se pierdan, y se marcan las que necesitan una decisión.
 | 2 | El código sigue con `MaxReconnectAttempts = 5`, que contradice la decisión de §7 (reconexión **sin** límite) | `MainScreenState.kt:50` | Se corrige en **A4**. No se tocó antes |
 | 3 | El reloj del turno (`turnStartedAt`) **se reinicia** en `resumeListeningIfMicOn`, y el `done` puede llegar **antes** de que la escena se mueva: una frase habría medido desde el reloj de la siguiente, o no habría medido | `MainScreenState.kt` | **Resuelto en A13** con `turnSentAt`, que solo se pone al mandar una frase |
 | 4 | Hay **dos** casos de "glosa sin seña" y el SRS habla de uno solo: la glosa que **no está en el catálogo** (`main.tex:201` "cuando una glosa no existe en el catálogo") y la glosa que el catálogo anuncia pero **sin animación exportada** (`0032`–`0049`, §5 de este documento). Con la seña de prueba apagada las dos se saltan en silencio | `MainScreenState.kt:604-648` | **A5 necesita una decisión del owner**: ¿"Seña no disponible" también por las 18 que están en el catálogo pero no tienen clip? Si el aviso sale por esas, la app estaría diciendo que no están en el catálogo cuando sí están |
-| 5 | La clave `duracion_firmado` del `snapshot()` de `SignAiMetrics` sigue usando la palabra que `AGENTS.md` retiró el 2026-10-16 | `SignAiMetrics.kt:130` | Renombrar a `duracion_representada` cuando se toque ese archivo. Es una cadena de logcat, no un nombre de código, así que no rompe nada |
+| 5 | La clave `duracion_firmado` del `snapshot()` de `SignAiMetrics` seguía usando la palabra que `AGENTS.md` retiró el 2026-10-16 | `SignAiMetrics.kt` | **Resuelto en A13**: ahora es `duracion_representada`. Era una cadena de logcat, no un nombre de código |
+| 6 | **No hay dominio del backend.** Ni el SRS (`main.tex:1095`, `:1100`) ni `../sign-ai-docs` nombran uno, así que no había con qué armar el `wss://` | `app/build.gradle.kts` | En A3 el default de release quedó en `wss://backend.invalid/ws/translate`: un host que por construcción no resuelve (`.invalid`, RFC 2606). Es deliberado —un APK sin configurar habla con nadie en vez de con el host de otra persona, y el fallo es ruidoso— pero **es una decisión del owner**: hace falta el dominio real para que release sirva para algo |
