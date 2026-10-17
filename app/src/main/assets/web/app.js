@@ -161,7 +161,7 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0;
 
 const scene = new THREE.Scene();
-// Fondo del tema oscuro = la marca (SignALL): el mismo #0c142c que
+// Fondo del tema oscuro = la marca (SignALL) en grafito: el mismo #121316 que
 // `DarkColors.background` en ui/designsystem/Color.kt. El canvas es la
 // superficie mas grande de la app, asi que si queda en el color viejo la
 // paleta nueva se ve solo en los controles.
@@ -203,8 +203,8 @@ scene.add(key);
 const fill = new THREE.DirectionalLight(0xffffff, 0.6);
 fill.position.set(-2, 1, 1.5);
 scene.add(fill);
-// Grilla del suelo: `soft` de la misma paleta (#1e2a4d), que sobre el fondo
-// queda tan sutil como la #1e2130 lo era sobre el fondo anterior.
+// Grilla del suelo: `soft` de la misma paleta (#25272c), que sobre el fondo
+// queda tan sutil como lo era antes sobre su propio fondo.
 const grid = new THREE.GridHelper(4, 8, 0x25272c, 0x25272c);
 grid.visible = false; // por defecto sin grilla (suelo)
 scene.add(grid);

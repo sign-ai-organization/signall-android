@@ -29,8 +29,8 @@ object SignAiBranding {
 
     /**
      * The wordmark. It comes in two variants because the "Sign" half is navy in the
-     * master, and navy on the dark background (#0c142c) is invisible: the dark variant
-     * has that half in white. [darkTheme] has to be the *app's* theme, not the
+     * master, and navy on the dark graphite background (#121316) is invisible: the dark
+     * variant has that half in white. [darkTheme] has to be the *app's* theme, not the
      * system's — read it from `LocalIsDarkTheme`.
      */
     @DrawableRes
