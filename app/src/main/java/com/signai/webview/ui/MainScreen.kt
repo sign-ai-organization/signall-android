@@ -1,6 +1,7 @@
 package com.signai.webview.ui
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -31,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import com.signai.webview.data.MicPermissionPrompt
 import com.signai.webview.ui.components.HistoryBottomSheet
 import com.signai.webview.ui.components.SignAiSplash
 import com.signai.webview.ui.designsystem.components.DrawerSide
@@ -54,6 +56,11 @@ private const val SplashTimeoutMs = 8_000L
 private const val ContentFadeMs = 500
 private const val SplashFadeMs = 400
 
+/** ¿El permiso de micrófono ya está concedido? */
+private fun Context.hasMicPermission(): Boolean =
+    ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) ==
+        PackageManager.PERMISSION_GRANTED
+
 @Composable
 fun MainScreen(state: MainScreenState) {
     var showHistory by remember { mutableStateOf(false) }
@@ -70,28 +77,42 @@ fun MainScreen(state: MainScreenState) {
     // lo hace por su cuenta; acá alcanza para los tiradores de los drawers.
     val dismissKeyboard = rememberKeyboardDismissAction()
 
-    // El mic es la única función que necesita permiso en tiempo de ejecución.
-    // Se pide la primera vez que se toca cualquiera de los dos interruptores, no
-    // al abrir la app, así que el diálogo llega con un motivo (`RF-UI-04`).
+    // El mic es la única función que necesita permiso en tiempo de ejecución, y
+    // la app lo pide **al abrir**, no en el primer toque del micrófono: el SRS
+    // dice que la solicitud aparece la primera vez que se abre la aplicación
+    // (`main.tex:837`), que es lo mismo que pedía `RF-UI-04`. Preguntarlo tarde
+    // fazia que el diálogo llegara con el dedo del usuario ya encima del control.
     val context = LocalContext.current
+    val micPrompt = remember(context) { MicPermissionPrompt(context) }
     var pendingMicAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     val micPermission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { granted ->
         val action = pendingMicAction
         pendingMicAction = null
+        // Sin acción pendiente no hay nada que retomar: conceder el permiso deja
+        // el micrófono disponible, no lo prende. Negarlo nunca rompe nada, solo
+        // avisa —`RF-UI-04` exige el aviso y la app sigue con el texto—.
         if (granted) action?.invoke() else state.onMicPermissionDenied()
     }
 
-    // Both voice switches go through here: the permission is the same one, and
-    // duplicating the check meant one of the two would eventually be the one
-    // that forgot.
+    // `RF-UI-04` / SRS `main.tex:837`: la solicitud sale al abrir y sale **una
+    // sola vez**, que es lo que guarda `MicPermissionPrompt`. Sin ese flag el
+    // diálogo se repetiría en cada arranque mientras el permiso siga sin
+    // concederse, y con el aviso de la negativa al lado sería insistente.
+    LaunchedEffect(Unit) {
+        if (!context.hasMicPermission() && !micPrompt.alreadyAsked) {
+            micPrompt.alreadyAsked = true
+            micPermission.launch(Manifest.permission.RECORD_AUDIO)
+        }
+    }
+
+    // Red de seguridad del permiso: si al abrir la app no se concedió, el toque
+    // del interruptor vuelve a preguntar. Both voice switches go through here:
+    // the permission is the same one, and duplicating the check meant one of the
+    // two would eventually be the one that forgot.
     fun withMicPermission(action: () -> Unit): () -> Unit = {
-        val granted = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.RECORD_AUDIO,
-        ) == PackageManager.PERMISSION_GRANTED
-        if (granted) {
+        if (context.hasMicPermission()) {
             action()
         } else {
             pendingMicAction = action
