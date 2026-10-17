@@ -206,21 +206,31 @@ es lo último que se lee y lo último que se olvida. Tiene cinco partes:
 1. **Nunca escribir**, con la lista de lo que *no* cuenta como autorización (que la tarea
    lo requiera, que sea obviamente correcto, que sea "una tilde", que otro documento diga
    otra cosa, que se haya hecho antes).
-2. **Nunca cambiar los permisos que bloquean la escritura.** Esta es la parte que pidió el
-   owner. Tabla con lo prohibido: quitar un `deny`, moverlos de `policies` a `permissions`,
-   agregar un `allow` que los tape, editar `~/.config/opencode/opencode.json` por
-   cualquier motivo, editar el `opencode.json` de un repo, o meter un MCP o script que
-   esquive el bloqueo. **Ese archivo no se edita en ninguna circunstancia.**
-3. **Si el bloqueo parece roto, se reporta, no se arregla** — y nunca se "prueba" una
-   herramienta de escritura para ver si funciona.
-4. **Por qué no es opcional**: el bloqueo lo impone opencode, no la credencial. La cookie sí
-   puede escribir, así que un agente que pueda editar la config **puede quitarse el bloqueo
-   a sí mismo**, y eso está prohibido aunque la escritura esté autorizada.
+2. **Los permisos que bloquean la escritura: solo con confirmación explícita.** Primera
+   versión: lo escribí como prohibición absoluta ("ese archivo no se edita en ninguna
+   circunstancia"). **El owner lo corrigió**: no es cierto, se puede, pero con su
+   confirmación explícita en un mensaje. Sin confirmación, no se procede.
+
+   Como el permiso general y el de Overleaf se cruzaban, se le preguntó, y la respuesta fue
+   que **los `deny` de Overleaf necesitan su propia confirmación**. Quedan dos niveles:
+
+   - **2a — editar la config global:** se puede, con confirmación explícita en un mensaje.
+   - **2b — tocar un `deny` de Overleaf:** necesita un mensaje que hable **de Overleaf**.
+     Un "arreglá la config" genérico no alcanza.
+
+   Y una consecuencia que quedó escrita: **tocar el bloqueo no habilita escribir.** Son dos
+   permisos distintos.
+3. **Si el bloqueo parece roto, se reporta, no se arregla por cuenta propia** — y nunca se
+   "prueba" una herramienta de escritura para ver si funciona. Arreglarlo es **proponerlo**.
+4. **Por qué el `deny` solo no alcanza**: el bloqueo lo impone opencode, no la credencial, y
+   **además se puede quitar desde el mismo archivo donde está escrito**. Un bloqueo que se
+   puede desactivar desde donde está no es una garantía, es una barrera. La garantía es que
+   nadie lo toque sin que el owner lo haya pedido de forma explícita.
 5. **Lo que sí se puede hacer**: las nueve herramientas de lectura.
 
-La misma prohibición se repitió al final del skill `overleaf-lectura`, porque ese es
-justo el archivo que alguien cargaría si quisiera tocar el bloqueo: **cargarlo no autoriza a
-cambiar nada.**
+La misma regla se repitió al final del skill `overleaf-lectura`, porque ese es justo el
+archivo que alguien cargaría si quisiera tocar el bloqueo: **cargarlo no autoriza a tocar
+nada.**
 
 **Verificado: `~/.config/opencode/opencode.json` sigue intacto, con las ocho `policies` en
 `deny`.** No se tocó en ninguna de las dos vueltas.
