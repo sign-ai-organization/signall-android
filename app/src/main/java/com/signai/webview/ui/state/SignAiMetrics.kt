@@ -156,7 +156,7 @@ class SignAiMetrics {
         append(" dictado_frases=").append(dictationPhrases.get())
         append(" dictado_palabras=").append(dictationWords.get())
         append(" duracion_frase=").append(turnTotal.summarise())
-        append(" duracion_firmado=").append(signTotal.summarise())
+        append(" duracion_representada=").append(signTotal.summarise())
         append(" oracion_a_avatar=").append(signStart.summarise())
         append(" envio_a_primera_sena=").append(firstSign.summarise())
     }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  The development backend is reached over plain HTTP/WS on the local network, and
-  Android blocks cleartext by default since API 28. Allowed here for development.
+  Sin texto en claro. El SRS pide que todo lo que sale del dispositivo vaya
+  cifrado (`main.tex:1095`) y que el enlace con el backend sea WSS (`:1100`);
+  desde API 28 Android tampoco lo permite por defecto, así que este archivo lo
+  hace explícito en vez de dejarlo en el comportamiento de la plataforma.
 
-  Pending, tracked as RF-INT-COM-03 / DEC-14 in the backend repo: expose the
-  backend over TLS (and add auth) before this app goes anywhere but a demo on a
-  trusted network. When that happens, delete this file, drop
-  `android:networkSecurityConfig` from the manifest, and set
-  `LLM`/backend URLs to `https://` / `wss://`.
+  El build type `debug` reemplaza este archivo por uno que sí lo permite, contra
+  el backend de desarrollo. Es el **único** caso en que el tráfico viaja sin
+  cifrar y el único donde RF-INT-COM-03 se incumple a propósito.
 -->
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true" />
+    <base-config cleartextTrafficPermitted="false" />
 </network-security-config>

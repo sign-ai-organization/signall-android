@@ -7,12 +7,41 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-// Where the backend lives. Override per device without touching code, e.g.
-//   ./gradlew installDebug -Psignai.backendWsUrl=ws://192.168.1.50:8080/ws/translate
-// Default is the Android emulator's alias for the host machine. A real device
-// needs the host's LAN address, never 127.0.0.1.
-val backendWsUrl: String =
-    (project.findProperty("signai.backendWsUrl") as String?) ?: "ws://10.0.2.2:8080/ws/translate"
+// ── Dónde vive el backend ──────────────────────────────────────────────────
+//
+// El SRS pide que todo lo que sale del dispositivo vaya cifrado (`main.tex:1095`)
+// y que el enlace con el backend sea WSS (`:1100`), así que **un build de
+// release solo puede apuntar a `wss://`**. Para desarrollar hace falta `ws://`
+// contra la máquina que corre el backend, y ese es el bypass: la propiedad
+// `-Psignai.backendWsUrl`, que **solo** lee el build type `debug`.
+//
+//   ./gradlew installDebug -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate
+//
+val backendWsUrlOverride: String? = project.findProperty("signai.backendWsUrl") as String?
+
+/**
+ * Default de debug: el alias del emulador a la máquina de desarrollo, para que
+ * `./gradlew installDebug` funcione sin pasar nada. Un teléfono físico necesita
+ * la dirección de la red local o `adb reverse`, nunca `127.0.0.1` a secas.
+ */
+val debugBackendWsUrl = "ws://10.0.2.2:8080/ws/translate"
+
+/**
+ * Default de release: un host que **no puede resolver** (`.invalid`, RFC 2606).
+ *
+ * Todavía no hay dominio deployed, y inventar uno sería peor que no tener ninguno:
+ * un APK de release sin configurar habla con nadie en vez de hablar con el host
+ * de otra persona, y el fallo es ruidoso. Cuando el backend esté desplegado se
+ * pasa `-Psignai.backendWsUrl=wss://…` y deja de hacer falta.
+ */
+val releaseBackendWsUrl = "wss://backend.invalid/ws/translate"
+
+if (backendWsUrlOverride != null && !backendWsUrlOverride.startsWith("wss://")) {
+    logger.lifecycle(
+        "SignAI: release ignora -Psignai.backendWsUrl=$backendWsUrlOverride porque no es " +
+            "wss://; usa $releaseBackendWsUrl hasta que se pase una URL wss://.",
+    )
+}
 
 android {
     namespace = "com.signai.webview"
@@ -24,12 +53,26 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
-        buildConfigField("String", "BACKEND_WS_URL", "\"$backendWsUrl\"")
     }
 
     buildTypes {
+        debug {
+            buildConfigField(
+                "String",
+                "BACKEND_WS_URL",
+                "\"${backendWsUrlOverride ?: debugBackendWsUrl}\"",
+            )
+        }
+
         release {
             isMinifyEnabled = false
+            // El override de desarrollo **no** se honra acá a propósito: es la
+            // forma más fácil de que texto en claro termine en un APK firmado.
+            buildConfigField(
+                "String",
+                "BACKEND_WS_URL",
+                "\"${backendWsUrlOverride?.takeIf { it.startsWith("wss://") } ?: releaseBackendWsUrl}\"",
+            )
         }
     }
 
