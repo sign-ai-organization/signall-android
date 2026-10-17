@@ -47,7 +47,6 @@ import com.signai.webview.ui.screens.conversation.ConversationPanel
 import com.signai.webview.ui.screens.settings.SettingsSidebar
 import com.signai.webview.ui.screens.stage.AvatarStage
 import com.signai.webview.ui.state.MainScreenState
-import com.signai.webview.ui.state.PlaybackState
 import com.signai.webview.ui.theme.SignAiTheme
 import com.signai.webview.ui.webview.AvatarWebView
 import kotlinx.coroutines.delay
@@ -217,7 +216,7 @@ fun MainScreen(state: MainScreenState) {
                     Box(Modifier.fillMaxSize()) {
                         AvatarStage(
                             status = state.statusLine,
-                            doneVisible = state.playbackState == PlaybackState.Done,
+                            doneVisible = state.doneVisible,
                             // Repetir es un control más: cierra el teclado, y cierra
                             // de verdad, como todos los demás.
                             onRepeat = {
@@ -250,7 +249,7 @@ fun MainScreen(state: MainScreenState) {
                             SignAiBottomBar(
                                 query = state.inputText,
                                 onQueryChange = state::setInput,
-                                playbackState = state.playbackState,
+                                playbackState = state.stateForUi,
                                 onSend = state::play,
                                 onMic = onMic,
                                 onOpenHistory = { showHistory = true },

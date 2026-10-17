@@ -45,9 +45,15 @@ private const val DrawerCloseDelayMs = 500L
  */
 private const val TranscriptionTimeoutMs = 15_000L
 
-/** Reconnect backoff, multiplied by the attempt count (`RF-INT-COM-01`). */
+/**
+ * Reconnect backoff: the wait grows by a second per attempt and tops out at
+ * [MaxReconnectWaitMs]. `RF-INT-COM-01` and the SRS (*Desconectado*,
+ * `main.tex:761-772`) want it growing and **without a limit of attempts**, so
+ * this caps the *wait* and never the number of tries: stopping would leave the
+ * app dead until it was restarted by hand, which is the very thing A4 fixes.
+ */
 private const val ReconnectBaseMs = 1_000L
-private const val MaxReconnectAttempts = 5
+private const val MaxReconnectWaitMs = 5_000L
 
 /** How long a transient message stays in the stage hint. */
 private const val StatusOverrideMs = 3_000L
@@ -124,8 +130,68 @@ class MainScreenState(
      */
     private val fallbackSignUrl: String get() = SignsCatalog.assetUrl(sign)
 
-    var playbackState by mutableStateOf(PlaybackState.Idle)
+    /**
+ * The state machine proper: the seven states of the SRS, and nothing else.
+ *
+ * Everything the interface shows goes through [stateForUi], and [stateLabel] is
+ * what the user reads.
+ */
+    var playbackState by mutableStateOf(PlaybackState.Inactivo)
         private set
+
+    /**
+     * "Reproducción completada" dejó de ser un estado y pasó a ser un flag.
+     *
+     * El SRS no la tiene entre los siete (`main.tex:726-773`) y antes ocupaba un
+     * hueco del enum solo para decorar: [MainScreen.kt] la usa para mostrar el
+     * aviso de frase representada. Es el mismo patrón que
+     * [dictationReadyToSend], y el mismo motivo —el estado no dice "terminó" en el
+     * SRS porque en modo en vivo nada termina: la cola se sigue llenando.
+     */
+    var doneVisible by mutableStateOf(false)
+        private set
+
+    /**
+     * El estado que ve el usuario.
+     *
+     * Solo [PlaybackState.TextoListo] se deduce, y solo cuando la máquina está
+     * [PlaybackState.Inactivo]: con el micrófono apagado, una frase en el campo y
+     * nada retenido, el estado real es "inactivo" y el SRS quiere que lo que se
+     * vea sea "Texto listo" (`main.tex:746`). Se deduce en vez de asignarse
+     * porque depende de cuatro cosas a la vez —micrófono apagado, texto en el
+     * campo, sin retención— y cualquiera de las tres lo deshace: que el estado
+     * fuera "Texto listo" cuando la conexión se cayó taparía *Desconectado*, y
+     * un estado que hay que acordarse de volver a poner es un estado que algún
+     * día se queda.
+     *
+     * La lista de condiciones es [dictationReadyToSend], que ya la tenía.
+     */
+    val stateForUi: PlaybackState
+        get() = if (playbackState == PlaybackState.Inactivo && dictationReadyToSend) {
+            PlaybackState.TextoListo
+        } else {
+            playbackState
+        }
+
+    /**
+     * La etiqueta del estado, que es lo que se lee arriba en el escenario.
+     *
+     * Sale de [stateForUi] y no de [playbackState], que es lo que hace que
+     * *Texto listo* se vea: `statusLine` lee esta etiqueta, así que si leyera el
+     * enum directamente el tercer estado del SRS no aparecería nunca.
+     *
+     * [PlaybackState.Grabando] es el único cuyo texto depende de algo más que del
+     * estado: el SRS tiene un solo estado de grabación, así que el enum no puede
+     * decir si se está dictando o escuchando. Eso lo dice la etiqueta
+     * (`main.tex:709` y el mapa de §7 del documento de contraste), y el usuario
+     * sigue viendo en qué modo está.
+     */
+    val stateLabel: String
+        get() = when (stateForUi) {
+            PlaybackState.Grabando ->
+                if (micMode == MicMode.Live) "Escuchando..." else "Dictando..."
+            else -> stateForUi.label
+        }
 
     /**
      * La escena tiene una cola de señas firmándose.
@@ -498,7 +564,7 @@ class MainScreenState(
         // traducción el campo ya está bloqueado por `busy`, que se explica solo,
         // y pisar el estado con "Ya está representado." antes de que la frase ni se
         // haya traducido era una contradicción a la vista.
-        if (playbackState != PlaybackState.Translating) {
+        if (playbackState != PlaybackState.Procesando) {
             showStatus("Ya está representado.", SentTextHoldMs)
         }
         Log.i(TAG, "texto ya enviado: retenido ${SentTextHoldMs}ms, Traducir bloqueado. \"$clean\"")
@@ -539,31 +605,53 @@ class MainScreenState(
     val statusLine: String
         get() = when {
             statusOverride != null -> statusOverride!!
-            playbackState == PlaybackState.Signing && caption.isNotBlank() -> caption
-            else -> playbackState.label
+            playbackState == PlaybackState.Reproduciendo && caption.isNotBlank() -> caption
+            else -> stateLabel
         }
 
     // ── Backend session ─────────────────────────────────────────────────────
 
-    /** Opens the translation session and keeps it open, reconnecting on failure. */
+    /**
+     * Intentos de reconexión seguidos, para la espera creciente.
+     *
+     * Vive en la clase y no en el `launch` porque el reinicio lo hace
+     * [BackendEvent.Connected], que es el restablecimiento —no el arranque— lo que
+     * lo deja en cero, según el SRS.
+     */
+    private var reconnectAttempts = 0
+
+    /**
+     * Opens the translation session and keeps it open, reconnecting on failure.
+     *
+     * El SRS pide tres cosas y las tres están acá (`main.tex:761-772`): espera
+     * creciente **hasta un máximo de 5 s**, **sin límite de intentos**, y el
+     * contador **reiniciado** cuando la conexión vuelve (en `Connected`). Antes el
+     * contador subía para siempre: después de unas horas de app abierta, la primera
+     * caída esperaba 5 s en vez de 1 s.
+     */
     fun connect() {
         connectJob?.cancel()
         connectJob = scope.launch {
-            var attempt = 0
             while (isActive) {
-                if (playbackState == PlaybackState.Idle) {
-                    playbackState = PlaybackState.Connecting
+                if (playbackState == PlaybackState.Inactivo) {
+                    // El SRS no distingue "conectando" de "sin conexión": son un
+                    // estado solo, y su texto ya dice que se está reconectando.
+                    playbackState = PlaybackState.Desconectado
                 }
                 backend.events().collect { event -> handleEvent(event) }
                 // The flow only ends when the session dropped, so this is the
                 // reconnect path: back off, then try again.
-                if (playbackState != PlaybackState.Translating &&
-                    playbackState != PlaybackState.Signing
-                ) {
-                    playbackState = PlaybackState.Offline
-                }
-                attempt++
-                delay(ReconnectBaseMs * attempt.coerceAtMost(MaxReconnectAttempts))
+                //
+                // *Sin condición*: antes solo se ponía *Desconectado* si el estado no
+                // era Traduciendo ni Reproduciendo, así que una caída en mitad de una
+                // frase dejaba el indicador diciendo "Procesando..." para siempre,
+                // con el botón Traducir deshabilitado y el envío manual rechazado:
+                // la app quedaba trabada y había que cerrarla a la fuerza.
+                playbackState = PlaybackState.Desconectado
+                reconnectAttempts++
+                delay(
+                    (ReconnectBaseMs * reconnectAttempts).coerceAtMost(MaxReconnectWaitMs),
+                )
             }
         }
     }
@@ -588,11 +676,14 @@ class MainScreenState(
             // el puente `onPlaybackDone` la cierra —; si no, el turno terminó y la
             // interfaz tiene que quedar libre. Sin esto se quedaba en
             // "Procesando..." con todo el panel deshabilitado.
-            playbackState = if (queuePlaying) PlaybackState.Signing else PlaybackState.Done
+            // "Reproducción completada" no es un estado del SRS: es el aviso de que la
+            // frase terminó, y se apaga solo cuando empieza otra cosa.
+            if (queuePlaying) playbackState = PlaybackState.Reproduciendo
+            else doneVisible = true
             return
         }
         resetTurn()
-        playbackState = labelFor(micMode)
+        playbackState = PlaybackState.Grabando
     }
 
     /** Una oración traducida: se representa apenas llega, sin esperar a las demás. */
@@ -692,10 +783,14 @@ class MainScreenState(
     private fun handleEvent(event: BackendEvent) {
         when (event) {
             is BackendEvent.Connected -> {
-                if (playbackState == PlaybackState.Connecting ||
-                    playbackState == PlaybackState.Offline
-                ) {
-                    playbackState = PlaybackState.Idle
+                // El contador de reconexión se reinicia **acá**, no cuando se
+                // pierde la sesión: es el restablecimiento el que lo reinicia
+                // (`main.tex:761-772`, "momento en el que el contador se reinicia").
+                // Antes nunca volvía a cero, así que después de unas horas de app
+                // abierta la primera caída esperaba el tope en vez de 1 s.
+                reconnectAttempts = 0
+                if (playbackState == PlaybackState.Desconectado) {
+                    playbackState = PlaybackState.Inactivo
                 }
             }
 
@@ -734,8 +829,102 @@ class MainScreenState(
 
             is BackendEvent.Failure -> fail(event.message)
 
-            is BackendEvent.Disconnected -> Unit
+            is BackendEvent.Disconnected -> onDisconnected()
         }
+    }
+
+    /**
+     * Se perdió la sesión con el servidor. Es el estado *Desconectado* del SRS
+     * (`main.tex:761-772`), y el texto que define su comportamiento es:
+     *
+     * > Se perdió la conexión con el servidor, lo que puede ocurrir en cualquier
+     * > estado. El avatar vuelve a reposo, el indicador de estados lo indica y el
+     * > sistema intenta reconectarse. […] El texto pendiente no se pierde. Si la
+     * > conexión se pierde mientras una frase se está traduciendo y el avatar
+     * > todavía no ha ejecutado ninguna seña de ella, esa frase se cancela y su
+     * > texto vuelve a la barra de transcripción, editable, para que el usuario
+     * > pueda mandarla de nuevo. Si la pérdida ocurre cuando el avatar ya está
+     * > representando, la representación se interrumpe y el indicador vuelve a
+     * > *Inactivo*.
+     *
+     * Son dos casos y el texto pendiente se trata distinto en cada uno, por lo
+     * mismo que dice el documento de contraste §7: en el primero el usuario
+     * **nunca vio** la frase representada, así que tiene que poder mandarla otra
+     * vez; en el segundo ya salió del campo y se representa a medias, así que
+     * devolverla al campo ofrecería un reenvío de algo que ya se mandó.
+     *
+     * Antes esto era `Unit`: la desconexión no hacía nada, y el síntoma era una app
+     * trabada con el estado clavado, el botón Traducir deshabilitado y el envío
+     * manual rechazado. Sin salida hasta cerrar la app a la fuerza.
+     *
+     * **El micrófono se apaga** (decisión del owner, 2026-10-17). El SRS dice que
+     * en modo TR el micrófono permanece encendido (`main.tex:709`), así que esto
+     * hay que documentarlo allá: cortar la captura es más honesto que dejar el
+     * micrófono prendido grabando hacia un socket muerto, y le dice al usuario de
+     * una vez que tiene que volver a prenderlo. Con el TR apagado, lo que se dijo
+     * en vivo y no llegó a salir vuelve al campo para que lo mande a mano —"el
+     * texto pendiente no se pierde"—.
+     */
+    private fun onDisconnected() {
+        // Lo primero, antes de tocar nada: si hay un turno en vuelo, esta es la
+        // última vez que se puede describir. Después `clearTurnState` borra la
+        // prueba de que lo hubo.
+        val interruptingSign = queuePlaying || playbackState == PlaybackState.Reproduciendo
+        val cancellingPhrase = !interruptingSign && pendingText != null
+
+        Log.i(
+            TAG,
+            "sesión perdida: interrumpiendo=$interruptingSign cancelando=$cancellingPhrase " +
+                "micrófono=${micMode.name}",
+        )
+
+        if (interruptingSign) {
+            // El avatar a reposo, de verdad: sin esto la interfaz volvía a
+            // inactiva mientras el canvas seguía con la seña adelante.
+            webView.stop()
+            queuePlaying = false
+            caption = ""
+            turnQueueItems.clear()
+        }
+
+        if (micActive) {
+            // Corte directo y no por `changeMicMode`: el modo saliente
+            // mandaría un `end` por un socket que ya no existe, y `stopCapture`
+            // dejaría el estado en Reproduciendo si había cola.
+            audio.stop()
+            micMode = MicMode.Off
+            processingJob?.cancel()
+        }
+
+        // Lo que el usuario dijo y todavía no salió vuelve al campo. Es la misma
+        // regla que RNF-REL-04: el texto pendiente no se pierde.
+        val pendingLive = livePhraseBacklog.trim()
+        livePhraseBacklog = ""
+        if (pendingLive.isNotBlank()) {
+            inputText = pendingLive
+            transcript = pendingLive
+            releaseSentText()
+            dictationBuffer = pendingLive
+            dictationPending = true
+        }
+
+        // El `final` de un dictado ya no va a llegar, así que el enrutado se cae.
+        // El texto ya transcrito **no** se borra: sigue en `dictationBuffer`.
+        dictationAwaitingFinal = false
+        pendingText = null
+        replayPending = false
+        clearTurnState()
+
+        if (cancellingPhrase) {
+            // El usuario nunca vio esta frase representada: la retención se suelta
+            // para que el campo quede editable y Traducir vuelva a estar
+            // disponible en cuanto la conexión se restablezca.
+            releaseSentText()
+        }
+
+        doneVisible = false
+        playbackState = PlaybackState.Inactivo
+        showStatus("Se perdió la conexión con el servidor. Se está reconectando.")
     }
 
     /**
@@ -763,7 +952,7 @@ class MainScreenState(
             // El silencio ya cerró la frase, así que la captura se va sin `end`:
             // no hay utterance abierto que cerrar y mandarlo solo agrega un viaje.
             if (dictationActive) stopDictation(endIsRedundant = true)
-            playbackState = if (micActive) labelFor(micMode) else PlaybackState.Idle
+            playbackState = if (micActive) PlaybackState.Grabando else PlaybackState.Inactivo
         }
     }
 
@@ -826,7 +1015,7 @@ class MainScreenState(
      * el campo mostrara la frase anterior mientras el usuario sigue hablando.
      */
     private fun sendLivePhrase(text: String): Boolean {
-        if (playbackState == PlaybackState.Translating || pendingText != null) return false
+        if (playbackState == PlaybackState.Procesando || pendingText != null) return false
         if (!backend.sendText(text)) {
             fail("No hay conexión con el servidor.")
             return false
@@ -835,10 +1024,24 @@ class MainScreenState(
         isReplay = false
         // Un turno anterior no puede filtrarse a este.
         clearTurnState()
+        // Si lo que sale es justamente lo que estaba esperando confirmación, ya no
+        // está esperando: se mandó.
+        //
+        // Sin esto, dictar "X", pasar al TR y decir "X" otra vez dejaba el mismo
+        // texto en los dos lados: el avatar lo representaba y, al apagar el TR,
+        // `stopCapture` lo devolvía al campo como pendiente —marcado *Texto listo*,
+        // con Traducir pidiendo mandarlo otra vez por una frase que ya se había
+        // representado. El pendiente sobrevive solo cuando es **otro** texto: ese
+        // sí es suyo y sin mandar.
+        if (dictationBuffer.trim() == text.trim()) {
+            Log.i(TAG, "el texto pendiente era esta misma frase: ya no está esperando")
+            dictationBuffer = ""
+            dictationPending = false
+        }
         // Arranca **después** de limpiar: `clearTurnState` borra el reloj del turno
         // anterior, y el SRS mide desde que esta frase sale, no desde la anterior.
         turnSentAt = SystemClock.elapsedRealtime()
-        playbackState = PlaybackState.Translating
+        playbackState = PlaybackState.Procesando
         Log.i(TAG, "en vivo → envío: $text")
         return true
     }
@@ -887,7 +1090,7 @@ class MainScreenState(
         // El texto queda en el campo esperando confirmación. No se manda nada:
         // el envío es del usuario (RF-STT-03) y el que lo dispara es Traducir.
         dictationPending = live.isNotBlank()
-        playbackState = PlaybackState.Idle
+        playbackState = PlaybackState.Inactivo
         // El aviso va en el hint del escenario y no en el campo: con la frase
         // escrita arriba, un placeholder no se ve nunca, que es justo cuando
         // hace falta. El hint es el lugar donde ya viven los mensajes
@@ -951,10 +1154,10 @@ class MainScreenState(
             showStatus("Apagá el micrófono o el TR para mandar una frase escrita.")
             return
         }
-        if (playbackState == PlaybackState.Translating ||
-            playbackState == PlaybackState.Processing ||
-            playbackState == PlaybackState.Connecting ||
-            playbackState == PlaybackState.Offline
+        if (playbackState == PlaybackState.Procesando ||
+            playbackState == PlaybackState.Procesando ||
+            playbackState == PlaybackState.Desconectado ||
+            playbackState == PlaybackState.Desconectado
         ) {
             return
         }
@@ -988,7 +1191,7 @@ class MainScreenState(
         // El SRS mide el "tiempo hasta la primera seña" desde que el texto se manda
         // a traducir (`main.tex:848-852`), que es este momento.
         turnSentAt = SystemClock.elapsedRealtime()
-        playbackState = PlaybackState.Translating
+        playbackState = PlaybackState.Procesando
         // Toda frase que sale de acá queda retenida en el campo: el Traducir con
         // lo dictado, el Traducir a mano y el Repetir. Sin esto, Traducir y
         // Repetir dejaban la frase en el campo con el botón habilitado y el avatar
@@ -1055,11 +1258,39 @@ class MainScreenState(
         // un Repetir que lo vuelva a prender.
         replayPending = false
         queuePlaying = false
+        doneVisible = false
         resetTurn()
         caption = ""
-        playbackState = PlaybackState.Idle
+        // *Error* es un estado del SRS (`main.tex:726-773`) y antes no existía: los
+        // fallos eran un mensaje de 3 s sobre la etiqueta de otro estado, así que
+        // el indicador decía "Listo para traducir" mientras la app acababa de
+        // fallar. El estado se va solo a [StatusOverrideMs] porque el mensaje se
+        // va, y volver a Inactivo sin esperar sería mentir el doble.
+        playbackState = PlaybackState.Error
         showStatus(message)
+        armErrorReturn()
     }
+
+    /**
+     * Devuelve la interfaz a *Inactivo* cuando termina el aviso de un fallo.
+     *
+     * Va junto a [showStatus] porque las dos cosas duran lo mismo ([StatusOverrideMs])
+     * y tienen que caerse juntas: si el estado volviera antes, el mensaje quedaría
+     * colgado sobre "Listo para traducir"; si volviera después, el indicador
+     * seguiría diciendo *Error* con la pantalla ya limpia.
+     */
+    private fun armErrorReturn() {
+        errorReturnJob?.cancel()
+        errorReturnJob = scope.launch {
+            delay(StatusOverrideMs)
+            // Solo si el estado sigue siendo Error: si en medio de los 3 s se mandó
+            // una frase, se prende el micrófono o reconectó, lo que hay que
+            // mostrar es eso y no un fallo viejo.
+            if (playbackState == PlaybackState.Error) playbackState = PlaybackState.Inactivo
+        }
+    }
+
+    private var errorReturnJob: Job? = null
 
     private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         statusOverride = message
@@ -1159,7 +1390,7 @@ class MainScreenState(
                 if (!queuePlaying) startPlaybackClock()
                 queuePlaying = true
             }
-            playbackState = PlaybackState.Signing
+            playbackState = PlaybackState.Reproduciendo
         }
     }
 
@@ -1198,7 +1429,7 @@ class MainScreenState(
                     showStatus("Esa frase no produjo ninguna seña.")
                     resumeListeningIfMicOn()
                 } else {
-                    playbackState = PlaybackState.Done
+                    doneVisible = true
                     showStatus("Esa frase no produjo ninguna seña.")
                 }
             }
@@ -1300,7 +1531,7 @@ class MainScreenState(
             dictationPending = false
         }
         micMode = mode
-        playbackState = labelFor(mode)
+        playbackState = PlaybackState.Grabando
         // The turn clock starts when the mic opens, so the turn total includes the
         // silence before the first word — which is the number a user perceives.
         resetTurn()
@@ -1312,7 +1543,7 @@ class MainScreenState(
         if (!audio.isRecording) {
             // The device refused to open the mic (usually a missing permission).
             micMode = MicMode.Off
-            playbackState = PlaybackState.Idle
+            playbackState = PlaybackState.Inactivo
             showStatus("No se pudo abrir el micrófono.")
         }
     }
@@ -1345,7 +1576,7 @@ class MainScreenState(
         resetTurn()
         heardAnythingThisSession = false
         metrics.reset()
-        playbackState = labelFor(to)
+        playbackState = PlaybackState.Grabando
     }
 
     /** Apaga el micrófono por completo. */
@@ -1400,7 +1631,7 @@ class MainScreenState(
         if (!heardAnythingThisSession) {
             Log.i(TAG, "el micrófono se apagó sin transcripción: no hay nada que traducir")
             resetTurn()
-            playbackState = PlaybackState.Idle
+            playbackState = PlaybackState.Inactivo
             showStatus("No se escuchó nada.")
             return
         }
@@ -1414,8 +1645,9 @@ class MainScreenState(
         // antes de que el avatar termine de representarla, así que el `playbackState`
         // ya diría "escuchando" con señas por delante. Con la cola como fuente de
         // verdad, apagar el micro devuelve la interfaz enseguida y el
-        // `onPlaybackDone` la deja en `done` al terminar.
-        playbackState = if (queuePlaying) PlaybackState.Signing else PlaybackState.Done
+        // `onPlaybackDone` prende el aviso de representación completada al terminar.
+        if (queuePlaying) playbackState = PlaybackState.Reproduciendo
+        else doneVisible = true
         processingJob?.cancel()
     }
 
@@ -1450,12 +1682,12 @@ class MainScreenState(
             Log.i(TAG, "el dictado se apagó sin transcripción")
             dictationAwaitingFinal = false
             resetTurn()
-            playbackState = PlaybackState.Idle
+            playbackState = PlaybackState.Inactivo
             showStatus("No se escuchó nada.")
             return
         }
 
-        playbackState = PlaybackState.Processing
+        playbackState = PlaybackState.Procesando
         armTranscriptionTimeout()
     }
 
@@ -1471,7 +1703,7 @@ class MainScreenState(
         processingJob?.cancel()
         processingJob = scope.launch {
             delay(TranscriptionTimeoutMs)
-            if (playbackState == PlaybackState.Processing && micMode == MicMode.Off) {
+            if (playbackState == PlaybackState.Procesando && micMode == MicMode.Off) {
                 dictationAwaitingFinal = false
                 dictationPending = dictationBuffer.isNotBlank()
                 fail("No llegó el final de la transcripción.")
@@ -1479,14 +1711,10 @@ class MainScreenState(
         }
     }
 
-    /** La etiqueta de la pista para un modo: lo que el usuario está haciendo. */
-    private fun labelFor(mode: MicMode): PlaybackState =
-        if (mode == MicMode.Live) PlaybackState.Listening else PlaybackState.Dictating
-
     /** Mic blocked by the user (RF-UI-04: say so, the app can't work without it). */
     fun onMicPermissionDenied() {
         micMode = MicMode.Off
-        playbackState = PlaybackState.Idle
+        playbackState = PlaybackState.Inactivo
         showStatus("Sin permiso de micrófono la app no puede traducir voz.")
     }
 
@@ -1613,18 +1841,19 @@ class MainScreenState(
                 )
                 playbackStartedAt = 0L
             }
-            playbackState =
-                when (micMode) {
-                    MicMode.Live -> PlaybackState.Listening
-                    MicMode.Dictation -> PlaybackState.Dictating
-                    // El micrófono apagado no tiene a quién volver: el turno
-                    // terminó y la interfaz queda libre. Si además hay un dictado
-                    // esperando confirmación, el campo es lo que hay que mirar y el
-                    // estado es "listo", no "reproducción completada".
-                    MicMode.Off ->
-                        if (dictationPending) PlaybackState.Idle
-                        else PlaybackState.Done
-                }
+            // El SRS tiene un solo estado de grabación, así que el enum no dice si se
+            // está dictando o escuchando: eso lo pone [stateLabel].
+            playbackState = PlaybackState.Grabando
+            // El micrófono apagado no tiene a quién volver: el turno terminó y la
+            // interfaz queda libre. El aviso de "reproducción completada" es un flag
+            // (`doneVisible`), no un estado: el SRS no lo tiene entre los siete, y
+            // con la cola del TR llena la app termina frases sin parar.
+            if (micMode == MicMode.Off) {
+                playbackState = PlaybackState.Inactivo
+                // Si además hay un dictado esperando confirmación, el campo es lo
+                // que hay que mirar y no hay nada que Completado todavía.
+                if (!dictationPending) doneVisible = true
+            }
         }
         caption = ""
         // The control panel stays disabled until the sign ends (`CNV-7`); clear
