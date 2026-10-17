@@ -91,16 +91,18 @@ fun SignAiBottomBar(
 ) {
     val dismissKeyboard = rememberKeyboardDismissAction()
 
-    // `Signing` **no** bloquea el panel. Bloquear todo el panel mientras el muñeco
+    // `Reproduciendo` **no** bloquea el panel. Bloquear todo el panel mientras el muñeco
     // representa dejaba al usuario mirando un formulario muerto sin ninguna señal de
     // por qué. Lo que realmente no se puede tocar es lo que está **en vuelo**: una
     // traducción pedida y todavía sin representar.
     //
     // Mandar otra frase con el avatar representando la anterior no pisa la animación: la
     // escena reemplaza la cola, que es lo mismo que pasa con cualquier frase nueva.
-    val busy =
-        playbackState == PlaybackState.Translating ||
-            playbackState == PlaybackState.Processing
+    //
+    // Un solo estado para las dos esperas: el SRS tiene *Procesando* y no distingue
+    // esperar la transcripción de esperar las glosas (`main.tex:726-773`), así que acá
+    // tampoco hay dos.
+    val busy = playbackState == PlaybackState.Procesando
     val controlsEnabled = enabled && !busy
 
     val micActive = dictationActive || liveActive
@@ -227,13 +229,23 @@ fun SignAiBottomBar(
                 )
                 // El micrófono **no** cambia de icono cuando hay texto esperando.
                 //
-                // La versión 0.2 de RF-UI-01 pide tres estados visuales y que el
-                // tercero mande la frase. Se probó en el dispositivo y se
-                // descartó: con un icono distinto el botón deja de leerse como
-                // "micrófono", y la primera reacción de quien lo usa es querer
-                // dictar otra vez, no confirmar. Lo que hace falta —un aviso de
-                // que hay texto listo— lo da el placeholder del campo, que está
-                // justo al lado y no reemplaza ninguna función.
+                // RF-UI-01 v0.2 pedía tres estados visuales del botón y que el
+                // tercero mandara la frase. La parte del ícono se probó en el
+                // dispositivo y se descartó: con un ícono distinto el botón deja de
+                // leerse como "micrófono", y la primera reacción de quien lo usa es
+                // querer dictar otra vez, no confirmar.
+                //
+                // Y el placeholder del campo, que este comentario antes señalaba como
+                // la señal del tercer estado, **no lo es**: el placeholder solo se ve
+                // cuando el campo está vacío, y en este estado el campo tiene la
+                // frase. El propio estado lo dice en `MainScreenState.kt`: "con la
+                // frase escrita arriba, un placeholder no se ve nunca, que es justo
+                // cuando hace falta".
+                //
+                // La señal persistente es el **estado**: hay texto en el campo y la
+                // etiqueta del escenario dice "Texto listo" (`main.tex:746`), que es el
+                // tercer estado del SRS. Se decide con el owner el 2026-10-17 hacer
+                // A1 así y no con un ícono.
                 //
                 // Tocarlo con texto esperando vuelve a dictar **de cero**: el
                 // texto anterior se descarta. Es una cancelación explícita, que

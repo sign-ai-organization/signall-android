@@ -26,12 +26,12 @@ Ninguno requiere inventar el requisito.
 
 | ID | Qué hay que cambiar | Dónde en la app | Qué lo pide el SRS | Estado |
 |---|---|---|---|---|
-| **A1** | Que el tercer estado del micrófono **se vea**, no solo se describa | `ui/screens/bottombar/SignAiBottomBar.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, filas *Texto listo* y *Grabando* (`main.tex:736-747`) | 🔶 **Sale junto con A7** (§9 #7) |
+| **A1** | Que el tercer estado del micrófono **se vea**, no solo se describa | `ui/screens/bottombar/SignAiBottomBar.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, filas *Texto listo* y *Grabando* (`main.tex:736-747`) | ✅ Hecho con A7 |
 | **A2** | Pedir el permiso de micrófono **al abrir la app**, no al tocar el micrófono | `ui/MainScreen.kt:78-103` | §Interfaz con el Usuario (`main.tex:837`) | ✅ Hecho (`1c85ddd`) |
 | **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt:35`, `res/xml/network_security_config.xml`, `app/build.gradle.kts:15` | §Interfaces de Comunicación (`main.tex:1095`, `:1100`) | ✅ Hecho · **falta el dominio** (§9 #6) |
-| **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt:538-544`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:761-772`) | ⬜ Pendiente · **decisión abierta** (§7) |
+| **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:761-772`) | ✅ Hecho · **el SRS necesita un ajuste** (§9 #9) |
 | **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt:604-648`, `:1069` | §Alcance (`main.tex:201`) y tabla, fila *Reproduciendo* (`main.tex:753`) | ✅ Hecho |
-| **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:726-773`) | ⬜ Pendiente · depende de A4 |
+| **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:726-773`) | ✅ Hecho |
 | **A13** | Armar la **métrica de latencia de punta a punta** | `ui/state/SignAiMetrics.kt`, `MainScreenState.kt:329` y `:188-195` | §Aspectos de medición (`main.tex:848-852`) | ✅ Hecho (instrumento; falta medir con el backend real) |
 
 **Orden sugerido.** A2 es el más chico (un cambio de comportamiento) y sirve para
@@ -40,7 +40,7 @@ puro y no toca interfaz. **A4 y A7 son el mismo trabajo**: los dos estados que l
 faltan a la app (*Error* y *Desconectado*) son los dos que el SRS define.
 
 **Orden en que se están haciendo** (de menor a mayor complejidad, 2026-10-17):
-A2 → A13 → A3 → A5 → A1 → **A4 + A7**. El registro de cada uno, con lo que se
+A2 → A13 → A3 → A5 → **A4 + A7 + A1**. El registro de cada uno, con lo que se
 midió y lo que quedó sin poder probar, está en **§8**.
 
 ---
@@ -324,8 +324,13 @@ a abrir.
   editable. Si se cae en *Reproduciendo*, la representación se interrumpe y el
   estado vuelve a *Inactivo*. El texto no vuelve al campo en ese segundo caso,
   porque ya salió del campo y el usuario ya lo vio.
-- **A4, el micrófono.** **Sin resolver.** `fail()` apaga el micrófono; hay que
-  decidir si la desconexión respeta el modo TR o corta como cualquier error.
+- **A4, el micrófono.** **Resuelto el 2026-10-17:** la desconexión **lo apaga**, con
+  el aviso "Se perdió la conexión con el servidor. Se está reconectando." Cortar es
+  más honesto que dejar el micrófono grabando hacia un socket muerto, y le dice al
+  usuario de una vez que tiene que volver a prenderlo. **Consecuencia: el SRS hay que
+  ajustarlo** —`main.tex:709` dice que en modo TR el micrófono permanece encendido, y
+  la fila *Desconectado* no menciona el micrófono. El texto exacto para pegar está en
+  `openspec/sessions/2026-10-17-estados-y-desconexion.md` (§9 #9).
 - **A7, los nombres de los estados.** El enum queda con **los siete nombres del
   SRS, en español**: `Inactivo`, `Grabando`, `TextoListo`, `Procesando`,
   `Reproduciendo`, `Error`, `Desconectado`. La distinción entre dictado y TR
@@ -447,6 +452,69 @@ apagada (default) y encendida:
 Las dos ramas son excluyentes por construcción, pero se comprobaron las dos. Al
 terminar se dejó el interruptor como estaba (apagado, el default).
 
+### ✅ A7 + A4 + A1 — Los siete estados del SRS, y que la app no se trabe
+
+Las tres juntas porque no se separan: *Texto listo* **es** el estado que hace visible
+A1, y *Error* y *Desconectado* son los dos estados que le faltaban a la máquina y los
+dos que explican lo que le pasa al usuario cuando se cae la red.
+
+**A7.** El enum tiene los siete nombres del SRS y nada más: `Inactivo`, `Grabando`,
+`TextoListo`, `Procesando`, `Reproduciendo`, `Error`, `Desconectado`. Tres fusiones y
+dos conversiones:
+
+| SRS (7) | Antes (9) | Cómo quedó |
+|---|---|---|
+| Inactivo | `Idle` | Se queda. La etiqueta sigue diciendo "Listo para traducir" |
+| Grabando | `Dictating` + `Listening` | Uno solo; la etiqueta dice "Dictando..." o "Escuchando..." según el modo (`stateLabel`) |
+| Texto listo | flag `dictationReadyToSend` | **Se deduce** en `stateForUi`, no se asigna (§9 #10) |
+| Procesando | `Processing` + `Translating` | Uno solo |
+| Reproduciendo | `Signing` | Se queda |
+| Error | — (mensaje de 3 s) | **Creado**: `fail()` lo pone y vuelve a `Inactivo` a los 3 s |
+| Desconectado | `Offline` + `Connecting` | Uno solo, y con reconexión sin límite |
+
+`Done` pasó a ser el flag `doneVisible` (mismo patrón que `dictationReadyToSend`), así
+que el aviso de "Reproducción completada" no se perdió.
+
+**A4.** `BackendEvent.Disconnected` era `Unit`; ahora es `onDisconnected()`, con los
+dos casos que el SRS separa:
+
+| Cuándo se cae | Qué hace |
+|---|---|
+| **Procesando**, sin ninguna seña ejecutada | Cancela la frase, su texto vuelve al campo **editable** y Traducir vuelve a estar disponible: el usuario nunca la vio representada |
+| **Reproduciendo** | Interrumpe de verdad: `SignAI.stop()` corta el mixer y vacía la cola en el JS. El texto **no** vuelve al campo, porque ya salió de ahí y ya se mandó |
+| El micrófono, en los dos casos | **Se apaga**, con el aviso "Se perdió la conexión con el servidor. Se está reconectando." Decisión del owner (2026-10-17) |
+
+Además: el indicador se pone `Desconectado` **sin condición** (antes solo si el estado
+no era Traduciendo ni Reproduciendo, y por eso una caída a mitad de frase dejaba la
+app trabada sin salida); la espera crece de a 1 s hasta un tope de 5 s y **no tiene
+límite de intentos**; y el contador se reinicia en `BackendEvent.Connected`.
+
+**Un comando nuevo en el puente**, aditivo como todos (`BRG-8`): `SignAICommands.STOP`
+→ `window.SignAI.stop()`, que corta lo que esté sonando y vacía la cola. Vaciar la
+cola además de parar es a propósito: si quedara, el próximo `appendQueue` arrancaría
+en `queueIdx + 1` y saltaría los ítems de en medio.
+
+**Medido en el Redmi Note 9S**, con el backend falso cerrando la sesión a propósito:
+
+| Escenario | Resultado |
+|---|---|
+| Cae la conexión con la frase en vuelo | `sesión perdida: interrumpiendo=false cancelando=true`. El texto vuelve al campo **editable** y **Traducir queda habilitado**: la app ya no queda trabada |
+| Cae la conexión con el avatar representando | `interrumpiendo=true`, y en el JS `stop(): cola cortada (sonando=true)`. Avatar a reposo, estado `Inactivo` |
+| Reconexión | Vuelve sola, con la espera creciente, y el estado sale de `Desconectado` |
+| Backend inalcanzable desde el arranque | `Desconectado` con el aviso, sin bloquear nada |
+| Dictado → frase cerrada | Etiqueta **"Texto listo"**, persistente, con el texto editable esperando Traducir |
+| Se borra el texto | Vuelve a "Listo para traducir" |
+| TR prendido | "Escuchando..." |
+| TR apagado con la frase representada | "Listo para traducir" + Repetir, **no** "Texto listo" |
+| `error` del backend | El mensaje sale y Traducir vuelve a estar disponible; a los 3 s el estado es `Inactivo` |
+
+**Lo que no se pudo medir:** la reconexión en sí con la espera de 1 s / 2 s / 3 s… se
+vio que reconecta y que el contador se reinicia, pero no se cronometró la serie
+completa: para eso hay que dejar el backend caído y volverlo a levantar, y con
+`adb reverse` la caída no se propaga (el túnel deja la conexión medio abierta y OkHttp,
+que no tiene timeout de lectura, no se entera). Por eso las pruebas de caída se
+hicieron **pidiéndole al backend que cierre la sesión**, no matándolo.
+
 ---
 
 ## 9. Diferencias y problemas que aparecieron
@@ -463,4 +531,8 @@ anotan acá para que no se pierdan, y se marcan las que necesitan una decisión.
 | 5 | La clave `duracion_firmado` del `snapshot()` de `SignAiMetrics` seguía usando la palabra que `AGENTS.md` retiró el 2026-10-16 | `SignAiMetrics.kt` | **Resuelto en A13**: ahora es `duracion_representada`. Era una cadena de logcat, no un nombre de código |
 | 6 | **No hay dominio del backend.** Ni el SRS (`main.tex:1095`, `:1100`) ni `../sign-ai-docs` nombran uno, así que no había con qué armar el `wss://` | `app/build.gradle.kts` | En A3 el default de release quedó en `wss://backend.invalid/ws/translate`: un host que por construcción no resuelve (`.invalid`, RFC 2606). Es deliberado —un APK sin configurar habla con nadie en vez de con el host de otra persona, y el fallo es ruidoso— pero **es una decisión del owner**: hace falta el dominio real para que release sirva para algo |
 | 7 | **A1 no es separable de A7.** El SRS solo pide que "el indicador pase a *Texto listo*" (`main.tex:738`), y el indicador de la app es la etiqueta de estado del escenario. Convertir `dictationReadyToSend` en el estado `TextoListo` —que es justamente lo que hace A7— **deja A1 hecho**: la etiqueta pasa a decir "Texto listo" mientras el texto espera, en vez de un aviso de 3 s | `SignAiBottomBar.kt`, `MainScreenState.kt` | Hacer A1 con un mecanismo visual aparte (un ícono, un anillo) sería inventar un requisito que el SRS no pide, y además **chocaría con una decisión ya tomada**: el bloque de comentario de `SignAiBottomBar.kt:228-240` documenta que el ícono del micrófono **no** cambia en el tercer estado porque se probó en el dispositivo y el botón dejaba de leerse como micrófono. Falta que el owner confirme si se sigue con esa decisión o si A7 la revierte |
-| 8 | El comentario de `SignAiBottomBar.kt:234-236` dice que la señal del tercer estado es el **placeholder del campo**. No es así: el placeholder solo se ve cuando el campo está vacío, y en el tercer estado el campo **tiene** la frase. El propio estado lo dice en otro comentario (`MainScreenState.kt:891-894`: "con la frase escrita arriba, un placeholder no se ve nunca, que es justo cuando hace falta"). O sea: la app cree que tiene una señal persistente y no la tiene | `SignAiBottomBar.kt:234-236` | Se corrige el comentario al hacer A7. Hoy lo único que hay es el aviso de 3 s "Texto listo. Toca Traducir para enviarlo.", que se pierde a los 3 s |
+| 8 | El comentario de `SignAiBottomBar.kt:234-236` dice que la señal del tercer estado es el **placeholder del campo**. No es así: el placeholder solo se ve cuando el campo está vacío, y en el tercer estado el campo **tiene** la frase. El propio estado lo dice en otro comentario (`MainScreenState.kt:891-894`: "con la frase escrita arriba, un placeholder no se ve nunca, que es justo cuando hace falta"). O sea: la app creía que tenía una señal persistente y no la tenía | `SignAiBottomBar.kt` | **Resuelto en A7**: la señal es el estado `TextoListo`, y el comentario que daba el placeholder por bueno está corregido |
+| 9 | **El SRS hay que ajustarlo en dos puntos**, por decisiones que el owner tomó el 2026-10-17. No es un error del documento: son requisitos que la app cumple distinto y el documento tiene que reflejarlo | Overleaf, `main.tex` | **(a)** `main.tex:709` dice que en modo TR el micrófono **permanece encendido**; con la caída de conexión la app lo **apaga** y avisa. **(b)** La fila *Desconectado* (`main.tex:761-772`) no dice qué pasa con el micrófono. El texto exacto que hay que pegar está en `openspec/sessions/2026-10-17-estados-y-desconexion.md` |
+| 10 | `TextoListo` se **deduce** en vez de asignarse, y por qué | `MainScreenState.stateForUi` | `dictationReadyToSend` depende de tres cosas a la vez (micrófono apagado, campo con texto, nada retenido) y cualquiera la deshace. Si fuera un estado asignado habría que acordarse de volver a ponerlo en cada transición, y cuando se olvidaba tapaba `Desconectado`. Como estado asignado se dejaba pegado en "Texto listo" con la conexión caída, que es un aviso peor que ninguno |
+| 11 | Dictar "X", pasar al TR y decir "X" otra vez dejaba el mismo texto **en los dos lados**: el avatar lo representaba y, al apagar el TR, `stopCapture` lo devolvía al campo como pendiente. Con A1 eso se veía como "Texto listo" sobre una frase que ya se había representado, con Traducir pidiendo mandarla otra vez | `MainScreenState.sendLivePhrase` | **Resuelto**: si lo que sale en vivo es justamente lo que estaba esperando confirmación, deja de estar pendiente. El pendiente sobrevive cuando es **otro** texto, que ese sí es del usuario y no se mandó |
+| 12 | El estado `Error` existe en la máquina, pero **lo que se lee es el mensaje**, no la palabra "Error": `statusLine` da prioridad al mensaje transitorio | `MainScreenState.statusLine` | Decisión, no olvido: "No llegó el final de la transcripción." le dice al usuario mucho más que "Error". Si el owner quiere que la palabra aparezca, hay que cambiar `statusLine` para que con estado `Error` muestre `Error · <mensaje>`, o colorear el punto del hint |

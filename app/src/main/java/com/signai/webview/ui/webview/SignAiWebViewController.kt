@@ -28,6 +28,15 @@ interface SignAiWebViewController {
     /** Arranca a representar desde [index]; no hace nada si ya hay algo sonando. */
     fun playFrom(index: Int)
 
+    /**
+     * Corta la representación en curso y deja al muñeco en pose de reposo.
+     *
+     * Estado *Desconectado* del SRS (`main.tex:761-772`): cuando la conexión se cae
+     * con el avatar representando, la representación se interrumpe. Es aditivo —
+     * el resto del puente no cambia (`BRG-8`).
+     */
+    fun stop()
+
     fun setDefaultSign(url: String)
 
     fun setDebug(on: Boolean)
@@ -81,6 +90,8 @@ class WebViewSignAiController : SignAiWebViewController {
     }
 
     override fun playFrom(index: Int) = js(SignAiCommands.playFrom(index))
+
+    override fun stop() = js(SignAiCommands.STOP)
 
     private fun serialize(items: List<SignQueueItem>): String = JSONArray().apply {
         items.forEach { item ->

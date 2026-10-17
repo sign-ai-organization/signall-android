@@ -72,6 +72,19 @@ object SignAiCommands {
     fun playFrom(index: Int) = "window.SignAI?.playFrom(${index.coerceAtLeast(0)})"
 
     /**
+     * Corta lo que esté sonando y deja al muñeco en pose de reposo.
+     *
+     * Lo necesita el estado *Desconectado* del SRS (`main.tex:761-772`): "si la
+     * pérdida ocurre cuando el avatar ya está representando, la representación se
+     * interrumpe". Sin esto la app volvía a reposo en la interfaz mientras el
+     * canvas seguía con la seña adelante, que es el peor de los dos mundos.
+     *
+     * Aditivo, como todos: el guard `?.` y los comandos anteriores no cambian
+     * (`BRG-8`), y en el JS es un método nuevo al lado de los otros.
+     */
+    const val STOP = "window.SignAI?.stop()"
+
+    /**
      * Sets the sign the scene opens on and falls back to (settings menu).
      *
      * [url] is a same-origin asset path from [SignsCatalog.assetUrl]; it is

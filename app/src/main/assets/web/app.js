@@ -796,6 +796,30 @@ window.SignAI = {
     loadSignClips(defaultSignUrl).then(({ clips }) => startClip(pickVariant(clips)));
   },
 
+  /**
+   * Corta lo que esté sonando y vacía la cola.
+   *
+   * Lo llama Android cuando se pierde la conexión y el turno ya está
+   * representándose a medias (estado *Desconectado* del SRS). Sin esto la interfaz
+   * volvía a reposo mientras el canvas seguía con la seña adelante.
+   *
+   * Vaciar la cola además de parar es a propósito: si quedara, un `appendQueue`
+   * posterior arrancaría en `queueStarted ? queueIdx + 1 : 0` y saltaría los ítems
+   * que quedaron entre medio. Con la cola vacía, el próximo `setQueue` de una frase
+   * nueva arranca en 0 como debe.
+   *
+   * Aditivo: no cambia `play`, `setQueue` ni el guard `?.` (BRG-8).
+   */
+  stop() {
+    const estabaSonando = state.playing;
+    stopPlayback();
+    state.queue = [];
+    state.queueIdx = 0;
+    state.queueStarted = false;
+    console.log(`stop(): cola cortada (sonando=${estabaSonando})`);
+    return true;
+  },
+
   setDebug(on) { Debug.enabled = !!on; Debug.render(); },
 
   /**
