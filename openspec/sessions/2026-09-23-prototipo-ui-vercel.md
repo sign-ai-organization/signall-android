@@ -33,7 +33,7 @@
    `localhost:3000`) para tenerlo como referencia. No se pudo capturar
    pantallazos: **no hay navegador de escritorio conectado a la sesión**
    (`browser.tabs.open` → `browser.disconnected`). Server detenido al cierre.
-5. **Plan escrito** en `openspec/changes/prototipo-ui-vercel/tasks.md`:
+5. **Plan escrito** en `openspec/changes/archive/2026-10-17-prototipo-ui-vercel/tasks.md`:
    enfoque (reconstruir nativo, no embeber), inventario feature-by-feature,
    capacidades nuevas, qué NO copiar, 7 fases (A–G), riesgos y decisiones
    abiertas.

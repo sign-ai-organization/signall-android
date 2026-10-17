@@ -73,9 +73,11 @@ Ya tiene listo el canal: un WebSocket en `ws://IP-DEL-BACKEND:8080/ws/translate`
 
 ## Paso 0 — Dejar el backend listo (en el otro repositorio)
 
-- [ ] **0.1 — Llenar la tabla de las 50 señas.** Hoy la tabla está vacía: si está
+- [x] **0.1 — Llenar la tabla de las 50 señas.** ~~Hoy la tabla está vacía: si está
       vacía, el backend responde "esta seña no existe" para todo y no hay nada que
-      ver. Es correr un script que inserte las 50. **Es lo único que bloquea.**
+      ver.~~ **Hecho el 2026-10-14** con `tools/seed_catalog.py --apply` (idempotente).
+      Verificado end-to-end con el `CatalogRepository` real y cruzado contra el disco y
+      `SignsCatalog.kt` por sha256. Log: `openspec/sessions/2026-10-14-seed-catalog-neon.md`.
 - [x] **0.2 — Que el backend acepte texto escrito.** Hoy solo entendía audio: si le
       mandábamos una frase escrita, la tiraba sin avisar. **Hecho en el PR #7.**
       Verificado con `python -m scripts.verify_text_frames`.
@@ -241,10 +243,12 @@ Al final, porque no hace falta para probar nada de lo anterior.
       usar lo que realmente escucha.
 - [x] Si se cae la conexión, reconectar solo y dejar el avatar quieto. →
       `MainScreenState.connect` con backoff.
-- [ ] **Cerrar la frase al soltar el micrófono.** Depende de que el backend
-      reenvíe el frame `end` al STT: está en la rama
-      `feat/android-client-support-v2` del backend, sin mergear. Ver
-      `openspec/sessions/2026-10-04-protocolo-backend.md`.
+- [x] **Cerrar la frase al soltar el micrófono.** Depende de que el backend
+      reenvíe el frame `end` al STT: ~~está en la rama
+      `feat/android-client-support-v2` del backend, sin mergear.~~ **Hecho y mergeado**
+      (2026-10-15, rama `flujo-oraciones`). Ver
+      `openspec/sessions/2026-10-04-protocolo-backend.md` y
+      `openspec/sessions/2026-10-15-final-vacio-dictado.md`.
 
 ---
 

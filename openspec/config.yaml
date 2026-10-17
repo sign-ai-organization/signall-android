@@ -67,7 +67,7 @@ context: |
   `APP`, `STA`, `GLS`, `BRG`, `ANI`, `SEM`, `RSP`, `BRD`, `OM`). Derivado del
   prototipo `PrototipoFrontend/` (Next.js/Vercel, solo referencia visual). La
   app se implementa en Compose nativo (Lumo + Phosphor); el WebView es solo el
-  canvas 3D. Plan de ejecución: `openspec/changes/prototipo-ui-vercel/tasks.md`.
+  canvas 3D. Plan de ejecución: `openspec/changes/archive/2026-10-17-prototipo-ui-vercel/tasks.md`.
 
   **Branding ABIERTO**: se mantiene "SignAI" por ahora, pero el nombre
   seguramente cambiará (el prototipo usa "Seña"); el wordmark debe ser una
@@ -84,7 +84,7 @@ context: |
   branding sigue centralizado en `ui/SignAiBranding.kt` (nombre abierto).
 
   ### Integraciones futuras
-  - `../sign-ai-backend`: SÍ. Plan en `openspec/changes/integracion-backend/tasks.md`.
+  - `../sign-ai-backend`: SÍ. Plan en `openspec/changes/archive/2026-10-17-integracion-backend/tasks.md`.
     Decisiones 2026-09-30: (a) **híbrido** — el vertical slice reproduce frames de
     landmarks servidos por HTTP, los clips GLB por seña se difieren; (b) **texto
     primero**, el audio real (`AudioRecord`) es la Fase D. La red la posee Kotlin

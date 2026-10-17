@@ -33,5 +33,6 @@
 - **Non-text contrast (1.4.11)**: UI components and graphical objects need ≥ 3:1 contrast against adjacent colors.
 - Applies to: form field borders, icon-only buttons, chart elements, custom controls.
 - **Focus appearance (2.4.13 - AAA)**: focus indicator must have ≥ 3:1 contrast and sufficient size.
-- Material3 default focus indicators generally meet this requirement.
-- Audit custom focus indicators — ensure they're visible on all surface colors.
+- The focus indicator's contrast has to be audited a mano: los componentes de este proyecto
+  son propios, no vienen con un indicador por defecto. Check it on every surface color,
+  including the two light-mode surfaces (`#FEFEFC`, `#F4F4F2`).

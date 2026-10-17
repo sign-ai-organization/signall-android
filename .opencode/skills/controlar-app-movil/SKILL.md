@@ -1,6 +1,8 @@
 ---
 name: controlar-app-movil
 description: Conducir la app Android nativa de SignAI (Kotlin/Compose + WebView) en el emulador o en el dispositivo físico - compilarla, instalarla, tocar pantallas, leer el árbol de accesibilidad, verificar cambios en pantalla y medir rendimiento. Usar cuando haya que probar, verificar, depurar o mostrar en pantalla algo de la app, cuando el usuario pida "probá en el móvil", "levantá la app", "instalala y probala", "verificá en el dispositivo", o cuando reporte que la app se siente lenta o va lento.
+metadata:
+  opencode/slash: "true"
 ---
 
 # Controlar la app móvil

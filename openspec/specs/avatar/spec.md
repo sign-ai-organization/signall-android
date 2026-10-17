@@ -55,7 +55,7 @@ Descartados con evidencia, no reabrir: el promedio de los 46 inicios de clip
 rig la rotación local de `.R` es el espejo de la de `.L` solo en la pose de
 bind, y promediar una pose de animación con su espejo cae fuera del rango para
 el que la malla fue tejida — se ve en
-[`img/`](../changes/reposo-y-crossfade/img/)).
+[`img/`](../changes/archive/2026-10-17-reposo-y-crossfade/img/)).
 
 ### Por qué re-posa y no deforma
 
@@ -141,7 +141,7 @@ mismo esqueleto mientras three.js las mezcla (`crossFadeTo` / `fadeIn` /
   action por clip, así que es la misma y no hay dos que mezclar. Es corte seco,
   y está bien — los clips son continuos consigo mismos.
 
-Detalle, duración y la cuenta de por qué 100 ms: `openspec/changes/reposo-y-crossfade/investigacion.md`.
+Detalle, duración y la cuenta de por qué 100 ms: `openspec/changes/archive/2026-10-17-reposo-y-crossfade/investigacion.md`.
 
 ## Bugs conocidos
 

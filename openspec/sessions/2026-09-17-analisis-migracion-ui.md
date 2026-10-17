@@ -43,7 +43,7 @@
    con `./gradlew build` verde + verificación manual + commit antes de
    continuar. Fase 0 = bootstrap (sin cambios visuales). Fase 7 = polish.
 
-6. **Creado `openspec/changes/ui-migration-lumo/`** con
+6. **Creado `openspec/changes/archive/2026-10-17-ui-migration-lumo/`** con
    `.openspec.yaml` y `tasks.md` (plan completo, riesgos, criterios de éxito).
 
 ## Decisiones tomadas
@@ -70,7 +70,7 @@ clave del `AGENTS.md` y del brief original:
 2. Reutilización clara de elementos.
 3. Coherencia con Clean Architecture.
 
-**Actualizaciones aplicadas al plan** (`openspec/changes/ui-migration-lumo/tasks.md`):
+**Actualizaciones aplicadas al plan** (`openspec/changes/archive/2026-10-17-ui-migration-lumo/tasks.md`):
 
 - Añadida sección **"Capas y responsabilidades (Clean Architecture, práctico)"**
   con 4 capas explícitas:
