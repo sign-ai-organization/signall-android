@@ -88,7 +88,7 @@ están corregidos, así que la advertencia se borró en vez de actualizarse.
 | **`contrato-websocket`** | Es un **procedimiento**: leer los dos lados, cambiar de forma aditiva, y cerrar diciendo qué queda pendiente del otro lado. Se dispara por tarea, no siempre. |
 | **`tres-fuentes-de-verdad`** | Es el flujo de revisión de las tres fuentes y qué hacer cuando no alinean, más la tabla de señales para determinar cuál de los dos está mal. |
 | **`sesion-openspec`** | La convención de la bitácora con su plantilla y la regla de mantener el índice. Es lo que hace que "cada sesión deja rastro" sea algo que se cumple y no una intención. |
-| **`overleaf-lectura`** | La prohibición queda siempre en `AGENTS.md`; el **mecanismo** (las ocho `policies`, por qué va en `policies` y no en `permissions`, cómo se renueva la cookie) es una auditoría bajo demanda. |
+| **`overleaf-lectura`** | Cómo leer la tesis, la cookie, y qué hacer cuando un documento está mal. El mecanismo del bloqueo (`policies` vs `permissions`) queda para el que ya está por tocar la config. |
 
 ### `compose-best-practices`: reescrito como Lumo
 
@@ -234,6 +234,52 @@ nada.**
 
 **Verificado: `~/.config/opencode/opencode.json` sigue intacto, con las ocho `policies` en
 `deny`.** No se tocó en ninguna de las dos vueltas.
+
+### Tercera corrección: el bloqueo dejó de ser una tarea
+
+En otra sesión, un agente reportó esto sin que nadie se lo pidiera:
+
+> Lo primero, dos avisos. 1. No pude confirmar que el bloqueo de escritura esté puesto. La
+> lista de herramientas que opencode me muestra está truncada... Si querés que verifique el
+> bloqueo, hay que abrir `~/.config/opencode/opencode.json` y eso necesita tu autorización
+> explícita.
+
+**La causa fui yo.** La sección de Overleaf del `AGENTS.md` decía, en el punto 3, que "el
+estado del bloqueo se mira **antes de usar nada**", y en el punto 5 que el skill servía
+"para auditar el bloqueo". Eso crea una **tarea**, y toda tarea con modo de falla se reporta.
+Peor: el método de auditoría que yo mismo propuse **no puede funcionar**.
+
+Verificado el 2026-10-17: el listado de herramientas muestra las **diecisiete**, incluidas
+las ocho denegadas (`edit_file`, `find_and_replace`, `accept_changes`, `reject_changes`,
+`reply_comment`, `resolve_comment`, `reopen_comment`, `compile`). **El `deny` se aplica al
+llamar, no al listar.** O sea que "si `overleaf_edit_file` aparece entre las herramientas,
+algo cambió la config" era falso, y estaba escrito **en tres lugares** del skill
+`overleaf-lectura`. Por eso esa sesión no podía cerrarlo: le estaba pidiendo algo que el
+listado no puede responder.
+
+El owner lo explicó mejor: *"no es necesario que lo revise, él ya lo sabe y simplemente
+necesito que lo tenga en cuenta, pero no es necesario que me lo mencione en su mensaje"*.
+
+Qué cambió:
+
+- **Se borró la tarea de auditoría**, no se cambió por una instrucción de "no auditar". No
+  decir "no audites" sigue siendo darle el tema; la ausencia de la tarea es lo que hace que
+  no aparezca en el mensaje.
+- **`AGENTS.md`**: la sección pasó de 134 líneas a 23, y la del medio —que era un duplicado
+  con su propio encabezado— quedó en cuatro líneas de prosa que apuntan al final. Sacó el
+  ensayo sobre "el bloqueo lo impone opencode, no la credencial", que es exactamente lo que
+  invita a pensar que hay que verificar algo. El `AGENTS.md` quedó en 390 líneas.
+- **El índice** ya no ofrece el skill para "auditar el bloqueo de escritura"; lo ofrece para
+  consultar la tesis.
+- **El skill `overleaf-lectura`** quedó en 83 líneas y es sobre **leer**: las nueve
+  herramientas, la cookie, qué hacer cuando un documento está mal. El mecanismo del bloqueo
+  quedó en una sección de dos puntos que dice "solo si alguien está por tocar la config, y
+  no como tarea".
+- **Lo único que queda de aviso** es el que el owner dijo que quería: la ventana de Chromium
+  cuando la cookie venció, porque rompe el flujo si aparece a mitad de una implementación.
+
+El bloqueo **sí** quedó verificado una vez, acá: ocho `policies` en `deny` y nada de Overleaf
+en `permissions`. Después de eso, es un hecho del entorno y no se vuelve a mirar.
 
 ## Qué quedó pendiente
 

@@ -58,27 +58,15 @@ El flujo que pidió el owner:
 3. **Si no están alineados, no seguir por cuenta propia.** Primero determinar cuál de los
    dos está mal —el **documento** o el **código**— y ahí preguntarle al owner.
 
-Un detalle práctico: la revisión de Overleaf tiene un costo en tiempo, porque el MCP abre
-una ventana de Chromium cuando la cookie venció (~5 días). **Avisá que vas a leer, no lo
-hagas por sorpresa** a mitad de una implementación.
+Un detalle práctico: la revisión de Overleaf tiene un costo en tiempo, porque el MCP puede
+abrir una ventana de Chromium cuando la cookie venció (~5 días). **Avisá que vas a leer, no
+lo hagas por sorpresa** a mitad de una implementación.
 
-### El Overleaf es de sólo lectura. Prohibido escribir.
-
-**Se usa para REVISAR. Prohibido escribir cualquier cosa** — un `.tex`, un comentario, una
-sugerencia, un cambio aceptado o rechazado — **salvo que el owner lo diga explícitamente en
-un mensaje.** No alcanza con que la tarea parezca necesitarlo, ni con que el cambio sea "solo
-corregir una tilde". **Ni `compile`**: no se compila desde acá.
-
-Está bloqueado a nivel de configuración, no por buena voluntad: ocho `policies` en
-`~/.config/opencode/opencode.json` deniegan las herramientas de escritura y `compile`.
-Quedan 9 usables, todas de lectura.
-
-El límite honesto: **el bloqueo lo impone opencode, no la credencial.** La cookie sigue
-teniendo permiso de escritura sobre toda la cuenta. Dentro de opencode no hay forma de
-escribir; fuera de él, sí. Por eso la regla se sostiene en que el owner la confirme.
-
-Para auditar el bloqueo, entender por qué tiene que estar en `policies` y no en
-`permissions`, y cómo se renueva la cookie: skill **`overleaf-lectura`**.
+De Overleaf se usa la fuente para **revisar**, y solo eso: está bloqueado a nivel de
+configuración —ocho `policies` en `~/.config/opencode/opencode.json`—, así que las nueve
+herramientas que quedan son todas de lectura. La regla completa, y por qué el bloqueo está
+en `policies` y no en `permissions`, están al final de este archivo y en el skill
+**`overleaf-lectura`**.
 
 ### No hay desempate entre las dos fuentes de documento
 
@@ -360,7 +348,7 @@ pide. La regla es leer la fila antes de decidir, no después.
 |---|---|
 | **Un frame del WebSocket, un nombre de métrica, el catálogo, o cualquier cosa que cruce a otro repo** | skill **`contrato-websocket`** — el contrato se lee en los dos lados antes de cambiarse, y el otro lado tiene que quedar actualizado o la deuda se dice en voz alta |
 | **Si el código y los documentos no coinciden, o hay que decidir si manda el código o el documento** | skill **`tres-fuentes-de-verdad`** — las tres fuentes, el flujo de revisión y qué hacer cuando no alinean |
-| **Consultar o compilar el Overleaf, o auditar el bloqueo de escritura** | skill **`overleaf-lectura`** — cómo leer, y por qué el bloqueo está en `policies` y no en `permissions` |
+| **Consultar el Overleaf de la tesis** | skill **`overleaf-lectura`** — cómo leer, la cookie, y qué hacer cuando un documento está mal |
 | **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, IDs de Overleaf |
 | **Saber qué se decidió ya entre el código y los documentos** | [`docs/CONTRASTE-DOCUMENTOS.md`](docs/CONTRASTE-DOCUMENTOS.md) — el contraste app ↔ documentos del 2026-10-16, con la decisión que se tomó en cada caso |
 | **El micrófono, el modo en vivo, la cola de la escena o la latencia** | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) + `tools/TIEMPO-REAL.md` |
@@ -378,134 +366,25 @@ Se invocan con `@nombre`.
 
 ---
 
-# ⛔ EL OVERLEAF ES DE SOLO LECTURA. NUNCA SE ESCRIBE EN ÉL.
+# El Overleaf es de solo lectura
 
-> Esta es la regla más importante del archivo. Va al final a propósito: es lo último que
-> se lee y lo último que se olvida.
->
-> **Dos cosas distintas, que se confunden fácil:**
->
-> - **Escribir en Overleaf**: prohibido, salvo que el owner lo pida explícitamente en un
->   mensaje. Acá no hay "se puede con permiso": o lo pidió, o no se hace.
-> - **Tocar el bloqueo**: se puede, pero hace falta un permiso **distinto y más específico**
->   (punto 2). Y tocar el bloqueo no habilita escribir.
->
-> Que una de las dos esté autorizada **no** habilita la otra.
+De Overleaf **se lee libremente**, sin pedir permiso: `ping`, `list_projects`,
+`open_project`, `list_files`, `read_file`, `read_log`, `list_comments`,
+`read_comment_thread`, `list_tracked_changes`. Las nueve de lectura.
 
-## 1. Escribir en Overleaf: solo si el owner lo pide, en un mensaje
+**No se escribe.** Ni un `.tex`, ni un comentario, ni una sugerencia, ni un cambio
+aceptado o rechazado, ni `compile`. Solo si el owner lo pide explícitamente en un mensaje, y
+no cuenta como que lo pidió que la tarea lo requiera, que sea obviamente correcto, que sea
+"una tilde", o que se haya hecho antes. Si queda pendiente corregir algo en Overleaf, **se lo
+decís al owner y lo hace él.**
 
-Un `.tex`, un comentario, una sugerencia, un cambio pendiente, un cambio aceptado o
-rechazado: **nada**. Tampoco `compile`. Ni para "corregir una tilde", ni porque el
-documento esté claramente mal, ni porque el cambio "sea del color del bien".
+Editar `~/.config/opencode/opencode.json` requiere su confirmación explícita en un mensaje.
+Para tocar un `deny` de Overleaf hace falta que el mensaje **hable de Overleaf**: un "arreglá
+la config" no alcanza. Sin confirmación, se propone el cambio exacto y se espera.
 
-**Solo se puede escribir si el owner lo pide de forma explícita, en un mensaje.** Y
-"explícitamente" quiere decir que lo escribió él, en esa sesión. No cuenta:
+Lo único que hay que avisar antes de leer: el MCP **abre una ventana de Chromium con perfil
+aislado cuando la cookie venció** (duran ~5 días), y hay que avisar porque rompe el flujo si
+aparece a mitad de una implementación.
 
-- que la tarea "requiera" un cambio de documentación
-- que sea obviamente correcto
-- que sea "solo corregir una tilde"
-- que otro documento diga otra cosa
-- que se haya hecho antes
-
-Si al final de tu trabajo queda pendiente corregir algo en Overleaf, **eso se le dice al
-owner y lo hace él.** No se hace.
-
-## 2. Los permisos que bloquean la escritura: solo con confirmación explícita
-
-El bloqueo vive en las `policies` de `~/.config/opencode/opencode.json`.
-
-**Se puede editar ese archivo. Pero nunca sin el permiso del owner, y hay dos niveles de
-permiso:**
-
-### 2a. Editar la configuración global — confirmación explícita en un mensaje
-
-Cualquier cambio en `~/.config/opencode/opencode.json` necesita que el owner lo autorice
-**de forma explícita, en un mensaje, en esa sesión**. Es posible, se puede hacer — pero no
-por iniciativa propia.
-
-**Sin esa confirmación, no se abre el archivo.** Y esto no cuenta como confirmación:
-
-- que el cambio "sea obviamente necesario", o que la tarea lo pida
-- que esté en un `README` o en un documento del proyecto
-- que haya parecido una buena idea al leer el archivo
-- que el owner haya confirmado **otra cosa** en el mismo mensaje
-
-Si hay que cambiar algo y no hay confirmación, **se lo dice al owner con el cambio exacto
-propuesto y espera.** No se toca el archivo mientras tanto.
-
-### 2b. Los `deny` de Overleaf — confirmación que hable **de Overleaf**
-
-**Este es un nivel aparte y más estricto.** Quitar, editar, mover o tapar un `deny` de
-Overleaf requiere que el mensaje del owner sea **sobre esos permisos**, no un permiso
-general para tocar la configuración.
-
-> Un "arreglá lo que necesites en la config" **no** habilita quitar un `deny` de Overleaf.
-> Hace falta algo como "sí, sacá el `deny` de `overleaf_edit_file`" — y solo ese.
-
-| | Sin confirmación | Con confirmación del owner |
-|---|---|---|
-| Editar la config global por otra razón | **No** | **Sí** |
-| Quitar o editar un `deny` de Overleaf | **No** | **Sí, pero el mensaje tiene que ser sobre Overleaf** |
-| Mover los `deny` de `policies` a `permissions` | **No** | **Idem: confirmación específica** |
-| Agregar un `allow` que los tape | **No** | **Idem: confirmación específica** |
-| Editar el `opencode.json` de un repo para levantarlos | **No, nunca sirve** | Ningún `opencode.json` de repo puede levantar un `policies` global |
-
-Y sigue valiendo una cosa en cualquier nivel:
-
-- **No se "prueba" nada.** No se manda un `overleaf_edit_file` de prueba para ver si el
-  bloqueo funciona. Se verifica mirando si la herramienta aparece entre las disponibles.
-- **Meter un MCP, un plugin o un script que esquive el bloqueo no es una solución**, es
-  una violación: sigue siendo escribir en Overleaf por la puerta de atrás.
-
-## 3. Si el bloqueo parece roto, se reporta. No se arregla por cuenta propia.
-
-`opencode` levanta las herramientas disponibles al arrancar la sesión, así que el estado
-del bloqueo se mira **antes de usar nada**.
-
-- **Si `overleaf_edit_file`, o cualquier otra de escritura, o `overleaf_compile`, aparece
-  entre las herramientas disponibles**, el bloqueo **no está puesto**: es una
-  configuración rota y hay que decirlo de inmediato. **Se sigue sin escribir**, y se avisa.
-- **Si una denegación no hace nada** y una herramienta de escritura responde con un error
-  en vez de quedar bloqueada: **se reporta**. No se reintenta ni se busca la vuelta.
-- **"Arreglarlo" significa proponerlo, no hacerlo.** Si el bloqueo está roto, se le
-  describe al owner qué falta y se espera su mensaje. Tocar la config sin ese mensaje va
-  contra el punto 2a, y tocar los `deny` sin un mensaje que hable de Overleaf va contra el
-  2b.
-
-Nunca se "prueba" una herramienta de escritura para ver si funciona. **No se prueba.**
-
-## 4. La cookie tiene permiso igual, y por eso esta regla no es opcional
-
-El bloqueo lo impone opencode, **no la credencial**. La cookie de sesión sigue teniendo
-permiso de escritura sobre toda la cuenta, y Overleaf en plan gratis no da tokens con
-alcance limitado.
-
-**Dentro de opencode no hay forma de escribir; fuera de él, sí.** Por eso la regla se
-sostiene en que el owner la confirmó: el `deny` hace que sea imposible por accidente, pero
-no impide que alguien lo esquive a propósito.
-
-**Por eso el punto 2 importa tanto.** Si un agente puede editar
-`~/.config/opencode/opencode.json`, puede quitarse el bloqueo a sí mismo antes de escribir.
-Por eso ese cambio exige una confirmación que hable **de Overleaf** y no un permiso general
-para tocar la configuración: es la diferencia entre "arreglá la config" y "dejá escribir en
-la tesis".
-
-Y por qué la regla se sostiene en la confirmación del owner y no solo en el `deny`: porque
-**el `deny` se puede quitar.** Un bloqueo que se puede desactivar desde el mismo sitio donde
-está escrito no es una garantía; es una barrera. La garantía es que nadie lo toque sin
-que el owner lo haya pedido de forma explícita.
-
-## 5. Lo que sí se puede hacer con Overleaf
-
-Leer, listar y comparar, nada más:
-
-`ping` · `list_projects` · `open_project` · `list_files` · `read_file` · `read_log` ·
-`list_comments` · `read_comment_thread` · `list_tracked_changes`
-
-Y una advertencia práctica: **avisale al owner antes de leer**, porque el MCP abre una
-ventana de Chromium con perfil aislado cuando la cookie venció (~5 días). No se le avisa
-por sorpresa a mitad de una implementación.
-
-El detalle operativo —las ocho `policies`, por qué van en `policies` y no en
-`permissions`, cómo se renueva la cookie— está en el skill `overleaf-lectura`. **Para
-leer. Para auditar el bloqueo. No para cambiarlo.**
+Leer no necesita más explicación. Cómo está puesto el bloqueo y qué hacer cuando un
+documento de Overleaf está mal, en el skill **`overleaf-lectura`**.
