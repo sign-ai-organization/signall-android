@@ -186,12 +186,20 @@ class MainScreenState(
      * que ya mide `rt_sentence_delay_ms`.
      */
     fun onSignStart(queueIndex: Int, jsMillis: Long) {
-        if (firstSegmentAt == 0L) return
-        val elapsedMs = SystemClock.elapsedRealtime() - firstSegmentAt
+        val now = SystemClock.elapsedRealtime()
+        // La escena se movió sin que hubiera una frase en vuelo: cola de un turno
+        // muerto, o el avatar calentando al abrir. No es una muestra de nada.
+        if (firstSegmentAt == 0L || turnSentAt == 0L) return
+        val elapsedMs = now - firstSegmentAt
         Log.i(TAG, "signStart: oración→avatar $elapsedMs ms (seña $queueIndex, reloj JS $jsMillis ms)")
         if (signStartReported) return
         signStartReported = true
         metrics.onSignStart(elapsedMs)
+        // El total del SRS. `oración→avatar` es solo el último tramo —de la
+        // primera oración al primer movimiento—; este arranca donde lo hace el del
+        // usuario: al mandar la frase. Es el número que se puede comparar con la
+        // línea base, porque ahí no hay nada del teléfono ni del avatar.
+        metrics.onFirstSign(now - turnSentAt)
     }
 
     /**
@@ -327,6 +335,20 @@ class MainScreenState(
 
     /** Wall clock of the current turn, for the timing logs and `metrics`. */
     private var turnStartedAt = SystemClock.elapsedRealtime()
+
+    /**
+     * Cuándo se mandó la frase del turno en curso, o `0` si no hay ninguna.
+     *
+     * Es el arranque del **tiempo hasta la primera seña** del SRS (`main.tex:848-852`),
+     * y va aparte de [turnStartedAt] a propósito. Ese reloj se reinicia en
+     * [resetTurn], que también llama [resumeListeningIfMicOn] al terminar cada
+     * frase en modo en vivo; con un solo reloj, una frase cuya escena se moviera
+     * después del `done` midió desde el reloj de la frase siguiente, o no midió.
+     *
+     * Además sirve de cerrojo: con `0` no hay turno en vuelo, así que un
+     * `signStart` suelto —de una cola que ya murió— no inventa una muestra.
+     */
+    private var turnSentAt = 0L
 
     /**
      * La captura en curso —o la que el usuario acaba de cortar— es de dictado.
@@ -793,6 +815,9 @@ class MainScreenState(
         isReplay = false
         // Un turno anterior no puede filtrarse a este.
         clearTurnState()
+        // Arranca **después** de limpiar: `clearTurnState` borra el reloj del turno
+        // anterior, y el SRS mide desde que esta frase sale, no desde la anterior.
+        turnSentAt = SystemClock.elapsedRealtime()
         playbackState = PlaybackState.Translating
         Log.i(TAG, "en vivo → envío: $text")
         return true
@@ -940,6 +965,9 @@ class MainScreenState(
         dictationBuffer = ""
         // Nothing of a previous phrase may survive into this one.
         clearTurnState()
+        // El SRS mide el "tiempo hasta la primera seña" desde que el texto se manda
+        // a traducir (`main.tex:848-852`), que es este momento.
+        turnSentAt = SystemClock.elapsedRealtime()
         playbackState = PlaybackState.Translating
         // Toda frase que sale de acá queda retenida en el campo: el Traducir con
         // lo dictado, el Traducir a mano y el Repetir. Sin esto, Traducir y
@@ -979,6 +1007,7 @@ class MainScreenState(
         queueStarted = false
         turnQueueItems.clear()
         conversationTurnIndex = -1
+        turnSentAt = 0L
         resetTurn()
     }
 

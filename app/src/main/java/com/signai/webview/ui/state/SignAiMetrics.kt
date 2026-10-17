@@ -30,6 +30,7 @@ class SignAiMetrics {
     private val turnTotal = Latency()
     private val signTotal = Latency()
     private val signStart = Latency()
+    private val firstSign = Latency()
 
     /**
      * Una frase se representó: desde que el usuario la mandó hasta que el backend
@@ -103,6 +104,34 @@ class SignAiMetrics {
     }
 
     /**
+     * **Tiempo hasta la primera seña**, la segunda de las tres medidas del SRS
+     * (`main.tex:848-852`): desde que el texto se manda a traducir hasta que el
+     * avatar ejecuta la primera seña.
+     *
+     * Es el número que decide si la app se siente en tiempo real, y era el único
+     * que no existía. Los otros dos miden un tramo distinto: [onTurn] va del envío
+     * al `done` del backend —el NLP, sin nada de la escena— y [onSignStart] va de
+     * la primera oración al primer movimiento, o sea solo el tramo del teléfono.
+     * Los dos estaban, el total no: sin él no se puede afirmar que una mejora en
+     * cualquiera de los dos se notó, y sin la línea base de las 28 frases cualquier
+     * comparación es inventada.
+     *
+     * El punto de partida es el mismo del SRS y no el primer texto: mandar la
+     * frase, apretar Traducir o —en modo en vivo— cerrarse la frase. Es el reloj
+     * que la persona percibe; cualquier otro arranque mide algo que ella no esperó.
+     *
+     * Una muestra por frase: las siguientes señas del mismo turno llegan con el
+     * avatar ya sonando, y para esas lo que importa es cuánto tardó el backend.
+     */
+    fun onFirstSign(totalMs: Long) {
+        firstSign.record(totalMs)
+        Log.i(
+            TAG,
+            "envío→primera seña: $totalMs ms (${firstSign.summarise()})",
+        )
+    }
+
+    /**
      * Una frase del dictado se cerró, sea por el silencio que oyó el STT o
      * porque el usuario apagó el micrófono.
      *
@@ -129,6 +158,7 @@ class SignAiMetrics {
         append(" duracion_frase=").append(turnTotal.summarise())
         append(" duracion_firmado=").append(signTotal.summarise())
         append(" oracion_a_avatar=").append(signStart.summarise())
+        append(" envio_a_primera_sena=").append(firstSign.summarise())
     }
 
     /** Zeros every counter, so a snapshot describes one test run and not the session. */
@@ -142,6 +172,7 @@ class SignAiMetrics {
         turnTotal.clear()
         signTotal.clear()
         signStart.clear()
+        firstSign.clear()
     }
 
     private companion object {
