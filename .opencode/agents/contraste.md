@@ -42,10 +42,11 @@ las diferencias**. Lo que coincide no se lista.
 
 ## Antes de empezar
 
-**Mirá `docs/CONTRASTE-DOCUMENTOS.md`**: es el contraste app ↔ documentos del 2026-10-16,
-con las diferencias que ya se identificaron y **la decisión que se tomó en cada una**. No
-rehagas ese análisis desde cero: extendelo, y concentrate en lo que cambió desde el
-2026-10-16 (commit `6e93987` del app, `18457be` de `sign-ai-docs`).
+**Mirá `docs/CONTRASTE-APPvsDOCUMENTOS.md`**: es el contraste app ↔ documentos, con las
+diferencias que ya se identificaron, **la decisión que se tomó en cada una** y la tabla de
+lo que hay que cambiar en la app. La fuente de verdad es el **SRS de Overleaf**, no
+`../sign-ai-docs`. No rehagas ese análisis desde cero: extendelo, y concentrate en lo que
+cambió desde el 2026-10-17 (commit `0b3c7f8` del app).
 
 ## Lo que no hacés
 

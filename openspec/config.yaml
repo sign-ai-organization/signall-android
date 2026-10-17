@@ -60,8 +60,9 @@ context: |
   (`brow_dwn_L`, `brow_outer_up_L`, `eye_blink_open_L`, `jaw_open_lt_rt_frwd`,
   `eyeball.lookat.L`) pero **no son articulaciones de skin**, el GLB que va en el APK tiene
   **cero morph targets**, y `app.js` no los menciona. La expresión facial viene horneada en
-  el clip. Es el punto **A6** de `docs/CONTRASTE-DOCUMENTOS.md`, en pausa: RF-AVT-03 pide
-  marcadores por tipo de frase y no hay implementación.
+  el clip. Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores
+  por tipo de frase y no hay implementación. **Decisión del owner pendiente** (2026-10-17):
+  antes estaba "en pausa" porque el documento no lo pedía; ahora el SRS sí lo pide.
 
   ### Constantes reales de la escena (`app/src/main/assets/web/app.js`)
   `CROSSFADE_MS = 100` · `MAX_DPR = 1.75` (tope a propósito) ·
