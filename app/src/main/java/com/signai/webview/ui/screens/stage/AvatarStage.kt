@@ -22,8 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Surface
@@ -31,6 +33,7 @@ import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.designsystem.foundation.pressScale
 import com.signai.webview.ui.icons.SignAiIcons
+import com.signai.webview.ui.state.PlaybackState
 import com.signai.webview.ui.theme.SignAiTheme
 
 /**
@@ -46,9 +49,52 @@ import com.signai.webview.ui.theme.SignAiTheme
 /** Space between the Repetir button and the top edge of the control bar. */
 private val RepeatGap = 32.dp
 
+/**
+ * El indicador creció un 25 % (owner, 2026-10-17): era la señal de estado de la
+ * app y a 7 dp con 12 sp no se leía de reojo, que es como se mira mientras el
+ * avatar representa.
+ */
+private const val StageHintScale = 1.25f
+private val StageHintDotSize = 7.dp * StageHintScale
+
+/**
+ * El color del punto del indicador, por estado.
+ *
+ * **Tres colores para siete estados**, no uno por estado: un semáforo, que es lo
+ * que el owner pidió ("coherencia, no un montón de cambios"). Los tres son tokens
+ * que ya existen en `ui/designsystem/Color.kt` —no se inventó ningún color— y se
+ * reparten por lo que la app está haciendo, no por el nombre del estado:
+ *
+ * - **Azul** (`strong`, el de marca): el camino normal. Inactivo, Texto listo,
+ *   Reproduciendo.
+ * - **Ámbar** (`live`): hay que esperar. Grabando y Procesando.
+ * - **Rojo** (`error`): algo falló o no hay a quién preguntar. Error y
+ *   Desconectado.
+ *
+ * El ámbar era de `live`/`onLive`, que por manual significa "escuchando ahora"
+ * (`docs/manual-identidad-visual.md`). Aquí se ensancha a las dos esperas, que es
+ * el mismo sentido —algo está pasando y toca esperar— y **no** se usa para nada
+ * que no esté pasando en ese momento, que es lo que el manual protege.
+ *
+ * La fila *Error* de la tabla del SRS dice "el indicador de estados muestra la
+ * señal de error": el punto rojo es esa señal. Y en la fila *Desconectado* dice
+ * "el indicador de estados lo indica": el rojo también, porque la conexión caída
+ * es un fallo aunque la app se esté reconectando sola.
+ */
+@Composable
+private fun PlaybackState.dotColor(): Color = when (this) {
+    PlaybackState.Grabando, PlaybackState.Procesando -> SignAiTheme.colors.live
+    PlaybackState.Error, PlaybackState.Desconectado -> SignAiTheme.colors.error
+    PlaybackState.Inactivo,
+    PlaybackState.TextoListo,
+    PlaybackState.Reproduciendo,
+    -> SignAiTheme.colors.strong
+}
+
 @Composable
 fun AvatarStage(
     status: String,
+    state: PlaybackState,
     doneVisible: Boolean,
     onRepeat: () -> Unit,
     modifier: Modifier = Modifier,
@@ -71,12 +117,20 @@ fun AvatarStage(
         ) {
             Box(
                 modifier = Modifier
-                    .size(7.dp)
-                    .background(SignAiTheme.colors.strong, CircleShape),
+                    .size(StageHintDotSize)
+                    .background(state.dotColor(), CircleShape),
             )
             SignAiText(
                 text = status,
-                style = SignAiTheme.typography.body3,
+                // +25 % sobre `body3` (12/16), que es lo que pidió el owner el
+                // 2026-10-17: el indicador es la única señal de estado de la app
+                // y a 12 sp costaba de leer. Se escalan también `lineHeight` y
+                // `letterSpacing` para que la línea no se corte.
+                style = SignAiTheme.typography.body3.copy(
+                    fontSize = 12.sp * StageHintScale,
+                    lineHeight = 16.sp * StageHintScale,
+                    letterSpacing = 0.15.sp * StageHintScale,
+                ),
                 color = SignAiTheme.colors.muted,
             )
         }

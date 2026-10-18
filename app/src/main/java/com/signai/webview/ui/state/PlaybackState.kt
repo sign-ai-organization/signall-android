@@ -31,31 +31,44 @@ package com.signai.webview.ui.state
  * mismo que ya se hacía con `dictationReadyToSend`.
  */
 enum class PlaybackState(val label: String) {
-    /** No hay nada en curso: se espera que el usuario escriba o hable. */
-    Inactivo("Listo para traducir"),
-
     /**
-     * 🎤 Dictado o ◢◢ en vivo: el micrófono está capturing.
+     * No hay nada en curso: se espera que el usuario escriba o hable.
      *
-     * La etiqueta de este estado la pone [MainScreenState.stateLabel], porque
-     * depende del modo: acá [label] solo sirve como valor por defecto.
+     * El texto en pantalla es **el nombre del estado**, y sale de acá y de ningún
+     * otro lado. La tabla `tab:estados-ui` del SRS no prescribe textos literales
+     * (la columna se llama "qué muestra la pantalla" y describe), pero el owner
+     * decidió el 2026-10-17 que lo que se lea sea el nombre del estado, tal cual
+     * está en la tabla. Un solo texto por estado, sin variantes.
+     *
+     * El único texto propio que la tabla sí permite sobre el indicador es
+     * ``Seña no disponible``, en la fila *Reproduciendo*: lo pone
+     * [MainScreenState] como alternativa cuando a una palabra no hay seña.
      */
-    Grabando("Dictando..."),
+    Inactivo("Inactivo"),
+
+    /** 🎤 Dictado o ◢◢ en vivo: el micrófono está captando. */
+    Grabando("Grabando"),
 
     /**
      * Hay una frase en el campo esperando que el usuario pulse Traducir
-     * (`main.tex:746`). Es el tercer estado de RF-UI-01 y el que el SRS llama
-     * *Texto listo*.
+     * (`main.tex:746`). Es el tercer estado de RF-UI-01.
      */
     TextoListo("Texto listo"),
 
     /** El backend está trabajando: transcripción del audio o glosas de la frase. */
-    Procesando("Procesando..."),
+    Procesando("Procesando"),
 
     /** El avatar está representando señas. */
-    Reproduciendo("Reproduciendo señas..."),
+    Reproduciendo("Reproduciendo"),
 
-    /** Algo falló y la interfaz lo dice como estado, no como un mensaje de 3 s. */
+    /**
+     * Algo falló y el indicador lo dice como estado.
+     *
+     * La fila *Error* de la tabla: "el indicador de estados muestra la señal de
+     * error, el texto se conserva y el sistema vuelve a *Inactivo*
+     * automáticamente". El texto que explica qué falló es un detalle de
+     * depuración y sale solo con la depuración prendida.
+     */
     Error("Error"),
 
     /**
@@ -64,7 +77,7 @@ enum class PlaybackState(val label: String) {
      * El SRS dice que la reconexión no tiene límite de intentos y espera de forma
      * creciente hasta un máximo de 5 s, así que este estado es normal y no
      * necesariamente termina: la app nunca queda esperando que el usuario la
-     * reinicie.
+     * reinicie. Se queda quieto en los reintentos, sin parpadear.
      */
-    Desconectado("Sin conexión con el servidor"),
+    Desconectado("Desconectado"),
 }

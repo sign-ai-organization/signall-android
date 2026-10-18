@@ -51,6 +51,29 @@ servía: el teléfono no alcanzaba a `192.168.78.102:8080`.
 El detalle de cada uno está en `docs/CONTRASTE-APPvsDOCUMENTOS.md` §8, con lo que se
 midió en el Redmi Note 9S y lo que no se pudo probar.
 
+## El indicador, después de la segunda vuelta
+
+El owner vio los textos que la app se inventaba y decidió el 2026-10-17 (tarde):
+
+- **En el indicador va el nombre del estado.** Los siete de la tabla, tal cual:
+  Inactivo, Grabando, Texto listo, Procesando, Reproduciendo, Error, Desconectado.
+  La tabla `tab:estados-ui` no prescribe textos literales —su columna es "qué
+  muestra la pantalla" y describe—, y el único mensaje literal de toda la tabla es
+  ``Seña no disponible``.
+- **"Seña no disponible" es el texto alternativo de *Reproduciendo***: sale
+  mientras el avatar representa, en vez de "Reproduciendo", cuando alguna palabra
+  no tiene seña.
+- **Las glosas y los avisos de 3 s salieron del indicador.** Quedan en el log
+  (`SignAiState`) y en pantalla solo con la depuración de Ajustes → Avanzado
+  prendida.
+- **El indicador creció un 25 %** y **el color del punto dice el estado**: azul
+  para el camino normal, ámbar para lo que espera, rojo para lo que falla. Tres
+  colores, no siete, y los tres son tokens que ya existían.
+
+Y de paso, dos bugs que aparecieron al probar: una frase **sin ninguna seña
+representable** dejaba la app en "Procesando" para siempre, y una frase cuya
+**primera oración** era vacía y la segunda no, no se representaba entera.
+
 ## Decisiones del owner que cambiaron el trabajo
 
 1. **A1 sale con A7, no con un ícono nuevo.** El SRS solo pide que "el indicador pase

@@ -180,18 +180,14 @@ class MainScreenState(
      * *Texto listo* se vea: `statusLine` lee esta etiqueta, así que si leyera el
      * enum directamente el tercer estado del SRS no aparecería nunca.
      *
-     * [PlaybackState.Grabando] es el único cuyo texto depende de algo más que del
-     * estado: el SRS tiene un solo estado de grabación, así que el enum no puede
-     * decir si se está dictando o escuchando. Eso lo dice la etiqueta
-     * (`main.tex:709` y el mapa de §7 del documento de contraste), y el usuario
-     * sigue viendo en qué modo está.
+     * Sale del enum y no de acá una variante: el owner decidió el 2026-10-17 que
+     * en pantalla se lea el nombre del estado, y el nombre es uno solo. Por eso
+     * `Grabando` ya no distingue "Dictando..." de "Escuchando...": el modo sigue
+     * en `micMode`, que es lo que muestran el ícono, el `stateDescription` del
+     * botón y el log, y el indicador no se inventa textos propios.
      */
     val stateLabel: String
-        get() = when (stateForUi) {
-            PlaybackState.Grabando ->
-                if (micMode == MicMode.Live) "Escuchando..." else "Dictando..."
-            else -> stateForUi.label
-        }
+        get() = stateForUi.label
 
     /**
      * La escena tiene una cola de señas firmándose.
@@ -604,8 +600,20 @@ class MainScreenState(
     /** What the stage hint shows: the glosses while signing, else state or message. */
     val statusLine: String
         get() = when {
+            // Depuración primero: con el interruptor de Ajustes → Avanzado prendido
+            // el indicador se usa como pantalla de diagnóstico y puede llevar
+            // glosas y mensajes en detalle.
+            settings.debug -> when {
+                playbackState == PlaybackState.Reproduciendo && caption.isNotBlank() ->
+                    "Reproduciendo · ${caption}"
+                statusOverride != null -> statusOverride!!
+                else -> stateLabel
+            }
+            // Fuera de depuración sale el nombre del estado y nada más. La única
+            // excepción es `statusOverride`, que hoy solo se usa para
+            // "Seña no disponible": el único texto propio que la tabla permite
+            // sobre el indicador, en la fila *Reproduciendo*.
             statusOverride != null -> statusOverride!!
-            playbackState == PlaybackState.Reproduciendo && caption.isNotBlank() -> caption
             else -> stateLabel
         }
 
@@ -923,8 +931,18 @@ class MainScreenState(
         }
 
         doneVisible = false
-        playbackState = PlaybackState.Inactivo
-        showStatus("Se perdió la conexión con el servidor. Se está reconectando.")
+        // El estado se queda en *Desconectado* y **no** hay mensaje encima.
+        //
+        // Antes ponía `Inactivo` + un aviso de 3 s ("Se perdió la conexión… Se está
+        // reconectando."), y como el reintento es cada 5 s los dos textos se
+        // turnaban sin parar: la etiqueta de la tabla se veía 2 s, el aviso 3 s, y
+        // vuelta a empezar. Un aviso que se enciende y se apaga cada 5 s no
+        // informa nada, y el texto de la tabla quedaba pisado la mitad del tiempo.
+        //
+        // Ahora manda la etiqueta y no parpadea: *Desconectado* dice "Sin conexión
+        // con el servidor" y sigue diciendo eso en cada intento, hasta que la
+        // conexión vuelve.
+        playbackState = PlaybackState.Desconectado
     }
 
     /**
@@ -1292,7 +1310,43 @@ class MainScreenState(
 
     private var errorReturnJob: Job? = null
 
-    private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
+    /**
+     * Un aviso de 3 s en el indicador, **solo de depuración**.
+     *
+     * Ninguno de los textos que se producen acá está en la tabla
+     * `tab:estados-ui` del SRS: "Ya está representado.", "No se escuchó nada.",
+     * "Sin conexión: no puedo escuchar." y compañía son detalle de qué pasó, no
+     * el estado en el que está la app. Con la depuración apagada —que es como
+     * vive la app— el indicador dice únicamente el nombre del estado, que es lo
+     * que pidió el owner el 2026-10-17.
+     *
+     * Los textos siguen existiendo, y ahí es donde se los lee: el log
+     * (`SignAiState`). Por eso cada llamada guarda su mensaje en el log antes de
+     * decidir si se escribe o no.
+     *
+     * El único texto propio que sí sale sin depuración es
+     * "Seña no disponible", y no pasa por acá: lo pone [showMissingSign] porque la
+     * tabla lo prescribe en la fila *Reproduciendo*.
+     */
+private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
+        Log.i(TAG, "aviso (no va al indicador): $message")
+        if (!settings.debug) return
+        writeStatusOverride(message, ms)
+    }
+
+    /**
+     * "Seña no disponible": el texto alternativo de *Reproduciendo*.
+     *
+     * Sale **sin** depuración porque es lo único que la tabla pone en pantalla
+     * además del nombre del estado (`main.tex:753`, fila *Reproduciendo*). Por
+     * eso no pasa por [showStatus], que es el camino de los avisos de depuración.
+     */
+    private fun showMissingSign() {
+        writeStatusOverride("Seña no disponible", StatusOverrideMs)
+    }
+
+    /** Escribe el texto transitorio y lo retira solo. [showStatus] / [showMissingSign]. */
+    private fun writeStatusOverride(message: String, ms: Long) {
         statusOverride = message
         statusJob?.cancel()
         statusJob = scope.launch {
@@ -1319,7 +1373,6 @@ class MainScreenState(
             val items = resolved.flatMap { it.items }
 
             if (first) {
-                queueStarted = true
                 turnQueueItems.clear()
                 // A replay is not a new turn: the phrase is already in the history
                 // and already has a conversation entry, so recording it again would
@@ -1355,13 +1408,16 @@ class MainScreenState(
             // produjo nada, así que una frase con tres glosas de cinco y dos
             // representables se saltaba en silencio lo que le faltaba.
             //
-            // El texto es **exactamente** el del SRS, sin la lista de glosas: el
-            // hint es de una línea y el aviso se lee de reojo, mientras el avatar
-            // representa. Cuáles fueron queda en el log (`SignAiState`), que es
-            // donde se mira cuando se depura.
+            // Este es el **único** texto propio que sale en el indicador sin
+            // depuración, porque es el único que la tabla prescribe: la fila
+            // *Reproduciendo* dice "Si alguna palabra no está en el catálogo, la
+            // pantalla muestra el mensaje ``Seña no disponible''". Es el texto
+            // alternativo de *Reproduciendo*, no un estado aparte, y por eso va
+            // por [showMissingSign] y no por [showStatus]. Las glosas que faltaron
+            // quedan en el log (`SignAiState`), que es donde se mira al depurar.
             val missing = resolved.flatMap { it.missing }
             if (missing.isNotEmpty()) {
-                showStatus("Seña no disponible")
+                showMissingSign()
                 Log.i(TAG, "glosas sin animación, avisadas: ${missing.joinToString(", ")}")
             }
 
@@ -1369,10 +1425,26 @@ class MainScreenState(
                 // Una oración que no produjo ninguna seña no es el fin del turno:
                 // las siguientes pueden sí, así que acá no se cierra nada. El aviso
                 // de arriba ya dijo cuáles fueron, y acá solo se corta.
+                //
+                // Y `queueStarted` **no** se prende: la escena no recibió nada, así
+                // que la cola todavía no es suya. Antes sí se prendía, y eso
+                // rompía dos cosas:
+                //
+                // - Si todas las oraciones del turno salían vacías, la app quedaba
+                //   en "Procesando" para siempre: la escena nunca recibió la cola,
+                //   nunca sonó y nunca avisó que terminó, así que el `done` del
+                //   backend veía la cola "arrancada" y no cerraba el turno.
+                // - Si la **primera** oración salía vacía y la segunda no, la
+                //   segunda entraba por `appendQueue` sin que nadie hubiera llamado
+                //   `setQueue` ni `play()`: la frase no se representaba entera.
+                //
+                // Con esto, la segunda oración sigue siendo la primera de verdad:
+                // `setQueue` + `play()`, y la cola entera se representa.
                 return@launch
             }
 
             if (first) {
+                queueStarted = true
                 webView.setQueue(items)
                 webView.play()
                 startPlaybackClock()
@@ -1406,6 +1478,12 @@ class MainScreenState(
      */
     private fun finishTurn() {
         val segments = pendingSegments.values.toList()
+        // La frase en vuelo se guarda **antes** de limpiar `pendingText`: más abajo
+        // se usa para saber si este `done` cierra un turno de verdad. Antes se
+        // miraba `pendingText` después de haberlo puesto en null, así que la rama
+        // de "la frase no produjo ninguna seña" nunca se tomaba y la app se
+        // quedaba en "Procesando" para siempre.
+        val fraseEnVuelo = pendingText
         if (segments.isNotEmpty()) {
             metrics.onTurn(
                 totalMs = SystemClock.elapsedRealtime() - turnStartedAt,
@@ -1419,16 +1497,20 @@ class MainScreenState(
         if (!queueStarted) {
             // Un `done` sin nada detrás. Cuando hay una frase en vuelo
             // (`pendingText` solo se pone cuando el backend se comprometió con una) quiere
-            // decir que la frase no produjo ninguna oración, y sin esto el turno
-            // se quedaría en "Traduciendo" para siempre. Sin frase en vuelo es un
+            // decir que la frase no produjo ninguna seña, y sin esto el turno
+            // se quedaría en "Procesando" para siempre. Sin frase en vuelo es un
             // `done` que llegó tarde o por segunda vez: la cola ya arrancó y no
             // hay nada que informar, así que cerrar acá mataría el turno.
-            if (pendingText != null) {
+            if (fraseEnVuelo != null) {
                 pendingText = null
                 if (micActive) {
                     showStatus("Esa frase no produjo ninguna seña.")
                     resumeListeningIfMicOn()
                 } else {
+                    // El estado también se cierra: sin esto la app se quedaba en
+                    // "Procesando" para siempre, con el Traducir deshabilitado,
+                    // cuando la frase no tenía ninguna seña que representar.
+                    playbackState = PlaybackState.Inactivo
                     doneVisible = true
                     showStatus("Esa frase no produjo ninguna seña.")
                 }
@@ -1720,8 +1802,14 @@ class MainScreenState(
 
     private fun sendAudio(chunk: ByteArray) {
         if (!backend.sendAudio(chunk)) {
-            changeMicMode(MicMode.Off)
-            fail("Se cortó la conexión mientras escuchaba.")
+            // Si la sesión ya se perdió, el aviso lo pone [onDisconnected] y el
+            // estado ya está en *Desconectado*. Fallar otra vez acá arrancaba un
+            // estado *Error* con su mensaje encima en medio de la reconexión, que
+            // es el mismo parpadeo que se quitó del otro lado.
+            if (playbackState != PlaybackState.Desconectado) {
+                changeMicMode(MicMode.Off)
+                fail("Se cortó la conexión mientras escuchaba.")
+            }
         }
     }
 

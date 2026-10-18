@@ -216,6 +216,7 @@ fun MainScreen(state: MainScreenState) {
                     Box(Modifier.fillMaxSize()) {
                         AvatarStage(
                             status = state.statusLine,
+ state = state.stateForUi,
                             doneVisible = state.doneVisible,
                             // Repetir es un control más: cierra el teclado, y cierra
                             // de verdad, como todos los demás.
