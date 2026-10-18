@@ -47,6 +47,24 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         .connectTimeout(10, TimeUnit.SECONDS)
         // A translation session is long-lived: no read timeout.
         .readTimeout(0, TimeUnit.MILLISECONDS)
+        // ...and that is exactly why it needs a heartbeat. With no read timeout,
+        // a session that dies *without closing the socket* —an `adb reverse`
+        // tunnel, a NAT that drops the mapping, a network change— stays "open"
+        // forever: OkHttp never notices, `isConnected` keeps saying true, and a
+        // phrase sent into it gets no answer, no error and no `done`. The app was
+        // frozen in "Procesando..." with no way out, and nothing in the log.
+        //
+        // A ping every [HeartbeatIntervalSec] s closes that hole: OkHttp sends the
+        // control frame and, when the pong does not come back, fails the socket.
+        // `onFailure` then hands [BackendEvent.Disconnected] to the state, which
+        // already knows how to show *Desconectado* and reconnect (`RF-INT-COM-01`).
+        //
+        // It is a WebSocket control frame, not an application message: the backend
+        // doesn't read it, nothing in the contract changes, and no metric moves.
+        // Worst case a dead session is reported up to two intervals late, which is
+        // why this is the heartbeat and not the clock: the clock decides *Error*
+        // and only that one is visible as a failure.
+        .pingInterval(HeartbeatIntervalSec, TimeUnit.SECONDS)
         .build()
 
     @Volatile
@@ -226,5 +244,8 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         const val TAG = "SignAiNet"
         const val NORMAL_CLOSURE = 1000
         const val DEFAULT_ERROR = "Ocurrió un error en el servidor."
+
+        /** Cada cuántos segundos el cliente le pregunta al servidor si sigue ahí. */
+        const val HeartbeatIntervalSec = 20L
     }
 }

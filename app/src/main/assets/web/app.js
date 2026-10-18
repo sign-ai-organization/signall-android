@@ -546,6 +546,20 @@ function pickVariant(clips) {
 }
 
 /**
+ * Avisa que una seña de la cola no se pudo cargar y se está saltando.
+ *
+ * `signFailed:<índice>`. Distinto de `signStart`, que es "el muñeco ya se está
+ * moviendo": acá el muñeco **no** se va a mover por este ítem, y Kotlin lo usa para
+ * poner "Seña no disponible", que es el único texto propio que la tabla de estados
+ * del SRS permite sobre el indicador (`main.tex:753`).
+ */
+function notifySignFailed(index, item) {
+  const gloss = (item && (item.gloss || item.url)) || "(sin nombre)";
+  try { window.SignAIBridge?.postMessage(`signFailed:${index}`); } catch (e) { /* no bridge */ }
+  console.warn(`[SignAI] seña ${index} (${gloss}) no se pudo cargar: se saltea`);
+}
+
+/**
  * Carga el ítem [index] de la cola y lo deja listo para reproducir. Mientras
  * carga, `state.loading` congela el loop: sin eso, una carga lenta dejaría
  * sonando el clip anterior.
@@ -566,11 +580,19 @@ async function loadQueueItem(index) {
   } catch (err) {
     console.error("No se pudo cargar la seña", item.url, err);
     state.loading = false;
-    // Un ítem que no carga no puede dejar el turno colgado en "representando": el
-    // muñeco vuelve al reposo y se avisa que terminó, que es lo que espera el
-    // lado Kotlin para liberar el panel y el micrófono.
-    stopPlayback();
-    notifyPlaybackDone();
+    // Un ítem que no carga **no se come el resto de la frase**. Antes se paraba
+    // todo (`stopPlayback`) y se avisaba que el turno había terminado: el usuario
+    // veía al muñeco detenerse y las demás señas de esa frase no se representaban
+    // nunca, sin que nada lo dijera — la frase "!terminaba" en silencio, a mitad.
+    // Ahora se saltea esta seña y se sigue con la siguiente: lo que se pierde es
+    // una seña, no la frase.
+    //
+    // `advanceQueue` es el que sabe si la cola se acabó, así que el "terminó"
+    // sigue siendo suyo y no de este `catch`. Y es el mismo camino que el normal:
+    // si el ítem que falló era el primero, acá no hay nada sonando y nadie va a
+    // empujar la cola, así que hay que llamarlo igual.
+    notifySignFailed(index, item);
+    advanceQueue();
     return false;
   }
 }
@@ -581,7 +603,10 @@ function advanceQueue() {
   const fade = crossfade();
 
   if (next >= state.queue.length) {
-    if (fade > 0) {
+    // `state.action` puede no existir: si **todos** los ítems fallaron al cargar,
+    // el muñeco nunca llegó a moverse y no hay action de la cual salir con
+    // fundición. Sin esta guarda esto reventaba con "cannot read property of null".
+    if (fade > 0 && state.action) {
       // Salida al reposo. No hace falta escribir ningún keyframe: cuando el
       // peso de una action llega a 0, `PropertyMixer.apply()` completa con el
       // valor guardado cuando se creó el binding — el TRS del nodo, o sea la

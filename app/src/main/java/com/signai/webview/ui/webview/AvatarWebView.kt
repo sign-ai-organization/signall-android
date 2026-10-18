@@ -1,5 +1,6 @@
 package com.signai.webview.ui.webview
 
+import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.PathHandler
 import androidx.webkit.WebViewClientCompat
+import androidx.webkit.WebResourceErrorCompat
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
 import com.signai.webview.data.SignAssetRepository
@@ -23,6 +25,21 @@ private const val AssetsPath = "/assets/"
 
 /** Prefix of the scene's "the avatar is moving" message (`notifySignStart`). */
 const val SignStartPrefix = "signStart:"
+
+/**
+ * Prefix of the scene's "this sign could not be loaded" message
+ * (`notifySignFailed`), with the queue index.
+ *
+ * **Aditivo**: ni este nombre ni los anteriores existían antes, así que una escena
+ * vieja no manda nada nuevo y una escena nueva con una app vieja simplemente no
+ * escucha el mensaje (`BRG-8`: compatible hacia atrás, siempre).
+ *
+ * Es lo que distingue dos cosas que antes se confundían en un mismo aviso: una glosa
+ * que el catálogo no tiene —la app ya lo decía antes de entregar la cola— y una
+ * glosa que el catálogo tiene pero cuyo `.glb` no se pudo bajar, que solo se
+ * descubre adentro del WebView.
+ */
+const val SignFailedPrefix = "signFailed:"
 
 /**
  * Serves the sign assets the app downloaded from the backend, so the 3D scene can
@@ -63,6 +80,22 @@ fun AvatarWebView(
      * the segment arriving here and the bridge message arriving here.
      */
     onSignStart: (queueIndex: Int, jsMillis: Long) -> Unit = { _, _ -> },
+    /**
+     * A sign of the phrase could not be loaded and was skipped: the scene keeps
+     * going with the rest of the phrase (`notifySignFailed` in `app.js`).
+     *
+     * The state uses it to say "Seña no disponible", which is the only text of its
+     * own the SRS table allows on the indicator (`main.tex:201` and `:753`).
+     */
+    onSignFailed: (queueIndex: Int) -> Unit = {},
+    /**
+     * The scene is gone: the page failed to load, or the browser lost its render
+     * process (`onReceivedError` / `onRenderProcessGone`).
+     *
+     * New: before this the app had no way of learning the canvas was dead, so it
+     * kept saying *Reproduciendo* with a still avatar and no way out.
+     */
+    onSceneFailed: (reason: String) -> Unit = {},
     onLoaded: () -> Unit = {},
     // While a drawer is open the WebView must not take any touch: it is an
     // embedded Android View and would otherwise win the whole screen, leaving
@@ -111,7 +144,8 @@ fun AvatarWebView(
                 }
 
                 // JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")`,
-                // `postMessage("avatarReady")` y `postMessage("signStart:<i>:<ms>")`.
+                // `postMessage("avatarReady")`, `postMessage("signStart:<i>:<ms>")` y
+                // `postMessage("signFailed:<i>")`.
                 // Only registered when the feature is supported (fallback: no
                 // playback event, the UI just stays in `signing`; y el splash se
                 // destapa por el timeout de 8 s).
@@ -155,6 +189,14 @@ fun AvatarWebView(
                                                 parts.getOrNull(1)?.toLongOrNull() ?: 0L,
                                             )
                                         }
+                                        // Mismo camino, mensaje nuevo: la escena se
+                                        // saltó una seña y sigue con la frase. Sin
+                                        // esto el salto era invisible desde Kotlin.
+                                        ?: message.data
+                                            ?.takeIf { it.startsWith(SignFailedPrefix) }
+                                            ?.removePrefix(SignFailedPrefix)
+                                            ?.toIntOrNull()
+                                            ?.let(onSignFailed)
                                 }
                             }
                         },
@@ -172,6 +214,58 @@ fun AvatarWebView(
                         // con el fin de la carga de la página. Cuando sí hay
                         // listener, el aviso real es `avatarReady`.
                         if (!bridgeSupported) onLoaded()
+                    }
+
+                    /**
+                     * La página principal no cargó.
+                     *
+                     * Antes no había ninguna de estas dos callbacks, y el resultado
+                     * era el mismo: si el navegador dejaba de poder con la escena, la
+                     * app se quedaba diciendo *Reproduciendo* con el muñeco quieto y
+                     * sin salida.
+                     *
+                     * Solo el marco principal: los `.glb` de las señas y el Three.js
+                     * de jsDelivr son subrecursos, y el fallo de uno de ellos lo
+                     * avisa la escena (`notifySignFailed`), no esta callback.
+                     */
+                    override fun onReceivedError(
+                        view: WebView,
+                        request: WebResourceRequest,
+                        error: WebResourceErrorCompat,
+                    ) {
+                        // La firma es medio de plataforma y medio `Compat`: la de
+                        // plataforma está `final` en `WebViewClientCompat` y es ella la
+                        // que despacha a esta.
+                        super.onReceivedError(view, request, error)
+                        if (!request.isForMainFrame) return
+                        onSceneFailed("No se pudo cargar la escena: ${error.description}")
+                    }
+
+                    /**
+                     * El navegador perdió su proceso de render.
+                     *
+                     * `false` = "no lo atendí": el sistema **mata la app** y el launcher la vuelve a
+                     * levantar con todo funcionando. Es lo que decidió el owner el
+                     * 2026-10-17, y es lo único que funciona: un WebView sin proceso
+                     * de render **no renderiza nunca más**, así que con `true` la app
+                     * sobreviviría con un canvas negro por el resto de la sesión y
+                     * la única salida sería cerrarla a mano. Perder lo que había en el
+                     * campo es menos malo que un avatar muerto.
+                     *
+                     * El aviso va igual antes de devolver: el proceso se va a morir,
+                     * pero queda en el log por qué pasó, y `sceneDead` alcanza a
+                     * limpiar el estado en el poco tiempo que hay.
+                     */
+                    override fun onRenderProcessGone(
+                        view: WebView,
+                        detail: android.webkit.RenderProcessGoneDetail,
+                    ): Boolean {
+                        android.util.Log.e(
+                            "SignAIWeb",
+                            "el proceso de render del WebView murió (${detail.didCrash()}); la app se reinicia",
+                        )
+                        onSceneFailed("La escena 3D dejó de funcionar: la app se está reiniciando.")
+                        return false
                     }
 
                     override fun shouldInterceptRequest(

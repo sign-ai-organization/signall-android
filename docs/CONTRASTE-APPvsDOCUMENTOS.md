@@ -32,6 +32,8 @@ Ninguno requiere inventar el requisito.
 | **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:761-772`) | ✅ Hecho · **el SRS necesita un ajuste** (§9 #9) |
 | **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt:604-648`, `:1069` | §Alcance (`main.tex:201`) y tabla, fila *Reproduciendo* (`main.tex:753`) | ✅ Hecho |
 | **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:726-773`) | ✅ Hecho |
+| **A14** | Que la app **no se pueda quedar congelada**: cuando nadie contesta, tiene que haber un reloj que la saque | `ui/state/MainScreenState.kt`, `data/SignAiWebSocketClient.kt`, `ui/webview/AvatarWebView.kt`, `assets/web/app.js` | **Ningún documento**: el SRS dice *qué* señal mostrar, nunca *cuánto* esperar (§6 #5) | ✅ Hecho y verificado en el device (6 cambios + 1 encontrado al verificar) |
+
 | **A13** | Armar la **métrica de latencia de punta a punta** | `ui/state/SignAiMetrics.kt`, `MainScreenState.kt:329` y `:188-195` | §Aspectos de medición (`main.tex:848-852`) | ✅ Hecho (instrumento; falta medir con el backend real) |
 
 **Orden sugerido.** A2 es el más chico (un cambio de comportamiento) y sirve para
@@ -307,6 +309,31 @@ Reportado al owner el 2026-10-17. **Nada de esto se toca desde acá.**
 | 2 | El SRS dice "SignAI" 25 veces y "SignALL" ninguna. Delegado al compañero | Overleaf, todo el documento |
 | 3 | Dos marcadores de trabajo sin completar: `[PENDIENTE: tamaño del APK con todos los archivos GLB.]` | Overleaf, `main.tex:931` y `:1154` |
 | 4 | `../sign-ai-docs/modificaciones/requerimientos.md` punto 19 pide "límite de intentos" de reconexión. El owner decidió **sin** límite: espera creciente hasta 5 s, indefinida. Hay que corregir ese texto | `../sign-ai-docs` |
+| 5 | **Ningún documento dice cuánto esperar antes de decidir que algo salió mal.** El SRS dice *qué* señal mostrar ante un error o una desconexión, y RNF-REL-02 dice que el avatar vuelva a reposo, pero en ningún lado hay un plazo. La app lo inventó: **15 s de silencio**. Sin ese número, una espera larga es indistinguible de un cuelgue | Overleaf, tabla de estados, filas *Procesando* y *Error* (`main.tex:726-773`) |
+| 6 | **Apagar el micrófono con una frase en vuelo.** `main.tex:709` dice que en modo TR el micrófono permanece encendido, y nada dice de qué modo se lo apaga a mitad de una traducción. La decisión del owner: apagarlo **cancela la frase** y su texto vuelve al campo editable | Overleaf, `main.tex:709` y la fila *Grabando* |
+| 7 | **Seña que existe pero no se puede descargar.** `main.tex:201` cubre "cuando una glosa no existe en el catálogo"; no cubre el caso de que la glosa existe y el archivo no baja. La decisión del owner: se saltea esa seña, se siguen representando las demás y el indicador muestra "Seña no disponible" | Overleaf, `main.tex:201` y la fila *Reproduciendo* (`main.tex:753`) |
+| 8 | **Cómo se detecta que se cayó la conexión.** La fila *Desconectado* describe la reconexión (sin límite, espera creciente hasta 5 s, contador que se reinicia) pero no dice cómo se nota la caída. Sin latido, una caída que no cierra el socket no se ve: la app cree que está conectada | Overleaf, fila *Desconectado* (`main.tex:761-772`) |
+| 9 | **Un `ping` en el WebSocket.** El SRS describe el canal (`RF-INT-COM-01`: *"el sistema detectará una desconexión del canal y se reconectará automáticamente"*) pero no dice con qué mecanismo. Hoy no hay ninguno, y la detección depende de que el otro lado cierre la conexión | Overleaf, §Interfaces de Comunicación |
+
+**Texto propuesto para pegar en el SRS** (propuesto por la sesión, **lo aplica el owner**;
+no se escribe nada en Overleaf desde acá):
+
+- Filas *Procesando* y *Error* de `tab:estados-ui`, o el párrafo que las precede:
+  *"Si el sistema está en estado Procesando y no recibe ninguna respuesta del servidor
+  durante 15 segundos, se considera un fallo: el indicador de estados muestra la señal
+  de error, el texto se conserva y el sistema vuelve a Inactivo automáticamente."*
+- Junto a `main.tex:709` (micrófono en modo TR):
+  *"Si el usuario apaga el micrófono mientras una frase se está traduciendo, esa
+  frase se cancela y su texto vuelve a la barra de transcripción, editable, para que
+  el usuario pueda mandarla de nuevo."*
+- Junto a `main.tex:201` (glosa sin seña):
+  *"Si una glosa existe en el catálogo pero su animación no puede descargarse, se
+  omite esa seña, se sigue representando el resto de la frase y el indicador de
+  estados muestra Seña no disponible."*
+- En la fila *Desconectado*, sobre la detección:
+  *"El cliente mantiene el canal con un latido periódico: si no recibe respuesta del
+  servidor dentro de dos intervalos, da la sesión por perdida y entra en el proceso
+  de reconexión descrito en esta fila."*
 
 ---
 
@@ -341,6 +368,25 @@ a abrir.
   que faltan es trabajo de las señas.
 - **§6, los huecos del SRS.** Fuera del alcance de la app: los arregla el owner o
   el compañero.
+- **A14, el reloj de silencio: 15 s y estado *Error*.** Cuando una frase sale y no
+  llega **nada** —ni una oración, ni el fin, ni un error— en 15 segundos, la app lo
+  toma como fallo: el texto vuelve al campo, el micrófono se corta, el indicador
+  muestra *Error* y a los 3 s vuelve a *Inactivo*. Son 15 s porque es el mismo plazo
+  que ya usa el reloj de la transcripción, y 5 s por encima del tope que el backend
+  le pone al LLM (10 s). **El plazo se rearma con cada frame que llega**, así que es
+  un reloj de *silencio* y no de duración: una frase larga con muchas oraciones no se
+  mate a mitad. Ningún documento prescribe un plazo (§6 #5): es decisión de la app y
+  el texto para el SRS está propuesto en §6.
+- **A14, apagar el micrófono con una frase en vuelo: cancela.** Si hay una frase
+  esperando respuesta y el usuario apaga el micrófono o el TR, esa frase se cancela
+  y su texto vuelve al campo editable, con el estado en *Inactivo*. No se manda sola.
+  Antes el apagado no sacaba a la app de *Procesando*: el botón de parar no paraba.
+- **A14, una seña que no se puede descargar: se saltea y se sigue.** Si la glosa
+  existe en el catálogo pero el archivo no baja, se omite esa seña, se sigue
+  representando el resto de la frase y el indicador muestra "Seña no disponible" —
+  el único texto propio que la tabla permite. Antes se cortaba la frase entera en
+  silencio: el usuario veía terminar la representación y no se enteraba de que
+  faltaban señas.
 
 ---
 
@@ -549,6 +595,61 @@ hicieron **pidiéndole al backend que cierre la sesión**, no matándolo.
 
 ---
 
+### ✅ A14 — Que la app no se pueda quedar congelada
+
+**Decidido el 2026-10-17, hecho y verificado en el Redmi Note 9S.** Esta sesión no llegó a tocar código:
+el owner pidió primero la investigación, y lo que salió fue una auditoría de los
+veinte casos en que la app espera algo.
+
+**Cómo se encontró.** El owner reportó que la app se quedaba en *Procesando* sin
+cambiar. Resultó ser real y reproducible en el Redmi Note 9S, y **no** era el bug que
+A5/A7 ya habían arreglado (una frase sin ninguna seña representable). Este es otro: la
+app no tiene **ninguna** red de seguridad para una frase que mandó y que nadie
+contestó. Con el micrófono apagado, el modo en vivo y el "Repetir" los tres casos se
+reprodujeron; en el peor de ellos quedaron **los cinco controles del panel deshabilitados**
+y la app no se movió ni reiniciando el backend, ni apagando y prendiendo el Wi-Fi.
+
+**Los seis cambios, en orden:**
+
+| # | Cambio | Dónde | Cierra |
+|---|---|---|---|
+| 1 | Reloj de silencio para la frase enviada, rearmado con cada frame | `ui/state/MainScreenState.kt` | El congelamiento sin respuesta; el "Repetir" sin salida |
+| 2 | `pingInterval` en el WebSocket, para que la caída silenciosa se vuelva *Desconectado* | `data/SignAiWebSocketClient.kt` | La caída que no cierra el socket |
+| 3 | Apagar el micrófono o el TR cancela la frase en vuelo | `MainScreenState.stopCapture` / `stopDictation` | El botón de parar que no para |
+| 4 | Una seña que no carga se saltea en vez de cortar la frase | `assets/web/app.js` (`loadQueueItem`) + un mensaje aditivo al puente | La frase cortada en silencio |
+| 5 | `onReceivedError` y `onRenderProcessGone` en el WebView | `ui/webview/AvatarWebView.kt` | El estado *Reproduciendo* con el muñeco quieto |
+| 6 | El `done` espera al trabajo de cola en vuelo | `MainScreenState.finishTurn` | La carrera entre el fin y la cola |
+
+1 y 2 son el mismo arreglo y van juntos.
+
+**Cómo se verificaron.** Todos contra el backend falso de `/tmp/opencode/fake-backend.py`,
+que se descifra con una palabra clave en la frase mandada. Cada caso, lo medido:
+
+| # | Qué se probó | Cómo | Resultado medido |
+|---|---|---|---|
+| 1 | El congelamiento sin respuesta | Frase `SIN-RESPUESTA`: el backend no manda ni una oración ni un `done` | El reloj disparó a los **15,001 ms** exactos (`22:22:37,934` → `22:22:52,935`), salió *Error* con el punto rojo y a los 3 s *Inactivo* con el panel libre. La frase normal que sale antes no se rompió: 2 oraciones, 3 glosas, `envío→primera seña` 155 ms |
+| 2 | La caída silenciosa | Backend falso congelado con `SIGSTOP`: el socket queda abierto y nadie responde | Detectada a los ~40 s —un intervalo de ping más la espera del pong— con `sent ping but didn't receive pong within 20000ms`, y la app pasó a *Desconectado* sola. Antes de este cambio eso no se detectaba nunca |
+| 3 | Apagar el TR con frase en vuelo | TR prendido, el `final` simulado manda la frase, el backend no contesta, TR apagado a los 5 s | `frase cancelada por el apagado del micrófono (seña en curso=false)`: el estado pasó de *Procesando* a **Texto listo** con la frase de vuelta en el campo editable y Traducir habilitado. A los 18 s seguía en *Texto listo*, sin falso *Error* |
+| 4 | Una seña que no carga | El backend sirve un `.glb` que es basura en `prueba/rota.glb`, dentro de una frase de tres | `No se pudo cargar la seña /signs/GLOSA_ROTA_b5245e.glb` → `seña 1 ... se saltea` → **la seña 2 se representó igual** (`signStart ... seña 2`), y en pantalla salió "Seña no disponible". El turno cerró con las 3 oraciones |
+| 6 | El `done` antes que la cola | El backend sirve un `.glb` **bueno** con 2 s de retraso en la primera oración, y manda el `done` enseguida | `el fin de la frase llegó con la cola todavía armándose: se espera`, y el turno se cerró 1,8 s después, cuando la cola ya estaba entregada. Antes decía "esa frase no produjo ninguna seña" sobre una frase que sí se iba a representar |
+| 5 | El WebView avisa si muere | **Solo leído, no provocado.** Hace falta que el navegador mate su proceso de render y no hay forma de pedirlo por `adb` | El código está y compila; el comportamiento en pantalla no se comprobó. Lo que sí se decidió: si el proceso de render muere, la app **se cierra** y el launcher la vuelve a levantar (`onRenderProcessGone` devuelve `false`), porque un WebView sin proceso de render no vuelve a renderizar nunca más |
+
+**Un defecto que encontró la propia verificación del caso 6** y que no estaba en la
+lista: dos oraciones del mismo turno que llegan juntas salían las dos como "la
+primera" de la cola, y la segunda **pisaba** la que la primera ya estaba
+representando; con la corrección de orden, la entrega quedaba en orden de descarga
+y no de oración. Las dos cosas van en el mismo arreglo (`STA-29`).
+
+**Un defecto propio que encontró la verificación del caso 3**: el reloj de silencio
+declaraba un fallo 15 s después de una cancelación —"El servidor no respondió" para
+una frase que el usuario había cancelado—. Ahora, cuando no hay frase en vuelo y lo
+que se esperaba era el `done` de una cancelada, lo que hace es **olvidar el descarte**
+sin mostrar nada. El caso 4 (una seña que no carga) necesita que el backend
+mande una glosa cuya animación no baja; el 5 necesita que el navegador mate el proceso
+del WebView; el 6 necesita que la resolución de una oración tarde más que el `done`.
+
+---
+
 ## 9. Diferencias y problemas que aparecieron
 
 No son ítems de la tabla: son cosas que se encontraron trabajando en ella. Se
@@ -570,3 +671,10 @@ anotan acá para que no se pierdan, y se marcan las que necesitan una decisión.
 | 12 | La tabla `tab:estados-ui` **no prescribe textos literales**: su columna se llama "qué muestra la pantalla" y describe. El único mensaje literal de toda la tabla es ``Seña no disponible`` (fila *Reproduciendo*) | Overleaf, `main.tex:753` | **Resuelto el 2026-10-17 por decisión del owner**: en el indicador va el **nombre del estado** y nada más —Inactivo, Grabando, Texto listo, Procesando, Reproduciendo, Error, Desconectado—. Los avisos de 3 s y las glosas que antes ocupaban el indicador **salen solo con la depuración prendida** (Ajustes → Avanzado) y en el resto del tiempo quedan en el log (`SignAiState`). El punto del indicador es ahora la señal de color (rojo para lo que falla, ámbar para lo que espera, azul para lo normal) |
 | 13 | Una frase **sin ninguna seña representable** dejaba la app en "Procesando" para siempre, con el Traducir deshabilitado | `MainScreenState.appendQueue`, `finishTurn` | **Resuelto**: `queueStarted` solo se prende cuando la escena recibió la cola de verdad, y el `done` del backend cierra el turno. De paso se arregló el caso peor: la primera oración vacía y la segunda con seña entraban por `appendQueue` sin que nadie hubiera llamado `setQueue` ni `play()`, y la frase no se representaba |
 | 14 | La app decía "Listo para traducir", "Procesando...", "Reproduciendo señas..." y "Sin conexión con el servidor", que **no están en el SRS** | `PlaybackState` | Son palabras de la app, de antes de esta sesión. Con la decisión del owner del 2026-10-17 el indicador dice el nombre del estado. Las textos viejos quedan en el historial de git |
+| 15 | **La app no tenía ninguna red de seguridad para una frase que mandó.** Con el micrófono apagado, en modo en vivo o con el "Repetir", si nadie contestaba el indicador se quedaba en *Procesando* para siempre; en el "Repetir" además quedaban los cinco controles del panel deshabilitados, sin salida. La red que sí existía (15 s) cubría solo la transcripción | `MainScreenState.armTranscriptionTimeout`, `stopCapture`, `finishTurn` | **Resuelto por decisión del owner** (§7, A14): reloj de silencio de 15 s a *Error*, apagar el micrófono cancela la frase en vuelo, y el `ping` para que la caída silenciosa sea *Desconectado*. Los tres textos para el SRS están propuestos en §6 #5, #6 y #8 |
+| 16 | **Caída silenciosa de la conexión.** Sin `readTimeout` ni `ping`, una conexión que muere sin cerrar el socket (túnel `adb reverse`, NAT del operador, cambio de red) no se detectaba: la app seguía creyendo conectada y una frase se quedaba esperando para siempre | `data/SignAiWebSocketClient.kt:46-50` | **Resuelto por A14**: `pingInterval(20 s)`. Es lo que convierte el congelamiento en un estado visible. Sin ese cambio, el reloj de 15 s al menos sacaría a la app, pero mostraría *Error* donde lo honesto es *Desconectado* |
+| 17 | **Una seña que no se puede cargar cortaba la frase entera en silencio.** El `catch` de `loadQueueItem` paraba todo y avisaba "terminado", así que las demás señas de la frase nunca se representaban y nada lo decía | `assets/web/app.js:566-575` | **Resuelto por decisión del owner** (§7, A14): se saltea esa seña, se sigue con las demás y el indicador muestra "Seña no disponible". Texto propuesto para el SRS en §6 #7 |
+| 18 | **El WebView no avisaba si moría.** Sin `onReceivedError` ni `onRenderProcessGone`, si el navegador mataba el proceso del WebView el estado se quedaba en *Reproduciendo* con el avatar quieto | `ui/webview/AvatarWebView.kt` | **Resuelto por A14**, y con los dos caminos decididos por separado (2026-10-17): si la **página** no cargó, aviso y la app sigue; si el **proceso de render** murió, se devuelve `false` y el sistema reinicia la app, porque un WebView sin proceso de render no renderiza nunca más y dejarla viva mostraría un canvas negro hasta que el usuario la cerrara a mano |
+| 19 | **El `done` podía cerrar el turno antes de que la cola estuviera lista.** `finishTurn` cerraba el turno mientras `appendQueue` todavía resolvía los assets, con dos efectos: la interfaz decía *Inactivo* un instante antes de *Reproduciendo*, y en modo en vivo la frase de reserva podía salir antes de que la anterior entregara su cola | `MainScreenState.finishTurn`, `appendQueue` | **Resuelto por A14**: el `done` espera al trabajo pendiente. Solo leído, no reproducido (§8, A14) |
+| 20 | **Dos oraciones del mismo turno salían las dos como "la primera" de la cola.** `appendQueue` decidía `first = !queueStarted` **antes** de resolver los assets, así que si una oración tardaba más en resolver que la siguiente, las dos Deliver por `setQueue` + `play()` y **la segunda pisaba la cola** que la primera ya estaba representando: la frase se cortaba a mitad, en silencio, y el turno se cerraba sobre una cola que ya no era la de la frase | `ui/state/MainScreenState.kt`, `appendQueue` | **Resuelto por A14** (`STA-29`): la entrega se serializa con `queueDeliveryGate` y `first` se lee después de resolver. Medido en el device: con una seña que tarda 2 s en bajarse, la frase se representaba al revés o se cortaba; después, en orden |
+| 21 | **El `done` no lleva con qué identificar a qué frase pertenece.** Cancelar una frase es local —el protocolo no tiene un frame para cancelarla— así que la app tiene que **tragarse** el `done` de la frase cancelada a ciegas. Si en el medio salió otra frase y el `done` viejo se perdió, se descarta el correcto y el turno nuevo se queda esperando hasta el reloj de 15 s | `ui/state/MainScreenState.kt`, `StaleTurn` | **Deuda de protocolo, no de la app.** Lo que la app hace está anotado en `openspec/specs/ui/spec.md` `STA-25` y el cambio que lo arreglaría de verdad —un id de turno en `segment`/`done`, o un frame `cancel`— está propuesto en `docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`. **Requiere tocar el backend, así que no se toca sin que el owner lo pida** |
