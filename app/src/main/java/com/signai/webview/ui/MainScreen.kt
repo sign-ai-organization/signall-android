@@ -233,6 +233,8 @@ fun MainScreen(state: MainScreenState) {
                                 onProgress = { progress = it },
                                 onPlaybackDone = state::onPlaybackDone,
                                 onSignStart = state::onSignStart,
+                                onSignFailed = state::onSignFailed,
+                                onSceneFailed = state::onSceneFailed,
                                 onLoaded = {
                                     loading = false
                                     state.syncWebSettings()

@@ -27,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -44,6 +45,38 @@ private const val DrawerCloseDelayMs = 500L
  * the app in "Procesando..." forever.
  */
 private const val TranscriptionTimeoutMs = 15_000L
+
+/**
+ * Cada cuánto mira el estado si la cola de la escena ya terminó de armarse.
+ *
+ * Es un fotograma: el caso que resuelve es "el `done` llegó antes de que la escena
+ * tuviera la frase", que dura lo que tarda una descarga, y a esa resolución no le
+ * hace falta ser fino.
+ */
+private const val QueueSettlePollMs = 16L
+
+/**
+ * Cuánto se espera, **en silencio**, a que el backend conteste una frase mandada.
+ *
+ * Es el hermano de [TranscriptionTimeoutMs] para el otro sentido del socket: aquel
+ * protege la transcripción del micrófono, este protege la traducción de lo que el
+ * usuario mandó. Antes no existía ninguno para esta, y esa es la razón de que la
+ * app quedara congelada: con el `readTimeout` en 0 y sin latido, una frase que
+ * sale y nadie contesta deja el estado en *Procesando* para siempre, con los cinco
+ * controles del panel deshabilitados y sin ninguna salida — ni apagar el
+ * micrófono, ni reiniciar el backend, ni esperar.
+ *
+ * Son los mismos 15 s que usa la transcripción, y 5 s por encima del tope que el
+ * backend le pone al LLM (`llm_timeout_ms = 10000`), así que una frase válida
+ * siempre tiene tiempo de contestarse. Y es un reloj de **silencio**, no de
+ * duración: se rearma con cada frame que llega ([armTurnSilence]), de modo que una
+ * frase larga con muchas oraciones no se mate a la mitad solo por tardar.
+ *
+ * El único número que no sale de un documento: el SRS dice *qué* señal mostrar
+ * (`main.tex:726-773`) y ningún documento dice cuánto esperar. Queda anotado en
+ * `docs/CONTRASTE-APPvsDOCUMENTOS.md` §6 #5, con el texto propuesto para el SRS.
+ */
+private const val TurnSilenceMs = 15_000L
 
 /**
  * Reconnect backoff: the wait grows by a second per attempt and tops out at
@@ -248,6 +281,8 @@ class MainScreenState(
      * que ya mide `rt_sentence_delay_ms`.
      */
     fun onSignStart(queueIndex: Int, jsMillis: Long) {
+        // La escena está muerta: este mensaje llegó tarde y no mide nada.
+        if (sceneDead) return
         val now = SystemClock.elapsedRealtime()
         // La escena se movió sin que hubiera una frase en vuelo: cola de un turno
         // muerto, o el avatar calentando al abrir. No es una muestra de nada.
@@ -332,6 +367,63 @@ class MainScreenState(
     /** Bounds the wait for a transcript after the mic is released. */
     private var processingJob: Job? = null
 
+    /**
+     * Red de seguridad de la frase mandada: [TurnSilenceMs] de silencio y se
+     * declara el fallo. Se rearma con cada frame que llega, así que mide lo que
+     * dice su nombre —que nadie habla— y no cuánto tarda la frase.
+     */
+    private var turnSilenceJob: Job? = null
+
+    /**
+     * Qué hacer con lo que siga llegando de una frase que el usuario canceló.
+     *
+     * Cancelar es **local**: el protocolo no tiene un frame para decirle al backend
+     * "olvida esa frase", así que el backend sigue mandando las oraciones que le
+     * faltan y su `done`, como si nada. Sin esto, las oraciones canceladas se
+     * representarían igual detrás de la espalda del usuario y el `done` viejo
+     * cerraría el turno siguiente.
+     *
+     * Los cuatro casos, porque el `done` no lleva con qué identificar la frase a la
+     * que pertenece: solo se puede "tragar" el primero que llegue.
+     */
+    private enum class StaleTurn {
+        /** No hay nada pendiente de una frase cancelada. */
+        None,
+
+        /**
+         * Recién cancelada: se descartan las oraciones que falten y se traga su
+         * `done`, porque todavía no salió ninguna frase nueva que pueda ser la
+         * dueño de ese `done`.
+         */
+        SentencesAndDone,
+
+        /**
+         * Ya salió otra frase mientras se esperaba: sus oraciones se aceptan —
+         * puede colarse alguna de la cancelada, que es un detalle visible—, pero
+         * el `done` viejo se traga igual, porque si no cerraría el turno nuevo.
+         */
+        DoneOnly,
+    }
+
+    /** Lo que queda de la frase que el usuario canceló. Ver [StaleTurn]. */
+    private var staleTurn = StaleTurn.None
+
+    /**
+     * La escena 3D dejó de existir: el navegador perdió su proceso de render, o la
+     * página principal no cargó.
+     *
+     * Antes la app no tenía cómo enterarse de eso, y el resultado era un estado
+     * *Reproduciendo* con el muñeco quieto para el resto de la sesión, sin salida.
+     * Con el aviso ([onSceneFailed]) deja de fingir: no entrega colas nuevas, no mide
+     * la primera seña y no vuelve a decir que terminó de representar.
+     *
+     * **No** se limpia sola: un WebView sin proceso de render no renderiza nunca
+     * más, así que solo un WebView nuevo —o reiniciar la app— lo arregla. Que se
+     * reinicie solo en vez de que la app muera es decisión del owner, y está anotada
+     * en `docs/CONTRASTE-APPvsDOCUMENTOS.md` §9.
+     */
+    private var sceneDead = false
+
     /** Text of the turn in flight, so the conversation entry is added on result. */
     private var pendingText: String? = null
 
@@ -354,6 +446,35 @@ class MainScreenState(
 
     /** How many segments the phrase has; 0 until the first one says so. */
     private var pendingTotal = 0
+
+    /**
+     * Cuántos [appendQueue] están armando cola para este turno **ahora mismo**.
+     *
+     * `appendQueue` resuelve los assets en una coroutine —puede suspender bajando un
+     * `.glb`— así que el `done` del backend llegafredo a veces antes de que la cola
+     * esté entregada a la escena. Y [finishTurn] decide el destino del turno mirando
+     * `queueStarted`, que en ese momento todavía valía `false`: el resultado era
+     * "esa frase no produjo ninguna seña" con la frase traducida y a punto de
+     * representarse, y en vivo la frase de reserva podía salir antes de que la
+     * anterior entregara su cola.
+     *
+     * Con este contador, [finishTurn] espera a que la cola se acomode antes de
+     * decidir. El techo es el mismo [TurnSilenceMs]: para entonces el reloj de
+     * silencio ya declaró el fallo y no hay nada más que esperar.
+     */
+    private var appendsInFlight = 0
+
+    /**
+     * Cadena de entrega de la cola: cada tanda espera a que la anterior entregue.
+     *
+     * Los assets se resuelven **en paralelo** (bajar una seña no tiene por qué
+     * esperar a que termine de bajar la anterior) pero se entregan **en orden de
+     * oración**, porque el orden es de la frase y no del reloj de las descargas.
+     * Ver [appendQueue].
+     *
+     * Se reinicia en [clearTurnState]: un turno nuevo no espera al anterior.
+     */
+    private var queueDeliveryGate = CompletableDeferred(Unit)
 
     /**
      * Índice de la última oración ya entregada a la escena; -1 = ninguna.
@@ -696,6 +817,15 @@ class MainScreenState(
 
     /** Una oración traducida: se representa apenas llega, sin esperar a las demás. */
     private fun onWholePhraseSegment(event: BackendEvent.Segment) {
+        // Oración de una frase que el usuario canceló: se descarta. El backend no
+        // sabe que la frase ya no interesa y sigue mandando lo que le falta.
+        if (staleTurn == StaleTurn.SentencesAndDone) {
+            Log.i(TAG, "oración de una frase cancelada: se descarta")
+            return
+        }
+        // Algo volvió: el reloj de silencio de la frase que esté en vuelo se
+        // rearma. Es lo que separa "el backend tarda" de "el backend no contesta".
+        armTurnSilence()
         transcript = pendingText ?: transcript
         pendingTotal = maxOf(pendingTotal, event.total)
         pendingSegments[event.index] = event.segment
@@ -818,6 +948,8 @@ class MainScreenState(
                 // funciona, así que la red de seguridad de "no llegó la
                 // transcripción" ya no hace falta.
                 processingJob?.cancel()
+                // Y también la de "no llegó la traducción": algo contesta.
+                armTurnSilence()
                 heardAnythingThisSession = true
                 // Dictado y en vivo parten del mismo sitio —los mismos chunks y
                 // el mismo STT— y se separan acá. Lo decide esta app, no el
@@ -921,6 +1053,10 @@ class MainScreenState(
         dictationAwaitingFinal = false
         pendingText = null
         replayPending = false
+        // La sesión se perdió: no va a llegar el `done` de nada, así que lo que
+        // quedara de una frase cancelada también se cae, con el reloj.
+        staleTurn = StaleTurn.None
+        turnSilenceJob?.cancel()
         clearTurnState()
 
         if (cancellingPhrase) {
@@ -969,7 +1105,10 @@ class MainScreenState(
             dictationPending = inputText.isNotBlank()
             // El silencio ya cerró la frase, así que la captura se va sin `end`:
             // no hay utterance abierto que cerrar y mandarlo solo agrega un viaje.
-            if (dictationActive) stopDictation(endIsRedundant = true)
+            // Y `cancelInFlight = false`: acá el micrófono no lo apagó el usuario,
+            // lo cerró el silencio, así que una traducción que esté en vuelo se
+            // sigue esperando en vez de tirarse.
+            if (dictationActive) stopDictation(endIsRedundant = true, cancelInFlight = false)
             playbackState = if (micActive) PlaybackState.Grabando else PlaybackState.Inactivo
         }
     }
@@ -1060,6 +1199,13 @@ class MainScreenState(
         // anterior, y el SRS mide desde que esta frase sale, no desde la anterior.
         turnSentAt = SystemClock.elapsedRealtime()
         playbackState = PlaybackState.Procesando
+        // Nadie va a contestar un `done` viejo: a partir de ahora el `done` que
+        // llegue es de esta frase. Ver [StaleTurn].
+        if (staleTurn == StaleTurn.SentencesAndDone) {
+            Log.i(TAG, "había una frase cancelada sin cerrar: se espera su fin antes de cerrar esta")
+            staleTurn = StaleTurn.DoneOnly
+        }
+        armTurnSilence()
         Log.i(TAG, "en vivo → envío: $text")
         return true
     }
@@ -1103,8 +1249,10 @@ class MainScreenState(
         // frases dictadas siga siendo el de frases, no el de transcripciones.
         metrics.onDictationUtterance(event.text)
         // El silencio cerró la frase, así que la captura se va sin mandar `end`:
-        // no hay utterance abierto que cerrar.
-        if (dictationActive) stopDictation(endIsRedundant = true)
+        // no hay utterance abierto que cerrar. Y `cancelInFlight = false` porque acá
+        // el apagado no lo pidió el usuario: lo cerró el silencio, así que una
+        // traducción en vuelo se sigue esperando en vez de tirarse.
+        if (dictationActive) stopDictation(endIsRedundant = true, cancelInFlight = false)
         // El texto queda en el campo esperando confirmación. No se manda nada:
         // el envío es del usuario (RF-STT-03) y el que lo dispara es Traducir.
         dictationPending = live.isNotBlank()
@@ -1210,6 +1358,16 @@ class MainScreenState(
         // a traducir (`main.tex:848-852`), que es este momento.
         turnSentAt = SystemClock.elapsedRealtime()
         playbackState = PlaybackState.Procesando
+        // Nadie va a contestar un `done` viejo: a partir de ahora el `done` que
+        // llegue es de esta frase. Ver [StaleTurn].
+        if (staleTurn == StaleTurn.SentencesAndDone) {
+            Log.i(TAG, "había una frase cancelada sin cerrar: se espera su fin antes de cerrar esta")
+            staleTurn = StaleTurn.DoneOnly
+        }
+        // Y el reloj: si en [TurnSilenceMs] no vuelve nada, esto es un fallo y no
+        // una espera. Antes no había nada para una frase mandada, y por eso la app
+        // se quedaba congelada.
+        armTurnSilence()
         // Toda frase que sale de acá queda retenida en el campo: el Traducir con
         // lo dictado, el Traducir a mano y el Repetir. Sin esto, Traducir y
         // Repetir dejaban la frase en el campo con el botón habilitado y el avatar
@@ -1246,6 +1404,10 @@ class MainScreenState(
         pendingTotal = 0
         flushedThrough = -1
         queueStarted = false
+        // La cadena de entrega es por turno: el que empieza no espera al anterior,
+        // que puede todavía estar bajando una seña que ya no importa. **Con valor**,
+        // o sea ya completada: la primera tanda tiene que poder pasar de una.
+        queueDeliveryGate = CompletableDeferred(Unit)
         turnQueueItems.clear()
         conversationTurnIndex = -1
         turnSentAt = 0L
@@ -1255,6 +1417,10 @@ class MainScreenState(
     private fun fail(message: String) {
         Log.i(TAG, "fallo: $message")
         pendingText = null
+        // Y con ella lo que quedara de una frase cancelada: el fallo es de la
+        // sesión, así que lo que venga después es de la sesión nueva.
+        staleTurn = StaleTurn.None
+        turnSilenceJob?.cancel()
         // The phrase this was building for is dead: its partial segments must
         // not be picked up by the next phrase.
         clearTurnState()
@@ -1366,11 +1532,33 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
      * the APK.
      */
     private fun appendQueue(segments: List<TranslationSegment>) {
+        // La escena no existe: entregarle una cola sería mandar instrucciones a un
+        // canvas muerto, y el estado quedaría diciendo *Reproduciendo* sin que haya
+        // nadie representando nada.
+        if (sceneDead) {
+            Log.i(TAG, "oración lista pero la escena 3D está muerta: no se entrega")
+            return
+        }
         val text = pendingText.orEmpty()
-        val first = !queueStarted
-        scope.launch {
+        // Cada tanda espera su turno de entrega, no su turno de resolución: los
+        // assets se bajan en paralelo (que es lo que hace que una frase larga no
+        // espere una descarga detrás de otra) pero **se entregan en orden de oración**.
+        //
+        // Sin esto la frase se representaba al revés en cuanto una oración tardaba
+        // más en resolver que la siguiente —medido: una oración cuya seña tarda 2 s
+        // en bajarse, con otra que llega y resuelve al instante: la segunda se
+        // representaba primero—, y era peor todavía antes de esta cadena: las dos
+        // salían como "la primera", las dos hacían `setQueue` y la segunda **pisaba**
+        // la cola que la primera ya estaba representando, así que la frase se
+        // cortaba a mitad sin que nada lo dijera.
+        val myTurn = CompletableDeferred<Unit>()
+        val previousTurn = queueDeliveryGate
+        queueDeliveryGate = myTurn
+        val job = scope.launch {
             val resolved = segments.map { queueItemsFor(it) }
+            previousTurn.await()
             val items = resolved.flatMap { it.items }
+            val first = !queueStarted
 
             if (first) {
                 turnQueueItems.clear()
@@ -1454,7 +1642,7 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
                 // a llamar `playFrom` si la cola ya se había vaciado mientras esta
                 // oración se traducía (ver `app.js`). O viene sonando o arranca
                 // después de este comando, así que en los dos casos queda
-                // representing.
+                // representando.
                 webView.appendQueue(items)
                 // El reloj solo se reinicia si venía de estar parado. Si venía
                 // sonando, reiniciarlo haría que `representado:` midiera solo el
@@ -1463,6 +1651,17 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
                 queuePlaying = true
             }
             playbackState = PlaybackState.Reproduciendo
+        }
+        // El contador que [finishTurn] mira antes de decidir el destino del turno, y
+        // el final de la cadena de entrega. Va por fuera del `launch` para que el
+        // cuerpo de arriba no se reescriba con un `try/finally` que no hace falta.
+        appendsInFlight++
+        scope.launch {
+            job.join()
+            appendsInFlight--
+            // La cadena no puede quedar colgada: si esta tanda no llegó a entregar
+            // —falló, o se canceló—, la siguiente tiene que poder seguir igual.
+            myTurn.complete(Unit)
         }
     }
 
@@ -1477,6 +1676,36 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
      * avatar represente la frase al revés.
      */
     private fun finishTurn() {
+        // `done` de una frase cancelada. Se traga sin tocar el turno vivo: si se
+        // aplicara lo de abajo, cerraría la frase que el usuario mandó después.
+        if (staleTurn != StaleTurn.None) {
+            val keepTheLiveTurn = staleTurn == StaleTurn.DoneOnly
+            staleTurn = StaleTurn.None
+            Log.i(TAG, "fin de una frase cancelada: se descarta (turno vivo intacto=$keepTheLiveTurn)")
+            if (!keepTheLiveTurn) {
+                pendingText = null
+                clearTurnState()
+            }
+            // Acá llegó algo, así que el reloj de silencio se rearma en vez de
+            // cancelarse: si quedó una frase en vuelo, su propio reloj tiene que
+            // seguir corriendo. Sin nada en vuelo, el reloj no dispara nada.
+            armTurnSilence()
+            // La frase que estaba esperando salida ya no tiene a nadie adelante, así
+            // que sale ahora —igual que en el camino normal—.
+            releaseLiveBacklog()
+            return
+        }
+
+        // Hay oraciones todavía armando cola: el `done` llegó antes de que la escena
+        // tuviera la frase. Decidir ahora sería decidir sobre un estado que todavía
+        // no es el real, así que se espera a que se acomode y se vuelve a entrar
+        // acá. Sin esto el turno se cerraba con `queueStarted` en `false` y decía
+        // "no produjo ninguna seña" sobre una frase que sí se iba a representar.
+        if (appendsInFlight > 0) {
+            finishTurnWhenQueueSettles()
+            return
+        }
+
         val segments = pendingSegments.values.toList()
         // La frase en vuelo se guarda **antes** de limpiar `pendingText`: más abajo
         // se usa para saber si este `done` cierra un turno de verdad. Antes se
@@ -1520,6 +1749,32 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         // Hay una frase en espera de salida (el TR habló más rápido que el LLM).
         // Sale ahora que esta ya no está en vuelo.
         releaseLiveBacklog()
+    }
+
+    /**
+     * El `done` llegó antes de que la cola estuviera lista: se espera y se reintenta
+     * [finishTurn].
+     *
+     * El techo es [TurnSilenceMs] y no infinito a propósito: si un asset se queda
+     * colgado, para entonces el reloj de silencio ya llamó [fail] y el turno ya está
+     * cerrado, así que seguir esperando solo sería dejar trabajo colgando.
+     */
+    private fun finishTurnWhenQueueSettles() {
+        Log.i(TAG, "el fin de la frase llegó con la cola todavía armándose: se espera")
+        scope.launch {
+            val deadline = SystemClock.elapsedRealtime() + TurnSilenceMs
+            while (appendsInFlight > 0 && SystemClock.elapsedRealtime() < deadline) {
+                delay(QueueSettlePollMs)
+            }
+            // El fallo o la desconexión ya cerraron el turno: no se toca más.
+            if (playbackState == PlaybackState.Error ||
+                playbackState == PlaybackState.Desconectado
+            ) {
+                return@launch
+            }
+            if (appendsInFlight > 0) Log.w(TAG, "la cola nunca terminó de armarse: se cierra igual")
+            finishTurn()
+        }
     }
 
     /**
@@ -1679,6 +1934,16 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         // fuerza: si no, el `final` con lo que el usuario dijo nunca llega.
         backend.sendEnd()
 
+        // El interruptor es también el botón de parar (decisión del owner): si hay
+        // una frase esperando respuesta, apagarla la cancela. Sin esto, apagar el
+        // TR con una frase en vuelo no sacaba a la app de *Procesando* —el apagado
+        // solo apagaba el micrófono— y el botón de parar no paraba.
+        val inFlight = pendingText
+        if (inFlight != null) {
+            cancelPhraseByMicOff(inFlight)
+            return
+        }
+
         // Apagar el TR deja el campo **limpio**.
         //
         // Lo que había ahí era la transcripción en vivo de lo que el micrófono
@@ -1746,7 +2011,10 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
      * frase—: ahí no hay utterance abierto que cerrar y mandarlo solo sumaría un
      * viaje de ida y vuelta y un `final` vacío de ruido.
      */
-    private fun stopDictation(endIsRedundant: Boolean = false) {
+    private fun stopDictation(
+        endIsRedundant: Boolean = false,
+        cancelInFlight: Boolean = true,
+    ) {
         audio.stop()
         micMode = MicMode.Off
         // Queda pendiente de `final`: aunque el usuario apague el micrófono sin
@@ -1754,6 +2022,18 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         // camino del dictado. Con el silencio ya cerrado no hay nada que esperar.
         dictationAwaitingFinal = !endIsRedundant
         if (!endIsRedundant) backend.sendEnd()
+        // Igual que en el TR, apagar el micrófono con una frase esperando la
+        // cancela. Solo cuando el apagado es del usuario: cuando lo que cerró el
+        // dictado fue el silencio, la frase en vuelo sigue siendo esperada y
+        // cancelarla sería tirar una traducción que va a llegar.
+        //
+        // Y acá el texto **no** vuelve al campo: en dictado el campo es del
+        // `final` que está por llegar y pisarlo perdería lo que el usuario acaba de
+        // decir, que es más nuevo. La frase cancelada sigue en `lastText`, o sea
+        // que el "Repetir" del escenario la puede volver a mandar.
+        if (cancelInFlight) {
+            pendingText?.let { cancelPhraseByMicOff(it, returnTextToField = false) }
+        }
         Log.i(
             TAG,
             "dictado detenido${if (endIsRedundant) " (el silencio ya lo había cerrado)" else ""}: " +
@@ -1791,6 +2071,136 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
                 fail("No llegó el final de la transcripción.")
             }
         }
+    }
+
+    /**
+     * Red de seguridad de la frase mandada, en el otro sentido del socket.
+     *
+     * [armTranscriptionTimeout] cubre la transcripción; esta cubre la traducción.
+     * Se arma cuando sale una frase ([requestTranslation], [sendLivePhrase]) y
+     * **se rearma con cada frame que vuelve**: una oración, una transcripción, un
+     * `done`. Por eso es un reloj de silencio y no un reloj de duración — una
+     * frase de diez oraciones puede tardar treinta segundos y no es un fallo— y por
+     * eso una frase que el backend contesta a medias no se declara muerta solo por
+     * tardar.
+     *
+     * Cuando se cumple, [fail] hace todo lo que hace falta: corta el micrófono,
+     * suelta el texto retenido para que el campo quede editable, apaga el panel de
+     * un Repetir, muestra *Error* y vuelve a *Inactivo* a los 3 s. El usuario
+     * siempre tiene salida.
+     *
+     * Lo que se pierde es la traducción, no el texto: la frase está en el campo y
+     * se puede mandar otra vez.
+     */
+    private fun armTurnSilence() {
+        turnSilenceJob?.cancel()
+        turnSilenceJob = scope.launch {
+            delay(TurnSilenceMs)
+            val liveTurn = pendingText != null
+            val discarding = staleTurn == StaleTurn.SentencesAndDone
+            // Solo hay algo que esperar si hay una frase en vuelo, o si lo que se
+            // canceló todavía no trajo su `done`. Cualquier otro estado significa
+            // que algo ya lo resolvió: *Error* y *Desconectado* limpian los dos.
+            if (!liveTurn && !discarding) return@launch
+            if (!liveTurn) {
+                // El `done` de una frase **cancelada** nunca llegó. Eso no es un
+                // fallo que haya que mostrar: el usuario canceló, la app ya está en
+                // *Inactivo* con el texto en el campo, y decir "el servidor no
+                // respondió" quince segundos después de una cancelación sería un
+                // error inventado. Lo único que hay que hacer es **olvidar el
+                // descarte**: a partir de ahora el `done` que llegue es de una frase
+                // nueva, y dejarlo prendido se tragaría el correcto.
+                //
+                // La carrera que queda —que el `done` viejo llegue después y cierre
+                // el turno de la frase nueva— es el precio de que el protocolo no
+                // permita cancelar una frase en el backend. Está anotada en
+                // `docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`.
+                Log.i(TAG, "el fin de la frase cancelada nunca llegó: se olvida el descarte")
+                staleTurn = StaleTurn.None
+                return@launch
+            }
+            fail("El servidor no respondió.")
+        }
+    }
+
+    /**
+     * El usuario apagó el micrófono o el TR con una frase esperando respuesta.
+     *
+     * **Decisión del owner, 2026-10-17**: apagar el interruptor es el botón de
+     * parar. Antes no sacaba a la app de *Procesando* —el apagado del TR no
+     * escribía el estado, solo apagaba el micrófono—, así que el botón de parar no
+     * paraba y la única red era el reloj de 15 s.
+     *
+     * Lo que se cancela es **local** ([StaleTurn]): el backend no tiene forma de
+     * saber que la frase ya no interesa y sigue mandando lo que le falta.
+     *
+     * Los dos finales, igual que en [onDisconnected] y por el mismo motivo: si el
+     * avatar ya estaba representando, el usuario **vio** parte de la frase, y
+     * devolverla al campo ofrecería un reenvío de algo que ya se mandó. Si no había
+     * ni una seña en pantalla, la frase no se vio nunca y tiene que poder mandarse
+     * otra vez —RNF-REL-04: el texto que el usuario confirmó no se pierde—.
+     *
+     * [returnTextToField] es `false` en el dictado: ahí el campo es del `final` que
+     * está por llegar y devolver ahí la frase cancelada perdería lo que el usuario
+     * acaba de decir, que es más nuevo. La cancelada sigue en `lastText`.
+     */
+    private fun cancelPhraseByMicOff(text: String, returnTextToField: Boolean = true) {
+        val interruptingSign = queuePlaying || playbackState == PlaybackState.Reproduciendo
+        Log.i(
+            TAG,
+            "frase cancelada por el apagado del micrófono (seña en curso=$interruptingSign): \"$text\"",
+        )
+
+        if (interruptingSign) {
+            // El avatar a reposo, como en la desconexión: sin esto el estado
+            // volvía a inactivo con el canvas todavía en la seña a medias.
+            webView.stop()
+            queuePlaying = false
+            caption = ""
+            turnQueueItems.clear()
+        }
+
+        pendingText = null
+        replayPending = false
+        doneVisible = false
+        clearTurnState()
+        // Lo que el backend siga mandando de esta frase se descarta, y su `done` se
+        // traga. El reloj **no** se cancela: es lo que garantiza que esto no se
+        // quede esperando para siempre si ese `done` nunca llega.
+        staleTurn = StaleTurn.SentencesAndDone
+        armTurnSilence()
+        processingJob?.cancel()
+
+        releaseSentText()
+        if (interruptingSign) {
+            // Lo que ya se estaba representando no vuelve. Un dictado anterior que
+            // siguiera esperando confirmación sí, como en el apagado normal.
+            if (dictationBuffer.isNotBlank()) {
+                inputText = dictationBuffer
+                transcript = dictationBuffer
+                dictationPending = true
+            }
+            playbackState = PlaybackState.Inactivo
+            showStatus("Representación interrumpida.")
+            return
+        }
+        if (!returnTextToField) {
+            // El campo es de otro dueño —el `final` que está por llegar—, así que
+            // la frase cancelada no vuelve a él. Queda en `lastText`.
+            playbackState = PlaybackState.Inactivo
+            showStatus("Frase cancelada.")
+            return
+        }
+
+        // El usuario nunca la vio: la frase vuelve al campo, editable, con el
+        // estado de "esperando confirmación" de una frase dictada —que es lo que
+        // Traducir y el aviso de abajo ya saben mostrar.
+        inputText = text
+        transcript = text
+        dictationBuffer = text
+        dictationPending = true
+        playbackState = PlaybackState.Inactivo
+        showStatus("Frase cancelada. Toca Traducir para mandarla.")
     }
 
     /** Mic blocked by the user (RF-UI-04: say so, the app can't work without it). */
@@ -1918,8 +2328,53 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         requestTranslation(clean)
     }
 
+    /**
+     * La escena 3D dejó de existir: la página principal no cargó, o el navegador
+     * perdió su proceso de render (`onReceivedError` / `onRenderProcessGone`).
+     *
+     * Antes la app no tenía este aviso, y el síntoma era el peor de la lista de
+     * casos: el estado se quedaba en *Reproduciendo* con el muñeco quieto y sin
+     * ninguna forma de salir.
+     *
+     * Lo que hace es un [fail]: se corta el micrófono (de nada sirve seguir
+     * escuchando si no hay a quién mostrarle la frase), el texto vuelve al campo
+     * editable, el panel se libera, y el estado dice *Error* y vuelve a *Inactivo*
+     * a los 3 s. Y [sceneDead] queda prendido para que la app **no siga fingiendo**
+     * que representa: no entrega colas nuevas ni vuelve a anunciar que una seña
+     * empezó.
+     *
+     * Solo avisa una vez: el error de página y el de render pueden llegar juntos, y
+     * dos *Error* seguidos son dos parpadeos.
+     */
+    fun onSceneFailed(reason: String) {
+        if (sceneDead) return
+        sceneDead = true
+        Log.e(TAG, "la escena 3D dejó de funcionar: $reason")
+        fail(reason)
+    }
+
+/**
+     * Una seña de la frase no se pudo descargar y la escena la saltó
+     * (`signFailed:<i>` del puente, `notifySignFailed` en `app.js`).
+     *
+     * Antes eso cortaba la frase entera en silencio: la escena paraba todo y
+     * avisaba que el turno había terminado, y las demás señas de la frase no se
+     * representaban nunca. Ahora la escena sigue, y lo único que falta es esta seña.
+     *
+     * En pantalla sale "Seña no disponible" —[showMissingSign]—, que es lo único
+     * que la tabla de estados del SRS permite decir sobre el indicador cuando una
+     * glosa no se puede representar (`main.tex:201` y `:753`). El detalle de cuál
+     * fue queda en el log, como las glosas que el catálogo no tiene.
+     */
+    fun onSignFailed(queueIndex: Int) {
+        Log.i(TAG, "la escena saltó la seña $queueIndex: no se pudo cargar su animación")
+        showMissingSign()
+    }
+
     /** Called by the JS bridge (`onPlaybackDone`, spec `BRG-7`/`STA-8`). */
     fun onPlaybackDone() {
+        // Mensaje de una escena que ya está muerta: no hay reproducción que cerrar.
+        if (sceneDead) return
         if (queuePlaying) {
             queuePlaying = false
             if (playbackStartedAt > 0L) {
