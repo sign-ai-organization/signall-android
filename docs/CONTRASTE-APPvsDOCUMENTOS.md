@@ -508,6 +508,38 @@ en `queueIdx + 1` y saltaría los ítems de en medio.
 | TR apagado con la frase representada | "Listo para traducir" + Repetir, **no** "Texto listo" |
 | `error` del backend | El mensaje sale y Traducir vuelve a estar disponible; a los 3 s el estado es `Inactivo` |
 
+### ✅ El indicador: el nombre del estado, el color, y un 25 % más grande
+
+Cambio pedido por el owner el 2026-10-17, después de ver los textos que la app se
+invaba. Tres cosas, y las tres están medidas en el Redmi Note 9S:
+
+**1. En pantalla va el nombre del estado, y nada más.** Los siete:
+
+| Estado | Texto en pantalla | Color del punto |
+|---|---|---|
+| Inactivo | "Inactivo" | Azul |
+| Grabando | "Grabando" | Ámbar |
+| Texto listo | "Texto listo" | Azul |
+| Procesando | "Procesando" | Ámbar |
+| Reproduciendo | "Reproduciendo" | Azul |
+| Error | "Error" | Rojo |
+| Desconectado | "Desconectado" | Rojo |
+
+**2. El color del punto dice en qué estado está la app: tres colores, no siete.**
+Azul (`strong`, el de marca) para el camino normal; ámbar (`live`) para lo que hay
+que esperar; rojo (`error`) para lo que falló. Los tres son tokens que ya estaban
+en `ui/designsystem/Color.kt`: no se inventó ningún color.
+
+**3. Un 25 % más grande**, punto y texto: de 7 dp a 8,75 dp, y de 12/16 sp a 15/20 sp.
+
+Lo que **salió** del indicador: las glosas que se mostraban mientras el avatar
+representaba ("glosa-uno · glosa-dos"), y todos los avisos de 3 s ("Ya está
+representado.", "No se escuchó nada.", "Sin conexión: no puedo escuchar."). Todos
+siguen existiendo, pero en el **log** (`SignAiState`) y, si la depuración de Ajustes
+→ Avanzado está prendida, también en pantalla. El único texto propio que queda en
+el indicador es **"Seña no disponible"**, que es el único que la tabla prescribe
+(fila *Reproduciendo*) y que va como texto **alternativo** de *Reproduciendo*.
+
 **Lo que no se pudo medir:** la reconexión en sí con la espera de 1 s / 2 s / 3 s… se
 vio que reconecta y que el contador se reinicia, pero no se cronometró la serie
 completa: para eso hay que dejar el backend caído y volverlo a levantar, y con
@@ -535,4 +567,6 @@ anotan acá para que no se pierdan, y se marcan las que necesitan una decisión.
 | 9 | **El SRS hay que ajustarlo en dos puntos**, por decisiones que el owner tomó el 2026-10-17. No es un error del documento: son requisitos que la app cumple distinto y el documento tiene que reflejarlo | Overleaf, `main.tex` | **(a)** `main.tex:709` dice que en modo TR el micrófono **permanece encendido**; con la caída de conexión la app lo **apaga** y avisa. **(b)** La fila *Desconectado* (`main.tex:761-772`) no dice qué pasa con el micrófono. El texto exacto que hay que pegar está en `openspec/sessions/2026-10-17-estados-y-desconexion.md` |
 | 10 | `TextoListo` se **deduce** en vez de asignarse, y por qué | `MainScreenState.stateForUi` | `dictationReadyToSend` depende de tres cosas a la vez (micrófono apagado, campo con texto, nada retenido) y cualquiera la deshace. Si fuera un estado asignado habría que acordarse de volver a ponerlo en cada transición, y cuando se olvidaba tapaba `Desconectado`. Como estado asignado se dejaba pegado en "Texto listo" con la conexión caída, que es un aviso peor que ninguno |
 | 11 | Dictar "X", pasar al TR y decir "X" otra vez dejaba el mismo texto **en los dos lados**: el avatar lo representaba y, al apagar el TR, `stopCapture` lo devolvía al campo como pendiente. Con A1 eso se veía como "Texto listo" sobre una frase que ya se había representado, con Traducir pidiendo mandarla otra vez | `MainScreenState.sendLivePhrase` | **Resuelto**: si lo que sale en vivo es justamente lo que estaba esperando confirmación, deja de estar pendiente. El pendiente sobrevive cuando es **otro** texto, que ese sí es del usuario y no se mandó |
-| 12 | El estado `Error` existe en la máquina, pero **lo que se lee es el mensaje**, no la palabra "Error": `statusLine` da prioridad al mensaje transitorio | `MainScreenState.statusLine` | Decisión, no olvido: "No llegó el final de la transcripción." le dice al usuario mucho más que "Error". Si el owner quiere que la palabra aparezca, hay que cambiar `statusLine` para que con estado `Error` muestre `Error · <mensaje>`, o colorear el punto del hint |
+| 12 | La tabla `tab:estados-ui` **no prescribe textos literales**: su columna se llama "qué muestra la pantalla" y describe. El único mensaje literal de toda la tabla es ``Seña no disponible`` (fila *Reproduciendo*) | Overleaf, `main.tex:753` | **Resuelto el 2026-10-17 por decisión del owner**: en el indicador va el **nombre del estado** y nada más —Inactivo, Grabando, Texto listo, Procesando, Reproduciendo, Error, Desconectado—. Los avisos de 3 s y las glosas que antes ocupaban el indicador **salen solo con la depuración prendida** (Ajustes → Avanzado) y en el resto del tiempo quedan en el log (`SignAiState`). El punto del indicador es ahora la señal de color (rojo para lo que falla, ámbar para lo que espera, azul para lo normal) |
+| 13 | Una frase **sin ninguna seña representable** dejaba la app en "Procesando" para siempre, con el Traducir deshabilitado | `MainScreenState.appendQueue`, `finishTurn` | **Resuelto**: `queueStarted` solo se prende cuando la escena recibió la cola de verdad, y el `done` del backend cierra el turno. De paso se arregló el caso peor: la primera oración vacía y la segunda con seña entraban por `appendQueue` sin que nadie hubiera llamado `setQueue` ni `play()`, y la frase no se representaba |
+| 14 | La app decía "Listo para traducir", "Procesando...", "Reproduciendo señas..." y "Sin conexión con el servidor", que **no están en el SRS** | `PlaybackState` | Son palabras de la app, de antes de esta sesión. Con la decisión del owner del 2026-10-17 el indicador dice el nombre del estado. Las textos viejos quedan en el historial de git |
