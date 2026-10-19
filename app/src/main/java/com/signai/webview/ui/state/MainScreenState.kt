@@ -2114,7 +2114,7 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
                 // La carrera que queda —que el `done` viejo llegue después y cierre
                 // el turno de la frase nueva— es el precio de que el protocolo no
                 // permita cancelar una frase en el backend. Está anotada en
-                // `docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`.
+                // `../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`.
                 Log.i(TAG, "el fin de la frase cancelada nunca llegó: se olvida el descarte")
                 staleTurn = StaleTurn.None
                 return@launch

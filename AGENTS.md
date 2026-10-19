@@ -350,7 +350,7 @@ pide. La regla es leer la fila antes de decidir, no después.
 | **Si el código y los documentos no coinciden, o hay que decidir si manda el código o el documento** | skill **`tres-fuentes-de-verdad`** — las tres fuentes, el flujo de revisión y qué hacer cuando no alinean |
 | **Consultar el Overleaf de la tesis** | skill **`overleaf-lectura`** — cómo leer, la cookie, y qué hacer cuando un documento está mal |
 | **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, IDs de Overleaf |
-| **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | [`docs/CONTRASTE-APPvsDOCUMENTOS.md`](docs/CONTRASTE-APPvsDOCUMENTOS.md) — el contraste app ↔ SRS, con la tabla de lo que hay que hacer y la decisión que se tomó en cada caso |
+| **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | **`ls docs/CONTRASTE-*.md`**. Los contrastes son documentos de trabajo de una sesión: se crean, se actualizan y a veces se borran, así que no hay una lista fija — se buscan por nombre. Cada repo tiene el suyo en su `docs/` (el del backend está en `../sign-ai-backend/docs/`) |
 | **El micrófono, el modo en vivo, la cola de la escena o la latencia** | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) + `tools/TIEMPO-REAL.md` |
 | **Probar o verificar en el device, o "va lento"** | skill **`controlar-app-movil`** — qué herramienta usar, y los errores ya pisados |
 | **Compose, Lumo, accesibilidad o performance** | skill **`compose-best-practices`** (Lumo/Phosphor, cero Material 3) + `ui/designsystem/Color.kt` |
