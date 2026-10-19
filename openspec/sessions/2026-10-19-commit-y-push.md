@@ -104,3 +104,17 @@ backend no tienen esa regla, y ahora su voz propia dice `representar`.
 - El contraste del backend (`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`)
   es nuevo: nadie lo revisó todavía, y es el que tiene la lista de lo que
   el SRS deja abierto del lado del servidor.
+- **Una rama del backend estaba solo en local**:
+  `feat/segmenter-en-traducir`, con dos commits del 2026-10-15 que no estaban
+  en ningún remoto (`13c7ac4` y `3bcf9fd`). Se pusheó para que no se pierda:
+  trae `scripts/verify_text_path.py` (430 líneas, la regresión del camino de
+  la frase escrita), el A/B de los dos caminos con las 252 frases y las fotos
+  de `scripts/measurements/`.
+  **El trabajo que hay ahí ya está en `flujo-oraciones` o quedó obsoleto**:
+  `13c7ac4` arreglaba que `handle_text()` fuera por el divisor de oraciones y
+  no por el traductor incremental, y en `flujo-oraciones` el camino
+  incremental ya no existe — `Orchestrator.translate_stream` divide por
+  oraciones y `_translate_sentence` está presente, así que el
+  `AttributeError` que ese commit arreglaba no ocurre acá. Lo que sí queda
+  vivo es el A/B como registro. La rama es del linaje de `tiempo-real`, que se
+  dejó atrás; borrarla del remoto es una decisión del owner.
