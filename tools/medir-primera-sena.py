@@ -1,6 +1,6 @@
 """Remide la primera seña con el flujo por oraciones.
 
-§7 de `../sign-ai-docs/auditoria-flujo-2026-10-15.md`: la línea base publicada
+Opción A, la que se explica en `docs/CAMBIOS.md`: la línea base publicada
 (913 ms p50 / 1336 ms p95) es del camino por palabras y **no es comparable** con
 el flujo por oraciones. Con oraciones la primera seña sale al terminar la primera
 oración, no a mitad de camino, así que el número sube por construcción y hay que

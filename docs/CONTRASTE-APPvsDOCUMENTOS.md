@@ -5,7 +5,7 @@
 **Fuente de verdad:** el **SRS de Overleaf**, proyecto `6a122a19bb9a5dd9d390ba3d`,
 archivo `main.tex`, **1370 líneas**, versión 426, editado el **2026-10-17** (releído
 después de esa edición).
-**Segundo documento:** `../sign-ai-docs` (`v0.15` y `modificaciones/requerimientos.md`),
+**Segundo documento:** `../sign-ai-docs` (`v0.16` y `modificaciones/requerimientos.md`),
 usado de apoyo cuando el SRS no habla de algo.
 **Contraste del backend:** vive en el repo del backend, no acá
 (`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`).
@@ -333,7 +333,7 @@ Reportado al owner el 2026-10-17. **Nada de esto se toca desde acá.**
 
 | # | Qué | Dónde |
 |---|---|---|
-| 1 | La §3 del SRS está vacía y conserva los subtítulos de una plantilla de juegos ("Funcionalidad 1: Jugar", "Registro y Autenticación", "Administración", "Consultas"). Con eso desaparecieron los IDs `RF-*` y `RNF-*` que usan `v0.15` y el plan de pruebas | Overleaf, `main.tex` §3 |
+| 1 | La §3 del SRS está vacía y conserva los subtítulos de una plantilla de juegos ("Funcionalidad 1: Jugar", "Registro y Autenticación", "Administración", "Consultas"). Con eso desaparecieron los IDs `RF-*` y `RNF-*` que usan `v0.16` y el plan de pruebas | Overleaf, `main.tex` §3 |
 | 2 | El SRS dice "SignAI" 25 veces y "SignALL" ninguna. Delegado al compañero | Overleaf, todo el documento |
 | 3 | Dos marcadores de trabajo sin completar: `[PENDIENTE: tamaño del APK con todos los archivos GLB.]` | Overleaf, `main.tex:932` y `:1155` |
 | 4 | `../sign-ai-docs/modificaciones/requerimientos.md` punto 19 pide "límite de intentos" de reconexión. El owner decidió **sin** límite: espera creciente hasta 5 s, indefinida. Hay que corregir ese texto | `../sign-ai-docs` |

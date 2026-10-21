@@ -33,7 +33,7 @@ hace, porque un agente que los lee construye el sistema equivocado:
 MaterialTheme.colorScheme", cuando el `AGENTS.md` dice que Material 3 no se agrega nunca
 y el sistema es Lumo. Hoy el repo tiene **cero** imports de `material3`.
 
-**4. Un claim del propio `AGENTS.md` era falso.** `AGENTS.md:565` decía que los spec
+**4. Un claim del propio `AGENTS.md` era falso.** Decía que los spec
 `CTL-6`, `STA-9` y `OM-4` "siguen describiendo el placeholder y están mal". Los tres ya
 estaban corregidos (`spec.md:122`, `:250`, `:407`). Un agente que le creyera "arreglaría"
 entradas que ya estaban bien.

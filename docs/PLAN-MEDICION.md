@@ -16,7 +16,7 @@ afirmar en la tesis.
 1. **Cumplir los documentos.** Los seis requisitos de desempeño (RNF-DES-01 a
    RNF-DES-06) están escritos **sin ninguna cifra**: los valores están
    pendientes de TSK-03/04/05 en
-   `../sign-ai-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.15.md:380`.
+   `../sign-ai-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md:439`.
    Estos números son los que los fijan.
 2. **Demostrar el pipeline paso a paso.** Cuánto se tarda en cada etapa, con
    el desglose que ya existe como molde en
@@ -132,19 +132,19 @@ El vocabulario se usa en **dos** lugares:
    glosas del catálogo, así que el modelo puede inventar glosas. Las que no
    existen las marca como no disponibles el validador."*
 2. **RF-NLP-02**, criterio de aceptación
-   (`SignAI_Requerimientos_Consolidados_v0.15.md:237`): *"el sistema envía el
-   texto al LLM externo y recibe una secuencia de glosas propuesta. **Esta
+   (`SignAI_Requerimientos_Consolidados_v0.16.md:260`): *"el sistema envía esa
+   oración al LLM externo y recibe una secuencia de glosas propuesta. **Esta
    salida todavía no ha sido validada contra el catálogo de señas, esa
    verificación ocurre en un módulo distinto.**"*
 3. El **historial de versiones** del mismo documento, línea 15 (v0.3 del
    10/08/2026): *"**El NLP no valida contra el catálogo**, esa función queda
    pendiente para la sección 3.4."* La 3.4 es donde después se escribió
    RF-CAT-02.
-4. `auditoria-flujo-2026-10-15.md` §9 (líneas 531-555): el costo de la lista
+4. `../sign-ai-backend/docs/performance.md` §9: el costo de la lista
    *"es lineal con el tamaño del corpus y se paga en cada llamada"* — 413
    caracteres hoy, ~41 KB a 5 000 glosas.
 
-**Por qué la reparación se queda.** El mismo §9, líneas 557-560, es explícito:
+**Por qué la reparación se queda.** El mismo §9 es explícito:
 
 > *"**Lo que NO hay que cambiar ahora.** La mitad del diseño es sana y se
 > queda: `_repair_glosses` y `_merge_fragments` consultan el vocabulario con
@@ -183,7 +183,7 @@ glosas que no están en el catálogo (`llm_client.py:215-218`). Eso es validar
 dentro del NLP, que RF-NLP-02 prohíbe, y tiene una consecuencia concreta:
 si el NLP borra la glosa, **RF-CAT-03 nunca se dispara** y el usuario nunca ve
 el aviso *"Seña no disponible"* que el requisito pide
-(`SignAI_Requerimientos_Consolidados_v0.15.md:326`). Hoy eso no se nota
+(`SignAI_Requerimientos_Consolidados_v0.16.md:358`). Hoy eso no se nota
 porque el prompt cerrado evita que la glosa llegue a ese punto.
 
 No se corrige en este trabajo. Se mide, se documenta y queda anotado como
@@ -213,7 +213,7 @@ corrida, con el prompt viejo.
 
 ### Pendiente escrito que esta medición cierra
 
-`../sign-ai-backend/docs/CAMBIOSBACKEND.md:183-185`:
+`../sign-ai-backend/docs/CAMBIOSBACKEND.md:186-188`:
 *"Falta remedir `rt_first_sign_ms` con el LLM de producción. Los 273 ms son de
 `qwen3:4b-instruct` en Ollama local, no de OpenAI. Con OpenAI la cifra es otra y
 esa es la que va a la tesis."*
@@ -240,7 +240,7 @@ Sin esto, las Fases 2 y 3 miden una configuración que va a cambiar.
 **Ojo con la caché.** Cambiar el prompt **no** invalida `semantic_cache`. Sin
 `DELETE FROM semantic_cache;` **y** `docker compose restart backend`, la
 segunda pasada sale como acierto de caché y no mide nada
-(`tools/TIEMPO-REAL.md:78-88` y `auditoria-flujo-2026-10-15.md:524`).
+(`tools/TIEMPO-REAL.md:78-88` y `../sign-ai-backend/AGENTS.md`).
 
 ---
 
@@ -422,6 +422,6 @@ en git, los `.wav` no.
 - **No implementa nada.** La Fase 0 y la Fase 1 son el trabajo de la próxima
   sesión.
 - **No arregla la discrepancia entre documentos y código** que se encontró al
-  revisar: el bloque LLM del plan de pruebas (`llm/general.md:32-33` y `:38`)
+  revisar: el bloque LLM del plan de pruebas (`llm/general.md:32-33` y `:44`)
   describe un cliente que ya no existe, porque el prompt se reescribió el
   2026-10-14 sin anotarlo en `docs/decisions.md`.

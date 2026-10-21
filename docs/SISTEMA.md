@@ -80,7 +80,7 @@ completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contr
 
 ## `../sign-ai-docs`
 
-Documentación de la tesis: `documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.15.md`
+Documentación de la tesis: `documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`
 (el documento formal), `diagramas/` (los `.drawio` editables y los `.png` del SDD:
 lógica, despliegue, procesos, clases, secuencia, persistencia y **estados de la UI**) y
 `plan-pruebas/` (el plan de pruebas del proyecto, con su `trazabilidad.md`).
