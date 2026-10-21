@@ -36,6 +36,10 @@ Lo demás vuelve a la versión anterior.
 - **Tamaño de Whisper.** El plan de pruebas dice “los tamaños de Whisper a comparar”. Si ya lo decidieron con pruebas, ten esos resultados a mano.
 - **El prompt sí lleva las glosas.** No están escritas en el archivo; `main.py` las inyecta desde la tabla `catalog` al arrancar.
 
+> **Actualizado el 2026-10-21.** Los dos puntos del prompt quedaron atrás: la
+> decisión **D-7** (owner, 2026-10-16) quitó la lista de glosas del prompt, y es
+> lo que se va a implementar. Ver `docs/PLAN-MEDICION.md` §3 (D-7).
+
 ### Para verificar tú
 
 - Filas con `||` en `original_text` de `semantic_cache`.
