@@ -207,9 +207,11 @@ para dejar los tres repos con la misma rama de integración. Por ahora **no camb
 flujo**: este repo sigue por `main` directo sin PR. Nadie la mergea ni la borra sin que lo
 pidas.
 
-**Hay trabajo en vuelo en `flujo-oraciones`** (los tres repos, desde el 2026-10-15,
-**sin mergear**). Si una sesión arranca en esa rama, esa es la que manda sobre `develop`
-hasta que el owner mergee, y hay que leer `docs/CAMBIOS.md` antes de tocar el pipeline.
+**El flujo por oraciones ya está en `main`** (2026-10-21). La rama `flujo-oraciones` fue el
+nuevo `main`: un fast-forward (`587ed04` → `2d8c757`) con el merge de `origin/main` que ya
+traía. Se trabaja sobre `main`. `develop` quedó como copia exacta de `main`. El punto de
+retorno es `respaldo/main-2026-10-21`, que apunta al `main` viejo y está en el remoto.
+
 La rama `tiempo-real` **ya no existe**: el trabajo de tiempo real de los tres repos entró
 por fast-forward a `main` acá y a `develop` en los hermanos, y la rama se borró local y
 remoto. Donde quede escrita en una bitácora vieja o en un documento es un dato histórico
