@@ -202,10 +202,18 @@ Acá: commit y push directo a `main`, sin PR ni rama de feature. **No abrir PRs 
 confirmación para commitear.** Los hermanos usan PR contra `develop` y no se commitean sin
 que el owner lo pida.
 
+**`develop` existe acá desde 2026-10-14**, creado como copia exacta de `main` (`4221303`),
+para dejar los tres repos con la misma rama de integración. Por ahora **no cambia el
+flujo**: este repo sigue por `main` directo sin PR. Nadie la mergea ni la borra sin que lo
+pidas.
+
 **Hay trabajo en vuelo en `flujo-oraciones`** (los tres repos, desde el 2026-10-15,
 **sin mergear**). Si una sesión arranca en esa rama, esa es la que manda sobre `develop`
 hasta que el owner mergee, y hay que leer `docs/CAMBIOS.md` antes de tocar el pipeline.
-La rama `tiempo-real` **ya no existe**: quedó mergeada en `develop` en los tres repos.
+La rama `tiempo-real` **ya no existe**: el trabajo de tiempo real de los tres repos entró
+por fast-forward a `main` acá y a `develop` en los hermanos, y la rama se borró local y
+remoto. Donde quede escrita en una bitácora vieja o en un documento es un dato histórico
+de dónde se hizo el trabajo, no una rama a la que volver.
 
 ## UI
 
