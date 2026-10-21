@@ -27,7 +27,7 @@ package com.signai.webview.ui.state
  * la frase". Eso se desarmó —la unidad de traducción es la oración y el STT
  * corta por pausas de 1,5 s—, así que hoy *en vivo* quiere decir otra cosa: la
  * frase sale sola cuando termina, no a mitad de camino. Ver
- * `sign-ai-docs/auditoria-flujo-2026-10-15.md` §7 (opción A).
+ * `docs/CAMBIOS.md` (opción A).
  */
 enum class MicMode {
     Off,

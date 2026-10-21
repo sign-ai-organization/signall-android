@@ -5,9 +5,11 @@ oraciones**, y qué tiene que hacer el resto del sistema con esto.
 
 **Rama:** `flujo-oraciones`, desde `develop`. **Sin mergear.**
 
-Plan completo: `../sign-ai-docs/auditoria-flujo-2026-10-15.md` §6.
+Plan completo: `../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10.
 Log de la sesión: `openspec/sessions/2026-10-15-flujo-oraciones-android.md`.
-Spec: `openspec/specs/ui/spec.md` (los 14 IDs de §6.3 punto 6).
+Spec: `openspec/specs/ui/spec.md` (los 14 IDs que reescribió el plan de octubre:
+`STA-9`, `STA-15` a `STA-20`, `GLS-11`, `GLS-12`, `BRG-14`, `BRG-15` y `OBS-1`
+a `OBS-3`).
 
 ---
 
@@ -164,7 +166,7 @@ en hablarla no es del turno de traducción.
 
 ---
 
-## 7. El adelanto automático: **se queda** (§6.3 punto 5, "remedir no borrar")
+## 7. El adelanto automático: **se queda** (el plan de octubre, punto 5: "remedir no borrar")
 
 `tools/medir-retraso.py` (nuevo) mide, con los 28 fixtures reales y las duraciones
 del `manifest.json`:
@@ -203,7 +205,7 @@ nadie**: nacieron para el camino por fragmentos. Se quedan por compat —
 
 | archivo | qué |
 |---|---|
-| `openspec/specs/ui/spec.md` | los 14 IDs de §6.3 punto 6 |
+| `openspec/specs/ui/spec.md` | los 14 IDs que reescribió el plan de octubre |
 | `AGENTS.md` | sección de modo en vivo, contrato entre repos, observabilidad, rama |
 | `tools/TIEMPO-REAL.md` | reescrito entero |
 | `tools/verificar-tiempo-real.sh` | ver más abajo |

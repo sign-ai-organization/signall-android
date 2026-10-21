@@ -7,7 +7,7 @@ frases usar, qué señas hay y qué significa cada número.
 > **Si llegaste desde `develop`:** este archivo cambió entero con el flujo por
 > oraciones. Lo que aquí dice "antes" es el camino por palabras, que ya no
 > existe. El plan del cambio está en
-> `../sign-ai-docs/auditoria-flujo-2026-10-15.md` §6, y el resumen de qué
+> `../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10, y el resumen de qué
 > cambió en cada repo está en `docs/CAMBIOS.md`, `../sign-ai-backend/docs/CAMBIOSBACKEND.md`
 > y `../sign-ai-stt/docs/CAMBIOSSTT.md`.
 
@@ -30,10 +30,10 @@ AHORA  hablar ─────── 1,5s de silencio ── Whisper ── divid
         (aquí no se representa nada)                                                  (recién acá)
 ```
 
-**La pérdida es la primera seña, y es deliberada** (opción A, §7 de la
-auditoría): representar a mitad de frase obligaría a partir los clips de dos palabras
+**La pérdida es la primera seña, y es deliberada** (opción A, que se explica en
+`docs/CAMBIOS.md`): representar a mitad de frase obligaría a partir los clips de dos palabras
 en glosas sueltas y a mantener el `||` de dos barras en la caché semántica, que
-es justamente el camino que la auditoría desarma. Lo que se gana es que **el
+es justamente el camino que el flujo por palabras usaba. Lo que se gana es que **el
 avatar nunca representa media oración** y que la clave de caché es una oración
 limpia, la misma en los dos modos.
 

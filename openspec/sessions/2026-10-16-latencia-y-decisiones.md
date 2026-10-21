@@ -90,14 +90,16 @@ pero solo hay una a la vez; el audio sigue fluyendo siempre.
 **Por qué A y no "traducir en paralelo con reordenamiento":** la app ya impide
 dos frases en vuelo (`MainScreenState.kt:693` en vivo, `:831` desde Traducir). El
 comentario del código lo dice con la razón exacta de
-`docs/performance.md:621-623`: *"intercalados, el `index` de las oraciones deja de
+`SignAiBottomBar.kt:114-115`: *"intercalados, el `index` de las oraciones deja de
 corresponder al orden en que llegaron y el avatar representaría la frase al revés"*.
 El buffer de reordenamiento resolvería un caso que la app ya prohíbe.
 
-**Alineación verificada:** `performance.md:621-623` pide exactamente "lanzar cada
+**Alineación verificada:** el pendiente "Desacoplar la traducción de la lectura del
+STT" (`../sign-ai-backend/docs/performance.md:676-681`) pide exactamente "lanzar cada
 traducción como tarea y garantizar el orden de las frases" — A cumple las dos
-mitades. `performance.md:331-334` lo nombra como requisito. `requirements.md:163`
-(RF-INT-SW-04) y `:536` (RNF-REL-01) exigen no bloquear el hilo principal.
+mitades. `performance.md:331-334` lo nombra como requisito.
+`../sign-ai-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md:160`
+(RF-INT-SW-04) y `:553` (RNF-REL-01) exigen no bloquear el hilo principal.
 Ningún documento exige traducir frases en paralelo. El docstring de
 `controller.py:29-36` **ya afirma que esto está hecho** y no lo está.
 
@@ -197,7 +199,7 @@ feature**. Sin esto, las fases 2 no se pueden afirmar en la tesis.
 
 | # | Fase | Repos | Qué |
 |---|---|---|---|
-| 1 | **Que los números existan** | backend, app, stt | `llm` como métrica real (ya pendiente en `performance.md:688-693`); una métrica del tiempo que el bucle de lectura estuvo trabado; el mensaje de puente `signStart` con reloj propio; arreglar las dos gauges rotas y `stt_end_to_final_ms` |
+| 1 | **Que los números existan** | backend, app, stt | `llm` como métrica real (ya pendiente en `../sign-ai-backend/docs/performance.md:756-763`); una métrica del tiempo que el bucle de lectura estuvo trabado; el mensaje de puente `signStart` con reloj propio; arreglar las dos gauges rotas y `stt_end_to_final_ms` |
 | 2 | **La puerta** (D-2) | backend | `handle_text` a su propia tarea, una a la vez |
 | 2 | **Los cables** (D-3) | backend | mismo archivo, mismo rato |
 | 3 | **La primera oración** (D-1) | android | `flushSegments` + `appendQueue`/`playFrom` |

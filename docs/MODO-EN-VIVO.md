@@ -10,15 +10,15 @@ The app signs **while the user speaks**, and the unit is the **sentence**. The p
 mic → PCM16/16 kHz → WebSocket → backend → STT → the phrase is split into sentences →
 sentences are translated → the avatar signs them in order.
 
-El cambio grande de esta rama (auditoría `../sign-ai-docs/auditoria-flujo-2026-10-15.md`
-§6): antes el backend mandaba fragmentos (`stream: true, total: 0`) y el avatar representaba
+El cambio grande de esta rama (el plan del cambio está en
+`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10): antes el backend mandaba fragmentos (`stream: true, total: 0`) y el avatar representaba
 **a mitad de frase**. Ahora solo hay oraciones, con `total` conocido desde el primero. El
 efecto es que el avatar **no** empieza a representar hasta que termina la primera oración, y
-`rt_first_sign_ms` sube por construcción. Es el costo consciente de la opción A (§7 de la
-auditoría): la línea base publicada —913 ms p50 / 1336 ms p95— es del camino por palabras
+`rt_first_sign_ms` sube por construcción. Es el costo consciente de la opción A (que se
+explica en `tools/TIEMPO-REAL.md`): la línea base publicada —913 ms p50 / 1336 ms p95— es del camino por palabras
 y **no es comparable**. Falta remedir.
 
-**Leé `../sign-ai-docs/auditoria-flujo-2026-10-15.md` §6.3 antes de tocar esta área**, y
+**Leé `docs/CAMBIOS.md` antes de tocar esta área**, y
 después `tools/TIEMPO-REAL.md`.
 
 ```bash
