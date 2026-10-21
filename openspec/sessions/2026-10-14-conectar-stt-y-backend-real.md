@@ -349,6 +349,11 @@ Prompt nuevo: vocabulario **cerrado** (las 50 glosas del catálogo, inyectadas) 
 regla explícita de que una glosa **puede** ser de varias palabras + "si el
 vocabulario tiene `COMO ESTAS`, nunca respondas `TU,ESTAR,COMO`".
 
+> **Después, la decisión D-7 (owner, 2026-10-16) quitó el vocabulario cerrado
+> del prompt**: la lista sale, porque va contra el plan de pruebas y no escala.
+> La regla de las glosas frasales y la reparación se quedan. Ver
+> `docs/PLAN-MEDICION.md` §3 (D-7).
+
 | Frase | Salida | ¿En §5? |
 |---|---|---|
 | cómo estás | `COMO ESTAS` (0026) | ✅ |
