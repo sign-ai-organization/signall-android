@@ -4,7 +4,7 @@
 > escribieron en `/tmp` durante la sesión; el plan los convierte en
 > `tools/` (tarea 0.1). La metodología está al final para que se pueda repetir.
 
-Fecha: 2026-10-14 · rama `tiempo-real`
+Fecha: 2026-10-14 · en la rama `tiempo-real`, ya mergeada a `main` y borrada
 
 ---
 

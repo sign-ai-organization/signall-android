@@ -9,7 +9,8 @@ Plan completo en [`../changes/archive/2026-10-17-reposo-y-crossfade/tasks.md`](.
 medidas y metodología en
 [`investigacion.md`](../changes/archive/2026-10-17-reposo-y-crossfade/investigacion.md).
 
-**Estado: implementado y verificado en el dispositivo.**
+**Estado: implementado y verificado en el dispositivo**, mergeado por
+fast-forward a `main` el mismo día (la rama `tiempo-real` ya no existe).
 
 ---
 

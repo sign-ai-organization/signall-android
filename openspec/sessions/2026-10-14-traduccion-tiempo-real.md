@@ -1,8 +1,11 @@
 # Traducción en tiempo real
 
 **Día**: martes 2026-10-14
-**Rama**: `tiempo-real` en los tres repos (`sign-ai-android` desde `main`, `sign-ai-backend` y `sign-ai-stt` desde `develop`)
-**Autorizado por el owner**: commit y push directo a esas tres ramas.
+**Dónde quedó**: mergeado por fast-forward el mismo día a `main` en
+`sign-ai-android` y a `develop` en `sign-ai-backend` y `sign-ai-stt`, con
+autorización del owner para hacerlo directo sin PR. La rama `tiempo-real` de
+los tres repos ya no existe. Abajo se lee `tiempo-real` donde la sesión
+trabajó: es el registro de ese día, no una rama a la que volver.
 
 ---
 
@@ -591,8 +594,11 @@ al viejo.
 3. **Calidad de glosas en fragmentos de dos palabras sin contenido semántico.**
    El contexto ya arregla el caso obvio, pero un fragmento suelto todavía puede
    dar una glosa rara. Es una limitación del prompt, no del transporte.
-4. **Abrir PR contra `develop`.** Los tres repos están pusheados a `tiempo-real`
-   pero no hay PR. La política del repo de Android es commit directo a `main`;
-   los otros dos usan PR contra `develop`, así que **este trabajo no debería
-   mergearse a `main` ni a `develop` sin que el usuario lo revise**. Hay cambios
-   de comportamiento en el protocolo del WebSocket.
+4. ~~**Abrir PR contra `develop`.**~~ **Resuelto el 2026-10-14** (esta misma
+   jornada, más tarde): el usuario revisó y autorizó el merge **directo, sin PR**.
+   Los tres entraron por fast-forward — Android a `main`, backend y STT a
+   `develop` — y la rama `tiempo-real` se borró local y remoto. Se dejó en
+   Android una rama `develop` como copia exacta de `main` para que los tres
+   repos tengan la misma rama de integración. Queda sin verificar, igual que
+   antes: **el cambio de comportamiento del protocolo del WebSocket no tuvo
+   revisión de código**, solo del owner.
