@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Fondo de la ventana del arranque en frío: lo que Android dibuja desde que la
+  actividad existe hasta que Compose pinta, y que antes era un rectángulo negro.
+
+  Es el mismo grafito del splash (`#121316`) y el mismo wordmark, así que la
+  pantalla de carga empieza antes: el usuario ve el logo desde el primer
+  fotograma y no un canvas negro que después se convierte en splash.
+
+  El tamaño es el del wordmark del splash (32 dp de alto), para que no salte al
+  cambiar de ventana a Compose.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="#121316" />
+    </item>
+    <item
+        android:width="115dp"
+        android:height="32dp"
+        android:gravity="center">
+        <bitmap
+            android:gravity="fill"
+            android:src="@drawable/logo_signall_on_dark" />
+    </item>
+</layer-list>

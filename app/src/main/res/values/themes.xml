@@ -4,5 +4,12 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <!--
+          Arranque en frío: el fondo de la ventana es el splash (grafito +
+          wordmark). Sin esto, entre tocar el icono y el primer fotograma de
+          Compose se veía un rectángulo negro, y el splash real apenas alcanzaba
+          a verse cuando el avatar ya estaba listo.
+        -->
+        <item name="android:windowBackground">@drawable/window_launch</item>
     </style>
 </resources>

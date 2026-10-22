@@ -27,6 +27,18 @@ private const val AssetsPath = "/assets/"
 const val SignStartPrefix = "signStart:"
 
 /**
+ * Prefix of the scene's loading progress (`reportProgress`), `progress:<0..100>`.
+ *
+ * Existe porque el progreso de la página no sirve para el splash: el WebView dice
+ * 100 % cuando terminó de cargar el HTML, y en ese momento todavía falta bajar,
+ * parsear y compilar 13 MB de avatar. Los números de acá son los de la escena
+ * (descarga → parseo → clips indexados → shaders compilados).
+ *
+ * **Aditivo**: una escena vieja no lo manda y la barra sigue como antes.
+ */
+const val ProgressPrefix = "progress:"
+
+/**
  * Prefix of the scene's "this sign could not be loaded" message
  * (`notifySignFailed`), with the queue index.
  *
@@ -128,10 +140,27 @@ fun AvatarWebView(
                 // nothing.
                 isFocusable = false
                 isFocusableInTouchMode = false
+                // -1 = la escena todavía no avisó; el progreso de la página no
+                // es el de la escena (ver `onProgressChanged`).
+                var sceneProgress = -1
+                val bridgeSupported =
+                    WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
                 webChromeClient = object : android.webkit.WebChromeClient() {
                     override fun onProgressChanged(view: WebView, newProgress: Int) {
                         super.onProgressChanged(view, newProgress)
-                        onProgress(newProgress)
+                        // El progreso de la página NO es el de la escena: la
+                        // página termina de cargar cuando todavía falta bajar y
+                        // parsear los 13 MB del avatar, así que el splash se
+                        // quedaba clavado en "100 %" sobre un canvas vacío.
+                        // Mientras la escena no avise, la página ocupa solo el
+                        // primer tramo de la barra; después manda la escena.
+                        onProgress(
+                            when {
+                                !bridgeSupported -> newProgress
+                                sceneProgress >= 0 -> sceneProgress
+                                else -> minOf(newProgress * 2 / 5, 45)
+                            },
+                        )
                     }
 
                     override fun onConsoleMessage(message: android.webkit.ConsoleMessage): Boolean {
@@ -144,13 +173,11 @@ fun AvatarWebView(
                 }
 
                 // JS → Kotlin: `window.SignAIBridge.postMessage("onPlaybackDone")`,
-                // `postMessage("avatarReady")`, `postMessage("signStart:<i>:<ms>")` y
-                // `postMessage("signFailed:<i>")`.
+                // `postMessage("avatarReady")`, `postMessage("progress:<0..100>")`,
+                // `postMessage("signStart:<i>:<ms>")` y `postMessage("signFailed:<i>")`.
                 // Only registered when the feature is supported (fallback: no
                 // playback event, the UI just stays in `signing`; y el splash se
                 // destapa por el timeout de 8 s).
-                val bridgeSupported =
-                    WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
                 if (bridgeSupported) {
                     WebViewCompat.addWebMessageListener(
                         this,
@@ -164,14 +191,26 @@ fun AvatarWebView(
                                 isMainFrame: Boolean,
                                 replyProxy: androidx.webkit.JavaScriptReplyProxy,
                             ) {
-                                when (message.data) {
+                                // El progreso de la escena va aparte del `when`:
+                                // no es una igualdad, trae el porcentaje pegado.
+                                val data = message.data
+                                if (data != null && data.startsWith(ProgressPrefix)) {
+                                    data.removePrefix(ProgressPrefix).toIntOrNull()
+                                        ?.let { pct ->
+                                            sceneProgress = pct.coerceIn(0, 100)
+                                            onProgress(sceneProgress)
+                                        }
+                                    return
+                                }
+                                when (data) {
                                     "onPlaybackDone" -> onPlaybackDone()
-                                    // El avatar son ~10 MB: `onPageFinished` dispara
-                                    // antes de que termine de bajar y parsear, así
-                                    // que usarlo para esconder el splash dejaba ver
-                                    // un canvas negro. La escena avisa cuando la
-                                    // tiene en escena. Si el bridge no está
-                                    // soportado, el timeout de `SignAiSplash`
+                                    // El avatar son 13 MB con las 50 señas adentro:
+                                    // `onPageFinished` dispara antes de que termine
+                                    // de bajar, parsear y compilar, así que usarlo
+                                    // para esconder el splash dejaba ver un canvas
+                                    // negro. La escena avisa cuando ya está todo
+                                    // cargado y hay un frame pintado. Si el bridge
+                                    // no está soportado, el timeout de `SignAiSplash`
                                     // (8 s) destapa igual.
                                     "avatarReady" -> onLoaded()
                                     // `startsWith` y no igualdad exacta: el mensaje
@@ -179,7 +218,7 @@ fun AvatarWebView(
                                     // los tres tramos (Android -> escena, escena ->
                                     // primer fotograma, escena -> Kotlin) se puedan
                                     // leer por separado en logcat.
-                                    else -> message.data
+                                    else -> data
                                         ?.takeIf { it.startsWith(SignStartPrefix) }
                                         ?.removePrefix(SignStartPrefix)
                                         ?.split(":")
@@ -192,7 +231,7 @@ fun AvatarWebView(
                                         // Mismo camino, mensaje nuevo: la escena se
                                         // saltó una seña y sigue con la frase. Sin
                                         // esto el salto era invisible desde Kotlin.
-                                        ?: message.data
+                                        ?: data
                                             ?.takeIf { it.startsWith(SignFailedPrefix) }
                                             ?.removePrefix(SignFailedPrefix)
                                             ?.toIntOrNull()
