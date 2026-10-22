@@ -128,5 +128,37 @@ Lo que sí estaba mal era el splash:
    (`adb shell am start -W` → `TotalTime: 2287`), con el gris `#181818` de MIUI. Se agregó
    `windowBackground` = grafito + wordmark (`res/drawable/window_launch.xml`), que en MIUI
    **no se ve** porque la ventana de lanzamiento del sistema la tapa; queda para AOSP.
-   Pendiente de decisión: diferir la creación del `AvatarWebView` dos frames para que el
-   splash de Compose aparezca antes.
+
+## Tercera parte: el WebView ya no se crea en el primer frame
+
+El video del arranque en frío mostró que el splash **no aparecía**: entre la ventana de MIUI
+y el avatar había 3,4 s de gris vacío. La causa es que `AvatarWebView` se creaba en la
+primera composición, y crear el WebView y empezar a cargar la página bloquea el hilo de UI
+más tiempo que el propio arranque del proceso: el primer frame que la app alcanzaba a
+pintar ya era el del avatar, así que el splash nunca llegaba a verse.
+
+**Cambio** (`ui/MainScreen.kt`): `sceneMounted` arranca en `false` y un `LaunchedEffect`
+espera dos `withFrameNanos` antes de ponerlo en `true`. `AvatarStage` (que es quien contiene
+el `AndroidView` del WebView) solo se compone cuando está en `true`. El estado vive dentro
+de la rama principal y no en la raíz de `MainScreen`, así que volver de Acerca de vuelve a
+diferir igual que el arranque en frío.
+
+**Medición** (Redmi Note 9S, `screenrecord` a 10 fps, ARRANQUE EN FRÍO, 2026-10-22):
+
+| | Sin diferir | Con diferir |
+|---|---|---|
+| Primera imagen de la app | ventana del sistema (~3,4 s) y de ahí directo al avatar: **el splash nunca se vio** | ventana del sistema (~3,3 s) y de ahí **el splash** con logo y barra |
+| Barra | no llega a verse | 0 → 58 → 98 → 100 |
+| Avatar en pantalla | ~3,6 s | ~5,7–5,9 s (el frame del fade ya lo tiene debajo) |
+
+El costo es real: **~2,2 s más** hasta el avatar, porque el WebView empieza a cargar después
+del primer frame en vez de durante la primera composición —en la corrida sin diferir la
+página se cargaba mientras el primer frame todavía no existía, y llegaba lista justo cuando
+la app por fin pintaba—. Se paga con el splash delante, que es lo que el owner pidió
+("siempre y cuando sea literalmente al INICIO"). Lo que se elimina es la pantalla vacía sin
+logo ni barra, que era el 100 % de lo que se veía.
+
+También se verificó el camino **Ajustes → Acerca de → Volver**: el splash vuelve a
+levantarse y la escena se recrea detrás (video: 58 % a los 1,6 s de tocar Volver, avatar
+visible al final del fade).
+

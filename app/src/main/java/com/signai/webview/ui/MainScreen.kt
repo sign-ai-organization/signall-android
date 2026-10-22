@@ -24,6 +24,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -187,7 +188,7 @@ fun MainScreen(state: MainScreenState) {
                     showAbout = false
                     // Salir de Acerca de **destruye** el WebView (está dentro del
                     // `else` de este `if`), así que volver a la escena lo crea de cero
-                    // y hay que volver a descargar y parsear el GLB de 10 MB: se veía el
+                    // y hay que volver a descargar y parsear el GLB de 12,98 MB: se veía el
                     // canvas vacío durante segundos (owner, 2026-10-16). Se vuelve a
                     // levantar el splash, que es lo que ya hay para el primer arranque y
                     // espera al `avatarReady` real, no a un tiempo fijo.
@@ -195,6 +196,22 @@ fun MainScreen(state: MainScreenState) {
                 },
             )
         } else {
+            // El WebView es la parte cara del arranque: crearlo y empezar a
+            // cargar la página bloquea el hilo de UI mientras el splash todavía
+            // no se dibujó, así que el usuario veía el canvas vacío antes de ver
+            // nada. Se lo crea **dos frames después** del primer dibujo: el
+            // splash ya está en pantalla y el trabajo pesado pasa por detrás
+            // (owner, 2026-10-22).
+            //
+            // El estado vive dentro del `else` a propósito: volver de Acerca de
+            // recrea la escena de cero, y ahí también conviene diferir.
+            var sceneMounted by remember { mutableStateOf(false) }
+            LaunchedEffect(Unit) {
+                withFrameNanos { }
+                withFrameNanos { }
+                sceneMounted = true
+            }
+
             Surface(
                 modifier = Modifier
                     .fillMaxSize()
@@ -214,33 +231,38 @@ fun MainScreen(state: MainScreenState) {
                     // bar lived inside the drawers' content and stayed on top of
                     // the panels, while the backdrops never saw a tap.
                     Box(Modifier.fillMaxSize()) {
-                        AvatarStage(
-                            status = state.statusLine,
- state = state.stateForUi,
-                            doneVisible = state.doneVisible,
-                            // Repetir es un control más: cierra el teclado, y cierra
-                            // de verdad, como todos los demás.
-                            onRepeat = {
-                                dismissKeyboard()
-                                state.replay()
-                            },
-                            bottomInset = bottomBarHeight,
-                            modifier = Modifier.fillMaxSize(),
-                        ) {
-                            AvatarWebView(
-                                modifier = Modifier.fillMaxSize(),
-                                onReady = state::attachWebView,
-                                onProgress = { progress = it },
-                                onPlaybackDone = state::onPlaybackDone,
-                                onSignStart = state::onSignStart,
-                                onSignFailed = state::onSignFailed,
-                                onSceneFailed = state::onSceneFailed,
-                                onLoaded = {
-                                    loading = false
-                                    state.syncWebSettings()
+                        // Sin montar hasta el segundo frame: `AvatarStage` trae
+                        // el `AndroidView` del WebView, que es lo que cuesta.
+                        // Mientras tanto solo se ve el splash, que está encima.
+                        if (sceneMounted) {
+                            AvatarStage(
+                                status = state.statusLine,
+                                state = state.stateForUi,
+                                doneVisible = state.doneVisible,
+                                // Repetir es un control más: cierra el teclado, y cierra
+                                // de verdad, como todos los demás.
+                                onRepeat = {
+                                    dismissKeyboard()
+                                    state.replay()
                                 },
-                                interactive = !(showConversation || showSettings),
-                            )
+                                bottomInset = bottomBarHeight,
+                                modifier = Modifier.fillMaxSize(),
+                            ) {
+                                AvatarWebView(
+                                    modifier = Modifier.fillMaxSize(),
+                                    onReady = state::attachWebView,
+                                    onProgress = { progress = it },
+                                    onPlaybackDone = state::onPlaybackDone,
+                                    onSignStart = state::onSignStart,
+                                    onSignFailed = state::onSignFailed,
+                                    onSceneFailed = state::onSceneFailed,
+                                    onLoaded = {
+                                        loading = false
+                                        state.syncWebSettings()
+                                    },
+                                    interactive = !(showConversation || showSettings),
+                                )
+                            }
                         }
                         Box(
                             Modifier

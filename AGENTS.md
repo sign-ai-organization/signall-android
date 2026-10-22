@@ -258,6 +258,12 @@ que si se manda antes se ve el canvas vacío y la primera seña paga el arranque
 El progreso de la página (`WebChromeClient.onProgressChanged`) **no** sirve para la barra:
 dice 100 % cuando terminó el HTML.
 
+**El WebView no se crea en el primer frame.** `MainScreen` monta el `AvatarWebView` dos
+`withFrameNanos` después, para que el splash ya esté en pantalla cuando el WebView se crea
+y empieza a cargar: si se crea en la primera composición, ese frame se paga antes de que
+exista el splash y el usuario ve la ventana vacía durante segundos (medido en el Redmi
+Note 9S, 2026-10-22). No lo "simplifiques" creando el WebView directo.
+
 **La fuente de verdad del contrato es `domain/SignAiCommands.kt`**: los nombres exactos de
 cada comando están ahí, no en este archivo. Kotlin los llama con
 `evaluateJavascript("window.SignAI?.<método>(...)")`.
