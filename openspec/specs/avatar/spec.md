@@ -8,26 +8,39 @@ horneada por hueso y la escena solo la reproduce.
 
 | | |
 |---|---|
-| Personaje | `models/avatar.glb` (~10.3 MB), 102 huesos, 11 mallas, texturas PBR |
-| Señas | `signs/<id>.glb`, un archivo por glosa, **solo animación** (~180 KB) |
+| Personaje | `models/avatar.glb` (12.98 MB), 102 huesos, 11 mallas, texturas WebP PBR |
+| Señas | **clips `0000`..`0049` dentro del mismo `avatar.glb`** (50, una por glosa) |
 | Escena | `app.js` + `index.html`, three r169 por CDN |
 | Catálogo | `domain/SignsCatalog.kt`, generado |
+
+**Cambio del 2026-10-22**: el asset pasó de `models/avatar.glb` + `signs/<id>.glb` a
+**un solo archivo** con las 50 señas adentro. `tools/pack_signall.py` lo arma desde
+`GLB SignALL/`. Los `signs/*.glb` que quedan en el repo no se piden en runtime: la
+escena resuelve `signs/<id>.glb` por nombre contra los clips del avatar
+(`embeddedClipsFor` en `app.js`). Por qué el cambio y con qué números, en
+`openspec/sessions/2026-10-22-signall-un-glb-50-senas.md`.
 
 Esto reemplazó (2026-10-13) al motor procedural que venía del prototipo web:
 landmarks de MediaPipe, `BONE_MAP`, `solveIKElbow`, `applyHandOrientation` y
 `sign.json`. **Nada de eso existe ya.** Si un documento o una sesión lo
 menciona, es historia: está en `openspec/sessions/2026-10-13-glb-animation-mixer.md`.
 
-## Los dos archivos y por qué están separados
+## Un archivo, y por qué alcanza
 
-Cada export de Cascadeur trae el personaje entero adentro, así que sin separar
-el muñeco estaría duplicado 32 veces (329.7 MB). `tools/split_signs.py` lo
-escribe una vez en `models/` y deja en `signs/` solo la animación, que es todo lo
-que el mixer necesita: **resuelve los tracks por nombre de nodo contra el root
-que se le pase**, no contra los nodos del propio archivo del clip.
+Cada export de Cascadeur trae el personaje entero adentro. El primer pipeline
+(`tools/split_signs.py`, 2026-10-13) separaba eso en `models/avatar.glb` +
+`signs/<id>.glb` para no versionar 32 copias del muñeco. Desde el 2026-10-22 el
+archivo único trae **el personaje + las 50 animaciones**, así que ya no hay nada
+que separar: el mixer resuelve los tracks por nombre de nodo contra el root, y
+cargar el clip desde el mismo `gltf.animations` que el avatar es lo mismo que
+cargarlo desde un `.glb` aparte, sin pedido de red.
 
-Cambiar el personaje no requiere re-exportar las señas, y cambiar una seña no
-requiere tocar el personaje.
+Lo que se pierde: las **variantes** de una misma seña (el layout viejo tenía 46
+tomas para 32 señas y `pickVariant` elegía al azar; el archivo nuevo trae una
+toma por seña). Está anotado como decisión abierta en la sesión del 2026-10-22.
+
+Cambiar el personaje requiere regenerar el archivo, y agregar una seña también:
+es un solo `.glb` y lo escribe `tools/pack_signall.py`.
 
 ## La pose de descanso está horneada en `avatar.glb`
 
@@ -35,8 +48,10 @@ El reposo **no** es una T-pose ni un default de three.js: es el TRS de los nodos
 del `.glb`, que es la pose que Cascadeur dejó en el export — brazos a 35° bajo
 la horizontal, manos a 52 cm del eje, de maniquí.
 
-La que hay ahora sale de `signs/0029_0000_0000.glb` (JUICIOSO), variante 0,
-primer keyframe (`t = 0.0417 s`), y son las rotaciones de **46 huesos**: la
+La que hay ahora sale de la seña `0029` (JUICIOSO), primer keyframe
+(`t = 0.0417 s`) —en el layout viejo `signs/0029_0000_0000.glb`, variante 0; en el
+archivo único, el clip `0029` del propio avatar—, y son las rotaciones de **46
+huesos**: la
 cadena de brazos entera de los dos lados (`shoulder`, `upper_arm`, `forearm`,
 `hand`, `palm.*`, `f_*`, `thumb*`). Ni la cara, ni el torso, ni las piernas.
 

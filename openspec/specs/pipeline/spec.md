@@ -1,5 +1,11 @@
 # Pipeline SignAI (WebView) — flujo de datos
 
+> **Actualización del 2026-10-22:** el flujo de assets cambió. Ya no hay
+> `models/avatar.glb` + `signs/<id>.glb`: hay **un solo** `models/avatar.glb` con el
+> personaje y las 50 señas como clips `0000`..`0049`, armado por `tools/pack_signall.py`
+> desde `GLB SignALL/`. El flujo de runtime no cambió. Detalle en
+> `openspec/sessions/2026-10-22-signall-un-glb-50-senas.md`.
+>
 > **Este archivo se reescribió entero el 2026-10-17.** La versión anterior describía el
 > pipeline de landmarks con `sign.json`, que se reemplazó por clips GLB el 2026-10-13, y
 > decía que la app era "100 % local, sin servidor", que es exactamente lo contrario del
@@ -14,28 +20,32 @@ runtime.
 ### Flujo de assets — cómo llega una animación al APK
 
 ```
-GLB Senas/*.glb                    exportaciones de Cascadeur (fuente, gitignored)
-      │
+GLB SignALL/*.glb                  el .glb único de Cascadeur: personaje + 50 clips
+      │                            (fuente, gitignored; 27,16 MB)
       ▼
-tools/split_signs.py               separa el personaje de las animaciones
-      │  · models/avatar.glb        ← el personaje, con la pose de descanso horneada
-      │  · signs/<id>.glb           ← una animación por seña, solo animación
-      │  · manifest.json            ← inventario, con sha256 por seña
-      │  · domain/SignsCatalog.kt   ← reescrito, para que el disco y el código no divergan
-      │  · (llama al final a tools/rest_pose.py, que hornea la pose en avatar.glb)
+tools/pack_signall.py              hornea la pose de descanso, poda morph targets
+      │                            que nadie anima y compacta el buffer
+      │  · models/avatar.glb        ← 12,98 MB: personaje + cara + clips 0000..0049
+      │  · manifest.json            ← inventario de los 50 clips
+      │  · domain/SignsCatalog.kt   ← reescrito, para que el asset y el código no divergan
       ▼
 app/src/main/assets/web/           dentro del APK
 ```
 
-Todo se resuelve con **rutas relativas**, sin red: `models/avatar.glb` y
-`signs/<id>.glb`. El layout `models/` + `signs/` no se cambia.
+Todo se resuelve con **rutas relativas**, sin red. La escena indexa los clips al cargar
+el avatar y resuelve `signs/<id>.glb` **por nombre** contra ese índice
+(`embeddedClipsFor` en `app.js`): el path es el identificador de la seña, no un archivo
+que exista en disco.
+
+El layout viejo (`tools/split_signs.py` → `models/` + `signs/`) quedó en el repo para
+rearmar los assets por seña, pero **el vigente es el archivo único**.
 
 **Nunca se edita `models/avatar.glb` a mano.** Se regenera. **Nunca se edita
-`SignsCatalog.kt` a mano** tampoco: `split_signs.py` lo reescribe, justamente para que la
-lista de código y el disco no puedan divergir.
+`SignsCatalog.kt` a mano** tampoco: lo reescribe el generador, justamente para que la
+lista de código y el asset no puedan divergir.
 
-**Agregar una seña** = soltar el `.glb` nuevo en `GLB Senas/` y correr `split_signs.py`.
-No es un paso más: es el único procedimiento.
+**Agregar o cambiar una seña** = regenerar el `.glb` único en `GLB SignALL/` y correr
+`pack_signall.py`. No es un paso más: es el único procedimiento.
 
 ### Flujo de runtime — qué pasa cuando alguien habla
 
@@ -87,20 +97,26 @@ en el skill `contrato-websocket`.
 
 ## Formato de `manifest.json`
 
-Lo escribe `split_signs.py`. Es el inventario de lo que hay en el APK:
+Lo escribe el generador de assets: `pack_signall.py` con el archivo único (vigente desde
+el 2026-10-22), `split_signs.py` con el layout por seña. Es el inventario de lo que hay en
+el APK:
 
 ```json
 [{ "sign_id": "0000",
-   "gloss": "GRACIAS",
-   "gloss_key": "GRACIAS",
    "path": "signs/0000_0000_0000.glb",
-   "variants": 3,
-   "variant_names": ["0000", "0000.001", "0000.002"],
-   "fps": 24, "frames": 59, "duration_s": 2.417,
-   "bytes": 310776, "sha256": "4947ed89…", "tracks": 309, "bones": 103 }]
+   "clip": "0000",
+   "bundled": "avatar",
+   "variants": 1,
+   "variant_names": ["0000"],
+   "fps": 24, "frames": 59, "duration_s": 2.417, "tracks": 311,
+   "faces": true,
+   "bytes": 12978476, "sha256": "b5cacff4…" }]
 ```
 
-El `sha256` es lo que permite cruzar el APK contra el catálogo sin abrir los binarios.
+Con el archivo único, `bytes` y `sha256` son los **del archivo entero**, no los de un clip:
+no existe un asset por seña. `gloss` va en `null` porque la glosa la pone el catálogo del
+backend, no el asset. El `sha256` es lo que permite cruzar el APK contra el catálogo sin
+abrir los binarios.
 
 ## Nombres de los huesos — crítico
 
@@ -228,11 +244,12 @@ GLB de 10 MB todavía se está bajando. `SignAiSplash` tiene además un timeout 
 same-origin dentro del APK (`signs/<id>.glb`), nunca una URL: eso es lo que permite que la
 app resuelva sin red.
 
-**Solo 32 de las 50 tienen animación exportada.** Las otras 18 (`0032`–`0049`) llegan con
-`available: true` y un path que no existe. `SignsCatalog.isOwnAssetPath()` distingue "no es
-un path nuestro" de "es nuestro pero todavía no lo exportamos" (`GLS-10`), y las manda
-directo al sign de reserva **sin tocar la red**: pedirlas por HTTP sería un 404
-garantizado en cada frase que las mencione.
+**Las 50 tienen animación desde el 2026-10-22.** El archivo único trae las 18 que
+faltaban (`0032`–`0049`), así que ya ninguna glosa llega con un path que no exista y
+`GLS-10` no alcanza a ninguna. `SignsCatalog.isOwnAssetPath()` se queda igual: distingue
+"no es un path nuestro" de "es nuestro pero todavía no lo exportamos", que es el caso de
+una glosa futura sin clip — y en ese caso la manda al sign de reserva **sin tocar la red**,
+porque pedirla por HTTP sería un 404 garantizado en cada frase que la mencione.
 
 El backend carga el catálogo **una sola vez al arrancar**. Después de un seed hay que
 reiniciarlo: no hay invalidación.

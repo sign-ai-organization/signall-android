@@ -122,8 +122,10 @@ o se baja el ZIP a mano.
 avatar desde landmarks de LSC50 (`HandCorrector`, `PoseFilter`, script WiLoR para
 manos) y tiene su propio `openspec/` con `specs/avatar|dataset|pipeline`. Está
 **inactiva desde 2026-09-19**. Los assets de acá salen de otro pipeline: exportaciones
-de Cascadeur en `GLB Senas/` → `tools/split_signs.py`. No mezclar los dos pipelines ni
-copiar scripts entre ellos.
+de Cascadeur en `GLB SignALL/` → `tools/pack_signall.py` (un archivo con el personaje y
+las 50 señas como clips). El layout viejo de `GLB Senas/` + `tools/split_signs.py` sigue
+en el repo para rearmar los assets por seña, pero no es el vigente. No mezclar los dos
+pipelines ni copiar scripts entre ellos.
 
 ## Carpetas hermanas que **no** son repositorios
 

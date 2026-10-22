@@ -1,21 +1,23 @@
 package com.signai.webview.domain
 
 /**
- * Signs shipped inside the APK, from `tools/split_signs.py`.
+ * Signs shipped inside the APK, from `tools/pack_signall.py`.
  *
  * One entry per sign of LSC50 that has an exported animation (rep 0, angle 0);
- * each maps to `assets/web/signs/<id>.glb`.
+ * each is a clip named `<id>` inside `assets/web/models/avatar.glb`,
+ * the one file that also holds the character.
  *
- * This file is GENERATED — `tools/split_signs.py` rewrites it from the assets it
- * just wrote, so the list and the files on disk cannot drift apart. Editing it
+ * This file is GENERATED — `tools/pack_signall.py` rewrites it from the assets it
+ * just wrote, so the list and the assets cannot drift apart. Editing it
  * by hand will be undone on the next generator run.
  *
  * The character itself is NOT per sign: `assets/web/models/avatar.glb` is loaded
- * once and every sign is an animation-only clip retargeted to that same
- * skeleton. Replacing the avatar therefore needs no re-export of the signs.
+ * once and every sign is a clip retargeted to that same skeleton. Replacing the
+ * avatar therefore needs no re-export of the signs.
  *
- * Only 32 of the 50 vocabulary signs are here — 0032–0049 still have no export. Signs outside
- * this list fall back to [DEFAULT] rather than failing (RF-CAT-03).
+ * All 50 vocabulary signs of LSC50 are here, bundled in the
+ * avatar. Signs outside this list fall back to [DEFAULT] rather than
+ * failing (RF-CAT-03).
  *
  * These are *animation* assets, not glosses. What a sign *means* still comes
  * from the backend's catalog, which holds all 50 LSC50 glosses: `available` on
@@ -34,12 +36,26 @@ object SignsCatalog {
         "0020_0000_0000", "0021_0000_0000", "0022_0000_0000", "0023_0000_0000",
         "0024_0000_0000", "0025_0000_0000", "0026_0000_0000", "0027_0000_0000",
         "0028_0000_0000", "0029_0000_0000", "0030_0000_0000", "0031_0000_0000",
+        "0032_0000_0000", "0033_0000_0000", "0034_0000_0000", "0035_0000_0000",
+        "0036_0000_0000", "0037_0000_0000", "0038_0000_0000", "0039_0000_0000",
+        "0040_0000_0000", "0041_0000_0000", "0042_0000_0000", "0043_0000_0000",
+        "0044_0000_0000", "0045_0000_0000", "0046_0000_0000", "0047_0000_0000",
+        "0048_0000_0000", "0049_0000_0000",
     )
 
     /** The sign the app opens on, and the one it falls back to. */
     const val DEFAULT: String = "0000_0000_0000"
 
-    /** Where a sign's animation lives, as a same-origin asset path. */
+    /**
+     * The logical path of a sign, as a same-origin URL.
+     *
+     * The animation itself is a clip inside `models/avatar.glb`, and the scene
+     * resolves this path to that clip **by name** without any request: it parses
+     * `<id>` out of the path and looks it up among the clips it already loaded
+     * (see `embeddedClipsFor` in `app.js`). The path is kept as the identifier
+     * because it is also what the backend's catalog answers, so the same string
+     * means the same sign on both sides.
+     */
     fun assetUrl(id: String): String = "signs/$id.glb"
 
     /**
@@ -47,15 +63,11 @@ object SignsCatalog {
      * or null when that path is not one of ours.
      *
      * The backend answers with the path we seeded in `catalog`, and since the
-     * assets ship inside the APK the path is already same-origin: the scene
-     * loads it directly. Only a path that matches a sign we actually ship is
-     * accepted, so a sign whose animation is not exported yet (0032–0049)
-     * returns null and the caller falls back instead of requesting a file that
-     * does not exist.
-     *
-     * Anything else — a remote URL, a traversal, a name we do not ship — is
-     * refused, and the caller treats it as "download it instead".
-     */
+     * animation ships inside the avatar the scene resolves it by name, without
+     * touching the network. A path that matches a sign in [available] is
+     * accepted; anything else is refused and the caller treats it as "download
+     * it instead".
+    */
     fun localAssetOrNull(path: String): String? {
         val clean = path.trim()
         if (!clean.startsWith("signs/") || clean.contains("..") || clean.contains("//")) return null
@@ -68,13 +80,11 @@ object SignsCatalog {
      * True when [path] is one of *our* asset paths, whether or not we ship it.
      *
      * The counterpart of [localAssetOrNull]: that one says "we have it", this
-     * one says "nobody is going to serve it over HTTP either". The catalog
-     * announces all 50 LSC50 glosses but only 32 have an export, so the
-     * rest come back with a `signs/<id>.glb` we do not ship. Asking the backend
-     * for those is a guaranteed 404 that costs a round trip on every utterance
-     * and changes nothing, so the caller skips straight to the fallback. A path
-     * that is *not* in this layout is a real remote asset and still goes down
-     * the download path.
+     * one says "nobody is going to serve it over HTTP either". Every LSC50 gloss
+     * has its clip bundled, so a `signs/<id>.glb` in our layout is never a
+     * remote asset: asking the backend for one would be a guaranteed 404. A
+     * path that is *not* in this layout is a real remote asset and still goes
+     * down the download path.
      */
     fun isOwnAssetPath(path: String): Boolean {
         val clean = path.trim()

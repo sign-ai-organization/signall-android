@@ -45,20 +45,27 @@
   historial, y una plantilla.
 - **`rendimiento/`** — medir de verdad si la app va lenta. Su propio
   [`README.md`](rendimiento/README.md) tiene las recetas y las trampas.
-- **`split_signs.py`** — **el pipeline de assets 3D de la app**. Separa los
-  exports del modelador (`GLB Senas/`, con el muñeco adentro en cada archivo) en
-  `assets/web/models/avatar.glb` + `assets/web/signs/<id>.glb`, regenera
-  `SignsCatalog.kt` y, **al final**, hornea la pose de descanso con
-  `rest_pose.py`. Corre cada vez que llegan señas nuevas. Sin dependencias
-  externas (no necesita Blender ni Node).
+- **`pack_signall.py`** — **el pipeline de assets 3D de la app**. Toma el `.glb`
+  único de `GLB SignALL/` (personaje + cara + las 50 señas como clips
+  `0000`..`0049`), hornea la pose de descanso, **poda los morph targets que
+  ninguna animación mueve** (68 → 7, ~15 MB), compacta el buffer y escribe
+  `assets/web/models/avatar.glb` + `manifest.json` + `SignsCatalog.kt`. De
+  27,2 MB a 12,98 MB, y la escena resuelve `signs/<id>.glb` por nombre contra
+  esos clips, sin descargar nada. Corre cada vez que llegan señas nuevas. Sin
+  dependencias externas (no necesita Blender ni Node).
+- **`split_signs.py`** — el pipeline **anterior**: separa los 40 exports por seña
+  (`GLB Senas/`, con el muñeco adentro en cada uno) en `models/avatar.glb` +
+  `signs/<id>.glb`. Queda para rearmar el layout viejo o comparar; el camino
+  vigente es `pack_signall.py`.
 - **`glb_pose.py`** — leer un `.glb`, recorrer el esqueleto (FK), samplear un
   clip y reconstruir la pose de bind desde las `inverseBindMatrices`. Es la
   base de las dos herramientas siguientes y el **único lector de GLB del repo**
   (el de `split_signs.py` se mudó acá). Sin dependencias.
 - **`rest_pose.py`** — deja el avatar con los **brazos abajo** en reposo,
   copiando las rotaciones de la cadena de brazos del primer keyframe de
-  `signs/0029_0000_0000.glb`. Idempotente, y frena la corrida si el export no es
-  la pose de bind (ahí deformaría la malla en silencio).
+  `0029` (`signs/0029_0000_0000.glb` o el clip del mismo nombre dentro del
+  avatar empaquetado). Idempotente, y frena la corrida si el export no es la
+  pose de bind (ahí deformaría la malla en silencio).
 - **`generar-marca.py`** — genera **los assets de la marca** desde los dos PNG
   maestros de la raíz (`Icono-SingALL.png`, `Logo-SingALL.png`). Escribe el
   adaptive icon (`ic_launcher_foreground.xml` + `ic_launcher_monochrome.xml` +

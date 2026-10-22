@@ -173,11 +173,17 @@ def deaccent(s):
 
 # ── Catálogo ──────────────────────────────────────────────────────────────────
 
-def write_catalog(manifest):
+def write_catalog(manifest, packed=False):
     """Reescribe `domain/SignsCatalog.kt` desde los archivos realmente escritos.
 
     El comentario de "GENERATED" va primero: quien lo lea tiene que saber que
     editarlo a mano se pierde en la próxima corrida.
+
+    [packed] cambia el origen que se documenta: con el layout de un `.glb` por
+    seña lo escribe `split_signs.py` y cada id es un archivo en `signs/`; con el
+    archivo único lo escribe `pack_signall.py` y cada id es un **clip** dentro de
+    `models/avatar.glb`. La lista y las funciones son las mismas —lo único que
+    cambia es dónde vive la animación—, así que el resto del código no distingue.
     """
     ids = [m["sign_id"] + "_0000_0000" for m in manifest]
     lines = []
@@ -188,24 +194,79 @@ def write_catalog(manifest):
     not_exported = (
         f" — {missing[0]}–{missing[-1]} still have no export" if missing else ""
     )
+    if packed:
+        generator = "tools/pack_signall.py"
+        layout = ("each is a clip named `<id>` inside `assets/web/models/avatar.glb`,\n"
+                  " * the one file that also holds the character")
+        coverage = (f"All {len(ids)} vocabulary signs of LSC50 are here, bundled in the\n"
+                    " * avatar. Signs outside this list fall back to [DEFAULT] rather than\n"
+                    " * failing (RF-CAT-03).")
+        asset_url_doc = (
+            "    /**\n"
+            "     * The logical path of a sign, as a same-origin URL.\n"
+            "     *\n"
+            "     * The animation itself is a clip inside `models/avatar.glb`, and the scene\n"
+            "     * resolves this path to that clip **by name** without any request: it parses\n"
+            "     * `<id>` out of the path and looks it up among the clips it already loaded\n"
+            "     * (see `embeddedClipsFor` in `app.js`). The path is kept as the identifier\n"
+            "     * because it is also what the backend's catalog answers, so the same string\n"
+            "     * means the same sign on both sides.\n"
+            "     */")
+        local_doc = (
+            "     * The backend answers with the path we seeded in `catalog`, and since the\n"
+            "     * animation ships inside the avatar the scene resolves it by name, without\n"
+            "     * touching the network. A path that matches a sign in [available] is\n"
+            "     * accepted; anything else is refused and the caller treats it as \"download\n"
+            "     * it instead\".")
+        own_doc = (
+            "     * The counterpart of [localAssetOrNull]: that one says \"we have it\", this\n"
+            "     * one says \"nobody is going to serve it over HTTP either\". Every LSC50 gloss\n"
+            "     * has its clip bundled, so a `signs/<id>.glb` in our layout is never a\n"
+            "     * remote asset: asking the backend for one would be a guaranteed 404. A\n"
+            "     * path that is *not* in this layout is a real remote asset and still goes\n"
+            "     * down the download path.")
+    else:
+        generator = "tools/split_signs.py"
+        layout = "each maps to `assets/web/signs/<id>.glb`"
+        coverage = (f"Only {len(ids)} of the 50 vocabulary signs are here{not_exported}. Signs outside\n"
+                    " * this list fall back to [DEFAULT] rather than failing (RF-CAT-03).")
+        asset_url_doc = "    /** Where a sign's animation lives, as a same-origin asset path. */"
+        local_doc = (
+            "     * The backend answers with the path we seeded in `catalog`, and since the\n"
+            "     * assets ship inside the APK the path is already same-origin: the scene\n"
+            "     * loads it directly. Only a path that matches a sign we actually ship is\n"
+            "     * accepted, so a sign whose animation is not exported yet (0032–0049)\n"
+            "     * returns null and the caller falls back instead of requesting a file that\n"
+            "     * does not exist.\n"
+            "     *\n"
+            "     * Anything else — a remote URL, a traversal, a name we do not ship — is\n"
+            "     * refused, and the caller treats it as \"download it instead\".")
+        own_doc = (
+            "     * The counterpart of [localAssetOrNull]: that one says \"we have it\", this\n"
+            "     * one says \"nobody is going to serve it over HTTP either\". The catalog\n"
+            "     * announces all 50 LSC50 glosses but only {n} have an export, so the\n"
+            "     * rest come back with a `signs/<id>.glb` we do not ship. Asking the backend\n"
+            "     * for those is a guaranteed 404 that costs a round trip on every utterance\n"
+            "     * and changes nothing, so the caller skips straight to the fallback. A path\n"
+            "     * that is *not* in this layout is a real remote asset and still goes down\n"
+            "     * the download path.").format(n=len(ids))
     text = f"""package com.signai.webview.domain
 
 /**
- * Signs shipped inside the APK, from `tools/split_signs.py`.
+ * Signs shipped inside the APK, from `{generator}`.
  *
  * One entry per sign of LSC50 that has an exported animation (rep 0, angle 0);
- * each maps to `assets/web/signs/<id>.glb`.
+ * {layout}.
  *
- * This file is GENERATED — `tools/split_signs.py` rewrites it from the assets it
- * just wrote, so the list and the files on disk cannot drift apart. Editing it
+ * This file is GENERATED — `{generator}` rewrites it from the assets it
+ * just wrote, so the list and the assets cannot drift apart. Editing it
  * by hand will be undone on the next generator run.
  *
  * The character itself is NOT per sign: `assets/web/models/avatar.glb` is loaded
- * once and every sign is an animation-only clip retargeted to that same
- * skeleton. Replacing the avatar therefore needs no re-export of the signs.
+ * once and every sign is a clip retargeted to that same skeleton. Replacing the
+ * avatar therefore needs no re-export of the signs.
  *
- * Only {len(ids)} of the 50 vocabulary signs are here{not_exported}. Signs outside
- * this list fall back to [DEFAULT] rather than failing (RF-CAT-03).
+ * {coverage}
  *
  * These are *animation* assets, not glosses. What a sign *means* still comes
  * from the backend's catalog, which holds all 50 LSC50 glosses: `available` on
@@ -222,23 +283,15 @@ object SignsCatalog {{
     /** The sign the app opens on, and the one it falls back to. */
     const val DEFAULT: String = "{ids[0]}"
 
-    /** Where a sign's animation lives, as a same-origin asset path. */
+{asset_url_doc}
     fun assetUrl(id: String): String = "signs/$id.glb"
 
     /**
      * Resolves a `glb_animation_path` coming from the backend to a local asset,
      * or null when that path is not one of ours.
      *
-     * The backend answers with the path we seeded in `catalog`, and since the
-     * assets ship inside the APK the path is already same-origin: the scene
-     * loads it directly. Only a path that matches a sign we actually ship is
-     * accepted, so a sign whose animation is not exported yet (0032–0049)
-     * returns null and the caller falls back instead of requesting a file that
-     * does not exist.
-     *
-     * Anything else — a remote URL, a traversal, a name we do not ship — is
-     * refused, and the caller treats it as "download it instead".
-     */
+{local_doc}
+    */
     fun localAssetOrNull(path: String): String? {{
         val clean = path.trim()
         if (!clean.startsWith("signs/") || clean.contains("..") || clean.contains("//")) return null
@@ -250,14 +303,7 @@ object SignsCatalog {{
     /**
      * True when [path] is one of *our* asset paths, whether or not we ship it.
      *
-     * The counterpart of [localAssetOrNull]: that one says "we have it", this
-     * one says "nobody is going to serve it over HTTP either". The catalog
-     * announces all 50 LSC50 glosses but only {len(ids)} have an export, so the
-     * rest come back with a `signs/<id>.glb` we do not ship. Asking the backend
-     * for those is a guaranteed 404 that costs a round trip on every utterance
-     * and changes nothing, so the caller skips straight to the fallback. A path
-     * that is *not* in this layout is a real remote asset and still goes down
-     * the download path.
+{own_doc}
      */
     fun isOwnAssetPath(path: String): Boolean {{
         val clean = path.trim()
