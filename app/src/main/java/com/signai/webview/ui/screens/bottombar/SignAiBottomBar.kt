@@ -5,13 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -162,8 +165,21 @@ fun SignAiBottomBar(
             .fillMaxWidth()
             .clip(RoundedCornerShape(topStart = 26.dp, topEnd = 26.dp))
             .background(SignAiTheme.colors.surface)
-            .navigationBarsPadding()
-            .imePadding(),
+            // **Un** inset de fondo, el mayor entre la barra de navegación y el
+            // teclado —eso es exactamente `safeDrawing`—, no la suma de los dos.
+            // Con `.navigationBarsPadding().imePadding()` se sumaban: el teclado se
+            // dibuja **encima** de la barra de navegación, así que su alto ya la
+            // incluye, y el panel quedaba un cacho más arriba del teclado.
+            //
+            // El padding va **después** del `background` a propósito: así el color
+            // del panel sigue llegando hasta el borde de abajo de la pantalla y la
+            // píldora de navegación queda sobre el panel y no sobre el fondo.
+            //
+            // El hueco grande de antes (~200 dp) no era solo esto: el manifest tenía
+            // `windowSoftInputMode` en `<application>`, donde el sistema lo ignora y
+            // queda `adjustPan`, así que además el sistema paneaba la ventana
+            // (owner, 2026-10-22). Las dos cosas se arreglan juntas.
+            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom)),
     ) {
         // 1dp top border (prototype `border-top: 1px solid var(--line)`).
         Box(

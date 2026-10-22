@@ -124,7 +124,8 @@ manos) y tiene su propio `openspec/` con `specs/avatar|dataset|pipeline`. Está
 **inactiva desde 2026-09-19**. Los assets de acá salen de otro pipeline: exportaciones
 de Cascadeur en `GLB SignALL/` → `tools/pack_signall.py` (un archivo con el personaje y
 las 50 señas como clips). El layout viejo de `GLB Senas/` + `tools/split_signs.py` sigue
-en el repo para rearmar los assets por seña, pero no es el vigente. No mezclar los dos
+en el repo para rearmar los assets por seña, pero no es el vigente —y sus 32 `.glb` ya no
+se empaquetan: `assets/web/signs/` se borró el 2026-10-22—. No mezclar los dos
 pipelines ni copiar scripts entre ellos.
 
 ## Carpetas hermanas que **no** son repositorios
