@@ -232,6 +232,19 @@ function setStatus(msg) {
   document.getElementById("status").textContent = msg;
 }
 
+/**
+ * Progreso real de la escena para la barra del splash, `progress:<0..100>`.
+ *
+ * El `onProgressChanged` del WebView no sirve para esto: dice 100 % cuando la
+ * página terminó de cargar el HTML, y ahí todavía falta lo caro (bajar, parsear
+ * y compilar 13 MB de avatar). El tramo 45–100 es de la escena; el 0–45 lo pone
+ * Kotlin con el progreso de la página. Con la escena vieja, que no manda nada,
+ * la barra se comporta como antes.
+ */
+function reportProgress(pct) {
+  try { window.SignAIBridge?.postMessage(`progress:${Math.round(pct)}`); } catch (e) { /* no bridge */ }
+}
+
 // ── DEBUG ─────────────────────────────────────────────────────────────────────
 // Centro único de opciones debug. Para agregar una opción: agregar una función
 // a `flags` que devuelva líneas de texto. Toggle: window.SignAI.setDebug(bool).
@@ -380,6 +393,7 @@ function unresolvedTracks(clip, nodeNames) {
   return missing;
 }
 
+reportProgress(45);
 loader.load(AVATAR_URL, (gltf) => {
   const root = gltf.scene;
 
@@ -440,6 +454,7 @@ loader.load(AVATAR_URL, (gltf) => {
   // vigilar. Se lee con `adb logcat -s SignAIWeb`.
   console.log("[SignAI] avatar listo · nodos:", state.nodeCount,
     "·", Math.round(performance.now()), "ms");
+  reportProgress(85);  // el GLB ya está parseado
 
   // Señas empaquetadas dentro del avatar: `0000`..`0049`, una animación por
   // seña. Se indexan antes de cargar la seña de arranque para que ese primer
@@ -448,10 +463,11 @@ loader.load(AVATAR_URL, (gltf) => {
   if (embeddedClips.size) {
     console.log("[SignAI] señas empaquetadas en el avatar:", embeddedClips.size);
   }
+  reportProgress(90);  // las 50 señas ya están indexadas
 
   // Seña de arranque, para que la app abra mostrando algo aunque el backend
   // esté caído.
-  loadSignClips(defaultSignUrl).then(({ clips }) => {
+  const defaultSign = loadSignClips(defaultSignUrl).then(({ clips }) => {
     const missing = unresolvedTracks(clips[0], nodeNames);
     setStatus(
       `Avatar listo — ${clips.length} variante(s)` +
@@ -464,16 +480,34 @@ loader.load(AVATAR_URL, (gltf) => {
     console.error(err);
   });
 
-  // La splash de Compose se esconde cuando la página termina de cargar, pero
-  // el avatar son 10 MB: sin este aviso el splash se va y se ve un canvas
-  // negro mientras descarga.
-  try { window.SignAIBridge?.postMessage("avatarReady"); } catch (e) { /* no bridge */ }
+  // El splash de Compose se esconde con `avatarReady`, así que ese aviso se
+  // manda cuando la escena está **entera**, no cuando el GLB terminó de parsear:
+  // los 50 clips ya indexados, la seña de arranque ya resuelta y un frame
+  // dibujado con el avatar adentro. Los dos `requestAnimationFrame` son el orden
+  // del navegador: el primero corre antes de pintar, el segundo ya corre después
+  // de que el frame salió. Sin eso, el splash se iba entre "el avatar está en la
+  // escena" y "el avatar se ve", y la primera seña pagaba el arranque del WebGL.
+  defaultSign
+    .catch(() => {})  // el error ya se muestra en la barra; no debe colgar el splash
+    .then(() => renderer.compileAsync(scene, camera).catch(() => {}))
+    .then(() => { reportProgress(96); })  // shaders ya compilados
+    .then(() => requestAnimationFrame(() => requestAnimationFrame(() => {
+      // Este es el número que ve el owner: el splash se va justo después.
+      console.log("[SignAI] escena lista ·", Math.round(performance.now()), "ms");
+      reportProgress(100);
+      try { window.SignAIBridge?.postMessage("avatarReady"); } catch (e) { /* no bridge */ }
+    })));
 
 }, (xhr) => {
-  setStatus(`Cargando avatar... ${xhr.total ? Math.round(xhr.loaded / xhr.total * 100) : 0}%`);
+  // El splash ya no lo ve nadie (está tapado por la barra), pero el estado de
+  // debug sí: es la única señal de cuánto falta mientras baja el archivo.
+  const pct = xhr.total ? xhr.loaded / xhr.total : 0;
+  setStatus(`Cargando avatar... ${Math.round(pct * 100)}%`);
+  reportProgress(45 + 35 * pct);  // 45 → 80: la descarga
 }, (err) => {
   setStatus("Error cargando models/avatar.glb");
   console.error(err);
+  reportProgress(100);  // que el splash no se quede esperando lo que ya falló
 });
 
 // ── Reproducción ──────────────────────────────────────────────────────────────

@@ -248,8 +248,15 @@ El WebView carga por `WebViewAssetLoader` en
 `https://appassets.androidplatform.net/assets/web/index.html`. JS→Kotlin va por
 `window.SignAIBridge.postMessage("onPlaybackDone")` al terminar la cola,
 `postMessage("avatarReady")` cuando el personaje ya está en escena (no en
-`onPageFinished`, que dispara mientras baja el GLB de 13 MB) y `signStart:<idx>:<jsMs>`
-por cada seña.
+`onPageFinished`, que dispara mientras baja el GLB de 13 MB), `progress:<0..100>` con el
+avance real de la escena para la barra del splash y `signStart:<idx>:<jsMs>` por cada seña.
+
+**`avatarReady` es "todo listo", no "el archivo llegó":** se manda después de indexar los
+50 clips, resolver la seña de arranque, compilar los shaders (`renderer.compileAsync`) y
+pintar un frame con el avatar adentro. El splash de Compose se esconde con ese aviso, así
+que si se manda antes se ve el canvas vacío y la primera seña paga el arranque del WebGL.
+El progreso de la página (`WebChromeClient.onProgressChanged`) **no** sirve para la barra:
+dice 100 % cuando terminó el HTML.
 
 **La fuente de verdad del contrato es `domain/SignAiCommands.kt`**: los nombres exactos de
 cada comando están ahí, no en este archivo. Kotlin los llama con

@@ -102,3 +102,31 @@ backend y el STT locales que ya estaban corriendo.
   cambiaron. Si se re-siembra, hay que reiniciar el backend (carga el catálogo una sola vez).
 - **`../sign-ai-docs` y Overleaf**: siguen diciendo que 18 señas no tienen animación. Ese
   contraste se propone, no se aplica desde acá (el `.tex` lo edita el owner).
+
+## Segunda parte: el splash cubre toda la carga
+
+El owner preguntó si el costo de arranque (~300 ms más) era por cada seña o solo al inicio,
+y pidió que el splash no se vaya hasta que el avatar y las señas estén cargadas. **Es solo
+al inicio**: por seña no hay nada que cargar, porque los clips ya están en memoria. Medido
+en el Redmi el mismo día: `oración→avatar` 61–130 ms (la primera frase de una sesión recién
+arrancada, 130 ms).
+
+Lo que sí estaba mal era el splash:
+
+1. **`avatarReady` se mandaba antes de que la escena estuviera lista.** Ahora se manda
+   después de indexar los clips, resolver la seña de arranque, compilar los shaders
+   (`renderer.compileAsync`, ~400–900 ms en este teléfono que antes se pagaban en el primer
+   frame visible) y pintar un frame con el avatar adentro (dos `requestAnimationFrame`).
+   Medido: `avatar listo` 1818–2084 ms → `escena lista` 2236–2957 ms (reloj JS,
+   `adb logcat -s SignAIWeb`). El frame del fade ya tiene el avatar debajo.
+2. **La barra decía 100 % mientras faltaba todo.** El progreso salía de
+   `WebChromeClient.onProgressChanged`, que llega a 100 cuando terminó el HTML. Ahora la
+   página ocupa el 0–45 % y la escena manda `progress:<n>` para el 45–100 % (45 → 80
+   descarga, 85 GLB parseado, 90 clips indexados, 96 shaders, 100 antes de `avatarReady`).
+   Verificado en video: 0 → 45 → 80 → 90 → 96 → 100.
+3. **Arranque en frío: ~2,3 s de ventana del sistema antes del primer píxel de la app**
+   (`adb shell am start -W` → `TotalTime: 2287`), con el gris `#181818` de MIUI. Se agregó
+   `windowBackground` = grafito + wordmark (`res/drawable/window_launch.xml`), que en MIUI
+   **no se ve** porque la ventana de lanzamiento del sistema la tapa; queda para AOSP.
+   Pendiente de decisión: diferir la creación del `AvatarWebView` dos frames para que el
+   splash de Compose aparezca antes.
