@@ -23,6 +23,8 @@ env
 # está en app/src/main/assets/web/ (16 MB, versionado).
 #
 #   GLB Senas/      32 exports por seña, con el muñeco adentro  (315 MB)
+#   GLB SignALL/    un solo .glb con el muñeco, la cara y las 50 señas
+#                   como clips de animación 0000..0049        (27 MB)
 #   Para Exportar/  .blend + .fbx de Cascadeur                 (660 MB)
 #   senas/          .glb viejos de Mixamo, ya superados       ( 76 MB)
 #   Base.glb, models/  armature suelto que dejó el modelador
@@ -33,6 +35,7 @@ env
 # El slash inicial ancla a la raíz del repo: sin él, `models/` también se
 # comería `app/src/main/assets/web/models/`, que sí tiene que versionarse.
 /GLB Senas/
+/GLB SignALL/
 /Para Exportar/
 /senas/
 /Base.glb
