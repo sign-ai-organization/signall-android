@@ -127,15 +127,16 @@ def build_sql(assets: dict[str, dict]) -> str:
 -- Generado por tools/seed_catalog.py desde la Table 2 del paper
 -- (doi 10.1038/s41597-024-04172-5). No editar a mano: se regenera entero.
 --
--- `glb_animation_path` es un path same-origin DENTRO del APK: la app lo carga
--- desde sus assets, no lo descarga del backend. Por eso las 18 señas sin
--- animación (fps/frames/bytes/sha256 en NULL) también están: el backend las
--- anuncia igual y la app cae al sign por defecto (RF-CAT-03).
+-- `glb_animation_path` es un path same-origin DENTRO del APK: la app resuelve
+-- ese nombre contra las animaciones que vienen adentro de `models/avatar.glb`,
+-- no lo descarga del backend. Por eso las señas sin animación exportada
+-- (fps/frames/bytes/sha256 en NULL) también están: el backend las anuncia igual
+-- y la app cae al sign por defecto (RF-CAT-03).
 
 BEGIN;
 
--- Las columnas de metadatos del asset. Nullable a propósito: las 18 señas sin
--- animación no tienen archivo de dónde sacarlos.
+-- Las columnas de metadatos del asset. Nullable a propósito: una seña sin
+-- animación exportada no tiene de dónde sacarlos.
 ALTER TABLE catalog
     ADD COLUMN IF NOT EXISTS fps          integer,
     ADD COLUMN IF NOT EXISTS total_frames integer,
@@ -174,9 +175,11 @@ def main() -> None:
     sql = build_sql(assets)
 
     have = len(assets)
+    missing = [f"{n:04d}" for n, *_ in LSC50 if f"{n:04d}" not in assets]
     print(f"  glosas       : {len(LSC50)} (LSC50, Table 2 del paper)")
     print(f"  con animación: {have}")
-    print(f"  sin animación: {len(LSC50) - have}  (0032–0049, aún no exportadas)")
+    print(f"  sin animación: {len(missing)}"
+          + (f"  ({missing[0]}–{missing[-1]}, aún no exportadas)" if missing else ""))
     print()
 
     if not args.apply:

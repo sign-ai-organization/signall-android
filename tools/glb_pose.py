@@ -44,6 +44,10 @@ COMPONENT_TYPES = {5120: ("b", 1), 5121: ("B", 1), 5122: ("h", 2),
 
 IDENTITY_Q = (0.0, 0.0, 0.0, 1.0)
 
+# Los tres canales de TRS de un nodo, por el nombre que usa glTF. `weights` no
+# está: no es un TRS y `sample_clip` lo saltea.
+_POSE_CHANNEL = {"translation": 0, "rotation": 1, "scale": 2}
+
 
 # ── GLB lectura/escritura ─────────────────────────────────────────────────────
 
@@ -513,8 +517,15 @@ def sample_clip(js, binary, anim_index=0, t=0.0):
     pose = {name: list(trs) for name, trs in base.items()}
 
     for name, path, times, values, _interp in clip_tracks(js, binary, anim_index):
+        channel = _POSE_CHANNEL.get(path)
+        if channel is None:
+            # `weights` (morph targets) no es TRS: un avatar con expresión facial
+            # animada trae canales así y no hay dónde ponerlos en una pose de
+            # huesos. Se ignoran, que es lo que hace que una seña con cara se
+            # pueda leer igual.
+            continue
         value = _sample_track(times, values, t, path == "rotation")
-        pose[name][{"translation": 0, "rotation": 1, "scale": 2}[path]] = value
+        pose[name][channel] = value
 
     return {name: tuple(trs) for name, trs in pose.items()}
 

@@ -45,7 +45,8 @@ WEB = REPO / "app/src/main/assets/web"
 AVATAR = WEB / "models/avatar.glb"
 
 # El frame de referencia: primer keyframe del clip de JUICIOSO.
-REFERENCE = "0029_0000_0000.glb"
+REFERENCE_ID = "0029"
+REFERENCE = f"{REFERENCE_ID}_0000_0000.glb"
 REFERENCE_VARIANT = 0
 
 # La cadena de brazos, y nada más. Con estos prefijos sobre `nombre + lado`
@@ -195,10 +196,16 @@ def bake_rest_pose(js, signs_dir=WEB / "signs"):
             "bones": len(touched), "delta": worst}
 
 
-def report_lines(report, indent="  "):
-    """El informe de [bake_rest_pose] como líneas para imprimir."""
-    lines = [f"{indent}pose de descanso desde {REFERENCE} variante "
-             f"{REFERENCE_VARIANT}, keyframe 0 (t = {report['t']:.4f}s)"]
+def report_lines(report, indent="  ", reference=None):
+    """El informe de [bake_rest_pose] como líneas para imprimir.
+
+    [reference] reemplaza el nombre del clip de referencia cuando el archivo no
+    es el de siempre (con las señas empaquetadas la referencia es un clip del
+    mismo archivo, no `signs/0029_0000_0000.glb`).
+    """
+    origin = reference or f"{REFERENCE} variante {REFERENCE_VARIANT}"
+    lines = [f"{indent}pose de descanso desde {origin}, "
+             f"keyframe 0 (t = {report['t']:.4f}s)"]
     for side in ("L", "R"):
         b, a = report["before"][side], report["after"][side]
         lines.append(f"{indent}  mano {side}  eje {abs(b[0]):.3f} -> {abs(a[0]):.3f} m"

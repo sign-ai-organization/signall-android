@@ -103,7 +103,7 @@ Reglas por repo:
 - **Los `.drawio` y el `.md` de requerimientos los edita el owner**: los cambios grandes
   se proponen, no se aplican en silencio.
 - **`../signai-avatar` no es la fuente de los GLB de esta app.** Es la demo anterior en
-  Flask. Los assets de acá salen de Cascadeur (`GLB Senas/` → `tools/split_signs.py`).
+  Flask. Los assets de acá salen de Cascadeur (`GLB SignALL/` → `tools/pack_signall.py`).
   No mezclar los dos pipelines ni copiar scripts entre ellos.
 
 Detalle de cada hermano, Carpetas hermanas que no son repositorios, y las IDs de los
@@ -248,7 +248,7 @@ El WebView carga por `WebViewAssetLoader` en
 `https://appassets.androidplatform.net/assets/web/index.html`. JS→Kotlin va por
 `window.SignAIBridge.postMessage("onPlaybackDone")` al terminar la cola,
 `postMessage("avatarReady")` cuando el personaje ya está en escena (no en
-`onPageFinished`, que dispara mientras baja el GLB de 10 MB) y `signStart:<idx>:<jsMs>`
+`onPageFinished`, que dispara mientras baja el GLB de 13 MB) y `signStart:<idx>:<jsMs>`
 por cada seña.
 
 **La fuente de verdad del contrato es `domain/SignAiCommands.kt`**: los nombres exactos de
@@ -306,9 +306,18 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
 - **Nunca pongas la normalización (escala/offset) en la raíz de la escena cargada.** Las
   exportaciones de Cascadeur animan la raíz del armature en posición, rotación *y* escala,
   así que el mixer la sobrescribe cada frame. Va en un objeto pivote padre.
-- **Nunca edites `models/avatar.glb` a mano**: se regenera con `tools/split_signs.py`, que
-  llama a `tools/rest_pose.py` al final. Agregar una seña = soltar el `.glb` en
-  `GLB Senas/` y correr ese script, que también reescribe `domain/SignsCatalog.kt`.
+- **Un solo `.glb` con todo adentro.** `models/avatar.glb` trae el personaje, la cara y
+  las **50 señas como clips** `0000`..`0049`; la escena los indexa al cargar
+  (`embeddedClipsFor` en `app.js`) y resuelve `signs/<id>.glb` **por nombre, sin pedir
+  nada por red**. De 27,2 MB de origen a 12,98 MB: se podan los 61 morph targets que
+  ninguna animación mueve y no pesan por defecto.
+- **Nunca edites `models/avatar.glb` a mano**: se regenera con `tools/pack_signall.py`
+  desde `GLB SignALL/`, que también reescribe `manifest.json` y `domain/SignsCatalog.kt`.
+  Agregar una seña = regenerar el `.glb` único y correr ese script.
+- **Arranque: 12,98 MB tardan ~1,85 s en estar en escena** en el Redmi Note 9S (medido
+  con el `performance.now()` que `app.js` imprime en `SignAIWeb`, 3 arranques en frío:
+  1845/1855/1854 ms). Con el avatar suelto de 10,3 MB eran 1451–1593 ms. El splash
+  espera a `avatarReady`, así que eso es lo que se ve antes de la escena.
 - `renderer.setPixelRatio` está **capado en 1.75** a propósito. Sin cap, el Redmi Note 9S
   renderiza 19,6 MP/frame y el GPU queda en ~37 ms/frame, con 99 % de jank.
 - `shouldInterceptRequest` fuerza `Cache-Control: no-store` para que los cambios de
@@ -326,11 +335,11 @@ Credenciales en `.envJulian` (gitignored). Si `psql` dice `parse error near '&'`
 archivo: es que la línea tiene `&` sin comillas.
 
 La app **no habla con Neon**: la base es del backend. `catalog` está sembrada con las 50
-glosas de LSC50 y reejecutar el seed es idempotente. **Solo 32 de las 50 tienen animación
-exportada**: las otras 18 (`0032`–`0049`) llegan con `available: true` y un path que no
-existe, y eso dispara `GLS-10`. **No lo "arregles" en la app** pidiéndolas por HTTP: es un
-404 garantizado. El backend carga el catálogo **una sola vez al arrancar**: después de un
-seed hay que reiniciarlo.
+glosas de LSC50 y reejecutar el seed es idempotente. **Las 50 tienen animación desde el
+2026-10-22**: el archivo único trae las 18 que faltaban (`0032`–`0049`), así que `GLS-10`
+("anunciada pero no exportada") ya no alcanza a ninguna glosa. **No las pidas por HTTP**:
+salen de los clips que vienen dentro del avatar. El backend carga el catálogo **una sola
+vez al arrancar**: después de un seed hay que reiniciarlo.
 
 ## Contexto del proyecto (OpenSpec)
 

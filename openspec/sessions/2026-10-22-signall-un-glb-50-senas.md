@@ -1,0 +1,104 @@
+# SignALL: un solo GLB con las 50 señas adentro
+
+**Fecha:** 2026-10-22, mañana · **Rama:** `main`
+
+## Qué llegó
+
+El owner trajo `SignALL (GLB por Sena).glb` (27,16 MB), exportado por un compañero: **un solo
+archivo con el personaje, la cara y las 50 señas como animaciones separadas** nombradas
+`0000`..`0049`, en vez de un `.glb` por seña. La pregunta era si sirve para la app y,
+si sirve, probarlo.
+
+El archivo quedó en `GLB SignALL/` (gitignored, igual que `GLB Senas/`), no en la raíz.
+
+## Qué se verificó antes de tocar nada
+
+Leído con `tools/glb_pose.py` y renderizado en Chromium headless con el `app.js` real:
+
+- **Mismo personaje**: 102 articulaciones de skin, en el mismo orden y con los mismos
+  nombres que el `models/avatar.glb` que ya estaba; 11 mallas y 12 materiales. La geometría
+  viene **decimada** (86 099 → 55 679 vértices) y las texturas en **WebP** (3,31 MB → 0,74
+  MB), así que el archivo pide `EXT_texture_webp`; three r169 lo soporta con
+  `GLTFTextureWebP`.
+- **50 clips reales**: `0000`..`0049`, todos distintos entre sí (hash por accessors) y con
+  movimiento de mano entre 19 y 70 cm de recorrido. Los 18 que faltaban en el APK
+  (`0032`–`0049`) **existen**. Que cada uno sea la seña correcta es contenido: no lo puede
+  validar una sesión, lo tiene que ver el owner o el director.
+- **Los clips `0000`–`0031` no son byte a byte los de `signs/`**: 20 de 306 tracks difieren
+  (cuello y mandíbula sobre todo, hasta 0,116 en un cuaternión). Es otro export, con cara.
+- **La pose de descanso no estaba horneada**: los brazos salen a 44° del reposo que tiene el
+  APK (pose de maniquí de Cascadeur). Sin hornearla, el muñeco abre con los brazos abiertos y
+  vuelve a esa pose al terminar cada frase.
+- **68 morph targets, casi todos muertos**: solo 5 se animan (`Male`, `LIVE_KEY_PERMANENT`,
+  `LIVE_KEY_TEMP_aged_young`, `cor_ElbowBend_Rt`, `cor_ShoulderSideRaise_Rt`); ninguno de los
+  de cara (`e_Smile`, `jawOpen`, …) tiene un keyframe. Son ~15 MB de datos, más lo que
+  `three.js` sube a la GPU para nada.
+
+## Qué se hizo
+
+1. **`app.js`: los clips del avatar se resuelven por nombre.** `embeddedClips` se llena con
+   `gltf.animations` al cargar el avatar y `embeddedClipsFor(url)` traduce
+   `signs/<id>_0000_0000.glb` a los clips `<id>` / `<id>.001` … sin pedir nada. Si el avatar
+   no trae animaciones, todo sigue por el camino de siempre (aditivo, compatible con el
+   layout viejo y con los assets que baje el backend).
+2. **`tools/pack_signall.py`** (nuevo, sin dependencias): valida que estén los 50 clips, hornea
+   la pose de descanso con la regla de `rest_pose.py` pero leyendo el frame de referencia del
+   propio archivo (clip `0029`), **poda los morph targets** que no anima nadie ni pesan por
+   defecto, **compacta el buffer** copiando cada `bufferView` una sola vez y solo el tramo en
+   uso, y escribe `models/avatar.glb` + `manifest.json` + `SignsCatalog.kt` con el generador
+   que ya existía (`write_catalog(manifest, packed=True)`).
+3. **`SignsCatalog.kt` regenerado con las 50** (antes 32). `signs/<id>.glb` sigue siendo el
+   identificador: lo que cambió es que ahora se resuelve contra los clips del avatar.
+4. **`app.js` imprime `performance.now()` en "avatar listo"**, para poder medir el costo de
+   arranque con `adb logcat -s SignAIWeb`.
+5. **Docs alineados**: `AGENTS.md` (§ Assets web, § Neon, mapa), `tools/README.md`,
+   `docs/SISTEMA.md` y los specs `avatar`, `pipeline` y `ui` (STG-1, GLS-9, GLS-10, BRG-13).
+
+## Qué se midió
+
+Todo en el **Redmi Note 9S físico** (`1ed6699f`, MIUI, Android 11), build `debug` con
+`-Psignai.backendWsUrl=ws://127.0.0.1:8080` y `adb reverse tcp:8080 tcp:8080`, contra el
+backend y el STT locales que ya estaban corriendo.
+
+| | Archivo viejo (10,3 MB + 32 señas) | Archivo único (12,98 MB, 50 señas) |
+|---|---|---|
+| Avatar listo (`performance.now()`) | 1451 / 1540 / 1593 ms | 1845 / 1854 / 1855 ms |
+| `oración→avatar` | 54 ms (p50 de n=2) | 61–115 ms |
+| Peticiones a `signs/` en una frase | 0 (assets locales) | 0 |
+| Frases con señas de `0032`–`0049` | no se pueden representar | **sí** |
+
+- **Tamaño**: 27,16 MB de origen → **12,98 MB** (morphs 14,9 MB → 1,04 MB; animaciones
+  2,62 MB; geometría 3,54 MB; texturas 0,74 MB; buffer 7,95 MB). Contra lo que había en el
+  APK (10,3 MB de avatar + ~5,8 MB de `signs/` = 16,1 MB) es **~3 MB menos** y 18 señas más.
+- **Fidelidad**: el recorrido de mano por clip en el archivo empaquetado es **idéntico** al
+  del original en los 50 clips (comparado clip por clip, 40 fotogramas cada uno), y el render
+  de `0000` y `0029` en el mismo instante es indistinguible.
+- **Extremo a extremo**: `"por favor gracias"` → `POR FAVOR,GRACIAS`, 2 señas representadas en
+  4536 ms, sin `signFailed`. `"yo nunca todos mucho"` → `YO,NUNCA,TODOS,MUCHO`, 4 señas en
+  8241 ms: las cuatro son clips que antes no existían en el APK.
+
+## Qué se decidió
+
+- **El layout viejo sigue en el repo** (`signs/*.glb`, `split_signs.py`) y **sigue soportado en
+  `app.js`**, pero no se pide en runtime. Borrar `signs/` (−5,8 MB en el APK) es decisión del
+  owner, no de la sesión.
+- **La pose de descanso se hornea en el pipeline**, no se pide al modelador: misma regla de
+  `rest_pose.py` (46 huesos de brazos, `0029`, primer keyframe), referencia leída del propio
+  archivo.
+- **Los morph targets no animados se podan** salvo los que pesan por defecto: sacar un shape
+  que pesa 0,3 deforma la malla sin que ningún keyframe lo toque.
+
+## Qué quedó pendiente
+
+- **`signs/`**: 32 archivos (~5,8 MB) que ya no se usan. Si el owner dice que sí, se borran y
+  el APK baja otro tanto. Mientras estén, nada se rompe.
+- **Variantes**: el layout viejo tenía 46 tomas para 32 señas y `pickVariant` elegía al azar;
+  ahora hay una por seña. Se pueden fusionar las 14 tomas viejas al archivo único (mismo
+  esqueleto) si el owner quiere conservar la variedad — decisión abierta.
+- **Contenido de `0032`–`0049`**: hay que confirmar con el owner/director que cada clip es la
+  seña que dice ser. La sesión solo verificó que existen, que son distintos y que se mueven.
+- **`catalog` de Neon**: `tools/seed_catalog.py` ya maneja el manifest nuevo y ahora informa
+  50/50 con animación, pero **no se re-sembró**. No hace falta para que funcione: los paths no
+  cambiaron. Si se re-siembra, hay que reiniciar el backend (carga el catálogo una sola vez).
+- **`../sign-ai-docs` y Overleaf**: siguen diciendo que 18 señas no tienen animación. Ese
+  contraste se propone, no se aplica desde acá (el `.tex` lo edita el owner).

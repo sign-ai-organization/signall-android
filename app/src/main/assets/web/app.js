@@ -1,15 +1,21 @@
 // SignAI — escena 3D del avatar.
 //
-// El personaje se carga UNA vez desde `models/avatar.glb` y cada seña es un
-// clip de animación suelto en `signs/<id>.glb`. No hay retargeting ni
-// interpretación de landmarks: los `.glb` traen la pose ya horneada por hueso, y
+// El personaje se carga UNA vez desde `models/avatar.glb`. No hay retargeting ni
+// interpretación de landmarks: los clips traen la pose ya horneada por hueso, y
 // acá solo se reproduce. Eso deja el `app.js` en ~300 líneas y saca de en medio
 // el motor procedural que antes tenía que adivinar la pose desde coordenadas
 // normalizadas de imagen.
 //
-// Dónde viene cada cosa:
-//   models/avatar.glb  → el muñeco con su esqueleto (102 huesos, HG_*)
-//   signs/*.glb        → solo animación, un clip por variante, mismo esqueleto
+// Dónde viene cada cosa, desde el 2026-10-22:
+//   models/avatar.glb  → el muñeco con su esqueleto (102 huesos, HG_*) **y las 50
+//                        señas como clips** `0000`..`0049`
+//   signs/*.glb        → el layout viejo: solo animación, un clip por variante,
+//                        mismo esqueleto. Se sigue soportando como descarga, pero
+//                        con las señas adentro del avatar no se pide ninguno.
+//
+// Los clips indexados del avatar se resuelven por nombre (`embeddedClipsFor`), así
+// que `signs/<id>.glb` es un identificador: el pedido por red solo ocurre si el
+// clip no vino en el archivo.
 //
 // Contrato con Android (`window.SignAI`) — no cambiar sin tocar el lado Kotlin:
 //   setQueue, appendQueue, playFrom, queuePending, queueState, play, setDebug,
@@ -105,7 +111,7 @@ function queueBacklog() {
 
 // ── Fundición entre señas ─────────────────────────────────────────────────────
 //
-// Las 46 variantes de clip arrancan y terminan en el mismo lugar (medido en
+// Las variantes de clip arrancan y terminan en el mismo lugar (medido en
 // `openspec/changes/reposo-y-crossfade/investigacion.md` §4.1: el salto directo
 // del final de una seña al inicio de la siguiente es de **5.9 cm de mediana** y
 // el 79% de los pares ya es continuo). Este archivo antes metía ~100 ms de pose
@@ -300,9 +306,53 @@ const Debug = {
 const loader = new GLTFLoader();
 const signCache = new Map();
 
+/**
+ * Clips que ya vinieron **dentro** del avatar, por nombre de clip.
+ *
+ * `models/avatar.glb` puede traer las señas empaquetadas como animaciones
+ * (`0000`..`0049`) en vez de un `.glb` por seña. Cuando las trae, pedir el
+ * `signs/<id>.glb` es un viaje de red (o un 404, si el archivo no se empaquetó
+ * porque la seña ya está acá) para un dato que ya está en memoria: se resuelve
+ * por nombre y no se descarga nada.
+ *
+ * Se llena al cargar el avatar. Si el archivo no trae animaciones queda vacío y
+ * todo sigue por el camino de siempre (un `.glb` por seña), así que las dos
+ * variantes de asset conviven sin ramas en el resto del archivo.
+ */
+const embeddedClips = new Map();
+
+/**
+ * Los clips de `url` si vienen dentro del avatar, o `null` si hay que cargarlos.
+ *
+ * La URL es la misma que manda Android para las dos variantes —`signs/0000_0000_0000.glb`—
+ * así que el id de la seña es lo que identifica al clip (`0000`), y las
+ * variantes de una misma seña son `0000`, `0000.001`, …: se devuelven todas,
+ * igual que si vinieran de un `.glb` propio, para que `pickVariant` siga
+ * eligiendo.
+ */
+function embeddedClipsFor(url) {
+  if (!embeddedClips.size) return null;
+  const match = /^signs\/([0-9]{4})(?:_[0-9]{4}){2}\.glb$/.exec(url);
+  if (!match) return null;
+  const id = match[1];
+  const clips = [];
+  for (const [name, clip] of embeddedClips) {
+    if (name === id || name.startsWith(id + ".")) clips.push(clip);
+  }
+  if (!clips.length) return null;
+  clips.sort((a, b) => a.name.localeCompare(b.name));
+  return clips;
+}
+
 /** Devuelve {clips} de un sign GLB, cacheado por URL. */
 async function loadSignClips(url) {
   if (signCache.has(url)) return signCache.get(url);
+  const embedded = embeddedClipsFor(url);
+  if (embedded) {
+    const entry = { clips: embedded };
+    signCache.set(url, entry);
+    return entry;
+  }
   const gltf = await loader.loadAsync(url);
   if (!gltf.animations.length) throw new Error(url + " -> sin clips");
   const entry = { clips: gltf.animations };
@@ -384,7 +434,20 @@ loader.load(AVATAR_URL, (gltf) => {
   // seña sin recargar los 10 MB. Se ata a `root`, NO a `pivot`: el pivot es
   // nuestro andamiaje y ningún track debe tocarlo.
   state.mixer = new THREE.AnimationMixer(root);
-  console.log("[SignAI] avatar listo · nodos:", state.nodeCount);
+  // El `performance.now()` va en el mensaje a propósito: es el único número que
+  // dice cuánto tardó la escena en tener el avatar listo, y con un archivo que
+  // trae las 50 señas adentro ese número es el costo de arranque que hay que
+  // vigilar. Se lee con `adb logcat -s SignAIWeb`.
+  console.log("[SignAI] avatar listo · nodos:", state.nodeCount,
+    "·", Math.round(performance.now()), "ms");
+
+  // Señas empaquetadas dentro del avatar: `0000`..`0049`, una animación por
+  // seña. Se indexan antes de cargar la seña de arranque para que ese primer
+  // clip también salga de acá y no haya ni un pedido de red antes de moverse.
+  for (const clip of gltf.animations) embeddedClips.set(clip.name, clip);
+  if (embeddedClips.size) {
+    console.log("[SignAI] señas empaquetadas en el avatar:", embeddedClips.size);
+  }
 
   // Seña de arranque, para que la app abra mostrando algo aunque el backend
   // esté caído.
