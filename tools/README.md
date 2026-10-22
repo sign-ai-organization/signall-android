@@ -56,7 +56,11 @@
 - **`split_signs.py`** — el pipeline **anterior**: separa los 40 exports por seña
   (`GLB Senas/`, con el muñeco adentro en cada uno) en `models/avatar.glb` +
   `signs/<id>.glb`. Queda para rearmar el layout viejo o comparar; el camino
-  vigente es `pack_signall.py`.
+  vigente es `pack_signall.py`. **Los 32 `.glb` que escribía en
+  `assets/web/signs/` se borraron el 2026-10-22** (5,7 MB en el APK que ya nadie
+  pedía: todas las señas salen del clip del archivo único). El script sigue
+  porque `pack_signall.py` le importa `write_catalog`, y porque es la única forma
+  de regenerar el layout viejo si hace falta.
 - **`glb_pose.py`** — leer un `.glb`, recorrer el esqueleto (FK), samplear un
   clip y reconstruir la pose de bind desde las `inverseBindMatrices`. Es la
   base de las dos herramientas siguientes y el **único lector de GLB del repo**

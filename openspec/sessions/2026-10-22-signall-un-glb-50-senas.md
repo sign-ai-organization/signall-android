@@ -162,3 +162,108 @@ También se verificó el camino **Ajustes → Acerca de → Volver**: el splash 
 levantarse y la escena se recrea detrás (video: 58 % a los 1,6 s de tocar Volver, avatar
 visible al final del fade).
 
+## Cuarta parte: pulido de la salida del splash, gestos, teclado y borrado de `signs/`
+
+Cuatro pedidos del owner en la misma tanda (2026-10-22, tarde), todos en el Redmi Note 9S.
+
+### 1. La salida del splash, el doble de lenta
+
+La animación de salida se sentía como un corte: el avatar aparecía de golpe. En
+`ui/MainScreen.kt` el cruce son dos animaciones que corren juntas —el splash se va y el
+contenido entra— y las dos se duplicaron:
+
+| | Antes | Ahora |
+|---|---|---|
+| `SplashFadeMs` (se va el splash) | 400 ms | **800 ms** |
+| `ContentFadeMs` (entra el contenido) | 500 ms | **1000 ms** |
+
+Medido con `screencap` en bucle (una captura cada ~450–650 ms, sin reloj confiable en
+`screenrecord` porque graba a *variable frame rate*): el cruce dura ~1,0 s entre la primera
+captura con las dos capas mezcladas y la primera con el contenido solo, y en el medio se ve
+el avatar con el wordmark encima (`shot/s14.png` de la captura). Los valores son constantes
+del código, la medición solo confirma que se ven.
+
+### 2. Navegación por gestos: arrastrar desde el borde no llegaba a la app
+
+El owner reportó que con gestos del sistema las pestañas se abren tocando pero no
+arrastrando. **No es la app: es el sistema.** Medido con `adb shell input swipe` a la altura
+de la pestaña, arrancando en distintos x (`launcher` = el gesto se lo quedó el sistema y la
+app se cerró, `app` = el arrastre llegó a la app):
+
+| x inicial | Resultado |
+|---|---|
+| 2 px | gesto de "atrás" → la app se va al launcher |
+| 26 px | gesto de "atrás" → launcher |
+| 45 px | gesto de "atrás" → launcher |
+| 60 px | llega a la app y abre el panel |
+| 70 px | llega a la app y abre el panel |
+
+O sea: **~20 dp de cada borde son del sistema**, y la pestaña visible son 20 dp pegados al
+borde, así que el dedo casi siempre cae en la franja del sistema. Se pidió la exclusión por
+las dos vías que existen y **MIUI las ignora**:
+
+- `Modifier.systemGestureExclusion()` en la pestaña (`EdgeDrawer.kt`), 200 dp de alto.
+- `View.setSystemGestureExclusionRects` a nivel de la ventana en `MainActivity.kt`
+  (`excludeDrawerEdgeBands`), con un rect de 24 dp de ancho × 200 dp de alto por borde —
+  200 dp es el tope que acepta Android por borde.
+
+Mitigación real, que es lo que pidió el owner como plan B: **todas las zonas táctiles +25 %**.
+
+| Zona | Antes | Ahora |
+|---|---|---|
+| Franja de arrastre del borde (`edgeStripWidth`) | 48 dp | **60 dp** |
+| Zona de arrastre del panel abierto (`handleDragWidth`) | 72 dp | **90 dp** |
+| Ancho táctil de la pestaña (`edgeStripWidth + handleHitPadding`) | 76 dp | **95 dp** |
+| Alto táctil de la pestaña | 160 dp | **200 dp** |
+| Alto del dibujo (la pestaña visible) | 62 dp | 62 dp (no cambió) |
+
+Verificado: tocar el centro de la pestaña abre Ajustes (el nodo mide 261×550 px en el árbol
+de accesibilidad, antes 209×440), y un arrastre desde x=60 px abre Conversación.
+
+### 3. Hueco enorme entre el teclado y los botones
+
+Eran **dos** bugs sumados:
+
+1. `android:windowSoftInputMode="adjustResize"` estaba en `<application>`, donde el sistema
+   lo **ignora** (es atributo de `<activity>`). La ventana quedaba en `adjustPan` —se ve en
+   `dumpsys window`: `sim={adjust=pan …}`— y el sistema paneaba la ventana entera hacia
+   arriba al abrir el teclado.
+2. `SignAiBottomBar` sumaba `.navigationBarsPadding().imePadding()`: el teclado se dibuja
+   **encima** de la barra de navegación, así que su alto ya la incluye y el inset se contaba
+   dos veces.
+
+El paneo y el inset daban ~535 px de hueco (medido desde el borde inferior de "Traducir"
+hasta el teclado: botones en y=1120, teclado en y=1655, sobre 2400). Ahora:
+
+- `windowSoftInputMode="adjustResize"` en la `<activity>` → `sim={adjust=resize …}`.
+- Un solo inset: `WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom)` (el mayor entre
+  barra de navegación y teclado), aplicado **después** del `background` para que el panel
+  siga llegando hasta el borde de abajo y la píldora de navegación quede sobre el panel.
+
+Medido después: "Traducir" termina en y=1622 y el teclado arranca en y=1655 → **33 px
+(12,5 dp)**, que es el padding de 12 dp del propio panel. El status "Inactivo" volvió a
+y=135 (antes el paneo lo mandaba a y=-367).
+
+### 4. `assets/web/signs/` borrado
+
+32 `.glb`, 5,7 MB en el APK. Nadie los pedía: toda glosa del catálogo resuelve su clip
+adentro de `models/avatar.glb` (`embeddedClipsFor` en `app.js`). Verificado en frío después
+del borrado: `señas empaquetadas en el avatar: 50`, `escena lista · 2431 ms`, cero pedidos
+a `signs/`.
+
+**La ruta `signs/<id>.glb` se queda en el código**: es el identificador que manda el
+backend y `app.js` la parsea para sacar el `<id>`. Lo que ya no existe es el archivo.
+`tools/split_signs.py` también se queda, porque `pack_signall.py` le importa
+`write_catalog`.
+
+## Qué quedó pendiente (cuarta parte)
+
+- **Gesto de arrastre desde el borde en MIUI**: no se puede resolver desde la app. Si el
+  owner quiere que el dedo caiga seguro fuera de la franja del sistema, hay que **mover la
+  pestaña 12–24 dp hacia adentro** (decisión de diseño, no tomada). Alternativa: dejarla
+  pegada al borde y que el arrastre se haga desde la zona táctil invisible, que ahora es
+  más grande.
+- **Acerca de + botón atrás del sistema cierra la app** en vez de volver a la escena (solo
+  el botón "Volver" vuelve). Sin tocar: no estaba en el pedido.
+
+

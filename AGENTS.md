@@ -302,6 +302,21 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
   bien (bug del 2026-09-23). No lo saques.
 - En MIUI la apariencia de los iconos de la barra de estado no sigue al tema claro
   (`isAppearanceLightStatusBars` y el flag legacy se ignoran).
+- **`windowSoftInputMode` va en `<activity>`, no en `<application>`.** Puesto en la
+  aplicación el sistema lo ignora y la ventana queda en `adjustPan`: al abrir el teclado
+  el sistema **panea** toda la ventana hacia arriba y encima el panel también reserva el
+  inset del teclado, así que se suman los dos desplazamientos y queda un hueco de ~200 dp
+  entre el teclado y los botones (bug del 2026-10-22, arreglado con `adjustResize` en la
+  activity). Y en el panel, el inset de abajo es **uno solo**: `safeDrawing` bottom (el
+  mayor entre barra de navegación y teclado), nunca `navigationBarsPadding().imePadding()`
+  sumados — el teclado ya se dibuja encima de la barra de navegación.
+- **Con navegación por gestos, ~20 dp de cada borde son del sistema, y MIUI ignora la
+  exclusión.** `Modifier.systemGestureExclusion()` (en la pestaña) y
+  `View.setSystemGestureExclusionRects` (en `MainActivity`) están puestos, pero medido en
+  el Redmi Note 9S: un arrastre que arranca en x=2/26/45 px se lo queda el gesto de
+  "atrás" y la app va al launcher; desde x=60 px sí llega y abre el panel. Por eso las
+  zonas táctiles de la pestaña son más grandes que el dibujo. Si alguien "limpia" la
+  exclusión, en un Pixel el arrastre desde el borde se pierde.
 - El blur de la sidebar usa `RenderEffect` (solo Android 12+, con guard) y solo mientras
   hay un drawer abierto.
 - **El avatar 3D es invisible para toda la instrumentación de accesibilidad**: sale como
@@ -324,6 +339,11 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
   (`embeddedClipsFor` en `app.js`) y resuelve `signs/<id>.glb` **por nombre, sin pedir
   nada por red**. De 27,2 MB de origen a 12,98 MB: se podan los 61 morph targets que
   ninguna animación mueve y no pesan por defecto.
+- **`assets/web/signs/` ya no existe** (borrado el 2026-10-22: 32 `.glb`, 5,7 MB en el
+  APK). Era el layout viejo y nadie los pedía porque toda glosa del catálogo resuelve su
+  clip adentro del archivo único. La ruta `signs/<id>.glb` **sigue siendo el
+  identificador** que manda el backend y `app.js` la sigue parseando para sacar el `<id>`;
+  lo que ya no hay es un archivo detrás. No la "limpies" del código: es el contrato.
 - **Nunca edites `models/avatar.glb` a mano**: se regenera con `tools/pack_signall.py`
   desde `GLB SignALL/`, que también reescribe `manifest.json` y `domain/SignsCatalog.kt`.
   Agregar una seña = regenerar el `.glb` único y correr ese script.

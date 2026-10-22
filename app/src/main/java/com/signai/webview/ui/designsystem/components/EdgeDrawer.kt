@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.systemGestureExclusion
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -109,10 +110,13 @@ fun SignAiEdgeDrawer(
     modifier: Modifier = Modifier,
     drawerWidth: Dp = SignAiSizes.drawerWidth,
     drawerOverflow: Dp = 64.dp,
-    edgeStripWidth: Dp = 48.dp,
+    // Zona de arrastre invisible en el borde. Subió de 48 a 60 dp (+25 %) el
+    // 2026-10-22 porque con navegación por gestos el sistema se queda con los
+    // primeros ~20 dp de cada lado; ver [handleHitPadding].
+    edgeStripWidth: Dp = 60.dp,
     // Grab strip of the OPEN drawer: wider than the closed-side strip, since
     // this one is an actual drag handle and not just a screen-edge swipe zone.
-    handleDragWidth: Dp = 72.dp,
+    handleDragWidth: Dp = 90.dp,
     // ZONA TÁCTIL INVISIBLE de la pestaña, extra **hacia adentro de la pantalla**.
     //
     // El dibujo del tab son 20dp pegados al borde, y MIUI se come los primeros ~15dp
@@ -122,7 +126,11 @@ fun SignAiEdgeDrawer(
     // sombra y el mismo grip, y `contentAlignment` lo mantiene pegado al borde porque el
     // Box crece hacia el interior. Es el mismo truco que en un iPhone: la Diana es chica
     // a la vista y grande al dedo.
-    handleHitPadding: Dp = 28.dp,
+    //
+    // Subió de 28 a 35 dp (+25 %) el 2026-10-22, junto con el alto del nodo (160 → 200
+    // dp) y con `systemGestureExclusion` (ver abajo): el owner usa navegación por gestos
+    // y el gesto de "atrás" del sistema se quedaba con el arrastre desde el borde.
+    handleHitPadding: Dp = 35.dp,
     edgeStripBottomExclusion: Dp = 0.dp,
     previewLabel: String = "",
     // The other drawer is the one on screen. The open gestures (edge strip and
@@ -505,7 +513,19 @@ fun SignAiEdgeDrawer(
                 // dibujando con `contentAlignment` pegado al borde y el ancho extra
                 // queda hacia adentro de la pantalla (ver [handleHitPadding]).
                 .width((if (isOpen) handleDragWidth else edgeStripWidth) + handleHitPadding)
-                .height(160.dp)
+                // 200dp de alto (de 160) = +25 %, y además es **el máximo** que
+                // Android deja excluir de los gestos del sistema por borde: pedir más
+                // hace que ignore la exclusión.
+                .height(200.dp)
+                // Con navegación por gestos por el sistema, arrastrar desde el borde
+                // de la pantalla no abre el panel: el gesto de "atrás" de Android se
+                // queda con el touch antes de que llegue a la app (owner, 2026-10-22).
+                // `systemGestureExclusion` le pide al sistema que no trate esta zona
+                // como gesto de navegación, así el arrastre llega al `draggable` de
+                // abajo. Es una **petición**: Android honra hasta 200dp por borde
+                // (este nodo mide exactamente eso) y el fabricante puede tener su
+                // propio criterio — en MIUI se verifica en el dispositivo.
+                .systemGestureExclusion()
                 .graphicsLayer { alpha = enabledFraction }
                 .then(
                     if (handleEnabled) {

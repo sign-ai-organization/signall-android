@@ -53,8 +53,14 @@ import com.signai.webview.ui.webview.AvatarWebView
 import kotlinx.coroutines.delay
 
 private const val SplashTimeoutMs = 8_000L
-private const val ContentFadeMs = 500
-private const val SplashFadeMs = 400
+
+// La salida del splash es un cruce: el splash se va y el contenido entra en el
+// mismo tramo. Estaba a 500/400 ms y el cambio se sentía como un corte: el
+// avatar aparecía de golpe. El owner pidió "el doble de lento" (2026-10-22),
+// así que las dos mitades del cruce duran el doble y se solapan todo lo posible
+// —el contenido arranca a entrar mientras el splash todavía se está yendo—.
+private const val ContentFadeMs = 1_000
+private const val SplashFadeMs = 800
 
 /** ¿El permiso de micrófono ya está concedido? */
 private fun Context.hasMicPermission(): Boolean =
