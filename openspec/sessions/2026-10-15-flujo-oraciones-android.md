@@ -169,7 +169,8 @@ sign-ai-stt:      develop tiene 4 commits que main no tiene
 
 Eso se vio a mitad de esta sesión y en un primer momento quedó registrado acá como
 "hallazgo pendiente de decisión". **No lo es: está decidido y escrito.** Ver
-`Revisión de develop.md` (nota del owner en la raíz de este repo, 2026-10-15):
+`docs/REVISION-DEVELOP.md` (nota del owner, 2026-10-15; vivía en la raíz del repo
+hasta que se movió el 2026-10-22):
 
 > **Base recomendada.** `origin/main` del backend ya contiene lo útil
 > (normalización del catálogo y frames `text`/`end`), sin nada de tiempo real.

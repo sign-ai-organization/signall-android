@@ -29,8 +29,10 @@ env
 #   senas/          .glb viejos de Mixamo, ya superados       ( 76 MB)
 #   Base.glb, models/  armature suelto que dejó el modelador
 #
-# Para rearmar los assets desde cero: `python3 tools/split_signs.py`, que lee
-# `GLB Senas/` y escribe models/avatar.glb + signs/*.glb.
+# Para rearmar los assets desde cero: `python3 tools/pack_signall.py`, que lee
+# `GLB SignALL/` y escribe `app/src/main/assets/web/models/avatar.glb` +
+# `manifest.json` + `domain/SignsCatalog.kt`. El layout viejo (un `.glb` por
+# seña) se rearma con `tools/split_signs.py` desde `GLB Senas/`.
 #
 # El slash inicial ancla a la raíz del repo: sin él, `models/` también se
 # comería `app/src/main/assets/web/models/`, que sí tiene que versionarse.

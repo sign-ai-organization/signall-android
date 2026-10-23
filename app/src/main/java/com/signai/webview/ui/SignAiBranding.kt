@@ -11,7 +11,7 @@ import com.signai.webview.R
  * literals across the UI.
  *
  * The two rasters are generated, not hand-made: `tools/generar-marca.py` reads the
- * masters at the repo root (`Icono-SingALL.png`, `Logo-SingALL.png`) and writes the
+ * masters in `docs/marca/` (`icono-signall.png`, `logo-signall.png`) and writes the
  * drawables plus the launcher icon. Run it again if the masters change.
  */
 object SignAiBranding {

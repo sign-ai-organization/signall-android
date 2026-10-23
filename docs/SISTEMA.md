@@ -36,7 +36,7 @@ acá: código y comentarios **en inglés sin excepción**, los nombres de clases
 coincidir con los del SDD, y **nunca hacer `git commit` ni `git push`** — se sugiere el
 mensaje y lo manda el owner, por PR contra `develop`.
 
-- **Contrato con la app**: `docs/android-integration.md` (461 líneas) es la fuente de
+- **Contrato con la app**: `docs/android-integration.md` (423 líneas) es la fuente de
   verdad del WebSocket `/ws/translate`: qué campos manda cada frame, qué espera la
   app, y el ejemplo completo de una frase. **Es lo primero que hay que leer si se toca
   el protocolo**, y hay que actualizarlo en el mismo cambio.
@@ -136,7 +136,9 @@ Sin git y sin reglas: material compartido o restos.
   avatar. Es el OpenSpec **compartido, distinto** del `openspec/` de esta app (que además
   tiene `specs/ui` y `sessions/`); las copias de `avatar`/`dataset` divergen entre sí, así
   que saber cuál manda requiere preguntar.
-- `../data/` — `LSC50.pdf` y `LANDMARKS/`: el dataset de origen (las 50 señas).
+- `../data/` — el dataset de origen (las 50 señas). Ya **no** tiene el `LSC50.pdf` ni
+  los `LANDMARKS/`: el paper se movió a `docs/lsc50-dataset.pdf` y los CSVs de muestra
+  se borraron el 2026-10-22.
 - `../Resources/` — scripts viejos y docs (ADR, documento maestro, backlog). Incluye
   `split_avatar_for_filament.py` y `retarget_blender.py`, que son del **approach
   abandonado**: no sirven de referencia para nada de acá.

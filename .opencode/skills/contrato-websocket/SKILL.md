@@ -14,7 +14,7 @@ Por eso este skill es un procedimiento, no una lista de campos.
 ## Antes de cambiar nada
 
 1. **Leé el contrato en los dos lados.** El del backend es
-   `../sign-ai-backend/docs/android-integration.md` (461 líneas) — es la fuente de verdad
+   `../sign-ai-backend/docs/android-integration.md` (423 líneas) — es la fuente de verdad
    y hay que **actualizarlo en el mismo cambio**. Del lado de la app, el contrato de
    salida es `domain/SignAiCommands.kt` y el parser está en `WebViewSignAiController`.
 2. **Leé las reglas del repo que vas a tocar antes de escribir en él.** El backend tiene

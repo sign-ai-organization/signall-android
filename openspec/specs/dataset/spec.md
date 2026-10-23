@@ -43,6 +43,10 @@ Los otros tipos (COLOR_FACE 50fps, GRAY_DEPTH, GRAY_IR) **no están en el ZIP**.
 
 ## Landmark sources y FPS
 
+Layout del dataset original. Los CSVs de muestra que había en `data/LANDMARKS/` se
+borraron del repo el 2026-10-22; la tabla describe cómo viene el dataset, no lo que hay
+versionado acá.
+
 | Tipo       | Carpeta                              | FPS fuente   | Landmarks | Detección |
 |------------|--------------------------------------|-------------|-----------|-----------|
 | BODY       | data/LANDMARKS/BODY_LANDMARKS/       | 24fps        | 33 (Pose) | ~100%     |
