@@ -155,9 +155,9 @@ context: |
 
   ### Enfoques muertos — no reintroducirlos
   Servidor Flask, Kotlin+Filament nativo, Unity, Flutter, y el motor procedural de
-  landmarks. Tampoco existen las herramientas de ese pipeline
-  (`tools/build_signs.py`, `tools/patch_webview_glue.py`, `tools/splice_movement.py`
-  quedaron sin consumidor y se pueden eliminar).
+  landmarks. Las herramientas de ese pipeline (`tools/build_signs.py`,
+  `tools/patch_webview_glue.py`, `tools/splice_movement.py`) y los CSVs de muestra de
+  `data/LANDMARKS/` **se borraron el 2026-10-22**: no hay nada que revivir.
 
 rules:
   proposal:

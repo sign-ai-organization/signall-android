@@ -256,11 +256,12 @@ reiniciarlo: no hay invalidación.
 
 ## Datos crudos de LSC50 (histórico)
 
-`../data/LANDMARKS/` tiene los CSVs originales del dataset (BODY 33, HANDS 21×2, FACE 468
-landmarks de MediaPipe) y `../data/LSC50.pdf`. **El pipeline de captura ya no alimenta la
-app** —la fuente de las animaciones es Cascadeur— pero el formato de los CSVs y el esquema
-de IDs `SSSS_VVVV_RRRR` se mantienen como referencia del dataset, y eso es lo que
-documenta `specs/dataset/spec.md`.
+El dataset original son los CSVs de landmarks (BODY 33, HANDS 21×2, FACE 468 landmarks de
+MediaPipe). **El pipeline de captura ya no alimenta la app** —la fuente de las animaciones
+es Cascadeur— pero el formato de los CSVs y el esquema de IDs `SSSS_VVVV_RRRR` se mantienen
+como referencia del dataset, y eso es lo que documenta `specs/dataset/spec.md`. El paper
+del dataset está en `docs/lsc50-dataset.pdf`; los CSVs de muestra que había en
+`data/LANDMARKS/` se borraron del repo el 2026-10-22.
 
 Los scripts de captura de ese pipeline quedaron en `../signai-avatar`, **inactiva desde el
 2026-09-19**. No se copian scripts entre los dos pipelines.

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Genera los recursos de marca (icono, logo, launcher icon) desde los PNG de la raíz.
+"""Genera los recursos de marca (icono, logo, launcher icon) desde los PNG maestros.
 
 Por qué un script y no los PNG sueltos
 --------------------------------------
-Los dos masters (`Icono-SingALL.png`, `Logo-SingALL.png`) están en la raíz del repo
-y **no** se pueden usar tal cual en la app:
+Los dos masters (`docs/marca/icono-signall.png`, `docs/marca/logo-signall.png`)
+son la única copia que hay en el repo —las copias sueltas de la raíz se borraron el
+2026-10-22— y **no** se pueden usar tal cual en la app:
 
 - El icono tiene la mano como **agujero** (alfa 0) sobre un azul sólido, así que
   al pintar el tile sobre cualquier fondo la mano toma el color del fondo. Para el
@@ -43,8 +44,9 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "app" / "src" / "main" / "res"
 
-MASTER_ICON = ROOT / "Icono-SingALL.png"
-MASTER_LOGO = ROOT / "Logo-SingALL.png"
+MARCA = ROOT / "docs" / "marca"
+MASTER_ICON = MARCA / "icono-signall.png"
+MASTER_LOGO = MARCA / "logo-signall.png"
 
 # La marca, en un solo lugar. `1C4CFC` es el azul que trae el PNG (1D4CFD) redondeado
 # al acento queapprobó el owner; `0C142C` es el fondo del tema oscuro.

@@ -71,7 +71,7 @@
   avatar empaquetado). Idempotente, y frena la corrida si el export no es la
   pose de bind (ahí deformaría la malla en silencio).
 - **`generar-marca.py`** — genera **los assets de la marca** desde los dos PNG
-  maestros de la raíz (`Icono-SingALL.png`, `Logo-SingALL.png`). Escribe el
+  maestros de `docs/marca/` (`icono-signall.png`, `logo-signall.png`). Escribe el
   adaptive icon (`ic_launcher_foreground.xml` + `ic_launcher_monochrome.xml` +
   `ic_launcher{,_legacy,_round}.xml`), `drawable-xxhdpi/ic_signall.png`, las dos
   variantes del wordmark (`logo_signall_on_light/on_dark.png`), y parchea
@@ -119,21 +119,20 @@
   Y loguea los `GET` de `.glb` que no sirve, que es la evidencia de si la app
   está pidiendo animaciones que no existen.
 
-### Pipeline viejo (ya no lo consume la app)
+### Pipeline viejo de landmarks (muerto)
 
-Estos tres armaban el formato anterior —50 JSON de landmarks de MediaPipe que
-`app.js` reproducía con un motor procedural de retargeting. Desde el 2026-10-13
-la app carga **GLB con la pose horneada** y no los usa. Se conservan porque
-documentan cómo se armaron los datos de LSC50 (y `hand_corrector.py` sigue
-sirviendo como herramienta de dataset):
+Armaba el formato anterior —50 JSON de landmarks de MediaPipe que `app.js`
+reproducía con un motor procedural de retargeting. Desde el 2026-10-13 la app
+carga **GLB con la pose horneada** y no los usa.
 
-- **`build_signs.py`** — horneaba landmarks a JSON. Reemplazado por
-  `split_signs.py`.
-- **`patch_webview_glue.py`** — parcheaba el `app.js` procedural. Ese
-  `app.js` ya no existe.
-- **`splice_movement.py`**, **`pose_filter.py`**, **`hand_corrector.py`** — prep
-  de datos de las CSVs de LSC50. siguen siendo válidos como herramienta de
-  dataset, no como camino de render.
+**Lo que quedaba de ese pipeline se borró el 2026-10-22**: `build_signs.py`,
+`patch_webview_glue.py`, `splice_movement.py` y los CSVs de muestra de
+`data/LANDMARKS/` (6,4 MB). El formato de los CSVs sigue documentado en
+`openspec/specs/dataset/spec.md`, que es donde sirve de referencia.
+
+Quedan `pose_filter.py` y `hand_corrector.py` (prep de datos, One-Euro y
+corrección de manos), que ya no tienen consumidor en este repo ni su entrada en
+disco: son herramienta de dataset, no de render.
 
 ## `dev.sh` rápido
 
