@@ -103,7 +103,7 @@ Reglas por repo:
 - **Los `.drawio` y el `.md` de requerimientos los edita el owner**: los cambios grandes
   se proponen, no se aplican en silencio.
 - **`../signai-avatar` no es la fuente de los GLB de esta app.** Es la demo anterior en
-  Flask. Los assets de acá salen de Cascadeur (`GLB SignALL/` → `tools/pack_signall.py`).
+  Flask. Los assets de acá salen de Cascadeur (`../material-3d/GLB SignALL/` → `tools/pack_signall.py`).
   No mezclar los dos pipelines ni copiar scripts entre ellos.
 
 Detalle de cada hermano, Carpetas hermanas que no son repositorios, y las IDs de los
@@ -345,7 +345,7 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
   identificador** que manda el backend y `app.js` la sigue parseando para sacar el `<id>`;
   lo que ya no hay es un archivo detrás. No la "limpies" del código: es el contrato.
 - **Nunca edites `models/avatar.glb` a mano**: se regenera con `tools/pack_signall.py`
-  desde `GLB SignALL/`, que también reescribe `manifest.json` y `domain/SignsCatalog.kt`.
+  desde `../material-3d/GLB SignALL/`, que también reescribe `manifest.json` y `domain/SignsCatalog.kt`.
   Agregar una seña = regenerar el `.glb` único y correr ese script.
 - **Arranque: 12,98 MB tardan ~1,85 s en estar en escena** en el Redmi Note 9S (medido
   con el `performance.now()` que `app.js` imprime en `SignAIWeb`, 3 arranques en frío:

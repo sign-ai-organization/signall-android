@@ -15,7 +15,7 @@ horneada por hueso y la escena solo la reproduce.
 
 **Cambio del 2026-10-22**: el asset pasó de `models/avatar.glb` + `signs/<id>.glb` a
 **un solo archivo** con las 50 señas adentro. `tools/pack_signall.py` lo arma desde
-`GLB SignALL/`. Los `signs/*.glb` que quedan en el repo no se piden en runtime: la
+`../material-3d/GLB SignALL/`. Los `signs/*.glb` que quedan en el repo no se piden en runtime: la
 escena resuelve `signs/<id>.glb` por nombre contra los clips del avatar
 (`embeddedClipsFor` en `app.js`). Por qué el cambio y con qué números, en
 `openspec/sessions/2026-10-22-signall-un-glb-50-senas.md`.
@@ -110,7 +110,7 @@ los huesos largos y de la cara.** Los nombres que existen (verificados contra el
 `.glb`):
 
 Verificado el 2026-10-17 contra `models/avatar.glb` **y** contra el export original de
-Cascadeur (`GLB Senas/0000 - GRACIAS.glb`). **102 articulaciones de skin en los dos
+Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`). **102 articulaciones de skin en los dos
 archivos.**
 
 ```

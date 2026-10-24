@@ -3,7 +3,7 @@
 > **Actualización del 2026-10-22:** el flujo de assets cambió. Ya no hay
 > `models/avatar.glb` + `signs/<id>.glb`: hay **un solo** `models/avatar.glb` con el
 > personaje y las 50 señas como clips `0000`..`0049`, armado por `tools/pack_signall.py`
-> desde `GLB SignALL/`. El flujo de runtime no cambió. Detalle en
+> desde `../material-3d/GLB SignALL/`. El flujo de runtime no cambió. Detalle en
 > `openspec/sessions/2026-10-22-signall-un-glb-50-senas.md`.
 >
 > **Este archivo se reescribió entero el 2026-10-17.** La versión anterior describía el
@@ -20,7 +20,7 @@ runtime.
 ### Flujo de assets — cómo llega una animación al APK
 
 ```
-GLB SignALL/*.glb                  el .glb único de Cascadeur: personaje + 50 clips
+../material-3d/GLB SignALL/*.glb                  el .glb único de Cascadeur: personaje + 50 clips
       │                            (fuente, gitignored; 27,16 MB)
       ▼
 tools/pack_signall.py              hornea la pose de descanso, poda morph targets
@@ -44,7 +44,7 @@ rearmar los assets por seña, pero **el vigente es el archivo único**.
 `SignsCatalog.kt` a mano** tampoco: lo reescribe el generador, justamente para que la
 lista de código y el asset no puedan divergir.
 
-**Agregar o cambiar una seña** = regenerar el `.glb` único en `GLB SignALL/` y correr
+**Agregar o cambiar una seña** = regenerar el `.glb` único en `../material-3d/GLB SignALL/` y correr
 `pack_signall.py`. No es un paso más: es el único procedimiento.
 
 ### Flujo de runtime — qué pasa cuando alguien habla
@@ -124,7 +124,7 @@ abrir los binarios.
 y se equivocó en las dos direcciones.
 
 Verificado el **2026-10-17** contra `models/avatar.glb` **y** contra el export original de
-Cascadeur (`GLB Senas/0000 - GRACIAS.glb`): **102 articulaciones de skin en los dos
+Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`): **102 articulaciones de skin en los dos
 archivos**.
 
 | Zona | Cómo es |

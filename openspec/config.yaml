@@ -29,7 +29,8 @@ context: |
   ### Assets: GLB, no `sign.json`
   - El personaje es `models/avatar.glb`; cada seña es `signs/<SSSS_VVVV_RRRR>.glb`, **solo
     animación**, reproducida con `THREE.AnimationMixer`.
-  - Los clips vienen de exportaciones de **Cascadeur** en `GLB Senas/` (gitignored).
+  - Los clips vienen del `.glb` único de **Cascadeur** en `../material-3d/GLB SignALL/`,
+    que **no está en el repo** (son ~1 GB y viven al lado, como `../data/`).
   - `tools/split_signs.py` separa personaje y animaciones, escribe `manifest.json`, y
     **reescribe `domain/SignsCatalog.kt`** para que el disco y el código no diverjan.
   - `split_signs.py` llama a `tools/rest_pose.py` **al final**: hornea en `avatar.glb` la
@@ -45,7 +46,7 @@ context: |
   decía lo contrario y daba ejemplos como `DEF-upper_armL`: **eso es falso**, y un agente
   que lo creyera renombraría huesos y rompería la animación sin ver ningún error.
   Verificado el 2026-10-17 contra `models/avatar.glb` **y** contra el export original de
-  Cascadeur en `GLB Senas/`: **102 articulaciones de skin en los dos archivos.**
+  Cascadeur en `../material-3d/GLB Senas/`: **102 articulaciones de skin en los dos archivos.**
   - Cadena del brazo: `shoulder.L`, `upper_arm.L`, `forearm.L`, `hand.L` — con punto, sin prefijo
   - Dedos y palma: `thumb.01.L`, `f_index.01.L`, `palm.01.L` … `palm.04.L`
   - Raíz del armature: `HG_Branden.001`. Está animada, pero **no es una articulación de
@@ -188,8 +189,8 @@ operations:
         contra los specs viejos: las listas de nombres de este repo se equivocaron en las
         dos direcciones"
       - "Para ver una pose sin instalar en el device: `tools/preview_pose.py`"
-      - "Un cambio de asset es: soltar el `.glb` en `GLB Senas/` y correr
-        `tools/split_signs.py`. **Nunca editar `avatar.glb` ni `SignsCatalog.kt` a mano**"
+      - "Un cambio de asset es: soltar el `.glb` en `../material-3d/GLB SignALL/` y correr
+        `tools/pack_signall.py`. **Nunca editar `avatar.glb` ni `SignsCatalog.kt` a mano**"
       - "Si se toca el contrato, cargar el skill `contrato-websocket` y decir qué queda
         pendiente del hermano"
       - "Respetar `MAX_DPR = 1.75` y no forzar `DoubleSide` en las mallas: sin eso el

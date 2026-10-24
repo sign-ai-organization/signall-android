@@ -22,20 +22,27 @@ env
 # exports de Samuel y sus .blend/.fbx de trabajo. Lo que la app necesita ya
 # está en app/src/main/assets/web/ (16 MB, versionado).
 #
-#   GLB Senas/      32 exports por seña, con el muñeco adentro  (315 MB)
-#   GLB SignALL/    un solo .glb con el muñeco, la cara y las 50 señas
-#                   como clips de animación 0000..0049        (27 MB)
-#   Para Exportar/  .blend + .fbx de Cascadeur                 (660 MB)
-#   senas/          .glb viejos de Mixamo, ya superados       ( 76 MB)
-#   Base.glb, models/  armature suelto que dejó el modelador
+# Desde el 2026-10-23 **no vive en el repo**: se movió a `../material-3d/`, al
+# lado de los otros repos, como `../data/` y `../Resources/`.
+#
+#   ../material-3d/GLB Senas/      32 exports por seña, con el muñeco adentro
+#   ../material-3d/GLB SignALL/    un solo .glb con el muñeco, la cara y las 50
+#                                  señas como clips de animación 0000..0049
+#   ../material-3d/Para Exportar/  .blend + .fbx de Cascadeur
+#
+# Los `senas/` de Mixamo, el armature suelto `Base.glb` y `models/` se borraron
+# el 2026-10-23: nadie los leía.
 #
 # Para rearmar los assets desde cero: `python3 tools/pack_signall.py`, que lee
-# `GLB SignALL/` y escribe `app/src/main/assets/web/models/avatar.glb` +
-# `manifest.json` + `domain/SignsCatalog.kt`. El layout viejo (un `.glb` por
-# seña) se rearma con `tools/split_signs.py` desde `GLB Senas/`.
+# `../material-3d/GLB SignALL/` y escribe
+# `app/src/main/assets/web/models/avatar.glb` + `manifest.json` +
+# `domain/SignsCatalog.kt`. El layout viejo (un `.glb` por seña) se rearma con
+# `tools/split_signs.py` desde `../material-3d/GLB Senas/`.
 #
-# El slash inicial ancla a la raíz del repo: sin él, `models/` también se
+# Defensivo: si alguien vuelve a dejar el material adentro del repo, que no se
+# trackee 1 GB. El slash inicial ancla a la raíz: sin él, `models/` también se
 # comería `app/src/main/assets/web/models/`, que sí tiene que versionarse.
+/material-3d/
 /GLB Senas/
 /GLB SignALL/
 /Para Exportar/

@@ -122,8 +122,8 @@ o se baja el ZIP a mano.
 avatar desde landmarks de LSC50 (`HandCorrector`, `PoseFilter`, script WiLoR para
 manos) y tiene su propio `openspec/` con `specs/avatar|dataset|pipeline`. Está
 **inactiva desde 2026-09-19**. Los assets de acá salen de otro pipeline: exportaciones
-de Cascadeur en `GLB SignALL/` → `tools/pack_signall.py` (un archivo con el personaje y
-las 50 señas como clips). El layout viejo de `GLB Senas/` + `tools/split_signs.py` sigue
+de Cascadeur en `../material-3d/GLB SignALL/` → `tools/pack_signall.py` (un archivo con el personaje y
+las 50 señas como clips). El layout viejo de `../material-3d/GLB Senas/` + `tools/split_signs.py` sigue
 en el repo para rearmar los assets por seña, pero no es el vigente —y sus 32 `.glb` ya no
 se empaquetan: `assets/web/signs/` se borró el 2026-10-22—. No mezclar los dos
 pipelines ni copiar scripts entre ellos.
@@ -139,6 +139,12 @@ Sin git y sin reglas: material compartido o restos.
 - `../data/` — el dataset de origen (las 50 señas). Ya **no** tiene el `LSC50.pdf` ni
   los `LANDMARKS/`: el paper se movió a `docs/lsc50-dataset.pdf` y los CSVs de muestra
   se borraron el 2026-10-22.
+- `../material-3d/` — **el material crudo de los assets**, movido acá el 2026-10-23 para
+  sacarlo de la base del repo (1 GB y git lo ignoraba):
+  - `GLB SignALL/` — el `.glb` único (27 MB), fuente del pipeline vigente.
+  - `GLB Senas/` — los 32 exports por seña del pipeline viejo (315 MB).
+  - `Para Exportar/` — los `.blend` + `.fbx` de Cascadeur (660 MB).
+  Ningún script escribe ahí: `pack_signall.py` y `split_signs.py` solo leen.
 - `../Resources/` — scripts viejos y docs (ADR, documento maestro, backlog). Incluye
   `split_avatar_for_filament.py` y `retarget_blender.py`, que son del **approach
   abandonado**: no sirven de referencia para nada de acá.
