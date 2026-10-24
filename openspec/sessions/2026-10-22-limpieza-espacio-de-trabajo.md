@@ -78,16 +78,73 @@ Se verificó igual, como pide `AGENTS.md`: `./gradlew build` sin errores e `inst
 el Redmi Note 9S (`1ed6699f`, `lastUpdateTime=2026-10-22 21:28:50`) con `adb reverse
 tcp:8080` y `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate`.
 
+## Segunda parte (2026-10-23): el material 3D sale del repo
+
+El owner señaló que seguían quedando **muchas carpetas en la base**. La medición le dio
+razón: de las trece carpetas, cinco eran material 3D crudo que git ignoraba pero que vivía
+adentro del repo, y sumaban **1,08 GB**.
+
+### Qué se hizo
+
+Movido a **`../material-3d/`**, como carpeta hermana (igual que `../data/` y `../Resources/`):
+
+| De la base del repo | A | Peso |
+|---|---|---|
+| `GLB SignALL/` | `../material-3d/GLB SignALL/` | 26 MB |
+| `GLB Senas/` | `../material-3d/GLB Senas/` | 315 MB |
+| `Para Exportar/` | `../material-3d/Para Exportar/` | 660 MB |
+
+Borrado (elegido por el owner):
+
+- **`senas/`** — 4 `.glb` de Mixamo, 76 MB, que el propio `.gitignore` marcaba como «ya
+  superados».
+- **`Base.glb` y `models/Base.glb`** — idénticos entre sí (`9eb058063df2e067d592f5b38a8e7a05`)
+  y sin ninguna referencia en el código ni en los docs.
+- **`tools/pose_filter.py` y `tools/hand_corrector.py`** — los dos huérfanos de la primera
+  parte: su único importador era `build_signs.py` y su entrada eran los CSVs borrados.
+
+Scripts repuntados, sin cambiar su interfaz (los dos aceptan la ruta por parámetro):
+
+- `tools/pack_signall.py:61` → `REPO.parent / "material-3d" / "GLB SignALL"`.
+- `tools/split_signs.py:43` → `REPO.parent / "material-3d" / "GLB Senas"`.
+
+Verificado con `python3 tools/pack_signall.py --dry-run`: encuentra el `.glb` de 27,16 MB y
+reporta los 50 clips, la pose de descanso y los morphs igual que antes del movimiento.
+
+Referencias actualizadas (13 en 7 archivos): `AGENTS.md` (2), `docs/SISTEMA.md` (2 + la
+entrada nueva en «Carpetas hermanas»), `tools/README.md` (2), `openspec/config.yaml` (4,
+incluida la instrucción de «un cambio de asset» que todavía mandaba a `GLB Senas/` y a
+`split_signs.py`), `openspec/specs/avatar/spec.md` (2) y `openspec/specs/pipeline/spec.md`
+(4). El bloque del `.gitignore` se reescribió: ahora explica que el material vive afuera y
+deja los patrones viejos como defensa por si alguien lo vuelve a dejar adentro.
+
+### Los dos pendientes, resueltos
+
+- **`pose_filter.py` y `hand_corrector.py`**: borrados (ver arriba).
+- **`docs/CAMBIOS.md` §7**: reescrito. El título pasa de «el adelanto automático **se queda**»
+  a «se quedó el 15 y se quitó el 16 (decisión D-5)», con un recuadro de estado actual
+  arriba y la medición conservada como registro, no como comportamiento. §8 lleva el mismo
+  aviso, porque el 2026-10-16 D-5 eliminó esa sección entera de `app.js`.
+  Además se corrigió la lista de pendientes: **#6** era el **#3** repetido casi palabra por
+  palabra y **#5** ya estaba hecho (`tools/README.md` documenta las dos herramientas;
+  `tools/HERRAMIENTAS.md` es la referencia del control del móvil, no su lugar).
+- De paso: `duracion_firmado` → **`duracion_representada`** en `docs/CAMBIOS.md` y
+  `tools/TIEMPO-REAL.md`. El código ya emitía el nombre nuevo desde A13
+  (`SignAiMetrics.kt:159`); los dos documentos seguían con la palabra que `AGENTS.md`
+  retiró el 2026-10-16.
+
+### Estado de la base
+
+Quedan **nueve** carpetas, todas de código, docs o caché: `app/` (248 MB de los cuales son
+`build/`), `docs/`, `openspec/`, `tools/`, `PrototipoFrontend/`, `gradle/`, `.opencode/`,
+`.gradle/` y `.kotlin/`. El repo pasó de **1,4 GB a ~340 MB** en disco.
+
 ## Qué quedó pendiente
 
-- **Dos huérfanos del mismo pipeline**: `tools/pose_filter.py` y `tools/hand_corrector.py`
-  los importaba únicamente `build_signs.py` y leían los CSVs que se borraron. Quedan
-  porque el owner eligió borrar tres scripts y no cinco; **decisión abierta**: borrarlos
-  también o dejarlos como herramienta de dataset.
-- **`docs/CAMBIOS.md` §7 (`:167`, `:186`) sigue contradiciendo la decisión D-5** (dice que
-  el adelanto automático «se queda», y D-5 lo eliminó). Es el pendiente #4 de
-  `2026-10-17-stack-de-ia-del-repo.md` y no se tocó acá: es contenido, no limpieza.
 - **`openspec/specs/pipeline/spec.md` sigue describiendo el pipeline viejo** más allá de
-  las dos líneas corregidas. Arreglarlo es reescribir el spec, no mover archivos.
+  las rutas y las dos líneas corregidas. Arreglarlo es reescribir el spec, no mover
+  archivos.
 - **`../sign-ai-docs` no tiene README** (pendiente #7, del otro repo). No se tocó: en los
   hermanos no se commitea sin que lo pida el owner.
+- **`Para Exportar/` (660 MB) es material del modelador**, no de la app: si algún día se
+  confirma que no hace falta, es lo más pesado que queda en `../material-3d/`.
