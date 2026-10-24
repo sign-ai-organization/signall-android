@@ -462,8 +462,8 @@ adb logcat -s SignAiMetrics
 ```
 
 El resumen (`resumen:`) trae `frases`, `oraciones`, `glosas`, `sin_seña`,
-`dictado_frases`, `dictado_palabras`, `duracion_frase` y `duracion_firmado`.
-`duracion_firmado` (`representado:`) es lo único que mide la escena; lo demás mide el
+`dictado_frases`, `dictado_palabras`, `duracion_frase` y `duracion_representada`.
+`duracion_representada` (`representado:`) es lo único que mide la escena; lo demás mide el
 pipeline.
 
 **`representado:` y `duracion_frase` son dos nombres para cosas distintas y no se

@@ -154,10 +154,10 @@ El resumen (`resumen:` en logcat) queda:
 
 ```
 frases=2 oraciones=3 glosas=11 sin_seña=0 dictado_frases=0 dictado_palabras=0
-duracion_frase=p50=1178ms p95=1178ms max=7802ms n=2 duracion_firmado=n/a
+duracion_frase=p50=1178ms p95=1178ms max=7802ms n=2 duracion_representada=n/a
 ```
 
-`duracion_firmado` (`representado:`) es lo único que mide la escena; `duracion_frase`
+`duracion_representada` (`representado:`) es lo único que mide la escena; `duracion_frase`
 mide el turno de traducción. **Son dos cosas distintas** y no se mezclan.
 
 `turnStartedAt` ahora arranca **cuando se manda la frase**, no al abrir el
@@ -166,30 +166,44 @@ en hablarla no es del turno de traducción.
 
 ---
 
-## 7. El adelanto automático: **se queda** (el plan de octubre, punto 5: "remedir no borrar")
+## 7. El adelanto automático: se quedó el 15 y se quitó el 16 (decisión D-5)
 
-`tools/medir-retraso.py` (nuevo) mide, con los 28 fixtures reales y las duraciones
-del `manifest.json`:
+> **Estado actual: no existe.** El 2026-10-16 la decisión **D-5** borró
+> `CATCHUP_BACKLOG`, `CATCHUP_FACTOR`, `state.catchUp` y la rama de `tickPlayback`
+> de `app.js`, y `BRG-15` quedó marcada como eliminada. El motivo no fue técnico:
+> la prueba **PR-PER-04** le pregunta a usuarios de LSC si la velocidad es
+> adecuada, y con el adelanto esa respuesta mezclaba la velocidad que eligió la
+> persona con un factor que nadie le dijo. Lo que sigue es **lo que se midió el
+> 2026-10-15**, cuando todavía existía: se conserva como registro, no como
+> comportamiento.
+
+`tools/medir-retraso.py` mide, con los 28 fixtures reales y las duraciones del
+`manifest.json`:
 
 | | |
 |---|---|
-| Avatar no termina antes de que el usuario termine de hablar | **17 de 28** |
+| El avatar no termina antes de que el usuario termine de hablar | **17 de 28** |
 | …ni con el adelanto 1,6× | **7 de 28** |
-| Firma/habla | mediana **1,26×** (máx. 3,72×) |
+| Representación / habla | mediana **1,26×** (máx. 3,72×) |
 | Con el adelanto | mediana 0,79× |
 | Desfase absoluto | mediana **+0,4 s** |
 
-**El desfase no lo causaba el modo de entrega**, así que el adelanto no se borra: lo
-causan los 2,15 s de animación contra la velocidad del habla. Lo que **sí** cambió
-es la forma de la cola — vacía mientras el usuario habla, llena de golpe al cerrar
-la frase — así que ahora el adelanto prende y apaga dentro de una misma
-conversación, que es lo correcto.
+**El desfase no lo causaba el modo de entrega**: lo causan los 2,15 s de animación
+contra la velocidad del habla. Por eso el 15 se decidió mantenerlo —la cola está
+vacía mientras el usuario habla y se llena de golpe al cerrar la frase, así que el
+adelanto prendía y apagaba dentro de una misma conversación—.
 
-`CATCHUP_BACKLOG = 2` y `CATCHUP_FACTOR = 1.6` **no se tocaron**.
+Ese argumento técnico no cambió. Lo que cambió fue **qué se le puede preguntar a
+una persona**: por eso D-5 lo quitó al día siguiente. Hoy `setSpeed` es el único
+ajuste de velocidad y se aplica tal cual.
 
 ---
 
 ## 8. `app.js`: adelantos de la escena, sin cambios de comportamiento
+
+**Ojo: el 2026-10-16 D-5 eliminó la sección entera** (ver §7). Lo que sigue
+describe lo que pasó el 15; hoy el comentario de `app.js` documenta por qué ya no
+hay adelanto automático.
 
 `BRG-14` y `BRG-15` de la spec. Lo único que cambió es el comentario de la sección
 "Adelanto automático", que afirmaba cosas que la medición desmintió ("2-3 palabras
@@ -322,6 +336,11 @@ de que el `.glb` termine de bajar). Sale en `SignAiMetrics` como
 
 ## Pendiente
 
+> Lista revisada el 2026-10-23: se sacó el **#6**, que era el **#3** repetido casi
+> palabra por palabra, y el **#5**, que ya estaba hecho (`tools/README.md` documenta
+> las dos herramientas; `tools/HERRAMIENTAS.md` es la referencia del control del
+> móvil, así que no es su lugar).
+
 1. **Propagar la desviación de RF-UI-01** al documento de requerimientos y a
    `trazabilidad.md`: RF-UI-01 cambia de criterio, y RF-STT-03 y RNF-REL-04 pasan
    de "No implementado" a implementado.
@@ -334,12 +353,7 @@ de que el `.glb` termine de bajar). Sale en `SignAiMetrics` como
    vacía, ahora que el avatar representa oración por oración: la línea base
    publicada (913 ms p50) sigue siendo del camino por palabras y no es
    comparable.
-5. Agregar `tools/medir-retraso.py` y `tools/medir-primera-sena.py` a
-   `tools/README.md` y `tools/HERRAMIENTAS.md`.
-6. **Prueba de regresión del eco** en la app: el auto-envío en vivo no debe poder
-   dispararse por un frame que no venga del STT. El backend ya está arreglado y
-   con test; en la app es una guarda de una línea.
-7. `setQueue` resetea `queueIdx` a 0 aunque haya algo sonando: si una frase
+5. `setQueue` resetea `queueIdx` a 0 aunque haya algo sonando: si una frase
    entra mientras la anterior se representa, el índice 0 de la nueva no llega a
    reproducirse. Es anterior a este trabajo y no se tocó, pero `appendQueue` lo
    hace más visible porque ahora la cola crece durante la reproducción. Candidato
