@@ -12,7 +12,7 @@ tracks sigan encontrando su hueso; lo que se descarta es malla, materiales,
 texturas y skin.
 
 Uso:
-    python3 tools/split_signs.py                      # "GLB Senas/" -> assets
+    python3 tools/split_signs.py                      # ../material-3d/GLB Senas/ -> assets
     python3 tools/split_signs.py OTRO_DIR DESTINO     # a elección
 
 Además de separar, el script:
@@ -39,7 +39,8 @@ import glb_pose as gp  # noqa: E402  — el lector de GLB vive ahí para todos
 import rest_pose  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
-SRC_DEFAULT = REPO / "GLB Senas"
+# Los exports por seña viven fuera del repo, en `../material-3d/GLB Senas/`.
+SRC_DEFAULT = REPO.parent / "material-3d" / "GLB Senas"
 DEST_DEFAULT = REPO / "app/src/main/assets/web"
 CATALOG_PATH = REPO / "app/src/main/java/com/signai/webview/domain/SignsCatalog.kt"
 

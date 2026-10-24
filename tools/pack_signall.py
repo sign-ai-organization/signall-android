@@ -36,7 +36,7 @@ Qué hace, en orden:
 
 Uso:
 
-    python3 tools/pack_signall.py                  # "GLB SignALL/" -> assets
+    python3 tools/pack_signall.py                  # ../material-3d/GLB SignALL/ -> assets
     python3 tools/pack_signall.py --dry-run        # informe, sin escribir
     python3 tools/pack_signall.py OTRO.glb DESTINO
 
@@ -56,7 +56,9 @@ import rest_pose  # noqa: E402
 from split_signs import write_catalog  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
-SRC_DEFAULT = REPO / "GLB SignALL"
+# El material crudo de Cascadeur no vive en el repo (son ~1 GB y git lo ignora):
+# está en `../material-3d/`, al lado de los otros repos, como `../data/`.
+SRC_DEFAULT = REPO.parent / "material-3d" / "GLB SignALL"
 DEST_DEFAULT = REPO / "app/src/main/assets/web"
 
 # Los ids de las 50 glosas de LSC50, en orden. Un clip con otro nombre no se

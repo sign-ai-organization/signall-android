@@ -46,7 +46,7 @@
 - **`rendimiento/`** — medir de verdad si la app va lenta. Su propio
   [`README.md`](rendimiento/README.md) tiene las recetas y las trampas.
 - **`pack_signall.py`** — **el pipeline de assets 3D de la app**. Toma el `.glb`
-  único de `GLB SignALL/` (personaje + cara + las 50 señas como clips
+  único de `../material-3d/GLB SignALL/` (personaje + cara + las 50 señas como clips
   `0000`..`0049`), hornea la pose de descanso, **poda los morph targets que
   ninguna animación mueve** (68 → 7, ~15 MB), compacta el buffer y escribe
   `assets/web/models/avatar.glb` + `manifest.json` + `SignsCatalog.kt`. De
@@ -54,7 +54,7 @@
   esos clips, sin descargar nada. Corre cada vez que llegan señas nuevas. Sin
   dependencias externas (no necesita Blender ni Node).
 - **`split_signs.py`** — el pipeline **anterior**: separa los 40 exports por seña
-  (`GLB Senas/`, con el muñeco adentro en cada uno) en `models/avatar.glb` +
+  (`../material-3d/GLB Senas/`, con el muñeco adentro en cada uno) en `models/avatar.glb` +
   `signs/<id>.glb`. Queda para rearmar el layout viejo o comparar; el camino
   vigente es `pack_signall.py`. **Los 32 `.glb` que escribía en
   `assets/web/signs/` se borraron el 2026-10-22** (5,7 MB en el APK que ya nadie
@@ -125,14 +125,12 @@ Armaba el formato anterior —50 JSON de landmarks de MediaPipe que `app.js`
 reproducía con un motor procedural de retargeting. Desde el 2026-10-13 la app
 carga **GLB con la pose horneada** y no los usa.
 
-**Lo que quedaba de ese pipeline se borró el 2026-10-22**: `build_signs.py`,
+**Lo que quedaba de ese pipeline se borró**: `build_signs.py`,
 `patch_webview_glue.py`, `splice_movement.py` y los CSVs de muestra de
-`data/LANDMARKS/` (6,4 MB). El formato de los CSVs sigue documentado en
-`openspec/specs/dataset/spec.md`, que es donde sirve de referencia.
-
-Quedan `pose_filter.py` y `hand_corrector.py` (prep de datos, One-Euro y
-corrección de manos), que ya no tienen consumidor en este repo ni su entrada en
-disco: son herramienta de dataset, no de render.
+`data/LANDMARKS/` el 2026-10-22; `pose_filter.py` y `hand_corrector.py` el
+2026-10-23, cuando quedaron sin su único importador y sin datos. El formato de
+los CSVs sigue documentado en `openspec/specs/dataset/spec.md`, que es donde
+sirve de referencia.
 
 ## `dev.sh` rápido
 
