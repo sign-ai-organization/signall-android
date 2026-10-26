@@ -6,6 +6,12 @@
 > desde `../material-3d/GLB SignALL/`. El flujo de runtime no cambió. Detalle en
 > `openspec/sessions/2026-10-22-signall-un-glb-50-senas.md`.
 >
+> **Auditoría del 2026-10-24:** se contrastó cada afirmación contra el código y contra el
+> GLB del APK. Se corrigieron el nombre de la raíz del armature, el número de morph
+> targets, el tamaño del archivo, la ausencia de `stop()` en el puente, el encadenado por
+> oración y la descripción de la cara. El detalle, en
+> `openspec/sessions/2026-10-24-auditoria-pipeline-spec.md`.
+>
 > **Este archivo se reescribió entero el 2026-10-17.** La versión anterior describía el
 > pipeline de landmarks con `sign.json`, que se reemplazó por clips GLB el 2026-10-13, y
 > decía que la app era "100 % local, sin servidor", que es exactamente lo contrario del
@@ -24,7 +30,8 @@ runtime.
       │                            (fuente, gitignored; 27,16 MB)
       ▼
 tools/pack_signall.py              hornea la pose de descanso, poda morph targets
-      │                            que nadie anima y compacta el buffer
+      │                            que nadie anima (conserva los que pesan por
+      │                            defecto) y compacta el buffer
       │  · models/avatar.glb        ← 12,98 MB: personaje + cara + clips 0000..0049
       │  · manifest.json            ← inventario de los 50 clips
       │  · domain/SignsCatalog.kt   ← reescrito, para que el asset y el código no divergan
@@ -32,13 +39,15 @@ tools/pack_signall.py              hornea la pose de descanso, poda morph target
 app/src/main/assets/web/           dentro del APK
 ```
 
-Todo se resuelve con **rutas relativas**, sin red. La escena indexa los clips al cargar
-el avatar y resuelve `signs/<id>.glb` **por nombre** contra ese índice
-(`embeddedClipsFor` en `app.js`): el path es el identificador de la seña, no un archivo
-que exista en disco.
+Los **assets** se resuelven con rutas relativas, sin red: la escena indexa los clips al
+cargar el avatar y resuelve `signs/<id>.glb` **por nombre** contra ese índice
+(`embeddedClipsFor` en `app.js`), así que el path es el identificador de la seña y no un
+archivo que exista en disco. La página sí carga Three.js r169 desde jsDelivr, así que el
+WebView necesita INTERNET aunque el avatar y las señas sean locales.
 
-El layout viejo (`tools/split_signs.py` → `models/` + `signs/`) quedó en el repo para
-rearmar los assets por seña, pero **el vigente es el archivo único**.
+El layout viejo (`tools/split_signs.py` → `models/` + `signs/`) sigue en el repo
+—`pack_signall.py` le importa `write_catalog`— y `app.js` sigue soportando un `.glb` por
+seña, pero `assets/web/signs/` se borró el 2026-10-22 y **el vigente es el archivo único**.
 
 **Nunca se edita `models/avatar.glb` a mano.** Se regenera. **Nunca se edita
 `SignsCatalog.kt` a mano** tampoco: lo reescribe el generador, justamente para que la
@@ -58,11 +67,15 @@ WebSocket  ws://<backend>:8080/ws/translate          ← la app SOLO habla con e
   ├─ texto escrito  ──► {"type":"text"}  ──► se traduce ──► segment × N ──► done
   │
   └─ voz  ──► frames binarios PCM16 ──► el backend reenvía al STT
-                     │
+                     │  {"type":"end"} al cerrar la captura
                      ▼
               ../sign-ai-stt  (faster-whisper + VAD)
                      │  transcript (muestra en vivo, NO se traduce)
                      │  final     (siempre llega, incluso vacío)
+                     ▼
+              la app muestra el texto y, en el modo en vivo, lo manda de
+              vuelta como {"type":"text"} — la voz no se traduce sola
+                     │
                      ▼
               el backend parte la frase en oraciones y traduce cada una
                      │
@@ -71,12 +84,14 @@ WebSocket  ws://<backend>:8080/ws/translate          ← la app SOLO habla con e
                      │
                      ▼
               MainScreenState.pendingSegments  (sortedMap por index)
-                     │  flushSegments() cuando size >= total
+                     │  flushSegments() entrega lo que haya, sin esperar a "total"
                      ▼
-              escena: setQueue + play()  ·  appendQueue por cada oración siguiente
+              escena: setQueue + play() con la primera oración
+                      appendQueue con cada oración siguiente
                      │
                      ▼
-              THREE.AnimationMixer reproduce signs/<id>.glb con crossfade de 100 ms
+              THREE.AnimationMixer reproduce el clip <id> embebido en
+              models/avatar.glb (resuelto por nombre) con crossfade de 100 ms
                      │
                      ▼
               window.SignAIBridge.postMessage("onPlaybackDone")
@@ -92,8 +107,10 @@ en el skill `contrato-websocket`.
 - **No habla con Neon.** La base es del backend.
 - **No traduce la voz.** La voz entra por el mismo socket pero vuelve como `transcript`, y
   esa transcripción no se traduce: solo lo que el cliente manda como `text`.
-- **No encadena.** Arma la cola entera cuando llega el último `segment`.
-- **No pide un `segment` a la vez para la primera oración.** Recibe todas.
+- **No espera a la frase entera.** Encadena cada oración apenas llega: `setQueue` + `play()`
+  con la primera y `appendQueue` con las siguientes (D-1, 2026-10-16). No arma la cola al
+  final.
+- **No pide los `segment` de a uno.** El backend los manda todos, en orden.
 
 ## Formato de `manifest.json`
 
@@ -116,25 +133,35 @@ el APK:
 Con el archivo único, `bytes` y `sha256` son los **del archivo entero**, no los de un clip:
 no existe un asset por seña. `gloss` va en `null` porque la glosa la pone el catálogo del
 backend, no el asset. El `sha256` es lo que permite cruzar el APK contra el catálogo sin
-abrir los binarios.
+abrir los binarios. Ojo con `faces`: `pack_signall.py` lo pone en `true` cuando el clip
+tiene algún canal de pesos (`weights`), no cuando tiene expresión facial — los 5 canales
+por clip son de cuerpo/ropa (ver § La cara).
 
 ## Nombres de los huesos — crítico
 
 **Las exportaciones de Cascadeur usan PUNTOS.** Este es el dato que más se ha equivocado,
 y se equivocó en las dos direcciones.
 
-Verificado el **2026-10-17** contra `models/avatar.glb` **y** contra el export original de
-Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`): **102 articulaciones de skin en los dos
-archivos**.
+Verificado el **2026-10-17** contra `models/avatar.glb` y contra el export original de
+Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`), y **reverificado el 2026-10-24**
+contra el archivo vigente: **102 articulaciones de skin** en los tres archivos.
 
 | Zona | Cómo es |
 |---|---|
 | Cadena del brazo | `shoulder.L`, `upper_arm.L`, `forearm.L`, `hand.L` — con punto, **sin prefijo** |
 | Dedos y palma | `thumb.01.L`, `f_index.01.L`, `palm.01.L` … `palm.04.L` |
-| Raíz del armature | `HG_Branden.001` |
+| Cara | `brow_*`, `eye_blink_open_*`, `eye_squint_*`, `eyeball*`, `jaw*`, `mouth_*` — **sí son joints del skin** (ver § La cara) |
+| Raíz del armature | `HG_Branden` en el archivo único; `HG_Branden.001` en el export viejo |
 
-La raíz `HG_Branden.001` también está animada, pero **no es una articulación de skin**:
-contar solo huesos hace que 138 tracks parezcan sin resolver cuando no lo están.
+La raíz **no es una articulación de skin** (los 102 joints empiezan en `spine`). En el
+archivo vigente **no está animada**: ningún canal de los 50 clips la toca. En el export
+viejo sí lo estaba, y de ahí viene la confusión. Cada clip actual tiene **311 canales**
+(contados en el GLB del APK el 2026-10-24): 306 son TRS de los 102 huesos y 5 son pesos de
+morph targets de mallas
+(`HG_Body_facial`, `HG_Chinos_Male.002`, `HG_Dress_Shirt_Collar_Male.002`,
+`HG_Leather_Dress_Shoe_Male.002`, `HG_Sweater_1_Male.002`). Por eso `app.js` cuenta
+**nodos** y no huesos: contar solo huesos dejaría esos 5 canales de pesos como falsos
+"sin resolver".
 
 > ### Dos trampas, y las dos costaron trabajo
 >
@@ -152,8 +179,8 @@ contar solo huesos hace que 138 tracks parezcan sin resolver cuando no lo están
 
 ### La cara no la anima la app
 
-Los nodos de cara que existen usan nombres al estilo ARKit y **no son articulaciones de
-skin**:
+Los nodos de cara usan nombres al estilo ARKit y **son articulaciones del skin** (están
+entre los 102 joints, no son nodos sueltos):
 
 ```
 brow_dwn_L / brow_dwn_R   brow_outer_up_L / brow_outer_up_R   brow_inner_up
@@ -162,16 +189,24 @@ eyeball.L, eyeball.lookat.L, eyeball_lookat_master
 jaw, jaw_upper, jaw_dwn_mouth_clsd, jaw_open_lt_rt_frwd
 ```
 
-Y **nada los mueve**: el GLB que va en el APK tiene **cero morph targets**, y `app.js` no
-menciona morph targets ni ninguno de esos nombres. La expresión facial **viene horneada en
-el clip**.
+`app.js` no los menciona ni los maneja: la escena no tiene código de expresión facial. En
+los clips, esos huesos **casi no se mueven**: el mayor rango de un componente del cuaternión
+de rotación de un nodo de cara en los 50 clips es **0,0012** (`jaw`, clip `0015`), contra
+**1,996** del mayor hueso del cuerpo (`thigh.L`, clip `0034`) —medido el 2026-10-24 leyendo
+los accessors del GLB—, así que hoy la cara queda prácticamente neutra. Tampoco hay morph
+targets **de expresión**: el
+archivo guarda **7** (no cero; contados en el JSON del GLB el 2026-10-24) porque
+`pack_signall.py` conserva los que pesan por defecto
+—`Male`, `LIVE_KEY_PERMANENT`, `Body Proportions` ×4 y `eyeball_size`—, ninguno de cara, y
+ningún canal de pesos cambia de valor dentro de un clip.
 
 Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide un marcador facial
 según el tipo de frase y no hay implementación. **Decisión del owner pendiente** (2026-10-17).
 Antes estaba "en pausa" porque el documento no lo pedía; el SRS de Overleaf ahora sí lo pide,
 así que hay que decidir si se implementa o se saca del documento. Si algún día se
-implementa, se toca acá y en `app.js` — no hay atajo con los huesos de cara, porque no
-existen.
+implementa, se toca acá y en `app.js`: **los huesos de cara existen y son joints**, así que
+el atajo técnico existe; lo que falta es decidir y hornear los marcadores en los clips (o
+animarlos desde la escena). No es un cambio de una línea.
 
 ## Constantes de la escena en `app.js` (valores reales)
 
@@ -214,11 +249,12 @@ Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe e
 
 | Comando | Qué hace |
 |---|---|
-| `play()` | Arranca la cola desde el ítem 0 |
+| `play()` | Arranca la cola desde el ítem 0; sin cola, repite la seña de arranque |
 | `playFrom(i)` | Arranca desde `i` |
-| `setQueue(json)` | **Reemplaza** la cola y la arranca |
+| `setQueue(json)` | **Reemplaza** la cola; el arranque lo hace `play()` o `playFrom()` |
 | `appendQueue(json)` | **Agrega** al final sin reiniciar lo que está sonando |
-| `setSpeed(f)` | Velocidad, `0..1`. La aplica tal cual: no hay adelanto automático |
+| `stop()` | Corta lo que esté sonando y **vacía** la cola (estado *Desconectado* del SRS) |
+| `setSpeed(f)` | Velocidad pedida en `0..1` (`0.5` = normal): `app.js` la escala por 2 y la limita a `0.1..3`. No hay adelanto automático. Un `0` cae en `0.5` por el operador lógico del JS, no en `0.1` |
 | `setReduceMotion(on)` | Corte seco entre señas en vez de fundición (accesibilidad) |
 | `setTheme(dark)` | El fondo del canvas sigue al tema de la app |
 | `setDefaultSign(url)` | Seña de apertura y de reserva |
@@ -230,12 +266,14 @@ Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe e
 
 | Mensaje | Cuándo |
 |---|---|
-| `avatarReady` | El personaje ya está parseado y en escena |
+| `avatarReady` | La escena está entera: 50 clips indexados, seña de arranque resuelta, shaders compilados y un frame pintado con el avatar adentro |
 | `onPlaybackDone` | La cola terminó |
 | `signStart:<idx>:<jsMs>` | El muñeco se empezó a mover en la seña `<idx>` |
+| `signFailed:<idx>` | La seña `<idx>` no se pudo cargar y se saltea |
+| `progress:<0..100>` | Avance real de la escena para la barra del splash (45–100) |
 
 `avatarReady` es lo que **tapa el splash** — no `onPageFinished`, que dispara mientras el
-GLB de 10 MB todavía se está bajando. `SignAiSplash` tiene además un timeout de 8 s.
+GLB de 12,98 MB todavía se está bajando. `SignAiSplash` tiene además un timeout de 8 s.
 
 ## El catálogo de Neon
 
@@ -247,9 +285,11 @@ app resuelva sin red.
 **Las 50 tienen animación desde el 2026-10-22.** El archivo único trae las 18 que
 faltaban (`0032`–`0049`), así que ya ninguna glosa llega con un path que no exista y
 `GLS-10` no alcanza a ninguna. `SignsCatalog.isOwnAssetPath()` se queda igual: distingue
-"no es un path nuestro" de "es nuestro pero todavía no lo exportamos", que es el caso de
-una glosa futura sin clip — y en ese caso la manda al sign de reserva **sin tocar la red**,
-porque pedirla por HTTP sería un 404 garantizado en cada frase que la mencione.
+"no es un path nuestro" de "es nuestro pero todavía no lo exportamos", que hoy no alcanza
+a ninguna glosa pero protege a una glosa futura sin clip. En ese caso **no toca la red**,
+porque pedirla por HTTP sería un 404 garantizado: si el ajuste *Seña de prueba si falta*
+está prendido la representa con la seña de reserva, y si está apagado —el default— la
+saltea y avisa "Seña no disponible" por glosa.
 
 El backend carga el catálogo **una sola vez al arrancar**. Después de un seed hay que
 reiniciarlo: no hay invalidación.

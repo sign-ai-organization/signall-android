@@ -154,8 +154,8 @@ class MainScreenState(
         private set
 
     /**
-     * Playback fallback for a gloss we have no animation for — either one of
-     * the 18 LSC50 signs still unexported, or an unknown gloss. See
+     * Playback fallback for a gloss we have no animation for — either an LSC50
+     * sign whose clip is missing (none today) or an unknown gloss. See
      * [Settings.demoSignFallback].
      *
      * Always the sign picked in the settings menu, so the demo playback follows
@@ -848,9 +848,9 @@ class MainScreenState(
      *
      * Una glosa que el catálogo no tiene no se representa (RF-CAT-03) salvo que
      * [Settings.demoSignFallback] esté prendido. Ese interruptor es lo que hace
-     * que las 18 señas de LSC50 sin animación exportada (0032–0049) muestren
-     * algo en vez de "Seña no disponible": el catálogo las anuncia, pero no hay
-     * clip, así que la cola cae en la única seña que viene dentro del APK.
+     * que una glosa sin clip (hoy ninguna) muestre algo en vez de "Seña no
+     * disponible": el catálogo la anuncia, pero no hay clip, así que la cola cae
+     * en la única seña que viene dentro del APK.
      *
      * Devuelve **qué glosas quedaron afuera** además de la cola, porque el SRS
      * (`main.tex:201`, `:753`) pide informar "Seña no disponible" en vez de
@@ -867,11 +867,11 @@ class MainScreenState(
             // abajo — y el fallback es la seña por defecto, o sea que todas las
             // glosas responderían con el mismo movimiento.
             //
-            // Un `signs/*.glb` que **no** tenemos (el catálogo anuncia las 50
-            // glosas pero solo 32 tienen export) es igual de indescargable: es
-            // nuestro propio layout, así que tampoco lo sirve nadie por HTTP. Se
-            // saltea el viaje de red y se va derecho al fallback. Cualquier otra
-            // cosa —un asset remoto de verdad— sí baja por la red.
+            // Un `signs/*.glb` que **no** tenemos (una glosa anunciada sin clip;
+            // hoy no hay ninguna) es igual de indescargable: es nuestro propio
+            // layout, así que tampoco lo sirve nadie por HTTP. Se saltea el viaje
+            // de red y se va derecho al fallback. Cualquier otra cosa —un asset
+            // remoto de verdad— sí baja por la red.
             val local = SignsCatalog.localAssetOrNull(gloss.glbPath)
             val url = when {
                 local != null -> local
@@ -1525,11 +1525,10 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
      * Resolves the glosses to assets and hands the queue to the scene.
      *
      * A gloss the catalog doesn't know is not played (RF-CAT-03), unless
-     * [Settings.demoSignFallback] is on. That switch is what makes the 18 LSC50
-     * signs whose animation is not exported yet (0032–0049) show something
-     * instead of "Seña no disponible": the catalog announces them, but we have
-     * no clip for them, so the queue falls back to the single sign baked into
-     * the APK.
+     * [Settings.demoSignFallback] is on. That switch is what makes a sign whose
+     * clip is missing (none today) show something instead of "Seña no
+     * disponible": the catalog announces it, but we have no clip for it, so the
+     * queue falls back to the single sign baked into the APK.
      */
     private fun appendQueue(segments: List<TranslationSegment>) {
         // La escena no existe: entregarle una cola sería mandar instrucciones a un

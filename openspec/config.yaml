@@ -26,31 +26,40 @@ context: |
   - Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17,
     Compose BOM 2024.12.01
 
-  ### Assets: GLB, no `sign.json`
-  - El personaje es `models/avatar.glb`; cada seña es `signs/<SSSS_VVVV_RRRR>.glb`, **solo
-    animación**, reproducida con `THREE.AnimationMixer`.
+  ### Assets: un solo GLB, no `sign.json`
+  - **Un solo `models/avatar.glb`**: el personaje, la cara y las 50 señas como clips
+    `0000`..`0049`, reproducidos con `THREE.AnimationMixer`. `signs/<SSSS_VVVV_RRRR>.glb`
+    sigue siendo el **identificador lógico** que manda el backend; `app.js` lo traduce al
+    clip `<id>` por nombre (`embeddedClipsFor`) y no pide nada por red. No hay archivo por
+    seña.
   - Los clips vienen del `.glb` único de **Cascadeur** en `../material-3d/GLB SignALL/`,
     que **no está en el repo** (son ~1 GB y viven al lado, como `../data/`).
-  - `tools/split_signs.py` separa personaje y animaciones, escribe `manifest.json`, y
-    **reescribe `domain/SignsCatalog.kt`** para que el disco y el código no diverjan.
-  - `split_signs.py` llama a `tools/rest_pose.py` **al final**: hornea en `avatar.glb` la
-    pose de descanso, que sale del primer keyframe de la seña `0029`.
+  - El pipeline vigente es `tools/pack_signall.py`: hornea la pose de descanso, poda los
+    morph targets que no anima nadie ni pesan por defecto, compacta el buffer y escribe
+    `models/avatar.glb`, `manifest.json` y `domain/SignsCatalog.kt`.
+  - `tools/split_signs.py` es el **layout viejo** (`models/` + `signs/`). Sigue en el repo
+    porque `pack_signall.py` le importa `write_catalog`; `assets/web/signs/` se borró el
+    2026-10-22 y no se pide en runtime.
   - **Nunca editar `models/avatar.glb` ni `SignsCatalog.kt` a mano.**
   - Entre señas hay una **fundición de 100 ms** (`CROSSFADE_MS`): no hay pose congelada ni
     hueco. Entre lo que se mide y lo que se afirma: `specs/avatar/spec.md`.
-  - `manifest.json` lleva `sha256` por seña, para cruzar el APK contra el catálogo sin
-    abrir los binarios.
+  - `manifest.json` repite en las 50 entradas `bytes` y `sha256` del **archivo entero**,
+    para cruzar el APK contra el catálogo sin abrir los binarios; no hay asset por seña.
 
   ### Nombres de huesos — CRÍTICO (verificado contra `tools/glb_pose.py` y los GLB)
   **Las exportaciones de Cascadeur SÍ usan puntos.** La versión anterior de este archivo
   decía lo contrario y daba ejemplos como `DEF-upper_armL`: **eso es falso**, y un agente
   que lo creyera renombraría huesos y rompería la animación sin ver ningún error.
   Verificado el 2026-10-17 contra `models/avatar.glb` **y** contra el export original de
-  Cascadeur en `../material-3d/GLB Senas/`: **102 articulaciones de skin en los dos archivos.**
+  Cascadeur en `../material-3d/GLB Senas/`, y reverificado el 2026-10-24 contra el archivo
+  vigente: **102 articulaciones de skin.**
   - Cadena del brazo: `shoulder.L`, `upper_arm.L`, `forearm.L`, `hand.L` — con punto, sin prefijo
   - Dedos y palma: `thumb.01.L`, `f_index.01.L`, `palm.01.L` … `palm.04.L`
-  - Raíz del armature: `HG_Branden.001`. Está animada, pero **no es una articulación de
-    skin**: contar solo huesos hace que 138 tracks parezcan sin resolver cuando no lo están.
+  - Cara: `brow_*`, `eye_blink_open_*`, `eye_squint_*`, `eyeball*`, `jaw*`, `mouth_*` —
+    **sí son joints del skin**
+  - Raíz del armature: `HG_Branden` en el archivo único (`HG_Branden.001` en el export
+    viejo). **No es una articulación de skin y en el archivo vigente no está animada**;
+    los 102 joints empiezan en `spine`.
 
   **No existe ningún hueso `DEF-` en este rig** — cero coincidencias en los dos archivos.
   Cualquier documento que liste `DEF-upper_armL`, `DEF-browTL`, `DEF-lidTL` o
@@ -59,11 +68,15 @@ context: |
 
   **La cara no la anima la app.** Los nodos de cara existen con nombres al estilo ARKit
   (`brow_dwn_L`, `brow_outer_up_L`, `eye_blink_open_L`, `jaw_open_lt_rt_frwd`,
-  `eyeball.lookat.L`) pero **no son articulaciones de skin**, el GLB que va en el APK tiene
-  **cero morph targets**, y `app.js` no los menciona. La expresión facial viene horneada en
-  el clip. Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores
-  por tipo de frase y no hay implementación. **Decisión del owner pendiente** (2026-10-17):
-  antes estaba "en pausa" porque el documento no lo pedía; ahora el SRS sí lo pide.
+  `eyeball.lookat.L`) y **son articulaciones de skin** (están entre los 102 joints), pero
+  `app.js` no los menciona ni los maneja. El GLB del APK tiene **7 morph targets** (no
+  cero; contados el 2026-10-24), todos de cuerpo/ropa/ojo (`Male`, `LIVE_KEY_PERMANENT`,
+  `Body Proportions` ×4, `eyeball_size`), ninguno de expresión facial, y los clips dejan
+  esos huesos casi quietos (rango máximo de un componente del cuaternión: 0,0012 en los 50
+  clips, medido el 2026-10-24). Es el punto **A6** de
+  `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores por tipo de frase y no hay
+  implementación. **Decisión del owner pendiente** (2026-10-17): antes estaba "en pausa"
+  porque el documento no lo pedía; ahora el SRS sí lo pide.
 
   ### Constantes reales de la escena (`app/src/main/assets/web/app.js`)
   `CROSSFADE_MS = 100` · `MAX_DPR = 1.75` (tope a propósito) ·
@@ -78,22 +91,24 @@ context: |
   ### Problemas conocidos del rig
   - La **ceja derecha se ve casi estática**. El síntoma es real, pero se atribuyó a los
     pesos de `DEF-browTL`/`DEF-browTR`, que **no son huesos de este rig**: la causa no se
-    pudo verificar contra el archivo. Lo que sí es cierto es que la app no anima la cara,
-    así que la asimetría viene **horneada en el clip**. Se corrige en Blender sobre el
+    pudo verificar contra el archivo. La app no anima la cara, y los clips actuales dejan
+    esos huesos casi quietos (rango máximo de un componente del cuaternión: 0,0012 en los
+    50 clips, medido el 2026-10-24), así que la asimetría hay que medirla en el export. Se corrige en Blender sobre el
     `.blend` de origen y re-exportando; nunca en `app.js`.
 
   ### Puente Kotlin ↔ JS
   **La fuente de verdad es `domain/SignAiCommands.kt`, no esta lista.**
   - Kotlin → JS, `window.SignAI.<método>()` **siempre con guard `?.`**:
-    `play`, `playFrom`, `setQueue`, `appendQueue`, `setSpeed`, `setReduceMotion`,
+    `play`, `playFrom`, `setQueue`, `appendQueue`, `stop`, `setSpeed`, `setReduceMotion`,
     `setTheme`, `setDefaultSign`, `setDebug`, `setFreeCamera`, `setGrid`, `setBackground`,
     `setSilenceTimeoutMs`. Todo método nuevo es **aditivo**: borrar o renombrar uno rompe
     en silencio.
   - JS → Kotlin, `window.SignAIBridge.postMessage(...)` vía
     `WebViewCompat.addWebMessageListener` (con feature-guard):
-    `onPlaybackDone`, `avatarReady`, `signStart:<idx>:<jsMs>`.
+    `onPlaybackDone`, `avatarReady`, `signStart:<idx>:<jsMs>`, `signFailed:<idx>`,
+    `progress:<0..100>`.
   - `avatarReady` es lo que **tapa el splash**, no `onPageFinished`: ese dispara mientras
-    el GLB de 10 MB todavía baja. `SignAiSplash` tiene un timeout de 8 s de reserva.
+    el GLB de 12,98 MB todavía baja. `SignAiSplash` tiene un timeout de 8 s de reserva.
   - El canvas de Three.js **no publica nada a accesibilidad**: sale en el árbol como
     `android.webkit.WebView` sin hijos. Para su estado, el tag `SignAIWeb` de logcat o el
     modo debug de Ajustes → AVANZADO.
@@ -113,12 +128,14 @@ context: |
   - **Solo se traduce lo que el cliente manda como `text`.** La voz vuelve como
     `transcript` y **no se traduce**.
   - `segment` es una oración, con `index` y `total` reales desde el primero. Ya no existen
-    `stream`, `provisional` ni `source_text`, y la app no encadena.
+    `stream`, `provisional` ni `source_text`; la app representa cada oración apenas llega
+    (D-1) y no espera a `total`.
   - **El `final` siempre llega**, incluso vacío: el STT responde a todo `end`.
-  - El catálogo es de **Neon**, manejado por el backend. **Solo 32 de las 50 glosas de
-    LSC50 tienen animación**: las 18 restantes (`0032`–`0049`) llegan con `available: true`
-    y un path inexistente, y eso lo maneja `SignsCatalog.isOwnAssetPath()` (`GLS-10`) sin
-    tocar la red.
+  - El catálogo es de **Neon**, manejado por el backend. **Las 50 glosas de LSC50 tienen
+    animación desde el 2026-10-22**, así que `GLS-10` ("anunciada pero no exportada") no
+    alcanza a ninguna. `SignsCatalog.isOwnAssetPath()` se conserva para una glosa futura
+    sin clip: si el ajuste *Seña de prueba si falta* está prendido la representa con la
+    seña de reserva y, si está apagado, la saltea sin tocar la red.
   - El detalle del contrato está en `docs/SISTEMA.md` y en el skill `contrato-websocket`.
 
   ### UI / Features (fuente de verdad)
@@ -170,7 +187,7 @@ rules:
   tasks:
     - "Separar las tareas de código de las de assets/Blender"
     - "Indicar si el cambio requiere **re-exportar el GLB** y por lo tanto correr
-      `tools/split_signs.py`"
+      `tools/pack_signall.py` (o `tools/split_signs.py` si se rearma el layout viejo)"
     - "Verificar los nombres de huesos contra `tools/glb_pose.py` — cadena del brazo con
       punto y sin prefijo (`upper_arm.L`), dedos y palma con punto (`thumb.01.L`,
       `palm.01.L`). **No hay huesos `DEF-` en este rig**"
@@ -195,8 +212,9 @@ operations:
         pendiente del hermano"
       - "Respetar `MAX_DPR = 1.75` y no forzar `DoubleSide` en las mallas: sin eso el
         Redmi Note 9S va a 99 % de jank"
-      - "La cara no la anima la app: cero morph targets en el GLB del APK y `app.js` no
-        menciona ninguno de esos nodos. No prometer marcadores faciales (RF-AVT-03)"
+      - "La cara no la anima la app: `app.js` no menciona los huesos de cara. El GLB tiene
+        7 morph targets de cuerpo/ropa/ojo, ninguno de expresión facial, y los clips dejan
+        la cara casi quieta. No prometer marcadores faciales (RF-AVT-03)"
   archive:
     guidance:
       - "Actualizar el `context` de este archivo si cambió algo relevante del proyecto"
