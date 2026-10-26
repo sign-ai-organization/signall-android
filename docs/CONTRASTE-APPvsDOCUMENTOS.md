@@ -277,9 +277,9 @@ resuelve tocando la app.
 
 | ID | La decisión | Por qué no se puede asumir |
 |---|---|---|
-| **A6** | ¿Los marcadores no manuales se hacen en la app o se sacan del SRS? | El SRS los pide (`main.tex:205`, y §Hardware). La app recibe el tipo de frase y no lo usa. El 2026-10-16 estaba "en pausa" **porque el documento no lo pedía**; ahora sí lo pide, así que la premisa cambió.<br>**Lo que se averiguó el 2026-10-17: NO es un trabajo chico de la app.** El rig **sí** tiene huesos de cara —25 por lo menos: `brow_inner_up`, `jaw_open`, `mouth_*`, `eye_blink_open_*`, leídos del `avatar.glb`—, pero **no tiene morph targets**, y `avatar.glb` viene con **0 animaciones**. O sea: la cara se puede mover, pero hay que **crear los clips en Cascadeur y exportarlos**, y además la escena tiene que saber cuándo reproducirlos mientras hay una seña en curso. Es trabajo de rig y de assets, no de la app |
+| **A6** | ¿Los marcadores no manuales se hacen en la app o se sacan del SRS? | El SRS los pide (`main.tex:205`, y §Hardware). La app recibe el tipo de frase y no lo usa. El 2026-10-16 estaba "en pausa" **porque el documento no lo pedía**; ahora sí lo pide, así que la premisa cambió.<br>**Lo que se averiguó el 2026-10-17, y se corrigió contra el GLB el 2026-10-26: NO es un trabajo chico de la app.** El rig **sí** tiene huesos de cara —**31, y todos son articulaciones de skin**: `brow_*`, `jaw*`, `mouth_*`, `eye_blink_open_*`, `eye_squint_*`, `eyeball*`—, tiene **7 morph targets** (ninguno de expresión facial) y **50 clips** desde el 2026-10-22. Pero los clips dejan los huesos de cara **casi quietos** (el mayor rango de un componente del cuaternión de rotación es **0,0012**, contra **1,996** del mayor hueso del cuerpo, medido el 2026-10-26), y la escena no maneja ni esos huesos ni los morphs. O sea: la cara se puede mover, pero hay que **crear los clips de expresión en Cascadeur y exportarlos**, y además la escena tiene que saber cuándo reproducirlos mientras hay una seña en curso. Es trabajo de rig y de assets, no de la app |
 | **A15** | ¿`SignAssetRepository` se borra o se deja? | El SRS cerró el canal HTTP a `/health` (`main.tex:1121`) y dijo que las animaciones van dentro del APK (`:1114`). Con el catálogo actual su descarga **no se ejecuta nunca**, porque toda glosa del catálogo trae una ruta `signs/*.glb` —nuestro propio layout— y eso se saltea antes de llegar a la red. **Pero el archivo no se puede borrar entero**: sus dos constantes `WEB_ORIGIN` y `SIGNS_PATH_PREFIX` son las que usa `AvatarWebView` para el dominio del `WebViewAssetLoader` y para el manejador que sirve `/signs/` desde la caché. Sin ellas el WebView no carga la escena. Decisión del owner 2026-10-17: **se deja**. Lo que está muerto es solo la rama de descarga, y esa rama es justo el comportamiento que describe el SDD ("el cliente Android descarga los archivos de animación que falten"), así que borrarla haría que la app se alejara del documento |
-| **B4/B5** | ¿Quién exporta las 18 señas que faltan? | Ver §5: el SRS dice 50 y el objetivo es 50. No es una corrección de documento, es trabajo de las señas |
+| **B4/B5** | ¿Quién exporta las 18 señas que faltan? | **Resuelto:** las 50 señas de LSC50 están en el archivo único desde el 2026-10-22. Lo que queda no es exportarlas sino **validar el contenido de `0032`–`0049`** con el owner y el director. Ver §5 |
 
 ---
 
@@ -315,15 +315,20 @@ igual. Cuando se cite un `A14` sin decir la tabla, es el de §1.
 ## 5. Sobre el "50" del SRS
 
 El SRS dice que las **50** animaciones van dentro del APK (`main.tex:930`,
-`:1185`, y §Alcance). Hoy hay **32**.
+`:1185`, y §Alcance). **Hoy hay 50** desde el 2026-10-22, cuando
+`tools/pack_signall.py` armó el archivo único con los 50 clips `0000`..`0049`
+(12,98 MB).
 
-**Decisión del owner (2026-10-17): el SRS no está equivocado.** El documento
-describe lo que va a haber; el objetivo es llegar a 50. Exportar las 18 que
-faltan (`0032`–`0049`) es trabajo de las señas, no una corrección del documento.
+**Decisión del owner (2026-10-17): el SRS no estaba equivocado.** El documento
+describe lo que va a haber; el objetivo era llegar a 50 y se llegó. Lo que queda
+de las 18 que faltaban (`0032`–`0049`) no es exportarlas: es **validar su
+contenido** con el owner y el director.
 
-Consecuencia para la app: hoy esas 18 glosas llegan con `available: true` y una
-ruta que no existe, y `SignsCatalog.isOwnAssetPath()` evita pedirlas por red para
-no comerse un 404. Cuando se exporten, la app las resuelve sola, sin cambios.
+Consecuencia para la app: hoy **ninguna** glosa del catálogo llega con una ruta
+que no exista, así que el caso no se da. `SignsCatalog.isOwnAssetPath()` se
+conserva para una glosa futura anunciada sin clip: evita pedirla por red (un 404
+garantizado) y, según `demoSignFallback`, la representa con la seña de reserva o
+la saltea avisando "Seña no disponible" por glosa.
 
 ---
 
@@ -419,8 +424,9 @@ a abrir.
   vive en la etiqueta, no en el estado. `Done` pasa a flag. `Connecting` se funde
   en `Desconectado`, aceptando que cada arranque muestre "Desconectado" mientras
   el socket abre. Mapa completo en §2.
-- **B4/B5, el número de señas.** El SRS dice 50 y se queda en 50. Exportar las 18
-  que faltan es trabajo de las señas.
+- **B4/B5, el número de señas.** El SRS dice 50 y hay 50 desde el 2026-10-22. Lo
+  que queda es validar el contenido de `0032`–`0049` con el owner y el director, no
+  exportarlas.
 - **§6, los huecos del SRS.** Fuera del alcance de la app: los arregla el owner o
   el compañero.
 - **A14, el reloj de silencio: 15 s y estado *Error*.** Cuando una frase sale y no
@@ -717,16 +723,17 @@ anotan acá para que no se pierdan, y se marcan las que necesitan una decisión.
 
 **Lo que NO va acá** (decisión del owner, 2026-10-17): las **mediciones**. Los
 números de la corrida con el backend real son del **plan de pruebas** de
-`../sign-ai-docs`, no de este contraste. Y las **18 señas que faltan** son trabajo de
-exportarlas, no de la app: la app ya funciona con las que tiene y entra sola con las
-nuevas cuando existan.
+`../sign-ai-docs`, no de este contraste. Y las **18 señas que alguna vez faltaron**
+ya están en el archivo único desde el 2026-10-22: lo que queda es validar su
+contenido con el owner y el director, no exportarlas. La app entra sola con
+cualquier seña nueva que exista.
 
 | # | Qué | Dónde | Qué hay que hacer |
 |---|---|---|---|
 | 1 | `shouldShowRequestPermissionRationale()` **no sirve** para saber si ya se preguntó: devuelve `false` tanto si nunca se preguntó como si ya no se va a preguntar. En MIUI **una sola negativa** deja el permiso en `USER_FIXED`, así que la app nunca avisaba que el micrófono quedó bloqueado — justo lo que `RF-UI-04` pide | `data/MicPermissionPrompt.kt` | **Resuelto en A2** con un flag propio. Se documentó en `openspec/specs/ui/spec.md` `CTL-14` |
 | 2 | El código tenía `MaxReconnectAttempts = 5`, que contradecía la decisión de §7 (reconexión **sin** límite) | `MainScreenState.kt`, la espera de reconexión | **Resuelto en A4**: ya no existe ese tope. Hoy la espera crece un segundo por intento y se detiene en 5 s, indefinidamente, y el contador que muestra la interfaz se reinicia en cada conexión nueva |
 | 3 | El reloj del turno (`turnStartedAt`) **se reinicia** en `resumeListeningIfMicOn`, y el `done` puede llegar **antes** de que la escena se mueva: una frase habría medido desde el reloj de la siguiente, o no habría medido | `MainScreenState.kt` | **Resuelto en A13** con `turnSentAt`, que solo se pone al mandar una frase |
-| 4 | Hay **dos** casos de "glosa sin seña" y el SRS habla de uno solo: la glosa que **no está en el catálogo** (`main.tex:200-202` "cuando una glosa no existe en el catálogo") y la glosa que el catálogo anuncia pero **sin animación exportada** (`0032`–`0049`, §5 de este documento). Con la seña de prueba apagada las dos se saltaban en silencio | `MainScreenState.kt` | **Resuelto en A5**: el aviso sale en los dos casos, porque las dos terminan en la misma rama (`sin seña ni fallback`). Decirlo solo para la primera habría sido mentir en silencio al revés: el catálogo **sí** anuncia las 18, lo que no hay es el clip. Cuando se exporten, desaparece solo el aviso de esas |
+| 4 | Hay **dos** casos de "glosa sin seña" y el SRS habla de uno solo: la glosa que **no está en el catálogo** (`main.tex:200-202` "cuando una glosa no existe en el catálogo") y la glosa que el catálogo anuncia pero **cuyo clip no está en el APK** (era el caso de `0032`–`0049` antes del 2026-10-22; **hoy no hay ninguna**, §5 de este documento). Con la seña de prueba apagada las dos se saltaban en silencio | `MainScreenState.kt` | **Resuelto en A5**: el aviso sale en los dos casos, porque las dos terminan en la misma rama (`sin seña ni fallback`). Decirlo solo para la primera habría sido mentir en silencio al revés: el catálogo **sí** anuncia la glosa, lo que no hay es el clip. Hoy no queda ninguna en ese caso; el aviso sigue para una glosa futura |
 | 5 | La clave `duracion_firmado` del `snapshot()` de `SignAiMetrics` seguía usando la palabra que `AGENTS.md` retiró el 2026-10-16 | `SignAiMetrics.kt` | **Resuelto en A13**: ahora es `duracion_representada`. Era una cadena de logcat, no un nombre de código |
 | 6 | **No hay dominio del backend.** Ni el SRS (`main.tex:1088`, `:1100`) ni `../sign-ai-docs` nombran uno, así que no había con qué armar el `wss://` | `app/build.gradle.kts` | En A3 el default de release quedó en `wss://backend.invalid/ws/translate`: un host que por construcción no resuelve (`.invalid`, RFC 2606). Es deliberado: un APK sin configurar habla con nadie en vez de con el host de otra persona, y el fallo es ruidoso. **Decisión del owner (2026-10-17): no hay dominio y no se va a tener, porque es un prototipo.** Queda así a propósito y no se vuelve a abrir |
 | 7 | **A1 no es separable de A7.** El SRS solo pide que "el indicador pase a *Texto listo*" (`main.tex:735`), y el indicador de la app es la etiqueta de estado del escenario. Convertir `dictationReadyToSend` en el estado `TextoListo` —que es justamente lo que hace A7— **deja A1 hecho**: la etiqueta pasa a decir "Texto listo" mientras el texto espera, en vez de un aviso de 3 s | `SignAiBottomBar.kt`, `MainScreenState.kt` | Hacer A1 con un mecanismo visual aparte (un ícono, un anillo) sería inventar un requisito que el SRS no pide, y además **chocaría con una decisión ya tomada**: el bloque de comentario de `SignAiBottomBar.kt` (el del ícono del micrófono) documenta que el ícono **no** cambia en el tercer estado porque se probó en el dispositivo y el botón dejaba de leerse como micrófono. **Resuelto con A7**: se conservó esa decisión y la señal del tercer estado pasó a ser el nombre del estado (*Texto listo*), que es lo que pedía el SRS |

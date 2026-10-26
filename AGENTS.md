@@ -385,9 +385,10 @@ sea trivial:
   arreglás ese comportamiento.
 - **`sessions/`**: bitácora de trabajo, un archivo por sesión. Convención y plantilla en el
   skill **`sesion-openspec`**.
-- ⚠️ **No todos los specs están al día**: `specs/pipeline/spec.md` y
-  `openspec/config.yaml` describen el pipeline viejo de landmarks/`sign.json` y **se contradicen
-  con el código**. Antes de creerles, contrastalos contra `AGENTS.md` y contra `app.js`.
+- **Si un spec o `openspec/config.yaml` contradicen al código, gana el código** y la
+  diferencia se reporta; no se elige por cuenta propia. El pipeline de landmarks con
+  `sign.json` ya no está vigente: donde aparezca, es historia. `specs/pipeline/spec.md` y
+  `openspec/config.yaml` se auditaron contra el código el 2026-10-24.
 
 ---
 

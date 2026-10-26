@@ -8,7 +8,7 @@ horneada por hueso y la escena solo la reproduce.
 
 | | |
 |---|---|
-| Personaje | `models/avatar.glb` (12.98 MB), 102 huesos, 11 mallas, texturas WebP PBR |
+| Personaje | `models/avatar.glb` (12,98 MB), 102 articulaciones de skin, 11 mallas, texturas WebP PBR |
 | Señas | **clips `0000`..`0049` dentro del mismo `avatar.glb`** (50, una por glosa) |
 | Escena | `app.js` + `index.html`, three r169 por CDN |
 | Catálogo | `domain/SignsCatalog.kt`, generado |
@@ -90,14 +90,22 @@ frena la corrida: deformar la malla no da ningún error en pantalla.
 
 ### Cómo se regenera
 
-`tools/rest_pose.py`, llamado **al final** de `tools/split_signs.py` (después de
-escribir `signs/`, porque el frame de referencia sale de ahí). **`avatar.glb` no
-se edita a mano**: se regenera, y la pose viene sola.
+`tools/pack_signall.py`, el pipeline vigente: reusa las funciones de
+`tools/rest_pose.py` y saca el frame de referencia del **primer keyframe del clip
+`0029` del propio archivo** que está armando, así que ya no necesita un
+`signs/0029_0000_0000.glb` en disco. `tools/split_signs.py` es el layout viejo
+—separaba `signs/` y después horneaba la pose desde ahí— y sigue en el repo porque
+el pipeline le importa `write_catalog`. **`avatar.glb` no se edita a mano**: se
+regenera, y la pose viene sola.
 
 ```bash
-python3 tools/rest_pose.py --dry-run   # solo el informe: manos antes/después
-python3 tools/preview_pose.py --sheet  # las 4 poses de la comparación
+python3 tools/pack_signall.py --dry-run   # informe: pose de descanso y morphs podados
 ```
+
+Ojo: `python3 tools/rest_pose.py --dry-run` y `python3 tools/preview_pose.py --sheet`
+**ya no corren solos** desde el 2026-10-22: los dos esperan el layout viejo
+(`assets/web/signs/`), que se borró. El informe de la pose lo da el `--dry-run` de
+`pack_signall.py`.
 
 `preview_pose.py` renderiza una pose sin three.js ni instalar la app (skinning
 lineal con las IBM del export, el mismo `pivot` y la misma cámara que `app.js`,
@@ -105,19 +113,24 @@ que lee del propio archivo). Necesita `numpy` y `PIL`; el pipeline de assets no.
 
 ## Nombres de huesos
 
-**Los export de Cascadeur usan puntos en los dedos y en la palma, y `DEF-` en
-los huesos largos y de la cara.** Los nombres que existen (verificados contra el
-`.glb`):
+**Los export de Cascadeur usan puntos en la cadena del brazo, en los dedos y en la
+palma, y no usan ningún prefijo en los huesos de la cara.** Los nombres que existen
+(verificados contra el `.glb`):
 
 Verificado el 2026-10-17 contra `models/avatar.glb` **y** contra el export original de
-Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`). **102 articulaciones de skin en los dos
+Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`), y reverificado el 2026-10-24
+y el 2026-10-26 contra el archivo vigente. **102 articulaciones de skin en los tres
 archivos.**
 
 ```
 shoulder.L, upper_arm.L, forearm.L, hand.L        (+ lados R)
 palm.01.L … palm.04.L   f_index.01.L … f_pinky.03.L   thumb.01.L … thumb.03.L
-HG_Branden.001                 ← raíz del armature (NO es un hueso)
+HG_Branden                     ← raíz del armature (NO es un joint, y no está animada)
 ```
+
+`HG_Branden.001` era el nombre de la raíz en el export viejo (`../material-3d/GLB
+Senas/`); en el archivo vigente la raíz es `HG_Branden` y **ningún canal de los 50
+clips la toca**.
 
 **No existe ningún hueso `DEF-` en este rig.** Verificado: cero coincidencias, tanto en el
 GLB que va en el APK como en el export original. Cualquier documento que liste
@@ -126,38 +139,51 @@ GLB que va en el APK como en el export original. Cualquier documento que liste
 
 ### La cara no la mueve la app
 
-Los nodos de cara que sí existen en el archivo usan nombres al estilo ARKit y **no son
-articulaciones de skin**:
+Los nodos de cara que existen en el archivo usan nombres al estilo ARKit y **sí son
+articulaciones de skin**: los 31 están entre los 102 joints.
 
 ```
 brow_dwn_L / brow_dwn_R        brow_outer_up_L / brow_outer_up_R   brow_inner_up
 eye_blink_open_L / eye_blink_open_R    eye_squint_L / eye_squint_R
 eyeball.L, eyeball.lookat.L, eyeball_lookat_master
 jaw, jaw_upper, jaw_dwn_mouth_clsd, jaw_open_lt_rt_frwd
+mouth_dimple_*, mouth_lower_down_*, mouth_smile_frown_*, mouth_stretch_*,
+mouth_upper_up_*, mouth_lt_rt_funnel, mouth_roll_lower, mouth_shrug_roll_upper
 ```
 
-Y **no están driven por nada**: el GLB que va en el APK tiene **cero morph targets**, y `app.js`
-no menciona morph targets, blendshapes ni ninguno de esos nombres. La expresión facial no
-se anima en código — la cara viene horneada en el clip. Es el punto **A6** de
+La app no los mueve: `app.js` no menciona ninguno de esos nombres. El GLB del APK
+tiene **7 morph targets** —`Male`, `LIVE_KEY_PERMANENT`, `Body Proportions` ×4 y
+`eyeball_size`—, **ninguno de expresión facial**, y los 5 canales de pesos por clip
+valen 1,0 constante (contado el 2026-10-24 y reverificado el 2026-10-26). Los clips
+dejan la cara **casi quieta**: el mayor rango de un componente del cuaternión de
+rotación de un hueso de cara en los 50 clips es **0,0012** (`jaw`, clip `0015`),
+contra **1,996** del mayor hueso del cuerpo (`thigh.L`, clip `0034`). O sea: los
+huesos existen y son del skin, pero la expresión no viene animada en el clip y no
+hay marcadores. Es el punto **A6** de
 `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores por tipo de frase y no hay
 implementación. Antes estaba en pausa; el SRS de Overleaf ahora sí lo pide, así que la
 decisión del owner está pendiente (2026-10-17).
 
 Dos detalles que no son obvios y ya costaron tiempo:
 
-- **Los tracks también animan la raíz del armature** (`HG_Branden.001`, en
-  posición, rotación y escala). Por eso `app.js` cuenta nodos resueltos y no
-  huesos: marcar 138 tracks "sin resolver" sería un falso positivo.
+- **La raíz del armature no se anima, y no es un joint.** `app.js` cuenta nodos
+  resueltos y no huesos porque los **5 canales de pesos** de cada clip apuntan a
+  mallas (`HG_Body_facial`, `HG_Chinos_Male.002`, `HG_Dress_Shirt_Collar_Male.002`,
+  `HG_Leather_Dress_Shoe_Male.002`, `HG_Sweater_1_Male.002`), que no son huesos del
+  skeleton: contar solo huesos marcaría esos 5 tracks como "sin resolver" en cada
+  clip.
 - **La normalización va en un `pivot` padre, nunca sobre la raíz.** El mixer
   sobrescribe la raíz frame a frame: la escala se perdería en el primer frame y
   el muñeco aparecería descolocado y sin escalar, sin ningún error.
 
 ## Animación entre señas
 
-Los 46 clips de animación **arrancan y terminan en el mismo cluster** (mano
-izquierda en `(+30, +91, +19) cm`, desviación estándar 2.5–6 cm): el salto
-directo del final de una seña al inicio de la siguiente es de **5.9 cm de
-mediana** y el 79% de los pares ya es continuo. Los exports de Cascadeur están
+Los 50 clips de animación **arrancan y terminan en el mismo cluster** (medido el
+2026-10-26 sobre los 50 clips del archivo vigente: mano izquierda en `(+31,5, +91,0,
++17,6) cm`, desviación estándar 3,2–4,3 cm; derecha en `(−12,1, +91,8, +26,3) cm`,
+2,4–6,0 cm): el salto directo del final de una seña al inicio de cualquier otra
+—distancia de `hand.L`, sobre los 2450 pares ordenados— es de **5,6 cm de mediana**
+y el **81 % de los pares queda por debajo de 10 cm**. Los exports de Cascadeur están
 escritos para encadenarse.
 
 Por eso `app.js` **no** pone nada entre las señas: el clip siguiente entra 100 ms
@@ -188,9 +214,13 @@ Detalle, duración y la cuenta de por qué 100 ms: `openspec/changes/archive/202
 > **no son huesos de este rig** (ver § Nombres de huesos). El síntoma se había visto en
 > pantalla, pero la causa atribuida a los pesos no se pudo verificar contra el archivo.
 >
-> **Lo que sí es cierto:** la app no anima la cara de ninguna manera, así que cualquier
-> asimetría de cejas viene **horneada en el clip**, no del runtime. Para corregirla hay que
-> tocar el `.blend` de origen en Blender y re-exportar; no se arregla en `app.js`.
+> **Lo que sí es cierto:** la app no anima la cara de ninguna manera, así que la
+> asimetría no puede venir del runtime. Y los clips actuales dejan los huesos de cara
+> **casi quietos** (rango máximo de 0,0012 en un componente del cuaternión, medido el
+> 2026-10-26 sobre los 50 clips), así que ni siquiera viene de una diferencia entre
+> clips: hay que **medirla en el export**, con los nombres que sí existen. Para
+> corregirla hay que tocar el `.blend` de origen en Blender y re-exportar; no se
+> arregla en `app.js`.
 >
 > Para volver a ocuparse de esto hace falta medir los pesos reales en el export, con los
 > nombres que sí existen en el archivo.
@@ -204,6 +234,10 @@ escalar después de un cambio en `app.js`, es esto.
 
 - No hay IK, ni cinemática inversa, ni reintentos de pose: los `.glb` traen la
   pose.
-- No hay sincronización de cara: viene horneada en el mismo clip.
-- No hay morph targets ni blendshapes.
+- No hay sincronización de cara: los clips actuales dejan los huesos faciales casi
+  quietos (rango máximo de 0,0012, medido el 2026-10-26), así que no hay expresión
+  que sincronizar.
+- Hay **7 morph targets** (`Male`, `LIVE_KEY_PERMANENT`, `Body Proportions` ×4,
+  `eyeball_size`), ninguno de expresión facial, y la escena no los maneja; no hay
+  blendshapes de cara.
 - El peso por vértice lo pone Cascadeur, no la app.
