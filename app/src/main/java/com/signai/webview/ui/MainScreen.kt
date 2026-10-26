@@ -262,11 +262,14 @@ fun MainScreen(state: MainScreenState) {
                                     onSignStart = state::onSignStart,
                                     onSignFailed = state::onSignFailed,
                                     onSceneFailed = state::onSceneFailed,
+                                    onAvatarLoaded = state::onAvatarLoaded,
+                                    onAvatarFailed = state::onAvatarFailed,
                                     onLoaded = {
                                         loading = false
                                         state.syncWebSettings()
                                     },
                                     interactive = !(showConversation || showSettings),
+                                    avatarId = state.settings.character.id,
                                 )
                             }
                         }
@@ -300,7 +303,9 @@ fun MainScreen(state: MainScreenState) {
                                 // (`STA-20`).
                                 sentTextLocked = state.sentTextLocked,
                                 micAvailable = state.backendConnected,
-                                enabled = !state.replayPending,
+                                // Un cambio de avatar deja el modelo a medio
+                                // construir: el panel espera a `avatarLoaded`.
+                                enabled = !state.replayPending && !state.avatarLoading,
                             )
                         }
 
@@ -368,6 +373,7 @@ fun MainScreen(state: MainScreenState) {
                                     settings = state.settings,
                                     onToggle = state::toggle,
                                     onCharacter = state::setCharacter,
+                                    canSwitchAvatar = state.canSwitchAvatar,
                                     onSpeed = state::setSpeed,
                                     onInterfaceSize = state::setInterfaceSize,
                                     sign = state.sign,

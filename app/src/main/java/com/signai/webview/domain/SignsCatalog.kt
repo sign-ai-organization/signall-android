@@ -1,19 +1,19 @@
 package com.signai.webview.domain
 
 /**
- * Signs shipped inside the APK, from `tools/pack_signall.py`.
+ * Signs shipped inside the APK, from `tools/pack_avatars.py`.
  *
  * One entry per sign of LSC50 that has an exported animation (rep 0, angle 0);
- * each is a clip named `<id>` inside `assets/web/models/avatar.glb`,
- * the one file that also holds the character.
+ * each is a clip named `<id>` inside `assets/web/models/juan.glb` or `assets/web/models/pauline.glb`,
+ * the files that also hold the character.
  *
- * This file is GENERATED — `tools/pack_signall.py` rewrites it from the assets it
+ * This file is GENERATED — `tools/pack_avatars.py` rewrites it from the assets it
  * just wrote, so the list and the assets cannot drift apart. Editing it
  * by hand will be undone on the next generator run.
  *
- * The character itself is NOT per sign: `assets/web/models/avatar.glb` is loaded
- * once and every sign is a clip retargeted to that same skeleton. Replacing the
- * avatar therefore needs no re-export of the signs.
+ * The character itself is NOT per sign: the scene loads one of
+ * `assets/web/models/juan.glb` or `assets/web/models/pauline.glb` once and every sign is a clip retargeted to that same
+ * skeleton. Replacing the avatar therefore needs no re-export of the signs.
  *
  * All 50 vocabulary signs of LSC50 are here, bundled in the
  * avatar. Signs outside this list fall back to [DEFAULT] rather than
@@ -49,7 +49,7 @@ object SignsCatalog {
     /**
      * The logical path of a sign, as a same-origin URL.
      *
-     * The animation itself is a clip inside `models/avatar.glb`, and the scene
+     * The animation itself is a clip inside `assets/web/models/juan.glb` or `assets/web/models/pauline.glb`, and the scene
      * resolves this path to that clip **by name** without any request: it parses
      * `<id>` out of the path and looks it up among the clips it already loaded
      * (see `embeddedClipsFor` in `app.js`). The path is kept as the identifier

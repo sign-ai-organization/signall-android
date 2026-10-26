@@ -150,6 +150,54 @@ class MainScreenState(
     var settings by mutableStateOf(settingsStore.load())
         private set
 
+    /**
+     * Se está cargando un avatar nuevo en la escena.
+     *
+     * El selector solo se habilita en reposo absoluto, así que mientras esto
+     * está prendido no hay ninguna frase en vuelo; igual el panel entero queda
+     * deshabilitado hasta que la escena avise `avatarLoaded:<id>`, para que no
+     * se pueda pedir una traducción contra un modelo a medio construir.
+     */
+    var avatarLoading by mutableStateOf(false)
+        private set
+
+    /** Avatar que estaba puesto antes del cambio, para volver si la carga falla. */
+    private var avatarBeforeSwitch: Character? = null
+
+    /** Reloj del cambio de avatar, para el log de la carga. */
+    private var avatarSwitchStartedAt = 0L
+
+    /**
+     * El selector de Personaje solo se puede tocar en reposo absoluto.
+     *
+     * Es la decisión del owner (2026-10-24): con una captura, una frase lista o
+     * enviada, una traducción, cola o una repetición pendientes, el avatar no
+     * cambia. *Grabando*, *Procesando* y *Reproduciendo* quedan afuera por el
+     * estado; [dictationPending] cubre "frase lista", [sentText] cubre "frase
+     * enviada", y [queuePlaying]/[replayPending]/[pendingText] cubren la cola y
+     * el Repetir, que siguen vivos después del `done`.
+     *
+     * *Desconectado* y *Error* **sí** permiten el cambio: no hay ninguna
+     * operación en curso, y bloquearlo ahí dejaría el selector inutilizable sin
+     * backend, que es justo cuando uno quiere probar los avatares. El plan pedía
+     * "únicamente en `Inactivo`"; se sigue la lista del owner y no esa
+     * recomendación, porque la lista es la decisión y la recomendación no.
+     * [sceneDead] lo deja apagado para siempre: un WebView sin proceso de render
+     * no puede cargar nada.
+     */
+    val canSwitchAvatar: Boolean
+        get() = !avatarLoading &&
+            !sceneDead &&
+            micMode == MicMode.Off &&
+            !queuePlaying &&
+            !replayPending &&
+            pendingText == null &&
+            !dictationPending &&
+            sentText == null &&
+            (playbackState == PlaybackState.Inactivo ||
+                playbackState == PlaybackState.Desconectado ||
+                playbackState == PlaybackState.Error)
+
     var sign by mutableStateOf(signs.firstOrNull() ?: SignsCatalog.DEFAULT)
         private set
 
@@ -721,6 +769,9 @@ class MainScreenState(
     /** What the stage hint shows: the glosses while signing, else state or message. */
     val statusLine: String
         get() = when {
+            // Cambio de avatar en curso: es un estado de carga propio, no uno
+            // de los siete del SRS. Mientras dura, el panel está deshabilitado.
+            avatarLoading -> "Cargando avatar…"
             // Depuración primero: con el interruptor de Ajustes → Avanzado prendido
             // el indicador se usa como pantalla de diagnóstico y puede llevar
             // glosas y mensajes en detalle.
@@ -2431,8 +2482,68 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         }
     }
 
+    /**
+     * Cambia el avatar en escena, solo en reposo absoluto.
+     *
+     * La selección se persiste **antes** de cargar para que el próximo arranque
+     * abra directamente con el avatar elegido, y se revierte si la escena avisa
+     * `avatarFailed:<id>`. La escena no borra el modelo anterior hasta que el
+     * nuevo terminó de parsearse, así que un fallo deja al usuario con el
+     * avatar que ya tenía.
+     */
     fun setCharacter(character: Character) {
+        if (character == settings.character) return
+        if (!canSwitchAvatar) {
+            showStatus("Para cambiar de avatar, dejá la app en reposo.")
+            return
+        }
+        val previous = settings.character
+        avatarBeforeSwitch = previous
+        avatarSwitchStartedAt = SystemClock.elapsedRealtime()
+        avatarLoading = true
         persist(settings.copy(character = character))
+        webView.setAvatar(character.id)
+        Log.i(TAG, "cambio de avatar: ${previous.id} -> ${character.id}")
+    }
+
+    /**
+     * La escena terminó de cargar el avatar pedido (`avatarLoaded:<id>`).
+     *
+     * Se ignoran los avisos que no correspondan al avatar que el usuario tiene
+     * seleccionado: un `avatarLoaded` viejo no debe destrabar un cambio nuevo.
+     */
+    fun onAvatarLoaded(id: String) {
+        if (!avatarLoading || id != settings.character.id) {
+            Log.i(TAG, "avatar cargado ($id) fuera de turno: se ignora")
+            return
+        }
+        val elapsed = SystemClock.elapsedRealtime() - avatarSwitchStartedAt
+        avatarLoading = false
+        avatarBeforeSwitch = null
+        Log.i(TAG, "avatar listo: $id en $elapsed ms")
+        showStatus("Avatar cargado.")
+    }
+
+    /**
+     * La escena no pudo cargar el avatar pedido (`avatarFailed:<id>`).
+     *
+     * El modelo anterior sigue en pantalla porque la escena lo descarta recién
+     * cuando el nuevo está listo, así que alcanza con volver la preferencia y
+     * liberar el panel. Si la falla es del avatar **inicial**, no hay anterior:
+     * la escena ya avisa por su cuenta y el splash se destapa por timeout.
+     */
+    fun onAvatarFailed(id: String) {
+        if (!avatarLoading || id != settings.character.id) {
+            Log.w(TAG, "fallo de avatar ($id) fuera de turno: se ignora")
+            return
+        }
+        val elapsed = SystemClock.elapsedRealtime() - avatarSwitchStartedAt
+        val previous = avatarBeforeSwitch ?: Character.Juan
+        avatarLoading = false
+        avatarBeforeSwitch = null
+        Log.e(TAG, "no se pudo cargar el avatar $id en $elapsed ms: se vuelve a ${previous.id}")
+        persist(settings.copy(character = previous))
+        showStatus("No se pudo cargar ese avatar. Se mantiene el anterior.")
     }
 
     fun setSpeed(speed: Int) {

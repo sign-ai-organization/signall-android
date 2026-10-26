@@ -1,15 +1,18 @@
 // SignAI — escena 3D del avatar.
 //
-// El personaje se carga UNA vez desde `models/avatar.glb`. No hay retargeting ni
-// interpretación de landmarks: los clips traen la pose ya horneada por hueso, y
-// acá solo se reproduce. Eso deja el `app.js` en ~300 líneas y saca de en medio
-// el motor procedural que antes tenía que adivinar la pose desde coordenadas
+// El personaje se carga UNA vez desde `models/juan.glb` o `models/pauline.glb`
+// (elección de Ajustes → Personaje). No hay retargeting ni interpretación de
+// landmarks: los clips traen la pose ya horneada por hueso, y acá solo se
+// reproduce. Eso deja el `app.js` en ~300 líneas y saca de en medio el motor
+// procedural que antes tenía que adivinar la pose desde coordenadas
 // normalizadas de imagen.
 //
-// Dónde viene cada cosa, desde el 2026-10-22:
-//   models/avatar.glb  → el muñeco con su esqueleto (102 huesos, HG_*) **y las 50
-//                        señas como clips** `0000`..`0049`
-//   signs/*.glb        → el layout viejo: solo animación, un clip por variante,
+// Dónde viene cada cosa, desde el 2026-10-26:
+//   models/<avatar>.glb → el muñeco con su esqueleto (102 huesos, HG_*) **y las
+//                        50 señas como clips** `0000`..`0049`, cada una con sus
+//                        variantes faciales `_alegria`, `_tristeza`, … (300
+//                        clips por archivo; hoy se usan solo las base)
+//   signs/*.glb         → el layout viejo: solo animación, un clip por variante,
 //                        mismo esqueleto. Se sigue soportando como descarga, pero
 //                        con las señas adentro del avatar no se pide ninguno.
 //
@@ -19,10 +22,12 @@
 //
 // Contrato con Android (`window.SignAI`) — no cambiar sin tocar el lado Kotlin:
 //   setQueue, appendQueue, playFrom, queuePending, queueState, play, setDebug,
-//   setFreeCamera, setGrid, setBackground, setReduceMotion,
+//   setFreeCamera, setGrid, setBackground, setReduceMotion, setAvatar,
 //   setSpeed, setTheme, setDefaultSign, setSilenceTimeoutMs
 // Hacia Android: `window.SignAIBridge.postMessage("onPlaybackDone")`,
-// `postMessage("avatarReady")` y `postMessage("signStart:<idx>:<jsMs>")`.
+// `postMessage("avatarReady")` (primer avatar), `postMessage("avatarLoaded:<id>")`
+// (cambios posteriores), `postMessage("avatarFailed:<id>")` y
+// `postMessage("signStart:<idx>:<jsMs>")` por cada seña.
 //
 // `signStart` es la primera seña del turno moviéndose en pantalla. Sin él, el
 // tramo desde que el backend manda una oración hasta que el muñeco se mueve no
@@ -64,7 +69,32 @@ const state = {
   silenceTimeoutMs: null,
 };
 
-const AVATAR_URL = "models/avatar.glb";
+const AVATAR_SOURCES = {
+  juan: "models/juan.glb",
+  pauline: "models/pauline.glb",
+};
+const DEFAULT_AVATAR = "juan";
+
+/**
+ * Catálogo local de avatares. La URL nunca se arma con un valor crudo: el nombre
+ * que llega por `setAvatar` o por `?avatar=` tiene que ser una clave de este
+ * objeto, así que no hay forma de pedir algo fuera de `models/`.
+ */
+function avatarFromQuery() {
+  const requested = new URLSearchParams(window.location.search).get("avatar");
+  return Object.prototype.hasOwnProperty.call(AVATAR_SOURCES, requested)
+    ? requested
+    : DEFAULT_AVATAR;
+}
+
+let avatarId = avatarFromQuery();
+/** La escena ya tiene este avatar indexado y en pantalla. */
+let loadedAvatarId = null;
+/** Sube con cada carga; una carga vieja no debe pisar a la nueva. */
+let avatarEpoch = 0;
+/** Pivote del avatar en escena, para poder limpiarlo al cambiar. */
+let avatarPivot = null;
+
 const DEFAULT_SIGN_URL = "signs/0000_0000_0000.glb";
 let defaultSignUrl = DEFAULT_SIGN_URL;
 
@@ -322,11 +352,11 @@ const signCache = new Map();
 /**
  * Clips que ya vinieron **dentro** del avatar, por nombre de clip.
  *
- * `models/avatar.glb` puede traer las señas empaquetadas como animaciones
- * (`0000`..`0049`) en vez de un `.glb` por seña. Cuando las trae, pedir el
- * `signs/<id>.glb` es un viaje de red (o un 404, si el archivo no se empaquetó
- * porque la seña ya está acá) para un dato que ya está en memoria: se resuelve
- * por nombre y no se descarga nada.
+ * `models/<avatar>.glb` (Juan o Pauline) puede traer las señas empaquetadas como
+ * animaciones (`0000`..`0049`) en vez de un `.glb` por seña. Cuando las trae,
+ * pedir el `signs/<id>.glb` es un viaje de red (o un 404, si el archivo no se
+ * empaquetó porque la seña ya está acá) para un dato que ya está en memoria: se
+ * resuelve por nombre y no se descarga nada.
  *
  * Se llena al cargar el avatar. Si el archivo no trae animaciones queda vacío y
  * todo sigue por el camino de siempre (un `.glb` por seña), así que las dos
@@ -342,6 +372,14 @@ const embeddedClips = new Map();
  * variantes de una misma seña son `0000`, `0000.001`, …: se devuelven todas,
  * igual que si vinieran de un `.glb` propio, para que `pickVariant` siga
  * eligiendo.
+ *
+ * **Las variantes faciales quedan afuera a propósito.** Desde el 2026-10-26 cada
+ * avatar trae `0000_alegria`, `0000_tristeza`, `0000_sorpresa`, `0000_pregunta`
+ * y `0000_negacion` además de la base. Ese sufijo con guion bajo no matchea
+ * `id + "."`, así que el resolutor devuelve solo el clip base: la app representa
+ * las señas como hasta ahora, sin marcadores faciales, hasta que el owner
+ * apruebe el mapeo tipo de oración → variante. Cuando eso pase, el cambio se
+ * hace acá y no hay que recomprimir los assets.
  */
 function embeddedClipsFor(url) {
   if (!embeddedClips.size) return null;
@@ -393,10 +431,66 @@ function unresolvedTracks(clip, nodeNames) {
   return missing;
 }
 
-reportProgress(45);
-loader.load(AVATAR_URL, (gltf) => {
-  const root = gltf.scene;
+/** Avisa a Android que el cambio de avatar terminó (`avatarLoaded:<id>`). */
+function notifyAvatarLoaded(id) {
+  try { window.SignAIBridge?.postMessage(`avatarLoaded:${id}`); } catch (e) { /* no bridge */ }
+  console.log(`[SignAI] avatar cargado: ${id} · ${Math.round(performance.now())} ms`);
+}
 
+/** Avisa que el avatar pedido no se pudo cargar (`avatarFailed:<id>`). */
+function notifyAvatarFailed(id) {
+  try { window.SignAIBridge?.postMessage(`avatarFailed:${id}`); } catch (e) { /* no bridge */ }
+}
+
+/** Libera geometrías, materiales y texturas de un árbol que se va de escena. */
+function disposeTree(root) {
+  const geometries = new Set();
+  const materials = new Set();
+  const textures = new Set();
+  root.traverse(obj => {
+    if (obj.geometry) geometries.add(obj.geometry);
+    const list = Array.isArray(obj.material)
+      ? obj.material
+      : (obj.material ? [obj.material] : []);
+    for (const material of list) {
+      materials.add(material);
+      // Las texturas cuelgan de propiedades con nombres distintos (map,
+      // normalMap, roughnessMap, …): se recorren todos los valores.
+      for (const value of Object.values(material)) {
+        if (value && value.isTexture) textures.add(value);
+      }
+    }
+  });
+  for (const texture of textures) texture.dispose();
+  for (const material of materials) material.dispose?.();
+  for (const geometry of geometries) geometry.dispose();
+}
+
+/**
+ * Saca el avatar actual de la escena y suelta lo que tenía en GPU.
+ *
+ * Se llama **después** de que el avatar nuevo terminó de parsearse, no antes:
+ * si la carga falla, el usuario se queda con el avatar que ya veía. El pico de
+ * memoria es el parseo del nuevo, que todavía no está en la escena.
+ */
+function releaseAvatar() {
+  state.mixer?.stopAllAction();
+  state.mixer = null;
+  state.action = null;
+  state.outgoing = null;
+  state.playing = false;
+  state.finishing = false;
+  state.nodeNames = new Set();
+  state.nodeCount = 0;
+  if (!avatarPivot) return;
+  scene.remove(avatarPivot);
+  disposeTree(avatarPivot);
+  avatarPivot = null;
+}
+
+/** Construye el pivote normalizado, el índice de nodos y el mixer de un GLB. */
+function prepareAvatar(gltf) {
+  const root = gltf.scene;
   root.traverse(obj => {
     if (obj.isMesh) {
       obj.frustumCulled = false;
@@ -407,13 +501,13 @@ loader.load(AVATAR_URL, (gltf) => {
   });
 
   // Normalizar: el muñeco mide ~1.83 de alto en el export. Se escala a 1.7 y se
-  // apoya en el piso (y=0) para que el encuadre y la grilla significen algo.
+  // apoya en el piso (y=0) para que el encuadre y la grilla signifiquen algo.
   //
   // La transformación va en un `pivot` PADRE, no sobre `root`: los clips de
-  // Cascadeur animan la raíz del armature (`HG_Branden001`) en posición,
-  // rotación y escala, así que el mixer sobrescribe `root` frame a frame. Si la
-  // normalización estuviera ahí, la perdería el primer frame y el muñeco
-  // aparecería descolocado y sin escalar — sin ningún error, solo feo.
+  // Cascadeur animan la raíz del armature en posición, rotación y escala, así
+  // que el mixer sobrescribe `root` frame a frame. Si la normalización estuviera
+  // ahí, la perdería el primer frame y el muñeco aparecería descolocado y sin
+  // escalar — sin ningún error, solo feo.
   const pivot = new THREE.Object3D();
   pivot.name = "SignAiPivot";
   pivot.add(root);
@@ -428,9 +522,6 @@ loader.load(AVATAR_URL, (gltf) => {
     pivot.position.set(-c.x * s, -box.min.y * s, -c.z * s);
   }
 
-  scene.add(pivot);
-  pivot.updateWorldMatrix(true, true);
-
   // Todo nodo del avatar, no solo los huesos: los tracks de los exports de
   // Blender incluyen la raíz del armature además de los 102 bones.
   const nodeNames = new Set();
@@ -440,75 +531,140 @@ loader.load(AVATAR_URL, (gltf) => {
       for (const bone of obj.skeleton.bones) nodeNames.add(bone.name);
     }
   });
-  state.nodeCount = nodeNames.size;
-  state.nodeNames = nodeNames;
-  // El mixer se ata al root con el que se construye. El root del avatar no
-  // cambia nunca (todos los clips de seña se reproducen sobre el mismo
-  // muñeco), así que un solo mixer alcanza — y es lo que permite cambiar de
-  // seña sin recargar los 10 MB. Se ata a `root`, NO a `pivot`: el pivot es
-  // nuestro andamiaje y ningún track debe tocarlo.
-  state.mixer = new THREE.AnimationMixer(root);
-  // El `performance.now()` va en el mensaje a propósito: es el único número que
-  // dice cuánto tardó la escena en tener el avatar listo, y con un archivo que
-  // trae las 50 señas adentro ese número es el costo de arranque que hay que
-  // vigilar. Se lee con `adb logcat -s SignAIWeb`.
-  console.log("[SignAI] avatar listo · nodos:", state.nodeCount,
-    "·", Math.round(performance.now()), "ms");
-  reportProgress(85);  // el GLB ya está parseado
 
-  // Señas empaquetadas dentro del avatar: `0000`..`0049`, una animación por
-  // seña. Se indexan antes de cargar la seña de arranque para que ese primer
-  // clip también salga de acá y no haya ni un pedido de red antes de moverse.
-  for (const clip of gltf.animations) embeddedClips.set(clip.name, clip);
-  if (embeddedClips.size) {
-    console.log("[SignAI] señas empaquetadas en el avatar:", embeddedClips.size);
+  return {
+    pivot,
+    nodeNames,
+    nodeCount: nodeNames.size,
+    // El mixer se ata al `root`, NO al `pivot`: el pivot es nuestro andamiaje y
+    // ningún track debe tocarlo. Todos los clips del avatar se reproducen sobre
+    // este mismo root, así que un solo mixer alcanza.
+    mixer: new THREE.AnimationMixer(root),
+    animations: gltf.animations,
+  };
+}
+
+/**
+ * Carga un avatar y lo deja listo para representar.
+ *
+ * [initial] distingue el arranque (manda `avatarReady`, el aviso que destapa el
+ * splash) de un cambio en caliente (manda `avatarLoaded:<id>`). El avatar
+ * anterior se libera recién cuando el nuevo parseó: un fallo no deja la escena
+ * vacía.
+ */
+function loadAvatar(id, initial = false) {
+  const url = AVATAR_SOURCES[id];
+  if (!url) {
+    console.error("loadAvatar: avatar desconocido", id);
+    notifyAvatarFailed(id);
+    return false;
   }
-  reportProgress(90);  // las 50 señas ya están indexadas
 
-  // Seña de arranque, para que la app abra mostrando algo aunque el backend
-  // esté caído.
-  const defaultSign = loadSignClips(defaultSignUrl).then(({ clips }) => {
-    const missing = unresolvedTracks(clips[0], nodeNames);
-    setStatus(
-      `Avatar listo — ${clips.length} variante(s)` +
-      (missing ? ` · ${missing} tracks sin resolver` : "") +
-      " · presiona Enviar",
-    );
-    if (missing) console.warn("[SignAI] tracks sin hueso:", missing, clips[0].name);
-  }).catch(err => {
-    setStatus("Error cargando la seña por defecto");
+  const epoch = ++avatarEpoch;
+  const started = performance.now();
+  // Cortar lo que estuviera sonando sin tocar el modelo: la escena solo cambia
+  // de muñeco cuando el nuevo está listo.
+  stopPlayback();
+  // Una cola vieja pertenece al turno anterior y no debe reanudarse sola.
+  state.queue = [];
+  state.queueIdx = 0;
+  state.queueStarted = false;
+  state.loading = true;
+  setStatus(`Cargando avatar ${id}...`);
+  if (initial) reportProgress(45);
+
+  loader.load(url, (gltf) => {
+    if (epoch !== avatarEpoch) {
+      // Llegó una carga que ya no interesa: liberar y no tocar la escena.
+      disposeTree(gltf.scene);
+      return;
+    }
+
+    const parsedAt = Math.round(performance.now() - started);
+    const prepared = prepareAvatar(gltf);
+    console.log(`[SignAI] ${id} parseado · nodos:`, prepared.nodeCount,
+      "·", parsedAt, "ms");
+
+    // Recién acá se reemplaza: el anterior se va con sus texturas y geometrías.
+    releaseAvatar();
+    avatarPivot = prepared.pivot;
+    scene.add(avatarPivot);
+    avatarPivot.updateWorldMatrix(true, true);
+    state.mixer = prepared.mixer;
+    state.nodeNames = prepared.nodeNames;
+    state.nodeCount = prepared.nodeCount;
+
+    // Los clips pertenecen al modelo que se acaba de cargar. Se reindexan
+    // enteros (y se vacía la caché) para que una seña no se reproduzca con los
+    // tracks del avatar anterior.
+    embeddedClips.clear();
+    signCache.clear();
+    for (const clip of prepared.animations) embeddedClips.set(clip.name, clip);
+    loadedAvatarId = id;
+    if (initial) reportProgress(85);
+    console.log(`[SignAI] ${id}: ${embeddedClips.size} clips indexados`);
+
+    // Seña de arranque, para que la app abra mostrando algo aunque el backend
+    // esté caído.
+    const defaultSign = loadSignClips(defaultSignUrl).then(({ clips }) => {
+      const missing = unresolvedTracks(clips[0], state.nodeNames);
+      setStatus(
+        `Avatar listo — ${clips.length} variante(s)` +
+        (missing ? ` · ${missing} tracks sin resolver` : "") +
+        " · presiona Enviar",
+      );
+      if (missing) console.warn("[SignAI] tracks sin hueso:", missing, clips[0].name);
+    }).catch(err => {
+      setStatus("Error cargando la seña por defecto");
+      console.error(err);
+    });
+
+    // El splash de Compose se esconde con `avatarReady`, así que ese aviso se
+    // manda cuando la escena está **entera**, no cuando el GLB terminó de
+    // parsear: los clips ya indexados, la seña de arranque ya resuelta y un
+    // frame dibujado con el avatar adentro. Los dos `requestAnimationFrame` son
+    // el orden del navegador: el primero corre antes de pintar, el segundo ya
+    // corre después de que el frame salió.
+    defaultSign
+      .catch(() => {})  // el error ya se muestra en la barra; no debe colgar el splash
+      .then(() => renderer.compileAsync(scene, camera).catch(() => {}))
+      .then(() => { if (initial) reportProgress(96); })  // shaders ya compilados
+      .then(() => requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (epoch !== avatarEpoch) return;
+        state.loading = false;
+        const totalMs = Math.round(performance.now() - started);
+        if (initial) {
+          // Este es el número que ve el owner: el splash se va justo después.
+          console.log(`[SignAI] escena lista (${id}) · ${totalMs} ms`);
+          reportProgress(100);
+          try { window.SignAIBridge?.postMessage("avatarReady"); } catch (e) { /* no bridge */ }
+        } else {
+          console.log(`[SignAI] cambio de avatar a ${id} listo · ${totalMs} ms`);
+          notifyAvatarLoaded(id);
+        }
+      })));
+  }, (xhr) => {
+    if (!initial) return;  // el progreso solo tiene sentido para el splash
+    // El splash ya no lo ve nadie (está tapado por la barra), pero el estado de
+    // debug sí: es la única señal de cuánto falta mientras baja el archivo.
+    const pct = xhr.total ? xhr.loaded / xhr.total : 0;
+    setStatus(`Cargando avatar ${id}... ${Math.round(pct * 100)}%`);
+    reportProgress(45 + 35 * pct);  // 45 → 80: la descarga
+  }, (err) => {
+    if (epoch !== avatarEpoch) return;
+    state.loading = false;
+    setStatus(`Error cargando ${url}`);
     console.error(err);
+    if (initial) {
+      reportProgress(100);  // que el splash no se quede esperando lo que ya falló
+    } else {
+      notifyAvatarFailed(id);
+    }
   });
+  return true;
+}
 
-  // El splash de Compose se esconde con `avatarReady`, así que ese aviso se
-  // manda cuando la escena está **entera**, no cuando el GLB terminó de parsear:
-  // los 50 clips ya indexados, la seña de arranque ya resuelta y un frame
-  // dibujado con el avatar adentro. Los dos `requestAnimationFrame` son el orden
-  // del navegador: el primero corre antes de pintar, el segundo ya corre después
-  // de que el frame salió. Sin eso, el splash se iba entre "el avatar está en la
-  // escena" y "el avatar se ve", y la primera seña pagaba el arranque del WebGL.
-  defaultSign
-    .catch(() => {})  // el error ya se muestra en la barra; no debe colgar el splash
-    .then(() => renderer.compileAsync(scene, camera).catch(() => {}))
-    .then(() => { reportProgress(96); })  // shaders ya compilados
-    .then(() => requestAnimationFrame(() => requestAnimationFrame(() => {
-      // Este es el número que ve el owner: el splash se va justo después.
-      console.log("[SignAI] escena lista ·", Math.round(performance.now()), "ms");
-      reportProgress(100);
-      try { window.SignAIBridge?.postMessage("avatarReady"); } catch (e) { /* no bridge */ }
-    })));
-
-}, (xhr) => {
-  // El splash ya no lo ve nadie (está tapado por la barra), pero el estado de
-  // debug sí: es la única señal de cuánto falta mientras baja el archivo.
-  const pct = xhr.total ? xhr.loaded / xhr.total : 0;
-  setStatus(`Cargando avatar... ${Math.round(pct * 100)}%`);
-  reportProgress(45 + 35 * pct);  // 45 → 80: la descarga
-}, (err) => {
-  setStatus("Error cargando models/avatar.glb");
-  console.error(err);
-  reportProgress(100);  // que el splash no se quede esperando lo que ya falló
-});
+loadAvatar(avatarId, true);
 
 // ── Reproducción ──────────────────────────────────────────────────────────────
 function notifyPlaybackDone() {
@@ -540,7 +696,8 @@ function notifySignStart(index) {
  * Detiene lo que esté sonando y deja al muñeco en pose de reposo.
  * `stopAllAction()` llama a `restoreOriginalDirection()` sobre cada binding,
  * así que los huesos vuelven a los quaterniones con los que se cargó el avatar:
- * la pose de descanso horneada en `models/avatar.glb` por `tools/rest_pose.py`.
+ * la pose de descanso horneada en `models/<avatar>.glb` por
+ * `tools/pack_avatars.py` (la misma regla de `rest_pose.py`).
  *
  * Es también el camino del long press (reset) y del corte seco con
  * `reduceMotion`: no es una transición, es cortar.
@@ -943,6 +1100,34 @@ window.SignAI = {
   },
 
   setDebug(on) { Debug.enabled = !!on; Debug.render(); },
+
+  /**
+   * Cambia el avatar completo que está en escena (`juan` / `pauline`).
+   *
+   * Solo en reposo: si hay una seña sonando, una cola viva o una carga en
+   * curso, se rechaza y devuelve `false`. La app también bloquea el selector,
+   * pero la guarda vive acá porque el comando es parte del puente y puede
+   * llamarse desde cualquier momento.
+   *
+   * El identificador se resuelve contra [AVATAR_SOURCES]; un valor que no esté
+   * en el catálogo no arma ninguna URL ni pide nada por red.
+   *
+   * Aditivo: no cambia ningún comando existente (BRG-8). El resultado se avisa
+   * con `avatarLoaded:<id>` o `avatarFailed:<id>`.
+   */
+  setAvatar(id) {
+    const name = String(id || "").toLowerCase();
+    if (!Object.prototype.hasOwnProperty.call(AVATAR_SOURCES, name)) {
+      console.error("setAvatar: avatar desconocido", id);
+      return false;
+    }
+    if (name === loadedAvatarId && !state.loading) return true;
+    if (state.playing || state.loading || state.finishing) {
+      console.warn("setAvatar: la escena no está en reposo");
+      return false;
+    }
+    return loadAvatar(name, false);
+  },
 
   /**
    * Accesibilidad: con el ajuste prendido no hay fundición entre señas y cada

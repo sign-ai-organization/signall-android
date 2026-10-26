@@ -54,6 +54,18 @@ const val ProgressPrefix = "progress:"
 const val SignFailedPrefix = "signFailed:"
 
 /**
+ * La escena terminó de cambiar de avatar: `avatarLoaded:<id>`.
+ *
+ * Solo se manda en los cambios posteriores al arranque. El primero sigue
+ * usando `avatarReady`, que es el aviso que destapa el splash. Aditivo: una
+ * escena vieja no lo manda y la app no se queda esperando nada que no exista.
+ */
+const val AvatarLoadedPrefix = "avatarLoaded:"
+
+/** La escena no pudo cargar el avatar pedido: `avatarFailed:<id>`. */
+const val AvatarFailedPrefix = "avatarFailed:"
+
+/**
  * Serves the sign assets the app downloaded from the backend, so the 3D scene can
  * `fetch()` them on its own origin (plan paso 4).
  *
@@ -101,6 +113,15 @@ fun AvatarWebView(
      */
     onSignFailed: (queueIndex: Int) -> Unit = {},
     /**
+     * La escena cargó el avatar pedido con [setAvatar] (`avatarLoaded:<id>`).
+     *
+     * El primer avatar no pasa por acá: ese sigue avisando `avatarReady`, que
+     * es también el que esconde el splash.
+     */
+    onAvatarLoaded: (id: String) -> Unit = {},
+    /** La escena no pudo cargar el avatar pedido (`avatarFailed:<id>`). */
+    onAvatarFailed: (id: String) -> Unit = {},
+    /**
      * The scene is gone: the page failed to load, or the browser lost its render
      * process (`onReceivedError` / `onRenderProcessGone`).
      *
@@ -113,6 +134,16 @@ fun AvatarWebView(
     // embedded Android View and would otherwise win the whole screen, leaving
     // the drawer's backdrop and handle unreachable (spec `EDG-22`).
     interactive: Boolean = true,
+    /**
+     * Avatar que la escena tiene que cargar **al abrir la página** (`juan`,
+     * `pauline`).
+     *
+     * Va en la URL y no por el puente porque la escena empieza a cargar el
+     * modelo en cuanto corre `app.js`: un `setAvatar` posterior llegaría con la
+     * descarga del avatar por defecto ya en vuelo y bajaría dos modelos. Los
+     * cambios en caliente sí van por `setAvatar`.
+     */
+    avatarId: String = "juan",
 ) {
     val context = LocalContext.current
     val signsDir = remember(context) { File(context.cacheDir, SignAssetRepository.SIGNS_PATH_PREFIX.trim('/')) }
@@ -200,6 +231,16 @@ fun AvatarWebView(
                                             sceneProgress = pct.coerceIn(0, 100)
                                             onProgress(sceneProgress)
                                         }
+                                    return
+                                }
+                                // Cambio de avatar en caliente. Va antes del
+                                // `when` porque el mensaje trae el id pegado.
+                                if (data != null && data.startsWith(AvatarLoadedPrefix)) {
+                                    onAvatarLoaded(data.removePrefix(AvatarLoadedPrefix))
+                                    return
+                                }
+                                if (data != null && data.startsWith(AvatarFailedPrefix)) {
+                                    onAvatarFailed(data.removePrefix(AvatarFailedPrefix))
                                     return
                                 }
                                 when (data) {
@@ -318,7 +359,10 @@ fun AvatarWebView(
                         return resp
                     }
                 }
-                loadUrl("$BridgeOrigin$AssetsPath" + "web/index.html")
+                loadUrl(
+                    "$BridgeOrigin$AssetsPath" + "web/index.html?avatar=" +
+                        android.net.Uri.encode(avatarId),
+                )
                 onReady(this)
             }
         },

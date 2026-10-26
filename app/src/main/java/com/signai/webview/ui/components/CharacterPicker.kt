@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
@@ -46,8 +47,16 @@ import com.signai.webview.ui.theme.SignAiTheme
 fun CharacterPicker(
     current: Character,
     onPick: (Character) -> Unit,
+    /**
+     * El avatar solo se puede cambiar en reposo absoluto (owner, 2026-10-24).
+     *
+     * Deshabilitado, el trigger no abre el menú: mostrarlo y dejar elegir una
+     * opción que [onPick] va a rechazar sería peor que no ofrecerlo.
+     */
+    enabled: Boolean = true,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    if (!enabled && expanded) expanded = false
     SignAiDropdown(
         expanded = expanded,
         onDismissRequest = { expanded = false },
@@ -55,6 +64,7 @@ fun CharacterPicker(
         trigger = {
             Surface(
                 onClick = { expanded = !expanded },
+                enabled = enabled,
                 shape = SignAiShapes.cornerTile,
                 color = SignAiTheme.colors.background,
                 border = BorderStroke(
@@ -63,7 +73,8 @@ fun CharacterPicker(
                 ),
                 modifier = Modifier
                     .width(SignAiSizes.characterTriggerWidth)
-                    .height(SignAiSizes.characterTriggerHeight),
+                    .height(SignAiSizes.characterTriggerHeight)
+                    .alpha(if (enabled) 1f else 0.45f),
             ) {
                 Row(
                     modifier = Modifier
@@ -104,6 +115,7 @@ fun CharacterPicker(
                     )
                     .selectable(
                         selected = selected,
+                        enabled = enabled,
                         role = Role.RadioButton,
                         onClick = {
                             onPick(character)

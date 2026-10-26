@@ -4,899 +4,1149 @@
   "gloss": null,
   "path": "signs/0000_0000_0000.glb",
   "clip": "0000",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0000"
+   "0000",
+   "0000_alegria",
+   "0000_tristeza",
+   "0000_sorpresa",
+   "0000_pregunta",
+   "0000_negacion"
   ],
   "fps": 24,
   "frames": 59,
   "duration_s": 2.417,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0001",
   "gloss": null,
   "path": "signs/0001_0000_0000.glb",
   "clip": "0001",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0001"
+   "0001",
+   "0001_alegria",
+   "0001_tristeza",
+   "0001_sorpresa",
+   "0001_pregunta",
+   "0001_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0002",
   "gloss": null,
   "path": "signs/0002_0000_0000.glb",
   "clip": "0002",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0002"
+   "0002",
+   "0002_alegria",
+   "0002_tristeza",
+   "0002_sorpresa",
+   "0002_pregunta",
+   "0002_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0003",
   "gloss": null,
   "path": "signs/0003_0000_0000.glb",
   "clip": "0003",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0003"
+   "0003",
+   "0003_alegria",
+   "0003_tristeza",
+   "0003_sorpresa",
+   "0003_pregunta",
+   "0003_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0004",
   "gloss": null,
   "path": "signs/0004_0000_0000.glb",
   "clip": "0004",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0004"
+   "0004",
+   "0004_alegria",
+   "0004_tristeza",
+   "0004_sorpresa",
+   "0004_pregunta",
+   "0004_negacion"
   ],
   "fps": 24,
   "frames": 50,
   "duration_s": 2.042,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0005",
   "gloss": null,
   "path": "signs/0005_0000_0000.glb",
   "clip": "0005",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0005"
+   "0005",
+   "0005_alegria",
+   "0005_tristeza",
+   "0005_sorpresa",
+   "0005_pregunta",
+   "0005_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0006",
   "gloss": null,
   "path": "signs/0006_0000_0000.glb",
   "clip": "0006",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0006"
+   "0006",
+   "0006_alegria",
+   "0006_tristeza",
+   "0006_sorpresa",
+   "0006_pregunta",
+   "0006_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0007",
   "gloss": null,
   "path": "signs/0007_0000_0000.glb",
   "clip": "0007",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0007"
+   "0007",
+   "0007_alegria",
+   "0007_tristeza",
+   "0007_sorpresa",
+   "0007_pregunta",
+   "0007_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0008",
   "gloss": null,
   "path": "signs/0008_0000_0000.glb",
   "clip": "0008",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0008"
+   "0008",
+   "0008_alegria",
+   "0008_tristeza",
+   "0008_sorpresa",
+   "0008_pregunta",
+   "0008_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0009",
   "gloss": null,
   "path": "signs/0009_0000_0000.glb",
   "clip": "0009",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0009"
+   "0009",
+   "0009_alegria",
+   "0009_tristeza",
+   "0009_sorpresa",
+   "0009_pregunta",
+   "0009_negacion"
   ],
   "fps": 24,
   "frames": 52,
   "duration_s": 2.125,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0010",
   "gloss": null,
   "path": "signs/0010_0000_0000.glb",
   "clip": "0010",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0010"
+   "0010",
+   "0010_alegria",
+   "0010_tristeza",
+   "0010_sorpresa",
+   "0010_pregunta",
+   "0010_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0011",
   "gloss": null,
   "path": "signs/0011_0000_0000.glb",
   "clip": "0011",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0011"
+   "0011",
+   "0011_alegria",
+   "0011_tristeza",
+   "0011_sorpresa",
+   "0011_pregunta",
+   "0011_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0012",
   "gloss": null,
   "path": "signs/0012_0000_0000.glb",
   "clip": "0012",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0012"
+   "0012",
+   "0012_alegria",
+   "0012_tristeza",
+   "0012_sorpresa",
+   "0012_pregunta",
+   "0012_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0013",
   "gloss": null,
   "path": "signs/0013_0000_0000.glb",
   "clip": "0013",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0013"
+   "0013",
+   "0013_alegria",
+   "0013_tristeza",
+   "0013_sorpresa",
+   "0013_pregunta",
+   "0013_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0014",
   "gloss": null,
   "path": "signs/0014_0000_0000.glb",
   "clip": "0014",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0014"
+   "0014",
+   "0014_alegria",
+   "0014_tristeza",
+   "0014_sorpresa",
+   "0014_pregunta",
+   "0014_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0015",
   "gloss": null,
   "path": "signs/0015_0000_0000.glb",
   "clip": "0015",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0015"
+   "0015",
+   "0015_alegria",
+   "0015_tristeza",
+   "0015_sorpresa",
+   "0015_pregunta",
+   "0015_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0016",
   "gloss": null,
   "path": "signs/0016_0000_0000.glb",
   "clip": "0016",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0016"
+   "0016",
+   "0016_alegria",
+   "0016_tristeza",
+   "0016_sorpresa",
+   "0016_pregunta",
+   "0016_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0017",
   "gloss": null,
   "path": "signs/0017_0000_0000.glb",
   "clip": "0017",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0017"
+   "0017",
+   "0017_alegria",
+   "0017_tristeza",
+   "0017_sorpresa",
+   "0017_pregunta",
+   "0017_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0018",
   "gloss": null,
   "path": "signs/0018_0000_0000.glb",
   "clip": "0018",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0018"
+   "0018",
+   "0018_alegria",
+   "0018_tristeza",
+   "0018_sorpresa",
+   "0018_pregunta",
+   "0018_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0019",
   "gloss": null,
   "path": "signs/0019_0000_0000.glb",
   "clip": "0019",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0019"
+   "0019",
+   "0019_alegria",
+   "0019_tristeza",
+   "0019_sorpresa",
+   "0019_pregunta",
+   "0019_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0020",
   "gloss": null,
   "path": "signs/0020_0000_0000.glb",
   "clip": "0020",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0020"
+   "0020",
+   "0020_alegria",
+   "0020_tristeza",
+   "0020_sorpresa",
+   "0020_pregunta",
+   "0020_negacion"
   ],
   "fps": 24,
   "frames": 54,
   "duration_s": 2.292,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0021",
   "gloss": null,
   "path": "signs/0021_0000_0000.glb",
   "clip": "0021",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0021"
+   "0021",
+   "0021_alegria",
+   "0021_tristeza",
+   "0021_sorpresa",
+   "0021_pregunta",
+   "0021_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0022",
   "gloss": null,
   "path": "signs/0022_0000_0000.glb",
   "clip": "0022",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0022"
+   "0022",
+   "0022_alegria",
+   "0022_tristeza",
+   "0022_sorpresa",
+   "0022_pregunta",
+   "0022_negacion"
   ],
   "fps": 24,
   "frames": 67,
   "duration_s": 2.75,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0023",
   "gloss": null,
   "path": "signs/0023_0000_0000.glb",
   "clip": "0023",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0023"
+   "0023",
+   "0023_alegria",
+   "0023_tristeza",
+   "0023_sorpresa",
+   "0023_pregunta",
+   "0023_negacion"
   ],
   "fps": 24,
   "frames": 57,
   "duration_s": 2.333,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0024",
   "gloss": null,
   "path": "signs/0024_0000_0000.glb",
   "clip": "0024",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0024"
+   "0024",
+   "0024_alegria",
+   "0024_tristeza",
+   "0024_sorpresa",
+   "0024_pregunta",
+   "0024_negacion"
   ],
   "fps": 24,
   "frames": 59,
   "duration_s": 2.417,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0025",
   "gloss": null,
   "path": "signs/0025_0000_0000.glb",
   "clip": "0025",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0025"
+   "0025",
+   "0025_alegria",
+   "0025_tristeza",
+   "0025_sorpresa",
+   "0025_pregunta",
+   "0025_negacion"
   ],
   "fps": 24,
   "frames": 55,
   "duration_s": 2.25,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0026",
   "gloss": null,
   "path": "signs/0026_0000_0000.glb",
   "clip": "0026",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0026"
+   "0026",
+   "0026_alegria",
+   "0026_tristeza",
+   "0026_sorpresa",
+   "0026_pregunta",
+   "0026_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0027",
   "gloss": null,
   "path": "signs/0027_0000_0000.glb",
   "clip": "0027",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0027"
+   "0027",
+   "0027_alegria",
+   "0027_tristeza",
+   "0027_sorpresa",
+   "0027_pregunta",
+   "0027_negacion"
   ],
   "fps": 24,
   "frames": 53,
   "duration_s": 2.167,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0028",
   "gloss": null,
   "path": "signs/0028_0000_0000.glb",
   "clip": "0028",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0028"
+   "0028",
+   "0028_alegria",
+   "0028_tristeza",
+   "0028_sorpresa",
+   "0028_pregunta",
+   "0028_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0029",
   "gloss": null,
   "path": "signs/0029_0000_0000.glb",
   "clip": "0029",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0029"
+   "0029",
+   "0029_alegria",
+   "0029_tristeza",
+   "0029_sorpresa",
+   "0029_pregunta",
+   "0029_negacion"
   ],
   "fps": 24,
   "frames": 53,
   "duration_s": 2.167,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0030",
   "gloss": null,
   "path": "signs/0030_0000_0000.glb",
   "clip": "0030",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0030"
+   "0030",
+   "0030_alegria",
+   "0030_tristeza",
+   "0030_sorpresa",
+   "0030_pregunta",
+   "0030_negacion"
   ],
   "fps": 24,
   "frames": 52,
   "duration_s": 2.125,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0031",
   "gloss": null,
   "path": "signs/0031_0000_0000.glb",
   "clip": "0031",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0031"
+   "0031",
+   "0031_alegria",
+   "0031_tristeza",
+   "0031_sorpresa",
+   "0031_pregunta",
+   "0031_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.125,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0032",
   "gloss": null,
   "path": "signs/0032_0000_0000.glb",
   "clip": "0032",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0032"
+   "0032",
+   "0032_alegria",
+   "0032_tristeza",
+   "0032_sorpresa",
+   "0032_pregunta",
+   "0032_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0033",
   "gloss": null,
   "path": "signs/0033_0000_0000.glb",
   "clip": "0033",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0033"
+   "0033",
+   "0033_alegria",
+   "0033_tristeza",
+   "0033_sorpresa",
+   "0033_pregunta",
+   "0033_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0034",
   "gloss": null,
   "path": "signs/0034_0000_0000.glb",
   "clip": "0034",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0034"
+   "0034",
+   "0034_alegria",
+   "0034_tristeza",
+   "0034_sorpresa",
+   "0034_pregunta",
+   "0034_negacion"
   ],
   "fps": 24,
   "frames": 56,
   "duration_s": 2.292,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0035",
   "gloss": null,
   "path": "signs/0035_0000_0000.glb",
   "clip": "0035",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0035"
+   "0035",
+   "0035_alegria",
+   "0035_tristeza",
+   "0035_sorpresa",
+   "0035_pregunta",
+   "0035_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0036",
   "gloss": null,
   "path": "signs/0036_0000_0000.glb",
   "clip": "0036",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0036"
+   "0036",
+   "0036_alegria",
+   "0036_tristeza",
+   "0036_sorpresa",
+   "0036_pregunta",
+   "0036_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0037",
   "gloss": null,
   "path": "signs/0037_0000_0000.glb",
   "clip": "0037",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0037"
+   "0037",
+   "0037_alegria",
+   "0037_tristeza",
+   "0037_sorpresa",
+   "0037_pregunta",
+   "0037_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0038",
   "gloss": null,
   "path": "signs/0038_0000_0000.glb",
   "clip": "0038",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0038"
+   "0038",
+   "0038_alegria",
+   "0038_tristeza",
+   "0038_sorpresa",
+   "0038_pregunta",
+   "0038_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0039",
   "gloss": null,
   "path": "signs/0039_0000_0000.glb",
   "clip": "0039",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0039"
+   "0039",
+   "0039_alegria",
+   "0039_tristeza",
+   "0039_sorpresa",
+   "0039_pregunta",
+   "0039_negacion"
   ],
   "fps": 24,
   "frames": 41,
   "duration_s": 1.667,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0040",
   "gloss": null,
   "path": "signs/0040_0000_0000.glb",
   "clip": "0040",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0040"
+   "0040",
+   "0040_alegria",
+   "0040_tristeza",
+   "0040_sorpresa",
+   "0040_pregunta",
+   "0040_negacion"
   ],
   "fps": 24,
   "frames": 34,
   "duration_s": 1.375,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0041",
   "gloss": null,
   "path": "signs/0041_0000_0000.glb",
   "clip": "0041",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0041"
+   "0041",
+   "0041_alegria",
+   "0041_tristeza",
+   "0041_sorpresa",
+   "0041_pregunta",
+   "0041_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0042",
   "gloss": null,
   "path": "signs/0042_0000_0000.glb",
   "clip": "0042",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0042"
+   "0042",
+   "0042_alegria",
+   "0042_tristeza",
+   "0042_sorpresa",
+   "0042_pregunta",
+   "0042_negacion"
   ],
   "fps": 24,
   "frames": 53,
   "duration_s": 2.167,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0043",
   "gloss": null,
   "path": "signs/0043_0000_0000.glb",
   "clip": "0043",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0043"
+   "0043",
+   "0043_alegria",
+   "0043_tristeza",
+   "0043_sorpresa",
+   "0043_pregunta",
+   "0043_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0044",
   "gloss": null,
   "path": "signs/0044_0000_0000.glb",
   "clip": "0044",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0044"
+   "0044",
+   "0044_alegria",
+   "0044_tristeza",
+   "0044_sorpresa",
+   "0044_pregunta",
+   "0044_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0045",
   "gloss": null,
   "path": "signs/0045_0000_0000.glb",
   "clip": "0045",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0045"
+   "0045",
+   "0045_alegria",
+   "0045_tristeza",
+   "0045_sorpresa",
+   "0045_pregunta",
+   "0045_negacion"
   ],
   "fps": 24,
   "frames": 61,
   "duration_s": 2.5,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0046",
   "gloss": null,
   "path": "signs/0046_0000_0000.glb",
   "clip": "0046",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0046"
+   "0046",
+   "0046_alegria",
+   "0046_tristeza",
+   "0046_sorpresa",
+   "0046_pregunta",
+   "0046_negacion"
   ],
   "fps": 24,
   "frames": 53,
   "duration_s": 2.167,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0047",
   "gloss": null,
   "path": "signs/0047_0000_0000.glb",
   "clip": "0047",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0047"
+   "0047",
+   "0047_alegria",
+   "0047_tristeza",
+   "0047_sorpresa",
+   "0047_pregunta",
+   "0047_negacion"
   ],
   "fps": 24,
   "frames": 53,
   "duration_s": 2.167,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0048",
   "gloss": null,
   "path": "signs/0048_0000_0000.glb",
   "clip": "0048",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0048"
+   "0048",
+   "0048_alegria",
+   "0048_tristeza",
+   "0048_sorpresa",
+   "0048_pregunta",
+   "0048_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  },
  {
   "sign_id": "0049",
   "gloss": null,
   "path": "signs/0049_0000_0000.glb",
   "clip": "0049",
-  "bundled": "avatar",
-  "variants": 1,
+  "bundled": "avatars",
+  "variants": 6,
   "variant_names": [
-   "0049"
+   "0049",
+   "0049_alegria",
+   "0049_tristeza",
+   "0049_sorpresa",
+   "0049_pregunta",
+   "0049_negacion"
   ],
   "fps": 24,
   "frames": 51,
   "duration_s": 2.083,
-  "tracks": 311,
+  "tracks": 312,
   "faces": true,
-  "bytes": 12978476,
-  "sha256": "b5cacff42f403fc0142b47fa277a45c0e8606926c72e668d078a3ccc221ceeb6"
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a"
  }
 ]

@@ -252,9 +252,10 @@ El WebView carga por `WebViewAssetLoader` en
 avance real de la escena para la barra del splash y `signStart:<idx>:<jsMs>` por cada seña.
 
 **`avatarReady` es "todo listo", no "el archivo llegó":** se manda después de indexar los
-50 clips, resolver la seña de arranque, compilar los shaders (`renderer.compileAsync`) y
-pintar un frame con el avatar adentro. El splash de Compose se esconde con ese aviso, así
-que si se manda antes se ve el canvas vacío y la primera seña paga el arranque del WebGL.
+300 clips del avatar, resolver la seña de arranque, compilar los shaders
+(`renderer.compileAsync`) y pintar un frame con el avatar adentro. El splash de Compose se
+esconde con ese aviso, así que si se manda antes se ve el canvas vacío y la primera seña
+paga el arranque del WebGL.
 El progreso de la página (`WebChromeClient.onProgressChanged`) **no** sirve para la barra:
 dice 100 % cuando terminó el HTML.
 
@@ -334,23 +335,34 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
 - **Nunca pongas la normalización (escala/offset) en la raíz de la escena cargada.** Las
   exportaciones de Cascadeur animan la raíz del armature en posición, rotación *y* escala,
   así que el mixer la sobrescribe cada frame. Va en un objeto pivote padre.
-- **Un solo `.glb` con todo adentro.** `models/avatar.glb` trae el personaje, la cara y
-  las **50 señas como clips** `0000`..`0049`; la escena los indexa al cargar
-  (`embeddedClipsFor` en `app.js`) y resuelve `signs/<id>.glb` **por nombre, sin pedir
-  nada por red**. De 27,2 MB de origen a 12,98 MB: se podan los 61 morph targets que
-  ninguna animación mueve y no pesan por defecto.
+- **Dos `.glb` completos, uno por avatar.** `models/juan.glb` (34,21 MB) y
+  `models/pauline.glb` (29,46 MB) traen el personaje, la cara y las **50 señas como
+  clips** `0000`..`0049`, cada una con sus variantes faciales (`_alegria`, `_tristeza`,
+  `_sorpresa`, `_pregunta`, `_negacion`): **300 clips por archivo**. La escena indexa
+  solo el avatar elegido (`embeddedClipsFor` en `app.js`) y resuelve `signs/<id>.glb`
+  **por nombre, sin pedir nada por red**. Hoy reproduce únicamente el clip base de cada
+  seña: los marcadores faciales están fuera de alcance hasta que se apruebe el mapeo.
+- **`models/avatares.json`** es el inventario reproducible: hash y tamaño de cada fuente
+  original, del archivo empaquetado, clips, articulaciones, variantes y la advertencia de
+  pose de bind de Pauline. Los originales `Juan_final.glb` y `Pauline_final.glb` **no viven
+  en el repo**: desde el 2026-10-26 están en `../material-3d/Avatares/`, con el resto del
+  material 3D, y no se editan.
 - **`assets/web/signs/` ya no existe** (borrado el 2026-10-22: 32 `.glb`, 5,7 MB en el
   APK). Era el layout viejo y nadie los pedía porque toda glosa del catálogo resuelve su
   clip adentro del archivo único. La ruta `signs/<id>.glb` **sigue siendo el
   identificador** que manda el backend y `app.js` la sigue parseando para sacar el `<id>`;
   lo que ya no hay es un archivo detrás. No la "limpies" del código: es el contrato.
-- **Nunca edites `models/avatar.glb` a mano**: se regenera con `tools/pack_signall.py`
-  desde `../material-3d/GLB SignALL/`, que también reescribe `manifest.json` y `domain/SignsCatalog.kt`.
-  Agregar una seña = regenerar el `.glb` único y correr ese script.
-- **Arranque: 12,98 MB tardan ~1,85 s en estar en escena** en el Redmi Note 9S (medido
-  con el `performance.now()` que `app.js` imprime en `SignAIWeb`, 3 arranques en frío:
-  1845/1855/1854 ms). Con el avatar suelto de 10,3 MB eran 1451–1593 ms. El splash
-  espera a `avatarReady`, así que eso es lo que se ve antes de la escena.
+- **Nunca edites `models/juan.glb` ni `models/pauline.glb` a mano**: se regeneran con
+  `tools/pack_avatars.py` desde `../material-3d/Avatares/Juan_final.glb` y
+  `.../Pauline_final.glb`, que también reescriben `models/avatares.json`, `manifest.json` y
+  `domain/SignsCatalog.kt`. El script hornea la pose de descanso y poda los morph targets
+  que ninguna de las 300 variantes mueve. `tools/pack_signall.py` es el pipeline viejo de
+  un solo avatar: no procesa estos dos archivos.
+- **Arranque medido el 2026-10-26 en el Redmi Note 9S**: Juan, **1,81–3,42 s** según
+  caché de página (3,42 s en frío, 1,95–2,50 s en caliente); Pauline, **1,95 s**. Un
+  cambio de avatar en caliente tarda **1,90–2,57 s** (parseo 1,18–1,95 s) y se mide en
+  `SignAiState` (`cambio de avatar`, `avatar listo`) y `SignAIWeb`. El splash espera a
+  `avatarReady`, así que eso es lo que se ve antes de la escena.
 - `renderer.setPixelRatio` está **capado en 1.75** a propósito. Sin cap, el Redmi Note 9S
   renderiza 19,6 MP/frame y el GPU queda en ~37 ms/frame, con 99 % de jank.
 - `shouldInterceptRequest` fuerza `Cache-Control: no-store` para que los cambios de

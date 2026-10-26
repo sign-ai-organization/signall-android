@@ -1,0 +1,56 @@
+[
+ {
+  "id": "juan",
+  "label": "Juan",
+  "path": "models/juan.glb",
+  "bytes": 34207768,
+  "sha256": "b99c062706fd36911d40399466584ce1516386d2e18a3ba447f442ae44d2236a",
+  "source": "Juan_final.glb",
+  "source_bytes": 37872312,
+  "source_sha256": "2d87e29c3dce58d78dc1a6f3e48bbad456d3cb2511e462d120999949dfdd8748",
+  "clips": 300,
+  "signs": 50,
+  "variants": [
+   "base",
+   "alegria",
+   "tristeza",
+   "sorpresa",
+   "pregunta",
+   "negacion"
+  ],
+  "joints": 102,
+  "rest_pose": {
+   "reference": "0029 (keyframe 0)",
+   "bones": 46,
+   "delta": 0.2982681393623352
+  },
+  "bind_warning": null
+ },
+ {
+  "id": "pauline",
+  "label": "Pauline",
+  "path": "models/pauline.glb",
+  "bytes": 29460916,
+  "sha256": "9833cd0e91ab1740d27130949160b87855ce13758c291c39d76df3bf0b364bce",
+  "source": "Pauline_final.glb",
+  "source_bytes": 35272616,
+  "source_sha256": "c91afb2be2d7888aa334f518e61fea75bd9d954bbd2f60f77bc05de1395c8f34",
+  "clips": 300,
+  "signs": 50,
+  "variants": [
+   "base",
+   "alegria",
+   "tristeza",
+   "sorpresa",
+   "pregunta",
+   "negacion"
+  ],
+  "joints": 102,
+  "rest_pose": {
+   "reference": "0029 (keyframe 0)",
+   "bones": 46,
+   "delta": 0.2478208839893341
+  },
+  "bind_warning": "el TRS de 2.00e+00 de los nodos que no son brazo no es la pose de bind. Revisar el export antes de hornear la pose de descanso."
+ }
+]

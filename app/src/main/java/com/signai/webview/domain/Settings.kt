@@ -11,7 +11,7 @@ data class Settings(
     val grid: Boolean = true,
     val bg: Boolean = false,
     // Avatar (spec `SET-3`/`SET-4`, `PER-4`).
-    val character: Character = Character.Julian,
+    val character: Character = Character.Juan,
     val speed: Int = 50, // 10..100
     // Accessibility (spec `ACC-*`).
     val interfaceSize: Int = 50, // 0..100
@@ -50,19 +50,22 @@ enum class Setting {
  * Avatar characters (spec `PER-*`). Pure domain: the color is stored as ARGB
  * and converted to a Compose `Color` at the call site.
  *
- * No existe una opción "gris". `Character` nunca llega a la escena 3D — el AvatarWebView
- * siempre carga `models/avatar.glb` — así que las opciones son los nombres del casting
- * y el punto de color del desplegable. Se ofrecía un "Gris" que no correspondía a
- * nada (el muñeco que se ve es Julián) y además era el default, con lo cual la primera
- * pantalla decía algo falso (owner, 2026-10-16). El default ahora es Julián, que es el
- * avatar que realmente se muestra; una instalación que tuviera guardado "Gris" cae al
- * default por el `firstOrNull` del repositorio.
+ * Desde el 2026-10-26 la selección **sí llega a la escena**: cada personaje
+ * corresponde a un `.glb` completo con el muñeco y sus 50 señas adentro
+ * (`models/juan.glb`, `models/pauline.glb`). [id] es el nombre seguro que viaja
+ * a JavaScript; la escena lo resuelve contra un catálogo local y nunca arma una
+ * URL con datos del usuario.
+ *
+ * Los valores viejos (`Julian`, `Samuel`, `Ximena`) se normalizan a [Juan] al
+ * leer las preferencias: esas opciones nunca cambiaron el modelo real, así que
+ * una instalación vieja no tiene por qué quedar en un avatar que ya no existe.
  */
 enum class Character(
     val label: String,
     val colorArgb: Long,
+    /** Identificador estable para el puente Kotlin → JS (`setAvatar`). */
+    val id: String,
 ) {
-    Julian("Julián", 0xFF765044),
-    Samuel("Samuel", 0xFF303843),
-    Ximena("Ximena", 0xFFA46B54),
+    Juan("Juan", 0xFF765044, "juan"),
+    Pauline("Pauline", 0xFFA46B54, "pauline"),
 }
