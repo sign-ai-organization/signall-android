@@ -20,7 +20,8 @@ env
 
 # Material de trabajo del modelado 3D (fuente, ~1 GB). NO va al repo: son los
 # exports de Samuel y sus .blend/.fbx de trabajo. Lo que la app necesita ya
-# está en app/src/main/assets/web/ (16 MB, versionado).
+# está en app/src/main/assets/web/ (61 MB, versionado): los dos `.glb` ya
+# empaquetados, uno por avatar.
 #
 # Desde el 2026-10-23 **no vive en el repo**: se movió a `../material-3d/`, al
 # lado de los otros repos, como `../data/` y `../Resources/`.
@@ -33,11 +34,11 @@ env
 # Los `senas/` de Mixamo, el armature suelto `Base.glb` y `models/` se borraron
 # el 2026-10-23: nadie los leía.
 #
-# Para rearmar los assets desde cero: `python3 tools/pack_signall.py`, que lee
-# `../material-3d/GLB SignALL/` y escribe
-# `app/src/main/assets/web/models/avatar.glb` + `manifest.json` +
-# `domain/SignsCatalog.kt`. El layout viejo (un `.glb` por seña) se rearma con
-# `tools/split_signs.py` desde `../material-3d/GLB Senas/`.
+# Para rearmar los assets desde cero: `python3 tools/pack_avatars.py`, que lee
+# `../material-3d/Avatares/Juan_final.glb` y `.../Pauline_final.glb` y escribe
+# `app/src/main/assets/web/models/juan.glb` y `pauline.glb`, más `avatars.json`,
+# `manifest.json` y `domain/SignsCatalog.kt`. `tools/pack_signall.py` es el
+# pipeline viejo de un solo avatar y ya no se usa.
 #
 # Defensivo: si alguien vuelve a dejar el material adentro del repo, que no se
 # trackee 1 GB. El slash inicial ancla a la raíz: sin él, `models/` también se
@@ -49,6 +50,15 @@ env
 /senas/
 /Base.glb
 /models/
+
+# Los originales sin empaquetar de los dos avatares (~71 MB entre los dos) ya no
+# viven acá: desde el 2026-10-26 están en `../material-3d/Avatares/`, con el
+# resto del material 3D, y son la entrada de `tools/pack_avatars.py`. Lo que la
+# app carga es `app/src/main/assets/web/models/juan.glb` y `pauline.glb`, que sí
+# se versionan. La regla de abajo es defensiva: si alguien deja otra vez los
+# originales sueltos en la raíz, que no se trackeen 71 MB.
+/Juan_final.glb
+/Pauline_final.glb
 
 # Caché de bytecode de Python. Los .pyc se generan al importar los scripts de
 # tools/, y quedaron versionados por error desde 74fa3fb: son específicos de la

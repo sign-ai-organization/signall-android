@@ -92,4 +92,18 @@ object SignAiCommands {
      * anything outside `signs/`.
      */
     fun setDefaultSign(url: String) = "window.SignAI?.setDefaultSign(${JSONObject.quote(url)})"
+
+    /**
+     * Cambia el avatar completo que está en escena.
+     *
+     * [id] es el identificador de [Character.id] (`juan`, `pauline`); la escena
+     * lo resuelve contra un catálogo local de rutas y **nunca** arma una URL con
+     * un valor arbitrario, así que este comando no puede pedir algo fuera de
+     * `models/`.
+     *
+     * Aditivo: el guard `?.` y todos los comandos anteriores siguen igual
+     * (`BRG-8`). La escena responde con `avatarLoaded:<id>` o
+     * `avatarFailed:<id>` por el puente, que también son mensajes nuevos.
+     */
+    fun setAvatar(id: String) = "window.SignAI?.setAvatar(${JSONObject.quote(id)})"
 }

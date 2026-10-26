@@ -174,7 +174,8 @@ def deaccent(s):
 
 # ── Catálogo ──────────────────────────────────────────────────────────────────
 
-def write_catalog(manifest, packed=False):
+def write_catalog(manifest, packed=False, generator=None,
+                  avatar_models="`assets/web/models/avatar.glb`"):
     """Reescribe `domain/SignsCatalog.kt` desde los archivos realmente escritos.
 
     El comentario de "GENERATED" va primero: quien lo lea tiene que saber que
@@ -183,8 +184,11 @@ def write_catalog(manifest, packed=False):
     [packed] cambia el origen que se documenta: con el layout de un `.glb` por
     seña lo escribe `split_signs.py` y cada id es un archivo en `signs/`; con el
     archivo único lo escribe `pack_signall.py` y cada id es un **clip** dentro de
-    `models/avatar.glb`. La lista y las funciones son las mismas —lo único que
-    cambia es dónde vive la animación—, así que el resto del código no distingue.
+    `models/avatar.glb`. [generator] y [avatar_models] permiten que el
+    empaquetado de los dos avatares (`pack_avatars.py`) documente su propio
+    origen sin duplicar esta función. La lista y las funciones son las mismas
+    —lo único que cambia es dónde vive la animación—, así que el resto del
+    código no distingue.
     """
     ids = [m["sign_id"] + "_0000_0000" for m in manifest]
     lines = []
@@ -196,9 +200,9 @@ def write_catalog(manifest, packed=False):
         f" — {missing[0]}–{missing[-1]} still have no export" if missing else ""
     )
     if packed:
-        generator = "tools/pack_signall.py"
-        layout = ("each is a clip named `<id>` inside `assets/web/models/avatar.glb`,\n"
-                  " * the one file that also holds the character")
+        generator = generator or "tools/pack_signall.py"
+        layout = (f"each is a clip named `<id>` inside {avatar_models},\n"
+                  " * the files that also hold the character")
         coverage = (f"All {len(ids)} vocabulary signs of LSC50 are here, bundled in the\n"
                     " * avatar. Signs outside this list fall back to [DEFAULT] rather than\n"
                     " * failing (RF-CAT-03).")
@@ -206,7 +210,7 @@ def write_catalog(manifest, packed=False):
             "    /**\n"
             "     * The logical path of a sign, as a same-origin URL.\n"
             "     *\n"
-            "     * The animation itself is a clip inside `models/avatar.glb`, and the scene\n"
+            f"     * The animation itself is a clip inside {avatar_models}, and the scene\n"
             "     * resolves this path to that clip **by name** without any request: it parses\n"
             "     * `<id>` out of the path and looks it up among the clips it already loaded\n"
             "     * (see `embeddedClipsFor` in `app.js`). The path is kept as the identifier\n"
@@ -263,9 +267,9 @@ def write_catalog(manifest, packed=False):
  * just wrote, so the list and the assets cannot drift apart. Editing it
  * by hand will be undone on the next generator run.
  *
- * The character itself is NOT per sign: `assets/web/models/avatar.glb` is loaded
- * once and every sign is a clip retargeted to that same skeleton. Replacing the
- * avatar therefore needs no re-export of the signs.
+ * The character itself is NOT per sign: the scene loads one of
+ * {avatar_models} once and every sign is a clip retargeted to that same
+ * skeleton. Replacing the avatar therefore needs no re-export of the signs.
  *
  * {coverage}
  *

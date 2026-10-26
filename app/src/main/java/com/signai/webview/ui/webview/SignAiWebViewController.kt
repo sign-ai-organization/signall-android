@@ -39,6 +39,15 @@ interface SignAiWebViewController {
 
     fun setDefaultSign(url: String)
 
+    /**
+     * Cambia el avatar en escena (`juan` / `pauline`).
+     *
+     * La escena valida el identificador contra su catálogo local y responde con
+     * `avatarLoaded:<id>` o `avatarFailed:<id>`. Aditivo: no cambia ningún
+     * comando existente (`BRG-8`).
+     */
+    fun setAvatar(id: String)
+
     fun setDebug(on: Boolean)
 
     fun setFreeCamera(on: Boolean)
@@ -107,6 +116,8 @@ class WebViewSignAiController : SignAiWebViewController {
     }.toString()
 
     override fun setDefaultSign(url: String) = js(SignAiCommands.setDefaultSign(url))
+
+    override fun setAvatar(id: String) = js(SignAiCommands.setAvatar(id))
 
     override fun setDebug(on: Boolean) = js(SignAiCommands.setDebug(on))
 

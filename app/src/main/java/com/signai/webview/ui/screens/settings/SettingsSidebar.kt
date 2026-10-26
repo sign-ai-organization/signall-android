@@ -49,6 +49,7 @@ fun SettingsSidebar(
     settings: Settings,
     onToggle: (Setting, Boolean) -> Unit,
     onCharacter: (Character) -> Unit,
+    canSwitchAvatar: Boolean,
     onSpeed: (Int) -> Unit,
     onInterfaceSize: (Int) -> Unit,
     sign: String,
@@ -86,7 +87,11 @@ fun SettingsSidebar(
 
         Section("AVATAR") {
             SettingRow(label = "Personaje", icon = SignAiIcons.Sparkle) {
-                CharacterPicker(current = settings.character, onPick = onCharacter)
+                CharacterPicker(
+                    current = settings.character,
+                    onPick = onCharacter,
+                    enabled = canSwitchAvatar,
+                )
             }
             SpeedRow(speed = settings.speed, onSpeed = onSpeed)
         }
