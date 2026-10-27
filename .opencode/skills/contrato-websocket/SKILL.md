@@ -82,5 +82,5 @@ agregar la feature.
 ## No confundir los tres repositorios
 
 `docs/SISTEMA.md` tiene el detalle de cada hermano: el `CLAUDE.md` del backend, el
-protocolo del STT, y por qué `../signai-avatar` **no** es la fuente de los GLB de esta
-app.
+protocolo del STT, y que `../signai-avatar` es la fuente de los GLB (rama `dev`) pero
+**no** del contrato.

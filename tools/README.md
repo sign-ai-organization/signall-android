@@ -46,11 +46,11 @@
 - **`rendimiento/`** — medir de verdad si la app va lenta. Su propio
   [`README.md`](rendimiento/README.md) tiene las recetas y las trampas.
 - **`pack_avatars.py`** — **el pipeline de assets 3D de la app**. Toma los dos
-  originales de `../material-3d/Avatares/` (`Juan_final.glb`, 37,87 MB, y
-  `Pauline_final.glb`, 35,27 MB; personaje + cara + 300 clips cada uno), verifica
+  originales de `../signai-avatar/models/` (`Juan.glb`, 37,99 MB, y `Pauline.glb`,
+  35,27 MB; personaje + cara + 300 clips cada uno, rama `dev`), verifica
   skins, articulaciones y nombres de clip, hornea la pose de descanso, **poda los
   morph targets que ninguna variante anima** y compacta el buffer. Escribe
-  `assets/web/models/juan.glb` (34,21 MB), `pauline.glb` (29,46 MB),
+  `assets/web/models/juan.glb` (34,28 MB), `pauline.glb` (29,46 MB),
   `models/avatares.json` (inventario con hashes), `manifest.json` y
   `SignsCatalog.kt`. La escena resuelve `signs/<id>.glb` por nombre contra los
   clips del avatar elegido, sin descargar nada. Sin dependencias externas (no

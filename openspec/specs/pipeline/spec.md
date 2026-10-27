@@ -1,8 +1,14 @@
 # Pipeline SignAI (WebView) — flujo de datos
 
+> **Actualización del 2026-10-27:** los dos `.glb` de origen pasan a leerse del repo
+> hermano `../signai-avatar/models/` (rama `dev`, commit `cf014ef`), que versiona la
+> versión con la **cadera centrada** del 2026-10-26. `tools/pack_avatars.py` no cambia
+> más que la ruta: el resultado sigue teniendo 300 clips, 102 articulaciones y los mismos
+> nombres y duraciones. `../material-3d/Avatares/` queda como versión anterior.
+>
 > **Actualización del 2026-10-26:** hay **dos archivos completos, uno por avatar**
-> (`models/juan.glb`, 34,21 MB, y `models/pauline.glb`, 29,46 MB), armados por
-> `tools/pack_avatars.py` desde `../material-3d/Avatares/`. Cada uno trae el personaje y
+> (`models/juan.glb`, 34,28 MB, y `models/pauline.glb`, 29,46 MB), armados por
+> `tools/pack_avatars.py` desde `../signai-avatar/models/`. Cada uno trae el personaje y
 > sus **300 clips** (50 señas × 6 variantes); la escena carga solo el avatar elegido en
 > Ajustes. El `models/avatar.glb` de 12,98 MB se borró. El flujo de runtime no cambió.
 >
@@ -32,14 +38,14 @@ runtime.
 ### Flujo de assets — cómo llega una animación al APK
 
 ```
-../material-3d/Avatares/Juan_final.glb             los dos exports de Cascadeur: personaje,
-../material-3d/Avatares/Pauline_final.glb          esqueleto y 300 clips cada uno
-      │                            (fuente, fuera del repo; 37,87 y 35,27 MB)
+../signai-avatar/models/Juan.glb               los dos exports finales de Cascadeur:
+../signai-avatar/models/Pauline.glb            personaje, esqueleto y 300 clips cada uno
+      │                            (fuente versionada, rama dev; 37,99 y 35,27 MB)
       ▼
 tools/pack_avatars.py              verifica skins, articulaciones y nombres de clip;
       │                            hornea la pose de descanso y poda los morph
       │                            targets que ninguna variante anima
-      │  · models/juan.glb          ← 34,21 MB: personaje + cara + 300 clips
+      │  · models/juan.glb          ← 34,28 MB: personaje + cara + 300 clips
       │  · models/pauline.glb       ← 29,46 MB: idem
       │  · models/avatares.json     ← inventario: hashes, clips, articulaciones
       │  · manifest.json            ← inventario de los 50 clips base
@@ -64,7 +70,7 @@ completos**, uno por avatar, desde el 2026-10-26.
 para que la lista de código y el asset no puedan divergir.
 
 **Agregar o cambiar una seña** = regenerar los dos `.glb` desde
-`../material-3d/Avatares/` y correr `pack_avatars.py`. No es un paso más: es el único
+`../signai-avatar/models/` y correr `pack_avatars.py`. No es un paso más: es el único
 procedimiento. `tools/pack_signall.py` es el pipeline viejo de un solo avatar y no procesa
 estos archivos.
 
@@ -155,9 +161,9 @@ pesos no son de expresión (ver § La cara).
 y se equivocó en las dos direcciones.
 
 Verificado el **2026-10-17** contra el `avatar.glb` de entonces y contra el export original
-de Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`), y **reverificado el 2026-10-24
-y el 2026-10-26** contra los archivos vigentes (`models/juan.glb` y `models/pauline.glb`):
-**102 articulaciones de skin** en todos ellos.
+de Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`), y **reverificado el 2026-10-24,
+el 2026-10-26 y el 2026-10-27** contra los archivos vigentes (`models/juan.glb` y
+`models/pauline.glb`): **102 articulaciones de skin** en todos ellos.
 
 | Zona | Cómo es |
 |---|---|
@@ -168,13 +174,13 @@ y el 2026-10-26** contra los archivos vigentes (`models/juan.glb` y `models/paul
 
 La raíz **no es una articulación de skin** (los 102 joints empiezan en `spine`). En el
 archivo vigente **no está animada**: ningún canal de los 50 clips la toca. En el export
-viejo sí lo estaba, y de ahí viene la confusión. Cada clip actual tiene **311 canales**
-(contados en el GLB del APK el 2026-10-24): 306 son TRS de los 102 huesos y 5 son pesos de
-morph targets de mallas
+viejo sí lo estaba, y de ahí viene la confusión. Cada clip actual de Juan tiene **312
+canales** (contados en el GLB del APK el 2026-10-27): 306 son TRS de los 102 huesos y 6 son
+pesos de morph targets de mallas
 (`HG_Body_facial`, `HG_Chinos_Male.002`, `HG_Dress_Shirt_Collar_Male.002`,
-`HG_Leather_Dress_Shoe_Male.002`, `HG_Sweater_1_Male.002`). Por eso `app.js` cuenta
-**nodos** y no huesos: contar solo huesos dejaría esos 5 canales de pesos como falsos
-"sin resolver".
+`HG_Leather_Dress_Shoe_Male.002`, `HG_Sweater_1_Male.002`, `HG_Haircap_Eyelashes`). Por eso
+`app.js` cuenta **nodos** y no huesos: contar solo huesos dejaría esos canales de pesos como
+falsos "sin resolver".
 
 > ### Dos trampas, y las dos costaron trabajo
 >
@@ -288,7 +294,7 @@ Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe e
 | `progress:<0..100>` | Avance real de la escena para la barra del splash (45–100) |
 
 `avatarReady` es lo que **tapa el splash** — no `onPageFinished`, que dispara mientras el
-GLB de 34,21 MB (Juan) o 29,46 MB (Pauline) todavía se está bajando. `SignAiSplash` tiene
+GLB de 34,28 MB (Juan) o 29,46 MB (Pauline) todavía se está bajando. `SignAiSplash` tiene
 además un timeout de 8 s.
 
 ## El catálogo de Neon
@@ -319,8 +325,10 @@ como referencia del dataset, y eso es lo que documenta `specs/dataset/spec.md`. 
 del dataset está en `docs/lsc50-dataset.pdf`; los CSVs de muestra que había en
 `data/LANDMARKS/` se borraron del repo el 2026-10-22.
 
-Los scripts de captura de ese pipeline quedaron en `../signai-avatar`, **inactiva desde el
-2026-09-19**. No se copian scripts entre los dos pipelines.
+Los scripts de captura de ese pipeline quedaron en `../signai-avatar`, donde la **demo
+Flask de landmarks está congelada desde el 2026-09-19**. El repo siguió activo para otra
+cosa: versiona los GLB finales de Cascadeur en `models/`. No se copian scripts entre los
+dos pipelines.
 
 ## Cómo se verifica un cambio de acá
 

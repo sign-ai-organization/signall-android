@@ -194,7 +194,7 @@ fun MainScreen(state: MainScreenState) {
                     showAbout = false
                     // Salir de Acerca de **destruye** el WebView (está dentro del
                     // `else` de este `if`), así que volver a la escena lo crea de cero
-                    // y hay que volver a descargar y parsear el GLB del avatar (34,21 MB
+                    // y hay que volver a descargar y parsear el GLB del avatar (34,28 MB
                     // con Juan, 29,46 MB con Pauline): se veía el
                     // canvas vacío durante segundos (owner, 2026-10-16). Se vuelve a
                     // levantar el splash, que es lo que ya hay para el primer arranque y

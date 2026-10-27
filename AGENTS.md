@@ -91,7 +91,7 @@ Cualquier sesión que toque el pipeline tiene que mirar los hermanos antes de de
 | `../sign-ai-backend` | FastAPI: WS con el cliente, NLP de glosas, catálogo, caché semántico, Neon | `develop` | 8080 |
 | `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 |
 | `../sign-ai-docs` | Requerimientos, diagramas del SDD, plan de pruebas (nada corre) | `main` | — |
-| `../signai-avatar` | Demo Flask de landmarks de LSC50, **inactiva desde 2026-09-19** | `main` | — |
+| `../signai-avatar` | Producción de las animaciones (Cascadeur): versiona los **GLB finales** de Juan y Pauline, 300 clips cada uno. La demo Flask de landmarks que también vive ahí está congelada | `dev` | — |
 
 Reglas por repo:
 
@@ -102,9 +102,12 @@ Reglas por repo:
   nunca commitear), el STT tiene `README.md`.
 - **Los `.drawio` y el `.md` de requerimientos los edita el owner**: los cambios grandes
   se proponen, no se aplican en silencio.
-- **`../signai-avatar` no es la fuente de los GLB de esta app.** Es la demo anterior en
-  Flask. Los assets de acá salen de Cascadeur (`../material-3d/GLB SignALL/` → `tools/pack_signall.py`).
-  No mezclar los dos pipelines ni copiar scripts entre ellos.
+- **`../signai-avatar` es la fuente de los GLB de esta app.** En su rama `dev` versiona
+  `models/Juan.glb` y `models/Pauline.glb` (300 clips cada uno; desde el 2026-10-26 con la
+  cadera centrada). De ahí los lee `tools/pack_avatars.py`; no se copian ni se editan a
+  mano, y sus commits no los hace esta sesión sin que el owner lo pida. La demo Flask de
+  landmarks que también vive en ese repo está **congelada desde el 2026-09-19**: no se le
+  copian scripts a esta app.
 
 Detalle de cada hermano, Carpetas hermanas que no son repositorios, y las IDs de los
 cinco proyectos de Overleaf: **[`docs/SISTEMA.md`](docs/SISTEMA.md)**.
@@ -344,7 +347,7 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
 - **Nunca pongas la normalización (escala/offset) en la raíz de la escena cargada.** Las
   exportaciones de Cascadeur animan la raíz del armature en posición, rotación *y* escala,
   así que el mixer la sobrescribe cada frame. Va en un objeto pivote padre.
-- **Dos `.glb` completos, uno por avatar.** `models/juan.glb` (34,21 MB) y
+- **Dos `.glb` completos, uno por avatar.** `models/juan.glb` (34,28 MB) y
   `models/pauline.glb` (29,46 MB) traen el personaje, la cara y las **50 señas como
   clips** `0000`..`0049`, cada una con sus variantes faciales (`_alegria`, `_tristeza`,
   `_sorpresa`, `_pregunta`, `_negacion`): **300 clips por archivo**. La escena indexa
@@ -353,17 +356,17 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
   seña: los marcadores faciales están fuera de alcance hasta que se apruebe el mapeo.
 - **`models/avatares.json`** es el inventario reproducible: hash y tamaño de cada fuente
   original, del archivo empaquetado, clips, articulaciones, variantes y la advertencia de
-  pose de bind de Pauline. Los originales `Juan_final.glb` y `Pauline_final.glb` **no viven
-  en el repo**: desde el 2026-10-26 están en `../material-3d/Avatares/`, con el resto del
-  material 3D, y no se editan.
+  pose de bind de Pauline. Los originales `Juan.glb` y `Pauline.glb` viven versionados en
+  `../signai-avatar/models/` (rama `dev`) y no se editan. `../material-3d/Avatares/`
+  conserva la versión anterior (`*_final.glb`, 2026-10-24), que ya **no** es la fuente.
 - **`assets/web/signs/` ya no existe** (borrado el 2026-10-22: 32 `.glb`, 5,7 MB en el
   APK). Era el layout viejo y nadie los pedía porque toda glosa del catálogo resuelve su
   clip adentro del archivo único. La ruta `signs/<id>.glb` **sigue siendo el
   identificador** que manda el backend y `app.js` la sigue parseando para sacar el `<id>`;
   lo que ya no hay es un archivo detrás. No la "limpies" del código: es el contrato.
 - **Nunca edites `models/juan.glb` ni `models/pauline.glb` a mano**: se regeneran con
-  `tools/pack_avatars.py` desde `../material-3d/Avatares/Juan_final.glb` y
-  `.../Pauline_final.glb`, que también reescriben `models/avatares.json`, `manifest.json` y
+  `tools/pack_avatars.py` desde `../signai-avatar/models/Juan.glb` y
+  `.../Pauline.glb`, que también reescriben `models/avatares.json`, `manifest.json` y
   `domain/SignsCatalog.kt`. El script hornea la pose de descanso y poda los morph targets
   que ninguna de las 300 variantes mueve. `tools/pack_signall.py` es el pipeline viejo de
   un solo avatar: no procesa estos dos archivos.

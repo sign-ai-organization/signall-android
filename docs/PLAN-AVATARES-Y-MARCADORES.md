@@ -9,7 +9,8 @@
 > deja el plan para “actualizar después”.**
 
 **Estado:** **implementado el 2026-10-26** el selector funcional con los dos avatares y el
-empaquetado de los GLB; los marcadores faciales quedan **fuera de alcance por decisión del
+empaquetado de los GLB; **regenerados el 2026-10-27** con la versión de los avatares que
+tiene la cadera centrada. Los marcadores faciales quedan **fuera de alcance por decisión del
 owner**. Faltan las mediciones de PR-AVT-06 y el mapeo tipo→variante. Ver «Resultado de la
 implementación».
 **Fecha:** 2026-10-24 (investigación y plan) · 2026-10-26 (implementación)
@@ -77,9 +78,32 @@ Pendiente después de esta implementación:
   Lo edita el owner.
 - Decidir la tabla facial (DOC-5) si algún día se retoma el alcance de marcadores.
 
+## Actualización del 2026-10-27 — GLB con la cadera centrada
+
+El repo hermano `../signai-avatar` empezó a versionar en su rama `dev` los GLB finales del
+pipeline de Cascadeur (`models/Juan.glb` y `models/Pauline.glb`, commit `cf014ef`). Esa
+versión corrige la cadera: el `spine` venía corrido 5–12 cm y girado 10°–18° en las 50
+señas, así que el avatar se iba de costado al representar y volvía al centro en reposo.
+
+- `tools/pack_avatars.py` ahora lee de `../signai-avatar/models/`.
+  `../material-3d/Avatares/` conserva la versión anterior y ya no es la fuente.
+- Se regeneraron `models/juan.glb` (34,28 MB) y `models/pauline.glb` (29,46 MB),
+  `models/avatares.json` y `manifest.json`; `SignsCatalog.kt` salió igual.
+- Verificación estática: 300 clips, 102 articulaciones, **mismos nombres y mismas
+  duraciones** por clip. El desplazamiento lateral de `spine` en los 50 clips base bajó de
+  **8,89 cm (Juan) y 8,92 cm (Pauline)** a **0,00 cm**.
+- El diff canal por canal de los 300 clips muestra cambios **solo** en `spine` (traslación
+  y giro) y `neck`/`head`; ningún otro canal cambió. El paquete que usa la app (pose de
+  descanso horneada y morphs podados) conserva esos mismos cambios y ninguno más.
+
+Documentación actualizada: `AGENTS.md`, `docs/SISTEMA.md`, `openspec/config.yaml`,
+`specs/pipeline/spec.md`, `specs/avatar/spec.md`, `tools/README.md` y
+`tools/pack_avatars.py`. Los documentos de la tesis no cambian: RF-AVT-02 pide reproducir
+el GLB de cada glosa y no distingue versiones del asset.
+
 ## Resumen de lo encontrado
 
-- `Juan_final.glb` y `Pauline_final.glb` estaban el 2026-10-24 en la raíz del repositorio, sin rastrear por Git. Se trataron como entradas originales: no se editaron. Desde el 2026-10-26 viven en `../material-3d/Avatares/`, fuera del repo, con el resto del material 3D.
+- `Juan_final.glb` y `Pauline_final.glb` estaban el 2026-10-24 en la raíz del repositorio, sin rastrear por Git. Se trataron como entradas originales: no se editaron. Desde el 2026-10-26 viven en `../material-3d/Avatares/`, fuera del repo, con el resto del material 3D. Desde el 2026-10-27 la fuente vigente es `../signai-avatar/models/` (rama `dev`); la copia de `material-3d/` queda como versión anterior.
 - Cada archivo contiene las 50 señas (`0000`–`0049`) y seis clips por seña: base, `_alegria`, `_tristeza`, `_sorpresa`, `_pregunta` y `_negacion`. Son **300 clips por avatar**.
 - Ambos tienen un esqueleto de 102 articulaciones y canales de animación facial para cejas, ojos, mandíbula y boca. La lectura de los GLB encontró, en las 50 señas de cada archivo, que los tracks de huesos coinciden entre la versión base y sus cinco variantes, mientras cambian los tracks de pesos de malla. Esto confirma que los archivos ofrecen variaciones faciales sin cambiar los movimientos de huesos; no confirma que cada expresión sea lingüísticamente adecuada para una categoría.
 - Cada archivo ocupa decenas de MB: Juan, **37.872.312 bytes**; Pauline, **35.272.616 bytes**. Juntos son **73.144.928 bytes** antes del empaquetado. Son cifras leídas de los archivos, no el tamaño del APK.
@@ -119,7 +143,7 @@ Esta tabla registra cómo se relacionan el código, los assets, los requisitos, 
 | DOC-5 | `../sign-ai-docs/plan-pruebas/01-diseno/avatar/pruebas.md`, PR-AVT-05 | Hace falta una tabla de expresiones esperadas por los cinco tipos gramaticales; la tabla se escribe antes de la ronda. | Aún no se decidió qué variante representa cada tipo. | **Pendiente.** | El owner consultará la correspondencia. Luego actualizar PR-AVT-05, sin cambiarla por inferencia técnica. |
 | DOC-6 | Backend, commit `78006a5`; `PhraseType`, `GlossAnalyzer`, contrato WS | Entrega un tipo gramatical entre cinco; no clasifica emociones. `secondary_signals` es de colisiones gramaticales y no viaja en `segment`. | Los clips incluyen sufijos de alegría, tristeza y sorpresa, además de pregunta y negación. | **Sin correspondencia emocional disponible.** | Opción A/C: mapear solo tipos gramaticales con tabla aprobada. Opción B: diseñar una clasificación emocional y nuevo campo WS, coordinando backend y app. Decisión pendiente del owner. |
 | DOC-7 | OpenSpec local, `specs/ui/spec.md` y `specs/avatar/spec.md` | Describe el selector como UI-only y una escena con un único GLB sin animación de expresiones. | El owner decidió selector funcional con dos avatares; el rostro quedó fuera de alcance el 2026-10-26. | **Resuelto el 2026-10-26.** Los dos specs describen los dos GLB, el selector funcional y el bloqueo en reposo; `specs/pipeline/spec.md` describe el empaquetado nuevo. | Hecho. El mapeo facial sigue pendiente y así se declara en los specs. |
-| DOC-8 | Overleaf SRS, versión 524; `../sign-ai-docs` PR-AVT-06 | El tamaño del APK con todos los GLB está pendiente de medir; PR-AVT-06 pide medir los assets y el instalador. | Los dos GLB empaquetados suman 63,7 MB (34,21 + 29,46). Medido el 2026-10-26 en el Redmi Note 9S: APK debug 48 MB, release sin firmar 34 MB, PSS ~390 MB con Juan. | **Medición del APK hecha; falta el registro formal en PR-AVT-06.** | Registrar build, modelo y dispositivo en el plan de pruebas y en `docs/PLAN-MEDICION.md`. Responsable: el owner al actualizar los documentos. |
+| DOC-8 | Overleaf SRS, versión 524; `../sign-ai-docs` PR-AVT-06 | El tamaño del APK con todos los GLB está pendiente de medir; PR-AVT-06 pide medir los assets y el instalador. | Los dos GLB empaquetados suman 63,74 MB (34,28 + 29,46). Medido el 2026-10-26 en el Redmi Note 9S: APK debug 48 MB, release sin firmar 34 MB, PSS ~390 MB con Juan. | **Medición del APK hecha; falta el registro formal en PR-AVT-06.** | Registrar build, modelo y dispositivo en el plan de pruebas y en `docs/PLAN-MEDICION.md`. Responsable: el owner al actualizar los documentos. |
 
 ### Registro de cambios del plan
 
@@ -129,6 +153,7 @@ Agregar una fila por cada trabajo posterior relacionado con esta iniciativa. No 
 |---|---|---|---|---|
 | 2026-10-24 | Investigación inicial de GLB, backend, selector y documentos; `git pull --ff-only` de `../sign-ai-docs` (ya estaba al día). | Ver “Fuentes técnicas y procedencia” al final. | Se registraron DOC-1–DOC-8; owner decidió dos GLB completos, rostro completo y cambio solo en reposo. | Correspondencia tipo gramatical→variante, por consultar con validadores LSC. |
 | 2026-10-26 | Implementación del selector y del empaquetado; los marcadores faciales quedaron fuera de alcance por decisión del owner. | `tools/pack_avatars.py` nuevo; `models/juan.glb`, `models/pauline.glb` y `models/avatares.json`; `app.js`; `Settings.kt`, `SignAiCommands.kt`, `MainScreenState.kt`, `AvatarWebView.kt`, `SignAiWebViewController.kt`, `CharacterPicker.kt`; specs `avatar`, `ui` y `pipeline`; `AGENTS.md`. | DOC-1 y DOC-7 resueltos; DOC-8 con la medición del APK; rostro completo pasa a «fuera de alcance» hasta que el owner lo retome. | La tabla facial (DOC-5) queda sin uso; el SDD de Overleaf (DOC-2) sigue sin describir los dos GLB. |
+| 2026-10-27 | Reempaquetado con los GLB del repo hermano `../signai-avatar` (rama `dev`, commit `cf014ef`), que corrigen la cadera. | `tools/pack_avatars.py`; `models/juan.glb`, `models/pauline.glb`, `models/avatares.json`, `manifest.json`; `AGENTS.md`, `docs/SISTEMA.md`, `openspec/config.yaml`, `specs/pipeline/spec.md`, `specs/avatar/spec.md`, `tools/README.md`. | DOC-8 actualizado a 63,74 MB. Sin cambios en nombres ni duraciones de clip; `spine` pasa de 8,89/8,92 cm de desvío a 0,00 cm. | Probar en el dispositivo que la representación ya no se va de costado. Los pies pueden deslizarse un poco en alguna seña (efecto secundario anotado en el hermano). |
 
 ### Qué significa «el backend decide cuándo» en el estado actual
 
@@ -218,3 +243,4 @@ Por lo tanto, el backend puede decir «esta oración es una pregunta» o «es ne
 - Documentación consolidada, `main` actualizado por pull sin cambios, commit `dc8d49c79285489815164adaf8a1fa7ef6e83b24`: `documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`, `modificaciones/requerimientos.md` y `plan-pruebas/01-diseno/avatar/`.
 - Tesis consultada el 2026-10-24: Overleaf SRS (`main.tex`, versión 524), SDD (`main.tex`, versión 212) y Memoria (`sections/descripcionGeneral.tex`, versión 98). Las versiones consultadas no indican por sí mismas la fecha en que el owner editó cada archivo.
 - Reglas de trabajo aplicadas: `AGENTS.md`, y los skills `tres-fuentes-de-verdad`, `contrato-websocket`, `overleaf-lectura`, `compose-best-practices` y `sesion-openspec`.
+- Repo hermano `../signai-avatar`, rama `dev`, commit `cf014ef` (2026-10-26): `models/Juan.glb` (37.988.016 bytes, sha256 `bd77c77c…`), `models/Pauline.glb` (35.272.616 bytes, sha256 `316bfbff…`), su `models/README.md` y `openspec/specs/animacion-cascadeur/spec.md`. De ahí salieron los GLB del 2026-10-27.
