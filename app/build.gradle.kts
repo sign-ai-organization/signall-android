@@ -7,6 +7,23 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+// ── Identidad del build ────────────────────────────────────────────────────
+//
+// El teléfono ya no se conecta por cable, así que no hay `adb shell dumpsys
+// package` para preguntarle qué build tiene instalado: el SHA viaja en la
+// pantalla Acerca de y, más adelante, en el reporte de métricas. `versionCode`
+// sale de la cantidad de commits para que cada APK publicado sea estrictamente
+// más nuevo que el anterior y Android nunca rechace la instalación por
+// "downgrade" (`../sign-ai-backend/docs/plan-wifi.md`, fase 2).
+fun git(vararg args: String): String =
+    runCatching {
+        providers.exec { commandLine("git", *args) }.standardOutput.asText.get().trim()
+    }.getOrDefault("")
+
+val gitSha: String = git("rev-parse", "--short", "HEAD").ifBlank { "unknown" }
+val buildSha: String = if (git("status", "--porcelain").isNotBlank()) "$gitSha-dirty" else gitSha
+val buildNumber: Int = git("rev-list", "--count", "HEAD").toIntOrNull()?.coerceAtLeast(1) ?: 1
+
 // ── Dónde vive el backend ──────────────────────────────────────────────────
 //
 // El SRS pide que todo lo que sale del dispositivo vaya cifrado (`main.tex:1095`)
@@ -67,8 +84,9 @@ android {
         applicationId = "com.signai.webview"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
+        versionCode = buildNumber
         versionName = "1.0.0"
+        buildConfigField("String", "GIT_SHA", "\"$buildSha\"")
     }
 
     buildTypes {

@@ -113,6 +113,10 @@ fun AboutScreen(
                 MetaText("Proyecto de tesis")
                 MetaText("Pontificia Universidad Javeriana")
                 MetaText("Versión ${BuildConfig.VERSION_NAME}")
+                // El SHA es lo que dice qué APK está instalado sin conectar el
+                // teléfono: la página de descarga publica el mismo valor
+                // (`tools/wifi/publicar-apk.sh`).
+                MetaText("Compilación ${BuildConfig.GIT_SHA}")
             }
         }
     }
