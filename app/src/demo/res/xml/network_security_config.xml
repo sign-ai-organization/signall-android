@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Solo para `demo`: prohíbe el texto en claro **y** confía en la CA de
+  laboratorio instalada por el usuario.
+
+  Es el único build type que puede hacer las dos cosas a la vez, y por eso
+  existe (`docs/plan-proxy-tls.md`, decisión 3):
+
+  - `main`/`release` prohíben el texto en claro pero solo confían en las CA del
+    sistema, y desde la API 24 Android **no** confía en las CA que instala el
+    usuario salvo que este archivo lo declare. Sin esa declaración, el handshake
+    con Caddy falla con `Trust anchor for certification path not found`, por más
+    que el certificado esté instalado en el teléfono.
+  - `debug` permite el texto en claro, así que sirve para la demo del cifrado
+    pero no para probar que la app **rechaza** un `ws://`.
+
+  `src="user"` es lo que hace confiable a `lab-ca.crt`. Android 11 solo deja
+  instalar una CA de usuario con pantalla de bloqueo configurada.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

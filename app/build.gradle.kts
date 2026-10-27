@@ -36,10 +36,26 @@ val debugBackendWsUrl = "ws://10.0.2.2:8080/ws/translate"
  */
 val releaseBackendWsUrl = "wss://backend.invalid/ws/translate"
 
+/**
+ * Default de `demo`: el camino **USB**, por `adb reverse tcp:8443 tcp:443`.
+ *
+ * El 8443 no es capricho: en el teléfono `adb reverse tcp:443 tcp:443` falla con
+ * `cannot bind listener: Permission denied` (verificado), así que el puerto del
+ * lado del teléfono tiene que ser uno no privilegiado. El certificado no depende
+ * del puerto: cubre la identidad `127.0.0.1`.
+ *
+ * Se elige USB y no Wi-Fi como default porque es determinista: no depende de que
+ * la IP por DHCP siga siendo la misma ni de una regla del cortafuegos. El camino
+ * por Wi-Fi se pasa explícitamente, con la IP de la máquina:
+ *
+ *   ./gradlew installDemo -Psignai.backendWsUrl=wss://192.168.80.49/ws/translate
+ */
+val demoBackendWsUrl = "wss://127.0.0.1:8443/ws/translate"
+
 if (backendWsUrlOverride != null && !backendWsUrlOverride.startsWith("wss://")) {
     logger.lifecycle(
-        "SignAI: release ignora -Psignai.backendWsUrl=$backendWsUrlOverride porque no es " +
-            "wss://; usa $releaseBackendWsUrl hasta que se pase una URL wss://.",
+        "SignAI: release y demo ignoran -Psignai.backendWsUrl=$backendWsUrlOverride porque no " +
+            "es wss://; release usa $releaseBackendWsUrl y demo usa $demoBackendWsUrl.",
     )
 }
 
@@ -72,6 +88,31 @@ android {
                 "String",
                 "BACKEND_WS_URL",
                 "\"${backendWsUrlOverride?.takeIf { it.startsWith("wss://") } ?: releaseBackendWsUrl}\"",
+            )
+        }
+
+        // Build de demostración del enlace cifrado (`docs/plan-proxy-tls.md`).
+        //
+        // Es `release` en todo lo que hace al enlace —solo `wss://`, y el
+        // `network_security_config` que prohíbe el texto en claro— pero firmado
+        // con la clave de debug para poder instalarlo y depurarlo. Además declara
+        // `app/src/demo/res/xml/network_security_config.xml`, que confía en las
+        // CA del **usuario**: sin eso el teléfono no acepta la CA de laboratorio
+        // de `mkcert`, porque desde la API 24 Android dejó de confiar en ellas
+        // por defecto.
+        //
+        // Tiene el mismo `applicationId` que `debug`, así que lo reemplaza en el
+        // teléfono. Para volver atrás se reinstala `debug`.
+        create("demo") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = true
+            // Mismo criterio que `release`: la propiedad de build nunca puede
+            // degradar el enlace a `ws://`.
+            buildConfigField(
+                "String",
+                "BACKEND_WS_URL",
+                "\"${backendWsUrlOverride?.takeIf { it.startsWith("wss://") } ?: demoBackendWsUrl}\"",
             )
         }
     }

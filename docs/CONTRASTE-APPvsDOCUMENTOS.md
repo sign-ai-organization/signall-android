@@ -39,7 +39,7 @@ Ninguno requiere inventar el requisito.
 |---|---|---|---|---|
 | **A1** | Que el tercer estado del micrófono **se vea**, no solo se describa | `ui/screens/bottombar/SignAiBottomBar.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, filas *Texto listo* y *Grabando* (`main.tex:732-741`) | ✅ Hecho con A7 |
 | **A2** | Pedir el permiso de micrófono **al abrir la app**, no al tocar el micrófono | `ui/MainScreen.kt:78-103` | §Interfaz con el Usuario (`main.tex:830`) | ✅ Hecho (`1c85ddd`) |
-| **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt`, `isEncrypted`, `res/xml/network_security_config.xml`, `app/build.gradle.kts`, `defaultConfig` y el bypass `-Psignai.backendWsUrl` | §Interfaces de Comunicación (`main.tex:1088`, `:1093`) | ✅ Hecho · **falta el dominio** (§9 #6) |
+| **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt`, `isEncrypted`, `res/xml/network_security_config.xml`, `app/build.gradle.kts`, el bypass `-Psignai.backendWsUrl` y el build `demo` con `src/demo/res/xml/network_security_config.xml` | §Interfaces de Comunicación (`main.tex:1088`, `:1093`) | ✅ Hecho · **el 2026-10-27 el `demo` demostró el `wss://` con TLS de laboratorio**; para `release` sigue faltando el dominio (§9 #6) |
 | **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:754-765`) | ✅ Hecho · **el SRS necesita un ajuste** (§9 #9) |
 | **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt`, `queueItemsFor` y `onSignFailed` | §Alcance (`main.tex:200-202`) y tabla, fila *Reproduciendo* (`main.tex:747`) | ✅ Hecho |
 | **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:717-766`) | ✅ Hecho |
@@ -103,21 +103,42 @@ el comportamiento de "seguir funcionando solo con texto".
 
 ---
 
-### A3 — El enlace con el backend va sin cifrar
+### A3 — El enlace con el backend va sin cifrar — resuelto el 2026-10-27 con el build `demo`
 
 **Qué dice el SRS.** Doble: "Toda comunicación que sale de un equipo viaja
 cifrada mediante TLS" (`main.tex:1088`) y "Entre la aplicación y el servidor se
 mantiene una conexión **WebSocket segura (WSS)**, bidireccional y persistente"
 (`main.tex:1093`).
 
-**Qué hace la app.** El WebSocket abre en `ws://10.0.2.2:8080/ws/translate`
-(`data/SignAiBackendConfig.kt`, `isEncrypted`) y el manifiesto permite tráfico en claro de
-forma global. La URL se inyecta por build config (`app/build.gradle.kts`, `defaultConfig` y el bypass `-Psignai.backendWsUrl`) y el
-código ya sabe derivar `https://` de una URL `wss://` (`SignAiBackendConfig.kt:29`).
+**Qué hacía la app el 2026-10-17.** El WebSocket abría en
+`ws://10.0.2.2:8080/ws/translate` (`data/SignAiBackendConfig.kt`, `isEncrypted`) y el
+manifiesto permitía tráfico en claro de forma global. La URL se inyecta por build config
+(`app/build.gradle.kts`, `defaultConfig` y el bypass `-Psignai.backendWsUrl`) y el código ya
+sabía derivar `https://` de una URL `wss://` (`SignAiBackendConfig.kt:29`).
 
-**Qué hacer.** Default a `wss://`, con el `ws://` de desarrollo como bypass por
-propiedad de build, y `network_security_config.xml` alineado para que el cleartext
-quede limitado al caso de desarrollo y no sea global.
+**Qué hace hoy.** `debug` no cambió: sigue abriendo `ws://` y sigue permitiendo el texto en
+claro, porque es el build de desarrollo y ahí se mide la latencia sin el handshake. Se agregó
+un cuarto build, **`demo`**, que es `release` en todo lo que hace al enlace:
+
+| Pieza | Qué es |
+|---|---|
+| `app/build.gradle.kts` | `create("demo") { initWith(release) }`, firmado con la clave de `debug`, `isDebuggable = true`, y `BACKEND_WS_URL` en `wss://127.0.0.1:8443/ws/translate`. La property `-Psignai.backendWsUrl` solo se acepta si empieza por `wss://`, igual que en `release` |
+| `app/src/demo/res/xml/network_security_config.xml` | `cleartextTrafficPermitted="false"` y `trust-anchors` con `system` **y** `user`. Es lo único que hace confiable a la CA de laboratorio: desde la API 24 Android no confía en las CA del usuario si el build no lo declara |
+| `tools/verificar-tiempo-real.sh` | además del chequeo del 8080, comprueba `https://127.0.0.1:8443/health` con la CA del laboratorio |
+
+El 8443 del lado del teléfono no es capricho: `adb reverse tcp:443 tcp:443` falla con
+`cannot bind listener: Permission denied`, así que el túnel es `adb reverse tcp:8443 tcp:443`
+y el certificado no depende del puerto.
+
+**Cómo se verifica.** `./gradlew installDemo`, `adb reverse tcp:8443 tcp:443`, la CA del
+laboratorio instalada en el teléfono y `adb logcat -s SignAiNet`: la sesión abre con
+`sesión abierta: wss://… (TLS)`. El mismo build, apuntado al 8080 en claro, falla con
+`CLEARTEXT communication … not permitted`. Medido el 2026-10-27 con el teléfono por USB.
+
+**Lo que queda.** `release` sigue apuntando a `wss://backend.invalid/ws/translate` y no
+sirve para nada real sin un certificado de una CA pública; y el build `demo` reemplaza a
+`debug` en el teléfono porque comparte `applicationId`, así que después de la demo hay que
+reinstalar `debug`.
 
 ---
 
@@ -507,6 +528,7 @@ distinguir "estoy mostrando la tesis" de "esto va a producción":
 |---|---|---|
 | `debug` | `-Psignai.backendWsUrl=…`, o `ws://10.0.2.2:8080/ws/translate` | Permitido |
 | `release` | Solo `wss://`. Una property que no sea `wss://` se **ignora con aviso** | **Prohibido** |
+| `demo` (2026-10-27) | Solo `wss://`. Default `wss://127.0.0.1:8443/ws/translate` | **Prohibido**, y confía en las CA del usuario |
 
 Tres archivos: `app/build.gradle.kts` (la property pasa a leerse por build type y
 release la ignora si no es `wss://`), `res/xml/network_security_config.xml`
@@ -537,6 +559,27 @@ ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)`. Esa línea es el hook de
 verificación de RF-INT-COM-03, cuyo criterio de aceptación es "verificable
 mediante inspección del tráfico de red": la app dice con qué ethernetos abrió, y
 en un build de release no puede decir otra cosa.
+
+**El 2026-10-27 se cerró el otro extremo:** `demo` hereda `release`, se firma con la clave
+de `debug` y trae su propio `src/demo/res/xml/network_security_config.xml` con
+`cleartextTrafficPermitted="false"` y anclas `system` + `user`. Es lo único que puede, a la
+vez, prohibir el texto en claro y confiar en la CA de laboratorio que instala `mkcert`.
+
+```
+$ ./gradlew :app:assembleDemo
+$ adb reverse tcp:8443 tcp:443          # el 443 no se puede mapear: Permission denied
+$ adb install -r app/build/outputs/apk/demo/app-demo.apk
+$ adb logcat -s SignAiNet
+SignAiNet: sesión abierta: wss://127.0.0.1:8443/ws/translate (TLS)
+```
+
+Y contra el 8080 en claro, el mismo APK no abre: el sistema rechaza la conexión con
+`CLEARTEXT communication … not permitted by network security policy`.
+
+El certificado del proxy lo emite `mkcert` para `127.0.0.1`, `localhost` y `192.168.80.49`, y
+el plan completo está en `sign-ai-backend/docs/plan-proxy-tls.md`. `demo` comparte
+`applicationId` con `debug`, así que lo reemplaza en el teléfono: para volver a medir
+latencia hay que reinstalar `debug`.
 
 ### ✅ A5 — "Seña no disponible", glosa por glosa
 

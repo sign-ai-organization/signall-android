@@ -168,6 +168,15 @@ Trampas que hacen perder tiempo:
   `adb reverse tcp:8080 tcp:8080` y compilá con
   `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. Sin eso la app muestra "Sin
   conexión con el servidor" y parece un problema del backend.
+- **La demo del cifrado usa el build `demo`, no `debug`.** `demo` hereda `release` (solo
+  `wss://`), se firma con la clave de `debug` y trae su `network_security_config` con las CA
+  del **usuario** como anclas; apunta a `wss://127.0.0.1:8443/ws/translate`. El túnel es
+  `adb reverse tcp:8443 tcp:443`, porque el `443` no se puede mapear en el teléfono
+  (`cannot bind listener: Permission denied`). El proxy y el certificado los levanta el
+  backend (`../sign-ai-backend/deploy/`, `docs/plan-proxy-tls.md`); si falta la CA de
+  laboratorio en el teléfono, el handshake falla con `Trust anchor for certification path
+  not found` y eso **no** es un problema de la app. `demo` comparte `applicationId` con
+  `debug`, así que lo reemplaza: después de la demo, `./gradlew installDebug`.
 - **`RECORD_AUDIO` es permiso de runtime y no está pre-otorgado.** Tocar el mic sin él dice
   "No se pudo abrir el micrófono", que se lee como un fallo del STT y no lo es:
   `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO`.
