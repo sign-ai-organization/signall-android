@@ -160,6 +160,15 @@ Sin git y sin reglas: material compartido o restos.
 Un único WebSocket, de la app **solo al backend**: `:8080/ws/translate`. La app nunca
 habla con el STT ni con Neon.
 
+**En la demo el canal va cifrado, y el backend no lo sabe.** La app habla `wss://` contra
+Caddy, que corre en el host del backend escuchando en el 443, termina el TLS con un
+certificado de laboratorio y reenvía al backend en claro por `127.0.0.1:8080`. El backend
+sigue escuchando donde escuchaba y no tiene ninguna configuración de TLS. El build que lo
+demuestra es `demo` (`wss://127.0.0.1:8443/ws/translate` con `adb reverse tcp:8443 tcp:443`
+y la CA de laboratorio instalada en el teléfono); `debug` sigue en `ws://`, porque es el
+build con el que se mide latencia y el handshake no debe entrar en la comparación. El plan
+completo está en `../sign-ai-backend/docs/plan-proxy-tls.md`.
+
 - **Solo se traduce lo que el cliente manda como `text`.** La voz entra por el mismo
   socket pero vuelve como `transcript`, y esa transcripción **no se traduce**. Si el
   backend hiciera eco de la frase escrita, la app lo tomaría por una frase de voz y la

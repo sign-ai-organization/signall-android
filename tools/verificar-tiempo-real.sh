@@ -275,6 +275,28 @@ check_device() {
     record "el teléfono llega al backend" 1 "sin adb reverse no hay backend; usá la IP de la red local"
   fi
 
+  # Variante cifrada (`docs/plan-proxy-tls.md`, fase 5). El 443 no se puede
+  # mapear en el teléfono (`cannot bind listener: Permission denied`), así que el
+  # túnel entra por el 8443. Del lado del teléfono va `-k` a propósito: lo que se
+  # prueba acá es que el túnel llega al proxy y que el handshake TLS se completa.
+  # Que el teléfono **confíe** en la CA de laboratorio lo demuestra el build
+  # `demo` en `adb logcat -s SignAiNet`, no `curl`.
+  lab_ca="$BACKEND_DIR/deploy/certs/lab-ca.crt"
+  if [[ -f "$lab_ca" ]]; then
+    if curl -sf --cacert "$lab_ca" https://127.0.0.1/health >/dev/null 2>&1; then
+      adb reverse tcp:8443 tcp:443 >/dev/null 2>&1
+      if adb shell "curl -sk -m 5 https://127.0.0.1:8443/health" 2>/dev/null | grep -q '"status":"ok"'; then
+        record "el proxy responde con TLS" 0 "host con la CA del laboratorio; teléfono por adb reverse tcp:8443 tcp:443"
+      else
+        record "el proxy responde con TLS" 1 "el host responde, pero el teléfono no llega por adb reverse tcp:8443 tcp:443"
+      fi
+    else
+      record "el proxy responde con TLS" 1 "deploy/certs/lab-ca.crt existe, pero https://127.0.0.1/health no responde: ¿está el servicio caddy arriba?"
+    fi
+  else
+    echo "  proxy TLS: sin probar (no está $lab_ca)"
+  fi
+
   adb logcat -c >/dev/null 2>&1
   adb shell am force-stop "$PKG" >/dev/null 2>&1
   adb shell am start -n "$PKG/.MainActivity" >/dev/null 2>&1
