@@ -8,13 +8,78 @@
 > cambios de este documento antes de terminar. **No se hacen cambios silenciosos ni se
 > deja el plan para “actualizar después”.**
 
-**Estado:** investigación y plan; no se implementó nada.  
-**Fecha:** 2026-10-24  
-**Alcance pedido:** usar Juan y Pauline desde el selector existente, y determinar cómo integrar las animaciones faciales sin apartarse de la tesis.
+**Estado:** **implementado el 2026-10-26** el selector funcional con los dos avatares y el
+empaquetado de los GLB; los marcadores faciales quedan **fuera de alcance por decisión del
+owner**. Faltan las mediciones de PR-AVT-06 y el mapeo tipo→variante. Ver «Resultado de la
+implementación».
+**Fecha:** 2026-10-24 (investigación y plan) · 2026-10-26 (implementación)
+**Alcance pedido:** usar Juan y Pauline desde el selector existente. Las animaciones
+faciales siguen investigadas en este documento pero **no se implementan**: el owner pidió
+el 2026-10-26 «solo mostramos las señas como lo estamos mostrando ahora».
+
+## Resultado de la implementación (2026-10-26)
+
+Se implementó el selector funcional con los dos avatares. **Los marcadores faciales no se
+tocaron**: el owner decidió ese día dejar las expresiones para después y seguir
+representando solo el clip base de cada seña, «como lo estamos mostrando ahora».
+
+Qué quedó hecho:
+
+- **Empaquetado.** `tools/pack_avatars.py` lee los dos originales de
+  `../material-3d/Avatares/`, verifica 1 skin, 102 articulaciones y los 300 nombres de clip
+  esperados, hornea la pose de descanso con la regla de `rest_pose.py` y poda los morph
+  targets que ninguna variante anima. Escribe `models/juan.glb` (34,21 MB),
+  `models/pauline.glb` (29,46 MB), el inventario `models/avatares.json`, `manifest.json` y
+  `domain/SignsCatalog.kt`. El `avatar.glb` de 12,98 MB se borró.
+- **Selector.** `Character` en `domain/Settings.kt` tiene `Juan` y `Pauline`; Juan es el
+  predeterminado y cualquier valor viejo (`Julián`, `Samuel`, `Ximena`) se normaliza a
+  Juan al leerlo, porque esas opciones nunca cambiaron el modelo.
+- **Puente.** El avatar inicial viaja en `?avatar=<id>` al cargar la página y los cambios en
+  caliente usan `window.SignAI.setAvatar(id)`, aditivo sobre `domain/SignAiCommands.kt`. El
+  modelo nuevo se parsea **antes** de liberar el anterior, y la escena avisa
+  `avatarLoaded:<id>` o `avatarFailed:<id>`.
+- **Bloqueo.** El selector está deshabilitado salvo en reposo: se permite en `Inactivo`,
+  `Desconectado` y `Error`, y se niega con captura, frase lista o enviada, traducción, cola
+  o repetición en curso. Mientras el avatar carga, la barra de abajo y el botón de
+  reproducir quedan bloqueados.
+- **Escena.** `app.js` carga el GLB del avatar elegido, indexa sus 300 clips, libera la
+  geometría, los materiales y las texturas del anterior con `dispose()` y vuelve a resolver
+  la seña que estaba en pantalla. Solo resuelve los clips base (`0000`..`0049`): el
+  resolutor no reconoce los sufijos faciales a propósito.
+
+Mediciones en el Redmi Note 9S, 2026-10-26, con `SignAIWeb` y `SignAiState` de logcat:
+
+| Qué | Medido |
+|---|---|
+| Arranque con Juan | 1,81–2,50 s en caliente, 3,42 s en frío (caché de página) |
+| Arranque con Pauline | 1,95 s |
+| Cambio de avatar en caliente | 1,90–2,57 s, de los cuales 1,18–1,95 s son el parseo del GLB |
+| APK debug / release sin firmar | 48 MB / 34 MB |
+| PSS de la app con Juan cargado | ~390 MB |
+
+Desvíos respecto del plan, todos deliberados:
+
+- El plan recomendaba habilitar el cambio **solo** en `Inactivo`; se habilitó también en
+  `Desconectado` y `Error` porque la lista del owner enumera operaciones activas, y en esos
+  dos estados no hay ninguna.
+- La correspondencia tipo de oración → variante facial (DOC-5, DOC-6) sigue abierta y sin
+  uso: no se reproduce ninguna variante.
+- `Pauline_final.glb` no pasa la comprobación de pose de bind (el TRS de 2,00 de los nodos
+  que no son brazo no es la pose de bind). Se registró como `bind_warning` en
+  `models/avatares.json` y el resultado visual en el dispositivo es correcto; queda como
+  advertencia para una revisión del export, no como bloqueo.
+
+Pendiente después de esta implementación:
+
+- Medir lo que pide PR-AVT-06 (DOC-8): tamaño del instalador, memoria y tiempo de carga con
+  build, modelo y dispositivo registrados.
+- Actualizar en Overleaf el SDD (DOC-2) para que describa dos GLB completos, uno por avatar.
+  Lo edita el owner.
+- Decidir la tabla facial (DOC-5) si algún día se retoma el alcance de marcadores.
 
 ## Resumen de lo encontrado
 
-- `Juan_final.glb` y `Pauline_final.glb` están en la raíz del repositorio, sin rastrear por Git. Se trataron como entradas originales: no se editaron.
+- `Juan_final.glb` y `Pauline_final.glb` estaban el 2026-10-24 en la raíz del repositorio, sin rastrear por Git. Se trataron como entradas originales: no se editaron. Desde el 2026-10-26 viven en `../material-3d/Avatares/`, fuera del repo, con el resto del material 3D.
 - Cada archivo contiene las 50 señas (`0000`–`0049`) y seis clips por seña: base, `_alegria`, `_tristeza`, `_sorpresa`, `_pregunta` y `_negacion`. Son **300 clips por avatar**.
 - Ambos tienen un esqueleto de 102 articulaciones y canales de animación facial para cejas, ojos, mandíbula y boca. La lectura de los GLB encontró, en las 50 señas de cada archivo, que los tracks de huesos coinciden entre la versión base y sus cinco variantes, mientras cambian los tracks de pesos de malla. Esto confirma que los archivos ofrecen variaciones faciales sin cambiar los movimientos de huesos; no confirma que cada expresión sea lingüísticamente adecuada para una categoría.
 - Cada archivo ocupa decenas de MB: Juan, **37.872.312 bytes**; Pauline, **35.272.616 bytes**. Juntos son **73.144.928 bytes** antes del empaquetado. Son cifras leídas de los archivos, no el tamaño del APK.
@@ -47,14 +112,14 @@ Esta tabla registra cómo se relacionan el código, los assets, los requisitos, 
 
 | ID | Fuente y fecha/versión | Lo que dice la fuente | Código, assets o decisión del owner | Diferencia / estado | Acción y responsable |
 |---|---|---|---|---|---|
-| DOC-1 | Código app `main`, commit `1c027f0`; `app.js` y `Settings.kt` | La escena carga un `avatar.glb`; el selector actual guarda Julián/Samuel/Ximena, pero no cambia el modelo. | El owner decidió Juan y Pauline, dos GLB completos, con Juan predeterminado. | **Diferencia confirmada.** | Implementación futura: conectar el selector con el modelo. Actualizar `openspec/specs/ui/spec.md` y `openspec/specs/avatar/spec.md`; responsable: quien implemente en este repo. |
+| DOC-1 | Código app `main`, commit `1c027f0`; `app.js` y `Settings.kt` | La escena carga un `avatar.glb`; el selector actual guarda Julián/Samuel/Ximena, pero no cambia el modelo. | El owner decidió Juan y Pauline, dos GLB completos, con Juan predeterminado. | **Resuelto el 2026-10-26.** El selector carga `models/juan.glb` o `models/pauline.glb` y `avatar.glb` ya no existe. | Hecho: `Character` con Juan/Pauline, `?avatar=<id>`, `SignAI.setAvatar`, `avatarLoaded`/`avatarFailed` y specs actualizados. |
 | DOC-2 | Overleaf SDD, `main.tex`, versión 212; consultada 2026-10-24 | Describe 50 archivos GLB en la app y deja pendiente documentar avatares, señas y archivos faciales. | Dos archivos recibidos; cada uno contiene 50 señas y 300 clips. El owner eligió empaquetarlos como un GLB completo por avatar. | **Divergencia; dirección resuelta por el owner.** | Actualizar la descripción de assets del SDD para reflejar dos GLB completos. Solo el owner edita Overleaf. |
 | DOC-3 | `../sign-ai-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`, 2026-10-21, RF-AVT-03 | El alcance actual del requisito es mover las cejas según el tipo de oración. | El owner decidió usar expresiones de todo el rostro disponibles en los GLB. | **Divergencia; dirección resuelta por el owner.** | Proponer al owner ampliar RF-AVT-03 y alinear la documentación consolidada antes de implementar. El agente no edita el documento de requisitos. |
 | DOC-4 | Overleaf SRS, `main.tex`, versión 524; consultada 2026-10-24 | El resumen pide marcadores faciales según el tipo de frase y el ajuste Personaje selecciona el personaje. No fija clips ni una tabla de expresiones. | El owner eligió Juan/Pauline y rostro completo; falta el mapeo tipo→variante. | **Compatible en el objetivo general; detalle abierto.** | Mantener la decisión de mapeo pendiente y reflejarla en la tabla aprobada de PR-AVT-05. Overleaf sigue siendo de solo lectura para el agente. |
 | DOC-5 | `../sign-ai-docs/plan-pruebas/01-diseno/avatar/pruebas.md`, PR-AVT-05 | Hace falta una tabla de expresiones esperadas por los cinco tipos gramaticales; la tabla se escribe antes de la ronda. | Aún no se decidió qué variante representa cada tipo. | **Pendiente.** | El owner consultará la correspondencia. Luego actualizar PR-AVT-05, sin cambiarla por inferencia técnica. |
 | DOC-6 | Backend, commit `78006a5`; `PhraseType`, `GlossAnalyzer`, contrato WS | Entrega un tipo gramatical entre cinco; no clasifica emociones. `secondary_signals` es de colisiones gramaticales y no viaja en `segment`. | Los clips incluyen sufijos de alegría, tristeza y sorpresa, además de pregunta y negación. | **Sin correspondencia emocional disponible.** | Opción A/C: mapear solo tipos gramaticales con tabla aprobada. Opción B: diseñar una clasificación emocional y nuevo campo WS, coordinando backend y app. Decisión pendiente del owner. |
-| DOC-7 | OpenSpec local, `specs/ui/spec.md` y `specs/avatar/spec.md` | Describe el selector como UI-only y una escena con un único GLB sin animación de expresiones. | El owner decidió selector funcional con dos avatares y rostro completo. | **Desactualizado frente a la decisión del owner.** | Actualizar ambos specs al implementar, después de alinear los documentos de tesis. Responsable: quien implemente en este repo. |
-| DOC-8 | Overleaf SRS, versión 524; `../sign-ai-docs` PR-AVT-06 | El tamaño del APK con todos los GLB está pendiente de medir; PR-AVT-06 pide medir los assets y el instalador. | Los dos GLB recibidos suman 73.144.928 bytes en crudo. | **Medición pendiente; el tamaño crudo no es el del APK.** | Medir instalador, memoria y carga en dispositivo durante verificación; registrar build, modelo y dispositivo. Responsable: quien implemente/pruebe. |
+| DOC-7 | OpenSpec local, `specs/ui/spec.md` y `specs/avatar/spec.md` | Describe el selector como UI-only y una escena con un único GLB sin animación de expresiones. | El owner decidió selector funcional con dos avatares; el rostro quedó fuera de alcance el 2026-10-26. | **Resuelto el 2026-10-26.** Los dos specs describen los dos GLB, el selector funcional y el bloqueo en reposo; `specs/pipeline/spec.md` describe el empaquetado nuevo. | Hecho. El mapeo facial sigue pendiente y así se declara en los specs. |
+| DOC-8 | Overleaf SRS, versión 524; `../sign-ai-docs` PR-AVT-06 | El tamaño del APK con todos los GLB está pendiente de medir; PR-AVT-06 pide medir los assets y el instalador. | Los dos GLB empaquetados suman 63,7 MB (34,21 + 29,46). Medido el 2026-10-26 en el Redmi Note 9S: APK debug 48 MB, release sin firmar 34 MB, PSS ~390 MB con Juan. | **Medición del APK hecha; falta el registro formal en PR-AVT-06.** | Registrar build, modelo y dispositivo en el plan de pruebas y en `docs/PLAN-MEDICION.md`. Responsable: el owner al actualizar los documentos. |
 
 ### Registro de cambios del plan
 
@@ -63,6 +128,7 @@ Agregar una fila por cada trabajo posterior relacionado con esta iniciativa. No 
 | Fecha | Trabajo realizado | Repo/archivos y fuentes | Diferencias/decisiones actualizadas | Pendiente |
 |---|---|---|---|---|
 | 2026-10-24 | Investigación inicial de GLB, backend, selector y documentos; `git pull --ff-only` de `../sign-ai-docs` (ya estaba al día). | Ver “Fuentes técnicas y procedencia” al final. | Se registraron DOC-1–DOC-8; owner decidió dos GLB completos, rostro completo y cambio solo en reposo. | Correspondencia tipo gramatical→variante, por consultar con validadores LSC. |
+| 2026-10-26 | Implementación del selector y del empaquetado; los marcadores faciales quedaron fuera de alcance por decisión del owner. | `tools/pack_avatars.py` nuevo; `models/juan.glb`, `models/pauline.glb` y `models/avatares.json`; `app.js`; `Settings.kt`, `SignAiCommands.kt`, `MainScreenState.kt`, `AvatarWebView.kt`, `SignAiWebViewController.kt`, `CharacterPicker.kt`; specs `avatar`, `ui` y `pipeline`; `AGENTS.md`. | DOC-1 y DOC-7 resueltos; DOC-8 con la medición del APK; rostro completo pasa a «fuera de alcance» hasta que el owner lo retome. | La tabla facial (DOC-5) queda sin uso; el SDD de Overleaf (DOC-2) sigue sin describir los dos GLB. |
 
 ### Qué significa «el backend decide cuándo» en el estado actual
 
@@ -76,7 +142,8 @@ Por lo tanto, el backend puede decir «esta oración es una pregunta» o «es ne
 
 - El avatar solo se puede cambiar en **reposo absoluto**. Mientras haya captura, una frase lista o enviada, traducción, cola o representación en curso, el selector no debe permitir el cambio. La recomendación del plan es habilitarlo únicamente en `Inactivo`, con micrófono y modo en vivo apagados y sin turno, cola ni repetición pendientes.
 - Juan es el avatar actual y Pauline la nueva. El valor inicial para instalaciones nuevas será Juan. Las preferencias guardadas con las opciones antiguas se normalizarán a Juan, ya que esas opciones nunca cambiaron el modelo real.
-- Se usarán **dos GLB completos**, uno por avatar, y el alcance de los marcadores será el **rostro completo**, no solo las cejas.
+- Se usarán **dos GLB completos**, uno por avatar. El alcance de los marcadores se había fijado como **rostro completo**, no solo las cejas; el **2026-10-26 el owner lo dejó fuera de alcance**: se siguen representando solo los clips base de las señas.
+- El cambio de avatar se habilita en cualquier estado sin operación activa: `Inactivo`, `Desconectado` y `Error`. Es la lectura de la lista del owner, más amplia que la recomendación original de habilitarlo solo en `Inactivo`.
 - Sigue abierta la correspondencia entre el tipo de oración y el clip que se debe reproducir. El owner consultará esa decisión; el plan conserva las alternativas en la sección siguiente.
 
 ## Plan de implementación propuesto
