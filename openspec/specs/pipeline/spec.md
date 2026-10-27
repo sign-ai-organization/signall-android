@@ -1,9 +1,15 @@
 # Pipeline SignAI (WebView) — flujo de datos
 
+> **Actualización del 2026-10-26:** hay **dos archivos completos, uno por avatar**
+> (`models/juan.glb`, 34,21 MB, y `models/pauline.glb`, 29,46 MB), armados por
+> `tools/pack_avatars.py` desde `../material-3d/Avatares/`. Cada uno trae el personaje y
+> sus **300 clips** (50 señas × 6 variantes); la escena carga solo el avatar elegido en
+> Ajustes. El `models/avatar.glb` de 12,98 MB se borró. El flujo de runtime no cambió.
+>
 > **Actualización del 2026-10-22:** el flujo de assets cambió. Ya no hay
 > `models/avatar.glb` + `signs/<id>.glb`: hay **un solo** `models/avatar.glb` con el
 > personaje y las 50 señas como clips `0000`..`0049`, armado por `tools/pack_signall.py`
-> desde `../material-3d/GLB SignALL/`. El flujo de runtime no cambió. Detalle en
+> desde `../material-3d/GLB SignALL/`. Detalle en
 > `openspec/sessions/2026-10-22-signall-un-glb-50-senas.md`.
 >
 > **Auditoría del 2026-10-24:** se contrastó cada afirmación contra el código y contra el
@@ -26,14 +32,17 @@ runtime.
 ### Flujo de assets — cómo llega una animación al APK
 
 ```
-../material-3d/GLB SignALL/*.glb                  el .glb único de Cascadeur: personaje + 50 clips
-      │                            (fuente, gitignored; 27,16 MB)
+../material-3d/Avatares/Juan_final.glb             los dos exports de Cascadeur: personaje,
+../material-3d/Avatares/Pauline_final.glb          esqueleto y 300 clips cada uno
+      │                            (fuente, fuera del repo; 37,87 y 35,27 MB)
       ▼
-tools/pack_signall.py              hornea la pose de descanso, poda morph targets
-      │                            que nadie anima (conserva los que pesan por
-      │                            defecto) y compacta el buffer
-      │  · models/avatar.glb        ← 12,98 MB: personaje + cara + clips 0000..0049
-      │  · manifest.json            ← inventario de los 50 clips
+tools/pack_avatars.py              verifica skins, articulaciones y nombres de clip;
+      │                            hornea la pose de descanso y poda los morph
+      │                            targets que ninguna variante anima
+      │  · models/juan.glb          ← 34,21 MB: personaje + cara + 300 clips
+      │  · models/pauline.glb       ← 29,46 MB: idem
+      │  · models/avatares.json     ← inventario: hashes, clips, articulaciones
+      │  · manifest.json            ← inventario de los 50 clips base
       │  · domain/SignsCatalog.kt   ← reescrito, para que el asset y el código no divergan
       ▼
 app/src/main/assets/web/           dentro del APK
@@ -47,14 +56,17 @@ WebView necesita INTERNET aunque el avatar y las señas sean locales.
 
 El layout viejo (`tools/split_signs.py` → `models/` + `signs/`) sigue en el repo
 —`pack_signall.py` le importa `write_catalog`— y `app.js` sigue soportando un `.glb` por
-seña, pero `assets/web/signs/` se borró el 2026-10-22 y **el vigente es el archivo único**.
+seña, pero `assets/web/signs/` se borró el 2026-10-22. El vigente son los **dos archivos
+completos**, uno por avatar, desde el 2026-10-26.
 
-**Nunca se edita `models/avatar.glb` a mano.** Se regenera. **Nunca se edita
-`SignsCatalog.kt` a mano** tampoco: lo reescribe el generador, justamente para que la
-lista de código y el asset no puedan divergir.
+**Nunca se editan `models/juan.glb` ni `models/pauline.glb` a mano.** Se regeneran.
+**Nunca se edita `SignsCatalog.kt` a mano** tampoco: lo reescribe el generador, justamente
+para que la lista de código y el asset no puedan divergir.
 
-**Agregar o cambiar una seña** = regenerar el `.glb` único en `../material-3d/GLB SignALL/` y correr
-`pack_signall.py`. No es un paso más: es el único procedimiento.
+**Agregar o cambiar una seña** = regenerar los dos `.glb` desde
+`../material-3d/Avatares/` y correr `pack_avatars.py`. No es un paso más: es el único
+procedimiento. `tools/pack_signall.py` es el pipeline viejo de un solo avatar y no procesa
+estos archivos.
 
 ### Flujo de runtime — qué pasa cuando alguien habla
 
@@ -91,7 +103,7 @@ WebSocket  ws://<backend>:8080/ws/translate          ← la app SOLO habla con e
                      │
                      ▼
               THREE.AnimationMixer reproduce el clip <id> embebido en
-              models/avatar.glb (resuelto por nombre) con crossfade de 100 ms
+              el GLB del avatar elegido (resuelto por nombre) con crossfade de 100 ms
                      │
                      ▼
               window.SignAIBridge.postMessage("onPlaybackDone")
@@ -114,9 +126,9 @@ en el skill `contrato-websocket`.
 
 ## Formato de `manifest.json`
 
-Lo escribe el generador de assets: `pack_signall.py` con el archivo único (vigente desde
-el 2026-10-22), `split_signs.py` con el layout por seña. Es el inventario de lo que hay en
-el APK:
+Lo escribe el generador de assets: `pack_avatars.py` con los dos archivos completos
+(vigente desde el 2026-10-26), `split_signs.py` con el layout por seña. Es el inventario
+de lo que hay en el APK:
 
 ```json
 [{ "sign_id": "0000",
@@ -130,21 +142,22 @@ el APK:
    "bytes": 12978476, "sha256": "b5cacff4…" }]
 ```
 
-Con el archivo único, `bytes` y `sha256` son los **del archivo entero**, no los de un clip:
-no existe un asset por seña. `gloss` va en `null` porque la glosa la pone el catálogo del
-backend, no el asset. El `sha256` es lo que permite cruzar el APK contra el catálogo sin
-abrir los binarios. Ojo con `faces`: `pack_signall.py` lo pone en `true` cuando el clip
-tiene algún canal de pesos (`weights`), no cuando tiene expresión facial — los 5 canales
-por clip son de cuerpo/ropa (ver § La cara).
+Con los archivos completos, `bytes` y `sha256` son los **del archivo entero**, no los de un
+clip: no existe un asset por seña. `gloss` va en `null` porque la glosa la pone el catálogo
+del backend, no el asset. El `sha256` es lo que permite cruzar el APK contra el catálogo sin
+abrir los binarios. Ojo con `faces`: `pack_avatars.py` lo pone en `true` cuando el clip
+tiene algún canal de pesos (`weights`), no cuando tiene expresión facial — los canales de
+pesos no son de expresión (ver § La cara).
 
 ## Nombres de los huesos — crítico
 
 **Las exportaciones de Cascadeur usan PUNTOS.** Este es el dato que más se ha equivocado,
 y se equivocó en las dos direcciones.
 
-Verificado el **2026-10-17** contra `models/avatar.glb` y contra el export original de
-Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`), y **reverificado el 2026-10-24**
-contra el archivo vigente: **102 articulaciones de skin** en los tres archivos.
+Verificado el **2026-10-17** contra el `avatar.glb` de entonces y contra el export original
+de Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`), y **reverificado el 2026-10-24
+y el 2026-10-26** contra los archivos vigentes (`models/juan.glb` y `models/pauline.glb`):
+**102 articulaciones de skin** en todos ellos.
 
 | Zona | Cómo es |
 |---|---|
@@ -191,22 +204,21 @@ jaw, jaw_upper, jaw_dwn_mouth_clsd, jaw_open_lt_rt_frwd
 
 `app.js` no los menciona ni los maneja: la escena no tiene código de expresión facial. En
 los clips, esos huesos **casi no se mueven**: el mayor rango de un componente del cuaternión
-de rotación de un nodo de cara en los 50 clips es **0,0012** (`jaw`, clip `0015`), contra
-**1,996** del mayor hueso del cuerpo (`thigh.L`, clip `0034`) —medido el 2026-10-24 leyendo
-los accessors del GLB—, así que hoy la cara queda prácticamente neutra. Tampoco hay morph
-targets **de expresión**: el
-archivo guarda **7** (no cero; contados en el JSON del GLB el 2026-10-24) porque
-`pack_signall.py` conserva los que pesan por defecto
-—`Male`, `LIVE_KEY_PERMANENT`, `Body Proportions` ×4 y `eyeball_size`—, ninguno de cara, y
-ningún canal de pesos cambia de valor dentro de un clip.
+de rotación de un nodo de cara en los 50 clips base del archivo anterior es **0,0012**
+(`jaw`, clip `0015`), contra **1,996** del mayor hueso del cuerpo (`thigh.L`, clip `0034`)
+—medido el 2026-10-24 leyendo los accessors del GLB—, así que hoy la cara queda
+prácticamente neutra. Los dos archivos vigentes **sí conservan morph targets** que alguna
+de las 300 variantes anima —65 bloques de target en Juan y 64 en Pauline, contados el
+2026-10-26—, pero la escena no los maneja y solo reproduce el clip base, así que nada de
+eso llega a pantalla.
 
 Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide un marcador facial
-según el tipo de frase y no hay implementación. **Decisión del owner pendiente** (2026-10-17).
-Antes estaba "en pausa" porque el documento no lo pedía; el SRS de Overleaf ahora sí lo pide,
-así que hay que decidir si se implementa o se saca del documento. Si algún día se
-implementa, se toca acá y en `app.js`: **los huesos de cara existen y son joints**, así que
-el atajo técnico existe; lo que falta es decidir y hornear los marcadores en los clips (o
-animarlos desde la escena). No es un cambio de una línea.
+según el tipo de frase y no hay implementación. El owner decidió el **2026-10-26** dejarlo
+fuera de alcance —se sigue representando solo el clip base—, así que la deuda es de
+documento, no de código. Si algún día se implementa, se toca acá y en `app.js`: **los huesos
+de cara existen y son joints** y los morph targets están conservados en los dos archivos,
+así que el material está; falta la tabla tipo→variante y la decisión de hornearla o
+animarla desde la escena. No es un cambio de una línea.
 
 ## Constantes de la escena en `app.js` (valores reales)
 
@@ -216,7 +228,7 @@ Verificadas en `app/src/main/assets/web/app.js`:
 |---|---|---|
 | `CROSSFADE_MS` | `100` | Fundición entre dos señas. Entre señas **no hay pose congelada ni hueco** |
 | `MAX_DPR` | `1.75` | Tope de `setPixelRatio`. **A propósito** |
-| `AVATAR_URL` | `models/avatar.glb` | El personaje |
+| `AVATAR_SOURCES` | `{ juan: "models/juan.glb", pauline: "models/pauline.glb" }` | Los dos personajes; el nombre pedido tiene que ser una clave de este objeto |
 | `DEFAULT_SIGN_URL` | `signs/0000_0000_0000.glb` | Seña de apertura y de reserva |
 | `BG_COLOR` | `#121316` | Fondo del canvas en oscuro (= `background` del tema) |
 | `BG_LIGHT` | `#f4f4f2` | Fondo del canvas en claro |
@@ -258,6 +270,7 @@ Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe e
 | `setReduceMotion(on)` | Corte seco entre señas en vez de fundición (accesibilidad) |
 | `setTheme(dark)` | El fondo del canvas sigue al tema de la app |
 | `setDefaultSign(url)` | Seña de apertura y de reserva |
+| `setAvatar(id)` | Cambia de avatar en caliente. El `id` tiene que ser `juan` o `pauline`; se ignora cualquier otro. Aditivo desde el 2026-10-26 |
 | `setDebug(on)` | Overlay `#status` |
 | `setFreeCamera(on)` · `setGrid(on)` · `setBackground(on)` | Ajustes de escena |
 | `setSilenceTimeoutMs(ms)` | Solo para el overlay de depurar; el valor llega desde `/health` del backend |
@@ -266,14 +279,17 @@ Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe e
 
 | Mensaje | Cuándo |
 |---|---|
-| `avatarReady` | La escena está entera: 50 clips indexados, seña de arranque resuelta, shaders compilados y un frame pintado con el avatar adentro |
+| `avatarReady` | La escena está entera: **300 clips indexados**, seña de arranque resuelta, shaders compilados y un frame pintado con el avatar adentro |
+| `avatarLoaded:<id>` | Un cambio de avatar en caliente terminó (2026-10-26) |
+| `avatarFailed:<id>` | El cambio de avatar falló; el anterior sigue en pantalla (2026-10-26) |
 | `onPlaybackDone` | La cola terminó |
 | `signStart:<idx>:<jsMs>` | El muñeco se empezó a mover en la seña `<idx>` |
 | `signFailed:<idx>` | La seña `<idx>` no se pudo cargar y se saltea |
 | `progress:<0..100>` | Avance real de la escena para la barra del splash (45–100) |
 
 `avatarReady` es lo que **tapa el splash** — no `onPageFinished`, que dispara mientras el
-GLB de 12,98 MB todavía se está bajando. `SignAiSplash` tiene además un timeout de 8 s.
+GLB de 34,21 MB (Juan) o 29,46 MB (Pauline) todavía se está bajando. `SignAiSplash` tiene
+además un timeout de 8 s.
 
 ## El catálogo de Neon
 

@@ -65,7 +65,7 @@ llega al cliente como `sentence_trace`, que la app ignora
 | 8 | Representa | Sí (teléfono) | `representado:` |
 | — | Cuadros por segundo | **No** | Ver §2.3 |
 | — | Transición entre señas | **No** | `CROSSFADE_MS = 100` es una constante, no una duración medida |
-| — | Carga de `avatar.glb` (12,98 MB) | **No** | Solo el timeout de 8 s del splash |
+| — | Carga del GLB del avatar (34,21 MB Juan / 29,46 MB Pauline) | **No** | Solo el timeout de 8 s del splash |
 | — | Ida y vuelta de la red | **No** | `OkHttpClient` pelado, sin `EventListener` ni `pingInterval` |
 
 ### 2.3 Tres problemas concretos que hay que resolver
@@ -255,7 +255,7 @@ segunda pasada sale como acierto de caché y no mide nada
 | 1.5 | `app.js` | Timestamp en `setQueue` / `appendQueue` / `loadSignClips` | Separar la baja del `.glb`. El docstring de `app.js:429-434` ya lo promete y no lo cumple |
 | 1.6 | `app.js` | **FPS real** | **RNF-DES-05** |
 | 1.7 | `app.js` | Duración real de la transición | **RNF-DES-06** |
-| 1.8 | `app.js` | Tiempo de carga de `avatar.glb` (12,98 MB) | Arranque |
+| 1.8 | `app.js` | Tiempo de carga del GLB del avatar (34,21 MB Juan / 29,46 MB Pauline) | Arranque |
 | 1.9 | Backend | `split_ms`, `fingerprint_ms`, `validation_ms` como histogramas | Los tres tramos sin número |
 | 1.10 | Backend | Reloj absoluto en cada mensaje del socket | Descomponer la latencia entre procesos |
 | 1.11 | `embedding_model.py:3` | El modelo está **escrito en el código**; hacerlo configurable por entorno | `marco.md:178` obliga a registrar el modelo de embeddings en cada corrida |

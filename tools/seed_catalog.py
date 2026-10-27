@@ -128,8 +128,9 @@ def build_sql(assets: dict[str, dict]) -> str:
 -- (doi 10.1038/s41597-024-04172-5). No editar a mano: se regenera entero.
 --
 -- `glb_animation_path` es un path same-origin DENTRO del APK: la app resuelve
--- ese nombre contra las animaciones que vienen adentro de `models/avatar.glb`,
--- no lo descarga del backend. Por eso las señas sin animación exportada
+-- ese nombre contra las animaciones que vienen adentro del `.glb` del avatar
+-- (`models/juan.glb` o `models/pauline.glb`), no lo descarga del backend. Por eso
+-- las señas sin animación exportada
 -- (fps/frames/bytes/sha256 en NULL) también están: el backend las anuncia igual
 -- y la app cae al sign por defecto (RF-CAT-03).
 

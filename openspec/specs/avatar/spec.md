@@ -8,13 +8,19 @@ horneada por hueso y la escena solo la reproduce.
 
 | | |
 |---|---|
-| Personaje | `models/avatar.glb` (12,98 MB), 102 articulaciones de skin, 11 mallas, texturas WebP PBR |
-| Señas | **clips `0000`..`0049` dentro del mismo `avatar.glb`** (50, una por glosa) |
+| Personaje | `models/juan.glb` (34,21 MB) **o** `models/pauline.glb` (29,46 MB), 102 articulaciones de skin cada uno; el que se carga lo elige el ajuste «Personaje» |
+| Señas | **300 clips adentro de cada archivo**: las 50 señas (`0000`..`0049`) por seis variantes (base, `_alegria`, `_tristeza`, `_sorpresa`, `_pregunta`, `_negacion`) |
 | Escena | `app.js` + `index.html`, three r169 por CDN |
 | Catálogo | `domain/SignsCatalog.kt`, generado |
 
+**Cambio del 2026-10-26**: hay **dos archivos completos, uno por avatar**. El
+`models/avatar.glb` de 12,98 MB se borró; `tools/pack_avatars.py` arma los dos
+desde `../material-3d/Avatares/`. La escena indexa solo el avatar elegido y
+resuelve `signs/<id>.glb` por nombre contra sus clips (`embeddedClipsFor` en
+`app.js`). Los originales sin empaquetar no viven en el repo.
+
 **Cambio del 2026-10-22**: el asset pasó de `models/avatar.glb` + `signs/<id>.glb` a
-**un solo archivo** con las 50 señas adentro. `tools/pack_signall.py` lo arma desde
+**un solo archivo** con las 50 señas adentro. `tools/pack_signall.py` lo armaba desde
 `../material-3d/GLB SignALL/`. Los `signs/*.glb` que quedan en el repo no se piden en runtime: la
 escena resuelve `signs/<id>.glb` por nombre contra los clips del avatar
 (`embeddedClipsFor` en `app.js`). Por qué el cambio y con qué números, en
@@ -25,32 +31,58 @@ landmarks de MediaPipe, `BONE_MAP`, `solveIKElbow`, `applyHandOrientation` y
 `sign.json`. **Nada de eso existe ya.** Si un documento o una sesión lo
 menciona, es historia: está en `openspec/sessions/2026-10-13-glb-animation-mixer.md`.
 
-## Un archivo, y por qué alcanza
+## Dos archivos, uno por avatar
 
-Cada export de Cascadeur trae el personaje entero adentro. El primer pipeline
-(`tools/split_signs.py`, 2026-10-13) separaba eso en `models/avatar.glb` +
-`signs/<id>.glb` para no versionar 32 copias del muñeco. Desde el 2026-10-22 el
-archivo único trae **el personaje + las 50 animaciones**, así que ya no hay nada
-que separar: el mixer resuelve los tracks por nombre de nodo contra el root, y
-cargar el clip desde el mismo `gltf.animations` que el avatar es lo mismo que
-cargarlo desde un `.glb` aparte, sin pedido de red.
+Cada export de Cascadeur trae el personaje entero adentro, y cada uno de los dos
+avatares es un archivo cerrado. El primer pipeline (`tools/split_signs.py`,
+2026-10-13) separaba eso en `models/avatar.glb` + `signs/<id>.glb` para no
+versionar 32 copias del muñeco. Desde el 2026-10-22 el archivo único trae **el
+personaje + las 50 animaciones**, y desde el 2026-10-26 son **dos** archivos con
+**300 clips cada uno**: el mixer resuelve los tracks por nombre de nodo contra el
+root, y cargar el clip desde el mismo `gltf.animations` que el avatar es lo mismo
+que cargarlo desde un `.glb` aparte, sin pedido de red.
 
-Lo que se pierde: las **variantes** de una misma seña (el layout viejo tenía 46
-tomas para 32 señas y `pickVariant` elegía al azar; el archivo nuevo trae una
-toma por seña). Está anotado como decisión abierta en la sesión del 2026-10-22.
+Las **variantes faciales** existen en los dos archivos y **no se reproducen**: el
+resolutor solo reconoce los clips base (`0000`..`0049`), a propósito, mientras los
+marcadores estén fuera de alcance (decisión del owner del 2026-10-26). Los morph
+targets que alguna de las 300 variantes anima se conservan en el archivo, para no
+tener que reempaquetar el día que se apruebe el mapeo: 65 bloques de target en
+Juan y 64 en Pauline, contados el 2026-10-26.
 
-Cambiar el personaje requiere regenerar el archivo, y agregar una seña también:
-es un solo `.glb` y lo escribe `tools/pack_signall.py`.
+Cambiar de avatar **no requiere regenerar nada**: los dos archivos están en el APK
+y la escena cambia de uno al otro en caliente. Regenerarlos sí: los escribe
+`tools/pack_avatars.py`.
 
-## La pose de descanso está horneada en `avatar.glb`
+## El cambio de avatar en caliente
+
+- **Quién decide**: el ajuste «Personaje» de Ajustes, que persiste en
+  `SharedPreferences`. Los valores son `juan` y `pauline`; Juan es el
+  predeterminado y cualquier valor viejo (`Julián`, `Samuel`, `Ximena`) se
+  normaliza a Juan al leerlo, porque esas opciones nunca cambiaron el modelo.
+- **Solo en reposo.** El selector se habilita en `Inactivo`, `Desconectado` y
+  `Error`, y se niega con captura, frase lista o enviada, traducción, cola o
+  repetición en curso. Mientras el avatar carga, la barra de abajo y el botón de
+  reproducir quedan bloqueados.
+- **Cómo viaja**: el avatar inicial va en la URL de la página (`?avatar=<id>`) y
+  los cambios usan `window.SignAI.setAvatar(id)`, método aditivo declarado en
+  `domain/SignAiCommands.kt`. La escena responde `avatarLoaded:<id>` o
+  `avatarFailed:<id>`; el splash espera ese aviso, no `onPageFinished`.
+- **El orden importa**: el modelo nuevo se parsea **antes** de liberar el
+  anterior, así un cambio que falla deja el avatar viejo en pantalla. Al liberar
+  se llama `dispose()` sobre geometrías, materiales y texturas.
+- **Costo medido** (Redmi Note 9S, 2026-10-26): un cambio en caliente tarda
+  1,90–2,57 s, de los cuales 1,18–1,95 s son el parseo del GLB. El arranque de la
+  app tarda 1,81–2,50 s con caché de página caliente y 3,42 s en frío.
+
+## La pose de descanso está horneada en los dos `.glb`
 
 El reposo **no** es una T-pose ni un default de three.js: es el TRS de los nodos
 del `.glb`, que es la pose que Cascadeur dejó en el export — brazos a 35° bajo
 la horizontal, manos a 52 cm del eje, de maniquí.
 
 La que hay ahora sale de la seña `0029` (JUICIOSO), primer keyframe
-(`t = 0.0417 s`) —en el layout viejo `signs/0029_0000_0000.glb`, variante 0; en el
-archivo único, el clip `0029` del propio avatar—, y son las rotaciones de **46
+(`t = 0.0417 s`) —en el layout viejo `signs/0029_0000_0000.glb`, variante 0; en
+los archivos vigentes, el clip `0029` del propio avatar—, y son las rotaciones de **46
 huesos**: la
 cadena de brazos entera de los dos lados (`shoulder`, `upper_arm`, `forearm`,
 `hand`, `palm.*`, `f_*`, `thumb*`). Ni la cara, ni el torso, ni las piernas.
@@ -90,22 +122,28 @@ frena la corrida: deformar la malla no da ningún error en pantalla.
 
 ### Cómo se regenera
 
-`tools/pack_signall.py`, el pipeline vigente: reusa las funciones de
+`tools/pack_avatars.py` es el pipeline vigente: reusa las funciones de
 `tools/rest_pose.py` y saca el frame de referencia del **primer keyframe del clip
-`0029` del propio archivo** que está armando, así que ya no necesita un
-`signs/0029_0000_0000.glb` en disco. `tools/split_signs.py` es el layout viejo
-—separaba `signs/` y después horneaba la pose desde ahí— y sigue en el repo porque
-el pipeline le importa `write_catalog`. **`avatar.glb` no se edita a mano**: se
-regenera, y la pose viene sola.
+`0029` del propio archivo** que está armando, así que no necesita un
+`signs/0029_0000_0000.glb` en disco. Verifica 1 skin, 102 articulaciones y los 300
+nombres de clip antes de escribir, y frena si la pose de bind no cierra.
+`tools/split_signs.py` es el layout viejo —separaba `signs/` y después horneaba la
+pose desde ahí— y sigue en el repo porque el pipeline le importa `write_catalog`.
+**`models/juan.glb` y `models/pauline.glb` no se editan a mano**: se regeneran, y
+la pose viene sola.
 
 ```bash
-python3 tools/pack_signall.py --dry-run   # informe: pose de descanso y morphs podados
+python3 tools/pack_avatars.py --dry-run   # informe de los dos, sin escribir
+python3 tools/pack_avatars.py             # los dos, desde ../material-3d/Avatares
 ```
+
+`tools/pack_signall.py` es el pipeline viejo de un solo avatar: no procesa estos dos
+archivos.
 
 Ojo: `python3 tools/rest_pose.py --dry-run` y `python3 tools/preview_pose.py --sheet`
 **ya no corren solos** desde el 2026-10-22: los dos esperan el layout viejo
 (`assets/web/signs/`), que se borró. El informe de la pose lo da el `--dry-run` de
-`pack_signall.py`.
+`pack_avatars.py`.
 
 `preview_pose.py` renderiza una pose sin three.js ni instalar la app (skinning
 lineal con las IBM del export, el mismo `pivot` y la misma cámara que `app.js`,
@@ -117,10 +155,10 @@ que lee del propio archivo). Necesita `numpy` y `PIL`; el pipeline de assets no.
 palma, y no usan ningún prefijo en los huesos de la cara.** Los nombres que existen
 (verificados contra el `.glb`):
 
-Verificado el 2026-10-17 contra `models/avatar.glb` **y** contra el export original de
+Verificado el 2026-10-17 contra el `avatar.glb` de entonces **y** contra el export original de
 Cascadeur (`../material-3d/GLB Senas/0000 - GRACIAS.glb`), y reverificado el 2026-10-24
-y el 2026-10-26 contra el archivo vigente. **102 articulaciones de skin en los tres
-archivos.**
+y el 2026-10-26 contra los dos archivos vigentes (`models/juan.glb` y
+`models/pauline.glb`). **102 articulaciones de skin en todos ellos.**
 
 ```
 shoulder.L, upper_arm.L, forearm.L, hand.L        (+ lados R)
@@ -151,35 +189,37 @@ mouth_dimple_*, mouth_lower_down_*, mouth_smile_frown_*, mouth_stretch_*,
 mouth_upper_up_*, mouth_lt_rt_funnel, mouth_roll_lower, mouth_shrug_roll_upper
 ```
 
-La app no los mueve: `app.js` no menciona ninguno de esos nombres. El GLB del APK
-tiene **7 morph targets** —`Male`, `LIVE_KEY_PERMANENT`, `Body Proportions` ×4 y
-`eyeball_size`—, **ninguno de expresión facial**, y los 5 canales de pesos por clip
-valen 1,0 constante (contado el 2026-10-24 y reverificado el 2026-10-26). Los clips
-dejan la cara **casi quieta**: el mayor rango de un componente del cuaternión de
-rotación de un hueso de cara en los 50 clips es **0,0012** (`jaw`, clip `0015`),
-contra **1,996** del mayor hueso del cuerpo (`thigh.L`, clip `0034`). O sea: los
-huesos existen y son del skin, pero la expresión no viene animada en el clip y no
-hay marcadores. Es el punto **A6** de
-`docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores por tipo de frase y no hay
-implementación. Antes estaba en pausa; el SRS de Overleaf ahora sí lo pide, así que la
-decisión del owner está pendiente (2026-10-17).
+La app no los mueve: `app.js` no menciona ninguno de esos nombres y solo
+reproduce los clips **base**. Los dos archivos vigentes conservan los morph targets
+que alguna de las 300 variantes anima —65 bloques en Juan, 64 en Pauline, contados
+el 2026-10-26—, así que el asset está listo para el mapeo facial; lo que falta es la
+decisión de qué variante usar, no el material.
+
+Las mediciones de «cara quieta» que siguen son del archivo único anterior, tomadas
+sobre sus 50 clips (`avatar.glb`, borrado el 2026-10-26): el mayor rango de un
+componente del cuaternión de rotación de un hueso de cara era **0,0012** (`jaw`, clip
+`0015`), contra **1,996** del mayor hueso del cuerpo (`thigh.L`, clip `0034`), y sus
+5 canales de pesos por clip valían 1,0 constante. **No se remidió sobre los dos
+archivos nuevos**: sirve como referencia de los clips base, no como afirmación sobre
+las variantes. Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide
+marcadores por tipo de frase y no hay implementación, y desde el 2026-10-26 es una
+decisión explícita del owner dejar eso fuera de alcance.
 
 Dos detalles que no son obvios y ya costaron tiempo:
 
 - **La raíz del armature no se anima, y no es un joint.** `app.js` cuenta nodos
-  resueltos y no huesos porque los **5 canales de pesos** de cada clip apuntan a
-  mallas (`HG_Body_facial`, `HG_Chinos_Male.002`, `HG_Dress_Shirt_Collar_Male.002`,
-  `HG_Leather_Dress_Shoe_Male.002`, `HG_Sweater_1_Male.002`), que no son huesos del
-  skeleton: contar solo huesos marcaría esos 5 tracks como "sin resolver" en cada
-  clip.
+  resueltos y no huesos porque los canales de pesos de cada clip apuntan a mallas
+  (por ejemplo `HG_Body_facial`), que no son huesos del skeleton: contar solo huesos
+  marcaría esos tracks como "sin resolver" en cada clip.
 - **La normalización va en un `pivot` padre, nunca sobre la raíz.** El mixer
   sobrescribe la raíz frame a frame: la escala se perdería en el primer frame y
   el muñeco aparecería descolocado y sin escalar, sin ningún error.
 
 ## Animación entre señas
 
-Los 50 clips de animación **arrancan y terminan en el mismo cluster** (medido el
-2026-10-26 sobre los 50 clips del archivo vigente: mano izquierda en `(+31,5, +91,0,
+Los clips base **arrancan y terminan en el mismo cluster** (medido el 2026-10-26
+sobre los 50 clips del archivo único anterior, hoy borrado: mano izquierda en
+`(+31,5, +91,0,
 +17,6) cm`, desviación estándar 3,2–4,3 cm; derecha en `(−12,1, +91,8, +26,3) cm`,
 2,4–6,0 cm): el salto directo del final de una seña al inicio de cualquier otra
 —distancia de `hand.L`, sobre los 2450 pares ordenados— es de **5,6 cm de mediana**
@@ -234,10 +274,10 @@ escalar después de un cambio en `app.js`, es esto.
 
 - No hay IK, ni cinemática inversa, ni reintentos de pose: los `.glb` traen la
   pose.
-- No hay sincronización de cara: los clips actuales dejan los huesos faciales casi
-  quietos (rango máximo de 0,0012, medido el 2026-10-26), así que no hay expresión
-  que sincronizar.
-- Hay **7 morph targets** (`Male`, `LIVE_KEY_PERMANENT`, `Body Proportions` ×4,
-  `eyeball_size`), ninguno de expresión facial, y la escena no los maneja; no hay
-  blendshapes de cara.
+- No hay sincronización de cara: la escena no reproduce ninguna variante facial y
+  no toca ningún hueso de la cara. Los clips base dejan los huesos faciales casi
+  quietos (rango máximo de 0,0012, medido el 2026-10-26 sobre el archivo anterior).
+- La escena **no maneja los morph targets**: los dos archivos conservan los que
+  alguna variante anima (65 bloques en Juan, 64 en Pauline), pero `app.js` no los
+  escribe, así que no hay blendshapes de cara en pantalla.
 - El peso por vértice lo pone Cascadeur, no la app.

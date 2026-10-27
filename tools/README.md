@@ -45,21 +45,27 @@
   historial, y una plantilla.
 - **`rendimiento/`** — medir de verdad si la app va lenta. Su propio
   [`README.md`](rendimiento/README.md) tiene las recetas y las trampas.
-- **`pack_signall.py`** — **el pipeline de assets 3D de la app**. Toma el `.glb`
-  único de `../material-3d/GLB SignALL/` (personaje + cara + las 50 señas como clips
-  `0000`..`0049`), hornea la pose de descanso, **poda los morph targets que
-  ninguna animación mueve** (68 → 7, ~15 MB), compacta el buffer y escribe
-  `assets/web/models/avatar.glb` + `manifest.json` + `SignsCatalog.kt`. De
-  27,2 MB a 12,98 MB, y la escena resuelve `signs/<id>.glb` por nombre contra
-  esos clips, sin descargar nada. Corre cada vez que llegan señas nuevas. Sin
-  dependencias externas (no necesita Blender ni Node).
-- **`split_signs.py`** — el pipeline **anterior**: separa los 40 exports por seña
+- **`pack_avatars.py`** — **el pipeline de assets 3D de la app**. Toma los dos
+  originales de `../material-3d/Avatares/` (`Juan_final.glb`, 37,87 MB, y
+  `Pauline_final.glb`, 35,27 MB; personaje + cara + 300 clips cada uno), verifica
+  skins, articulaciones y nombres de clip, hornea la pose de descanso, **poda los
+  morph targets que ninguna variante anima** y compacta el buffer. Escribe
+  `assets/web/models/juan.glb` (34,21 MB), `pauline.glb` (29,46 MB),
+  `models/avatares.json` (inventario con hashes), `manifest.json` y
+  `SignsCatalog.kt`. La escena resuelve `signs/<id>.glb` por nombre contra los
+  clips del avatar elegido, sin descargar nada. Sin dependencias externas (no
+  necesita Blender ni Node). Uso: `python3 tools/pack_avatars.py [--dry-run]`.
+- **`pack_signall.py`** — el pipeline **anterior**, de un solo avatar: empaquetaba
+  `../material-3d/GLB SignALL/` en `models/avatar.glb` (12,98 MB, borrado el
+  2026-10-26). Ya no se usa; sigue en el repo porque `pack_avatars.py` le importa
+  `repack` y `morphs_to_keep`.
+- **`split_signs.py`** — el pipeline **más viejo**: separa los 40 exports por seña
   (`../material-3d/GLB Senas/`, con el muñeco adentro en cada uno) en `models/avatar.glb` +
   `signs/<id>.glb`. Queda para rearmar el layout viejo o comparar; el camino
-  vigente es `pack_signall.py`. **Los 32 `.glb` que escribía en
+  vigente es `pack_avatars.py`. **Los 32 `.glb` que escribía en
   `assets/web/signs/` se borraron el 2026-10-22** (5,7 MB en el APK que ya nadie
-  pedía: todas las señas salen del clip del archivo único). El script sigue
-  porque `pack_signall.py` le importa `write_catalog`, y porque es la única forma
+  pedía: todas las señas salen del clip del archivo del avatar). El script sigue
+  porque `pack_avatars.py` le importa `write_catalog`, y porque es la única forma
   de regenerar el layout viejo si hace falta.
 - **`glb_pose.py`** — leer un `.glb`, recorrer el esqueleto (FK), samplear un
   clip y reconstruir la pose de bind desde las `inverseBindMatrices`. Es la
