@@ -8,16 +8,20 @@ horneada por hueso y la escena solo la reproduce.
 
 | | |
 |---|---|
-| Personaje | `models/juan.glb` (34,21 MB) **o** `models/pauline.glb` (29,46 MB), 102 articulaciones de skin cada uno; el que se carga lo elige el ajuste «Personaje» |
+| Personaje | `models/juan.glb` (34,28 MB) **o** `models/pauline.glb` (29,46 MB), 102 articulaciones de skin cada uno; el que se carga lo elige el ajuste «Personaje» |
 | Señas | **300 clips adentro de cada archivo**: las 50 señas (`0000`..`0049`) por seis variantes (base, `_alegria`, `_tristeza`, `_sorpresa`, `_pregunta`, `_negacion`) |
 | Escena | `app.js` + `index.html`, three r169 por CDN |
 | Catálogo | `domain/SignsCatalog.kt`, generado |
 
 **Cambio del 2026-10-26**: hay **dos archivos completos, uno por avatar**. El
 `models/avatar.glb` de 12,98 MB se borró; `tools/pack_avatars.py` arma los dos
-desde `../material-3d/Avatares/`. La escena indexa solo el avatar elegido y
-resuelve `signs/<id>.glb` por nombre contra sus clips (`embeddedClipsFor` en
-`app.js`). Los originales sin empaquetar no viven en el repo.
+desde `../signai-avatar/models/`, el repo hermano que versiona los GLB finales en su rama
+`dev`. La escena indexa solo el avatar elegido y resuelve `signs/<id>.glb` por nombre
+contra sus clips (`embeddedClipsFor` en `app.js`).
+
+**Cambio del 2026-10-27**: se regeneraron con la versión del 2026-10-26 de esos GLB, que
+trae la **cadera centrada** en las 50 señas. Mismos 300 clips, mismos nombres y mismas
+duraciones; solo cambian `spine` (traslación y giro) y `neck`/`head`.
 
 **Cambio del 2026-10-22**: el asset pasó de `models/avatar.glb` + `signs/<id>.glb` a
 **un solo archivo** con las 50 señas adentro. `tools/pack_signall.py` lo armaba desde
@@ -134,7 +138,7 @@ la pose viene sola.
 
 ```bash
 python3 tools/pack_avatars.py --dry-run   # informe de los dos, sin escribir
-python3 tools/pack_avatars.py             # los dos, desde ../material-3d/Avatares
+python3 tools/pack_avatars.py             # los dos, desde ../signai-avatar/models
 ```
 
 `tools/pack_signall.py` es el pipeline viejo de un solo avatar: no procesa estos dos

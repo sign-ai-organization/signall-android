@@ -14,7 +14,7 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
                                       └──▶ Neon (Postgres 16 + pgvector): catalog, semantic_cache
 
 ../sign-ai-docs  ← requerimientos, diagramas del SDD, plan de pruebas (nada corre)
-../signai-avatar ← demo vieja en Flask del pipeline de landmarks (dormida)
+../signai-avatar ← animaciones (Cascadeur): GLB finales de Juan y Pauline (rama dev)
 ```
 
 | Repo | Qué es | Rama | Puerto | Se levanta con |
@@ -22,7 +22,7 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
 | `../sign-ai-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `develop` | 8080 | `docker compose up --build` (levanta **también** el STT) |
 | `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 | incluido en el compose del backend, o solo desde su repo |
 | `../sign-ai-docs` | Requerimientos consolidados, diagramas del SDD (drawio + png), plan de pruebas, cambios pendientes | `main` | — | no corre nada |
-| `../signai-avatar` | Demo Flask del pipeline de landmarks de LSC50 (`HandCorrector`, `PoseFilter`, WiLoR) | `main` | — | inactiva desde 2026-09-19 |
+| `../signai-avatar` | Producción de las animaciones con Cascadeur; versiona en `models/` los GLB finales de Juan y Pauline (300 clips cada uno). La demo Flask de landmarks que también vive ahí está congelada desde 2026-09-19 | `dev` | — | — |
 
 **El contrato entre ellos son frames de WebSocket, no imports.** Un cambio acá rompe allá
 sin que el compilador avise. Ese es el motivo de que este archivo exista.
@@ -118,16 +118,31 @@ o se baja el ZIP a mano.
 
 ## `../signai-avatar`
 
-**No es la fuente de los GLB de esta app.** Es la demo anterior en Flask que servía un
-avatar desde landmarks de LSC50 (`HandCorrector`, `PoseFilter`, script WiLoR para
-manos) y tiene su propio `openspec/` con `specs/avatar|dataset|pipeline`. Está
-**inactiva desde 2026-09-19**. Los assets de acá salen de otro pipeline: los dos exports
-finales de Cascadeur en `../material-3d/Avatares/` → `tools/pack_avatars.py` (dos archivos,
-uno por avatar, con las 50 señas como clips). El layout viejo de `../material-3d/GLB Senas/`
-+ `tools/split_signs.py` sigue en el repo para rearmar los assets por seña, pero no es el
-vigente —y sus 32 `.glb` ya no se empaquetan: `assets/web/signs/` se borró el 2026-10-22—.
-`../material-3d/GLB SignALL/` y `tools/pack_signall.py` son el pipeline intermedio de un
-solo avatar, retirado el 2026-10-26. No mezclar los pipelines ni copiar scripts entre ellos.
+**Es la fuente de los GLB de esta app.** Es el repo de producción de las animaciones:
+las señas se hacen en Cascadeur sobre los avatares HumGen3D (Juan y Pauline) y el
+resultado final se versiona en su carpeta `models/`, en la rama **`dev`**:
+
+- `models/Juan.glb` — 37,99 MB, 300 clips, 102 articulaciones.
+- `models/Pauline.glb` — 35,27 MB, ídem.
+
+Desde el commit `cf014ef` (2026-10-26) esos archivos traen la **cadera centrada** en las
+50 señas: antes el `spine` venía corrido y girado, y el avatar se iba de costado al
+representar. `tools/pack_avatars.py` los lee de ahí, hornea la pose de descanso, poda los
+morph targets que nadie anima y escribe los dos `.glb` de la app. El proceso completo está
+en su `openspec/specs/animacion-cascadeur/spec.md`; los cambios de expresión facial, en
+`openspec/changes/avatar-expresiones-faciales/`.
+
+La **demo Flask vieja** (`HandCorrector`, `PoseFilter`, WiLoR, con su `openspec/` de
+`specs/avatar|dataset|pipeline`) sigue en el mismo repo pero está **congelada desde el
+2026-09-19**: es el pipeline de landmarks, no el vigente, y no se le copian scripts a esta
+app. El layout viejo de `../material-3d/GLB Senas/` + `tools/split_signs.py` sigue en el
+repo para rearmar los assets por seña, pero no es el vigente —y sus 32 `.glb` ya no se
+empaquetan: `assets/web/signs/` se borró el 2026-10-22—. `../material-3d/GLB SignALL/` y
+`tools/pack_signall.py` son el pipeline intermedio de un solo avatar, retirado el
+2026-10-26. No mezclar los pipelines ni copiar scripts entre ellos.
+
+**Regla de git**: como todo hermano, no se commitea ahí sin que el owner lo pida (PR contra
+`develop`). Esta app solo lee `models/`.
 
 ## Carpetas hermanas que **no** son repositorios
 
@@ -142,14 +157,16 @@ Sin git y sin reglas: material compartido o restos.
   se borraron el 2026-10-22.
 - `../material-3d/` — **el material crudo de los assets**, movido acá el 2026-10-23 para
   sacarlo de la base del repo (1 GB y git lo ignoraba):
-  - `Avatares/` — `Juan_final.glb` (37,87 MB) y `Pauline_final.glb` (35,27 MB), los
-    originales del pipeline vigente. **Entrada inmutable**: no se editan.
+  - `Avatares/` — `Juan_final.glb` (37,87 MB) y `Pauline_final.glb` (35,27 MB), la
+    **versión anterior** (2026-10-24) de los dos exports de Cascadeur. Ya no es la fuente:
+    la vigente está versionada en `../signai-avatar/models/`. **Entrada inmutable**: no se
+    edita; se conserva para comparar.
   - `GLB SignALL/` — el `.glb` único (27 MB) del pipeline intermedio, retirado el
     2026-10-26.
   - `GLB Senas/` — los 32 exports por seña del pipeline viejo (315 MB).
   - `Para Exportar/` — los `.blend` + `.fbx` de Cascadeur (660 MB).
-  Ningún script escribe ahí: `pack_avatars.py`, `pack_signall.py` y `split_signs.py` solo
-  leen.
+  Ningún script escribe ahí: `pack_signall.py` y `split_signs.py` solo leen.
+  `pack_avatars.py` ya no lee de acá: lee de `../signai-avatar/models/`.
 - `../Resources/` — scripts viejos y docs (ADR, documento maestro, backlog). Incluye
   `split_avatar_for_filament.py` y `retarget_blender.py`, que son del **approach
   abandonado**: no sirven de referencia para nada de acá.

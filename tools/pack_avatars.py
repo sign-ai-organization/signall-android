@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Empaqueta los dos avatares completos (Juan y Pauline) para la app.
 
-El 2026-10-24 el owner entregó `Juan_final.glb` y `Pauline_final.glb`. Cada
-archivo trae el personaje, su esqueleto de 102 articulaciones y **300 clips**:
-las 50 señas de LSC50 (`0000`..`0049`) por seis variantes —la base, `_alegria`,
-`_tristeza`, `_sorpresa`, `_pregunta` y `_negacion`—. Los originales no se
-editan: son la entrada inmutable, y viven fuera del repo en
-`../material-3d/Avatares/` (2026-10-26: estaban sueltos en la raíz).
+Los exports finales de Cascadeur viven versionados en el repo hermano
+`../signai-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev` desde el
+commit `cf014ef`, 2026-10-26). Cada archivo trae el personaje, su esqueleto de
+102 articulaciones y **300 clips**: las 50 señas de LSC50 (`0000`..`0049`) por
+seis variantes —la base, `_alegria`, `_tristeza`, `_sorpresa`, `_pregunta` y
+`_negacion`—. Los originales no se editan: son la entrada inmutable.
+
+`../material-3d/Avatares/` conserva la versión anterior (`Juan_final.glb` y
+`Pauline_final.glb`, 2026-10-24). Sigue sirviendo para comparar, pero **ya no es
+la fuente**: la versión del 2026-10-26 corrigió la cadera (el avatar se iba de
+costado al representar) y volvió a aplicar la corrección de cabeza.
 
 Este script hace el empaquetado que la app necesita, sin cambiar ninguna
 animación:
@@ -31,14 +36,15 @@ propósito mientras los marcadores estén fuera de alcance.
 
 Uso:
 
-    python3 tools/pack_avatars.py                 # los dos, desde ../material-3d/Avatares
+    python3 tools/pack_avatars.py                 # los dos, desde ../signai-avatar/models
     python3 tools/pack_avatars.py --dry-run       # informe, sin escribir
     python3 tools/pack_avatars.py --source-dir OTRA/CARPETA
 
-Los dos `.glb` de origen **no** se versionan (ocupan ~73 MB y son material de
-trabajo): viven en `../material-3d/Avatares/`, junto al resto del material 3D, y
-sus hashes, tamaños y conteos quedan en `models/avatars.json`, que es lo que
-permite reproducir el empaquetado.
+Los dos `.glb` de origen se versionan en el repo hermano `../signai-avatar`
+(rama `dev`, carpeta `models/`): son la entrega final del pipeline de Cascadeur
+y solo se reemplazan cuando el owner aprueba una versión nueva. Sus hashes,
+tamaños y conteos quedan en `models/avatars.json`, que es lo que permite
+reproducir el empaquetado desde otro clon.
 """
 import argparse
 import copy
@@ -55,14 +61,16 @@ from split_signs import write_catalog  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 DEST_DEFAULT = REPO / "app/src/main/assets/web"
-# Los originales viven fuera del repo, con el resto del material 3D. No se
-# versionan (71 MB) y no se editan: son la entrada inmutable del empaquetado.
-SOURCE_DEFAULT = REPO.parent / "material-3d" / "Avatares"
+# Los exports finales se versionan en el repo hermano `../signai-avatar` (rama
+# `dev`, carpeta `models/`). No se editan: son la entrada inmutable del
+# empaquetado. `../material-3d/Avatares/` conserva la versión anterior del
+# 2026-10-24, que ya no es la fuente.
+SOURCE_DEFAULT = REPO.parent / "signai-avatar" / "models"
 
 # El orden define el orden del inventario; el `id` es el que viaja a la escena.
 AVATARS = (
-    ("juan", "Juan", "Juan_final.glb"),
-    ("pauline", "Pauline", "Pauline_final.glb"),
+    ("juan", "Juan", "Juan.glb"),
+    ("pauline", "Pauline", "Pauline.glb"),
 )
 
 SIGN_IDS = [f"{i:04d}" for i in range(50)]
@@ -193,8 +201,8 @@ def build_manifest(path, js, avatar_sha):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--source-dir", type=Path, default=SOURCE_DEFAULT,
-                        help="carpeta con Juan_final.glb y Pauline_final.glb "
-                             "(por defecto ../material-3d/Avatares)")
+                        help="carpeta con Juan.glb y Pauline.glb "
+                             "(por defecto ../signai-avatar/models)")
     parser.add_argument("--dest", type=Path, default=DEST_DEFAULT,
                         help="assets/web (donde viven models/ y manifest.json)")
     parser.add_argument("--dry-run", action="store_true",

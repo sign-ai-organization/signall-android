@@ -338,7 +338,7 @@ igual. Cuando se cite un `A14` sin decir la tabla, es el de §1.
 El SRS dice que las **50** animaciones van dentro del APK (`main.tex:930`,
 `:1185`, y §Alcance). **Hoy hay 50** desde el 2026-10-22, cuando
 `tools/pack_signall.py` armó el archivo único con los 50 clips `0000`..`0049`
-(12,98 MB). Desde el 2026-10-26 hay **dos** archivos —`models/juan.glb`, 34,21 MB, y
+(12,98 MB). Desde el 2026-10-26 hay **dos** archivos —`models/juan.glb`, 34,28 MB, y
 `models/pauline.glb`, 29,46 MB—, cada uno con las 50 señas base y sus cinco variantes
 faciales; la app reproduce solo el clip base.
 
