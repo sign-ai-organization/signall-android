@@ -44,11 +44,21 @@ El owner preguntó si todo estaba pusheado a `main` en todos los repos. El repas
 
 Nada. Esta sesión no cambió código de la app ni midió latencias.
 
+## Segunda parte (misma sesión): `develop` como copia exacta de `main`
+
+Decisión del owner: **`develop` queda como una copia de `main` en todos los repos de
+código**, menos `signai-avatar` y `sign-ai-docs`, que no se tocan.
+
+- **app**: `develop` se adelantó a `main` por fast-forward (`6ad0fda` → `c50eb1d`) y se
+  pusheó. Antes de moverla se commiteó la bitácora de esta sesión, para que el commit
+  también quedara en `develop` y las dos ramas terminaran en el mismo punto.
+- **backend** y **STT**: ya estaban iguales a `main` (`c8aa516` y `7a571c2`), así que no se
+  hizo nada; se verificó que `main`, `origin/main`, `develop` y `origin/develop` apuntan al
+  mismo commit.
+- **docs** y **avatar**: sin tocar, como pidió el owner.
+
 ## Qué quedó pendiente
 
-- **app (`sign-ai-android`)**: `develop` está **2 commits atrás** de `main` (`c34d1d2` y
-  `a1245b8`, el README y su registro). No se movió porque `AGENTS.md` prohíbe mergear o
-  tocar `develop` sin que el owner lo pida. Hay que preguntarle.
 - **backend**: el prompt nuevo se lee al arrancar el proceso, así que hay que **reiniciar**
   el backend para que tome efecto. Al cierre de la sesión no había nada escuchando en el
   8080 ni en el 8000.
