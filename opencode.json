@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["opencode-pty"],
+  "plugins": ["opencode-pty-v2"],
   "mcp": {
     "servers": {
       "mobile-mcp": {
