@@ -80,10 +80,35 @@ mientras el WebView parsea el GLB de 34 MB: hay que esperar ~10 s antes de proba
   desaparecen y el panel corre por debajo de la barra; acá el drawer arranca **debajo** de la
   barra de estado (spec `EDG-18`) y los iconos quedan. Es un cambio de layering y de insets,
   así que **queda para que lo decida el owner**; no se tocó.
-- **`EdgeDrawer.kt` tiene el bloque del "drag preview" duplicado** (dos `if` idénticos,
-  ~`:303` y `:323`). Es previo a esta sesión y no se tocó, pero es una capa de dibujo de más
-  mientras se arrastra.
-- **Contenido de Ajustes apretado a 308 dp**: con la densidad simulada, "Personaje" se parte
-  en tres líneas. Es el layout del panel, no el drawer, y no se tocó.
-- `EDG-24` sigue abierta: si la pestaña se dibuja 12–24 dp adentro del borde para que el dedo
-  caiga fuera de la franja del sistema.
+- **`EDG-24`** sigue abierta: si la pestaña se dibuja 12–24 dp adentro del borde para que el
+  dedo caiga fuera de la franja del sistema.
+
+## Segunda parte (misma fecha): las dos cosas que quedaron anotadas
+
+El owner pidió arreglar en un commit aparte lo que la sesión había dejado anotado como
+"encontrado y no tocado".
+
+1. **Preview de arrastre duplicado** (`EdgeDrawer.kt`): había dos bloques `if` idénticos. Se
+   borró uno. **No cambia nada visible**: midiendo con capturas a mitad de gesto, el preview
+   se compone antes del panel real y mide lo mismo, así que el panel opaco lo tapa siempre;
+   lo que se ve al arrastrar es el panel de verdad con su contenido y el label translúcido
+   nunca aparece. Queda anotado en `EDG-6` y la decisión (quitarlo o dibujarlo encima) es
+   del owner.
+2. **Ajustes apretado en pantallas angostas** (`SettingRow.kt`, `SettingsSidebar.kt`,
+   `SignAiSizes.kt`): con el panel de una pantalla de 308 dp, "Personaje" se partía en tres
+   líneas porque el selector fijo de 167 dp se llevaba todo el ancho. `SettingRow` ahora
+   mide su ancho (`BoxWithConstraints`) y, si baja de `settingRowStackBelow` (270 dp), las
+   filas que piden `stackBelow` —solo las dos con control ancho: Personaje y Tamaño de
+   interfaz— **se apilan**: etiqueta arriba, control abajo a la derecha. Las de switch no se
+   apilan, porque su control de 43 dp nunca deja a la etiqueta sin lugar.
+
+   Verificado con `wm density` (el activity está fijo en retrato, así que el ancho se simula
+   con la densidad): **392 dp** (panel 345, tu teléfono) → idéntico a antes; **360 dp**
+   (panel 317) → fila única, "Personaje" y "Tamaño de interfaz" en una línea; **308 dp**
+   (panel 271) → apiladas las dos filas anchas y el resto igual.
+
+   No cambia ninguna interacción ni el funcionamiento de los drawers: es solo layout de esa
+   pantalla, y `EDG-25`/`EDG-5` de esta misma sesión siguen como quedaron.
+
+Estado final de la sesión: `./gradlew build` limpio, app instalada en el Redmi Note 9S,
+commit `fix(drawers)` + este `fix(settings)`, los dos en `main`.

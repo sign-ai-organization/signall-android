@@ -354,26 +354,6 @@ fun SignAiEdgeDrawer(
             }
         }
 
-        // Drag preview: translucent panel that follows the finger.
-        if (dragging && fraction > 0.02f && fraction < 0.98f) {
-            Box(
-                modifier = Modifier
-                    .align(horizontalAlignment)
-                    .fillMaxHeight()
-                    .width(drawerWidth)
-                    .offset { IntOffset(offsetX.value.toInt(), 0) }
-                    .background(SignAiTheme.colors.surface.copy(alpha = 0.94f)),
-                contentAlignment = Alignment.Center,
-            ) {
-                SignAiText(
-                    text = previewLabel.uppercase(),
-                    style = SignAiTheme.typography.label,
-                    color = SignAiTheme.colors.muted,
-                    modifier = Modifier.padding(horizontal = SignAiSpacing.lg),
-                )
-            }
-        }
-
         // Backdrop (spec `EDG-9`/`EDG-10`): a full-screen scrim with the
         // prototype's weighted gradient — opaque at the drawer's edge, fully
         // transparent at the far side. It is composed BEFORE the panel and the

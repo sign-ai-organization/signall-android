@@ -1,13 +1,18 @@
 package com.signai.webview.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
@@ -23,41 +28,78 @@ import com.signai.webview.ui.theme.SignAiTheme
  * catálogo") se pasaba de largo y el switch quedaba **encima** del texto, porque
  * `SpaceBetween` sin pesos no recorta a nadie. Con el peso, la etiqueta envuelve y el
  * control queda siempre de tamaño natural y pegado a la derecha.
+ *
+ * **Responsive** (owner, 2026-11-03): en un panel angosto esa misma regla se da
+ * vuelta. Con el panel de una pantalla de 320 dp la fila queda en ~237 dp, el
+ * selector de Personaje se lleva 167 dp y la etiqueta se quedaba con ~30 dp: "Personaje"
+ * se partía en **tres líneas**. La fila que trae un control ancho puede pedir
+ * [stackBelow]: por debajo de ese ancho se apila (etiqueta arriba, control abajo a la
+ * derecha, con su tamaño táctil intacto). Las filas con switch no lo piden porque su
+ * control mide 43 dp y la etiqueta nunca se queda sin lugar.
  */
 @Composable
 fun SettingRow(
     label: String,
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
+    /**
+     * Ancho de la fila por debajo del cual se apila. `0.dp` = nunca (filas con switch,
+     * cuyo control es chico y no le quita lugar a la etiqueta).
+     */
+    stackBelow: Dp = 0.dp,
     content: @Composable () -> Unit,
 ) {
-    Row(
+    BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = SignAiSizes.settingRowMinHeight),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
+        contentAlignment = Alignment.CenterStart,
     ) {
-        Row(
-            modifier = Modifier.weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(11.dp),
-        ) {
-            if (icon != null) {
-                SignAiIcon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    size = 18.dp,
-                    tint = SignAiTheme.colors.muted,
-                )
+        if (maxWidth < stackBelow) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                SettingLabel(label, icon, Modifier.fillMaxWidth())
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    contentAlignment = Alignment.CenterEnd,
+                ) {
+                    content()
+                }
             }
-            SignAiText(
-                text = label,
-                style = SignAiTheme.typography.body2,
-                color = SignAiTheme.colors.text,
-                modifier = Modifier.weight(1f),
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                SettingLabel(label, icon, Modifier.weight(1f))
+                content()
+            }
+        }
+    }
+}
+
+@Composable
+private fun SettingLabel(label: String, icon: ImageVector?, modifier: Modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(11.dp),
+    ) {
+        if (icon != null) {
+            SignAiIcon(
+                imageVector = icon,
+                contentDescription = null,
+                size = 18.dp,
+                tint = SignAiTheme.colors.muted,
             )
         }
-        content()
+        SignAiText(
+            text = label,
+            style = SignAiTheme.typography.body2,
+            color = SignAiTheme.colors.text,
+            modifier = Modifier.weight(1f),
+        )
     }
 }
