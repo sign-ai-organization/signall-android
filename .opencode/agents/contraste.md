@@ -21,7 +21,7 @@ las diferencias**. Lo que coincide no se lista.
 
 1. **Cargá el skill `tres-fuentes-de-verdad` primero.** Define las tres fuentes y el flujo.
 2. Las tres fuentes son: **este repo** (el código), **`../sign-ai-docs`** (requerimientos
-   v0.16, diagramas del SDD, `plan-pruebas/`, `modificaciones/requerimientos.md`) y **el
+   v0.16, diagramas del SDD, `plan-pruebas/`, `cambios/requerimientos.md`) y **el
    Overleaf de la tesis**.
 3. Para cada diferencia, una fila con: **qué dice el documento** (con archivo, sección y
    **fecha**) · **qué hace el código** (con `archivo:línea`) · **cuál de los dos parece

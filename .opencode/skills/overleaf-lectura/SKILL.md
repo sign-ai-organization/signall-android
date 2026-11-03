@@ -87,7 +87,7 @@ no la sesión. Lo que cambió es lo que se puede hacer con eso:
 - Resolver una divergencia (el documento pide algo que la app decidió no hacer, o al revés):
   **primero se pregunta**. Después de la decisión, el texto se propone igual que cualquier
   otro cambio.
-- Lo que queda pendiente se anota en `../sign-ai-docs/modificaciones/requerimientos.md` o en
+- Lo que queda pendiente se anota en `../sign-ai-docs/cambios/requerimientos.md` o en
   el log de sesión.
 
 ## Tocar la configuración global

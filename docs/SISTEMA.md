@@ -85,7 +85,7 @@ Documentación de la tesis: `documentos/requerimientos/SignAI_Requerimientos_Con
 lógica, despliegue, procesos, clases, secuencia, persistencia y **estados de la UI**) y
 `plan-pruebas/` (el plan de pruebas del proyecto, con su `trazabilidad.md`).
 
-- **`modificaciones/requerimientos.md` es una bandeja de cambios pendientes**, con
+- **`cambios/requerimientos.md` es una bandeja de cambios pendientes**, con
   estados **Propuesto / Acordado / Hecho**: ahí caen las cosas que la app ya hace y el
   documento todavía no dice (modo en vivo, entrada de texto, historial, apagado del mic…).
   Si se implementa algo sin requisito, se anota ahí.
@@ -96,7 +96,7 @@ lógica, despliegue, procesos, clases, secuencia, persistencia y **estados de la
 
 ### El Overleaf de la tesis
 
-Cuenta `signai.tesis@gmail.com` (dedicada a la tesis, 10 proyectos, 5 sin archivar).
+Cuenta `signai.tesis@gmail.com` (dedicada a la tesis, 7 proyectos activos y 5 en la papelera).
 Se lee con el MCP `@netique/overleaf-mcp` v0.3.7, registrado **global** en
 `~/.config/opencode/opencode.json` con `OL_BROWSER=/usr/bin/chromium`. La cookie de
 sesión vive en `~/.config/overleaf-mcp/cookie.json` (modo 600), dura ~5 días y se
@@ -111,9 +111,11 @@ dejar el texto propuesto en un archivo. El detalle está en el skill `overleaf-l
 
 | Proyecto | ID | Última edición |
 |---|---|---|
-| SRS | `6a122a19bb9a5dd9d390ba3d` | 2026-11-02 |
-| Memoria | `6a7c98a30e11208333279f4a` | 2026-09-17 |
+| SRS - Especificación de Requisitos de Software | `6a122a19bb9a5dd9d390ba3d` | 2026-11-03 |
 | SDD - Documento de Diseño | `6a85c9a632974414503d9b82` | 2026-10-27 |
+| plan-pruebas | `6add1e0e35efb959c10cd0fb` | 2026-10-29 |
+| SPMP - Plan de administración | `6ade5197cb7fef15df51358d` | 2026-10-28 |
+| Memoria | `6a7c98a30e11208333279f4a` | 2026-09-17 |
 | PMP | `6a11da204de1f4e676e9e59a` | 2026-05-26 |
 | PPP | `6a11f38ec7df3c45f6caee2d` | 2026-05-24 |
 

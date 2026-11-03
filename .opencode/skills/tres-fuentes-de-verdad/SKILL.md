@@ -35,9 +35,9 @@ Casi siempre sí, y hay una forma de hacerlo sin adivinar:
 | El documento tiene una fecha **posterior** al cambio, y menciona el comportamiento nuevo | El código está atrasado |
 | El documento tiene fecha **anterior** y describe algo que el código ya no hace | El documento quedó atrás |
 | El código tiene un ID de spec que lo respalda y una fecha de sesión que lo explica | El documento quedó atrás |
-| `../sign-ai-docs/modificaciones/requerimientos.md` lo tiene como **Propuesto** o **Acordado** | La decisión ya está tomada: hay que aplicar lo acordado |
+| `../sign-ai-docs/cambios/requerimientos.md` lo tiene como **Propuesto** o **Acordado** | La decisión ya está tomada: hay que aplicar lo acordado |
 
-Ese último es el más útil: **`modificaciones/requerimientos.md` es la bandeja de cambios
+Ese último es el más útil: **`cambios/requerimientos.md` es la bandeja de cambios
 pendientes**, con estados Propuesto / Acordado / Hecho. Ahí caen las cosas que la app ya
 hace y el documento todavía no dice.
 
@@ -83,7 +83,7 @@ cuál**:
 
 Cuando el documento que está mal es uno de Overleaf, **cuál de los dos está mal lo decide el
 owner**. Después de esa decisión, la sesión puede dejar el cambio como sugerencia con control
-de cambios, y anotarlo en `../sign-ai-docs/modificaciones/requerimientos.md` o en el log de
+de cambios, y anotarlo en `../sign-ai-docs/cambios/requerimientos.md` o en el log de
 sesión. Aceptar o rechazar el cambio es del owner, no de la sesión.
 
 ## Una advertencia sobre los documentos de este repo
