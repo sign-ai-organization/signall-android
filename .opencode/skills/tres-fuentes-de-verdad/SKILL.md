@@ -66,8 +66,11 @@ La revisión de Overleaf tiene un costo en tiempo: cuando la cookie venció (~5 
 **Avisale al owner que vas a leer, antes de hacerlo.** No se hace por sorpresa a mitad de
 una implementación.
 
-De Overleaf se **lee, nunca se escribe**. El detalle del bloqueo, y por qué tiene que
-estar en `policies` y no en `permissions`, está en el skill `overleaf-lectura`.
+De Overleaf se **lee libre**, y desde el 2026-11-02 también **se escribe con permiso y con
+control de cambios**: cada edición queda como sugerencia que el owner acepta o rechaza, y
+antes de escribir se pregunta en el mensaje. El detalle —qué herramientas están habilitadas,
+cómo se comprueba el registro y por qué el bloqueo va en `policies`— está en el skill
+`overleaf-lectura`.
 
 ## El resultado
 
@@ -78,9 +81,10 @@ cuál**:
 - **Se anota que el documento quedó atrás**, con la evidencia de cuándo y por qué.
 - **Se pregunta**, cuando no se puede determinar cuál de los dos está mal.
 
-Cuando el documento que está mal es uno de Overleaf, **lo corrige el owner y no la
-sesión**: el `.tex` no se toca. Lo que sí puede hacer una sesión es anotarlo en
-`../sign-ai-docs/modificaciones/requerimientos.md` o en el log de sesión.
+Cuando el documento que está mal es uno de Overleaf, **cuál de los dos está mal lo decide el
+owner**. Después de esa decisión, la sesión puede dejar el cambio como sugerencia con control
+de cambios, y anotarlo en `../sign-ai-docs/modificaciones/requerimientos.md` o en el log de
+sesión. Aceptar o rechazar el cambio es del owner, no de la sesión.
 
 ## Una advertencia sobre los documentos de este repo
 
