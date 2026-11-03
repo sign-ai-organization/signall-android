@@ -51,6 +51,18 @@ object SignAiSizes {
      */
     val signTriggerWidth = 150.dp
 
+    /**
+     * Ancho máximo de la burbuja de la frase en el panel de Conversación, como
+     * fracción del ancho del panel (350 dp − 44 dp de padding = 306 dp, así que
+     * 0,88 deja ~269 dp de texto y ~37 dp de aire del lado contrario).
+     *
+     * Es una fracción y no un dp fijo porque el panel mide `min(88 % de la
+     * pantalla, 350 dp)`: en un teléfono angosto 269 dp no cabrían. Las frases
+     * cortas no se estiran hasta el máximo — la burbuja mide lo que mide su
+     * texto y solo se topa con este techo.
+     */
+    const val conversationBubbleMaxWidthFraction = 0.88f
+
     val settingRowMinHeight = 50.dp
 
     /**

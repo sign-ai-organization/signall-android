@@ -24,6 +24,12 @@ object SignAiShapes {
     val cornerPanel = RoundedCornerShape(24)
     val cornerSheet = RoundedCornerShape(28)
     val cornerPill = RoundedCornerShape(percent = 50)
+    // Conversation bubbles (panel de Conversación): 18 dp like the edge tab, with
+    // the corner that points at the speaker squared down to 6 dp, so the two
+    // sides of a turn read as a chat. `Start` is the gloss (left), `End` is the
+    // phrase (right).
+    val cornerBubbleStart = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp, bottomStart = 6.dp, bottomEnd = 18.dp)
+    val cornerBubbleEnd = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp, bottomStart = 18.dp, bottomEnd = 6.dp)
     val cornerEdgeTabLeft = RoundedCornerShape(topStart = 0.dp, topEnd = 18.dp, bottomEnd = 18.dp, bottomStart = 0.dp)
     val cornerEdgeTabRight = RoundedCornerShape(topStart = 18.dp, topEnd = 0.dp, bottomEnd = 0.dp, bottomStart = 18.dp)
     // Prototype `.side-left { border-radius: 0 27px 27px 0 }` and
