@@ -1,7 +1,8 @@
 # Audios que graba el owner (H1)
 
 Lista de los **39 audios** que le tocan a H1 en los cuatro conjuntos de la sección 8 del
-plan de pruebas. Los otros 40 de AU-01 son de H2, H3 y H4 y no están acá.
+plan de pruebas. Los otros 40 de AU-01 son de H2, H3 y H4 y están en
+[`AUDIOS-QUE-GRABAN-ELLOS.md`](AUDIOS-QUE-GRABAN-ELLOS.md), listos para mandarles.
 
 Fuente: `../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-0*.md` (v0.1).
 
