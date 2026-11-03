@@ -331,6 +331,12 @@ class MainScreenState(
     fun onSignStart(queueIndex: Int, jsMillis: Long) {
         // La escena está muerta: este mensaje llegó tarde y no mide nada.
         if (sceneDead) return
+        // El rótulo sobre el avatar: qué glosa acaba de arrancar en la escena.
+        // Se resuelve por índice contra la cola que Kotlin le entregó, así que no
+        // hace falta que la escena cuente nada nuevo. Un índice que no existe
+        // —una seña de calentamiento, o la cola de un turno ya limpiado— no
+        // inventa un rótulo: se deja el que hubiera.
+        turnQueueItems.getOrNull(queueIndex)?.let { currentGloss = it.gloss }
         val now = SystemClock.elapsedRealtime()
         // La escena se movió sin que hubiera una frase en vuelo: cola de un turno
         // muerto, o el avatar calentando al abrir. No es una muestra de nada.
@@ -366,6 +372,23 @@ class MainScreenState(
 
     /** Glosses of the sequence being played, shown in the stage hint while signing. */
     private var caption by mutableStateOf("")
+
+    /**
+     * La glosa que la escena está representando en este momento, o `null`.
+     *
+     * Es lo que muestra el rótulo sobre el avatar: **una seña a la vez**, no la
+     * frase. Sale de `signStart:<índice>`, que la escena ya manda por cada seña,
+     * resuelto contra [turnQueueItems] —la misma cola que se le entregó— así que
+     * no hay un canal nuevo entre Kotlin y la escena ni un cambio de protocolo.
+     *
+     * No reemplaza a [caption]: aquel dice la frase entera y solo se ve con
+     * depuración prendida, y sirve para diagnosticar. Este es el que lee quien
+     * mira, y por eso se apaga en los mismos lugares en que la representación
+     * termina o se corta: si quedara prendido, la última palabra se leería como
+     * "todavía se está representando" con el muñeco en reposo.
+     */
+    var currentGloss by mutableStateOf<String?>(null)
+        private set
 
     /** Transient message (errors) that replaces the state label in the hint. */
     private var statusOverride by mutableStateOf<String?>(null)
@@ -1462,6 +1485,9 @@ class MainScreenState(
         turnQueueItems.clear()
         conversationTurnIndex = -1
         turnSentAt = 0L
+        // El rótulo sobre el avatar pertenece a la cola que se acaba de soltar:
+        // con la cola vacía o reemplazada ya no hay seña que rotular.
+        currentGloss = null
         resetTurn()
     }
 
@@ -2352,6 +2378,11 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
 
     fun attachWebView(webView: WebView) {
         this.webView.attach(webView)
+        // Un WebView nuevo no tiene cola: si se llega acá con el rótulo de una
+        // seña todavía prendido —salir de *Acerca de* a mitad de una frase
+        // destruye la escena y su `onPlaybackDone` ya no va a llegar—, mostrarlo
+        // sobre una escena vacía diría que algo se está representando cuando no.
+        currentGloss = null
         // Best-effort; the bridge may not be ready yet, so this is repeated on load.
         syncWebSettings()
     }
@@ -2452,6 +2483,7 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         // The control panel stays disabled until the sign ends (`CNV-7`); clear
         // the flag here so it is released even while a drawer is closing.
         replayPending = false
+        currentGloss = null
     }
 
     fun toggle(setting: Setting, on: Boolean) {

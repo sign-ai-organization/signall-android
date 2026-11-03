@@ -246,6 +246,7 @@ fun MainScreen(state: MainScreenState) {
                                 status = state.statusLine,
                                 state = state.stateForUi,
                                 doneVisible = state.doneVisible,
+                                currentGloss = state.currentGloss,
                                 // Repetir es un control más: cierra el teclado, y cierra
                                 // de verdad, como todos los demás.
                                 onRepeat = {
