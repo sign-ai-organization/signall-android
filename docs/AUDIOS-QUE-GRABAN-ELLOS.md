@@ -9,11 +9,15 @@ dos de ellas otra vez con ruido de fondo.
 
 ## Quién graba qué
 
+El owner asignó los tres papeles el 2026-11-03: **Julián es H2**, **Samuel es H3** y
+**Sergio es H4**. La versión para imprimir o mandar es
+[`audios-companeros.pdf`](audios-companeros.pdf).
+
 | Persona | Audios | Qué hace |
 |---|---|---|
-| **H2** | 20 | Las 10 frases en silencio y las mismas 10 con ruido moderado |
-| **H3** | 10 | Las 10 frases en silencio |
-| **H4** | 10 | Las 10 frases en silencio |
+| **Julián** (H2) | 20 | Las 10 frases en silencio y las mismas 10 con ruido moderado |
+| **Samuel** (H3) | 10 | Las 10 frases en silencio |
+| **Sergio** (H4) | 10 | Las 10 frases en silencio |
 
 Total: **30 en silencio y 10 con ruido**. El owner pone los otros 39 (H1 en silencio, H1 con
 ruido, los 8 sin voz, los 10 de cierre y la toma continua).
@@ -96,15 +100,15 @@ mismo ruido y la misma distancia del bloque del owner.
 
 ## Para mandar por separado
 
-**H3** graba, en silencio y en el mismo cuarto: `AU-01-003`, `009`, `015`, `021`, `027`,
-`033`, `039`, `045`, `051`, `057`.
+**Samuel** (H3) graba, en silencio y en el mismo cuarto: `AU-01-003`, `009`, `015`, `021`,
+`027`, `033`, `039`, `045`, `051`, `057`.
 
-**H4** graba, en silencio y en el mismo cuarto: `AU-01-004`, `010`, `016`, `022`, `028`,
-`034`, `040`, `046`, `052`, `058`.
+**Sergio** (H4) graba, en silencio y en el mismo cuarto: `AU-01-004`, `010`, `016`, `022`,
+`028`, `034`, `040`, `046`, `052`, `058`.
 
-**H2** graba en silencio: `AU-01-002`, `008`, `014`, `020`, `026`, `032`, `038`, `044`, `050`,
-`056`. Y con ruido, en la sesión del owner: `AU-01-006`, `012`, `018`, `024`, `030`, `036`,
-`042`, `048`, `054`, `060`.
+**Julián** (H2) graba en silencio: `AU-01-002`, `008`, `014`, `020`, `026`, `032`, `038`, `044`,
+`050`, `056`. Y con ruido, en la sesión del owner: `AU-01-006`, `012`, `018`, `024`, `030`,
+`036`, `042`, `048`, `054`, `060`.
 
 ## Lo que hay que anotar al recibirlos
 
