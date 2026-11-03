@@ -6,6 +6,8 @@ su propia sesión, y acá vuelve solo el resultado.
 Reglas de la semana:
 
 - Se hace **una tarjeta por sesión**, en el orden de la tabla.
+- El alcance de una sesión es **exactamente lo que dice su fila**. Lo que no está escrito ahí
+  no se hace, ni se agrega "de paso", sin preguntar primero.
 - No se abre la siguiente hasta que la anterior esté cerrada: compilada, instalada si hay
   device conectado, y contada acá abajo.
 - Si una tarjeta se traba por una decisión del owner, se para y se anota. No se reordena
@@ -17,7 +19,7 @@ Reglas de la semana:
 |---|---|---|---|---|---|
 | 1 | 8a · Datos de prueba | Grabar los **79 audios** con un celular: AU-01 (60), AU-02 (10), AU-03 (8) y AU-04 (1). AU-01 necesita **4 voces distintas**: el owner (H1) más tres personas (H2–H4). Lo demás lo graba el owner solo. CT-02 (videos) depende de personas con LSC, no del owner. | `../sign-ai-docs/borradores/plan-pruebas/02-datos/` | Tarda semanas | Pendiente |
 | 2 | 2 · Rebote de los paneles | Quitar el rebote al abrir y al soltar el arrastre de los dos drawers. | `ui/designsystem/components/EdgeDrawer.kt` | Bajo | **Hecho** (`14f0500`, `3ba23d4`) |
-| 3 | 3 · Velocidad con número | Mostrar el valor real 10–100 y pasar de slider sin números a pasos o presets. Ya lo pide `RF-AVT-08`. | `ui/screens/settings/SettingsSidebar.kt` | Bajo | Pendiente |
+| 3 | 3 · Ajustes: velocidad con número y modo debug | Revisar todas las filas de Ajustes y pasar la velocidad de señas, que hoy es un slider sin número, a un control de menos y más como «Tamaño de interfaz». El modo debug deja de ser un interruptor guardado en el teléfono y pasa a encenderse por variable de entorno o propiedad de compilación, así que el bloque AVANZADO no aparece en producción. | `ui/screens/settings/SettingsSidebar.kt` + `app/build.gradle.kts` | Bajo | Pendiente |
 | 3b | 4b · SRS: AVANZADO solo de desarrollo | Proponer en el SRS el cambio de redacción del bloque AVANZADO, que hoy aparece como parte de la interfaz (contraste A11) y ahora es solo de desarrollo. Va con control de cambios y lo aprueba el owner. | Overleaf (SRS) | Bajo | Pendiente (permiso por tanda) |
 | 4 | 4 · AVANZADO en release | Decidir si el bloque AVANZADO se oculta en release y alinear el SRS con esa decisión (contraste A11). | `SettingsSidebar.kt` + SRS | Bajo, pero es decisión | **Decidido** (se hace con el orden 3; el texto del SRS va en 3b) |
 | 5 | 5 · Conversación | Pasar la lista «TÚ / TRADUCCIÓN» a burbujas de chat. | `ui/screens/conversation/ConversationPanel.kt` | Medio | Pendiente |
