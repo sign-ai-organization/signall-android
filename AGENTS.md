@@ -77,7 +77,7 @@ discutir.
 
 Cuando el documento que está mal es uno de Overleaf, **cuál de los dos está mal lo decide el
 owner**. La sesión puede dejar el texto como sugerencia, con permiso y control de cambios
-(`track changes`), y anotarlo en `../sign-ai-docs/modificaciones/requerimientos.md` o en el
+(`track changes`), y anotarlo en `../sign-ai-docs/cambios/requerimientos.md` o en el
 log de sesión. Lo que no puede es aceptar ni rechazar el cambio: eso lo hace el owner.
 
 ---

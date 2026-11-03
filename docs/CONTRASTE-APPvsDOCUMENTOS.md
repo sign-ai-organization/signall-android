@@ -5,7 +5,7 @@
 **Fuente de verdad:** el **SRS de Overleaf**, proyecto `6a122a19bb9a5dd9d390ba3d`,
 archivo `main.tex`, **1370 líneas**, versión 426, editado el **2026-10-17** (releído
 después de esa edición).
-**Segundo documento:** `../sign-ai-docs` (`v0.16` y `modificaciones/requerimientos.md`),
+**Segundo documento:** `../sign-ai-docs` (`v0.16` y `cambios/requerimientos.md`),
 usado de apoyo cuando el SRS no habla de algo.
 **Contraste del backend:** vive en el repo del backend, no acá
 (`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`).
@@ -364,7 +364,7 @@ Reportado al owner el 2026-10-17. **Nada de esto se toca desde acá.**
 | 1 | La §3 del SRS está vacía y conserva los subtítulos de una plantilla de juegos ("Funcionalidad 1: Jugar", "Registro y Autenticación", "Administración", "Consultas"). Con eso desaparecieron los IDs `RF-*` y `RNF-*` que usan `v0.16` y el plan de pruebas | Overleaf, `main.tex` §3 |
 | 2 | El SRS dice "SignAI" 25 veces y "SignALL" ninguna. Delegado al compañero | Overleaf, todo el documento |
 | 3 | Dos marcadores de trabajo sin completar: `[PENDIENTE: tamaño del APK con todos los archivos GLB.]` | Overleaf, `main.tex:932` y `:1155` |
-| 4 | `../sign-ai-docs/modificaciones/requerimientos.md` punto 19 pide "límite de intentos" de reconexión. El owner decidió **sin** límite: espera creciente hasta 5 s, indefinida. Hay que corregir ese texto | `../sign-ai-docs` |
+| 4 | `../sign-ai-docs/cambios/requerimientos.md` punto 19 pide "límite de intentos" de reconexión. El owner decidió **sin** límite: espera creciente hasta 5 s, indefinida. Hay que corregir ese texto | `../sign-ai-docs` |
 | 5 | **Ningún documento dice cuánto esperar antes de decidir que algo salió mal.** El SRS dice *qué* señal mostrar ante un error o una desconexión, y RNF-REL-02 dice que el avatar vuelva a reposo, pero en ningún lado hay un plazo. La app lo inventó: **15 s de silencio**. Sin ese número, una espera larga es indistinguible de un cuelgue | Overleaf, tabla de estados, filas *Procesando* y *Error* (`main.tex:717-766`) |
 | 6 | **Apagar el micrófono con una frase en vuelo.** `main.tex:737` dice que en modo TR el micrófono permanece encendido, y nada dice de qué modo se lo apaga a mitad de una traducción. La decisión del owner: apagarlo **cancela la frase** y su texto vuelve al campo editable | Overleaf, `main.tex:737` y la fila *Grabando* |
 | 7 | **Seña que existe pero no se puede descargar.** `main.tex:200-202` cubre "cuando una glosa no existe en el catálogo"; no cubre el caso de que la glosa existe y el archivo no baja. La decisión del owner: se saltea esa seña, se siguen representando las demás y el indicador muestra "Seña no disponible" | Overleaf, `main.tex:200-202` y la fila *Reproduciendo* (`main.tex:747`) |
