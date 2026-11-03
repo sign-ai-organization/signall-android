@@ -97,17 +97,23 @@ lógica, despliegue, procesos, clases, secuencia, persistencia y **estados de la
 ### El Overleaf de la tesis
 
 Cuenta `signai.tesis@gmail.com` (dedicada a la tesis, 10 proyectos, 5 sin archivar).
-Se lee con el MCP `@netique/overleaf-mcp` v0.3.6, registrado **global** en
+Se lee con el MCP `@netique/overleaf-mcp` v0.3.7, registrado **global** en
 `~/.config/opencode/opencode.json` con `OL_BROWSER=/usr/bin/chromium`. La cookie de
 sesión vive en `~/.config/overleaf-mcp/cookie.json` (modo 600), dura ~5 días y se
 renueva sola: la próxima llamada abre una ventana de Chromium con perfil aislado para
 que el owner se loguee, y se cierra sola.
 
-| Proyecto | ID | Última edición cuando se conectó |
+**Desde el 2026-11-02 también se escribe**, con permiso pedido en cada tanda y con el
+control de cambios prendido **por documento**: cada edición queda como sugerencia que el
+owner acepta o rechaza, y aceptar o rechazar está bloqueado para la sesión. El control de
+cambios es premium en esta cuenta y **vence el 2026-11-09**; si no se renueva, se vuelve a
+dejar el texto propuesto en un archivo. El detalle está en el skill `overleaf-lectura`.
+
+| Proyecto | ID | Última edición |
 |---|---|---|
-| SRS | `6a122a19bb9a5dd9d390ba3d` | 2026-10-17 18:45 |
+| SRS | `6a122a19bb9a5dd9d390ba3d` | 2026-11-02 |
 | Memoria | `6a7c98a30e11208333279f4a` | 2026-09-17 |
-| SDD - Documento de Diseño | `6a85c9a632974414503d9b82` | 2026-08-30 |
+| SDD - Documento de Diseño | `6a85c9a632974414503d9b82` | 2026-10-27 |
 | PMP | `6a11da204de1f4e676e9e59a` | 2026-05-26 |
 | PPP | `6a11f38ec7df3c45f6caee2d` | 2026-05-24 |
 

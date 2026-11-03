@@ -371,8 +371,13 @@ Reportado al owner el 2026-10-17. **Nada de esto se toca desde acá.**
 | 8 | **Cómo se detecta que se cayó la conexión.** La fila *Desconectado* describe la reconexión (sin límite, espera creciente hasta 5 s, contador que se reinicia) pero no dice cómo se nota la caída. Sin latido, una caída que no cierra el socket no se ve: la app cree que está conectada | Overleaf, fila *Desconectado* (`main.tex:754-765`) |
 | 9 | **Un `ping` en el WebSocket.** El SRS describe el canal (`RF-INT-COM-01`: *"el sistema detectará una desconexión del canal y se reconectará automáticamente"*) pero no dice con qué mecanismo. Hoy no hay ninguno, y la detección depende de que el otro lado cierre la conexión | Overleaf, §Interfaces de Comunicación |
 
+> Desde el 2026-11-02 la sesión puede dejar estos textos como sugerencias con control de
+> cambios, con permiso pedido en cada tanda; la aprobación sigue siendo del owner. Ver el
+> skill `overleaf-lectura`.
+
 **Texto propuesto para pegar en el SRS** (propuesto por la sesión, **lo aplica el owner**;
 no se escribe nada en Overleaf desde acá):
+
 
 - Final de la fila *Procesando* de `tab:estados-ui` (`main.tex:744`, después de
   *"está trabajando."* y antes del `\\ ddlinespace`):

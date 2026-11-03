@@ -62,11 +62,10 @@ Un detalle práctico: la revisión de Overleaf tiene un costo en tiempo, porque 
 abrir una ventana de Chromium cuando la cookie venció (~5 días). **Avisá que vas a leer, no
 lo hagas por sorpresa** a mitad de una implementación.
 
-De Overleaf se usa la fuente para **revisar**, y solo eso: está bloqueado a nivel de
-configuración —ocho `policies` en `~/.config/opencode/opencode.json`—, así que las nueve
-herramientas que quedan son todas de lectura. La regla completa, y por qué el bloqueo está
-en `policies` y no en `permissions`, están al final de este archivo y en el skill
-**`overleaf-lectura`**.
+De Overleaf se usa la fuente para **revisar**, y desde el 2026-11-02 también para **escribir
+con permiso y con control de cambios**: el owner levantó `edit_file`, `find_and_replace` y
+`compile` en `~/.config/opencode/opencode.json` y dejó bloqueadas las que borran rastro. La
+regla completa está al final de este archivo y en el skill **`overleaf-lectura`**.
 
 ### No hay desempate entre las dos fuentes de documento
 
@@ -76,9 +75,10 @@ No se elige una fuente, no se promedian las dos y no se deja que ninguna gane po
 Las dos versiones se citan **con su fecha**: un "el SRS dice X" sin fecha no se puede
 discutir.
 
-Cuando el documento que está mal es uno de Overleaf, **lo corrige el owner y no la
-sesión**. Anotarlo en `../sign-ai-docs/modificaciones/requerimientos.md` o en el log de
-sesión es lo que puede hacer una sesión; el `.tex` no.
+Cuando el documento que está mal es uno de Overleaf, **cuál de los dos está mal lo decide el
+owner**. La sesión puede dejar el texto como sugerencia, con permiso y control de cambios
+(`track changes`), y anotarlo en `../sign-ai-docs/modificaciones/requerimientos.md` o en el
+log de sesión. Lo que no puede es aceptar ni rechazar el cambio: eso lo hace el owner.
 
 ---
 
@@ -425,7 +425,7 @@ pide. La regla es leer la fila antes de decidir, no después.
 |---|---|
 | **Un frame del WebSocket, un nombre de métrica, el catálogo, o cualquier cosa que cruce a otro repo** | skill **`contrato-websocket`** — el contrato se lee en los dos lados antes de cambiarse, y el otro lado tiene que quedar actualizado o la deuda se dice en voz alta |
 | **Si el código y los documentos no coinciden, o hay que decidir si manda el código o el documento** | skill **`tres-fuentes-de-verdad`** — las tres fuentes, el flujo de revisión y qué hacer cuando no alinean |
-| **Consultar el Overleaf de la tesis** | skill **`overleaf-lectura`** — cómo leer, la cookie, y qué hacer cuando un documento está mal |
+| **Consultar o corregir el Overleaf de la tesis** | skill **`overleaf-lectura`** — leer libre, pedir permiso, escribir con control de cambios y reportar cada edición |
 | **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, IDs de Overleaf |
 | **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | **`ls docs/CONTRASTE-*.md`**. Los contrastes son documentos de trabajo de una sesión: se crean, se actualizan y a veces se borran, así que no hay una lista fija — se buscan por nombre. Cada repo tiene el suyo en su `docs/` (el del backend está en `../sign-ai-backend/docs/`) |
 | **El micrófono, el modo en vivo, la cola de la escena o la latencia** | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) + `tools/TIEMPO-REAL.md` |
@@ -443,25 +443,40 @@ Se invocan con `@nombre`.
 
 ---
 
-# El Overleaf es de solo lectura
+# El Overleaf: se lee libre, se escribe con permiso
 
 De Overleaf **se lee libremente**, sin pedir permiso: `ping`, `list_projects`,
 `open_project`, `list_files`, `read_file`, `read_log`, `list_comments`,
-`read_comment_thread`, `list_tracked_changes`. Las nueve de lectura.
+`read_comment_thread`, `list_tracked_changes`.
 
-**No se escribe.** Ni un `.tex`, ni un comentario, ni una sugerencia, ni un cambio
-aceptado o rechazado, ni `compile`. Solo si el owner lo pide explícitamente en un mensaje, y
-no cuenta como que lo pidió que la tarea lo requiera, que sea obviamente correcto, que sea
-"una tilde", o que se haya hecho antes. Si queda pendiente corregir algo en Overleaf, **se lo
-decís al owner y lo hace él.**
+**Escribir es otra cosa, y está habilitado desde el 2026-11-02.** El owner levantó tres
+permisos —`edit_file`, `find_and_replace` y `compile`— y dejó bloqueadas las cinco que
+borran rastro: `accept_changes`, `reject_changes`, `reply_comment`, `resolve_comment` y
+`reopen_comment`. La sesión **propone**; el owner **acepta o rechaza**. Nunca al revés, y
+nunca se acepta un cambio propio.
+
+Tres condiciones, en este orden:
+
+1. **Preguntar antes de escribir, en cada tanda.** Que esté habilitado no es permiso
+   permanente: el owner lo da en un mensaje y cubre esa tanda, no las siguientes.
+2. **Todo cambio tiene que quedar registrado** (track changes). La respuesta de la
+   herramienta trae `tracked: true`; si llega `false`, se para y se avisa. El control de
+   cambios se prende **por documento** y en esta cuenta es **premium hasta el 2026-11-09**:
+   si vence o está apagado en ese documento, no se escribe igual — se vuelve a dejar el
+   texto propuesto en un archivo y lo pega el owner.
+3. **Cada cambio se reporta en una tabla**, sin excepción: documento, qué cambió, línea
+   aproximada y el texto exacto que se puso. Sin eso no hay nada que auditar.
+
+Y lo de siempre: cuando el documento y el código no coinciden, **cuál de los dos está mal lo
+decide el owner**. Corregir una redacción no es lo mismo que resolver una divergencia.
 
 Editar `~/.config/opencode/opencode.json` requiere su confirmación explícita en un mensaje.
 Para tocar un `deny` de Overleaf hace falta que el mensaje **hable de Overleaf**: un "arreglá
-la config" no alcanza. Sin confirmación, se propone el cambio exacto y se espera.
+la config" no alcanza.
 
 Lo único que hay que avisar antes de leer: el MCP **abre una ventana de Chromium con perfil
 aislado cuando la cookie venció** (duran ~5 días), y hay que avisar porque rompe el flujo si
 aparece a mitad de una implementación.
 
-Leer no necesita más explicación. Cómo está puesto el bloqueo y qué hacer cuando un
-documento de Overleaf está mal, en el skill **`overleaf-lectura`**.
+El detalle operativo —cómo se comprueba que el cambio quedó registrado, cómo se revierte, y
+por qué el bloqueo va en `policies`— está en el skill **`overleaf-lectura`**.
