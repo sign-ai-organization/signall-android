@@ -167,9 +167,9 @@ Main.
 | ID | Feature | Origen | Descripción / criterio de aceptación |
 |---|---|---|---|
 | CNV-1 | Header | `[P]` | Eyebrow "CONTEXTO" + título "Conversación" + cerrar. |
-| CNV-2 | Turno **TÚ** | `[P]` | Por cada frase enviada: label "TÚ" + la frase del usuario. |
-| CNV-3 | Turno **TRADUCCIÓN** | `[P]` | Por cada turno: label "TRADUCCIÓN" + gloss LSC (`GLS-*`). |
-| CNV-4 | Registro de sesión | `[N]` | La lista crece con cada frase enviada; cada turno entra con animación y la vista se desplaza al último. Vive solo mientras el proceso está abierto (`ConversationTurn`, en memoria; no se persiste). |
+| CNV-2 | Turno **TÚ** | `[P]` | Por cada frase enviada, una burbuja pegada al borde derecho del panel: relleno `soft`, borde `outline`, la etiqueta chica "TÚ" arriba y la frase del usuario debajo. Ancho máximo 88 % del panel, en fracción y no en dp porque el panel mide `min(88 % de la pantalla, 350 dp)`: una frase corta mide lo que mide su texto y una larga envuelve. |
+| CNV-3 | Turno **TRADUCCIÓN** | `[P]` | Por cada turno, una burbuja pegada al borde izquierdo: `surface` con borde `outline`, la etiqueta chica "TRADUCCIÓN" arriba y la gloss LSC (`GLS-*`) debajo. Mide lo que mide su texto y deja siempre el ancho del botón Repetir, así que un glosa corta ("HOLA") queda chica y una larga envuelve en varias líneas. **El azul de marca no entra acá**: el lado, el relleno y la etiqueta distinguen los dos turnos, nunca solo el color. |
+| CNV-4 | Registro de sesión | `[N]` | La lista crece con cada frase enviada; cada turno entra con animación (`animateItem`) y la vista queda pegada al último, incluido el final de una traducción larga, que si no quedaría cortado por el borde de abajo. El turno nace con la primera oración y crece con las demás: cada vez que crece se vuelve a anclar el fondo, igual que cuando cambia el tamaño de la tipografía (`ACC-2`). Con «Reducir animaciones» prendido no corre `animateItem` y el desplazamiento es instantáneo. Vive solo mientras el proceso está abierto (`ConversationTurn`, en memoria; no se persiste). |
 | CNV-5 | Botón **Repetir** por turno | `[N]` | A la derecha de la traducción de cada turno; repite la seña de ese turno sin crear uno nuevo. El botón del stage (`STG-4`) sigue repitiendo la última frase. |
 | CNV-6 | Nota de gesto | `[P]` | "Desliza desde el borde para volver". |
 | CNV-7 | Estado vacío | `[N]` | Sin turnos: "Aún no hay frases en esta conversación." (no hay bloques estáticos). |
