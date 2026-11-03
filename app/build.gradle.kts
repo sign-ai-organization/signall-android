@@ -76,6 +76,51 @@ if (backendWsUrlOverride != null && !backendWsUrlOverride.startsWith("wss://")) 
     )
 }
 
+// ── Herramientas de desarrollo ──────────────────────────────────────────────
+//
+// El bloque AVANZADO de Ajustes y la consola de la escena (`setDebug` del puente,
+// la que se lee con `adb logcat -s SignAIWeb`) **no son un ajuste del teléfono**:
+// existen solo si la compilación los pide. Antes eran el interruptor «Modo debug»
+// de Settings, persistido en SharedPreferences; eso permitía encenderlos desde
+// cualquier APK de producción y dejaba viva una preferencia vieja.
+//
+// Se piden por el mismo camino que `signai.backendWsUrl`:
+//
+//   ./gradlew installDebug -Psignai.devTools=true
+//   SIGNAI_DEV_TOOLS=1 ./gradlew installDebug
+//
+// **Apagados por defecto, incluso en debug** (decisión del owner, 2026-11-03).
+// Release y `demo` los ignoran siempre: producción no compone `Section("AVANZADO")`
+// ni manda `setDebug(true)` a la escena, y una propiedad de build no puede
+// cambiarlo.
+fun devToolsFlag(raw: String?): Boolean? =
+    when (raw?.trim()?.lowercase()) {
+        "1", "true", "yes", "on" -> true
+        "0", "false", "no", "off" -> false
+        else -> null
+    }
+
+val devToolsFromProperty = devToolsFlag(project.findProperty("signai.devTools") as String?)
+val devToolsFromEnvironment =
+    devToolsFlag(providers.environmentVariable("SIGNAI_DEV_TOOLS").orNull)
+val devToolsRequested = devToolsFromProperty ?: devToolsFromEnvironment ?: false
+
+if (devToolsFromProperty != null && devToolsFromEnvironment != null &&
+    devToolsFromProperty != devToolsFromEnvironment
+) {
+    logger.lifecycle(
+        "SignAI: -Psignai.devTools=$devToolsFromProperty gana sobre " +
+            "SIGNAI_DEV_TOOLS=$devToolsFromEnvironment.",
+    )
+}
+
+if (devToolsRequested) {
+    logger.lifecycle(
+        "SignAI: AVANZADO y la consola de la escena solo existen en debug; " +
+            "release y demo los ignoran.",
+    )
+}
+
 android {
     namespace = "com.signai.webview"
     compileSdk = 36
@@ -96,6 +141,7 @@ android {
                 "BACKEND_WS_URL",
                 "\"${backendWsUrlOverride ?: debugBackendWsUrl}\"",
             )
+            buildConfigField("boolean", "DEV_TOOLS", devToolsRequested.toString())
         }
 
         release {
@@ -107,6 +153,9 @@ android {
                 "BACKEND_WS_URL",
                 "\"${backendWsUrlOverride?.takeIf { it.startsWith("wss://") } ?: releaseBackendWsUrl}\"",
             )
+            // Producción no tiene bloque AVANZADO ni consola de escena. La
+            // propiedad existe para debug, y acá se ignora aunque se pase.
+            buildConfigField("boolean", "DEV_TOOLS", "false")
         }
 
         // Build de demostración del enlace cifrado (`docs/plan-proxy-tls.md`).
@@ -132,6 +181,8 @@ android {
                 "BACKEND_WS_URL",
                 "\"${backendWsUrlOverride?.takeIf { it.startsWith("wss://") } ?: demoBackendWsUrl}\"",
             )
+            // `demo` hereda release: tampoco tiene herramientas de desarrollo.
+            buildConfigField("boolean", "DEV_TOOLS", "false")
         }
     }
 

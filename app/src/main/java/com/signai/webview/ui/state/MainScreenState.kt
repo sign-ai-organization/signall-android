@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.signai.webview.BuildConfig
 import com.signai.webview.data.AudioCapture
 import com.signai.webview.data.BackendHealth
 import com.signai.webview.data.SettingsRepository
@@ -795,10 +796,10 @@ class MainScreenState(
             // Cambio de avatar en curso: es un estado de carga propio, no uno
             // de los siete del SRS. Mientras dura, el panel está deshabilitado.
             avatarLoading -> "Cargando avatar…"
-            // Depuración primero: con el interruptor de Ajustes → Avanzado prendido
-            // el indicador se usa como pantalla de diagnóstico y puede llevar
-            // glosas y mensajes en detalle.
-            settings.debug -> when {
+            // Depuración primero: en una compilación con `DEV_TOOLS` el indicador
+            // se usa como pantalla de diagnóstico y puede llevar glosas y mensajes
+            // en detalle. Ya no depende de una preferencia del teléfono.
+            BuildConfig.DEV_TOOLS -> when {
                 playbackState == PlaybackState.Reproduciendo && caption.isNotBlank() ->
                     "Reproduciendo · ${caption}"
                 statusOverride != null -> statusOverride!!
@@ -1573,7 +1574,7 @@ class MainScreenState(
      */
 private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         Log.i(TAG, "aviso (no va al indicador): $message")
-        if (!settings.debug) return
+        if (!BuildConfig.DEV_TOOLS) return
         writeStatusOverride(message, ms)
     }
 
@@ -2389,7 +2390,11 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
 
     /** Pushes the current persisted settings to the WebView bridge. */
     fun syncWebSettings() {
-        webView.setDebug(settings.debug)
+        // La consola de la escena (`adb logcat -s SignAIWeb` y el overlay de
+        // diagnóstico) sigue el flag de compilación, no una preferencia. En una
+        // compilación de desarrollo queda disponible aunque la fila «Modo debug»
+        // ya no exista; en release no se enciende de ninguna forma.
+        webView.setDebug(BuildConfig.DEV_TOOLS)
         webView.setFreeCamera(settings.freeCam)
         webView.setGrid(settings.grid)
         webView.setBackground(settings.bg)
@@ -2488,7 +2493,6 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
 
     fun toggle(setting: Setting, on: Boolean) {
         val updated = when (setting) {
-            Setting.Debug -> settings.copy(debug = on)
             Setting.FreeCam -> settings.copy(freeCam = on)
             Setting.Grid -> settings.copy(grid = on)
             Setting.Background -> settings.copy(bg = on)
@@ -2501,7 +2505,6 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         }
         persist(updated)
         when (setting) {
-            Setting.Debug -> webView.setDebug(on)
             Setting.FreeCam -> webView.setFreeCamera(on)
             Setting.Grid -> webView.setGrid(on)
             Setting.Background -> webView.setBackground(on)

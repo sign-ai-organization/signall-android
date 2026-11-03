@@ -19,8 +19,11 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
 
     override fun load(): Settings {
         val defaults = Settings()
+        // `KEY_DEBUG` se **ignora** a propósito: el modo debug dejó de ser una
+        // preferencia (2026-11-03) y ahora es `BuildConfig.DEV_TOOLS`. Una
+        // instalación vieja puede tener el booleano guardado; leerlo volvería a
+        // abrir la puerta que este cambio cierra. `save()` lo borra.
         return Settings(
-            debug = prefs.getBoolean(KEY_DEBUG, defaults.debug),
             freeCam = prefs.getBoolean(KEY_FREECAM, defaults.freeCam),
             grid = prefs.getBoolean(KEY_GRID, defaults.grid),
             bg = prefs.getBoolean(KEY_BG, defaults.bg),
@@ -41,7 +44,9 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
 
     override fun save(settings: Settings) {
         prefs.edit()
-            .putBoolean(KEY_DEBUG, settings.debug)
+            // Limpia la preferencia vieja del modo debug: ya no se lee ni se
+            // escribe, y dejarla guardada solo confunde a quien audite el archivo.
+            .remove(KEY_DEBUG)
             .putBoolean(KEY_FREECAM, settings.freeCam)
             .putBoolean(KEY_GRID, settings.grid)
             .putBoolean(KEY_BG, settings.bg)
@@ -59,6 +64,8 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
 
     private companion object {
         const val PREFS_NAME = "signai"
+
+        /** Preferencia vieja del interruptor «Modo debug»: solo se borra. */
         const val KEY_DEBUG = "debug"
         const val KEY_FREECAM = "freecam"
         const val KEY_GRID = "grid"

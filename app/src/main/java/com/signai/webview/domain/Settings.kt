@@ -5,8 +5,8 @@ package com.signai.webview.domain
  * `data` layer can persist it without depending on `ui`.
  */
 data class Settings(
-    // Advanced / debug (spec `SET-8`).
-    val debug: Boolean = false,
+    // Advanced / dev-only (spec `SET-8`). `debug` ya no vive acá: es una
+    // condición de compilación (`BuildConfig.DEV_TOOLS`), no una preferencia.
     val freeCam: Boolean = false,
     val grid: Boolean = true,
     val bg: Boolean = false,
@@ -34,7 +34,6 @@ data class Settings(
 )
 
 enum class Setting {
-    Debug,
     FreeCam,
     Grid,
     Background,

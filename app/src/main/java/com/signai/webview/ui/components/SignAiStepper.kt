@@ -29,6 +29,31 @@ import com.signai.webview.ui.theme.SignAiTheme
  */
 private const val STEP = 5
 
+/**
+ * Valor al que lleva un toque, **sobre la grilla de [step]**.
+ *
+ * Un valor viejo puede no ser múltiplo del paso: la velocidad era un slider y en
+ * el teléfono del owner había quedado en 52. Sumar o restar el paso a secas daba
+ * 42 y 62, que no son valores del control y hacían que nunca volviera a caer en
+ * 50, 60… Con esto el primer toque ya ordena el valor: desde 52, «−» va a 50 y
+ * «+» a 60. Desde un valor ya alineado se comporta como siempre.
+ */
+private fun steppedValue(
+    current: Int,
+    step: Int,
+    min: Int,
+    max: Int,
+    increase: Boolean,
+): Int {
+    val offset = (current - min).coerceAtLeast(0)
+    val index = if (increase) {
+        offset / step + 1
+    } else {
+        (offset + step - 1) / step - 1
+    }
+    return (min + index * step).coerceIn(min, max)
+}
+
 @Composable
 fun SignAiStepper(
     value: Int,
@@ -52,7 +77,9 @@ fun SignAiStepper(
             icon = SignAiIcons.Minus,
             contentDescription = decreaseContentDescription,
             enabled = canDecrease,
-            onClick = { onValue((value - step).coerceAtLeast(minValue)) },
+            onClick = {
+                onValue(steppedValue(value, step, minValue, maxValue, increase = false))
+            },
         )
         // El número va centrado **entre los dos botones**, no pegado al "−": con un
         // ancho fijo y sin `contentAlignment` el texto se dibujaba en la esquina
@@ -76,7 +103,9 @@ fun SignAiStepper(
             icon = SignAiIcons.Plus,
             contentDescription = increaseContentDescription,
             enabled = canIncrease,
-            onClick = { onValue((value + step).coerceAtMost(maxValue)) },
+            onClick = {
+                onValue(steppedValue(value, step, minValue, maxValue, increase = true))
+            },
         )
     }
 }
