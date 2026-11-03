@@ -43,6 +43,18 @@ object SignAiSizes {
     val characterTriggerHeight = 36.dp
 
     val settingRowMinHeight = 50.dp
+
+    /**
+     * Ancho de fila por debajo del cual una fila de Ajustes **se apila**: la
+     * etiqueta arriba y el control abajo a la derecha (owner, 2026-11-03).
+     *
+     * El panel mide `min(88 % del ancho, 350 dp)`, así que en una pantalla de 320 dp
+     * quedan ~237 dp de fila: el selector de Personaje (167 dp) más el ícono y el
+     * espacio dejaban ~30 dp para la etiqueta y "Personaje" se partía en tres líneas.
+     * 270 dp es el ancho en el que la etiqueta todavía conserva ~70 dp con el control
+     * más ancho, o sea pantallas de ~360 dp para arriba quedan como estaban.
+     */
+    val settingRowStackBelow = 270.dp
     val historyItemMinHeight = 55.dp
     val switchWidth = 43.dp
     val switchHeight = 25.dp

@@ -86,7 +86,11 @@ fun SettingsSidebar(
         Spacer(Modifier.height(38.dp))
 
         Section("AVATAR") {
-            SettingRow(label = "Personaje", icon = SignAiIcons.Sparkle) {
+            SettingRow(
+                label = "Personaje",
+                icon = SignAiIcons.Sparkle,
+                stackBelow = SignAiSizes.settingRowStackBelow,
+            ) {
                 CharacterPicker(
                     current = settings.character,
                     onPick = onCharacter,
@@ -97,7 +101,11 @@ fun SettingsSidebar(
         }
 
         Section("ACCESIBILIDAD") {
-            SettingRow(label = "Tamaño de interfaz", icon = SignAiIcons.TextAa) {
+            SettingRow(
+                label = "Tamaño de interfaz",
+                icon = SignAiIcons.TextAa,
+                stackBelow = SignAiSizes.settingRowStackBelow,
+            ) {
                 SignAiStepper(
                     value = settings.interfaceSize,
                     onValue = onInterfaceSize,
