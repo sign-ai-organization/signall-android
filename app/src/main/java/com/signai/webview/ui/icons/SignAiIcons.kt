@@ -10,19 +10,28 @@ import com.phosphor.icons.regular.Check
 import com.phosphor.icons.regular.CircleHalf
 import com.phosphor.icons.regular.Clock
 import com.phosphor.icons.regular.ClockCounterClockwise
+import com.phosphor.icons.regular.Cursor
+import com.phosphor.icons.regular.FilmStrip
 import com.phosphor.icons.regular.Gear
+import com.phosphor.icons.regular.GridFour
 import com.phosphor.icons.regular.Info
 import com.phosphor.icons.regular.Microphone
 import com.phosphor.icons.regular.Minus
 import com.phosphor.icons.regular.Moon
 import com.phosphor.icons.regular.PaperPlaneTilt
+import com.phosphor.icons.regular.Person
 import com.phosphor.icons.regular.Play
+import com.phosphor.icons.regular.PlayCircle
 import com.phosphor.icons.regular.Plus
 import com.phosphor.icons.regular.SlidersHorizontal
 import com.phosphor.icons.regular.Sparkle
 import com.phosphor.icons.regular.SpeakerHigh
+import com.phosphor.icons.regular.Speedometer
 import com.phosphor.icons.regular.Sun
 import com.phosphor.icons.regular.TextAa
+import com.phosphor.icons.regular.TextB
+import com.phosphor.icons.regular.TextHOne
+import com.phosphor.icons.regular.Tree
 import com.phosphor.icons.regular.Waveform
 import com.phosphor.icons.regular.X
 
@@ -43,6 +52,18 @@ object SignAiIcons {
     val Clock: ImageVector = PhIcons.Regular.Clock
     val ClockCounterClockwise: ImageVector = PhIcons.Regular.ClockCounterClockwise
     val CircleHalf: ImageVector = PhIcons.Regular.CircleHalf
+
+    // Filas de Ajustes (owner, 2026-11-03): cada icono dice qué hace la fila.
+    // Antes AVANZADO repetía `Gear` en las cinco y ACCESIBILIDAD repetía `TextAa`.
+    val Person: ImageVector = PhIcons.Regular.Person
+    val Speedometer: ImageVector = PhIcons.Regular.Speedometer
+    val TextB: ImageVector = PhIcons.Regular.TextB
+    val TextHOne: ImageVector = PhIcons.Regular.TextHOne
+    val FilmStrip: ImageVector = PhIcons.Regular.FilmStrip
+    val Cursor: ImageVector = PhIcons.Regular.Cursor
+    val GridFour: ImageVector = PhIcons.Regular.GridFour
+    val Tree: ImageVector = PhIcons.Regular.Tree
+    val PlayCircle: ImageVector = PhIcons.Regular.PlayCircle
     val Info: ImageVector = PhIcons.Regular.Info
     // El TR de tiempo real. Onda y no micrófono, a propósito: los dos botones
     // de la barra toman voz, y dos micrófonos en la misma barra eran

@@ -746,6 +746,10 @@ function startClip(clip) {
 
   state.finishing = false;
   state.playing = true;
+  // RF-AVT-08: si el usuario cambió la velocidad mientras la seña anterior
+  // estaba saliendo, el valor nuevo se aplica acá, al arrancar esta. La seña
+  // que ya estaba en curso termina con la velocidad con la que empezó.
+  applySpeed();
 
   if (Debug.enabled) {
     const how = fade > 0 ? "fundición" : !previous && crossfade() > 0
@@ -1145,7 +1149,11 @@ window.SignAI = {
   setSpeed(v) {
     // v en 0..1 (0.5 = velocidad normal) → factor 0.1..3
     state.baseSpeed = Math.max(0.1, Math.min(3, (Number(v) || 0.5) * 2));
-    applySpeed();
+    // RF-AVT-08: un cambio a mitad de frase **no** corta ni acelera la seña que
+    // está saliendo; se aplica desde la siguiente (`startClip` llama a
+    // `applySpeed`). Si no hay nada sonando —al abrir, o entre turnos— no hay a
+    // quién esperar y se aplica en el acto.
+    if (!state.playing || !state.action) applySpeed();
     if (Debug.enabled) Debug.render();
   },
 

@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -21,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import com.signai.webview.BuildConfig
 import com.signai.webview.ui.SignAiBranding
 import com.signai.webview.ui.components.CharacterPicker
 import com.signai.webview.ui.components.SettingRow
@@ -29,7 +28,6 @@ import com.signai.webview.ui.components.SignAiSmallIconButton
 import com.signai.webview.ui.components.SignAiStepper
 import com.signai.webview.ui.components.SignPickerDropdown
 import com.signai.webview.ui.designsystem.components.SignAiIcon
-import com.signai.webview.ui.designsystem.components.SignAiSlider
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Switch
 import com.signai.webview.ui.designsystem.foundation.SignAiSizes
@@ -40,9 +38,14 @@ import com.signai.webview.domain.Settings
 import com.signai.webview.ui.theme.SignAiTheme
 
 /**
- * Right drawer — Settings (spec `SET-*`), with sections AVATAR / ACCESIBILIDAD /
- * APARIENCIA / AVANZADO. The debug toggles live in AVANZADO, separated from the
- * user-facing settings (`SET-8`).
+ * Right drawer — Settings (spec `SET-*`): AVATAR / ACCESIBILIDAD / APARIENCIA
+ * and, **only in development builds**, AVANZADO.
+ *
+ * AVANZADO ya no es una sección de producción ni depende de una preferencia:
+ * existe si `BuildConfig.DEV_TOOLS` está encendido (`-Psignai.devTools=true` o
+ * `SIGNAI_DEV_TOOLS=1`, ver `app/build.gradle.kts`). Con el flag apagado no se
+ * compone el `Section`, así que no hay ninguna forma de llegar a esos ajustes
+ * desde el teléfono, ni con la vieja preferencia `debug` guardada.
  */
 @Composable
 fun SettingsSidebar(
@@ -88,7 +91,7 @@ fun SettingsSidebar(
         Section("AVATAR") {
             SettingRow(
                 label = "Personaje",
-                icon = SignAiIcons.Sparkle,
+                icon = SignAiIcons.Person,
                 stackBelow = SignAiSizes.settingRowStackBelow,
             ) {
                 CharacterPicker(
@@ -112,16 +115,16 @@ fun SettingsSidebar(
                     label = "el tamaño de la interfaz",
                 )
             }
-            SettingRow(label = "Texto en negrita", icon = SignAiIcons.TextAa) {
+            SettingRow(label = "Texto en negrita", icon = SignAiIcons.TextB) {
                 Switch(checked = settings.bold, onCheckedChange = { onToggle(Setting.Bold, it) })
             }
             SettingRow(label = "Contraste aumentado", icon = SignAiIcons.CircleHalf) {
                 Switch(checked = settings.contrast, onCheckedChange = { onToggle(Setting.Contrast, it) })
             }
-            SettingRow(label = "Texto más grande", icon = SignAiIcons.Plus) {
+            SettingRow(label = "Texto más grande", icon = SignAiIcons.TextHOne) {
                 Switch(checked = settings.large, onCheckedChange = { onToggle(Setting.Large, it) })
             }
-            SettingRow(label = "Reducir animaciones", icon = SignAiIcons.Minus) {
+            SettingRow(label = "Reducir animaciones", icon = SignAiIcons.FilmStrip) {
                 Switch(checked = settings.reduceMotion, onCheckedChange = { onToggle(Setting.ReduceMotion, it) })
             }
         }
@@ -137,56 +140,67 @@ fun SettingsSidebar(
 
         AboutLink(onClick = onOpenAbout)
 
-        Section("AVANZADO") {
-            SettingRow(label = "Modo debug", icon = SignAiIcons.Gear) {
-                Switch(checked = settings.debug, onCheckedChange = { onToggle(Setting.Debug, it) })
+        // Solo existe si la compilación lo pide: no es una preferencia del
+        // teléfono. Con el flag apagado, ni la sección ni la consola de la
+        // escena se encienden desde acá.
+        if (BuildConfig.DEV_TOOLS) {
+            Section("AVANZADO") {
+                SettingRow(label = "Cámara libre", icon = SignAiIcons.Cursor) {
+                    Switch(checked = settings.freeCam, onCheckedChange = { onToggle(Setting.FreeCam, it) })
+                }
+                SettingRow(label = "Suelo (grilla)", icon = SignAiIcons.GridFour) {
+                    Switch(checked = settings.grid, onCheckedChange = { onToggle(Setting.Grid, it) })
+                }
+                SettingRow(label = "Fondo bosque", icon = SignAiIcons.Tree) {
+                    Switch(checked = settings.bg, onCheckedChange = { onToggle(Setting.Background, it) })
+                }
+                SettingRow(label = "Seña de prueba", icon = SignAiIcons.PlayCircle) {
+                    Switch(
+                        checked = settings.demoSignFallback,
+                        onCheckedChange = { onToggle(Setting.DemoSignFallback, it) },
+                    )
+                }
+                SettingRow(
+                    label = "Seña de ejemplo",
+                    icon = SignAiIcons.Sparkle,
+                    // 300 y no 270: con el selector de 150 dp, entre 271 y 299 dp
+                    // de fila la etiqueta se partiría en dos líneas. En el Redmi
+                    // (fila de 301 dp) queda en una sola; en pantallas de 360 dp o
+                    // menos se apila, que es preferible a "Seña de / ejemplo".
+                    stackBelow = 300.dp,
+                ) {
+                    SignPickerDropdown(current = sign, options = signs, onPick = onPickSign)
+                }
             }
-            SettingRow(label = "Cámara libre (orbitar + zoom)", icon = SignAiIcons.Gear) {
-                Switch(checked = settings.freeCam, onCheckedChange = { onToggle(Setting.FreeCam, it) })
-            }
-            SettingRow(label = "Suelo (grilla)", icon = SignAiIcons.Gear) {
-                Switch(checked = settings.grid, onCheckedChange = { onToggle(Setting.Grid, it) })
-            }
-            SettingRow(label = "Fondo bosque", icon = SignAiIcons.Gear) {
-                Switch(checked = settings.bg, onCheckedChange = { onToggle(Setting.Background, it) })
-            }
-            SettingRow(
-                label = "Seña de prueba si falta",
-                icon = SignAiIcons.Gear,
-            ) {
-                Switch(
-                    checked = settings.demoSignFallback,
-                    onCheckedChange = { onToggle(Setting.DemoSignFallback, it) },
-                )
-            }
-            Spacer(Modifier.height(8.dp))
-            SignPickerDropdown(current = sign, options = signs, onPick = onPickSign)
         }
     }
 }
 
+/**
+ * Velocidad de las señas (`SET-4`, `RF-AVT-08`).
+ *
+ * Era una etiqueta con un `SignAiSlider` que mapeaba 10..100 a 0..1 y no mostraba
+ * el número en ningún lado: no había forma de saber en qué valor estaba. Ahora es
+ * una fila más, con el mismo `SignAiStepper` de «Tamaño de interfaz»: dos botones
+ * y el valor visible.
+ *
+ * El paso es 10 (decisión del owner, 2026-11-03): de 10 a 100 en nueve toques.
+ * La escala y el rango no cambian, y quien ya tiene un valor guardado lo conserva.
+ */
 @Composable
 private fun SpeedRow(speed: Int, onSpeed: (Int) -> Unit) {
-    Column(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(11.dp),
-        ) {
-            SignAiIcon(
-                imageVector = SignAiIcons.SpeakerHigh,
-                contentDescription = null,
-                size = 18.dp,
-                tint = SignAiTheme.colors.muted,
-            )
-            SignAiText(
-                text = "Velocidad de señas",
-                style = SignAiTheme.typography.body2,
-                color = SignAiTheme.colors.text,
-            )
-        }
-        SignAiSlider(
-            value = (speed - 10) / 90f,
-            onValueChange = { onSpeed(10 + (it * 90).toInt()) },
+    SettingRow(
+        label = "Velocidad de señas",
+        icon = SignAiIcons.Speedometer,
+        stackBelow = SignAiSizes.settingRowStackBelow,
+    ) {
+        SignAiStepper(
+            value = speed,
+            onValue = onSpeed,
+            step = 10,
+            minValue = 10,
+            maxValue = 100,
+            label = "la velocidad de las señas",
         )
     }
 }

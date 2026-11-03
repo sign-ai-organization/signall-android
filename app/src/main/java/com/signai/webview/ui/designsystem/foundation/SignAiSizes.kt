@@ -42,6 +42,15 @@ object SignAiSizes {
     val characterTriggerWidth = 167.dp
     val characterTriggerHeight = 36.dp
 
+    /**
+     * Ancho del selector de Seña, más angosto que el de Personaje.
+     *
+     * Sus opciones son «Seña 0»..«Seña 49», no un nombre completo, y con 167 dp
+     * la etiqueta «Seña de ejemplo» se partía en dos líneas en el panel de 345 dp
+     * (medido en el Redmi, 2026-11-03). 150 dp le dejan el ancho que necesita.
+     */
+    val signTriggerWidth = 150.dp
+
     val settingRowMinHeight = 50.dp
 
     /**
