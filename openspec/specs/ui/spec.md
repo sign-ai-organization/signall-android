@@ -185,12 +185,12 @@ Main.
 | SET-1 | Header con logo | `[N]` | Tile con el **icono real de la marca** (`ic_signall.png`) + cerrar. Ver `BRD-5`. |
 | SET-2 | Sección **AVATAR** | `[P]` | Título de sección. |
 | SET-3 | **Personaje** (picker) | `[P]` | Dropdown con Juan y Pauline + dots de color + check del seleccionado. Ver `PER-*`. |
-| SET-4 | **Velocidad de señas** | `[P]` | Slider 10–100 (ícono SpeakerHigh). |
+| SET-4 | **Velocidad de señas** | `[P]` | **Dos botones − / +**, no una barra (2026-11-03, a pedido del owner), con el valor visible en negrita al medio: es el mismo `SignAiStepper` de «Tamaño de interfaz» (`ACC-1`). Rango 10–100 y paso **10** (de 10 a 100 en nueve toques); `−` deshabilitado en 10 y `+` en 100, con `contentDescription` propio en cada botón. Ícono `Speedometer`. Un valor viejo fuera de la grilla —el slider pudo dejar 52— se ordena al **primer toque**: desde 52, `−` va a 50 y `+` a 60 (`steppedValue`), así vuelve a ser múltiplo del paso. El cambio se aplica en la **seña siguiente** y no corta ni acelera la que está saliendo (`BRG-6`). Antes: slider 10–100 sin número visible, con ícono `SpeakerHigh`. |
 | SET-5 | Sección **ACCESIBILIDAD** | `[P]` | Ver `ACC-*`. |
 | SET-6 | Sección **APARIENCIA** | `[P]` | Ver `APP-*`. |
 | SET-7 | Link **Acerca de** | `[P]` | Ícono Info + "Acerca de" + chevron; abre About. |
-| SET-8 | Sección **AVANZADO** | `[A][N]` | Al final: Modo debug, Cámara libre, Suelo (grilla), Fondo bosque, selector de Seña. |
-| SET-9 | Fila de setting reutilizable | `[N]` | Ícono + label + control (switch/slider), min-height 50. La etiqueta lleva `weight(1f)` y es lo único que cede ancho. **Responsive (2026-11-03):** por debajo de `SignAiSizes.settingRowStackBelow` (270 dp de fila, o sea pantallas de ~355 dp o menos) las filas con **control ancho** —Personaje (167 dp) y Tamaño de interfaz (116 dp)— **se apilan**: etiqueta arriba y control abajo a la derecha, con su tamaño táctil intacto. Antes, en un panel de 271 dp, "Personaje" se partía en **tres líneas** porque el selector se llevaba todo el ancho. Las filas con switch no se apilan: su control mide 43 dp y nunca deja a la etiqueta sin lugar. De 360 dp de pantalla para arriba nada cambia (verificado con `wm density` en 392, 360 y 308 dp). |
+| SET-8 | Sección **AVANZADO** (solo desarrollo) | `[A][N]` | **Reescrita el 2026-11-03 (owner):** no es parte de la app que se entrega. La sección existe solo si `BuildConfig.DEV_TOOLS` está encendido —se pide al compilar con `-Psignai.devTools=true` o `SIGNAI_DEV_TOOLS=1`, y está **apagada por defecto incluso en `debug`**—; en `release` y `demo` el flag es siempre `false` y una propiedad de build no lo cambia. Con el flag apagado no se compone el `Section`, así que no hay forma de llegar a esos ajustes desde el teléfono. Filas: Cámara libre, Suelo (grilla), Fondo bosque, Seña de prueba y Seña de ejemplo (esta última pasó de ser un botón suelto debajo de la sección a una fila más, con `stackBelow = 300.dp` por su selector de 150 dp). **«Modo debug» ya no existe** y `debug` dejó de ser una preferencia: la clave vieja de `SharedPreferences` se **ignora** al leer y se **borra** al guardar (`SettingsRepository`), y el indicador de diagnóstico y la consola de la escena los enciende el mismo `DEV_TOOLS` (`STA-13`, `BRG-2`). El código del overlay se apaga, no se borra. |
+| SET-9 | Fila de setting reutilizable | `[N]` | Ícono + label + control (switch, stepper o selector), min-height 50. La etiqueta lleva `weight(1f)` y es lo único que cede ancho. **Cada fila trae su propio ícono** (2026-11-03): `Person` (Personaje), `Speedometer` (Velocidad de señas), `TextAa` (Tamaño de interfaz), `TextB` (Texto en negrita), `CircleHalf` (Contraste), `TextHOne` (Texto más grande), `FilmStrip` (Reducir animaciones), `Moon`/`Sun` (tema) y, en AVANZADO, `Cursor`, `GridFour`, `Tree`, `PlayCircle` y `Sparkle`. Antes AVANZADO repetía `Gear` en sus cinco filas y ACCESIBILIDAD repetía `TextAa`. Las etiquetas se acortaron para que quepan en **una línea** («Cámara libre (orbitar + zoom)» → «Cámara libre», «Seña de prueba si falta» → «Seña de prueba»). **Responsive (2026-11-03):** por debajo de `SignAiSizes.settingRowStackBelow` (270 dp de fila, o sea pantallas de ~355 dp o menos) las filas con **control ancho** —Personaje (167 dp), Velocidad de señas (116 dp) y Tamaño de interfaz (116 dp)— **se apilan**: etiqueta arriba y control abajo a la derecha, con su tamaño táctil intacto. Antes, en un panel de 271 dp, "Personaje" se partía en **tres líneas** porque el selector se llevaba todo el ancho. Las filas con switch no se apilan: su control mide 43 dp y nunca deja a la etiqueta sin lugar. De 360 dp de pantalla para arriba nada cambia (verificado con `wm density` en 392, 360 y 308 dp). La fila **Seña de ejemplo** (solo con `DEV_TOOLS`) usa `stackBelow = 300.dp` porque su selector mide 150 dp: entre 271 y 299 dp de fila la etiqueta se partiría en dos. |
 | SET-10 | Dropdown de personaje | `[P]` | Trigger con chevron que rota al abrir; menú anclado con animación `dropdown-in`. |
 | SET-11 | Menú **debajo** del trigger | `[A]` | Las opciones se abren **debajo** del botón y con su mismo ancho, no flotando descuadrado. El `Popup` de Compose ignora `alignment`/`offset` en Android 11: la ventana se estira a `fillMaxSize()` y el menú seUbica con un `offset` normal medido contra `view.rootView.getLocationOnScreen`. Si no cabe abajo, **sube**. |
 | SET-12 | Menú largo scrolleable | `[A]` | El selector de Seña tiene 32 opciones y no entraban todas: la lista interna lleva `verticalScroll`. Es el mismo `Dropdown` del picker de Personaje (`SET-11`), que por eso no podía llegar a la opción 27+. |
@@ -362,7 +362,7 @@ de que llegó su `segment`, contra los ~569 ms que costaba esperar a que llegara
 | BRG-3 | `setFreeCamera(bool)` | `[A]` | Cámara libre (orbitar/zoom sin límite). |
 | BRG-4 | `setGrid(bool)` | `[A]` | Grilla/suelo. |
 | BRG-5 | `setBackground(bool)` | `[A]` | Fondo bosque. |
-| BRG-6 | `setSpeed(0..1)` | `[N]` | Velocidad de reproducción de señas (slider `SET-4`). Aditivo. |
+| BRG-6 | `setSpeed(0..1)` | `[N]` | Velocidad de reproducción de señas, con los botones − / + de `SET-4` (Kotlin manda `speed / 100f`; la escena mapea 0..1 a un factor de 0,1..3). **Desde el 2026-11-03 el cambio no corta la seña en curso**: si hay una seña saliendo, el valor se guarda y `startClip` lo aplica al arrancar la **siguiente**; si la escena está quieta se aplica en el acto. Aditivo. |
 | BRG-7 | `onPlaybackDone` (JS→Kotlin) | `[N]` | Evento al terminar `play()`; alimenta `STA-8`. Vía `WebMessageListener` (`SignAIBridge`). |
 | BRG-8 | Contrato retrocompatible | `[A]` | Los 5 comandos actuales y el guard `?.` no cambian. |
 | BRG-9 | `setTheme(dark)` | `[N]` | Aditivo. Hace que el fondo del canvas 3D siga el tema claro/oscuro (mitiga el riesgo de light mode) y alterna la clase `light` en `<html>` para contrastar el texto de debug/estado. |
@@ -474,20 +474,32 @@ Todos verificados disponibles en `phosphoricons-regular-android:1.0.5`.
 |---|---|---|
 | ArrowLeft | `ArrowLeft` | `NAV-3` |
 | Check | `Check` | `PER-3` |
-| ChevronDown | `CaretDown` | `SET-10` |
+| ChevronDown | `CaretDown` | `SET-3`, `SET-10`, `SET-8` (Seña de ejemplo) |
 | ChevronRight | `CaretRight` | `HIS-3`, `SET-7` |
-| Clock3 / History | `Clock` / `ClockCounterClockwise` | `CTL-3` |
+| Clock3 / History | `ClockCounterClockwise` | `CTL-3` |
 | Contrast | `CircleHalf` | `ACC-3` |
 | Info | `Info` | `SET-7` |
-| Minus | `Minus` | `ACC-5` |
 | Mic | `Microphone` | `CTL-5` |
+| Minus | `Minus` | botón − de `ACC-1` y `SET-4` |
 | Moon / Sun | `Moon` / `Sun` | `APP-3` |
-| Plus | `Plus` | `ACC-4` |
+| Plus | `Plus` | botón + de `ACC-1` y `SET-4` |
 | RotateCcw | `ArrowCounterClockwise` | `STG-4`, `CNV-5` |
 | Send | `PaperPlaneTilt` | `CTL-4` |
-| Settings2 | `SlidersHorizontal` | `NAV-6` |
-| Sparkles | `Sparkle` | `SET-3` |
-| Type | `TextAa` | `ACC-1/2` |
-| Volume2 | `SpeakerHigh` | `SET-4` |
 | X | `X` | cierres |
-| Play | `Play` | (disponible) |
+| — (nuevo) | `Waveform` | TR / modo en vivo (`STA-17`) |
+| — (nuevo) | `Person` | `SET-3` |
+| — (nuevo) | `Speedometer` | `SET-4` |
+| — (nuevo) | `TextB` | `ACC-2` |
+| — (nuevo) | `TextHOne` | `ACC-4` |
+| — (nuevo) | `FilmStrip` | `ACC-5` |
+| — (nuevo) | `Cursor` | `SET-8` (Cámara libre) |
+| — (nuevo) | `GridFour` | `SET-8` (Suelo) |
+| — (nuevo) | `Tree` | `SET-8` (Fondo bosque) |
+| — (nuevo) | `PlayCircle` | `SET-8` (Seña de prueba) |
+| Sparkles | `Sparkle` | `SET-8` (Seña de ejemplo) |
+| Type | `TextAa` | `ACC-1` |
+
+**Desde el 2026-11-03** cada fila de Ajustes usa el ícono que dice qué hace, en vez de
+repetir `Gear` en AVANZADO y `TextAa` en ACCESIBILIDAD (`SET-9`). `Gear`, `SlidersHorizontal`,
+`SpeakerHigh`, `Clock` y `Play` siguen definidos en `SignAiIcons` por compatibilidad, pero
+**ninguna pantalla los usa**.
