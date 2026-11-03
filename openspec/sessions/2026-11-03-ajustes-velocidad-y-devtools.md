@@ -96,13 +96,52 @@ levantado (Ajustes no lo necesita).
   no muestra nada de depuración.
 - `./gradlew build` limpio.
 
+## Segunda parte (misma fecha): el spec y el SRS
+
+El owner pidió cerrar los dos pendientes de arriba en la misma sesión, en ese orden: primero
+poner al día el spec contra el código de `3be7256`, y después proponer en el SRS los dos
+cambios de redacción que faltaban.
+
+### Qué se hizo
+
+1. **`openspec/specs/ui/spec.md`** (commit `14d768e`):
+   - `SET-4`: la velocidad son **dos botones − / +** con el valor visible al medio, paso 10 y
+     rango 10–100; un valor viejo fuera de la grilla se alinea al primer toque y el cambio
+     entra en la **seña siguiente** sin cortar la actual.
+   - `SET-8`: AVANZADO deja de ser preferencia y pasa a existir solo con
+     `BuildConfig.DEV_TOOLS` (`-Psignai.devTools=true` o `SIGNAI_DEV_TOOLS=1`, apagado por
+     defecto); la clave vieja `debug` se ignora y se borra.
+   - `SET-9`: cada fila con su ícono, etiquetas de una línea, y el apilado suma la fila de
+     velocidad (116 dp) y la de seña de ejemplo (`stackBelow = 300.dp`).
+   - `BRG-6`: `setSpeed` ya no se describe como «slider `SET-4`» y se documenta que no corta
+     la seña en curso.
+   - Tabla de íconos: se reescribió contra `SignAiIcons` (cada fila con su Phosphor real) y se
+     dejó anotado que `Gear`, `SlidersHorizontal`, `SpeakerHigh`, `Clock` y `Play` quedaron
+     definidos pero sin uso.
+   - `ACC-1` no necesitó cambios: ya describía el stepper de botones.
+   - `./gradlew build` limpio.
+2. **SRS en Overleaf** (`main.tex`, proyecto `6a122a19bb9a5dd9d390ba3d`), con control de
+   cambios (`track_changes_on_for_me: true`; las dos ediciones volvieron con `tracked: true`,
+   versiones 639 → 640 → 641):
+   - **Velocidad de señas** (tabla `tab:ajustes`, ~línea 874): «Control deslizante, de 10 a
+     100…» → «Dos botones de menos y más, con el valor visible entre ellos, que ajustan la
+     velocidad de reproducción de las señas de 10 a 100 en pasos de 10.»
+   - **Avanzado** (misma tabla, ~línea 894): ahora dice que son opciones del equipo de
+     desarrollo que **no forman parte de la interfaz que se entrega**, que se habilitan al
+     compilar con una variable de entorno y no aparecen en la versión final; se quitó «modo de
+     depuración» de la lista, porque esa opción ya no existe como fila.
+   - El rango 10–100 no se tocó. Compila con **0 errores** (93 advertencias, sin comparar
+     contra una línea base). No se aceptó ni rechazó ningún cambio ni se tocaron comentarios.
+
+### Qué se decidió
+
+- **Extender esta sesión y no abrir otra**: el skill `sesion-openspec` pide un archivo por
+  sesión y, si ya hay uno del día, extenderlo.
+- **Dos cambios y solo dos en el SRS**: el owner los acotó. Quedaron por fuera §3.2–3.6, el
+  rótulo de la seña en curso y las expresiones faciales, que ya estaban anotados como
+  pendientes en otras sesiones.
+
 ## Qué quedó pendiente
 
-- **`openspec/specs/ui/spec.md`** no se actualizó: `SET-4` (velocidad), `SET-8`/`SET-9`
-  (AVANZADO y su control de compilación), `ACC-1` (stepper) y la tabla de íconos siguen
-  hablando de la barra y del switch de debug.
-- **El SRS** describe la velocidad como una barra con rango 10–100. El cambio a botones es del
-  owner, pero el texto no se tocó: hay que decidir si se actualiza el requisito. **No se abrió
-  Overleaf en esta sesión** (lo pidió el owner).
 - **`demo` y `debug` comparten `applicationId`**, así que después de probar `demo` hay que
   volver a `./gradlew installDebug`.
