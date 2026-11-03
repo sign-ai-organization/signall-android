@@ -102,6 +102,15 @@ import kotlin.math.abs
 
 enum class DrawerSide { Start, End }
 
+// Velocidad (dp/s) a partir de la cual un arrastre decide por sí solo: abre o
+// cierra completo aunque el dedo haya recorrido poco. Es el `velocityThreshold`
+// del drawer modal de Material 3 (`SwipeableDefaults`, 125 dp/s) y es lo que
+// hace que un pestañeo abra el panel, como en Gmail o en X/Twitter. Por debajo
+// del umbral decide la distancia (la mitad del panel). Valores medidos con
+// gestos reales de 1-2 frames quedan muy por encima; un arrastre lento y
+// deliberado queda por debajo.
+private val DrawerFlingVelocity = 125.dp
+
 @Composable
 fun SignAiEdgeDrawer(
     side: DrawerSide,
@@ -109,7 +118,6 @@ fun SignAiEdgeDrawer(
     onOpenChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     drawerWidth: Dp = SignAiSizes.drawerWidth,
-    drawerOverflow: Dp = 64.dp,
     // Zona de arrastre invisible en el borde. Subió de 48 a 60 dp (+25 %) el
     // 2026-10-22 porque con navegación por gestos el sistema se queda con los
     // primeros ~20 dp de cada lado; ver [handleHitPadding].
@@ -161,8 +169,8 @@ fun SignAiEdgeDrawer(
 ) {
     val density = LocalDensity.current
     val widthPx = with(density) { drawerWidth.toPx() }
-    val overflowPx = with(density) { drawerOverflow.toPx() }
     val edgeStripWidthPx = with(density) { edgeStripWidth.toPx() }
+    val flingVelocityPx = with(density) { DrawerFlingVelocity.toPx() }
     val scope = rememberCoroutineScope()
 
     // 1 while this tab is fully visible, 0 while it has faded out because the
@@ -184,6 +192,18 @@ fun SignAiEdgeDrawer(
     var gestureOwned by remember { mutableStateOf(false) }
     val reduceMotion = LocalReduceMotion.current
 
+    // SIN REBOTE (owner, 2026-11-03). El spring anterior era
+    // `DampingRatioMediumBouncy` (ζ = 0,5), cuyo sobrepaso máximo es
+    // `e^(-πζ/√(1-ζ²))` = 16,3 % del recorrido: unos 49 dp sobre un panel de
+    // 300 dp. El panel se pasaba del borde de la pantalla, dejaba ver el fondo
+    // y volvía, y por eso existía la franja `drawerOverflow` de 64 dp fuera de
+    // cuadro que tapaba ese hueco. Con ζ = 1 (crítico) el panel llega, se
+    // asienta y se queda quieto, sin sobrepaso y sin franja.
+    //
+    // La rigidez se deja igual a propósito: el spring es una propiedad del
+    // recorrido, así que la velocidad se siente igual que antes y el cambio
+    // vale para cualquier ancho de panel (`panelWidth = min(maxWidth * 0.88,
+    // 350.dp)`) y cualquier densidad, sin un dp fijo que pueda quedar corto.
     LaunchedEffect(isOpen) {
         if (!dragging) {
             val target = if (isOpen) 0f else closedOffset
@@ -193,7 +213,7 @@ fun SignAiEdgeDrawer(
                 offsetX.animateTo(
                     targetValue = target,
                     animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        dampingRatio = Spring.DampingRatioNoBouncy,
                         stiffness = Spring.StiffnessMedium,
                     ),
                 )
@@ -216,23 +236,54 @@ fun SignAiEdgeDrawer(
         gestureOwned = claimGesture()
         dragging = gestureOwned
     }
-    val snapAfterDrag: () -> Unit = {
+    val snapAfterDrag: (Float) -> Unit = { velocity ->
         dragging = false
         gestureOwned = false
         releaseGesture()
+        // Cómo decide un drawer estándar (DrawerLayout de Gmail, Material 3):
+        // primero la VELOCIDAD del gesto, y solo si no hubo fling, la distancia.
+        // Antes acá se miraba únicamente la mitad del recorrido, así que un
+        // pestañeo rápido se ignoraba y el panel se devolvía (owner, 2026-11-03).
+        //
+        // `velocity` llega en px/s con el signo del dedo: positivo = el dedo va
+        // hacia la derecha. `offsetX` crece hacia la derecha, así que el signo se
+        // usa tal cual, sin invertirlo por lado.
+        val towardOpen = if (side == DrawerSide.End) velocity < 0f else velocity > 0f
+        val towardClosed = if (side == DrawerSide.End) velocity > 0f else velocity < 0f
+        val passedHalfway = abs(offsetX.value) < widthPx / 2f
         // A drawer cannot be dragged open while the other one is on screen.
-        val shouldOpen = !otherDrawerOpen && abs(offsetX.value) < widthPx / 2f
+        val shouldOpen =
+            !otherDrawerOpen &&
+                when {
+                    abs(velocity) < flingVelocityPx -> passedHalfway
+                    towardOpen -> true
+                    towardClosed -> false
+                    else -> passedHalfway
+                }
+        val target = if (shouldOpen) 0f else closedOffset
+        // La velocidad se arrastra al resorte SOLO si empuja hacia el destino.
+        // En contra del destino, un resorte crítico igual podría pasarse del
+        // borde, que es justo lo que se está quitando (ver el comentario de
+        // `LaunchedEffect(isOpen)`). Con la misma dirección el recorrido es
+        // monótono: llega y se queda.
+        val towardTarget = if (shouldOpen) towardOpen else towardClosed
+        val carriedVelocity = if (towardTarget) velocity else 0f
         scope.launch {
-            val target = if (shouldOpen) 0f else closedOffset
             if (reduceMotion) {
                 offsetX.snapTo(target)
             } else {
+                // Mismo criterio que la apertura por tap: ζ = 1. Sobre
+                // `StiffnessHigh` el tramo que falta recorrer se hace en muy
+                // pocos frames, así que soltar el arrastre sigue sintiéndose
+                // inmediato, y ahora además hereda el impulso del dedo en vez de
+                // arrancar de cero.
                 offsetX.animateTo(
                     targetValue = target,
                     animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        dampingRatio = Spring.DampingRatioNoBouncy,
                         stiffness = Spring.StiffnessHigh,
                     ),
+                    initialVelocity = carriedVelocity,
                 )
             }
             onOpenChange(shouldOpen)
@@ -241,7 +292,6 @@ fun SignAiEdgeDrawer(
 
     val horizontalAlignment = if (side == DrawerSide.End) Alignment.CenterEnd else Alignment.CenterStart
     val topAlignment = if (side == DrawerSide.End) Alignment.TopEnd else Alignment.TopStart
-    val dragDirectionSign = if (side == DrawerSide.End) 1f else -1f
     val drawerShape =
         if (side == DrawerSide.End) SignAiShapes.cornerDrawerRight
         else SignAiShapes.cornerDrawerLeft
@@ -279,7 +329,7 @@ fun SignAiEdgeDrawer(
                         state = dragState,
                         orientation = Orientation.Horizontal,
                         onDragStarted = { startDrag() },
-                        onDragStopped = { snapAfterDrag() },
+                        onDragStopped = { snapAfterDrag(it) },
                     ),
             )
         }
@@ -442,7 +492,7 @@ fun SignAiEdgeDrawer(
                             state = dragState,
                             orientation = Orientation.Horizontal,
                             onDragStarted = { startDrag() },
-                            onDragStopped = { snapAfterDrag() },
+                            onDragStopped = { snapAfterDrag(it) },
                         )
                     } else {
                         Modifier
@@ -458,18 +508,13 @@ fun SignAiEdgeDrawer(
             }
         }
 
-        // Overflow strip: an extra `drawerOverflow` of surface hanging off the
-        // trailing screen edge. On the open spring's rebound `offsetX` overshoots
-        // past 0; this keeps the edge covered instead of exposing the content
-        // behind. Invisible at rest.
-        Box(
-            modifier = Modifier
-                .align(horizontalAlignment)
-                .fillMaxHeight()
-                .width(drawerOverflow)
-                .offset { IntOffset((offsetX.value + dragDirectionSign * overflowPx).toInt(), 0) }
-                .background(SignAiTheme.colors.surface),
-        )
+        // Aquí estaba la franja `drawerOverflow` (64 dp de `surface` colgando
+        // fuera de cuadro): existía solo para tapar el hueco en el borde
+        // mientras el spring rebotaba. Con ζ = 1 el panel nunca pasa del borde,
+        // así que no hay hueco que tapar y se fue con el rebote (2026-11-03).
+        // No la repongas sin volver a medir el borde: la franja era un dp FIJO y,
+        // con el panel ancho (`min(maxWidth * 0.88, 350.dp)`), un rebote de 16 %
+        // ya se le acercaba al límite.
 
         // Handle: edge tab that rides the drawer's leading edge, matching the
         // prototype `.edge-tab` (globals.css): a small `surface` tab hugging the
@@ -534,7 +579,7 @@ fun SignAiEdgeDrawer(
                                 state = dragState,
                                 orientation = Orientation.Horizontal,
                                 onDragStarted = { startDrag() },
-                                onDragStopped = { snapAfterDrag() },
+                                onDragStopped = { snapAfterDrag(it) },
                             )
                             .pointerInput(isOpen, otherDrawerOpen) {
                                 detectTapGestures(
