@@ -1,12 +1,16 @@
 package com.signai.webview.ui.screens.stage
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,18 +21,25 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.signai.webview.ui.designsystem.components.SignAiIcon
 import com.signai.webview.ui.designsystem.components.SignAiText
 import com.signai.webview.ui.designsystem.components.Surface
+import com.signai.webview.ui.designsystem.foundation.SignAiMotion
 import com.signai.webview.ui.designsystem.foundation.SignAiShapes
 import com.signai.webview.ui.designsystem.foundation.SignAiSpacing
 import com.signai.webview.ui.designsystem.foundation.pressScale
@@ -38,9 +49,10 @@ import com.signai.webview.ui.theme.SignAiTheme
 
 /**
  * Avatar stage (spec `STG-*`): the 3D WebView is the protagonist, overlaid with
- * the status hint (top-left) and the Repetir button (bottom-center, just above
- * the control bar, only when the last playback is `done`). [bottomInset] keeps
- * the button clear of the overlaid control bar.
+ * the status hint (top-left), the current-sign badge (top-center) and the
+ * Repetir button (bottom-center, just above the control bar, only when the last
+ * playback is `done`). [bottomInset] keeps the button clear of the overlaid
+ * control bar.
  *
  * The WebView itself is passed as [content] so this stays a presentation
  * component and never touches the bridge directly.
@@ -48,6 +60,18 @@ import com.signai.webview.ui.theme.SignAiTheme
 
 /** Space between the Repetir button and the top edge of the control bar. */
 private val RepeatGap = 32.dp
+
+/**
+ * Distancia entre la barra de estado y el rótulo de la seña en curso.
+ *
+ * 36 dp deja la píldora justo debajo del indicador de estado —que ocupa la
+ * esquina superior izquierda— y encima de la cabeza del avatar: con el encuadre
+ * por defecto (`STG-9`) la cabeza arranca alrededor del 13 % del alto, y el
+ * rótulo termina antes. Es una distancia fija y no un porcentaje porque la
+ * píldora mide lo mismo en cualquier pantalla; lo que tiene que quedar libre
+ * es su alto, no su centro.
+ */
+private val GlossTopGap = 36.dp
 
 /**
  * El indicador creció un 25 % (owner, 2026-10-17): era la señal de estado de la
@@ -99,8 +123,22 @@ fun AvatarStage(
     onRepeat: () -> Unit,
     modifier: Modifier = Modifier,
     bottomInset: Dp = 0.dp,
+    currentGloss: String? = null,
     content: @Composable () -> Unit,
 ) {
+    // `AnimatedVisibility` sigue componiendo su contenido mientras se va, y para
+    // entonces `currentGloss` ya es `null`: se guarda el último texto para que la
+    // salida muestre la seña que terminó y no una píldora vacía.
+    var lastGloss by remember { mutableStateOf(currentGloss) }
+    LaunchedEffect(currentGloss) {
+        if (currentGloss != null) lastGloss = currentGloss
+    }
+
+    // Un solo spec para todas las transiciones del rótulo. Se calcula acá porque
+    // `motionTween` es `@Composable` —lee "reducir animaciones"— y las lambdas de
+    // `transitionSpec` no lo son.
+    val glossFade = SignAiMotion.motionTween<Float>(SignAiMotion.Fast)
+
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
@@ -133,6 +171,67 @@ fun AvatarStage(
                 ),
                 color = SignAiTheme.colors.muted,
             )
+        }
+
+        // Rótulo de la seña en curso: arriba al centro, en la banda libre que
+        // queda sobre la cabeza del avatar. Muestra **una** seña, la que la
+        // escena acaba de arrancar, no la frase entera (eso es el `caption` de
+        // depuración, que sigue viviendo en el indicador de la izquierda).
+        //
+        // Sin `clickable` ni `pointerInput` a propósito: un nodo sin entrada no
+        // participa del hit-test, así que un toque en esta zona sigue llegando
+        // al WebView del avatar.
+        AnimatedVisibility(
+            visible = currentGloss != null,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .statusBarsPadding()
+                .padding(top = GlossTopGap),
+            enter = fadeIn(glossFade) +
+                scaleIn(
+                    animationSpec = glossFade,
+                    initialScale = 0.96f,
+                ),
+            exit = fadeOut(glossFade) +
+                scaleOut(
+                    animationSpec = glossFade,
+                    targetScale = 0.96f,
+                ),
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(SignAiShapes.cornerPill)
+                    .background(SignAiTheme.colors.surface)
+                    .border(1.dp, SignAiTheme.colors.outline, SignAiShapes.cornerPill)
+                    .padding(
+                        horizontal = SignAiSpacing.mdLg,
+                        vertical = SignAiSpacing.sm,
+                    )
+                    .semantics(mergeDescendants = true) {
+                        contentDescription = "Seña en curso: ${lastGloss.orEmpty()}"
+                    },
+            ) {
+                // La píldora es una sola: lo que cambia es el texto de adentro,
+                // con un fundido corto y el ancho acomodándose en el mismo
+                // movimiento. Dos píldoras superpuestas durante el cruce se
+                // verían como un parpadeo de dos anchos distintos.
+                AnimatedContent(
+                    targetState = lastGloss.orEmpty(),
+                    transitionSpec = {
+                        (fadeIn(glossFade) togetherWith
+                            fadeOut(glossFade))
+                            .using(SizeTransform(clip = true))
+                    },
+                    label = "glosa-en-curso",
+                ) { text ->
+                    SignAiText(
+                        text = text,
+                        style = SignAiTheme.typography.h4.copy(textAlign = TextAlign.Center),
+                        color = SignAiTheme.colors.text,
+                        maxLines = 2,
+                    )
+                }
+            }
         }
 
         // Repetir: only after a completed playback, centered a little above the
