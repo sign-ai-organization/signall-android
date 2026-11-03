@@ -60,9 +60,12 @@ no se corre por reflejo, solo cuando hay que comprobar que el `.tex` sigue compi
   `tracked: false`, la edición entró directo**: se avisa en el momento.
 - `list_tracked_changes` muestra las marcas pendientes con autor y hora. Es la prueba que se
   le enseña al owner.
-- **No confiar en `track_changes_on_for_me`**: el 2026-11-02 devolvió `false` mientras las
-  escrituras sí quedaban registradas. Ese campo del `open_project` es engañoso; la verdad está
-  en `tracked` y en `list_tracked_changes`.
+- **`track_changes_on_for_me` va por documento y puede quedar viejo.** Es el estado que el
+  MCP conoce al entrar al proyecto: si el owner prende el interruptor con el proyecto ya
+  abierto, el campo puede seguir en `false` un rato (pasó el 2026-11-02, con el SRS: el
+  interruptor estaba prendido en el SDD, no en el SRS). La regla es: **si dice `false`, no se
+  escribe**; se le pide al owner que lo prenda en ese documento y se vuelve a abrir. El
+  registro real se confirma con `tracked: true` y con `list_tracked_changes`.
 
 ## Cuidados al editar
 

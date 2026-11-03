@@ -21,11 +21,12 @@ es una función premium **hasta el 2026-11-09**, y dejar por escrito cómo se us
 Las cinco que quedan bloqueadas son justamente las que borran el rastro de la revisión:
 **la sesión propone, el owner acepta o rechaza.**
 
-**Se comprobó que el registro funciona**, que era la duda real: `find_and_replace`
-respondió `tracked: true` y `track_mode: "on"`, y `list_tracked_changes` mostró la marca
-pendiente con autor y hora. **Ojo con `track_changes_on_for_me`**: devolvió `false` en
-`open_project` mientras las escrituras sí quedaban registradas; ese campo no sirve como
-verificación.
+**Se comprobó que el registro funciona.** La primera comprobación dio `false`, y la razón no
+era el MCP: el interruptor estaba prendido en el **SDD** y todavía no en el **SRS**, porque va
+por documento. Después de prenderlo en los dos, `track_changes_on_for_me` pasó a `true` en
+ambos. La lección: el campo puede quedar viejo si se prende con el proyecto ya abierto, pero
+un `false` significa "no escribas todavía"; el registro real se confirma con `tracked: true` y
+con `list_tracked_changes`.
 
 **Contextos actualizados:**
 
@@ -41,7 +42,7 @@ verificación.
 ## Primeras ediciones en el SRS
 
 Proyecto `6a122a19bb9a5dd9d390ba3d`, `main.tex`, versión **632 → 637**. Cinco sugerencias,
-todas pendientes de que el owner las acepte o las rechace:
+**las cinco aceptadas por el owner el mismo día**:
 
 | # | Qué | Línea aprox. |
 |---|---|---|
@@ -56,7 +57,7 @@ decimales, 33,9 MiB), con `juan.glb` y `pauline.glb` verificados dentro del ZIP.
 
 ## Lo que queda
 
-- El owner tiene que aceptar o rechazar las cinco sugerencias.
+- Las cinco sugerencias del SRS quedaron aceptadas; no hay ninguna pendiente en el proyecto.
 - **§2.7, línea ~1498**: falta la misma cifra del APK ("espacio suficiente para instalar el
   paquete"). Preguntado; sin respuesta todavía.
 - **2026-11-09**: vence el premium del control de cambios. Si no se renueva, no se escribe

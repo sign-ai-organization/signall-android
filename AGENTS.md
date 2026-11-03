@@ -459,11 +459,12 @@ Tres condiciones, en este orden:
 
 1. **Preguntar antes de escribir, en cada tanda.** Que esté habilitado no es permiso
    permanente: el owner lo da en un mensaje y cubre esa tanda, no las siguientes.
-2. **Todo cambio tiene que quedar registrado** (track changes). La respuesta de la
-   herramienta trae `tracked: true`; si llega `false`, se para y se avisa. El control de
-   cambios se prende **por documento** y en esta cuenta es **premium hasta el 2026-11-09**:
-   si vence o está apagado en ese documento, no se escribe igual — se vuelve a dejar el
-   texto propuesto en un archivo y lo pega el owner.
+2. **Todo cambio tiene que quedar registrado** (track changes). Se mira
+   `track_changes_on_for_me` en `open_project`: va **por documento** y si dice `false` no se
+   escribe — se le pide al owner que lo prenda en ese documento. Después, la respuesta de la
+   herramienta tiene que traer `tracked: true`; si trae `false`, se para y se avisa. En esta
+   cuenta el control de cambios es **premium hasta el 2026-11-09**: si vence, no se escribe
+   igual — se vuelve a dejar el texto propuesto en un archivo y lo pega el owner.
 3. **Cada cambio se reporta en una tabla**, sin excepción: documento, qué cambió, línea
    aproximada y el texto exacto que se puso. Sin eso no hay nada que auditar.
 
