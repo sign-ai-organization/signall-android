@@ -188,7 +188,7 @@ table.list th:nth-child(3) { width: 24%; }
             <td class="what" data-l="Punto"><div class="t">Validar el audio que llega por el WebSocket</div><div class="sec-note" style="margin:4px 0 0">RNF-SEC-02</div></td>
             <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Implementarlo.</td>
             <td class="wide" data-l="Qué implica">El backend rechaza un fragmento vacío, uno con número impar de bytes o uno de más de 32 KB, y cierra la conexión. Un fragmento normal de 30 ms pesa 960 bytes, así que 32 KB es más de un segundo de audio: nada legítimo queda afuera.</td>
-            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0">Probado con <code>scripts/verify_audio_validation.py</code>: los tres casos cierran la sesión con el frame de error y el código 1008, y un fragmento válido sigue pasando.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">2</span></td>
@@ -202,28 +202,28 @@ table.list th:nth-child(3) { width: 24%; }
             <td class="what" data-l="Punto"><div class="t">Con qué modelo se mide y se defiende la tesis</div><div class="sec-note" style="margin:4px 0 0">RNF-AV-03 y SRS</div></td>
             <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>El modelo oficial es <code>gpt-4o-mini</code>.</td>
             <td class="wide" data-l="Qué implica">La máquina queda con <code>gpt-4o-mini</code>, 5 segundos por llamada y 1 reintento. Qwen queda solo para desarrollo, en <code>.env.local</code>, y no se usa en la ronda de pruebas. La clave de OpenAI está en <code>.env</code> (empieza con <code>sk-p</code>), no en <code>.env.local</code>.</td>
-            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0">`.env` queda con <code>gpt-4o-mini</code>, 5000 ms y 1 reintento; Qwen vive en <code>.env.local</code>, que no se versiona. <code>scripts/verify_official_config.py</code> en verde. En esta máquina el run local sigue usando Qwen por ese archivo.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">4</span></td>
             <td class="what" data-l="Punto"><div class="t">La copia del SDD que vive en el backend</div><div class="sec-note" style="margin:4px 0 0"><code>docs/sdd.md</code></div></td>
             <td data-l="Lo que decidiste">Sincronizarla.</td>
             <td class="wide" data-l="Qué implica">Se corrigen las firmas que quedaron viejas: <code>NLPServiceImpl</code> con <code>segmenter</code>, <code>SemanticCache.lookup/store</code> con glosas, <code>EmbeddingModel</code>, <code>handleText(text, turn)</code> y <code>Gloss</code> con <code>semanticCategory</code>. La fuente sigue siendo Overleaf; la copia del repositorio queda alineada y con aviso de fecha.</td>
-            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0"><code>docs/sdd.md</code> actualizado en §7.1, §7.2 y §7.5 (firmas, <code>turn</code>, <code>semanticCategory</code>, <code>done</code> en el error y etiqueta <code>source</code>). Las entradas de <code>sdd-changes.md</code> quedaron marcadas como aplicadas.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">5</span></td>
             <td class="what" data-l="Punto"><div class="t">Terminar el identificador de turno en la app Android</div><div class="sec-note" style="margin:4px 0 0">Contrato del WebSocket</div></td>
             <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Completarlo.</td>
             <td class="wide" data-l="Qué implica">La app numera cada frase desde 1 en cada conexión, manda ese número en el frame <code>text</code> y descarta las oraciones y el <code>done</code> de un turno viejo. El backend ya lo acepta y lo devuelve; faltaba el lado de la app.</td>
-            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0">Probado en el Redmi Note 9S: <code>SignAiNet</code> muestra <code>segment 0/1 turn=1</code> y luego <code>turn=2</code>. La app numera cada frase y descarta los frames cuyo turno no es el vigente; <code>StaleTurn</code> queda como respaldo si el backend no manda el campo.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">6</span></td>
             <td class="what" data-l="Punto"><div class="t">Enmascarar las direcciones internas en <code>/metrics.json</code></div><div class="sec-note" style="margin:4px 0 0">Decisión del 18/10</div></td>
             <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Enmascararlas.</td>
             <td class="wide" data-l="Qué implica">El endpoint sigue mostrando el esquema y la ruta (<code>ws://***/ws/transcribe</code>), pero no el host ni el puerto. Una captura de pantalla de la demo ya no publica cómo está montada la red interna.</td>
-            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0">Verificado en el backend en marcha: <code>/metrics.json</code> devuelve <code>http://***/v1</code> y <code>ws://***/ws/transcribe</code>, sin host ni puerto. <code>scripts/verify_endpoints.py</code> en verde.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">7</span></td>
@@ -244,35 +244,35 @@ table.list th:nth-child(3) { width: 24%; }
             <td class="what" data-l="Punto"><div class="t">El nombre <code>rt_first_sign_ms</code></div><div class="sec-note" style="margin:4px 0 0">Métrica de latencia</div></td>
             <td data-l="Lo que decidiste"><span class="pill p-good">B</span><br>Dejarlo como está.</td>
             <td class="wide" data-l="Qué implica">No se renombra. La métrica mide hasta que el backend envía la primera oración, no hasta que el avatar se mueve; los dos tramos se documentan por separado y la etiqueta <code>source</code> ya separa caché de modelo. Renombrarla rompería las citas de la línea base.</td>
-            <td data-l="Estado"><span class="pill p-good">Decidido</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0">Documentado en <code>docs/sdd.md</code> §7.5: los dos tramos de RNF-DES-01 y la etiqueta <code>source</code> con <code>cache</code>/<code>llm</code>. El nombre de la métrica no cambió.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">10</span></td>
             <td class="what" data-l="Punto"><div class="t">El estado de salud cuando el catálogo está vacío</div><div class="sec-note" style="margin:4px 0 0">T2 · <code>/health</code></div></td>
             <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Agregar el catálogo al <code>/health</code>.</td>
             <td class="wide" data-l="Qué implica">El endpoint publica <code>catalog_loaded</code>, <code>catalog_glosses</code> y deja de decir <code>status: ok</code> cuando el catálogo está vacío: pasa a <code>degraded</code>. Así una demo no falla en silencio con todas las señas «no disponible».</td>
-            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0">Verificado en el backend en marcha: <code>/health</code> responde <code>ok</code>, <code>catalog_loaded: true</code> y 50 glosas. Con el catálogo vacío responde <code>degraded</code>; lo cubre <code>scripts/verify_endpoints.py</code>.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">11</span></td>
             <td class="what" data-l="Punto"><div class="t">Los tiempos de conexión a la base</div><div class="sec-note" style="margin:4px 0 0">T4 · RNF-REL-03</div></td>
             <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Medir y acotar.</td>
             <td class="wide" data-l="Qué implica">Se mide cuánto tarda abrir una conexión y esperar una libre, y se agregan topes a las dos cosas. El tope de consulta de 5 s ya existía; lo que faltaba era que una base que acepta TCP y no responde no dejara el arranque esperando.</td>
-            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0">Medido con <code>scripts/verify_database_resilience.py</code>: contra un servidor TCP que acepta y no contesta, la conexión se rinde en <b>0,50 s</b>, no en el tiempo del sistema operativo. La espera por una conexión libre también tiene tope de 5 s.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">12</span></td>
             <td class="what" data-l="Punto"><div class="t">Analizadores estáticos en la app Android</div><div class="sec-note" style="margin:4px 0 0">RNF-MNT-03</div></td>
             <td data-l="Lo que decidiste">Dejarlo para el final.</td>
             <td class="wide" data-l="Qué implica">El backend ya tiene ruff y mypy con CI verde. La app no tiene detekt ni ktlint. Se agrega al final si el tiempo alcanza; no se toca ahora para no abrir otro frente.</td>
-            <td data-l="Estado"><span class="pill p-dis">Pendiente</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0"><code>org.jlleitschuh.gradle.ktlint</code> 14.2.0, con <code>./gradlew ktlintCheck</code> dentro de <code>build</code>. Las reglas de formato que chocaban con el estilo del repo quedaron apagadas; las de corrección (imports y variables sin usar, saltos de línea, espacios) quedan activas y el árbol pasa limpio.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">13</span></td>
             <td class="what" data-l="Punto"><div class="t">Medir la caché en memoria</div><div class="sec-note" style="margin:4px 0 0">E1 · <code>semantic_cache</code></div></td>
             <td data-l="Lo que decidiste">Medir antes de decidir.</td>
             <td class="wide" data-l="Qué implica">Se compara el antes y el después con el mismo script y la misma red. No se cambia el código todavía. La caché en memoria ya quita un viaje a Neon de ~100 ms, pero hay dos mediciones que se contradicen y ninguna está publicada.</td>
-            <td data-l="Estado"><span class="pill p-dis">Pendiente</span><br><span class="sec-note" style="margin:4px 0 0">Medición.</span></td>
+            <td data-l="Estado"><span class="pill p-good">Hecho</span><br><span class="sec-note" style="margin:4px 0 0">Medido con <code>scripts/measure_cache_lookup.py</code> (20 rondas, misma frase, 109 filas cargadas, mismo contenedor): <b>p50 10 µs en memoria</b> contra <b>p50 254 ms en Neon</b>. Neon suma 254 ms al p50. La memoria se queda.</span></td>
           </tr>
           <tr>
             <td class="what" data-l="N.º"><span class="n">14</span></td>
@@ -299,6 +299,7 @@ table.list th:nth-child(3) { width: 24%; }
       <div class="panel">
         <h3>Cómo leer el estado</h3>
         <dl>
+          <dt><span class="pill p-good">Hecho</span></dt><dd>El cambio está aplicado y verificado; la evidencia está en la columna de estado.</dd>
           <dt><span class="pill p-good">Decidido</span></dt><dd>La decisión está cerrada; no requiere más trabajo en esta sesión.</dd>
           <dt><span class="pill p-ok">En implementación</span></dt><dd>La decisión está tomada y el cambio se está aplicando. Todavía no se declara terminado hasta compilar y verificar.</dd>
           <dt><span class="pill p-dis">Pendiente</span></dt><dd>La decisión está tomada, pero el trabajo se hace en otra sesión, después de medir, o al final del cronograma.</dd>
