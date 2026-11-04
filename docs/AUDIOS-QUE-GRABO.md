@@ -6,6 +6,35 @@ plan de pruebas. Los otros 40 de AU-01 son de H2, H3 y H4 y están en
 
 Fuente: `../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-0*.md` (v0.1).
 
+## Estado: grabados y organizados
+
+Los 39 **están grabados y organizados**, el 2026-11-03. Quedaron fuera de los repos, en
+`../../data/audios/`, con un archivo por ID y una copia a 16 kHz para el STT:
+
+```text
+data/audios/
+  AU-01/  20 audios   AU-02/  10   AU-03/   8   AU-04/  1
+  16k/    los 39 en WAV mono 16 kHz
+  origen/AudiosTesisJD.zip          el ZIP como llegó
+  MANIFIESTO.md  manifiesto.csv     qué es cada archivo, qué mide y qué se verificó
+```
+
+Cada archivo se identificó **por su contenido**, no por el número: se transcribieron los 39 y
+se comparó el texto contra el que pide el plan para cada código. Los 39 coinciden y los
+cuatro conjuntos quedaron completos. Ese trabajo está en `MANIFIESTO.md`, con la duración, el
+silencio final y la transcripción de cada uno.
+
+**Dos se tienen que regrabar**, porque no van a cerrar como el plan pide:
+
+- `AU-02-007` (archivo `35.m4a`): la pausa interna mide 1,50 s, así que cierra por silencio a
+  los 8,9 s en vez de por el límite de 8 s; y el final no tiene silencio (0,75 s en vez de 3 s).
+- `AU-02-008` (archivo `36.m4a`): el límite de 8 s sí corta, pero el final tiene 1,17 s de
+  silencio en vez de 3 s, así que la segunda mitad espera al mensaje de fin.
+
+Lo que hay que anotar para que el corpus se pueda repetir: **cuál fue el ruido** y a qué
+distancia, **con qué celular** se grabaron los 39 y **en qué cuarto** se grabaron los de
+silencio. Sin el ruido y la distancia, los diez de Julián con ruido no se pueden grabar igual.
+
 Están ordenados **por lugar y condición**, no por código, para no mover el celular ni la
 fuente de ruido entre audios:
 
