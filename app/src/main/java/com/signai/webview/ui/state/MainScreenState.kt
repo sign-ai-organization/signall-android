@@ -32,8 +32,6 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.atomic.AtomicReference
 
 /** Wait for the drawer close animation before replaying a conversation turn (`CNV-6`). */
@@ -195,9 +193,11 @@ class MainScreenState(
             pendingText == null &&
             !dictationPending &&
             sentText == null &&
-            (playbackState == PlaybackState.Inactivo ||
-                playbackState == PlaybackState.Desconectado ||
-                playbackState == PlaybackState.Error)
+            (
+                playbackState == PlaybackState.Inactivo ||
+                    playbackState == PlaybackState.Desconectado ||
+                    playbackState == PlaybackState.Error
+            )
 
     var sign by mutableStateOf(signs.firstOrNull() ?: SignsCatalog.DEFAULT)
         private set
@@ -213,11 +213,11 @@ class MainScreenState(
     private val fallbackSignUrl: String get() = SignsCatalog.assetUrl(sign)
 
     /**
- * The state machine proper: the seven states of the SRS, and nothing else.
- *
- * Everything the interface shows goes through [stateForUi], and [stateLabel] is
- * what the user reads.
- */
+     * The state machine proper: the seven states of the SRS, and nothing else.
+     *
+     * Everything the interface shows goes through [stateForUi], and [stateLabel] is
+     * what the user reads.
+     */
     var playbackState by mutableStateOf(PlaybackState.Inactivo)
         private set
 
@@ -479,6 +479,20 @@ class MainScreenState(
 
     /** Lo que queda de la frase que el usuario canceló. Ver [StaleTurn]. */
     private var staleTurn = StaleTurn.None
+
+    /**
+     * Número de la frase que está en vuelo, o `null` si no hay ninguna.
+     *
+     * Es el identificador que la app le pone a cada `text` y que el backend copia
+     * en los frames de esa frase. Cuando llega un frame con número, se compara
+     * contra este y se descarta si no coincide: es la forma exacta de tirar lo
+     * que sigue llegando de una frase cancelada, sin depender de "tragarse el
+     * primer `done`" como hace [StaleTurn].
+     *
+     * `null` es el caso del backend viejo (o del arreglo legado, que no lleva
+     * número): ahí el filtro cae en [StaleTurn] y se comporta como antes.
+     */
+    private var currentTurn: Int? = null
 
     /**
      * La escena 3D dejó de existir: el navegador perdió su proceso de render, o la
@@ -1038,14 +1052,46 @@ class MainScreenState(
                 }
             }
 
-            is BackendEvent.Segment -> onWholePhraseSegment(event)
+            is BackendEvent.Segment -> {
+                if (belongsToCurrentTurn(event.turn)) onWholePhraseSegment(event)
+                else dropStaleFrame("segment", event.turn)
+            }
 
-            is BackendEvent.PhraseDone -> finishTurn()
+            is BackendEvent.PhraseDone -> {
+                if (belongsToCurrentTurn(event.turn)) finishTurn()
+                else dropStaleFrame("done", event.turn)
+            }
 
-            is BackendEvent.Failure -> fail(event.message)
+            is BackendEvent.Failure -> {
+                if (belongsToCurrentTurn(event.turn)) fail(event.message)
+                else dropStaleFrame("error", event.turn)
+            }
 
             is BackendEvent.Disconnected -> onDisconnected()
         }
+    }
+
+    /**
+     * Si un frame pertenece a la frase que está en vuelo.
+     *
+     * Con número, la comparación es exacta: es lo que descarta lo que sigue
+     * llegando de una frase cancelada sin depender de "tragarse el primer `done`".
+     * Sin número —backend viejo o arreglo legado— no hay nada que comparar, así
+     * que el frame pasa y el descarte queda a cargo de [StaleTurn], como antes.
+     *
+     * Cuando el número coincide, [StaleTurn] se apaga: el descarte por posición ya
+     * no hace falta, y dejarlo prendido haría que el `done` de esta frase se
+     * confundiera con el de la cancelada y cerrara el turno equivocado.
+     */
+    private fun belongsToCurrentTurn(turn: Int?): Boolean {
+        if (turn == null) return true
+        if (turn != currentTurn) return false
+        staleTurn = StaleTurn.None
+        return true
+    }
+
+    private fun dropStaleFrame(kind: String, turn: Int?) {
+        Log.i(TAG, "frame '$kind' del turno $turn descartado (turno en vuelo=$currentTurn)")
     }
 
     /**
@@ -1248,7 +1294,8 @@ class MainScreenState(
      */
     private fun sendLivePhrase(text: String): Boolean {
         if (playbackState == PlaybackState.Procesando || pendingText != null) return false
-        if (!backend.sendText(text)) {
+        val turn = backend.sendText(text)
+        if (turn == null) {
             fail("No hay conexión con el servidor.")
             return false
         }
@@ -1256,6 +1303,7 @@ class MainScreenState(
         isReplay = false
         // Un turno anterior no puede filtrarse a este.
         clearTurnState()
+        currentTurn = turn
         // Si lo que sale es justamente lo que estaba esperando confirmación, ya no
         // está esperando: se mandó.
         //
@@ -1406,7 +1454,8 @@ class MainScreenState(
         // avatar representando la anterior, y la escena reemplaza la cola. Si acá
         // también se rechazara, el botón Traducir se vería habilitado y no haría
         // nada, que es peor que deshabilitarlo.
-        if (!backend.sendText(text)) {
+        val turn = backend.sendText(text)
+        if (turn == null) {
             fail("No hay conexión con el servidor.")
             return
         }
@@ -1429,6 +1478,7 @@ class MainScreenState(
         dictationBuffer = ""
         // Nothing of a previous phrase may survive into this one.
         clearTurnState()
+        currentTurn = turn
         // El SRS mide el "tiempo hasta la primera seña" desde que el texto se manda
         // a traducir (`main.tex:848-852`), que es este momento.
         turnSentAt = SystemClock.elapsedRealtime()
@@ -1475,6 +1525,7 @@ class MainScreenState(
      * aparezcan en la cola del siguiente, así que esto se llama en los dos sitios.
      */
     private fun clearTurnState() {
+        currentTurn = null
         pendingSegments.clear()
         pendingTotal = 0
         flushedThrough = -1
@@ -1572,7 +1623,7 @@ class MainScreenState(
      * "Seña no disponible", y no pasa por acá: lo pone [showMissingSign] porque la
      * tabla lo prescribe en la fila *Reproduciendo*.
      */
-private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
+    private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
         Log.i(TAG, "aviso (no va al indicador): $message")
         if (!BuildConfig.DEV_TOOLS) return
         writeStatusOverride(message, ms)
@@ -1772,6 +1823,12 @@ private fun showStatus(message: String, ms: Long = StatusOverrideMs) {
             releaseLiveBacklog()
             return
         }
+
+        // El turno llegó a su fin. Se suelta el número para que un `done` repetido
+        // —o cualquier frame suyo que llegue tarde— no vuelva a cerrar nada. Va
+        // antes de `releaseLiveBacklog`, que puede mandar la frase siguiente y
+        // poner un número nuevo.
+        currentTurn = null
 
         // Hay oraciones todavía armando cola: el `done` llegó antes de que la escena
         // tuviera la frase. Decidir ahora sería decidir sobre un estado que todavía

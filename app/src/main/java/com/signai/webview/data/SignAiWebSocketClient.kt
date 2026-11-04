@@ -17,6 +17,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import okio.ByteString.Companion.toByteString
 
 /**
@@ -70,6 +71,14 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
     @Volatile
     private var socket: WebSocket? = null
 
+    /**
+     * Number of the next phrase. The contract says it starts at 1 on each
+     * connection, so it is reset when a socket opens; across a reconnection the
+     * numbers start over and that is fine, because the backend treats them as
+     * opaque.
+     */
+    private val nextTurn = AtomicInteger(0)
+
     /** True while there is a live session to talk to. */
     val isConnected: Boolean
         get() = socket != null
@@ -86,6 +95,7 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
                     TAG,
                     "sesión abierta: ${config.url} (${if (config.isEncrypted) "TLS" else "SIN CIFRAR"})",
                 )
+                nextTurn.set(0)
                 trySend(BackendEvent.Connected)
             }
 
@@ -116,16 +126,27 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
     }
 
     /**
-     * Sends the phrase to translate.
+     * Sends the phrase to translate and returns its turn, or `null` when the
+     * socket could not take it.
      *
      * Everything the avatar signs goes through here, whatever produced it: a
      * phrase typed in the field, one the user confirmed from dictation, or one
      * the `TR` switch sent on its own when the phrase closed. The backend only
      * translates what arrives in this frame, which is what keeps RF-STT-03 true.
+     *
+     * The turn is what lets this client drop the frames of a phrase the user
+     * already cancelled: the backend keeps producing them (the protocol has no
+     * "forget that phrase" frame) and, without the identifier, its `done` would
+     * close the next phrase.
      */
-    fun sendText(text: String): Boolean {
-        val payload = JSONObject().put("type", "text").put("text", text).toString()
-        return socket?.send(payload) ?: false
+    fun sendText(text: String): Int? {
+        val turn = nextTurn.incrementAndGet()
+        val payload = JSONObject()
+            .put("type", "text")
+            .put("text", text)
+            .put("turn", turn)
+            .toString()
+        return if (socket?.send(payload) == true) turn else null
     }
 
     /**
@@ -194,19 +215,21 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
                 index = obj.optInt("index"),
                 total = obj.optInt("total"),
                 segment = parseSegment(segment),
+                turn = obj.optTurn(),
             )
             Log.d(
                 TAG,
-                "segment ${event.index}/${event.total} -> " +
+                "segment ${event.index}/${event.total} turn=${event.turn} -> " +
                     event.segment.glosses.joinToString(",") { it.text },
             )
             event
         }
 
-        "done" -> BackendEvent.PhraseDone
+        "done" -> BackendEvent.PhraseDone(turn = obj.optTurn())
 
         "error" -> BackendEvent.Failure(
             message = obj.optString("message").ifBlank { DEFAULT_ERROR },
+            turn = obj.optTurn(),
         )
 
         // `trace` / `sentence_trace` are the debug-only pipeline timings. Ignoring
@@ -215,6 +238,16 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
         // expects, which is now simply not sent and, if it arrives, not read.
         else -> null
     }
+
+    /**
+     * The turn the backend echoed, or `null` when the frame has none.
+     *
+     * Read as a number on purpose: the app always sends an integer and the
+     * backend copies it untouched, so a string there is not a turn this client
+     * produced. Returning `null` makes the app use its own stale-turn
+     * bookkeeping instead of comparing against something it cannot match.
+     */
+    private fun JSONObject.optTurn(): Int? = (opt("turn") as? Number)?.toInt()
 
     private fun parseSegment(segment: JSONObject): TranslationSegment {
         val glossArray = segment.optJSONArray("glosses") ?: JSONArray()
