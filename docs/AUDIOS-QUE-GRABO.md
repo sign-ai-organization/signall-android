@@ -44,9 +44,21 @@ Con eso, los 39 del owner están completos y verificados, y los 40 de los compa�
 los 79 audios del plan están grabados. El detalle de los 40 está en
 [`AUDIOS-QUE-GRABAN-ELLOS.md`](AUDIOS-QUE-GRABAN-ELLOS.md).
 
-Lo que hay que anotar para que el corpus se pueda repetir: **cuál fue el ruido** y a qué
-distancia, **con qué celular** se grabaron los 39 y **en qué cuarto** se grabaron los de
-silencio.
+## Cómo se grabaron
+
+Datos que informó el owner el 2026-11-03:
+
+| Dato | Valor |
+|---|---|
+| Celular | **iPhone 14 Pro Max** |
+| Distancia del celular a la boca | **10 cm** (por confirmar: dijo «unos 1 centímetros» y después que era la misma distancia que la de la fuente de ruido) |
+| Distancia a la fuente de ruido | **10 cm**; el audio «más cerca» (`AU-03-004`) a **5 cm**, la mitad |
+| Ruido | Un **video de ruido estudiantil reproducido desde un iPad**, a 10 cm del celular |
+| Cuarto | Su cuarto, en silencio |
+
+Lo medido encaja con esos números: el audio a 5 cm tiene unos 8 dB más de ruido que el de 10 cm,
+que es lo que corresponde al acercar la fuente a la mitad de la distancia. El piso de los audios
+de silencio es −57 a −58 dB, el más bajo del corpus después de los de Samuel.
 
 Están ordenados **por lugar y condición**, no por código, para no mover el celular ni la
 fuente de ruido entre audios:
