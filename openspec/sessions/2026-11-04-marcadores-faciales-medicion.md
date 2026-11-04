@@ -1,0 +1,84 @@
+# Marcadores faciales: medición de las variantes, recorrido del tipo y propuesta
+
+**Fecha:** 2026-11-04, tarde · **Rama:** `main`
+
+## Qué llegó
+
+Orden 8 de [`docs/PLAN-SEMANA-13.md`](../../docs/PLAN-SEMANA-13.md): pavimentar el terreno
+de los marcadores faciales **sin activarlos**. El owner fijó ese día que los marcadores son
+**gramaticales, no emocionales**: la clasificación de alegría/tristeza/sorpresa se intentó y
+no se logró, y el backend no manda ninguna señal emocional. Queda descartada la opción B y
+se trabaja la A (tabla tipo gramatical → variante).
+
+## Qué se hizo
+
+- **Medidor nuevo:** `tools/measure_face_markers.py`. Lee los morph targets de
+  `app/src/main/assets/web/models/juan.glb` y `pauline.glb`, calcula el alcance geométrico
+  de cada target (mm a peso 1), samplea los canales `weights` de los 300 clips y compara
+  cada variante contra el clip base de su seña en tiempo normalizado. Soporta accessors
+  `sparse`, que `glb_pose.read_accessor` no lee porque el empaquetado no los necesita.
+- **Resultado completo:** [`docs/mediciones/marcadores-2026-11-04.md`](../../docs/mediciones/marcadores-2026-11-04.md)
+  con tablas por variante, por par de variantes y por seña para los dos avatares, más el
+  JSON con el resumen por seña al lado. No se renderizó: la medición es geométrica.
+- **Recorrido del tipo verificado**, sin cambios de contrato:
+  `PhraseType` (`../sign-ai-backend/app/domain/models.py:6`) → `analyze(sentence)`
+  (`app/nlp/gloss_analyzer.py:78`) → `Segment(type=...)` (`app/nlp/nlp_service_impl.py:87`)
+  → frame `segment` con `index`/`total` (`app/controller/controller.py:289`) → parser
+  (`data/SignAiWebSocketClient.kt:252`) → `SignQueueItem.type`
+  (`ui/state/MainScreenState.kt:949`) → JSON del puente
+  (`ui/webview/SignAiWebViewController.kt:110`) → `state.currentType`
+  (`app.js:830`), que hoy solo aparece en el diagnóstico.
+- **Propuesta de tabla tipo → variante** y **lista exacta de cambios** para activarlos, en
+  [`docs/PLAN-AVATARES-Y-MARCADORES.md`](../../docs/PLAN-AVATARES-Y-MARCADORES.md). La tabla
+  **no se escribió** en `../sign-ai-docs/.../pruebas.md`: la decisión es del owner.
+- El plan se puso al día: DOC-5 y DOC-6 actualizados, DOC-9 nuevo, registro de cambios con
+  la fila del 2026-11-04. Se corrigió el nombre del inventario a `models/avatars.json`
+  (los documentos decían `avatares.json`; el archivo y el script siempre dijeron
+  `avatars.json`).
+
+## Qué se decidió
+
+- **Opción A**, por decisión del owner del 2026-11-04. La B queda descartada. La C se toma
+  como corte mínimo dentro de la A: activar solo las filas medidas.
+- **No se implementó la función.** No se tocaron `embeddedClipsFor`, `pickVariant` ni
+  `loadQueueItem`. Los marcadores siguen apagados.
+- **Backend: nada.** El tipo ya viaja por oración; no hace falta frame, campo ni métrica
+  nueva para la opción A.
+- **No se tocó Overleaf ni `../sign-ai-backend`.**
+
+## Qué se midió
+
+Todo sobre los GLB **empaquetados** de la app (2026-10-27), con
+`tools/measure_face_markers.py`, el 2026-11-04. Δ = desplazamiento facial que agrega la
+variante sobre el clip base de la misma seña, mediana de las 50 señas (las 50 dieron
+idénticas).
+
+- **Δ pico:** `_alegria` 7,28 mm · `_tristeza` 6,24 · `_sorpresa` 7,07 · `_pregunta` 8,31 ·
+  `_negacion` 3,66. Con el encuadre por defecto (1 mm ≈ 1,26 px) son 9,2 / 7,9 / 8,9 / 10,5 /
+  4,6 px. Ninguna queda por debajo de 1 mm.
+- **Cara idéntica en las 50 señas:** la matriz de pesos de `0049_<variante>` es exactamente
+  la de `0000_<variante>` para las cinco.
+- **Pose fija:** el rango de peso a lo largo del clip es 0,00 mm en las cinco; lo único que
+  se mueve durante la seña es el parpadeo, que ya está en el base.
+- **Solo cara:** los 250 clips variantes tienen los mismos canales de hueso y los mismos
+  valores que su base (tolerancia 0,01° / 0,01 mm). No agregan cabeza, tronco ni manos.
+- **Distinción:** el par más parecido es `_sorpresa`–`_pregunta` (2,89 mm de pico, 0,86 mm
+  de RMS; comparten la subida de cejas y difieren en la boca). El segundo es
+  `_tristeza`–`_negacion` (1,07 mm de RMS). Los demás pares superan 1,6 mm de RMS.
+- **Alcance de la malla de ojos:** Juan 9,44 mm, Pauline 7,90 mm; la malla de la cara mide
+  15,76 mm en los dos. No cambia las cifras de la tabla.
+
+## Qué quedó pendiente
+
+- **Validación LSC** de las dos filas abiertas: pregunta de contenido y orden. La propuesta
+  deja esas dos con el clip base hasta que alguien que sepa LSC defina la cara.
+- **Escribir la tabla aprobada en PR-AVT-05** (`../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`),
+  que hoy tiene un TODO y pide para la negación un movimiento de cabeza que la variante no
+  aporta. Lo hace el owner.
+- **Implementar** `embeddedClipsFor` + `pickVariant` en `app.js` cuando la tabla esté
+  aprobada. Ojo: hay que separar «toma» (`id.<n>`) de «variante» (`id_<sufijo>`) o el
+  resolutor elegiría una cara al azar.
+- **`AGENTS.md` y otros documentos siguen diciendo `models/avatares.json`**; el archivo real
+  es `models/avatars.json`. No se tocó `AGENTS.md` en esta sesión.
+- **Cabeza de la negación:** si el validador LSC la pide, es una tanda nueva en
+  `../signai-avatar` (Cascadeur), no un cambio de la app.
