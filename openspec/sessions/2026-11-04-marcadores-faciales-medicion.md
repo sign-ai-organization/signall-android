@@ -125,3 +125,33 @@ Con el mock y `adb reverse tcp:8080 tcp:8080`, build `debug` apuntando a
 
 Pendiente y sin cambios: la validación LSC de pregunta de contenido y orden, la escritura de
 la tabla en PR-AVT-05 y el movimiento de cabeza de la negación.
+
+### Verificación con el backend real (misma sesión)
+
+El owner pidió dejar el backend real preparado, sin mock. Se levantaron los dos servicios:
+
+- **Backend**: `docker compose -f docker-compose.yml -f docker-compose.host.yml up -d --build backend`.
+  Con la red de compose, Neon daba `TimeoutError` al crear el pool (la resolución devuelve IPv6 y
+  el contenedor se queda esperando); con la red del host conecta. `/health` respondió con
+  `catalog_glosses: 50` y 109 filas de caché.
+- **STT**: `docker compose up -d --build` en `../sign-ai-stt`. La imagen vieja fallaba al
+  arrancar con `NameError: REALTIME` (código anterior al commit actual); el rebuild cargó el
+  modelo `medium` en CUDA y `/health` respondió `device: cuda`.
+
+Con los dos arriba, frases reales por el WebSocket y por la app (Redmi Note 9S, build `debug`
+con `adb reverse tcp:8080 tcp:8080`):
+
+| Frase | Tipo del backend | Glosas | Clip en la escena |
+|---|---|---|---|
+| `No quiero ir a la universidad.` | `NEGATIVE` | YO, NUNCA | `0038_negacion`, `0037_negacion` |
+| `¿Tú comes?` | `YES_NO_QUESTION` | TU, COMER | `0039_pregunta`, `0007_pregunta` |
+| `Yo como.` | `AFFIRMATIVE` | YO, COMER | `0038`, `0007` (base) |
+| `¿Cómo estás?` | `CONTENT_QUESTION` | COMO ESTAS | base (fila abierta) |
+
+El overlay mostró `tipo: NEGATIVE  cara: negacion`, `tipo: YES_NO_QUESTION  cara: pregunta` y
+`tipo: AFFIRMATIVE  cara: base`. El backend real no manda el tipo por ninguna otra vía ni
+cambió el contrato.
+
+Ojo al probar: solo se ve una seña si sus glosas están en LSC50. «¿Vienes mañana?» produce
+VIENES y MANANA, que no están en el catálogo, y la app las saltea sin error (no hay clip que
+representar). Para la cara conviene usar frases con glosas del catálogo, como las de la tabla.
