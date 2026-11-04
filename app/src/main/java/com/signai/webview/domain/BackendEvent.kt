@@ -49,17 +49,33 @@ sealed interface BackendEvent {
      * app collects all of them and signs the phrase as one queue, so a sentence
      * that needs an extra LLM round trip cannot leave the avatar signing half a
      * phrase.
+     *
+     * [turn] is the identifier the app put on the phrase (see
+     * `SignAiWebSocketClient.sendText`); it comes back untouched. `null` means
+     * the backend did not echo one, either because it is an older backend or
+     * because this is a legacy array frame, and then the app falls back to its
+     * own stale-turn bookkeeping.
      */
     data class Segment(
         val index: Int,
         val total: Int,
         val segment: TranslationSegment,
+        val turn: Int? = null,
     ) : BackendEvent
 
-    /** End of the phrase: every sentence has been sent. */
-    data object PhraseDone : BackendEvent
+    /**
+     * End of the phrase: every sentence has been sent, whether it worked or not.
+     *
+     * [turn] identifies which phrase closed. Without it the app cannot tell the
+     * `done` of a phrase it cancelled from the `done` of the phrase it sent
+     * next.
+     */
+    data class PhraseDone(val turn: Int? = null) : BackendEvent
 
-    data class Failure(val message: String) : BackendEvent
+    data class Failure(
+        val message: String,
+        val turn: Int? = null,
+    ) : BackendEvent
 
     data object Disconnected : BackendEvent
 }
