@@ -259,24 +259,25 @@ fun AvatarWebView(
                                     // los tres tramos (Android -> escena, escena ->
                                     // primer fotograma, escena -> Kotlin) se puedan
                                     // leer por separado en logcat.
-                                    else -> data
-                                        ?.takeIf { it.startsWith(SignStartPrefix) }
-                                        ?.removePrefix(SignStartPrefix)
-                                        ?.split(":")
-                                        ?.let { parts ->
-                                            onSignStart(
-                                                parts.getOrNull(0)?.toIntOrNull() ?: 0,
-                                                parts.getOrNull(1)?.toLongOrNull() ?: 0L,
-                                            )
-                                        }
-                                        // Mismo camino, mensaje nuevo: la escena se
-                                        // saltó una seña y sigue con la frase. Sin
-                                        // esto el salto era invisible desde Kotlin.
-                                        ?: data
-                                            ?.takeIf { it.startsWith(SignFailedPrefix) }
-                                            ?.removePrefix(SignFailedPrefix)
-                                            ?.toIntOrNull()
-                                            ?.let(onSignFailed)
+                                    else ->
+                                        data
+                                            ?.takeIf { it.startsWith(SignStartPrefix) }
+                                            ?.removePrefix(SignStartPrefix)
+                                            ?.split(":")
+                                            ?.let { parts ->
+                                                onSignStart(
+                                                    parts.getOrNull(0)?.toIntOrNull() ?: 0,
+                                                    parts.getOrNull(1)?.toLongOrNull() ?: 0L,
+                                                )
+                                            }
+                                            // Mismo camino, mensaje nuevo: la escena se
+                                            // saltó una seña y sigue con la frase. Sin
+                                            // esto el salto era invisible desde Kotlin.
+                                            ?: data
+                                                ?.takeIf { it.startsWith(SignFailedPrefix) }
+                                                ?.removePrefix(SignFailedPrefix)
+                                                ?.toIntOrNull()
+                                                ?.let(onSignFailed)
                                 }
                             }
                         },

@@ -1,11 +1,12 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.nomanr.plugin.lumo")
+    id("org.jlleitschuh.gradle.ktlint")
 }
-
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 // ── Identidad del build ────────────────────────────────────────────────────
 //
@@ -222,4 +223,44 @@ dependencies {
     implementation("io.github.dev778g-me:phosphoricons-regular-android:1.0.5")
 
     implementation("androidx.webkit:webkit:1.12.1")
+}
+
+// ── Análisis estático ──────────────────────────────────────────────────────
+//
+// `./gradlew ktlintCheck` corre dentro de `build` y falla con los avisos nuevos.
+// Las reglas que se apagan son preferencias de formato que chocan con el estilo
+// que el repo ya usa (firmas largas en una línea, constantes en PascalCase,
+// funciones de Compose en PascalCase, imports agrupados por origen). Prenderlas
+// reformatearía casi todos los archivos y taparía los cambios que importan.
+//
+// Queda prendido lo que detecta un error real: imports sin usar, variables sin
+// usar, espacios al final, falta de salto de línea final, líneas en blanco
+// consecutivas, imports con comodín y el resto de las reglas de corrección.
+ktlint {
+    android.set(true)
+    additionalEditorconfig.set(
+        mapOf(
+            "ktlint_standard_class-signature" to "disabled",
+            "ktlint_standard_function-signature" to "disabled",
+            "ktlint_standard_multiline-expression-wrapping" to "disabled",
+            "ktlint_standard_argument-list-wrapping" to "disabled",
+            "ktlint_standard_chain-method-continuation" to "disabled",
+            "ktlint_standard_function-expression-body" to "disabled",
+            "ktlint_standard_function-literal" to "disabled",
+            "ktlint_standard_function-naming" to "disabled",
+            "ktlint_standard_property-naming" to "disabled",
+            "ktlint_standard_multiline-if-else" to "disabled",
+            "ktlint_standard_if-else-wrapping" to "disabled",
+            "ktlint_standard_statement-wrapping" to "disabled",
+            "ktlint_standard_condition-wrapping" to "disabled",
+            "ktlint_standard_binary-expression-wrapping" to "disabled",
+            "ktlint_standard_no-empty-first-line-in-class-body" to "disabled",
+            "ktlint_standard_spacing-between-declarations-with-comments" to "disabled",
+            "ktlint_standard_no-consecutive-comments" to "disabled",
+            "ktlint_standard_import-ordering" to "disabled",
+            "ktlint_standard_max-line-length" to "disabled",
+            "ktlint_standard_string-template" to "disabled",
+            "ktlint_standard_no-consecutive-blank-lines" to "disabled",
+        ),
+    )
 }

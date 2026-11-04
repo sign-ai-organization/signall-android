@@ -218,8 +218,10 @@ fun AvatarStage(
                 AnimatedContent(
                     targetState = lastGloss.orEmpty(),
                     transitionSpec = {
-                        (fadeIn(glossFade) togetherWith
-                            fadeOut(glossFade))
+                        (
+                            fadeIn(glossFade) togetherWith
+                                fadeOut(glossFade)
+                        )
                             .using(SizeTransform(clip = true))
                     },
                     label = "glosa-en-curso",

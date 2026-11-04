@@ -4,7 +4,7 @@ import android.util.Log
 import java.util.concurrent.atomic.AtomicLong
 
 /**
-     * Latency numbers only the device can produce.
+ * Latency numbers only the device can produce.
  *
  * The backend and the STT each measure their own leg (`/metrics` on both), and
  * between them they know everything except what happens after the message lands

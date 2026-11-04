@@ -67,7 +67,7 @@ object SignsCatalog {
      * touching the network. A path that matches a sign in [available] is
      * accepted; anything else is refused and the caller treats it as "download
      * it instead".
-    */
+     */
     fun localAssetOrNull(path: String): String? {
         val clean = path.trim()
         if (!clean.startsWith("signs/") || clean.contains("..") || clean.contains("//")) return null
