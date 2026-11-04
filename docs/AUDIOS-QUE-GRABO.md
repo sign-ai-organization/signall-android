@@ -24,12 +24,24 @@ se comparó el texto contra el que pide el plan para cada código. Los 39 coinci
 cuatro conjuntos quedaron completos. Ese trabajo está en `MANIFIESTO.md`, con la duración, el
 silencio final y la transcripción de cada uno.
 
-**Dos se tienen que regrabar**, porque no van a cerrar como el plan pide:
+**Dos se regrabaron y ya están verificados**, el mismo 2026-11-03, con la segunda entrega
+(`new.zip`):
 
-- `AU-02-007` (archivo `35.m4a`): la pausa interna mide 1,50 s, así que cierra por silencio a
-  los 8,9 s en vez de por el límite de 8 s; y el final no tiene silencio (0,75 s en vez de 3 s).
-- `AU-02-008` (archivo `36.m4a`): el límite de 8 s sí corta, pero el final tiene 1,17 s de
-  silencio en vez de 3 s, así que la segunda mitad espera al mensaje de fin.
+- `AU-02-007` (`35.m4a`): tenía la pausa interna en 1,50 s y cerraba por silencio a los 8,9 s
+  en vez de por el límite de 8 s. La toma nueva tiene 3,7 s de silencio al final y corta a
+  los 8 s dentro de una pausa.
+- `AU-02-008` (`36.m4a`): le faltaba el silencio al final (1,17 s). La toma nueva tiene 4,6 s
+  y corta a los 8 s dentro de una pausa.
+
+Los diez de AU-02 cierran ahora como el plan pide.
+
+**Falta decidir el audio de habla continua** (`Habla Continua.m4a`, AU-04). Las 20 frases
+están, en orden y una sola vez, pero con el VAD del servicio salen **17 pausas de 1,5 s o
+más, no 19**: dos quedan cortadas por la respiración y una mide 1,2 s. PR-RES-06 mide
+«frases enviadas y traducidas», así que de ese audio saldrían 17 o 18 frases en vez de 20 y
+la prueba leería una pérdida que en realidad es del audio. Se regraba en una toma de ~83 s
+con las pausas más largas (3 s) y respirando al final de cada pausa, pegado a la frase
+siguiente.
 
 Lo que hay que anotar para que el corpus se pueda repetir: **cuál fue el ruido** y a qué
 distancia, **con qué celular** se grabaron los 39 y **en qué cuarto** se grabaron los de

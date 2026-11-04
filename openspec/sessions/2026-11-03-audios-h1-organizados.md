@@ -79,3 +79,19 @@ pcm = w.readframes(w.getnframes())
 print(sum(v.is_speech(pcm[i:i+1920], 16000) for i in range(0, len(pcm)-1920, 1920)))
 "
 ```
+
+## Segunda entrega: los dos regrabados
+
+El owner regrabó los dos que fallaban y los pasó en `new.zip` (`8608ed01…ac939e1`, guardado
+en `origen/new-2026-11-03.zip`). Verificados con la misma vara, se reemplazaron en el corpus
+y se regeneraron el `.wav` de 16 kHz, el sha256, `MANIFIESTO.md` y `manifiesto.csv`:
+
+| Archivo | Primera toma | Toma nueva |
+|---|---|---|
+| `35.m4a` (AU-02-007) | pausa interna de 1,50 s → cerraba por silencio a los 8,9 s; 0,75 s de silencio al final | corta a los 8 s en una pausa de 0,48 s; **3,7 s** de silencio al final |
+| `36.m4a` (AU-02-008) | 1,17 s de silencio al final | corta a los 8 s en una pausa de 0,87 s; **4,6 s** de silencio al final |
+
+Los diez de AU-02 cierran ahora como el plan pide. Queda un solo audio en discusión, el de
+habla continua (AU-04): con el VAD del servicio da **17 pausas de 1,5 s o más de las 19 que
+pide el plan**, así que PR-RES-06 leería 17 o 18 frases en vez de 20 y parecería una pérdida.
+Se regraba en una toma de ~83 s con pausas de 3 s y la respiración al final de cada pausa.
