@@ -119,6 +119,10 @@ GLOSS_SYSTEM_PROMPT = (
 # Glosas fijas, para que la prueba sea estable y no dependa del modelo.
 FIXED_GLOSSES = ["YO", "UNIVERSIDAD", "IR"]
 
+# Tipo de oración que se anuncia en el segmento. Puesto por `--type`; sirve para
+# probar los marcadores faciales, que se eligen por tipo (RF-AVT-03).
+FORCED_TYPE = "AFFIRMATIVE"
+
 # Si la frase contiene esta palabra se responde con un error, para probar el
 # camino de fallo del cliente.
 FAIL_WITH = "FALLA"
@@ -222,7 +226,7 @@ def build_result(text: str) -> list[dict]:
                 ),
             }
         )
-    return [{"type": "AFFIRMATIVE", "glosses": entries}]
+    return [{"type": FORCED_TYPE, "glosses": entries}]
 
 
 def handle_http(connection, request) -> Response | None:
@@ -387,9 +391,11 @@ async def handle_session(websocket) -> None:
                 )
                 continue
 
-            await websocket.send(
-                json.dumps({"type": "transcript", "text": text, "final": True})
-            )
+            # El eco de `text` como `transcript` **no** existe en el backend real:
+            # un `text` es una frase a traducir, no voz. Cuando el mock lo hacía,
+            # el modo en vivo la tomaba por una frase hablada y la reenviaba: el
+            # mismo bucle que quemó el proceso con el backend viejo (~2.900
+            # repeticiones). El `transcript` sale solo del camino de audio.
             await send_translation(websocket, loop, text)
     except websockets.exceptions.ConnectionClosed:
         # Normal: the app dropped the session, it reconnects on its own.
@@ -397,7 +403,10 @@ async def handle_session(websocket) -> None:
 
 
 async def main() -> None:
-    if not available_signs():
+    # En modo local no hace falta ningún archivo: `signs/<id>.glb` es el
+    # identificador del contrato y la app resuelve el clip dentro del avatar
+    # empaquetado (`embeddedClipsFor`). Solo el modo remoto sirve archivos.
+    if not ASSETS_LOCAL and not available_signs():
         sys.exit(
             f"No hay señas horneadas en {SIGNS_DIR}.\n"
             "Generá las con:  python3 tools/split_signs.py"
@@ -418,12 +427,10 @@ async def main() -> None:
             print(f"[mock] STT local: {local_stt.engine_name()}")
         else:
             print("[mock] STT apagado: el audio se ignora (--stt para transcribirlo)")
-        print(f"[mock] {len(available_signs())} animaciones servidas desde {SIGNS_DIR.name}/")
-        print(
-            "[mock] rutas: signs/ (local, dentro del APK)"
-            if ASSETS_LOCAL
-            else "[mock] rutas: /static/ (remoto, la app las descarga)"
-        )
+        if ASSETS_LOCAL:
+            print("[mock] rutas: signs/<id>.glb (el clip vive dentro del avatar)")
+        else:
+            print(f"[mock] {len(available_signs())} animaciones desde {SIGNS_DIR.name}/")
         print("[mock] Ctrl+C para salir")
         await asyncio.Future()
 
@@ -435,6 +442,8 @@ if __name__ == "__main__":
         USE_STT = True
     if "--assets-remote" in sys.argv:
         ASSETS_LOCAL = False
+    if "--type" in sys.argv:
+        FORCED_TYPE = sys.argv[sys.argv.index("--type") + 1].strip().upper()
     if "--glosses" in sys.argv:
         FIXED_GLOSSES = [
             g.strip() for g in sys.argv[sys.argv.index("--glosses") + 1].split(",") if g.strip()

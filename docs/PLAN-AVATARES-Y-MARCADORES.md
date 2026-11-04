@@ -10,16 +10,15 @@
 
 **Estado:** **implementado el 2026-10-26** el selector funcional con los dos avatares y el
 empaquetado de los GLB; **regenerados el 2026-10-27** con la versión de los avatares que
-tiene la cadera centrada. Los marcadores faciales **no están activados**. El 2026-11-04 el
-owner fijó el enfoque **A** (tabla tipo gramatical → variante), descartó la clasificación
-emocional (**B**) y esta sesión **midió** las cinco variantes, documentó el recorrido del
-tipo y dejó la propuesta de tabla y la lista de cambios, sin implementar la función. Ver
-«Medición y propuesta de marcadores (2026-11-04)».
+tiene la cadera centrada. El 2026-11-04 el owner fijó el enfoque **A** (tabla tipo
+gramatical → variante), descartó la clasificación emocional (**B**), se midieron las cinco
+variantes y **se activaron las tres filas medidas**: afirmación → base, pregunta sí/no →
+`_pregunta`, negación → `_negacion`. Pregunta de contenido y orden siguen en el base hasta
+la validación LSC. Ver «Medición y propuesta de marcadores (2026-11-04)».
 **Fecha:** 2026-10-24 (investigación y plan) · 2026-10-26 (implementación) · 2026-11-04
-(medición de variantes y propuesta)
-**Alcance pedido:** usar Juan y Pauline desde el selector existente. Las animaciones
-faciales siguen investigadas en este documento pero **no se implementan**: el owner pidió
-el 2026-10-26 «solo mostramos las señas como lo estamos mostrando ahora».
+(medición de variantes e implementación del mapeo)
+**Alcance pedido:** usar Juan y Pauline desde el selector existente. Desde el 2026-11-04 se
+representan también los marcadores faciales de los tipos validados por medición.
 
 ## Resultado de la implementación (2026-10-26)
 
@@ -251,26 +250,32 @@ Dos advertencias que salen de la medición y afectan la tabla:
   tendría que venir en el clip de la seña o en un trabajo nuevo de Cascadeur), o el criterio
   va a fallar por una razón que no es la cara.
 
-### Cambios que haría falta para activarlos (no implementados)
+### Cómo quedaron activados (implementado el 2026-11-04)
 
-**App (`sign-ai-android`).** El punto único es `embeddedClipsFor` (`app.js:384`), que hoy
-descarta los sufijos con guion bajo a propósito, más el resolutor de variantes:
+**App (`sign-ai-android`).** Se implementó el mínimo de la opción A **sin tocar los
+assets ni el backend**, y se verificó en el Redmi Note 9S con el mock:
 
-1. `embeddedClipsFor`: reconocer los seis nombres de cada seña (`0000` y
-   `0000_alegria`/`_tristeza`/`_sorpresa`/`_pregunta`/`_negacion`) y devolverlos separados.
-   **No mezclar tomas con variantes**: hoy `pickVariant` (`app.js:802`) elige al azar entre
-   los clips con sufijo `.001`; si las variantes faciales entran a la misma lista, el
-   resolutor elegiría una cara al azar. Hay que distinguir «toma» (`id.<n>`) de «variante»
-   (`id_<sufijo>`).
-2. `pickVariant(clips, type)`: aplicar la tabla aprobada; si falta la variante, usar el base
-   y registrarlo. Mantener el azar solo entre tomas del mismo tipo de clip.
-3. `loadQueueItem` (`app.js:830`): pasar `item.type` a `pickVariant`. No hay cambio de
-   contrato: el tipo ya está en el ítem.
-4. Diagnóstico: agregar a la línea `tipo:` del overlay qué variante se eligió. Es lo que
-   PR-AVT-05 necesita como evidencia, y hoy no se puede leer.
-5. Caché: `signCache` sigue por URL y devuelve todos los clips; la selección ocurre después.
-   No hay que tocarla **si** se respeta el punto 1. Si se cacheara la variante elegida por
-   URL, dos oraciones con el mismo signo y distinto tipo se pisarían.
+1. `embeddedClipsFor` (`app.js`) devuelve `{ clips, variants }`: `clips` son las tomas
+   (`0000`, `0000.001`, …) y `variants` es un `Map` sufijo → clip con las cinco caras.
+   Separarlos es lo que evita que el sorteo de tomas elija una cara.
+2. `pickVariant(clips, variants, type)` aplica `FACE_VARIANT_BY_TYPE`; si la variante
+   pedida no existe, usa el base. El azar quedó solo entre tomas.
+3. `loadQueueItem` pasa `item.type` a `pickVariant` y `state.currentType` sigue siendo el
+   tipo del `segment`. No hubo cambio de contrato.
+4. El overlay de diagnóstico muestra `cara:` junto a `tipo:` (`tipo: NEGATIVE  cara:
+   negacion`). Es la evidencia que falta para PR-AVT-05.
+5. `signCache` sigue por URL y devuelve todas las tomas y variantes; la selección ocurre
+   después, así que dos oraciones con el mismo signo y distinto tipo no se pisan.
+
+La tabla implementada, literal a la propuesta medida:
+
+| Tipo | Variante | Estado |
+|---|---|---|
+| `AFFIRMATIVE` | base | medido |
+| `YES_NO_QUESTION` | `_pregunta` | medido |
+| `NEGATIVE` | `_negacion` | medido (cara; sin cabeza) |
+| `CONTENT_QUESTION` | base | pendiente de validación LSC |
+| `IMPERATIVE` | base | pendiente de validación LSC |
 
 **Backend (`sign-ai-backend`).** **Nada.** El tipo ya viaja por oración, con `index`/`total`
 reales y sin campo emocional. No hace falta tocar frames, métricas ni catálogo. Solo habría
@@ -280,10 +285,14 @@ trabajo si se retomara la opción B, que el owner descartó.
 el validador LSC pide caras distintas por seña (hoy la misma cara se repite en las 50) o
 movimiento de cabeza para la negación; eso es una tanda nueva de Cascadeur.
 
-**Documentos.** Escribir la tabla aprobada en PR-AVT-05
-(`../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`), que hoy tiene una
-tabla con TODO y una expectativa de cabeza que la variante no cumple. Eso lo decide y lo
-pega el owner. En Overleaf no se tocó nada en esta sesión.
+**Documentos.** La tabla aprobada va en PR-AVT-05
+(`../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`), que todavía tiene
+un TODO y una expectativa de cabeza que la variante no cumple. Eso lo decide y lo pega el
+owner. En Overleaf no se tocó nada.
+
+**Herramientas.** `tools/mock_backend.py` acepta `--type <TIPO>` para probar cada fila sin
+el backend real, y ya no devuelve el eco de `text` como `transcript` (el backend real no lo
+hace y el eco disparaba el bucle del modo en vivo).
 
 ## Resumen de lo encontrado
 
@@ -324,8 +333,8 @@ Esta tabla registra cómo se relacionan el código, los assets, los requisitos, 
 | DOC-2 | Overleaf SDD, `main.tex`, versión 212; consultada 2026-10-24 | Describe 50 archivos GLB en la app y deja pendiente documentar avatares, señas y archivos faciales. | Dos archivos recibidos; cada uno contiene 50 señas y 300 clips. El owner eligió empaquetarlos como un GLB completo por avatar. | **Divergencia; dirección resuelta por el owner.** | Actualizar la descripción de assets del SDD para reflejar dos GLB completos. Solo el owner edita Overleaf. |
 | DOC-3 | `../sign-ai-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`, 2026-10-21, RF-AVT-03 | El alcance actual del requisito es mover las cejas según el tipo de oración. | El owner decidió usar expresiones de todo el rostro disponibles en los GLB. | **Divergencia; dirección resuelta por el owner.** | Proponer al owner ampliar RF-AVT-03 y alinear la documentación consolidada antes de implementar. El agente no edita el documento de requisitos. |
 | DOC-4 | Overleaf SRS, `main.tex`, versión 524; consultada 2026-10-24 | El resumen pide marcadores faciales según el tipo de frase y el ajuste Personaje selecciona el personaje. No fija clips ni una tabla de expresiones. | El owner eligió Juan/Pauline y rostro completo; falta el mapeo tipo→variante. | **Compatible en el objetivo general; detalle abierto.** | Mantener la decisión de mapeo pendiente y reflejarla en la tabla aprobada de PR-AVT-05. Overleaf sigue siendo de solo lectura para el agente. |
-| DOC-5 | `../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`, PR-AVT-05 | Hace falta una tabla de expresiones esperadas por los cinco tipos gramaticales; la tabla se escribe antes de la ronda. | El 2026-11-04 hay una **propuesta** de tabla medida (ver «Propuesta de tabla tipo → variante» en este plan): afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`; pregunta de contenido y orden quedan abiertas a validación LSC. | **Propuesta lista; falta la validación y la escritura en PR-AVT-05.** La tabla actual de PR-AVT-05 sigue con TODO y pide para la negación un movimiento de cabeza que la variante no aporta. | El owner decide y pega la tabla en PR-AVT-05 antes de correr la prueba. No se editó `pruebas.md` en esta sesión. |
-| DOC-6 | Backend, commit `c8aa516` (2026-11-04); `PhraseType`, `GlossAnalyzer`, contrato WS | Entrega un tipo gramatical entre cinco; **el tipo se calcula por oración**, no por frase. No clasifica emociones. `secondary_signals` es de colisiones gramaticales y no viaja en `segment`. | El recorrido completo está verificado: el tipo llega en cada `segment`, se guarda por ítem de cola y está disponible en `app.js` al elegir el clip (`state.currentType`), donde hoy solo se usa en el diagnóstico. | **Opción B descartada por el owner (2026-11-04); se trabaja la A.** No hace falta cambiar el contrato: el dato ya está donde se necesita. | Implementar la tabla aprobada solo en `app.js` (`embeddedClipsFor` + `pickVariant`). Backend: nada. |
+| DOC-5 | `../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`, PR-AVT-05 | Hace falta una tabla de expresiones esperadas por los cinco tipos gramaticales; la tabla se escribe antes de la ronda. | El 2026-11-04 hay una **propuesta** de tabla medida (ver «Propuesta de tabla tipo → variante» en este plan): afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`; pregunta de contenido y orden quedan abiertas a validación LSC. | **Implementada en la app el 2026-11-04** para las tres filas medidas; verificado en el Redmi Note 9S. La tabla de PR-AVT-05 sigue con TODO y pide para la negación un movimiento de cabeza que la variante no aporta. | El owner valida las dos filas abiertas y pega la tabla en PR-AVT-05 antes de correr la prueba. No se editó `pruebas.md`. |
+| DOC-6 | Backend, commit `c8aa516` (2026-11-04); `PhraseType`, `GlossAnalyzer`, contrato WS | Entrega un tipo gramatical entre cinco; **el tipo se calcula por oración**, no por frase. No clasifica emociones. `secondary_signals` es de colisiones gramaticales y no viaja en `segment`. | El recorrido completo está verificado: el tipo llega en cada `segment`, se guarda por ítem de cola y está disponible en `app.js` al elegir el clip (`state.currentType`), donde hoy solo se usa en el diagnóstico. | **Opción B descartada por el owner (2026-11-04); se trabaja la A.** No hace falta cambiar el contrato: el dato ya está donde se necesita. | **Implementado en `app.js`** (`embeddedClipsFor` separa tomas de variantes, `pickVariant` aplica la tabla, `loadQueueItem` pasa el tipo). Backend: nada. |
 | DOC-9 | `models/juan.glb` y `models/pauline.glb` empaquetados (2026-10-27); medición 2026-11-04 | Las variantes existen para las 50 señas, pero no se sabía cuánto mueven la cara ni si se distinguen. | Cada variante es **la misma cara en las 50 señas**, es una **pose fija** (0,00 mm de cambio durante el clip) y **solo mueve la cara**: los 250 clips variantes tienen los mismos huesos que su base. Δ pico: 3,66–8,31 mm. Par más parecido: `_sorpresa`–`_pregunta` (0,86 mm de RMS). | **Medición hecha; consecuencia de alcance.** El marcador se puede decidir por tipo de oración, no por seña. La cabeza de la negación no la da la variante. | Escribir la tabla con esta limitación explícita; si LSC pide caras por seña o cabeza, es trabajo nuevo en `../signai-avatar`. |
 | DOC-7 | OpenSpec local, `specs/ui/spec.md` y `specs/avatar/spec.md` | Describe el selector como UI-only y una escena con un único GLB sin animación de expresiones. | El owner decidió selector funcional con dos avatares; el rostro quedó fuera de alcance el 2026-10-26. | **Resuelto el 2026-10-26.** Los dos specs describen los dos GLB, el selector funcional y el bloqueo en reposo; `specs/pipeline/spec.md` describe el empaquetado nuevo. | Hecho. El mapeo facial sigue pendiente y así se declara en los specs. |
 | DOC-8 | Overleaf SRS, versión 524; `../sign-ai-docs` PR-AVT-06 | El tamaño del APK con todos los GLB está pendiente de medir; PR-AVT-06 pide medir los assets y el instalador. | Los dos GLB empaquetados suman 63,74 MB (34,28 + 29,46). Medido el 2026-10-26 en el Redmi Note 9S: APK debug 48 MB, release sin firmar 34 MB, PSS ~390 MB con Juan. | **Medición del APK hecha; falta el registro formal en PR-AVT-06.** | Registrar build, modelo y dispositivo en el plan de pruebas y en `docs/PLAN-MEDICION.md`. Responsable: el owner al actualizar los documentos. |
@@ -339,7 +348,8 @@ Agregar una fila por cada trabajo posterior relacionado con esta iniciativa. No 
 | 2026-10-24 | Investigación inicial de GLB, backend, selector y documentos; `git pull --ff-only` de `../sign-ai-docs` (ya estaba al día). | Ver “Fuentes técnicas y procedencia” al final. | Se registraron DOC-1–DOC-8; owner decidió dos GLB completos, rostro completo y cambio solo en reposo. | Correspondencia tipo gramatical→variante, por consultar con validadores LSC. |
 | 2026-10-26 | Implementación del selector y del empaquetado; los marcadores faciales quedaron fuera de alcance por decisión del owner. | `tools/pack_avatars.py` nuevo; `models/juan.glb`, `models/pauline.glb` y `models/avatars.json`; `app.js`; `Settings.kt`, `SignAiCommands.kt`, `MainScreenState.kt`, `AvatarWebView.kt`, `SignAiWebViewController.kt`, `CharacterPicker.kt`; specs `avatar`, `ui` y `pipeline`; `AGENTS.md`. | DOC-1 y DOC-7 resueltos; DOC-8 con la medición del APK; rostro completo pasa a «fuera de alcance» hasta que el owner lo retome. | La tabla facial (DOC-5) queda sin uso; el SDD de Overleaf (DOC-2) sigue sin describir los dos GLB. |
 | 2026-10-27 | Reempaquetado con los GLB del repo hermano `../signai-avatar` (rama `dev`, commit `cf014ef`), que corrigen la cadera. | `tools/pack_avatars.py`; `models/juan.glb`, `models/pauline.glb`, `models/avatars.json`, `manifest.json`; `AGENTS.md`, `docs/SISTEMA.md`, `openspec/config.yaml`, `specs/pipeline/spec.md`, `specs/avatar/spec.md`, `tools/README.md`. | DOC-8 actualizado a 63,74 MB. Sin cambios en nombres ni duraciones de clip; `spine` pasa de 8,89/8,92 cm de desvío a 0,00 cm. | Probar en el dispositivo que la representación ya no se va de costado. Los pies pueden deslizarse un poco en alguna seña (efecto secundario anotado en el hermano). |
-| 2026-11-04 | Orden 8 de `docs/PLAN-SEMANA-13.md`: medición real de las cinco variantes faciales, recorrido del tipo gramatical y propuesta de tabla y de cambios, **sin activar la función**. El owner fijó el enfoque A y descartó B. | `tools/measure_face_markers.py` (nuevo); `docs/mediciones/marcadores-2026-11-04.md` y `.json` (nuevos); este plan; `openspec/sessions/2026-11-04-marcadores-faciales-medicion.md`. Backend leído en `c8aa516`; app leída en `3cf2be2`. | DOC-5 y DOC-6 actualizados; DOC-9 agregado con la limitación de los assets. Se corrigió el nombre del inventario: es `models/avatars.json`, no `avatares.json` (el script y el archivo siempre dijeron `avatars.json`; los documentos repetían el nombre equivocado). | Validación LSC de las filas de pregunta de contenido y orden; escribir la tabla aprobada en PR-AVT-05; implementar `embeddedClipsFor` + `pickVariant`. `AGENTS.md` y otros documentos todavía dicen `avatares.json`. |
+| 2026-11-04 | Orden 8 de `docs/PLAN-SEMANA-13.md`: medición real de las cinco variantes faciales, recorrido del tipo gramatical y propuesta de tabla y de cambios. El owner fijó el enfoque A y descartó B. | `tools/measure_face_markers.py` (nuevo); `docs/mediciones/marcadores-2026-11-04.md` y `.json` (nuevos); este plan; `openspec/sessions/2026-11-04-marcadores-faciales-medicion.md`. Backend leído en `c8aa516`; app leída en `3cf2be2`. | DOC-5 y DOC-6 actualizados; DOC-9 agregado con la limitación de los assets. Se corrigió el nombre del inventario: es `models/avatars.json`, no `avatares.json`. | Validación LSC de las filas de pregunta de contenido y orden; escribir la tabla aprobada en PR-AVT-05. `AGENTS.md` y otros documentos todavía dicen `avatares.json`. |
+| 2026-11-04 | **Activación de los marcadores faciales** por pedido del owner: se implementó el mapeo tipo → variante de la propuesta medida, para tener la base funcional. | `app/src/main/assets/web/app.js`: `FACE_MARKER_SUFFIXES`, `FACE_VARIANT_BY_TYPE`, `embeddedClipsFor` (tomas vs. variantes), `faceMarkerSuffix`, `pickVariant` con tipo, `loadQueueItem` y `state.currentVariant` en el overlay. `tools/mock_backend.py`: `--type` y sin eco de `text` como `transcript`. `openspec/specs/avatar/spec.md` y este plan. | Verificado en el Redmi Note 9S con el mock: `YES_NO_QUESTION` → `0038_pregunta` y `NEGATIVE` → `0038_negacion`, con `tipo: NEGATIVE  cara: negacion` en el overlay. Las tres filas medidas quedan activas; pregunta de contenido y orden siguen en base. | Validación LSC de las dos filas abiertas. La cabeza de la negación sigue sin existir. |
 
 ### Qué significa «el backend decide cuándo» en el estado actual
 
@@ -424,7 +434,7 @@ base en las demás).
 
 - Resueltos: dos GLB completos; rostro completo; selector bloqueado hasta el reposo absoluto; Juan como predeterminado.
 - **Resuelto el 2026-11-04:** se trabaja la **opción A** (tabla tipo gramatical → variante). La **B** queda descartada porque la clasificación emocional se intentó y no se logró, y el backend no manda ninguna señal emocional. Los marcadores son gramaticales, no emocionales.
-- **Abierto:** la tabla concreta. Hay una propuesta medida en este documento (afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`; contenido y orden abiertos) que tiene que validar alguien que sepa LSC, y la aprueba el owner. No implementar el mapeo hasta tener respuesta.
+- **Implementado el 2026-11-04:** la tabla medida en este documento (afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`; contenido y orden en base) ya está en `FACE_VARIANT_BY_TYPE` de `app.js` y se verificó en el Redmi Note 9S. Queda **abierta la validación LSC** de pregunta de contenido y orden: cuando se defina, se cambia una fila de esa tabla y no hay que recomprimir nada.
 - `../sign-ai-docs` se actualizó mediante `git pull --ff-only` el 2026-10-24. `main` ya estaba al día, sin cambios nuevos: commit `dc8d49c79285489815164adaf8a1fa7ef6e83b24`.
 
 ## Fuentes técnicas y procedencia

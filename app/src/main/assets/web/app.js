@@ -61,6 +61,9 @@ const state = {
   // principio o seguir después de la última seña que sonó.
   queueStarted: false,
   currentType: "",
+  // Variante facial que se está representando (`base`, `pregunta`, …). La elige
+  // `pickVariant` con la tabla por tipo; solo se lee en el diagnóstico.
+  currentVariant: "",
   // Velocidad pedida por el usuario (setSpeed) y velocidad aplicada.
   baseSpeed: 1,
   speed: 1,
@@ -287,7 +290,8 @@ const Debug = {
       `play: ${state.playing}  clip: ${state.action?.getClip().name ?? "-"}`,
       `t: ${(state.action?.time ?? 0).toFixed(2)} / ` +
         `${(state.action?.getClip().duration ?? 0).toFixed(2)}s  speed: ${state.speed.toFixed(2)}`,
-      `cola: ${state.queueIdx + 1}/${state.queue.length}  tipo: ${state.currentType || "-"}`,
+      `cola: ${state.queueIdx + 1}/${state.queue.length}  tipo: ${state.currentType || "-"}` +
+        `  cara: ${state.currentVariant || "-"}`,
       // `inUse` es la prueba de que hay dos actions vivas: durante la fundición
       // son 2 (la que entra y la que sale) y el resto del tiempo 1.
       `fundición: ${state.finishing ? "salida" : state.outgoing ? "saliendo" : "-"}` +
@@ -365,21 +369,47 @@ const signCache = new Map();
 const embeddedClips = new Map();
 
 /**
+ * Variantes faciales que trae cada avatar, por sufijo de clip. El clip base
+ * (`0000`) es la seña sin marcador; los demás son la misma seña con una cara
+ * estampada que solo mueve los morph targets (los huesos son idénticos).
+ */
+const FACE_MARKER_SUFFIXES = new Set([
+  "alegria", "tristeza", "sorpresa", "pregunta", "negacion",
+]);
+
+/**
+ * Tipo de oración del backend → variante facial. Es la tabla propuesta el
+ * 2026-11-04 y **está sujeta a la validación LSC**: las tres filas marcadas
+ * como medidas salen de los morph targets; pregunta de contenido y orden
+ * quedan en el clip base porque no hay una cara validada todavía.
+ *
+ * Cambiar una fila acá no toca los assets ni el backend: el tipo ya viaja en
+ * cada `segment` y `app.js` lo recibe en `item.type`.
+ */
+const FACE_VARIANT_BY_TYPE = Object.freeze({
+  AFFIRMATIVE: "base",        // medido: el base ya es reposo + parpadeo
+  YES_NO_QUESTION: "pregunta", // medido: es la que más sube las cejas
+  NEGATIVE: "negacion",       // medido: ceño y boca; no aporta la cabeza
+  CONTENT_QUESTION: "base",   // abierto a validación LSC
+  IMPERATIVE: "base",         // abierto a validación LSC
+});
+
+/**
  * Los clips de `url` si vienen dentro del avatar, o `null` si hay que cargarlos.
  *
  * La URL es la misma que manda Android para las dos variantes —`signs/0000_0000_0000.glb`—
- * así que el id de la seña es lo que identifica al clip (`0000`), y las
- * variantes de una misma seña son `0000`, `0000.001`, …: se devuelven todas,
- * igual que si vinieran de un `.glb` propio, para que `pickVariant` siga
- * eligiendo.
+ * así que el id de la seña es lo que identifica al clip (`0000`). Se devuelven
+ * **separadas** dos cosas:
  *
- * **Las variantes faciales quedan afuera a propósito.** Desde el 2026-10-26 cada
- * avatar trae `0000_alegria`, `0000_tristeza`, `0000_sorpresa`, `0000_pregunta`
- * y `0000_negacion` además de la base. Ese sufijo con guion bajo no matchea
- * `id + "."`, así que el resolutor devuelve solo el clip base: la app representa
- * las señas como hasta ahora, sin marcadores faciales, hasta que el owner
- * apruebe el mapeo tipo de oración → variante. Cuando eso pase, el cambio se
- * hace acá y no hay que recomprimir los assets.
+ *   - `clips`: las tomas de la seña (`0000`, `0000.001`, …), que son la misma
+ *     animación exportada varias veces. `pickVariant` elige una al azar, como
+ *     siempre.
+ *   - `variants`: un `Map` sufijo → clip con los marcadores faciales
+ *     (`0000_alegria`, `0000_tristeza`, `0000_sorpresa`, `0000_pregunta`,
+ *     `0000_negacion`). Se eligen por tipo de oración, no al azar.
+ *
+ * No mezclarlas es lo que evita que `pickVariant` devuelva una cara al azar:
+ * los dos grupos se parecen en el nombre pero no en el significado.
  */
 function embeddedClipsFor(url) {
   if (!embeddedClips.size) return null;
@@ -387,26 +417,39 @@ function embeddedClipsFor(url) {
   if (!match) return null;
   const id = match[1];
   const clips = [];
+  const variants = new Map();
   for (const [name, clip] of embeddedClips) {
-    if (name === id || name.startsWith(id + ".")) clips.push(clip);
+    if (name === id || name.startsWith(id + ".")) {
+      clips.push(clip);
+      continue;
+    }
+    const suffix = faceMarkerSuffix(name, id);
+    if (suffix) variants.set(suffix, clip);
   }
   if (!clips.length) return null;
   clips.sort((a, b) => a.name.localeCompare(b.name));
-  return clips;
+  return { clips, variants };
 }
 
-/** Devuelve {clips} de un sign GLB, cacheado por URL. */
+/** Sufijo facial de `name` (`0000_alegria` → `alegria`), o `null`. */
+function faceMarkerSuffix(name, id) {
+  const prefix = id + "_";
+  if (!name.startsWith(prefix)) return null;
+  const suffix = name.slice(prefix.length);
+  return FACE_MARKER_SUFFIXES.has(suffix) ? suffix : null;
+}
+
+/** Devuelve {clips, variants} de un sign GLB, cacheado por URL. */
 async function loadSignClips(url) {
   if (signCache.has(url)) return signCache.get(url);
   const embedded = embeddedClipsFor(url);
   if (embedded) {
-    const entry = { clips: embedded };
-    signCache.set(url, entry);
-    return entry;
+    signCache.set(url, embedded);
+    return embedded;
   }
   const gltf = await loader.loadAsync(url);
   if (!gltf.animations.length) throw new Error(url + " -> sin clips");
-  const entry = { clips: gltf.animations };
+  const entry = { clips: gltf.animations, variants: new Map() };
   signCache.set(url, entry);
   return entry;
 }
@@ -609,7 +652,7 @@ function loadAvatar(id, initial = false) {
     const defaultSign = loadSignClips(defaultSignUrl).then(({ clips }) => {
       const missing = unresolvedTracks(clips[0], state.nodeNames);
       setStatus(
-        `Avatar listo — ${clips.length} variante(s)` +
+        `Avatar listo — ${clips.length} toma(s)` +
         (missing ? ` · ${missing} tracks sin resolver` : "") +
         " · presiona Enviar",
       );
@@ -798,8 +841,20 @@ function preloadNext() {
     console.warn("[SignAI] no se pudo precargar", next.url, err));
 }
 
-/** Elige una variante al azar: 10 de las 32 señas traen 2–4 tomas distintas. */
-function pickVariant(clips) {
+/**
+ * Elige el clip de la seña: la variante facial del tipo de oración si existe,
+ * o una toma al azar del clip base.
+ *
+ * Las variantes faciales no entran al azar: son cinco caras distintas de la
+ * misma seña y elegirlas sorteadas mostraría una negación en una afirmación.
+ * Solo se sortea dentro de las tomas, que son la misma animación repetida.
+ * Deja en `state.currentVariant` lo que se eligió, para el diagnóstico.
+ */
+function pickVariant(clips, variants, type) {
+  const wanted = FACE_VARIANT_BY_TYPE[type] || "base";
+  const variant = wanted !== "base" ? variants?.get(wanted) : null;
+  state.currentVariant = variant ? wanted : "base";
+  if (variant) return variant;
   return clips.length > 1 ? clips[(Math.random() * clips.length) | 0] : clips[0];
 }
 
@@ -829,10 +884,10 @@ async function loadQueueItem(index) {
   state.loading = true;
   state.currentType = item.type || "";
   try {
-    const { clips } = await loadSignClips(item.url);
+    const { clips, variants } = await loadSignClips(item.url);
     if (index !== state.queueIdx || epoch !== state.epoch) return false;
     state.loading = false;
-    startClip(pickVariant(clips));
+    startClip(pickVariant(clips, variants, state.currentType));
     notifySignStart(index);
     return true;
   } catch (err) {
