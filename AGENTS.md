@@ -181,6 +181,11 @@ Trampas que hacen perder tiempo:
   laboratorio en el teléfono, el handshake falla con `Trust anchor for certification path
   not found` y eso **no** es un problema de la app. `demo` comparte `applicationId` con
   `debug`, así que lo reemplaza: después de la demo, `./gradlew installDebug`.
+- **La consola de la escena y el bloque AVANZADO no son un ajuste del teléfono.** No hay
+  interruptor en Ajustes: existen solo si la compilación los pide, con
+  `./gradlew installDebug -Psignai.devTools=true` o `SIGNAI_DEV_TOOLS=1 ./gradlew installDebug`.
+  Están **apagados por defecto, incluso en `debug`**, y `release`/`demo` los ignoran siempre.
+  Si no aparecen, no es un bug: es el build.
 - **`RECORD_AUDIO` es permiso de runtime y no está pre-otorgado.** Tocar el mic sin él dice
   "No se pudo abrir el micrófono", que se lee como un fallo del STT y no lo es:
   `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO`.
@@ -203,7 +208,7 @@ AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2
 | Backend | `:8080/metrics` | `rt_first_sign_ms`, `rt_phrase_total_ms`, `rt_sentence_delay_ms`, `rt_phrases_total`, `rt_sentences_total` |
 | Device | `adb logcat -s SignAiMetrics` | oraciones por frase, glosas, **duración de la representación**, p50/p95/max |
 | Device | `adb logcat -s SignAiNet` | cada `segment` que mandó el backend, con `index`/`total` |
-| Escena | `adb logcat -s SignAIWeb` | consola JS (necesita depurar prendido en Ajustes → AVANZADO) |
+| Escena | `adb logcat -s SignAIWeb` | consola JS (solo en el build con `DEV_TOOLS`; ver la trampa del build) |
 
 **Regla: agregar la métrica antes de agregar la feature.** Un número que no se
 instrumentó no se puede afirmar que mejoró. Y al citar un número, decí de dónde salió.
@@ -339,7 +344,8 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
 - **El avatar 3D es invisible para toda la instrumentación de accesibilidad**: sale como
   `android.webkit.WebView` sin ningún hijo, porque el canvas de Three.js no publica nada.
   No se puede tocar ni leer con `mobile-mcp`, Maestro ni `uiautomator`. Para el estado de
-  la escena: el tag `SignAIWeb` de logcat, o el modo debug de la app.
+  la escena: el tag `SignAIWeb` de logcat o el overlay de diagnóstico, los dos solo en el
+  build con `DEV_TOOLS` (ver la trampa del build).
 - **Los cues del pipeline (`micMode`, cola, estados de turno) están documentados en
   [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md).** Si la tarea toca el micrófono, el
   WebSocket, la cola o la latencia, leelo antes.
