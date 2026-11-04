@@ -157,6 +157,7 @@ Para cambiar un frame o un nombre de métrica: cargá el skill **`contrato-webso
 
 ```bash
 ./gradlew build          # verificar antes de commitear
+./gradlew ktlintCheck    # solo el análisis estático de Kotlin
 ./gradlew installDebug   # necesita device/emulator por adb
 ```
 
@@ -188,8 +189,11 @@ Trampas que hacen perder tiempo:
   siguiente recomposición lo mostraba de nuevo. Regla general: **tocar un control cierra el
   teclado, no manda la frase** — el texto se queda en el campo.
 
-No hay tests, no hay CI, no hay lint. Toolchain: AGP 8.9.3, Kotlin 2.3.21,
-compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2024.12.01.
+No hay tests, no hay CI. **ktlint se agregó el 2026-11-03** (`org.jlleitschuh.gradle.ktlint`
+14.2.0): `./gradlew ktlintCheck` corre en `build` y falla con los avisos nuevos. La deuda de
+estilo anterior está congelada en `app/config/ktlint/baseline.xml` (ninguna violación era un
+error real, solo reglas de formato); un archivo nuevo que entre con avisos sí falla. Toolchain:
+AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2024.12.01.
 
 ## Observabilidad
 
