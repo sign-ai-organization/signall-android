@@ -5,7 +5,7 @@
 | Conjunto | Audios | Estado |
 |---|---|---|
 | AU-01 de H1 | 20 | Completos |
-| AU-01 de los compañeros | 40 | Completos: 20 de Julián, 10 de Samuel y 10 de Sergio |
+| AU-01 de los compañeros | 40 | Completos: 10 de Julián, 10 de Samuel y 20 de Sergio (los 10 en silencio y los 10 con ruido) |
 | AU-02 | 10 | Completos (incluidos los dos regrabados) |
 | AU-03 | 8 | Completos |
 | AU-04 | 1 | Completo: la toma nueva da 19 pausas internas de 1,5 s o más, no 17 |
@@ -17,21 +17,16 @@ El detalle de cada audio, con duración, silencio y transcripción, está en
 
 La ficha está casi completa: **iPhone 14 Pro Max** el del owner, el celular a **10 cm** de la
 boca, el ruido a **10 cm** (y a 5 cm en el audio «más cerca»), ruido de un **video de ruido
-estudiantil desde un iPad**, cada uno en **su cuarto en silencio**, y en el caso de Sergio una
-**televisión a unos 10 m**. Falta:
+estudiantil desde un iPad**, cada uno en **su cuarto en silencio**. Sergio grabó con un
+**iPhone 17 Pro**, y su ruido fue una **televisión a unos 10 m**. Falta solo:
 
-- **Confirmar los 10 cm**: el owner dijo «unos 1 centímetros» y después que era la misma
-  distancia que la de la fuente de ruido.
-- **Con qué celular grabaron Samuel, Julián y Sergio.**
+- **Con qué celular grabaron Samuel y Julián.**
 
-## Dos cosas sobre los diez audios con ruido
+## El plan cambió
 
-Están en la voz de Sergio, no en la de Julián:
-
-1. **El nivel ya está igualado** en una copia derivada, sin tocar los originales:
-   `../../data/audios/derivados/ruido-nivel/` (con la comparación audio por audio en su
-   `README.md`). Venía 6,3 dB bajo el bloque del owner y ahora los dos bloques coinciden.
-   Falta que el owner apruebe esa copia para reemplazar la del corpus.
-2. **La voz sigue siendo de H4 y no de H2**, así que AU-01 queda con tres voces. O se documenta
-   así, o Julián regraba los diez. Está en [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md),
-   sección «Lo que hay que revisar».
+El owner decidió el 2026-11-03 **cambiar el plan en vez de regrabar** los diez con ruido. AU-01
+queda con **H1 y H4** en la condición de ruido, y así está en
+`../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcripcion.md`. Las dos
+condiciones de ruido se miden por separado, porque no es el mismo ruido: iPad a 10 cm la de H1 y
+televisión a 10 m la de H4. La copia con el nivel igualado sigue en
+`../../data/audios/derivados/ruido-nivel/` por si se quiere usar.

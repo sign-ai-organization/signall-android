@@ -181,3 +181,28 @@ Queda por confirmar si la boca estaba a 10 cm (el owner dijo «unos 1 centímetr
 celular grabaron Samuel, Julián y Sergio. Los archivos muestran al menos tres formas distintas de
 grabar: mono a 70 kbps (Julián), mono con Grabaciones de voz (Sergio en silencio) y estéreo a
 ~130 kbps exportado en lote (Samuel y los diez con ruido).
+
+## El plan cambia: el ruido es de H1 y H4
+
+El owner decidió no regrabar nada y **cambiar el plan**. Se editó
+`../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcripcion.md`:
+
+- La condición de ruido pasa a ser de **H1 y H4** (era H1 y H2). En la tabla, los diez IDs
+  `-006` cambiaron de hablante, de H2 a H4.
+- Se agregó el criterio: el ruido no es el mismo en los dos casos —H1 con un video de ruido
+  estudiantil desde un iPad a 10 cm, H4 con una televisión a unos 10 m— y los dos bloques se
+  miden por separado, sin promediarse.
+- Los 60 audios pasaron de «Por grabar» a «Grabado», y el estado del conjunto a «Grabados y
+  verificados el 2026-11-03».
+
+La edición quedó **sin commitear**: `sign-ai-docs` se commitea solo si el owner lo pide.
+
+En este repo se alineó todo lo que decía «H2» para esos diez: `manifiesto.csv` y `MANIFIESTO.md`
+(ahora **H4**, y la sección 1 cuenta la decisión en vez de plantearla como problema),
+`AUDIOS-QUE-GRABAN-ELLOS.md` (Julián 10 en silencio, Sergio 20 contando los diez con ruido) y el
+`README.md` de `derivados/ruido-nivel/` (aclara que la copia iguala el volumen, no el ruido ni la
+voz).
+
+Datos de la ficha que quedaron confirmados: la boca a **10 cm** del celular, la fuente de ruido a
+10 cm en el caso de H1 y a 5 cm en `AU-03-004`; Sergio grabó todo con un **iPhone 17 Pro**. Siguen
+faltando los celulares de Samuel y de Julián.

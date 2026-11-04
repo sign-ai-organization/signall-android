@@ -51,7 +51,7 @@ Datos que informó el owner el 2026-11-03:
 | Dato | Valor |
 |---|---|
 | Celular | **iPhone 14 Pro Max** |
-| Distancia del celular a la boca | **10 cm** (por confirmar: dijo «unos 1 centímetros» y después que era la misma distancia que la de la fuente de ruido) |
+| Distancia del celular a la boca | **10 cm** |
 | Distancia a la fuente de ruido | **10 cm**; el audio «más cerca» (`AU-03-004`) a **5 cm**, la mitad |
 | Ruido | Un **video de ruido estudiantil reproducido desde un iPad**, a 10 cm del celular |
 | Cuarto | Su cuarto, en silencio |
