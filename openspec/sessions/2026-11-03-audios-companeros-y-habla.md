@@ -61,10 +61,31 @@ Consecuencia: AU-01 queda con tres voces y no cuatro, y las dos voces con ruido 
 el manifiesto esos diez figuran como «H2 · voz de H4», para que el ID del plan y la voz real se
 lean juntos.
 
+## El nivel de los diez con ruido: igualado
+
+El owner pidió subirles el nivel. Medido: la diferencia con el bloque del owner es de **6,3 dB**
+en todo el archivo, y la relación voz/ruido de los dos bloques es la misma (21,9 dB contra
+21,8 dB). O sea que no era otro ruido ni otra distancia: era otra ganancia de grabación. Por eso
+se sube el nivel entero y no se mezcla nada.
+
+Se generó una **copia derivada** en `../data/audios/derivados/ruido-nivel/` (los `.m4a` para
+escuchar y los WAV de 16 kHz que consume el servicio) con `ffmpeg -af volume=6.3dB` aplicado
+sobre la copia de 16 kHz, más un `README.md` con la comparación audio por audio. Los picos
+quedan entre −3,8 y −1,0 dBFS: no satura ninguno. Los dos bloques quedan con el mismo piso
+(−37,2 dB) y el mismo techo (−15,3 dB). **Los originales no se tocaron**, y los diez se
+volvieron a transcribir después de subirlos: dan exactamente el mismo texto.
+
+Ojo con un detalle que costó una pasada: al convertir de estéreo a mono por el camino del
+codificador, ffmpeg suma 3 dB respecto de la mezcla que hace al decodificar. La primera versión
+quedó 9,3 dB arriba y con un pico en 0 dBFS. Por eso el nivel se aplica sobre la copia ya mono
+de 16 kHz, que es la entrada real del servicio.
+
 ## Qué quedó abierto
 
-- **Decisión del owner** sobre esos diez: dejarlos como están (documentando que la voz es H4 y
-  que el ruido está 6 dB más bajo) o regrabarlos con la voz de H2 al nivel del bloque de H1.
+- **Aprobación del nivel igualado:** si el owner aprueba la copia de `derivados/ruido-nivel/`,
+  se reemplaza la del corpus y se rehace el manifiesto. Los originales se quedan igual.
+- **Decisión sobre la voz:** los diez siguen siendo la voz de H4, así que AU-01 tiene tres
+  voces. Se documenta así, o Julián regraba los diez.
 - **Faltan los 10 de Samuel** (`AU-01-003`, `009`, `015`, `021`, `027`, `033`, `039`, `045`,
   `051`, `057`), los diez en silencio.
 - **Falta la ficha de la grabación:** qué celular grabó cada persona, en qué cuarto se grabaron
