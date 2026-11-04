@@ -23,8 +23,12 @@ en [`AUDIOS-QUE-GRABAN-ELLOS.md`](AUDIOS-QUE-GRABAN-ELLOS.md).
 
 ## Una decisión abierta
 
-Los diez audios con ruido están en la voz de Sergio, no en la de Julián: es lo que se acordó
-al grabarlos, y el ruido está además unos 6 dB por debajo del bloque con ruido del owner. Las
-dos formas de cerrarlo están en [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo
-que hay que revisar»: dejarlos documentados (AU-01 quedaría con tres voces) o que Julián
-regrabe los diez al nivel del owner.
+Quedan dos cosas sobre los diez audios con ruido, que están en la voz de Sergio:
+
+1. **El nivel ya está igualado** en una copia derivada, sin tocar los originales:
+   `../../data/audios/derivados/ruido-nivel/` (con la comparación audio por audio en su
+   `README.md`). Venía 6,3 dB bajo el bloque del owner y ahora los dos bloques coinciden.
+   Falta que el owner la apruebe para reemplazar la copia del corpus.
+2. **La voz sigue siendo de H4 y no de H2**, así que AU-01 queda con tres voces. O se documenta
+   así, o Julián regraba los diez. Está en [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md),
+   sección «Lo que hay que revisar».

@@ -27,9 +27,13 @@ grabó el bloque que iba a ser de Julián— y la medición lo confirma: el tono
 (120–137 Hz) no coincide con el de los diez de Julián en silencio (86–107 Hz) y sí con el de
 Sergio (110–131 Hz); el timbre se parece más a los audios de Sergio en 9 de los 10 casos; y
 los archivos son estéreo a 135 kbps con la misma hora de creación en los diez, mientras los
-otros son mono a 63–70 kbps. Además, ese ruido está unos 6 dB por debajo del bloque con ruido
-del owner. La consecuencia es de conteo: AU-01 queda con tres voces (H1, H2 y H4) y las dos
-voces con ruido son H1 y H4. El detalle está en
+otros son mono a 63–70 kbps. Además, esos diez venían 6,3 dB más bajos que el bloque con ruido
+del owner, con la misma relación voz/ruido: era la ganancia de la grabación, no otro ruido.
+Ya hay una copia con el nivel igualado, sin tocar los originales, en
+`../../data/audios/derivados/ruido-nivel/` (ahí está la comparación audio por audio).
+
+La consecuencia es de conteo: AU-01 queda con tres voces (H1, H2 y H4) y las dos voces con
+ruido son H1 y H4. El detalle está en
 [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo que hay que revisar».
 
 Lo que hay que anotar al recibir los diez de Samuel y para cerrar los 40: qué teléfono grabó
