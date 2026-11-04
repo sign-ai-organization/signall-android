@@ -206,3 +206,11 @@ voz).
 Datos de la ficha que quedaron confirmados: la boca a **10 cm** del celular, la fuente de ruido a
 10 cm en el caso de H1 y a 5 cm en `AU-03-004`; Sergio grabó todo con un **iPhone 17 Pro**. Siguen
 faltando los celulares de Samuel y de Julián.
+
+## La ficha, completa
+
+Los celulares de los cuatro: **H1 iPhone 14 Pro Max · H2 iPhone 15 Pro · H3 iPhone 17 · H4
+iPhone 17 Pro**. Con eso la ficha de grabación queda cerrada: celular a 10 cm de la boca, fuente
+de ruido a 10 cm (y a 5 cm en `AU-03-004`), ruido de un video estudiantil desde un iPad en el
+caso de H1 y una televisión a unos 10 m en el de H4, y cada uno en su cuarto en silencio. No
+queda ningún dato pendiente de la parte de los audios.

@@ -137,8 +137,8 @@ de fondo a unos 10 m en su cuarto.
 
 ## Lo que hay que anotar al recibirlos
 
-- Qué teléfono grabó cada persona: se sabe el de H1 (iPhone 14 Pro Max) y el de H4 (iPhone 17
-  Pro); faltan el de H2 y el de H3.
+- Qué teléfono grabó cada persona: H1, iPhone 14 Pro Max; H2, iPhone 15 Pro; H3, iPhone 17; H4,
+  iPhone 17 Pro.
 - En qué cuarto se grabaron los de silencio: cada uno en el suyo, en silencio. Los pisos medidos
   van de −55 a −71 dB, así que son cuartos distintos.
 - Qué ruido y a qué distancia: H1 con un video de ruido estudiantil desde un iPad a 10 cm, y H4
