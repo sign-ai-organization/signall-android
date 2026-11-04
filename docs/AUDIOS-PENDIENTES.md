@@ -1,34 +1,34 @@
 # Lo que falta
 
-**Del owner no falta ningún audio.** Los 39 están grabados y verificados, incluido el de
-habla continua.
+**No falta ningún audio.** Los 79 del plan están grabados, organizados y verificados.
 
 | Conjunto | Audios | Estado |
 |---|---|---|
 | AU-01 de H1 | 20 | Completos |
+| AU-01 de los compañeros | 40 | Completos: 20 de Julián, 10 de Samuel y 10 de Sergio |
 | AU-02 | 10 | Completos (incluidos los dos regrabados) |
 | AU-03 | 8 | Completos |
 | AU-04 | 1 | Completo: la toma nueva da 19 pausas internas de 1,5 s o más, no 17 |
 
-## Lo que falta de los compañeros
+El detalle de cada audio, con duración, silencio y transcripción, está en
+[`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md).
 
-| Persona | Audios | Qué falta |
-|---|---|---|
-| Julián (H2) | 20 | Nada: llegaron los 20 |
-| Sergio (H4) | 10 | Nada: llegaron los 10 |
-| **Samuel** (H3) | 10 | **Los 10 en silencio:** `AU-01-003`, `009`, `015`, `021`, `027`, `033`, `039`, `045`, `051`, `057` |
+## Lo que falta anotar
 
-La lista con el texto de cada uno está en [`audios-companeros.pdf`](audios-companeros.pdf) y
-en [`AUDIOS-QUE-GRABAN-ELLOS.md`](AUDIOS-QUE-GRABAN-ELLOS.md).
+Tres datos que no son audios y que hacen falta para defender la prueba de transcripción:
 
-## Una decisión abierta
+- **Qué celular grabó cada persona.**
+- **En qué cuarto se grabaron los de silencio** y si alguien grabó en otro sitio.
+- **Cuál fue el ruido** del bloque con ruido y a qué distancia estaba el celular.
 
-Quedan dos cosas sobre los diez audios con ruido, que están en la voz de Sergio:
+## Dos cosas sobre los diez audios con ruido
+
+Están en la voz de Sergio, no en la de Julián:
 
 1. **El nivel ya está igualado** en una copia derivada, sin tocar los originales:
    `../../data/audios/derivados/ruido-nivel/` (con la comparación audio por audio en su
    `README.md`). Venía 6,3 dB bajo el bloque del owner y ahora los dos bloques coinciden.
-   Falta que el owner la apruebe para reemplazar la copia del corpus.
+   Falta que el owner apruebe esa copia para reemplazar la del corpus.
 2. **La voz sigue siendo de H4 y no de H2**, así que AU-01 queda con tres voces. O se documenta
    así, o Julián regraba los diez. Está en [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md),
    sección «Lo que hay que revisar».

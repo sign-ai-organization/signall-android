@@ -40,9 +40,9 @@ Los diez de AU-02 cierran ahora como el plan pide.
 necesita, con la más corta en 1,86 s, más 1,95 s de silencio al final: las 20 frases cierran
 por silencio. La toma anterior daba 17. `AU-04` queda cerrado.
 
-Con eso, los 39 del owner están completos y verificados. Los 40 de los compañeros están en
-[`AUDIOS-QUE-GRABAN-ELLOS.md`](AUDIOS-QUE-GRABAN-ELLOS.md): llegaron 30 y faltan los 10 de
-Samuel.
+Con eso, los 39 del owner están completos y verificados, y los 40 de los compañeros también:
+los 79 audios del plan están grabados. El detalle de los 40 está en
+[`AUDIOS-QUE-GRABAN-ELLOS.md`](AUDIOS-QUE-GRABAN-ELLOS.md).
 
 Lo que hay que anotar para que el corpus se pueda repetir: **cuál fue el ruido** y a qué
 distancia, **con qué celular** se grabaron los 39 y **en qué cuarto** se grabaron los de

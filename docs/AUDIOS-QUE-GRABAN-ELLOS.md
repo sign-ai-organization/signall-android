@@ -7,52 +7,40 @@ Fuente: `../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcrip
 (v0.1). Las diez frases son las de FR-01-A; cada una la leen cuatro personas en silencio y
 dos de ellas otra vez con ruido de fondo.
 
-## Estado: 30 de 40 recibidos
+## Estado: los 40 recibidos
 
-Llegaron el 2026-11-03 en `AudiosSignAllCompaneros.zip`, ya organizados y verificados en el
-corpus (`../../data/audios/`). Falta una sola persona:
+Los 40 están grabados, organizados y verificados en el corpus (`../../data/audios/`):
 
 | Persona | Audios | Estado |
 |---|---|---|
-| **Julián** (H2) | 20 | **Recibidos** los 20: los 10 en silencio y los 10 con ruido |
-| **Sergio** (H4) | 10 | **Recibidos** los 10 en silencio |
-| **Samuel** (H3) | 10 | **Faltan los 10**: `AU-01-003`, `009`, `015`, `021`, `027`, `033`, `039`, `045`, `051`, `057` |
+| **Julián** (H2) | 20 | Recibidos los 20: los 10 en silencio y los 10 con ruido |
+| **Samuel** (H3) | 10 | Recibidos los 10 en silencio |
+| **Sergio** (H4) | 10 | Recibidos los 10 en silencio |
 
-Los archivos venían nombrados con el número del ID (`002.m4a` … `060.m4a`), y solo estaban
-los pares: por eso llegaron 30 y no 40. Cada uno se identificó por su contenido —se
-transcribieron los 30 y se comparó contra la frase que le toca— y los 30 coinciden.
+Los de Julián y Sergio llegaron nombrados con el número del ID (`002.m4a` … `060.m4a`), solo los
+pares. Los de Samuel llegaron como `Samuel 1.m4a` … `Samuel 10.m4a`, sin ID. Ninguno se asignó
+por el nombre: se transcribieron los 40 y se comparó contra la frase que le toca a cada uno, y
+los 40 coinciden. En el caso de Samuel, el orden `1`…`10` coincide con el de las diez frases y
+por eso quedó `1`→`AU-01-003`, `2`→`009`, `3`→`015`, `4`→`021`, `5`→`027`, `6`→`033`,
+`7`→`039`, `8`→`045`, `9`→`051` y `10`→`057`.
 
-**Los diez con ruido son la voz de Sergio.** Así lo dijo el owner al entregarlos —Sergio
-grabó el bloque que iba a ser de Julián— y la medición lo confirma: el tono de esos diez
-(120–137 Hz) no coincide con el de los diez de Julián en silencio (86–107 Hz) y sí con el de
-Sergio (110–131 Hz); el timbre se parece más a los audios de Sergio en 9 de los 10 casos; y
-los archivos son estéreo a 135 kbps con la misma hora de creación en los diez, mientras los
-otros son mono a 63–70 kbps. Además, esos diez venían 6,3 dB más bajos que el bloque con ruido
-del owner, con la misma relación voz/ruido: era la ganancia de la grabación, no otro ruido.
-Ya hay una copia con el nivel igualado, sin tocar los originales, en
-`../../data/audios/derivados/ruido-nivel/` (ahí está la comparación audio por audio).
+**Los diez con ruido son la voz de Sergio.** Así lo dijo el owner al entregarlos —Sergio grabó
+el bloque que iba a ser de Julián— y la medición lo confirma: el tono de esos diez (120–137 Hz)
+no coincide con el de los diez de Julián en silencio (86–107 Hz) y sí con el de Sergio
+(110–131 Hz); el timbre se parece más a los audios de Sergio en 9 de los 10 casos; y los
+archivos son estéreo a 135 kbps con la misma hora de creación en los diez, mientras los otros
+son mono a 63–70 kbps. Además, esos diez venían 6,3 dB más bajos que el bloque con ruido del
+owner, con la misma relación voz/ruido: era la ganancia de la grabación, no otro ruido. Ya hay
+una copia con el nivel igualado, sin tocar los originales, en
+`../../data/audios/derivados/ruido-nivel/`.
 
 La consecuencia es de conteo: AU-01 queda con tres voces (H1, H2 y H4) y las dos voces con
 ruido son H1 y H4. El detalle está en
 [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo que hay que revisar».
 
-Lo que hay que anotar al recibir los diez de Samuel y para cerrar los 40: qué teléfono grabó
-cada persona y en qué cuarto se grabaron los de silencio.
-
-## Quién graba qué
-
-El owner asignó los tres papeles el 2026-11-03: **Julián es H2**, **Samuel es H3** y
-**Sergio es H4**. La versión para imprimir o mandar es
-[`audios-companeros.pdf`](audios-companeros.pdf).
-
-| Persona | Audios | Qué hace |
-|---|---|---|
-| **Julián** (H2) | 20 | Las 10 frases en silencio y las mismas 10 con ruido moderado |
-| **Samuel** (H3) | 10 | Las 10 frases en silencio |
-| **Sergio** (H4) | 10 | Las 10 frases en silencio |
-
-Total: **30 en silencio y 10 con ruido**. El owner pone los otros 39 (H1 en silencio, H1 con
-ruido, los 8 sin voz, los 10 de cierre y la toma continua).
+La ficha de la grabación sigue pendiente: **qué celular grabó cada persona** y **en qué cuarto
+se grabaron los de silencio**. Los diez de Samuel y los de Sergio vienen del mismo tipo de
+archivo (estéreo a ~130 kbps), así que conviene anotar si los procesó la misma persona.
 
 ## Cómo se graba (vale para los 40)
 
