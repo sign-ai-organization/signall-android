@@ -82,3 +82,46 @@ idénticas).
   es `models/avatars.json`. No se tocó `AGENTS.md` en esta sesión.
 - **Cabeza de la negación:** si el validador LSC la pide, es una tanda nueva en
   `../signai-avatar` (Cascadeur), no un cambio de la app.
+
+## Activación de los marcadores (misma sesión, después)
+
+El owner pidió dejar la **base funcional ya**, usando las variantes que existen, sin esperar
+la validación LSC. Se implementó la tabla de la propuesta **tal como está medida**:
+
+| Tipo | Variante |
+|---|---|
+| `AFFIRMATIVE` | base |
+| `YES_NO_QUESTION` | `_pregunta` |
+| `NEGATIVE` | `_negacion` |
+| `CONTENT_QUESTION` | base (abierto) |
+| `IMPERATIVE` | base (abierto) |
+
+Cambios en `app/src/main/assets/web/app.js`:
+
+- `FACE_MARKER_SUFFIXES` y `FACE_VARIANT_BY_TYPE`, la tabla que se cambia cuando LSC defina
+  las dos filas abiertas.
+- `embeddedClipsFor` devuelve `{ clips, variants }`: las tomas (`0000`, `0000.001`, …) van
+  separadas de las caras (`0000_pregunta`, …). Sin esa separación, `pickVariant` sortearía
+  una cara.
+- `pickVariant(clips, variants, type)` aplica la tabla, cae al base si la variante falta y
+  deja `state.currentVariant` para el diagnóstico.
+- `loadQueueItem` le pasa `item.type`. No cambió el contrato.
+- El overlay muestra `cara:` al lado de `tipo:`.
+
+`tools/mock_backend.py`: se agregó `--type <TIPO>` para probar cada fila sin el backend real.
+También se quitó el eco de `text` como `transcript`: el backend real no lo hace y, con el
+modo en vivo prendido, el eco disparaba el bucle de reenvío de la misma frase.
+
+### Verificación en el Redmi Note 9S
+
+Con el mock y `adb reverse tcp:8080 tcp:8080`, build `debug` apuntando a
+`ws://127.0.0.1:8080/ws/translate`:
+
+- `--type YES_NO_QUESTION` → la escena cargó `0038_pregunta`; overlay `tipo:
+  YES_NO_QUESTION  cara: pregunta`.
+- `--type NEGATIVE` → `0038_negacion`; overlay `tipo: NEGATIVE  cara: negacion`.
+- `AFFIRMATIVE` sigue usando el base.
+- La app recibió una sola `segment` por frase, sin bucle.
+
+Pendiente y sin cambios: la validación LSC de pregunta de contenido y orden, la escritura de
+la tabla en PR-AVT-05 y el movimiento de cabeza de la negación.

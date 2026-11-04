@@ -124,9 +124,18 @@
   # glosas fijas para un caso puntual, sin LLM
   python3 -u tools/mock_backend.py --glosses "POR FAVOR,MUCHO,¿CÓMO ESTÁS?"
 
+  # tipo de oración forzado, para ver el marcador facial que le toca
+  python3 -u tools/mock_backend.py --type NEGATIVE
+
   # asset remoto en vez del path dentro del APK (ejercita la descarga)
   python3 -u tools/mock_backend.py --assets-remote
   ```
+
+  `--type` acepta los cinco del backend (`AFFIRMATIVE`, `YES_NO_QUESTION`,
+  `CONTENT_QUESTION`, `NEGATIVE`, `IMPERATIVE`) y es la forma de probar los
+  marcadores faciales sin adivinar el tipo de una frase. En modo local no
+  necesita ningún archivo en disco: `signs/<id>.glb` es el identificador del
+  contrato y el clip sale del avatar empaquetado.
 
   El `-u` no es opcional cuando redirigís la salida a un archivo: sin él Python
   bloquea el stdout y el log aparece vacío aunque el backend esté sirviendo.

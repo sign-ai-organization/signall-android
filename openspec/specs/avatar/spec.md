@@ -46,11 +46,13 @@ personaje + las 50 animaciones**, y desde el 2026-10-26 son **dos** archivos con
 root, y cargar el clip desde el mismo `gltf.animations` que el avatar es lo mismo
 que cargarlo desde un `.glb` aparte, sin pedido de red.
 
-Las **variantes faciales** existen en los dos archivos y **no se reproducen**: el
-resolutor solo reconoce los clips base (`0000`..`0049`), a propósito, mientras los
-marcadores estén fuera de alcance (decisión del owner del 2026-10-26). Los morph
-targets que alguna de las 300 variantes anima se conservan en el archivo, para no
-tener que reempaquetar el día que se apruebe el mapeo: 65 bloques de target en
+Las **variantes faciales** existen en los dos archivos y desde el **2026-11-04 se
+reproducen por tipo de oración** (`FACE_VARIANT_BY_TYPE` en `app.js`): afirmación usa
+el base, pregunta sí/no usa `_pregunta` y negación usa `_negacion`; pregunta de
+contenido y orden siguen en el base hasta que se validen con LSC. Las variantes
+faciales se devuelven **separadas** de las tomas en `embeddedClipsFor` (`clips` vs.
+`variants`), así que el sorteo de tomas nunca elige una cara. Los morph targets que
+alguna de las 300 variantes anima se conservan en el archivo: 65 bloques de target en
 Juan y 64 en Pauline, contados el 2026-10-26.
 
 Cambiar de avatar **no requiere regenerar nada**: los dos archivos están en el APK
@@ -193,11 +195,15 @@ mouth_dimple_*, mouth_lower_down_*, mouth_smile_frown_*, mouth_stretch_*,
 mouth_upper_up_*, mouth_lt_rt_funnel, mouth_roll_lower, mouth_shrug_roll_upper
 ```
 
-La app no los mueve: `app.js` no menciona ninguno de esos nombres y solo
-reproduce los clips **base**. Los dos archivos vigentes conservan los morph targets
-que alguna de las 300 variantes anima —65 bloques en Juan, 64 en Pauline, contados
-el 2026-10-26—, así que el asset está listo para el mapeo facial; lo que falta es la
-decisión de qué variante usar, no el material.
+Desde el **2026-11-04** la app también elige una **variante facial** según el tipo de
+oración que manda el backend (`FACE_VARIANT_BY_TYPE` y `pickVariant(clips, variants,
+type)`): afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`.
+Pregunta de contenido y orden quedan en el base porque no hay una cara validada por LSC
+todavía. La medición de las cinco variantes está en
+`docs/mediciones/marcadores-2026-11-04.md`: cada variante es la misma cara en las 50
+señas, es una pose fija y mueve solo los morph targets (los huesos son idénticos al
+base). Los dos archivos vigentes conservan los morph targets que alguna de las 300
+variantes anima —65 bloques en Juan, 64 en Pauline, contados el 2026-10-26—.
 
 Las mediciones de «cara quieta» que siguen son del archivo único anterior, tomadas
 sobre sus 50 clips (`avatar.glb`, borrado el 2026-10-26): el mayor rango de un
@@ -206,8 +212,8 @@ componente del cuaternión de rotación de un hueso de cara era **0,0012** (`jaw
 5 canales de pesos por clip valían 1,0 constante. **No se remidió sobre los dos
 archivos nuevos**: sirve como referencia de los clips base, no como afirmación sobre
 las variantes. Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide
-marcadores por tipo de frase y no hay implementación, y desde el 2026-10-26 es una
-decisión explícita del owner dejar eso fuera de alcance.
+marcadores por tipo de frase y desde el 2026-11-04 hay una primera implementación con
+tres filas medidas y dos pendientes de validación lingüística.
 
 Dos detalles que no son obvios y ya costaron tiempo:
 
@@ -278,10 +284,12 @@ escalar después de un cambio en `app.js`, es esto.
 
 - No hay IK, ni cinemática inversa, ni reintentos de pose: los `.glb` traen la
   pose.
-- No hay sincronización de cara: la escena no reproduce ninguna variante facial y
-  no toca ningún hueso de la cara. Los clips base dejan los huesos faciales casi
-  quietos (rango máximo de 0,0012, medido el 2026-10-26 sobre el archivo anterior).
-- La escena **no maneja los morph targets**: los dos archivos conservan los que
-  alguna variante anima (65 bloques en Juan, 64 en Pauline), pero `app.js` no los
-  escribe, así que no hay blendshapes de cara en pantalla.
+- Hay una sola cara por tipo de oración, no una por seña: la variante elegida es la
+  misma en las 50 señas (medido el 2026-11-04). No hay emociones: el backend no
+  manda esa señal y no se clasifican.
+- No hay movimiento de cabeza en las variantes: los huesos son idénticos al base.
+  La negación solo cambia la cara.
+- La escena **sí maneja los morph targets** desde el 2026-11-04, pero solo a través
+  del clip de la variante elegida: no los escribe a mano ni los mezcla entre
+  variantes.
 - El peso por vértice lo pone Cascadeur, no la app.
