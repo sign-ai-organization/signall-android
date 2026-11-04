@@ -41,9 +41,11 @@ ser más que un detalle: es la explicación de un hallazgo (abajo).
   pero está **unos 6 dB más bajo** que el bloque con ruido del owner: −42,4 dB contra −36,4 dB
   de media en los tramos sin voz.
 
-## El hallazgo: los diez «de Julián con ruido» no son la voz de Julián
+## La voz de los diez con ruido
 
-Se midió por tres vías independientes y las tres apuntan a la voz de H4:
+El owner lo dijo al entregar el ZIP: **esos diez los grabó Sergio**, en lugar de Julián. La
+medición no descubre nada nuevo, pero confirma de quién es la voz y deja la consecuencia para
+el conteo de hablantes. Se comprobó por tres vías independientes y las tres apuntan a H4:
 
 | Prueba | H2 en silencio | Los 10 con ruido | H4 en silencio |
 |---|---|---|---|
@@ -55,7 +57,9 @@ El tono se midió con autocorrelación sobre tramas que el VAD marca como habla;
 coeficientes cepstrales comparando cada audio con ruido contra los dos candidatos **de la misma
 frase**. La diferencia no es de nivel ni de ruido: es otra voz.
 
-Consecuencia: AU-01 tendría tres voces y no cuatro, y las dos voces con ruido serían H1 y H4.
+Consecuencia: AU-01 queda con tres voces y no cuatro, y las dos voces con ruido son H1 y H4. En
+el manifiesto esos diez figuran como «H2 · voz de H4», para que el ID del plan y la voz real se
+lean juntos.
 
 ## Qué quedó abierto
 

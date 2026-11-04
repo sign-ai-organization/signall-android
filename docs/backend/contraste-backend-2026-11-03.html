@@ -1,0 +1,1101 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Contraste del backend (Copy)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: documento de revisión punto por punto; barra fija con filtros y contador; dos tablas de seis columnas; en móvil cada fila pasa a tarjeta. */
+:root {
+  --bg: #f5f7f7; --surface: #ffffff; --fg: #1b2426; --muted: #5b6a6d; --line: #d9e0e1; --accent: #14646b;
+  --good-bg: #dff3e6; --good-fg: #14562d;
+  --ok-bg: #dfe9fb;   --ok-fg: #1f3f86;
+  --dis-bg: #fbefc9;  --dis-fg: #6b4a00;
+  --bad-bg: #fbe1dd;  --bad-fg: #8a2216;
+  --neu-bg: #e6eaeb;  --neu-fg: #3f4d50;
+  --font-display: "Bricolage Grotesque", "Segoe UI", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101718; --surface: #172122; --fg: #e4eced; --muted: #93a5a8; --line: #2a3a3c; --accent: #5cc3cc;
+    --good-bg: #17382366; --good-fg: #7fd9a0; --ok-bg: #1d2e5a88; --ok-fg: #a9c1f5;
+    --dis-bg: #4a38087a; --dis-fg: #f1cb6a; --bad-bg: #44201b88; --bad-fg: #ff9d8e;
+    --neu-bg: #28363888; --neu-fg: #b3c3c6; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101718; --surface: #172122; --fg: #e4eced; --muted: #93a5a8; --line: #2a3a3c; --accent: #5cc3cc;
+  --good-bg: #17382366; --good-fg: #7fd9a0; --ok-bg: #1d2e5a88; --ok-fg: #a9c1f5;
+  --dis-bg: #4a38087a; --dis-fg: #f1cb6a; --bad-bg: #44201b88; --bad-fg: #ff9d8e;
+  --neu-bg: #28363888; --neu-fg: #b3c3c6; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1320px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: grid; gap: 12px; margin-bottom: 24px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--font-display); font-size: clamp(28px, 4.6vw, 42px); line-height: 1.08; margin: 0; text-wrap: balance; }
+.lede { max-width: 74ch; color: var(--muted); margin: 0; }
+h2 { font-family: var(--font-display); font-size: 22px; margin: 0 0 4px; text-wrap: balance; }
+.sec-note { margin: 0 0 12px; color: var(--muted); max-width: 74ch; }
+section { margin-top: 36px; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; min-width: 0; }
+.panel h3 { font-family: var(--font-display); font-size: 17px; margin: 0 0 8px; }
+.panel p { margin: 0 0 8px; } .panel p:last-child { margin: 0; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+dl { margin: 0; display: grid; gap: 10px; }
+dt { font-weight: 600; } dd { margin: 0; color: var(--muted); }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding-block: 10px; margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.bar .lab { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-right: 4px; }
+.bar button { font: inherit; font-size: 14px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 5px 12px; border-radius: 6px; }
+.bar button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.bar button:focus-visible, input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bar .count { margin-left: auto; font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.tablebox { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 1300px; }
+th { text-align: left; font-family: var(--font-mono); font-weight: 500; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--bg); }
+td { vertical-align: top; padding: 11px 12px; border-bottom: 1px solid var(--line); min-width: 0; }
+tr:last-child td { border-bottom: 0; }
+tr.done td { opacity: .55; }
+td.what { width: 12%; }
+td.what .t { font-weight: 600; margin-top: 4px; }
+.chk { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.chk input { width: 17px; height: 17px; accent-color: var(--accent); }
+.n { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--accent); }
+td.c1, td.c2, td.c3 { width: 12%; }
+td.c4 { width: 7%; }
+td.c5 { width: 29%; }
+td.cm { width: 16%; }
+table.list { min-width: 820px; }
+td.wide { width: 62%; }
+td.cm textarea { width: 100%; min-height: 64px; resize: vertical; font: inherit; font-size: 14px; line-height: 1.4; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+td.cm textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+tr.done td:not(.cm) { opacity: .55; }
+tr.done td { opacity: 1; }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: 12px; font-weight: 500; padding: 3px 9px; border-radius: 5px; margin-bottom: 6px; }
+.p-good { background: var(--good-bg); color: var(--good-fg); }
+.p-ok { background: var(--ok-bg); color: var(--ok-fg); }
+.p-dis { background: var(--dis-bg); color: var(--dis-fg); }
+.p-bad { background: var(--bad-bg); color: var(--bad-fg); }
+.p-neu { background: var(--neu-bg); color: var(--neu-fg); }
+.coin { font-family: var(--font-mono); font-size: 12.5px; }
+.eval p { margin: 0 0 6px; } .eval p:last-child { margin: 0; }
+.eval .rec { color: var(--muted); }
+.note { max-width: 80ch; color: var(--muted); }
+.upd { display: inline-block; font-family: var(--font-mono); font-size: 11px; font-weight: 500; background: var(--accent); color: var(--bg); padding: 1px 7px; border-radius: 4px; margin-bottom: 4px; }
+/* Anchos fijos por columna: la evaluación es la que más texto lleva. */
+.wrap { max-width: 1680px; }
+table { table-layout: fixed; min-width: 1280px; }
+table.list { min-width: 900px; }
+th, td { overflow-wrap: anywhere; }
+table:not(.list) th:nth-child(1) { width: 11%; }
+table:not(.list) th:nth-child(2) { width: 12%; }
+table:not(.list) th:nth-child(3) { width: 14%; }
+table:not(.list) th:nth-child(4) { width: 14%; }
+table:not(.list) th:nth-child(5) { width: 7%; }
+table:not(.list) th:nth-child(6) { width: 29%; }
+table:not(.list) th:nth-child(7) { width: 13%; }
+table.list th:nth-child(1) { width: 18%; }
+table.list th:nth-child(2) { width: 58%; }
+table.list th:nth-child(3) { width: 24%; }
+@media (max-width: 860px) {
+  table, tbody, tr, td { display: block; min-width: 0; width: 100% !important; }
+  table { min-width: 0; }
+  thead { display: none; }
+  tr { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  tr:last-child { border-bottom: 0; }
+  td { border: 0; padding: 4px 0; }
+  td::before { content: attr(data-l); display: block; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  td.what::before { display: none; }
+  td.what { font-size: 16px; }
+  .bar .count { margin-left: 0; width: 100%; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">sign-ai-backend · main contra tu versión</div>
+    <h1>Lo que tenías, lo que decidió el documento y lo que hay en main</h1>
+    <p class="lede">«Tu versión» es <code>c595bad</code>, la punta de tu <code>develop</code> local. «Documento» es <code>docs/CONTRASTE-BACKENDvsDOCUMENTOS.md</code>. «Main hoy» es <code>origin/main</code> al 21 de octubre, a las 15:29 (commit <code>a03bbc9</code>), después de que Diego subió los nueve cambios de código.</p>
+    <p class="lede">Las filas que llevan la etiqueta <span class="upd">Actualizado</span> se revisaron contra tu copia local del v0.16 (commit <code>2e11aeb</code>, 21/10 a las 19:52), después de que actualizaste los requerimientos no funcionales y unificaste los funcionales con los de Diego.</p>
+    <p class="lede">Son cinco secciones. <strong>1:</strong> una fila por cada uno de los 43 contrastes, en su orden. <strong>2:</strong> lo que el documento no numera. <strong>3:</strong> los nueve puntos de la sección 10.3 y si ya están implementados. <strong>4:</strong> lo que debes tener presente. <strong>5:</strong> lo que sigue sin hacerse. Si marcas la casilla de todas las filas, revisaste todo; se guarda en este navegador.</p>
+    <p class="lede"><strong>Actualización del 3 de noviembre de 2026:</strong> al final de la página hay una sección nueva con las catorce decisiones que tomaste y el estado de cada una. Las cinco secciones originales quedaron intactas.</p>
+  </header>
+
+  <div class="cols">
+    <div class="panel">
+      <h3>Qué significan los términos</h3>
+      <dl>
+        <dt>A y B</dt>
+        <dd>En el documento, A es «se cambia el código» y B es «se cambia el documento para que describa el código».</dd>
+        <dt>D-7</dt>
+        <dd>La séptima decisión de la lista de Diego: la lista de las 50 glosas del catálogo <strong>sale del prompt</strong> del modelo de lenguaje. Hoy el prompt dice «usa SOLO estas glosas:» y las 50.</dd>
+        <dt>«No existe»</dt>
+        <dd>Que esa función no está en el código. En cada fila va explicado qué significa en concreto.</dd>
+        <dt>§</dt>
+        <dd>Sección del documento de contraste donde se trata el tema.</dd>
+      </dl>
+    </div>
+    <div class="panel">
+      <h3>Cómo leer la evaluación</h3>
+      <dl>
+        <dt><span class="pill p-good">Buena</span></dt><dd>Resuelve un problema real a bajo costo.</dd>
+        <dt><span class="pill p-ok">Aceptable</span></dt><dd>Razonable si el equipo está de acuerdo.</dd>
+        <dt><span class="pill p-dis">Discutible</span></dt><dd>Tiene ventajas y costos que conviene medir o decidir.</dd>
+        <dt><span class="pill p-bad">Mala</span></dt><dd>Yo la revertiría.</dd>
+        <dt><span class="pill p-neu">Neutra</span></dt><dd>No cambia el resultado de forma apreciable.</dd>
+      </dl>
+      <p class="note" style="margin-top:10px">La evaluación es mi opinión técnica. Lo que no pude verificar (Overleaf, el texto de <code>docs/sdd.md</code>, tu <code>.env</code>) está marcado «Solo documento».</p>
+    </div>
+  </div>
+
+  <div class="bar" role="group" aria-label="Filtros">
+    <span class="lab">Mostrar</span>
+    <button type="button" data-f="all" aria-pressed="true">Todas</button>
+    <button type="button" data-f="todo" aria-pressed="false">Sin revisar</button>
+    <button type="button" data-f="cm" aria-pressed="false">Con comentarios</button>
+    <button type="button" data-f="good" aria-pressed="false">Buena</button>
+    <button type="button" data-f="ok" aria-pressed="false">Aceptable</button>
+    <button type="button" data-f="dis" aria-pressed="false">Discutible</button>
+    <button type="button" data-f="bad" aria-pressed="false">Mala</button>
+    <button type="button" data-f="neu" aria-pressed="false">Neutra</button>
+    <button type="button" data-f="list" aria-pressed="false">Notas</button>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+
+  <div id="sections"></div>
+
+  <section id="revision-2026-11-03">
+    <h2>6. Revisión y decisiones del 3 de noviembre de 2026</h2>
+    <p class="sec-note">Esta sección se agregó al final del artifact original. No reemplaza ni reescribe las 43 filas de contraste: registra qué decidiste sobre cada punto abierto y en qué quedó. «Hecho» significa que el cambio ya está en el código o en el documento; «En implementación» significa que la decisión está tomada y el trabajo empezó; «Pendiente» significa que la decisión está tomada pero el trabajo se hace en otra sesión o después de medir.</p>
+
+    <div class="tablebox">
+      <table class="list" style="table-layout:fixed;min-width:1350px">
+        <colgroup>
+          <col style="width:60px">
+          <col style="width:225px">
+          <col style="width:200px">
+          <col style="width:650px">
+          <col style="width:210px">
+        </colgroup>
+        <thead>
+          <tr><th>N.º</th><th>Punto</th><th>Lo que decidiste</th><th>Qué implica</th><th>Estado</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">1</span></td>
+            <td class="what" data-l="Punto"><div class="t">Validar el audio que llega por el WebSocket</div><div class="sec-note" style="margin:4px 0 0">RNF-SEC-02</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Implementarlo.</td>
+            <td class="wide" data-l="Qué implica">El backend rechaza un fragmento vacío, uno con número impar de bytes o uno de más de 32 KB, y cierra la conexión. Un fragmento normal de 30 ms pesa 960 bytes, así que 32 KB es más de un segundo de audio: nada legítimo queda afuera.</td>
+            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">2</span></td>
+            <td class="what" data-l="Punto"><div class="t">«Seña no disponible» cuando falta la animación</div><div class="sec-note" style="margin:4px 0 0">RF-CAT-03</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">B</span><br>Reescribir el requisito.</td>
+            <td class="wide" data-l="Qué implica">El backend sigue marcando la glosa que no está en el catálogo. El caso «está en el catálogo pero su animación no está en el APK» pasa a ser responsabilidad de la app, que es la única que sabe qué clips trae. Hoy las 50 señas tienen animación, así que el caso no ocurre con el corpus actual.</td>
+            <td data-l="Estado"><span class="pill p-dis">Pendiente</span><br><span class="sec-note" style="margin:4px 0 0">Texto listo; se aplica en la sesión de documentos.</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">3</span></td>
+            <td class="what" data-l="Punto"><div class="t">Con qué modelo se mide y se defiende la tesis</div><div class="sec-note" style="margin:4px 0 0">RNF-AV-03 y SRS</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>El modelo oficial es <code>gpt-4o-mini</code>.</td>
+            <td class="wide" data-l="Qué implica">La máquina queda con <code>gpt-4o-mini</code>, 5 segundos por llamada y 1 reintento. Qwen queda solo para desarrollo, en <code>.env.local</code>, y no se usa en la ronda de pruebas. La clave de OpenAI está en <code>.env</code> (empieza con <code>sk-p</code>), no en <code>.env.local</code>.</td>
+            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">4</span></td>
+            <td class="what" data-l="Punto"><div class="t">La copia del SDD que vive en el backend</div><div class="sec-note" style="margin:4px 0 0"><code>docs/sdd.md</code></div></td>
+            <td data-l="Lo que decidiste">Sincronizarla.</td>
+            <td class="wide" data-l="Qué implica">Se corrigen las firmas que quedaron viejas: <code>NLPServiceImpl</code> con <code>segmenter</code>, <code>SemanticCache.lookup/store</code> con glosas, <code>EmbeddingModel</code>, <code>handleText(text, turn)</code> y <code>Gloss</code> con <code>semanticCategory</code>. La fuente sigue siendo Overleaf; la copia del repositorio queda alineada y con aviso de fecha.</td>
+            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">5</span></td>
+            <td class="what" data-l="Punto"><div class="t">Terminar el identificador de turno en la app Android</div><div class="sec-note" style="margin:4px 0 0">Contrato del WebSocket</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Completarlo.</td>
+            <td class="wide" data-l="Qué implica">La app numera cada frase desde 1 en cada conexión, manda ese número en el frame <code>text</code> y descarta las oraciones y el <code>done</code> de un turno viejo. El backend ya lo acepta y lo devuelve; faltaba el lado de la app.</td>
+            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">6</span></td>
+            <td class="what" data-l="Punto"><div class="t">Enmascarar las direcciones internas en <code>/metrics.json</code></div><div class="sec-note" style="margin:4px 0 0">Decisión del 18/10</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Enmascararlas.</td>
+            <td class="wide" data-l="Qué implica">El endpoint sigue mostrando el esquema y la ruta (<code>ws://***/ws/transcribe</code>), pero no el host ni el puerto. Una captura de pantalla de la demo ya no publica cómo está montada la red interna.</td>
+            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">7</span></td>
+            <td class="what" data-l="Punto"><div class="t">Corregir los documentos</div><div class="sec-note" style="margin:4px 0 0">Repos y Overleaf</div></td>
+            <td data-l="Lo que decidiste">Preparar los cambios, pero en otra sesión.</td>
+            <td class="wide" data-l="Qué implica">Queda preparada la lista de ediciones para los repositorios y, aparte, la de Overleaf con control de cambios. No se aplica nada en esta sesión para no mezclar demasiados frentes. Cada edición de Overleaf se propone y la acepta el owner.</td>
+            <td data-l="Estado"><span class="pill p-dis">Pendiente</span><br><span class="sec-note" style="margin:4px 0 0">Sesión aparte.</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">8</span></td>
+            <td class="what" data-l="Punto"><div class="t">El texto de las frases en los logs</div><div class="sec-note" style="margin:4px 0 0">RNF-SEC-03</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">B</span> ahora y <span class="pill p-bad">A</span> antes de la demo con personas.</td>
+            <td class="wide" data-l="Qué implica">Mientras se mide, el texto se queda en los logs porque es lo que permite depurar una traducción. Antes de una demostración con personas reales se quita o se enmascara. La decisión es de tiempo, no de fondo.</td>
+            <td data-l="Estado"><span class="pill p-good">Decidido</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">9</span></td>
+            <td class="what" data-l="Punto"><div class="t">El nombre <code>rt_first_sign_ms</code></div><div class="sec-note" style="margin:4px 0 0">Métrica de latencia</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">B</span><br>Dejarlo como está.</td>
+            <td class="wide" data-l="Qué implica">No se renombra. La métrica mide hasta que el backend envía la primera oración, no hasta que el avatar se mueve; los dos tramos se documentan por separado y la etiqueta <code>source</code> ya separa caché de modelo. Renombrarla rompería las citas de la línea base.</td>
+            <td data-l="Estado"><span class="pill p-good">Decidido</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">10</span></td>
+            <td class="what" data-l="Punto"><div class="t">El estado de salud cuando el catálogo está vacío</div><div class="sec-note" style="margin:4px 0 0">T2 · <code>/health</code></div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Agregar el catálogo al <code>/health</code>.</td>
+            <td class="wide" data-l="Qué implica">El endpoint publica <code>catalog_loaded</code>, <code>catalog_glosses</code> y deja de decir <code>status: ok</code> cuando el catálogo está vacío: pasa a <code>degraded</code>. Así una demo no falla en silencio con todas las señas «no disponible».</td>
+            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">11</span></td>
+            <td class="what" data-l="Punto"><div class="t">Los tiempos de conexión a la base</div><div class="sec-note" style="margin:4px 0 0">T4 · RNF-REL-03</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">A</span><br>Medir y acotar.</td>
+            <td class="wide" data-l="Qué implica">Se mide cuánto tarda abrir una conexión y esperar una libre, y se agregan topes a las dos cosas. El tope de consulta de 5 s ya existía; lo que faltaba era que una base que acepta TCP y no responde no dejara el arranque esperando.</td>
+            <td data-l="Estado"><span class="pill p-ok">En implementación</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">12</span></td>
+            <td class="what" data-l="Punto"><div class="t">Analizadores estáticos en la app Android</div><div class="sec-note" style="margin:4px 0 0">RNF-MNT-03</div></td>
+            <td data-l="Lo que decidiste">Dejarlo para el final.</td>
+            <td class="wide" data-l="Qué implica">El backend ya tiene ruff y mypy con CI verde. La app no tiene detekt ni ktlint. Se agrega al final si el tiempo alcanza; no se toca ahora para no abrir otro frente.</td>
+            <td data-l="Estado"><span class="pill p-dis">Pendiente</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">13</span></td>
+            <td class="what" data-l="Punto"><div class="t">Medir la caché en memoria</div><div class="sec-note" style="margin:4px 0 0">E1 · <code>semantic_cache</code></div></td>
+            <td data-l="Lo que decidiste">Medir antes de decidir.</td>
+            <td class="wide" data-l="Qué implica">Se compara el antes y el después con el mismo script y la misma red. No se cambia el código todavía. La caché en memoria ya quita un viaje a Neon de ~100 ms, pero hay dos mediciones que se contradicen y ninguna está publicada.</td>
+            <td data-l="Estado"><span class="pill p-dis">Pendiente</span><br><span class="sec-note" style="margin:4px 0 0">Medición.</span></td>
+          </tr>
+          <tr>
+            <td class="what" data-l="N.º"><span class="n">14</span></td>
+            <td class="what" data-l="Punto"><div class="t">El nombre del proyecto y la portada</div><div class="sec-note" style="margin:4px 0 0">SRS y SDD</div></td>
+            <td data-l="Lo que decidiste"><span class="pill p-good">SignAll</span></td>
+            <td class="wide" data-l="Qué implica">El nombre correcto es <strong>SignAll</strong>. El owner cambia las menciones manualmente. La portada del SDD, que todavía tiene el texto de la plantilla, se limpia en la sesión de documentos.</td>
+            <td data-l="Estado"><span class="pill p-good">Decidido</span><br><span class="sec-note" style="margin:4px 0 0">El owner lo aplica.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cols" style="margin-top:16px">
+      <div class="panel">
+        <h3>Lo que ya estaba decidido y no se reabre</h3>
+        <dl>
+          <dt>El nombre <code>rt_first_sign_ms</code></dt><dd>Se queda; se documentan los dos tramos.</dd>
+          <dt>La migración 004</dt><dd>Ya está aplicada en Neon; no hay nada que hacer en producción.</dd>
+          <dt>La red de compose y el proxy TLS</dt><dd>Ya están hechos y documentados.</dd>
+          <dt>Los nueve puntos de la §10.3</dt><dd>Ya están implementados y verificados.</dd>
+          <dt>El formato de la clave de animación</dt><dd>La base ya usa <code>signs/...</code>; solo falta corregir el ejemplo del documento, que entra en la sesión 7.</dd>
+        </dl>
+      </div>
+      <div class="panel">
+        <h3>Cómo leer el estado</h3>
+        <dl>
+          <dt><span class="pill p-good">Decidido</span></dt><dd>La decisión está cerrada; no requiere más trabajo en esta sesión.</dd>
+          <dt><span class="pill p-ok">En implementación</span></dt><dd>La decisión está tomada y el cambio se está aplicando. Todavía no se declara terminado hasta compilar y verificar.</dd>
+          <dt><span class="pill p-dis">Pendiente</span></dt><dd>La decisión está tomada, pero el trabajo se hace en otra sesión, después de medir, o al final del cronograma.</dd>
+        </dl>
+        <p class="sec-note" style="margin-top:10px">La clave de OpenAI vive en <code>.env</code>, que no se versiona. <code>.env.local</code> es el archivo opcional para Qwen y no se usa en la ronda oficial.</p>
+      </div>
+    </div>
+
+    <p class="sec-note" style="margin-top:16px">Esta sección se agregó el 3 de noviembre de 2026. El artifact original no se modificó en sus cinco secciones; la copia con esta revisión vive en <code>sign-ai-android/docs/backend/contraste-backend-2026-11-03.html</code>.</p>
+  </section>
+</div>
+
+<script>
+var COIN = { si: "Sí", no: "No, pendiente", par: "Parcial", con: "Se contradice", doc: "Solo documento" };
+var EV = { good: "Buena", ok: "Aceptable", dis: "Discutible", bad: "Mala", neu: "Neutra" };
+var REC = function (t) { return "<span class='rec'>" + t + "</span>"; };
+
+/* Cada fila: [ref, tema, tu versión, decisión del documento, main hoy, coincide, evaluación, [párrafos]] */
+var DOC43 = [
+  ["1", "Las 12 imágenes del SDD son del juego viejo",
+   "Las 12 PNG de <code>docs/diagrams/</code> y las de Overleaf eran del diseño anterior; las de <code>sign-ai-docs</code> son las nuevas.",
+   "B. Reemplazar las 12 por las de <code>sign-ai-docs/diagramas/png/</code>.",
+   "Las 12 PNG de <code>docs/diagrams/</code> cambiaron (visible en el diff). Overleaf: según el documento, subidas el 20/10 y verificadas por hash; no lo puedo ver.",
+   "si", "good",
+   ["Es subir archivos, no redibujar.", REC("Abre las 12 y compáralas con las de sign-ai-docs.")]],
+  ["2", "<code>Controller.sendResult(segments)</code> no existe",
+   "El SDD nombraba un método que tu código nunca tuvo; hay cinco métodos de salida.",
+   "B. Reescribir §7.1 del SDD. No crear un <code>sendResult</code> que nadie usaría.",
+   "Código igual a tu versión. El texto de <code>docs/sdd.md</code> se reescribió el 21/10 (+163 líneas; no lo leí).",
+   "si", "good",
+   ["Documentar lo que existe es lo correcto. Crear un método para cumplir el papel es peor."]],
+  ["3", "El SDD dice que <code>Orchestrator</code> tiene un solo método (<code>translate</code>)",
+   "Tu código tiene dos: <code>translate</code> y <code>translate_stream</code>.",
+   "B. Explicar que <code>translate_stream</code> es el camino del protocolo y <code>translate</code> el cómodo. No borrar <code>translate()</code>.",
+   "Los dos métodos siguen. Sin cambio de código.",
+   "si", "good",
+   ["Borrar <code>translate()</code> rompería <code>scripts/verify_orchestrator.py</code> sin ganar nada."]],
+  ["4", "<code>NLPService.transform</code> contra <code>split</code> y <code>transform_sentence</code>",
+   "Tu código ya tiene los tres: <code>transform</code> los compone.",
+   "B (decidido el 18/10; antes figuraba pendiente). Describir los tres.",
+   "Sin cambio de código.",
+   "si", "good",
+   ["Borrar <code>transform</code> rompe <code>verify_nlp_service.py</code> y no hay razón de fondo: la Figura 5 de <code>sign-ai-docs</code> ya muestra los tres."]],
+  ["5", "<code>SentenceSegmenter</code> y <code>EmbeddingModel</code> faltan en el SDD",
+   "Tu código ya los usa en <code>NLPServiceImpl</code>.",
+   "B. Agregar las dos clases al texto.",
+   "Sin cambio de código.",
+   "si", "good",
+   ["La Figura 5 ya las tiene; solo estaba viejo el texto."]],
+  ["6", "<code>lookup</code> devuelve <code>List&lt;Segment&gt;</code> en el SDD",
+   "Tu código usa <code>List&lt;String&gt;</code> y la columna es <code>glosses TEXT[]</code>.",
+   "B. Corregir la firma en §7.1 y §7.2.",
+   "Sin cambio de código.",
+   "si", "good",
+   ["Un <code>Segment</code> completo duplicaría el tipo de frase que ya está en otra columna."]],
+  ["7", "El <code>store</code> aparece síncrono en el SDD",
+   "En tu código corre en segundo plano.",
+   "B. Marcarlo asíncrono en la Figura 7.",
+   "Sin cambio. Sigue en segundo plano.",
+   "si", "good",
+   ["Hacerlo síncrono costaba ~220 ms por frase nueva (medido según el documento)."]],
+  ["8", "El SDD no dice quién dispara la traducción",
+   "El backend traducía cuando llegaba el <code>final</code> del STT.",
+   "B. Reescribir el arranque de §6.3 y §7.2 para decir quién dispara.",
+   "El backend traduce <strong>solo</strong> un <code>{\"type\":\"text\"}</code> del cliente. Las transcripciones del STT solo se reenvían a la app.",
+   "si", "dis",
+   ["Es un cambio de comportamiento respecto a tu versión, aunque el documento lo presenta como una aclaración de texto.",
+    "A favor: garantiza que una frase dictada no se firme antes de que el usuario la confirme (RF-STT-03) y quita las banderas de modo.",
+    "En contra: la app debe reenviar cada frase cerrada como <code>text</code>. Si falla, nada se traduce, y ya hubo un bucle por eso (según el documento, ~2 900 frases repetidas).",
+    REC("Acéptalo solo si lo apruebas tú y Android ya lo hace.")]],
+  ["9", "«Static GLB Server» en el SDD",
+   "<code>app/static_glb/</code> está vacío; el <code>CLAUDE.md</code> de tu versión lo menciona.",
+   "B. Sacarlo del SDD. Los GLB van dentro del APK.",
+   "No hay servidor. Según el documento, los 12 <code>.drawio</code> de <code>sign-ai-docs</code> ya no lo tenían.",
+   "si", "good",
+   ["Documentar un componente que no existe es peor que quitarlo."]],
+  ["10", "<code>modified_at</code> «permite detectar cambios sin reiniciar»",
+   "Nadie lee la columna; el catálogo se carga una vez al arrancar.",
+   "B (igual que §6.2). Aceptar el reinicio y reescribir RNF-MNT-01.",
+   "Sin cambio de código.",
+   "si", "ok",
+   ["Con 50 señas fijas, reiniciar para añadir una es razonable. Pero se rebaja un requisito (RNF-MNT-01), y el propio v0.16 lo reconocía en tensión con RNF-BD-03."]],
+  ["11", "<code>semantic_category</code> está en la base y nadie la lee",
+   "El <code>SELECT</code> pide solo <code>gloss, glb_animation_path</code>.",
+   "A. Leerla y añadir el campo a <code>Gloss</code>.",
+   "<strong>Implementado</strong> (commit <code>cdd09fd</code>): el <code>SELECT</code> incluye la columna y llega a <code>CatalogEntry</code>, <code>Gloss</code> y al <code>segment</code>.",
+   "si", "neu",
+   ["Deja el código de acuerdo con el diagrama de la tabla, pero nadie usa el dato y cada glosa viaja con un campo más (la app lo ignora).", REC("Valor bajo. No hace daño.")]],
+  ["12", "<code>glb_animation_path</code> guarda rutas de un servidor que no existe",
+   "Los valores son del tipo <code>/static/glb/…</code>.",
+   "B. Escribir que el valor es una clave que la app resuelve con sus recursos.",
+   "Valores en Neon sin cambio.",
+   "si", "ok",
+   ["Funciona, pero deja datos que parecen URLs y no lo son. Cambiarlos en Neon sería más limpio y toca producción."]],
+  ["13", "El diagrama 7.4 tiene seis estados; falta <em>Texto listo</em>",
+   "El texto del SDD y el SRS dicen siete.",
+   "B. Agregar el estado al <code>.drawio</code> y regenerar la PNG.",
+   "Según el documento, editado y regenerado.",
+   "doc", "good",
+   ["Es el único diagrama que hay que editar de verdad: un nodo y tres flechas.", REC("Abre la imagen 7.4 y confirma que tiene siete estados.")]],
+  ["14", "El 7.4 rotula la salida de <em>Error</em> como «≤2 s»",
+   "El SRS no pone plazo.",
+   "B. Quitar el número del SDD; queda en el SRS.",
+   "Según el documento, hecho en el mismo archivo del punto 13.",
+   "doc", "neu",
+   ["Un número duplicado en dos documentos se desactualiza. Cambio menor."]],
+  ["15", "El C4-2 dice «Filament»",
+   "El SRS dice Three.js 0.169.0 en WebView.",
+   "B. Una palabra en el <code>.drawio</code>.",
+   "Según el documento, corregido.",
+   "doc", "good",
+   ["Corrección de una palabra."]],
+  ["16", "El SRS no describe el protocolo real y lista «solicitud en espera»",
+   "El backend nunca manda ese aviso.",
+   "B. Describir los frames reales y sacar «solicitud en espera».",
+   "Según el documento, escrito en §2.1.5 del SRS.",
+   "doc", "good",
+   ["Es solo prosa; el SRS no tiene diagrama del protocolo."]],
+  ["17", "spaCy no aparece en el SRS ni en el SDD §6.2",
+   "Tu backend lo usa; <code>es_core_news_md</code> pesa ≈ +440 MB.",
+   "B. Agregar la fila a las dos tablas.",
+   "Según el documento, agregada.",
+   "doc", "good",
+   ["Una dependencia que pesa 440 MB debe estar documentada."]],
+  ["18", "El SRS dice «el NLP no consume memoria del servidor»",
+   "Contradice el ítem de embeddings del mismo SRS.",
+   "B. Corregir la frase.",
+   "Según el documento, corregida.",
+   "doc", "good",
+   ["Corrige una contradicción interna."]],
+  ["19", "El SRS dice «dos puntos de entrada»; son cuatro",
+   "El backend expone el WebSocket, <code>/health</code>, <code>/metrics</code> y <code>/metrics.json</code> (los tres últimos son de main).",
+   "B. Escribir los cuatro, o «dos más instrumentación».",
+   "Según el documento, escrito.",
+   "doc", "ok",
+   ["Dos de los cuatro puntos existen por el trabajo de métricas de Diego, no por tu diseño. Es correcto documentarlos si decides conservar esas rutas."]],
+  ["20", "El SRS dice FastAPI 0.115 y LangChain 1.4.6",
+   "Medido en la imagen: 0.143.0 y 1.4.5. <code>requirements.txt</code> no fija versiones.",
+   "B (poner los números reales) y fijarlos (punto 32).",
+   "SRS corregido, según el documento. <strong><code>requirements.txt</code> ya fija las versiones</strong> (commit <code>8ff4a84</code>).",
+   "si", "good",
+   ["Documentar lo real es lo correcto.", REC("Comprueba que la imagen compile con esas versiones.")]],
+  ["21", "El SRS dice «el servidor conserva 8 s de audio por frase»",
+   "Ese tope está en el STT; el backend no guarda audio.",
+   "B. Aclarar que el tope es del servicio de transcripción.",
+   "Según el documento, aclarado.",
+   "doc", "good",
+   ["Corrección de atribución."]],
+  ["22", "RF-INT-SW-01 dice que el STT es «componente interno»",
+   "El STT es otro repositorio y otro contenedor.",
+   "B. Aclarar el requisito.",
+   "Sin cambio de código.",
+   "si", "good",
+   ["Empaquetarlo dentro del backend exigiría su propia GPU. Los diagramas 6.2 y C4-2 ya lo muestran separado."]],
+  ["23", "RNF-SEC-01: límite de solicitudes por cliente",
+   "No hay ningún límite: cualquier cliente puede mandar frases sin tope.",
+   "B, abierto. Bajar o quitar el requisito y anotarlo como trabajo futuro.",
+   "No existe.",
+   "si", "ok",
+   ["Para un prototipo con pocos usuarios es razonable. Pero es rebajar un requisito para que el código lo cumpla.", REC("Que lo apruebe el equipo y quede como alcance de la tesis.")]],
+  ["24", "RNF-SEC-02: validar que lo recibido sea audio",
+   "El backend reenvía al STT cualquier byte que reciba.",
+   "A (fila 24 y §9.2: implementarlo). Pero §10.3.2 dice que no tiene decisión y que no se implementa.",
+   "No existe. «No existe» significa que no se revisa el tamaño del chunk ni la energía; <code>_pcm16_rms</code> ya calcula el nivel y no rechaza nada.",
+   "con", "neu",
+   ["La idea es barata, pero el documento se contradice.", REC("Pídele que aclare cuál de las dos secciones manda.")]],
+  ["25", "RNF-SEC-03: el texto de las frases queda en los logs y en el caché",
+   "Se escribe a nivel INFO, dos veces por frase.",
+   "A y B. Sacar el texto de los logs y poner vencimiento al caché. El 21/10 se aplazó: se quieren todos los logs mientras se mide.",
+   "Se sigue escribiendo.",
+   "si", "ok",
+   ["Aceptable mientras se mide. Es dato de usuarios en un archivo; antes de una demo con personas reales conviene quitarlo."]],
+  ["26", "RNF-REL-01 y RNF-DES-04: cola de sesiones y mínimo de simultáneas",
+   "No hay cola ni tope de sesiones.",
+   "B, abierto. Bajar a 2-3 sesiones y quitar la cola.",
+   "No existen.",
+   "si", "ok",
+   ["Mismo caso que el punto 23: razonable para un prototipo, pero rebaja un requisito.", REC("Que lo apruebe el equipo.")]],
+  ["27", "RNF-REL-03: reintentos hacia la base de datos",
+   "No hay ni un reintento, y si Neon no responde al arrancar el proceso no levanta.",
+   "A (§6.4). <code>command_timeout</code> de 5 s, un reintento y un <code>try/except</code> en el arranque.",
+   "<strong>Implementado</strong> (commit <code>a09ed17</code>): <code>command_timeout=5</code>, <code>RetryPolicy</code> y <code>run_with_retry</code> en el pool, el catálogo, la precarga, el <code>lookup</code> y el <code>store</code>. Si Neon no responde, el backend arranca sin base.",
+   "si", "good",
+   ["El peor caso (~10 s) queda por debajo de los 15 s del reloj de la app.",
+    "Matices (ver «Lo que debes tener presente»): el arranque sin base no se avisa (<code>/health</code> sigue en <code>ok</code>) y el tope de 5 s no cubre la conexión inicial ni <code>pool.acquire()</code>."]],
+  ["28", "RNF-MNT-05: borrar una entrada del caché sin reiniciar",
+   "Con tu caché consultando Neon, borrar una fila surtía efecto al instante.",
+   "B. Cambiar el criterio a «reflejado tras reiniciar».",
+   "Con el caché en memoria, la fila vive en RAM hasta reiniciar.",
+   "si", "dis",
+   ["El requisito se reescribió para describir el diseño de Diego, no al revés. Si decides revertir el caché en memoria, hay que revertir esto también.", REC("Depende de la decisión del caché (ver el cambio E1).")]],
+  ["29", "RNF-BD-03: «cero consultas a la base durante la traducción»",
+   "Es falso: hay el <code>store</code>, el camino de reserva y el keep-alive.",
+   "B. Aclarar: «cero lecturas del catálogo durante la inferencia».",
+   "Sin cambio de código.",
+   "si", "ok",
+   ["Lo que el requisito protege de verdad (el catálogo en memoria) se cumple. Reformular es honesto."]],
+  ["30", "RNF-AV-03: avisar «en un par de segundos» si falla el modelo",
+   "10 s por intento y 2 reintentos por defecto de LangChain: hasta ~30 s.",
+   "A (§6.3). <code>llm_timeout_ms = 5000</code> y <code>max_retries = 1</code>.",
+   "<strong>Implementado</strong> (commit <code>4806a89</code>): <code>llm_timeout_ms=5000</code> y <code>llm_max_retries=1</code>, y <code>max_retries</code> llega a <code>ChatOpenAI</code>.",
+   "si", "good",
+   ["El criterio es que el backend avise antes que la app (15 s). Con <code>gpt-4o-mini</code> la respuesta normal tarda 1-3 s.", "Con un modelo local en frío (6,2 s la primera llamada) fallaría."]],
+  ["31", "RNF-MNT-03: analizadores estáticos",
+   "No hay <code>mypy</code> ni <code>ruff</code>; quedan comentarios en español en cinco archivos aunque <code>CLAUDE.md</code> exige inglés.",
+   "A. Configurar <code>ruff</code> (y <code>mypy</code>).",
+   "<strong>Implementado</strong> (commit <code>8ff4a84</code>): <code>pyproject.toml</code>, <code>requirements-dev.txt</code> con versiones fijas y un CI en <code>.github/workflows/ci.yml</code>.",
+   "si", "neu",
+   ["Bueno a largo plazo. No ejecuté <code>ruff</code> ni <code>mypy</code>, así que no sé si pasan.", REC("Mira que el CI de GitHub salga en verde.")]],
+  ["32", "RNF-MNT-04: dependencias fijadas",
+   "<code>requirements.txt</code> lista nueve paquetes sin versión.",
+   "A. Fijar las versiones.",
+   "<strong>Implementado</strong> (commit <code>8ff4a84</code>): las nueve tienen versión (<code>fastapi==0.143.0</code>, <code>asyncpg==0.32.0</code>, etc.).",
+   "si", "good",
+   ["Alto valor y bajo riesgo si las versiones salen de lo que corre hoy.", REC("No verifiqué que existan esas versiones; reconstruye la imagen para comprobarlo.")]],
+  ["33", "RNF-POR-02: <code>network_mode: host</code>",
+   "Puerto 8080 publicado y red de compose.",
+   "B. Declarar la restricción en el documento (§2.3).",
+   "Implementado. Pero <code>.env.example</code> y <code>settings.py</code> siguen con <code>ws://stt:8000</code>, que no resuelve en red host.",
+   "con", "bad",
+   ["Contradice RNF-POR-02 (portable): el propio documento admite que en Docker Desktop se comporta distinto, y estás en Windows.",
+    "Su razón de ser era llegar a un Ollama local, pero el modelo oficial es <code>gpt-4o-mini</code>, así que ese beneficio no aplica a la configuración oficial.",
+    REC("Red de compose por defecto, y el modo host en un archivo aparte para quien use Ollama.")]],
+  ["34", "RF-INT-COM-03: TLS, WSS y proxy inverso",
+   "El backend no termina TLS.",
+   "B, con TODO. Documentar que el cifrado lo termina el despliegue. Poner un proxy sería A y tocaría 3 diagramas.",
+   "No hay proxy. En §10.2 está «para preguntar».",
+   "si", "dis",
+   ["Según el documento, la app en <em>release</em> solo acepta <code>wss://</code>. Sin TLS, esa versión no conecta.",
+    "Documentarlo es lo mínimo, pero no resuelve cómo se hará la demostración.",
+    REC("Decide si la demo usa una versión de depuración o si se monta un proxy.")]],
+  ["35", "RF-NLP-02: al modelo se le entrega «la frase completa»",
+   "Lo que llega al modelo es una oración.",
+   "B. Aclarar el requisito.",
+   "Sin cambio de código.",
+   "si", "good",
+   ["Es lo que tu código ya hacía desde que se segmentó."]],
+  ["36", "RF-CAT-03: «Seña no disponible»",
+   "El backend marca <code>available: false</code> y lo dice la app. 18 de las 50 glosas vienen con <code>available: true</code> y ruta inexistente.",
+   "B. Aclarar el SRS para cubrir los dos casos y decir que el aviso lo pone la app.",
+   "Sin cambio de código; texto cambiado según el documento.",
+   "si", "dis",
+   ["Documentarlo no arregla que 18 señas se anuncien disponibles y el avatar no pueda reproducirlas.", REC("Es un problema de datos del catálogo; el documento lo trata como redacción.")]],
+  ["37", "El nombre <code>rt_first_sign_ms</code> promete la seña y mide el envío",
+   "No existía la métrica.",
+   "B. Dejar el nombre y documentar los dos tramos en el SRS.",
+   "La métrica existe y mide hasta que el backend <em>envía</em> la primera oración.",
+   "si", "dis",
+   ["Conservar el nombre se justificó para comparar con la línea base (913 ms), pero el mismo documento dice que esa cifra no es comparable. La razón ya no existe.", REC("Renombrar es más honesto.")]],
+  ["38", "El caché guarda duplicados y respuestas vacías",
+   "<code>INSERT</code> simple sin restricción única.",
+   "A y B. <code>UPSERT</code> sobre <code>(original_text, phrase_type)</code>, no guardar vacías, y actualizar el plan de pruebas.",
+   "<strong>Implementado</strong> (commit <code>cdd09fd</code>): <code>ON CONFLICT … DO UPDATE</code>, <code>store</code> descarta respuestas vacías y existe la migración <code>004</code>. <strong>La migración no se aplica sola.</strong>",
+   "si", "good",
+   ["Una respuesta vacía guardada se sirve siempre como HIT: esa frase nunca vuelve a traducirse bien.",
+    "Riesgo: la migración con <code>UNIQUE</code> falla si hay duplicados, y limpiarlos es un <code>DELETE</code> sobre datos reales.",
+    REC("Hacerlo, con respaldo de la tabla y tu visto bueno antes de correr la migración.")]],
+  ["39", "Si una frase falla a mitad, sale <code>error</code> y no <code>done</code>",
+   "El contrato no lo dice y el <code>done</code> solo se manda en el camino feliz.",
+   "A, junto con el identificador de turno de §6.5 (ver E7).",
+   "<strong>Implementado</strong> (commit <code>4522dbd</code>): tras <code>send_error</code> se llama a <code>send_done</code>.",
+   "si", "ok",
+   ["Cierra el turno de forma limpia.", REC("Comprueba que Android no tome un <code>done</code> tras un <code>error</code> como «terminó bien».")]],
+  ["40", "Ni el SRS ni el SDD mencionan la instrumentación",
+   "Solo existía <code>PipelineTrace</code>.",
+   "B. Agregarla al SDD como instrumentación no funcional.",
+   "Según el documento, agregada (subsección «Instrumentación»).",
+   "doc", "good",
+   ["Medir es útil para una tesis; documentarlo es correcto."]],
+  ["41", "La §3 del SRS está vacía con subtítulos de una plantilla de juegos",
+   "Plantilla sin llenar.",
+   "Diferido. Llenarla en un futuro.",
+   "Sin cambio.",
+   "doc", "dis",
+   ["Si el SRS va a la directora, no debería llevar una plantilla de juegos vacía.", REC("Llénala o bórrala antes de entregar.")]],
+  ["42", "El SRS dice «SignAI» 25 veces y «SignALL» ninguna",
+   "Nombre del proyecto inconsistente según el documento.",
+   "Del compañero. «Ya lo sabe».",
+   "Sin información en el repositorio.",
+   "doc", "neu",
+   ["Corrección editorial. No tengo más detalle del documento.", REC("Confirma con tu compañero cuál es el nombre correcto.")]],
+  ["43", "Portada del SDD con «[PENDIENTE DE COMPLETAR]» y un solo registro en el historial",
+   "Plantilla azul sin limpiar y una sola entrada (19/08/2026).",
+   "Del compañero. Limpiar antes de la entrega.",
+   "El documento dice que ya se agregó la fila del 20/10 al historial.",
+   "doc", "neu",
+   ["Es trabajo de entrega, no de diseño.", REC("Revísalo en el SDD de Overleaf antes de entregar.")]]
+];
+
+var EXTRAS = [
+  ["E1", "Caché semántico en memoria (código)",
+   "Cada búsqueda consultaba pgvector en Neon.",
+   "No hay un punto propio; los puntos 28 y 29 reescriben requisitos para describirlo.",
+   "Implementado: <code>semantic_cache_preload=true</code>, tope de 20 000 filas, búsqueda exacta y luego coseno con umbral 0,05. Neon solo se escribe, en segundo plano.",
+   "si", "dis",
+   ["A favor: quita un viaje a Neon (~100 ms según Diego) con los mismos resultados. Se apaga con una variable de entorno.",
+    "En contra: tú mediste que el lookup casi no costaba. Las dos mediciones se contradicen. Borrar o editar filas no se refleja hasta reiniciar, y cada instancia tiene su copia.",
+    REC("Mide los dos caminos con el mismo script y la misma red antes de decidir.")]],
+  ["E2", "D-7: la lista de glosas sale del prompt",
+   "Prompt de tres ejemplos y sin lista.",
+   "D-7 (§10.3 bis): la lista sale, porque el plan de pruebas dice que el prompt no la lleva y porque no escala.",
+   "<strong>Implementado</strong> (commit <code>6e0871a</code>): <code>{vocabulary}</code> ya no existe y el prompt es una constante. El vocabulario solo se usa para la reparación.",
+   "si", "dis",
+   ["Hoy el prompt dice «usa SOLO estas 50 glosas». D-7 lo quita: el modelo traduce libremente y la reparación corrige.",
+    "A favor: es lo que tú querías y el costo crece con el corpus (a 5 000 glosas serían ~10 000 tokens por llamada).",
+    "En contra: con 50 glosas son ~103 tokens y el corpus está fijado en 50 (RD-01). La lista evita que el modelo invente signos; Diego midió 9/10 con ella.",
+    "Ahora el modelo no ve la lista, así que emitirá más glosas desconocidas, y la reparación (E4) las descarta en silencio.",
+    REC("Coherente con tu criterio. Mídelo con las mismas frases antes y después, con el caché vaciado y el backend reiniciado.")]],
+  ["E3", "Reglas nuevas del prompt",
+   "Reglas de orden, artículos e infinitivos.",
+   "Se conservan (salen solo las tres que mencionan «the vocabulary»).",
+   "Glosas de varias palabras permitidas (<code>COMO ESTAS</code>), ejemplo contra partirlas y regla de no emitir pronombres sueltos.",
+   "si", "good",
+   ["Las glosas frasales existen y la regla «una glosa = una palabra» las partía en señas que no existen.", "La regla de pronombres es la única sin medir y puede quitar un YO que sí hacía falta.", REC("Conserva lo de glosas frasales; mide la de pronombres.")]],
+  ["E4", "Reparación de glosas",
+   "La salida del modelo pasaba tal cual y el validador marcaba «no disponible».",
+   "Se queda (§10.3 bis).",
+   "Une fragmentos, corrige ortografía y <strong>descarta en silencio</strong> las glosas fuera del catálogo, salvo que ninguna exista. Contradice la frase de <code>CLAUDE.md</code> que dice que el validador las marca.",
+   "par", "dis",
+   ["Unir <code>COMO</code> + <code>ESTAS</code> en <code>COMO ESTAS</code> es claramente bueno.", "Descartar lo desconocido es lo contrario de lo que prefieres («mejor que diga que la seña no está»): el usuario no se entera.", "Tras D-7 (sin lista en el prompt) esto pesa más: el código sigue sin cambios y el comentario sigue diciendo que «el validador ya marca» lo que no está en el catálogo, lo cual es falso mientras quede al menos una glosa válida.", REC("Conserva la unión y deja pasar las glosas desconocidas para que el validador las marque.")]],
+  ["E5", "Modelo oficial y <code>LLM_BASE_URL</code> (§6.1)",
+   "<code>gpt-4o-mini</code> fijo.",
+   "§6.1: <code>gpt-4o-mini</code> oficial; Qwen local para pruebas, en un <code>.env.local</code>.",
+   "<code>LLM_BASE_URL</code> vacío por defecto. <code>.env.example</code> con <code>gpt-4o-mini</code>.",
+   "si", "good",
+   ["Reproducible y alineado con el SRS. El parámetro opcional no afecta si está vacío.", "Las cifras de latencia (273 ms p50) son de Qwen local con caché vacío, no del modelo oficial."]],
+  ["E6", "Llamada de calentamiento del LLM",
+   "No existía.",
+   "Sin punto propio.",
+   "Una llamada de relleno al LLM en cada arranque (<code>LLM_WARMUP_ENABLED=true</code>).",
+   "si", "neu",
+   ["Útil con un modelo local; con OpenAI es una llamada casi gratuita en cada arranque y no aporta nada."]],
+  ["E7", "Identificador de turno <code>turn</code> (§6.5)",
+   "El <code>text</code> no lleva identificador y el <code>done</code> es solo <code>{\"type\":\"done\"}</code>.",
+   "§6.5, opción A: lo pone el cliente (entero desde 1 por conexión) y el backend lo copia a <code>segment</code>, <code>done</code> y <code>error</code> sin interpretarlo.",
+   "<strong>Implementado</strong> (commit <code>4522dbd</code>): el router lee <code>turn</code> y el controlador lo copia a <code>segment</code>, <code>done</code> y <code>error</code>. Un cliente que no lo manda recibe los frames sin el campo.",
+   "si", "good",
+   ["Resuelve una carrera real: si cancelas la frase A y mandas la B, el <code>done</code> de A puede llegar cuando B corre.", "Barato (unas ocho líneas) y compatible hacia atrás.", REC("Hazlo junto con el cambio de Android en el mismo trabajo.")]],
+  ["E8", "Router: traducción en su propia tarea y cierre de sesión",
+   "Un <code>asyncio.gather</code> de las dos lecturas, con la traducción dentro del bucle.",
+   "Sin punto propio (código del 14 al 19 de octubre).",
+   "<code>_PhraseTranslator</code> con un candado, y la sesión termina cuando acaba cualquiera de las dos mitades (<code>asyncio.wait</code>).",
+   "par", "good",
+   ["Corrige dos fallos medidos según el documento: 10 sesiones dejaban 20 conexiones al STT abiertas, y traducir dentro del bucle retrasaba el audio.", REC("Conservarlo.")]],
+  ["E9", "Eco de la frase escrita",
+   "Respondía a cada <code>text</code> con un <code>transcript</code> <code>final</code>.",
+   "Corregido en <code>9e0f4b7</code> (CAMBIOSBACKEND.md).",
+   "Ya no se manda ningún <code>transcript</code> por un <code>text</code>.",
+   "si", "good",
+   ["Necesario una vez que el cliente decide: sin esto la app tomaba su propia frase por voz y la reenviaba."]],
+  ["E10", "Migración 003: cuatro columnas en <code>catalog</code>",
+   "Las columnas existían en producción pero no en el repositorio.",
+   "Sin punto propio.",
+   "<code>003_add_catalog_asset_metadata.sql</code>: <code>fps</code>, <code>total_frames</code>, <code>asset_bytes</code>, <code>asset_sha256</code>. Idempotente; nadie las lee.",
+   "si", "good",
+   ["Hace que una base creada con las migraciones quede igual a producción. Son cuatro columnas, no tres."]],
+  ["E11", "Normalización del catálogo (tildes, mayúsculas, <code>¿?</code>)",
+   "Búsqueda exacta: <code>CÓMO</code> no encontraba <code>COMO</code>.",
+   "Sin punto propio.",
+   "Implementada. Conserva la Ñ. Ya estaba en <code>origin/main</code> desde antes.",
+   "si", "good",
+   ["Pequeña, aislada y con un caso real de producción."]],
+  ["E12", "Lectura periódica del <code>/health</code> del STT",
+   "No existía.",
+   "Sin punto propio.",
+   "Cada 30 s un hilo lee <code>silence_timeout_ms</code> del STT y lo copia al <code>/health</code> del backend.",
+   "si", "neu",
+   ["Es para un panel de depuración en Android. Se confirmará al revisar el STT."]],
+  ["E13", "Cálculo de RMS sin <code>audioop</code>",
+   "No existía.",
+   "Sin punto propio.",
+   "Python puro por chunk.",
+   "si", "good",
+   ["<code>audioop</code> se elimina en Python 3.13; esta versión funciona en cualquiera."]],
+  ["E14", "Métricas en el código (<code>/metrics</code>, <code>llm_ms</code>, <code>cache_lookup_ms</code>)",
+   "Solo <code>PipelineTrace</code>.",
+   "Puntos 37 y 40 (documentación).",
+   "Implementadas. <code>llm_base_url</code> y <code>stt_ws_url</code> salen sin enmascarar en <code>/metrics.json</code>.",
+   "par", "ok",
+   ["Medir ayuda a una tesis y es opcional.", "El documento decide enmascarar las dos direcciones (§9.4) y el código no lo hace."]],
+  ["E15", "Vaciar <code>semantic_cache</code> antes de remedir (§6.1 y §9.4)",
+   "El caché guarda las glosas de cualquier modelo anterior.",
+   "Vaciarlo antes de la ronda con el modelo oficial.",
+   "Es un paso manual. <code>CLAUDE.md</code> dice <code>DELETE FROM semantic_cache</code>.",
+   "par", "good",
+   ["Sin vaciar, el prompt nuevo no se ejecuta: las glosas viejas salen como HIT.", "Con el caché en memoria hay que <strong>reiniciar el backend</strong> después del <code>DELETE</code>; <code>performance.md</code> lo dice y <code>CLAUDE.md</code> no."]],
+  ["E16", "<code>flujo-oraciones</code> pasó a ser <code>main</code> (21/10)",
+   "Tu <code>main</code> de antes era <code>979e99d</code>.",
+   "Decisión del owner el 21/10: avance rápido sin reescribir historia.",
+   "Rama de respaldo <code>respaldo/main-2026-10-21</code> apunta al <code>main</code> viejo; <code>develop</code> conserva los 8 commits del tiempo real.",
+   "si", "ok",
+   ["Se puede deshacer gracias a la rama de respaldo y no se perdió historia.", REC("Confirma que sabías que se movía <code>main</code>.")]],
+  ["E17", "Borrado de <code>docs/requirements.md</code>",
+   "Existía una copia de 764 líneas de los requerimientos en el backend.",
+   "Era un duplicado desactualizado; <code>CLAUDE.md</code> apunta ahora al v0.16 de <code>sign-ai-docs</code>.",
+   "Borrado el 21/10.",
+   "si", "good",
+   ["Una copia desactualizada engaña más que ayuda. El archivo de requerimientos pasó a llamarse <code>…_v0.16.md</code> y se cambiaron las citas por nombre."]]
+];
+
+var NINE = [
+  ["P1", "D-7: quitar la lista de glosas del prompt",
+   "El prompt llevaba las 50 glosas en <code>{vocabulary}</code>.",
+   "§10.3 punto 1: la lista sale; la reparación y el validador se quedan.",
+   "<strong>Hecho</strong> (commit <code>6e0871a</code>). <code>PROMPT_TEMPLATE</code> ya no tiene el marcador, <code>self._prompt</code> es una constante, y se reescribieron las reglas que mencionaban el vocabulario.",
+   "si", "dis",
+   ["Se cumple lo decidido. Lo que cambia en la práctica es que el modelo ya no tiene el límite del catálogo y la reparación hace ese trabajo (ver T3).", REC("Mide antes y después con las mismas frases y el caché vaciado.")]],
+  ["P2", "LLM: 5 s y un reintento",
+   "10 s por intento y 2 reintentos por defecto de LangChain (hasta ~30 s).",
+   "§10.3 punto 2: <code>llm_timeout_ms=5000</code> y <code>max_retries=1</code>.",
+   "<strong>Hecho</strong> (commit <code>4806a89</code>). En <code>settings.py</code>, <code>.env.example</code> y el constructor de <code>LLMClient</code>. El orden de argumentos de <code>main.py</code> coincide con el constructor.",
+   "si", "good",
+   ["Peor caso ~10 s, por debajo de los 15 s de la app. Tu <code>.env</code> real puede tener <code>LLM_TIMEOUT_MS=10000</code>, que pisaría el valor nuevo: revísalo.", "Con un modelo local en frío (6,2 s) fallaría."]],
+  ["P3", "Base de datos: tope, reintento y arranque controlado",
+   "Sin tope de espera; si Neon no responde al arrancar, el proceso muere.",
+   "§10.3 punto 3: 5 s por consulta, un reintento y un <code>try/except</code> en el arranque.",
+   "<strong>Hecho</strong> (commit <code>a09ed17</code>). <code>open_pool</code> devuelve <code>None</code> si no hay base; <code>run_with_retry</code> envuelve la carga del catálogo, la precarga, el <code>lookup</code> y el <code>store</code>. Los tres consumidores aceptan un pool nulo.",
+   "si", "good",
+   ["Cumple lo decidido. Con matices importantes: T2 (arranque sin aviso) y T4 (lo que el tope no cubre).", REC("Corre <code>scripts/verify_database_resilience.py</code> dentro del contenedor.")]],
+  ["P4", "Identificador de turno <code>turn</code>",
+   "El <code>text</code> no llevaba identificador.",
+   "§10.3 punto 4 (§6.5, opción A): lo pone el cliente y el backend lo copia sin interpretarlo.",
+   "<strong>Hecho</strong> (commit <code>4522dbd</code>). <code>ClientFrame</code> lo lee, <code>handle_text(text, turn)</code> lo guarda y <code>_with_turn</code> lo agrega a <code>segment</code>, <code>done</code> y <code>error</code>.",
+   "si", "good",
+   ["Un cliente que no lo manda recibe los frames sin el campo, como antes.", "El valor es opaco: se copia lo que llegue, de cualquier tipo JSON.", REC("Falta confirmar que Android lo envía y lo usa para descartar el <code>done</code> de otra frase.")]],
+  ["P5", "<code>done</code> también cuando hay error",
+   "Tras un error no se mandaba <code>done</code>.",
+   "§10.3 punto 5 (fila 39).",
+   "<strong>Hecho</strong> (commit <code>4522dbd</code>). Tras <code>send_error</code> se llama a <code>send_done</code>, y se limpia el turno.",
+   "si", "ok",
+   ["Cierra el turno de forma limpia.", REC("Comprueba en Android que un <code>done</code> tras un <code>error</code> no se interprete como éxito.")]],
+  ["P6", "Leer <code>semantic_category</code>",
+   "El <code>SELECT</code> pedía solo <code>gloss, glb_animation_path</code>.",
+   "§10.3 punto 6 (fila 11): leerla.",
+   "<strong>Hecho</strong> (commit <code>cdd09fd</code>). El <code>SELECT</code> la incluye, <code>CatalogEntry</code> y <code>Gloss</code> tienen el campo, y el validador la pasa.",
+   "si", "neu",
+   ["Cada glosa del <code>segment</code> lleva un campo más. Es aditivo y la app lo ignora."]],
+  ["P7", "<code>UPSERT</code> del caché y no guardar vacías",
+   "<code>INSERT</code> simple, con duplicados y respuestas vacías.",
+   "§10.3 punto 7 (fila 38): <code>UPSERT</code> sobre <code>(original_text, phrase_type)</code>.",
+   "<strong>Hecho en código</strong> (commit <code>cdd09fd</code>): <code>ON CONFLICT … DO UPDATE</code> y <code>store</code> descarta vacías. Además, el contador de filas en memoria ya no cuenta dos veces la misma frase.",
+   "par", "good",
+   ["Depende de la migración <code>004</code>, que borra datos y no se aplica sola (T1). Sin ella, cada escritura al caché falla.", REC("Respalda la tabla, aplica la 004 y solo entonces despliega el código.")]],
+  ["P8", "<code>ruff</code> y <code>mypy</code>",
+   "No había configuración ni integración continua.",
+   "§10.3 punto 8 (fila 31).",
+   "<strong>Hecho</strong> (commit <code>8ff4a84</code>): <code>pyproject.toml</code>, <code>requirements-dev.txt</code> y <code>.github/workflows/ci.yml</code>. Se tocaron unos 20 archivos por orden de imports y similares.",
+   "si", "ok",
+   ["No ejecuté los analizadores, así que no sé si el código pasa.", REC("Revisa el resultado del CI en GitHub.")]],
+  ["P9", "Dependencias fijadas",
+   "Nueve paquetes sin versión.",
+   "§10.3 punto 9 (fila 32).",
+   "<strong>Hecho</strong> (commit <code>8ff4a84</code>). Las nueve tienen versión exacta; <code>spacy</code> y <code>es_core_news_md</code> ya estaban fijados.",
+   "si", "good",
+   ["Mejora la reproducibilidad.", REC("No verifiqué que las versiones existan. Reconstruye la imagen: <code>docker compose build</code>.")]]
+];
+
+var PRESENT = [
+  ["T1", "La migración 004 borra datos y nadie la aplica sola",
+   ["Hace dos <code>DELETE</code> sobre <code>semantic_cache</code>: las filas con glosas vacías y los duplicados (conserva la más nueva). Después crea el índice único.",
+    "El repositorio no tiene un ejecutor de migraciones; alguien debe correrla a mano en Neon.",
+    "Si el código nuevo corre antes de aplicarla, el <code>ON CONFLICT</code> falla (no hay restricción única) y el caché deja de persistir.",
+    REC("Respalda la tabla, aplica la 004 y después despliega.")]],
+  ["T2", "El arranque sin base de datos no se avisa",
+   ["Si Neon no responde, el backend arranca con el catálogo vacío y <code>/health</code> sigue diciendo <code>\"status\": \"ok\"</code>.",
+    "Todas las señas saldrían «no disponibles» sin que nada lo indique. El documento lo describe como intencional.",
+    REC("Pide que <code>/health</code> distinga el estado, o que el arranque reintente antes de continuar.")]],
+  ["T3", "D-7 sin lista agrava la reparación silenciosa",
+   ["<code>_repair_glosses</code> no cambió y descarta en silencio las glosas fuera del catálogo mientras quede al menos una válida.",
+    "Ahora el modelo no ve la lista, así que emitirá más glosas desconocidas y el usuario no se enterará.",
+    "El comentario del código y <code>CLAUDE.md</code> siguen diciendo que el validador las marca; con la reparación en medio, no es así."]],
+  ["T4", "El tope de 5 s no cubre todo",
+   ["Por lo que sé de <code>asyncpg</code>, <code>command_timeout</code> acota los comandos, no la conexión inicial (60 s por defecto) ni <code>pool.acquire()</code>.",
+    "La precarga del caché lee toda la tabla con un solo comando: si pasa de 5 s falla y el backend cae al camino por Neon sin avisar. Con pocas filas no pasa; con 20 000 sí podría.",
+    REC("Verifícalo con la prueba de resiliencia; es una lectura mía de los valores por defecto, no una medición.")]],
+  ["T5", "No verifiqué que las versiones fijadas existan ni que <code>ruff</code> y <code>mypy</code> pasen",
+   ["No ejecuté nada: revisé el código y los diffs.",
+    "El CI de GitHub y <code>docker compose build</code> responden lo que yo no puedo."]]
+];
+
+var PENDING = [
+  ["S1", "<code>network_mode: host</code> y <code>STT_WS_URL</code>",
+   ["Siguen igual. <code>.env.example</code> y <code>settings.py</code> mantienen <code>ws://stt:8000</code>, que no resuelve en red host (fila 33)."]],
+  ["S2", "Enmascarar direcciones en <code>/metrics.json</code>",
+   ["El documento dice que <code>llm_base_url</code> y <code>stt_ws_url</code> se enmascaran (§9.4). El código no lo hace."]],
+  ["S3", "<code>CLAUDE.md</code> sobre vaciar el caché",
+   ["Dice <code>DELETE FROM semantic_cache</code> sin mencionar que hay que reiniciar el backend. Con el caché en memoria, sin reiniciar no sirve (E15)."]],
+  ["S4", "El nombre <code>rt_first_sign_ms</code>",
+   ["Sigue igual aunque mide hasta el envío (fila 37)."]],
+  ["S5", "Decisiones abiertas o aplazadas",
+   ["Validar el audio (fila 24, el documento se contradice), el texto en los logs (fila 25, aplazado), el límite de solicitudes y la cola de sesiones (filas 23 y 26)."]],
+  ["S6", "<code>docs/sdd.md</code> sin actualizar",
+   ["<code>handle_text</code> con <code>turn</code> y el campo nuevo en <code>Gloss</code> quedaron registrados en <code>docs/sdd-changes.md</code> como pendientes, «por la regla del repo». El SDD y el código ya no coinciden en eso."]],
+  ["S7", "Cambios de Android para el contrato nuevo",
+   ["El backend ya acepta y devuelve <code>turn</code> y manda <code>done</code> tras un error. Falta confirmar en el repositorio de Android que los usa; lo reviso cuando llegue a ese repo."]]
+];
+
+/* Actualización con los requerimientos de tu copia local del v0.16 (commit 2e11aeb, 21/10 19:52). */
+var UPD = "<span class='upd'>Actualizado</span> ";
+function setRow(list, ref, f) {
+  for (var i = 0; i < list.length; i++) {
+    if (list[i][0] !== ref) continue;
+    if (f.doc !== undefined) list[i][3] = UPD + f.doc;
+    if (f.main !== undefined) list[i][4] = f.main;
+    if (f.coin !== undefined) list[i][5] = f.coin;
+    if (f.ev !== undefined) list[i][6] = f.ev;
+    if (f.body !== undefined) list[i][7] = f.body;
+    return;
+  }
+}
+
+setRow(DOC43, "8", {
+  doc: "Tu v0.16 ya lo dice: RF-INT-COM-01 («solo se traduce el texto que llega como texto») y RF-STT-03 (en modo manual el usuario decide cuándo enviar). Diego lo trata en la fila 8 como una aclaración de texto.",
+  coin: "si", ev: "ok",
+  body: ["Sigue siendo un cambio de comportamiento respecto a tu versión, pero ahora está escrito en tus propios requisitos, así que dejó de ser una discrepancia entre documento y código.",
+    "A favor: una frase dictada no se firma antes de que el usuario la confirme.",
+    "En contra: depende de que la app reenvíe cada frase cerrada. Si falla, nada se traduce, y ya hubo un bucle por eso.",
+    REC("Decisión tomada. Falta confirmar en Android que reenvía cada frase cerrada.")]
+});
+
+setRow(DOC43, "10", {
+  doc: "RNF-MNT-01 de tu v0.16 ya dice que el cambio en el catálogo se reconoce «después de reiniciar el servicio».",
+  coin: "si", ev: "ok",
+  body: ["El requisito ya fue reescrito, como decidía el documento.",
+    "Con 50 señas fijas, reiniciar para añadir una es razonable. Se rebajó el requisito original («sin reiniciar») para que el código lo cumpla."]
+});
+
+setRow(DOC43, "16", {
+  doc: "RF-INT-COM-01 de tu v0.16 describe los cinco mensajes del servidor, los tres de la app, el identificador de turno y que el aviso de fin sale también cuando la frase falla. El SRS de Overleaf no lo pude ver.",
+  coin: "si",
+  body: ["Los frames reales ya están descritos en tus requerimientos. Falta comprobar que el SRS de Overleaf diga lo mismo."]
+});
+
+setRow(DOC43, "22", {
+  doc: "RF-INT-SW-01 de tu v0.16 ya dice «servicio propio al que el backend se conecta por WebSocket», y RNF-POR-02 lo sitúa en un contenedor aparte.",
+  coin: "si", ev: "good"
+});
+
+setRow(DOC43, "23", {
+  doc: "RNF-SEC-01 se reescribió: ya no pide un límite de solicitudes sino medir las sesiones abiertas y las frases procesadas. El límite queda como trabajo futuro (TODO).",
+  main: "El backend ya mide: <code>sessions_active</code>, <code>sessions_total</code> y <code>rt_phrases_total</code> en <code>/metrics</code>.",
+  coin: "si", ev: "good",
+  body: ["El requisito ahora es algo que el código ya cumple, y la razón es honesta: sin inicio de sesión no hay cómo identificar a un cliente.",
+    REC("Sigue sin haber límite. Queda como trabajo futuro, escrito en el propio requisito.")]
+});
+
+setRow(DOC43, "24", {
+  doc: "RNF-SEC-02 sigue vigente: rechazar fragmentos vacíos, de tamaño impar o por encima de un máximo, y cerrar la conexión. Su TODO dice «implementar la validación y definir el máximo». Diego (§10.3.2) dice que no se implementa.",
+  main: "No existe. El backend reenvía al STT cualquier byte que reciba. <code>_pcm16_rms</code> ya recorre cada chunk y no rechaza nada.",
+  coin: "no", ev: "ok",
+  body: ["Tu requisito ya está escrito, así que la contradicción se resuelve a favor de implementarlo, o de bajar el requisito.",
+    "Es barato: tres comprobaciones sobre el chunk (vacío, impar, demasiado grande).",
+    REC("Decide: implementarlo o quitar el requisito. Hoy no coinciden.")]
+});
+
+setRow(DOC43, "25", {
+  doc: "RNF-SEC-03 reescrito: la voz no se guarda (se reenvía y se descarta) y el texto transcrito queda en la caché. Su TODO: definir cuánto tiempo se conserva. No menciona los logs.",
+  main: "El backend no guarda el audio, solo lo reenvía. El texto queda en la caché y también en los logs del servidor.",
+  coin: "par", ev: "ok",
+  body: ["La parte de la voz se cumple. La del texto es una postura mínima mientras se define la retención.",
+    "Los logs también guardan el texto y el requisito no los cubre.",
+    REC("Aceptable mientras se mide; antes de una demo con personas reales conviene resolver los logs.")]
+});
+
+setRow(DOC43, "26", {
+  doc: "RNF-REL-01 y RNF-DES-04 reescritos: tres sesiones simultáneas y sin cola, porque el audio no tiene búfer y una sesión en espera ya habría perdido su audio. TODO: medir con más de un cliente.",
+  main: "No hay cola ni tope de sesiones, y todavía no hay una medición con tres sesiones.",
+  coin: "si", ev: "good",
+  body: ["La justificación es sólida: una cola daría una espera sin límite y haría imposible medir la latencia con honestidad.",
+    REC("Pendiente medir con tres clientes a la vez, como dice el TODO.")]
+});
+
+setRow(DOC43, "27", {
+  doc: "RNF-REL-03 pide tope de espera, reintentos acotados y arranque controlado. Su TODO («implementar 5 s, un reintento y el arranque») quedó desactualizado: el código ya lo hace.",
+  main: "<strong>Implementado</strong> (commit <code>a09ed17</code>): <code>command_timeout=5</code>, <code>RetryPolicy</code> y <code>run_with_retry</code>, y arranque sin base si Neon no responde.",
+  coin: "si", ev: "good",
+  body: ["Matices en «Lo que debes tener presente» (T2 y T4): el arranque sin base no se avisa y el tope no cubre la conexión inicial.",
+    REC("Actualiza el TODO del requisito: el código ya lo cumple.")]
+});
+
+setRow(DOC43, "28", {
+  doc: "RNF-MNT-05 reescrito: la corrección de una entrada del caché «se refleja después de reiniciar el backend», porque mantiene la caché en memoria.",
+  main: "Con el caché en memoria, la fila vive en RAM hasta reiniciar.",
+  coin: "si", ev: "ok",
+  body: ["Ya está escrito en tus requisitos. Si algún día se revierte el caché en memoria, hay que reescribir también RNF-MNT-05, RNF-BD-03 y RF-INT-COM-05.",
+    REC("Depende de la decisión del caché (E1), que sigue por medir.")]
+});
+
+setRow(DOC43, "29", {
+  doc: "RNF-BD-03 reescrito: catálogo y caché se cargan al iniciar; se evitan las lecturas, no las escrituras (el guardado va en segundo plano).",
+  main: "Coincide mientras la precarga funcione. Si falla, el backend lee Neon en cada frase.",
+  coin: "si", ev: "ok",
+  body: ["El criterio de aceptación («no se registran lecturas… originadas por el flujo de traducción») no se cumple en ese caso de falla de la precarga."]
+});
+
+setRow(DOC43, "30", {
+  doc: "RNF-AV-03 ya dice cinco segundos por llamada al modelo, un reintento y diez segundos en el peor caso. Su TODO («implementar») quedó desactualizado.",
+  main: "<strong>Implementado</strong> (commit <code>4806a89</code>): <code>llm_timeout_ms=5000</code> y <code>llm_max_retries=1</code>.",
+  coin: "si", ev: "good",
+  body: ["El requisito y el código coinciden.", REC("Actualiza el TODO del requisito.")]
+});
+
+setRow(DOC43, "31", {
+  doc: "RNF-MNT-03 de tu v0.16: «el backend usa ruff y mypy». TODO: configurar el análisis estático en la app móvil.",
+  main: "<strong>Implementado</strong> en el backend (commit <code>8ff4a84</code>). La app móvil no tiene análisis estático.",
+  coin: "par", ev: "ok",
+  body: ["El backend cumple el criterio si el CI pasa; yo no lo ejecuté.", "El requisito habla también de la app móvil, y eso hoy solo está como TODO."]
+});
+
+setRow(DOC43, "32", {
+  doc: "RNF-MNT-04 de tu v0.16 pide dependencias centralizadas y entorno repetible.",
+  main: "<strong>Implementado</strong> (commit <code>8ff4a84</code>): las nueve dependencias tienen versión.",
+  coin: "si", ev: "good"
+});
+
+setRow(DOC43, "33", {
+  doc: "RNF-POR-02 ahora lo reconoce como TODO: «hoy el backend usa la red del equipo anfitrión y requiere un motor con soporte de redes de host; se prevé quitar esa condición».",
+  coin: "par",
+  body: ["Tu propio requisito ya prevé quitar el modo host, que es lo que yo recomendaba.",
+    "Contradice el criterio de la portabilidad: el propio documento admite que en Docker Desktop se comporta distinto, y estás en Windows.",
+    REC("Falta hacerlo: red de compose por defecto, y el modo host en un archivo aparte para quien use Ollama.")]
+});
+
+setRow(DOC43, "34", {
+  doc: "En tu v0.16 el cifrado es <strong>RF-INT-COM-06</strong>: cifrar app↔backend y backend↔LLM, verificable con inspección del tráfico. Diego cita «RF-INT-COM-03», que ahora es la comunicación con el STT.",
+  main: "Sin proxy: el backend no termina TLS.",
+  coin: "no", ev: "dis",
+  body: ["Tu requisito pide cifrado verificable, y el backend solo no lo cumple por sí mismo.",
+    "Según el documento, la app en <em>release</em> solo acepta <code>wss://</code>. Sin TLS, esa versión no conecta.",
+    REC("Decide si la demo usa una versión de depuración o si se monta un proxy.")]
+});
+
+setRow(DOC43, "35", {
+  doc: "RF-NLP-02 de tu v0.16 ya dice «cada oración» y «la oración».",
+  coin: "si", ev: "good"
+});
+
+setRow(DOC43, "36", {
+  doc: "RF-CAT-03 reescrito: el sistema marca como no disponible una glosa que no está en el catálogo <em>o</em> que está pero sin animación en la app, y la app avisa «Seña no disponible». El criterio dice que lo marca el backend.",
+  main: "El backend marca no disponible solo la que no está en el catálogo. Las 18 sin animación exportada salen <code>available: true</code>.",
+  coin: "no", ev: "dis",
+  body: ["Tu requisito pide al backend algo que no puede saber con los datos actuales: el catálogo no dice qué animaciones trae la app.",
+    "Opciones: un indicador de animación exportada en el catálogo, o que lo decida la app y reescribir el requisito.",
+    REC("Es una brecha real entre requisito y código, no de redacción.")]
+});
+
+setRow(DOC43, "37", {
+  doc: "RNF-DES-01 de tu v0.16 ya describe los dos tramos: el del backend (hasta enviar la primera oración) y el de la app (hasta ejecutar la seña).",
+  coin: "si"
+});
+
+setRow(DOC43, "39", {
+  doc: "RF-INT-COM-01 de tu v0.16 ya dice que «el aviso de fin sale también cuando la frase falla».",
+  coin: "si"
+});
+
+setRow(EXTRAS, "E1", {
+  doc: "No hay un punto propio, pero RNF-BD-03, RF-INT-COM-05 y RNF-MNT-05 de tu v0.16 ya presuponen el caché cargado en memoria al arrancar."
+});
+
+PRESENT.push(
+  ["T6", "Dos TODO de tus requisitos ya están implementados",
+   ["RNF-REL-03 y RNF-AV-03 dicen «TODO: implementar» el tope de espera y el reintento. El código ya lo hace (commits <code>a09ed17</code> y <code>4806a89</code>).",
+    REC("Actualiza esos dos TODO para que el requisito y el código no se contradigan.")]],
+  ["T7", "La numeración de requisitos cambió",
+   ["El documento de contraste de Diego cita, por ejemplo, <code>RF-INT-COM-03</code> como el cifrado. En tu v0.16 el cifrado es <code>RF-INT-COM-06</code> y <code>COM-03</code> es la comunicación con el STT.",
+    "Las citas por número de requisito y por línea de ese documento pueden apuntar a otra cosa. Hay que revisarlas antes de usarlas como respaldo."]]
+);
+
+PENDING.push(
+  ["S8", "Requisitos con código pendiente",
+   ["RNF-SEC-02 (validar el audio) y RF-CAT-03 (marcar una glosa sin animación como no disponible) piden algo que el código no hace. RNF-POR-02 prevé quitar el modo host y no se ha hecho. RNF-MNT-03 deja pendiente la app móvil."]]
+);
+
+var SECTIONS = [
+  { title: "1. Los 43 contrastes del documento", note: "En el mismo orden que la sección 3.1 del documento. Cada número aparece una sola vez.", rows: DOC43 },
+  { title: "2. Cambios que el documento no numera", note: "Código y decisiones que están en main o en las secciones 6, 9 y 10 y no son una fila de la tabla de 43.", rows: EXTRAS },
+  { title: "3. Los nueve puntos de la sección 10.3: ¿ya están implementados?", note: "Estado verificado leyendo el código de los siete commits del 21 de octubre (15:27 a 15:29). Los nueve están hechos; los matices están en cada fila.", rows: NINE },
+  { title: "4. Lo que debes tener presente", note: "Riesgos que encontré al leer el código. Ninguno impide usar los cambios, pero conviene resolverlos o decidirlos.", items: PRESENT },
+  { title: "5. Lo que sigue sin hacerse", note: "No estaba entre los nueve puntos, así que no cuenta como incumplimiento, pero quizá lo esperabas.", items: PENDING }
+];
+
+var STORE_KEY = "contraste-backend-revisados";
+var checked = {};
+try { checked = JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {}; } catch (e) { checked = {}; }
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(checked)); } catch (e) { /* sin almacenamiento */ } }
+
+var COMMENT_KEY = "contraste-backend-comentarios";
+var comments = {};
+try { comments = JSON.parse(localStorage.getItem(COMMENT_KEY) || "{}") || {}; } catch (e) { comments = {}; }
+function saveComments() { try { localStorage.setItem(COMMENT_KEY, JSON.stringify(comments)); } catch (e) { /* sin almacenamiento */ } }
+
+var filter = "all";
+var total = 0;
+
+function render() {
+  var html = "";
+  SECTIONS.forEach(function (s, si) {
+    if (s.items) {
+      html += '<section data-sec="' + si + '"><h2>' + s.title + '</h2><p class="sec-note">' + s.note + '</p>' +
+        '<div class="tablebox"><table class="list"><thead><tr><th>Punto</th><th>Detalle</th><th>Comentarios</th></tr></thead><tbody>';
+      s.items.forEach(function (it) {
+        total++;
+        html += '<tr data-v="list" data-k="' + it[0] + '"><td class="what" data-l="Punto"><label class="chk"><input type="checkbox" id="chk-' + it[0] + '" data-k="' + it[0] + '"><span class="n">' + it[0] + '</span></label><div class="t">' + it[1] + '</div></td>' +
+          '<td class="wide eval" data-l="Detalle">' + it[2].map(function (p) { return "<p>" + p + "</p>"; }).join("") + '</td>' +
+          '<td class="cm" data-l="Comentarios"><textarea id="cm-' + it[0] + '" data-k="' + it[0] + '" rows="3" aria-label="Comentario sobre ' + it[0] + '" placeholder="Escribe un comentario"></textarea></td></tr>';
+      });
+      html += '</tbody></table></div></section>';
+      return;
+    }
+    html += '<section data-sec="' + si + '"><h2>' + s.title + '</h2><p class="sec-note">' + s.note + '</p>' +
+      '<div class="tablebox"><table><thead><tr><th>Punto y tema</th><th>Tu versión</th><th>Lo que decide el documento</th><th>Main hoy</th><th>¿Coincide?</th><th>¿Es buena decisión?</th><th>Comentarios</th></tr></thead><tbody>';
+    s.rows.forEach(function (r) {
+      total++;
+      var body = r[7].map(function (p) { return "<p>" + p + "</p>"; }).join("");
+      html += '<tr data-v="' + r[6] + '" data-k="' + r[0] + '">' +
+        '<td class="what" data-l="Punto y tema"><label class="chk"><input type="checkbox" id="chk-' + r[0] + '" data-k="' + r[0] + '"><span class="n">' + (/^[EP]/.test(r[0]) ? r[0] : "N.º " + r[0]) + '</span></label><div class="t">' + r[1] + '</div></td>' +
+        '<td class="c1" data-l="Tu versión">' + r[2] + '</td>' +
+        '<td class="c2" data-l="Lo que decide el documento">' + r[3] + '</td>' +
+        '<td class="c3" data-l="Main hoy">' + r[4] + '</td>' +
+        '<td class="c4 coin" data-l="¿Coincide?">' + COIN[r[5]] + '</td>' +
+        '<td class="c5 eval" data-l="¿Es buena decisión?"><span class="pill p-' + r[6] + '">' + EV[r[6]] + '</span>' + body + '</td>' +
+        '<td class="cm" data-l="Comentarios"><textarea id="cm-' + r[0] + '" data-k="' + r[0] + '" rows="3" aria-label="Comentario sobre ' + r[0] + '" placeholder="Escribe un comentario"></textarea></td></tr>';
+    });
+    html += '</tbody></table></div></section>';
+  });
+  document.getElementById("sections").innerHTML = html;
+
+  document.querySelectorAll('input[type="checkbox"]').forEach(function (box) {
+    box.checked = !!checked[box.getAttribute("data-k")];
+    box.addEventListener("change", function () {
+      var k = box.getAttribute("data-k");
+      if (box.checked) checked[k] = 1; else delete checked[k];
+      save();
+      apply();
+    });
+  });
+  document.querySelectorAll("td.cm textarea").forEach(function (ta) {
+    var k = ta.getAttribute("data-k");
+    if (comments[k]) ta.value = comments[k];
+    ta.addEventListener("input", function () {
+      if (ta.value.trim()) comments[k] = ta.value; else delete comments[k];
+      saveComments();
+      apply();
+    });
+  });
+  apply();
+}
+
+function apply() {
+  var shown = 0, done = 0;
+  document.querySelectorAll("tbody tr").forEach(function (tr) {
+    var k = tr.getAttribute("data-k");
+    // La sección 6 es una tabla de revisión, no una fila del contraste: no tiene
+    // casilla ni comentario, y los filtros de arriba no deben esconderla.
+    if (!k) { tr.hidden = false; return; }
+    var isDone = !!checked[k];
+    if (isDone) done++;
+    tr.classList.toggle("done", isDone);
+    var on;
+    if (filter === "all") on = true;
+    else if (filter === "todo") on = !isDone;
+    else if (filter === "cm") on = !!comments[k] || tr.contains(document.activeElement); /* la fila que se está editando no desaparece */
+    else on = tr.getAttribute("data-v") === filter;
+    tr.hidden = !on;
+    if (on) shown++;
+  });
+  document.querySelectorAll("section[data-sec]").forEach(function (sec) {
+    var any = false;
+    sec.querySelectorAll("tbody tr").forEach(function (tr) { if (!tr.hidden) any = true; });
+    sec.hidden = !any;
+  });
+  document.getElementById("count").textContent = "Revisadas " + done + " de " + total + " · comentarios " + Object.keys(comments).length + " · mostrando " + shown;
+  var allRows = document.querySelectorAll("tbody tr");
+  document.querySelectorAll(".bar button").forEach(function (b) {
+    var f = b.getAttribute("data-f");
+    if (!b.getAttribute("data-t")) b.setAttribute("data-t", b.textContent);
+    var n = 0;
+    allRows.forEach(function (tr) {
+      var k = tr.getAttribute("data-k");
+      if (!k) return;
+      if (f === "all") n++;
+      else if (f === "todo") { if (!checked[k]) n++; }
+      else if (f === "cm") { if (comments[k]) n++; }
+      else if (tr.getAttribute("data-v") === f) n++;
+    });
+    b.textContent = b.getAttribute("data-t") + " (" + n + ")";
+    b.setAttribute("aria-pressed", String(f === filter));
+  });
+}
+
+document.querySelectorAll(".bar button").forEach(function (b) {
+  b.addEventListener("click", function () { filter = b.getAttribute("data-f"); apply(); });
+});render();
+</script>
+
+
+
+
+</body></html>

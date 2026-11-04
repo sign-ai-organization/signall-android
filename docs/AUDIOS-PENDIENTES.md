@@ -23,7 +23,8 @@ en [`AUDIOS-QUE-GRABAN-ELLOS.md`](AUDIOS-QUE-GRABAN-ELLOS.md).
 
 ## Una decisión abierta
 
-Los diez audios con ruido no están en la voz de Julián: la voz es la de Sergio, y el ruido
-está unos 6 dB por debajo del bloque con ruido del owner. Las dos formas de cerrarlo están en
-[`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo que hay que revisar»: dejarlos
-documentados o regrabarlos con la voz de Julián al nivel del owner.
+Los diez audios con ruido están en la voz de Sergio, no en la de Julián: es lo que se acordó
+al grabarlos, y el ruido está además unos 6 dB por debajo del bloque con ruido del owner. Las
+dos formas de cerrarlo están en [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo
+que hay que revisar»: dejarlos documentados (AU-01 quedaría con tres voces) o que Julián
+regrabe los diez al nivel del owner.
