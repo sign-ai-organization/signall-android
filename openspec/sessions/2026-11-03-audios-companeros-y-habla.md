@@ -120,3 +120,40 @@ print('tramas', len(f), 'con voz', sum(f))
 ```
 
 No se tocó código de la app: solo documentos y el corpus, que vive fuera de los repos.
+
+## Los 10 de Samuel: el corpus queda completo
+
+Llegaron en `AduisoSignAllConSamuel.zip` (1 876 468 bytes, `615d2d64…a4c642`), que traía los 40
+de AU-01. Los 30 que ya estaban se compararon por sha256 con los del corpus: **idénticos, cero
+diferencias**. O sea que lo único nuevo eran los diez de Samuel.
+
+Venían como `Samuel 1.m4a` … `Samuel 10.m4a`, sin ID. Se transcribieron los diez y se asignaron
+por contenido; el orden coincide con el de las frases del plan:
+
+| Archivo | ID | Frase |
+|---|---|---|
+| `Samuel 1` | `AU-01-003` | Hola, buenos días, bienvenidos. |
+| `Samuel 2` | `AU-01-009` | Buenas tardes. Hoy me siento más o menos. |
+| `Samuel 3` | `AU-01-015` | ¿Tienes hambre? |
+| `Samuel 4` | `AU-01-021` | Perdón. ¿Estás triste? |
+| `Samuel 5` | `AU-01-027` | Hola, ¿cómo estás? ¿Cómo te llamas? |
+| `Samuel 6` | `AU-01-033` | ¿Dónde vive tu familia? |
+| `Samuel 7` | `AU-01-039` | Yo nunca como mucho. |
+| `Samuel 8` | `AU-01-045` | Perdón. Mi hermano nunca está contento. |
+| `Samuel 9` | `AU-01-051` | Por favor, come poco. |
+| `Samuel 10` | `AU-01-057` | Con permiso. Déjame pasar, por favor. |
+
+Medido: cuarto más silencioso de todo el corpus (**−71,5 dB de piso** de media), voz entre −21 y
+−25 dB, picos entre −8,8 y −15,2 dBFS, 1,0–1,5 s de silencio al principio y 0,5–1,2 s al final.
+Los diez archivos son estéreo a ~130 kbps, el mismo perfil que los de Sergio: conviene anotar si
+los procesó la misma persona.
+
+Una sola cosa por oír: en `AU-01-003` el transcriptor devolvió «bienvenido», en singular, donde
+el plan dice «bienvenidos». Es una letra y el transcriptor suele comerse la ese final, pero si se
+quiere descartar son los últimos dos segundos del audio.
+
+El ZIP se borró del repo apenas se extrajo, como pidió el owner, y quedó copia en
+`../data/audios/origen/`.
+
+Con esto el corpus tiene **79 audios** (60 + 10 + 8 + 1) y `MANIFIESTO.md` se regeneró: AU-01
+pasó de 50 a 60, con los diez bloques de seis completos.
