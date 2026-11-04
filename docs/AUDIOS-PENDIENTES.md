@@ -1,49 +1,29 @@
-# Lo que falta grabar
+# Lo que falta
 
-**Un solo audio.** Los otros 38 de los 39 están bien y no se tocan.
+**Del owner no falta ningún audio.** Los 39 están grabados y verificados, incluido el de
+habla continua.
 
-| # | Archivo | Qué es | Por qué se regraba | Duración |
-|---|---|---|---|---|
-| 1 | `Habla Continua` | Una toma de corrido con las 20 frases de abajo | La toma anterior da 17 pausas de 1,5 s o más de las 19 que necesita: dos quedan partidas por la respiración y una mide 1,2 s | ~85 s |
-
-## El texto, en orden
-
-Lee **solo la columna del texto**. No leas el número ni la columna de la derecha en voz alta.
-
-| # | Texto que lees | Al terminar |
+| Conjunto | Audios | Estado |
 |---|---|---|
-| 1 | Hola, buenos días, bienvenidos. | 3 s de silencio |
-| 2 | ¿Tienes hambre? | 3 s de silencio |
-| 3 | Yo nunca como mucho. | 3 s de silencio |
-| 4 | Por favor, come poco. | 3 s de silencio |
-| 5 | Mi abuelo y mi tío trabajan en familia. | 3 s de silencio |
-| 6 | ¿Por qué estás triste? | 3 s de silencio |
-| 7 | Mi abuelo nunca trabaja. | 3 s de silencio |
-| 8 | Niños, trabajen todos. | 3 s de silencio |
-| 9 | ¿Dónde vive tu familia? | 3 s de silencio |
-| 10 | ¿Estás bien? | 3 s de silencio |
-| 11 | Estoy contento porque mi hermano está feliz. | 3 s de silencio |
-| 12 | Mi tío nunca está aburrido. | 3 s de silencio |
-| 13 | Hola, familia, siéntanse bienvenidos. | 3 s de silencio |
-| 14 | ¿Cuándo comen ustedes? | 3 s de silencio |
-| 15 | Ustedes nunca se sienten mal. | 3 s de silencio |
-| 16 | ¿Ustedes trabajan en familia? | 3 s de silencio |
-| 17 | ¿Tu hermano está aburrido? | 3 s de silencio |
-| 18 | Adiós a todos. *(medio segundo)* Buenas noches. | 3 s de silencio |
-| 19 | Perdón. *(medio segundo)* ¿Estás triste? | 3 s de silencio |
-| 20 | Con permiso. *(medio segundo)* Déjame pasar, por favor. | 3 s y paras |
+| AU-01 de H1 | 20 | Completos |
+| AU-02 | 10 | Completos (incluidos los dos regrabados) |
+| AU-03 | 8 | Completos |
+| AU-04 | 1 | Completo: la toma nueva da 19 pausas internas de 1,5 s o más, no 17 |
 
-Las frases 18, 19 y 20 son las únicas con dos oraciones: entre las dos va **medio segundo**,
-no 3.
+## Lo que falta de los compañeros
 
-## Las cuatro reglas
+| Persona | Audios | Qué falta |
+|---|---|---|
+| Julián (H2) | 20 | Nada: llegaron los 20 |
+| Sergio (H4) | 10 | Nada: llegaron los 10 |
+| **Samuel** (H3) | 10 | **Los 10 en silencio:** `AU-01-003`, `009`, `015`, `021`, `027`, `033`, `039`, `045`, `051`, `057` |
 
-1. **Una sola toma, de corrido.** No se corta ni se pega. Si te equivocas, se empieza de cero.
-2. **3 segundos de pausa entre frase y frase**, no 2. Es la única diferencia con la vez
-   anterior, y no cambia el texto.
-3. **Respira al final de la pausa, pegado a la frase siguiente.** No en la mitad: si respiras
-   en medio, la pausa se parte en dos, ninguna llega a 1,5 s y el audio vuelve a quedar mal.
-   Aguanta el aire durante los 3 s y suéltalo cuando empieces a hablar.
-4. **Un segundo de silencio al empezar y 3 al terminar.** No digas nada entre frases.
+La lista con el texto de cada uno está en [`audios-companeros.pdf`](audios-companeros.pdf) y
+en [`AUDIOS-QUE-GRABAN-ELLOS.md`](AUDIOS-QUE-GRABAN-ELLOS.md).
 
-El archivo se llama `Habla Continua`, igual que antes.
+## Una decisión abierta
+
+Los diez audios con ruido no están en la voz de Julián: la voz es la de Sergio, y el ruido
+está unos 6 dB por debajo del bloque con ruido del owner. Las dos formas de cerrarlo están en
+[`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo que hay que revisar»: dejarlos
+documentados o regrabarlos con la voz de Julián al nivel del owner.
