@@ -15,12 +15,10 @@ El detalle de cada audio, con duración, silencio y transcripción, está en
 
 ## Lo que falta anotar
 
-La ficha está casi completa: **iPhone 14 Pro Max** el del owner, el celular a **10 cm** de la
-boca, el ruido a **10 cm** (y a 5 cm en el audio «más cerca»), ruido de un **video de ruido
-estudiantil desde un iPad**, cada uno en **su cuarto en silencio**. Sergio grabó con un
-**iPhone 17 Pro**, y su ruido fue una **televisión a unos 10 m**. Falta solo:
-
-- **Con qué celular grabaron Samuel y Julián.**
+La ficha está completa: el celular a **10 cm** de la boca, el ruido a **10 cm** (y a 5 cm en el
+audio «más cerca»), ruido de un **video de ruido estudiantil desde un iPad**, cada uno en **su
+cuarto en silencio**. El ruido de Sergio fue una **televisión a unos 10 m**. Los celulares: **H1** iPhone 14 Pro Max, **H2** iPhone 15 Pro, **H3** iPhone 17 y **H4** iPhone
+17 Pro. Con eso la ficha está completa: no queda nada por anotar.
 
 ## El plan cambió
 
