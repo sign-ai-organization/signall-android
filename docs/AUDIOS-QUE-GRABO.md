@@ -35,13 +35,12 @@ silencio final y la transcripción de cada uno.
 
 Los diez de AU-02 cierran ahora como el plan pide.
 
-**Falta decidir el audio de habla continua** (`Habla Continua.m4a`, AU-04). Las 20 frases
-están, en orden y una sola vez, pero con el VAD del servicio salen **17 pausas de 1,5 s o
-más, no 19**: dos quedan cortadas por la respiración y una mide 1,2 s. PR-RES-06 mide
-«frases enviadas y traducidas», así que de ese audio saldrían 17 o 18 frases en vez de 20 y
-la prueba leería una pérdida que en realidad es del audio. Se regraba en una toma de ~83 s
-con las pausas más largas (3 s) y respirando al final de cada pausa, pegado a la frase
-siguiente.
+**Falta el audio de habla continua** (`Habla Continua.m4a`, AU-04), y es el único que
+queda. Las 20 frases están, en orden y una sola vez, pero con el VAD del servicio salen
+**17 pausas de 1,5 s o más, no 19**: dos quedan cortadas por la respiración y una mide 1,2 s.
+PR-RES-06 mide «frases enviadas y traducidas», así que de ese audio saldrían 17 o 18 frases
+en vez de 20 y la prueba leería una pérdida que en realidad es del audio. El texto y las
+reglas para regrabarlo están en [`AUDIOS-PENDIENTES.md`](AUDIOS-PENDIENTES.md).
 
 Lo que hay que anotar para que el corpus se pueda repetir: **cuál fue el ruido** y a qué
 distancia, **con qué celular** se grabaron los 39 y **en qué cuarto** se grabaron los de
