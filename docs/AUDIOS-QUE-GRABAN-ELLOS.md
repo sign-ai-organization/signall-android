@@ -7,6 +7,33 @@ Fuente: `../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcrip
 (v0.1). Las diez frases son las de FR-01-A; cada una la leen cuatro personas en silencio y
 dos de ellas otra vez con ruido de fondo.
 
+## Estado: 30 de 40 recibidos
+
+Llegaron el 2026-11-03 en `AudiosSignAllCompaneros.zip`, ya organizados y verificados en el
+corpus (`../../data/audios/`). Falta una sola persona:
+
+| Persona | Audios | Estado |
+|---|---|---|
+| **Julián** (H2) | 20 | **Recibidos** los 20: los 10 en silencio y los 10 con ruido |
+| **Sergio** (H4) | 10 | **Recibidos** los 10 en silencio |
+| **Samuel** (H3) | 10 | **Faltan los 10**: `AU-01-003`, `009`, `015`, `021`, `027`, `033`, `039`, `045`, `051`, `057` |
+
+Los archivos venían nombrados con el número del ID (`002.m4a` … `060.m4a`), y solo estaban
+los pares: por eso llegaron 30 y no 40. Cada uno se identificó por su contenido —se
+transcribieron los 30 y se comparó contra la frase que le toca— y los 30 coinciden.
+
+**Los diez con ruido no están en la voz de Julián.** Se midió de tres maneras y las tres
+apuntan a la voz de Sergio: el tono de esos diez (120–137 Hz) no coincide con el de los diez
+de Julián en silencio (86–107 Hz) y sí con el de Sergio (110–131 Hz); el timbre se parece más
+a los audios de Sergio en 9 de los 10 casos; y los archivos son estéreo a 135 kbps con la
+misma hora de creación en los diez, mientras los otros son mono a 63–70 kbps. Es consistente
+con que Sergio haya grabado el bloque con ruido. Además, ese ruido está unos 6 dB por debajo
+del bloque con ruido del owner. El detalle está en
+[`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo que hay que revisar».
+
+Lo que hay que anotar al recibir los diez de Samuel y para cerrar los 40: qué teléfono grabó
+cada persona y en qué cuarto se grabaron los de silencio.
+
 ## Quién graba qué
 
 El owner asignó los tres papeles el 2026-11-03: **Julián es H2**, **Samuel es H3** y
