@@ -10,10 +10,13 @@
 
 **Estado:** **implementado el 2026-10-26** el selector funcional con los dos avatares y el
 empaquetado de los GLB; **regenerados el 2026-10-27** con la versión de los avatares que
-tiene la cadera centrada. Los marcadores faciales quedan **fuera de alcance por decisión del
-owner**. Faltan las mediciones de PR-AVT-06 y el mapeo tipo→variante. Ver «Resultado de la
-implementación».
-**Fecha:** 2026-10-24 (investigación y plan) · 2026-10-26 (implementación)
+tiene la cadera centrada. Los marcadores faciales **no están activados**. El 2026-11-04 el
+owner fijó el enfoque **A** (tabla tipo gramatical → variante), descartó la clasificación
+emocional (**B**) y esta sesión **midió** las cinco variantes, documentó el recorrido del
+tipo y dejó la propuesta de tabla y la lista de cambios, sin implementar la función. Ver
+«Medición y propuesta de marcadores (2026-11-04)».
+**Fecha:** 2026-10-24 (investigación y plan) · 2026-10-26 (implementación) · 2026-11-04
+(medición de variantes y propuesta)
 **Alcance pedido:** usar Juan y Pauline desde el selector existente. Las animaciones
 faciales siguen investigadas en este documento pero **no se implementan**: el owner pidió
 el 2026-10-26 «solo mostramos las señas como lo estamos mostrando ahora».
@@ -30,7 +33,7 @@ Qué quedó hecho:
   `../material-3d/Avatares/`, verifica 1 skin, 102 articulaciones y los 300 nombres de clip
   esperados, hornea la pose de descanso con la regla de `rest_pose.py` y poda los morph
   targets que ninguna variante anima. Escribe `models/juan.glb` (34,21 MB),
-  `models/pauline.glb` (29,46 MB), el inventario `models/avatares.json`, `manifest.json` y
+  `models/pauline.glb` (29,46 MB), el inventario `models/avatars.json`, `manifest.json` y
   `domain/SignsCatalog.kt`. El `avatar.glb` de 12,98 MB se borró.
 - **Selector.** `Character` en `domain/Settings.kt` tiene `Juan` y `Pauline`; Juan es el
   predeterminado y cualquier valor viejo (`Julián`, `Samuel`, `Ximena`) se normaliza a
@@ -67,7 +70,7 @@ Desvíos respecto del plan, todos deliberados:
   uso: no se reproduce ninguna variante.
 - `Pauline_final.glb` no pasa la comprobación de pose de bind (el TRS de 2,00 de los nodos
   que no son brazo no es la pose de bind). Se registró como `bind_warning` en
-  `models/avatares.json` y el resultado visual en el dispositivo es correcto; queda como
+  `models/avatars.json` y el resultado visual en el dispositivo es correcto; queda como
   advertencia para una revisión del export, no como bloqueo.
 
 Pendiente después de esta implementación:
@@ -76,7 +79,7 @@ Pendiente después de esta implementación:
   build, modelo y dispositivo registrados.
 - Actualizar en Overleaf el SDD (DOC-2) para que describa dos GLB completos, uno por avatar.
   Lo edita el owner.
-- Decidir la tabla facial (DOC-5) si algún día se retoma el alcance de marcadores.
+- Decidir la tabla facial (DOC-5): la propuesta medida del 2026-11-04 está lista; falta la validación LSC y la aprobación del owner.
 
 ## Actualización del 2026-10-27 — GLB con la cadera centrada
 
@@ -88,7 +91,7 @@ señas, así que el avatar se iba de costado al representar y volvía al centro 
 - `tools/pack_avatars.py` ahora lee de `../signai-avatar/models/`.
   `../material-3d/Avatares/` conserva la versión anterior y ya no es la fuente.
 - Se regeneraron `models/juan.glb` (34,28 MB) y `models/pauline.glb` (29,46 MB),
-  `models/avatares.json` y `manifest.json`; `SignsCatalog.kt` salió igual.
+  `models/avatars.json` y `manifest.json`; `SignsCatalog.kt` salió igual.
 - Verificación estática: 300 clips, 102 articulaciones, **mismos nombres y mismas
   duraciones** por clip. El desplazamiento lateral de `spine` en los 50 clips base bajó de
   **8,89 cm (Juan) y 8,92 cm (Pauline)** a **0,00 cm**.
@@ -100,6 +103,187 @@ Documentación actualizada: `AGENTS.md`, `docs/SISTEMA.md`, `openspec/config.yam
 `specs/pipeline/spec.md`, `specs/avatar/spec.md`, `tools/README.md` y
 `tools/pack_avatars.py`. Los documentos de la tesis no cambian: RF-AVT-02 pide reproducir
 el GLB de cada glosa y no distingue versiones del asset.
+
+## Medición y propuesta de marcadores (2026-11-04)
+
+El owner fijó el 2026-11-04 que los marcadores **no son emociones**: dependen del tipo de
+oración. La clasificación de alegría, tristeza y sorpresa se intentó y no se logró, y el
+backend no manda ninguna señal emocional, así que **la opción B queda descartada**. Se
+trabaja la **opción A**: una tabla tipo gramatical → variante con los cinco tipos que el
+backend ya calcula. Esta sesión pavimenta el terreno: mide, documenta el recorrido del dato
+y propone la tabla y los cambios, **sin activar la función**.
+
+### Cómo se midió
+
+Herramienta nueva: `tools/measure_face_markers.py`. Lee los dos GLB empaquetados y hace
+tres cosas, sin renderizar y sin Blender:
+
+1. **Alcance geométrico.** Cada morph target guarda, por vértice, cuánto se mueve ese
+   vértice a peso 1. El máximo de esas distancias es el alcance del target en milímetros.
+2. **Pesos animados.** Los canales `weights` del clip dan el peso de cada target en cada
+   keyframe. Se samplea el clip completo (81 puntos) y se calcula el desplazamiento real
+   `peso × alcance`.
+3. **Δ contra el clip base.** La variante se compara con el clip base de la misma seña en
+   tiempo normalizado, excluyendo el parpadeo (`eyeBlink`), que está en todas. Eso mide lo
+   que el usuario **ve cambiar** si se activa el marcador.
+
+Salida completa: [`mediciones/marcadores-2026-11-04.md`](mediciones/marcadores-2026-11-04.md)
+(tablas por seña y por avatar) y el JSON con el resumen por seña al lado. La conversión a píxeles usa el
+encuadre por defecto de `app.js` (cámara a 2,3 m, fov 45°, canvas de 2400 px): 1 mm ≈
+1,26 px. **Es una cuenta, no una captura.** Los umbrales de visibilidad (< 1 mm apenas se
+percibe, 1–2 mm marginal, > 3 mm visible) son una **hipótesis geométrica**: no se
+validaron con personas ni con una grabación de pantalla.
+
+### Resultado por avatar y variante
+
+El Δ pico es la mediana de las 50 señas; en la medición **las 50 dieron idénticas** (ver
+hallazgo 3). Juan y Pauline comparten los mismos pesos y los mismos alcances en la malla de
+la cara; solo cambia el alcance máximo de la malla de los ojos (Juan 9,44 mm, Pauline
+7,90 mm), que no cambia ninguna de las cifras de esta tabla.
+
+| Variante | Δ pico (mm) | ≈px | Δ RMS (mm) | Cambia durante la seña | Target que más mueve |
+|---|---:|---:|---:|---:|---|
+| `_alegria` | 7,28 | 9,2 | 2,22 | 0,00 mm | `mouthSmile_L` (peso 0,75) |
+| `_tristeza` | 6,24 | 7,9 | 1,49 | 0,00 mm | `browInnerUp` (peso 0,75) |
+| `_sorpresa` | 7,07 | 8,9 | 2,35 | 0,00 mm | `browOuterUp_R` (peso 0,85) |
+| `_pregunta` | 8,31 | 10,5 | 2,79 | 0,00 mm | `browOuterUp_R` (peso 1,00) |
+| `_negacion` | 3,66 | 4,6 | 1,49 | 0,00 mm | `mouthShrugLower` (peso 0,45) |
+
+Qué mueve cada una, en concreto (pesos sostenidos; las cinco mueven más targets que los
+que se listan):
+
+| Variante | Cejas | Ojos | Boca | Mejillas / nariz |
+|---|---|---|---|---|
+| `_alegria` | — | `eyeSquint` 0,25 | `mouthSmile` 0,75, `mouthDimple` 0,20 | `cheekSquint` 0,50 |
+| `_tristeza` | `browInnerUp` 0,75, `browDown` 0,15 | `eyeSquint` 0,10 | `mouthFrown` 0,65, `mouthShrugLower` 0,30 | — |
+| `_sorpresa` | `browInnerUp` 0,85, `browOuterUp` 0,85 | `eyeWide` 0,70 | `mouthFunnel` 0,20, `mouthLowerDown` 0,25 | — |
+| `_pregunta` | `browInnerUp` 1,00, `browOuterUp` 1,00 | `eyeWide` 0,55 | `mouthPress` 0,30, `mouthRollLower` 0,15 | — |
+| `_negacion` | `browDown` 0,45, `browInnerUp` 0,10 | — | `mouthShrugLower` 0,45, `mouthPress` 0,35, `mouthFrown` 0,55 | `noseSneer` 0,15 |
+
+### Los seis hallazgos que cambian la decisión
+
+1. **Las cinco variantes mueven la cara y ninguna es invisible.** El Δ pico va de 3,66 mm
+   (`_negacion`, ≈ 4,6 px) a 8,31 mm (`_pregunta`, ≈ 10,5 px). Ninguna queda por debajo del
+   umbral de 1 mm. La más sutil es `_negacion`, y aun así mueve la boca 3,37 mm y las cejas
+   2,34 mm.
+2. **Las cinco se distinguen entre sí, pero hay dos pares cercanos.** El par más parecido es
+   `_sorpresa` vs `_pregunta`: 2,89 mm de pico y **0,86 mm de RMS**, porque las dos suben las
+   cejas (0,85 vs 1,00) y solo se separan por la boca (`mouthFunnel` vs `mouthPress`). El
+   segundo es `_tristeza` vs `_negacion`: 1,07 mm de RMS, porque comparten la boca fruncida y
+   se separan sobre todo por `browInnerUp`. Todos los demás pares superan 1,6 mm de RMS.
+3. **Cada variante es la misma cara en las 50 señas.** La matriz de pesos de
+   `0049_alegria` es exactamente la de `0000_alegria`, y lo mismo con las otras cuatro. No
+   hay adaptación por seña: el marcador es una pose de la cara que se estampa sobre
+   cualquier seña. Eso hace que la tabla tipo → variante sea la unidad correcta (no hay
+   información por seña que elegir), pero también que la cara sea la misma en dos señas cualesquiera.
+4. **La expresión es una pose fija, no una animación.** El rango de peso a lo largo del clip
+   es **0,00 mm** en las cinco: el marcador aparece y se queda. Lo único que se mueve en la
+   cara durante la seña es el parpadeo, que viene igual en el clip base.
+5. **Las variantes mueven solo la cara.** Los 250 clips variantes tienen exactamente los
+   mismos canales de hueso y los mismos valores que su base (tolerancia 0,01° / 0,01 mm).
+   No agregan movimiento de cabeza, tronco ni manos. En particular, el «movimiento lateral
+   de la cabeza» que PR-AVT-05 espera para la negación **no lo puede dar la variante**: o
+   viene en el clip de la seña, o hay que animarlo en Cascadeur.
+6. **El clip base ya tiene cara: reposo más parpadeo.** Los pesos faciales del base son cero
+   salvo `eyeBlink` (peso 1 en un keyframe). Por eso «afirmación = cara neutra» no necesita
+   ningún trabajo: el clip base ya es esa cara.
+
+### El recorrido del tipo, de `PhraseType` a `state.currentType`
+
+Se revisó el camino completo y **el tipo llega en cada oración**. No hace falta cambiar el
+contrato para la opción A.
+
+| Paso | Archivo y línea | Qué pasa |
+|---|---|---|
+| 1. El backend parte la frase en oraciones | `../sign-ai-backend/app/nlp/nlp_service_impl.py:36-37`, `app/orchestrator/orchestrator.py:18-24` | `split(text)` devuelve las oraciones; `translate_stream` las traduce en paralelo y las entrega **en orden**, con `index` y `total` reales desde la primera. |
+| 2. Cada oración se clasifica sola | `app/nlp/nlp_service_impl.py:46-48`, `app/nlp/gloss_analyzer.py:78-108` | `analyze(sentence)` corre **sobre la oración**, no sobre la frase. Si una frase se parte en dos, cada mitad tiene su propio tipo. |
+| 3. El tipo viaja en el segmento | `app/nlp/nlp_service_impl.py:87-88`, `app/domain/models.py:34-36`, `app/controller/controller.py:289-295` | `ValidatedSegment(type, glosses)`; el frame es `{"type":"segment","index","total","segment":{"type","glosses"}}`. |
+| 4. Android lo parsea | `data/SignAiWebSocketClient.kt:252-263`, `domain/Translation.kt` | `PhraseType.from(...)` mapea los cinco valores; un valor desconocido cae en `UNKNOWN` y no rompe. |
+| 5. Se guarda por ítem de cola | `ui/state/MainScreenState.kt:949-999`, `:1686` | `queueItemsFor(segment)` se llama **por oración** y pone `type = segment.type` en cada glosa de esa oración. |
+| 6. Cruza el puente | `ui/webview/SignAiWebViewController.kt:105-110` | `put("type", item.type.wire)`: el JSON que recibe la escena lleva el tipo por ítem. |
+| 7. `app.js` lo recibe | `app.js:825-836` | `loadQueueItem` hace `state.currentType = item.type || ""` justo antes de cargar el clip. |
+| 8. Hoy solo se usa en el diagnóstico | `app.js:290` | Única lectura: la línea `tipo:` del overlay de depuración. `pickVariant` (`app.js:802`) no lo mira. |
+
+Consecuencias:
+
+- **El tipo está disponible exactamente donde se elige el clip** (`loadQueueItem` →
+  `pickVariant`), sin tocar Kotlin ni el WebSocket. Es el punto de enganche natural.
+- **Cuando una frase se parte en varias oraciones, cada una conserva su tipo.** El orden de
+  la cola lo decide `index` / la cadena de entrega de `MainScreenState`; el tipo no participa
+  del orden. Una frase como «No vienes. ¿Vienes?» produce dos ítems con tipos distintos, y
+  el avatar puede cambiar de cara entre oración y oración.
+- **El mismo signo puede aparecer en dos oraciones con tipos distintos** («Vienes.» y
+  «¿Vienes?»). Cualquier caché que guarde la variante elegida por URL quedaría incorrecta:
+  la caché actual (`signCache`, `app.js:350`) guarda por URL y devuelve **todos** los clips
+  de la seña, así que la selección tiene que seguir ocurriendo después, en `pickVariant`.
+- El backend **no manda** `secondary_signals` en el segmento ni ningún campo de emoción;
+  `secondary_signals` es de colisiones gramaticales y se queda en la caché del backend.
+
+### Propuesta de tabla tipo → variante (para PR-AVT-05)
+
+Separación explícita: **lo medido** sale de la sección anterior; **la correspondencia
+lingüística es una hipótesis** y la tiene que validar alguien que sepa LSC. La decisión es
+del owner, y por eso esta tabla **no se escribió** en
+`../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`: se propone acá para
+que el owner la apruebe y la pegue en PR-AVT-05 antes de correr la prueba.
+
+| Tipo (backend) | Qué espera PR-AVT-05 hoy | Variante propuesta | Lo que la variante mide | Tipo de dato |
+|---|---|---|---|---|
+| `AFFIRMATIVE` | Cara neutra, sin cambios en las cejas | **base** (ninguna variante) | El base tiene peso facial 0 salvo parpadeo | Medido: el base ya es neutro |
+| `YES_NO_QUESTION` | Cejas levantadas durante toda la frase | **`_pregunta`** | `browInnerUp` y `browOuterUp` a 1,00; 8,31 mm (10,5 px) | Medido: es la variante que más sube las cejas |
+| `CONTENT_QUESTION` | Cejas fruncidas hacia abajo durante la seña interrogativa | **abierto** | `_pregunta` sube las cejas (lo contrario); `_negacion` baja las cejas 0,45 pero es la cara de negación; `_tristeza` sube `browInnerUp` 0,75 y frunce la boca, no las cejas | **Hipótesis lingüística**: elegir entre base, `_negacion` o un clip nuevo |
+| `NEGATIVE` | Ceño fruncido y movimiento lateral de la cabeza en NUNCA | **`_negacion`** para la cara | `browDown` 0,45 + boca fruncida; 3,66 mm (4,6 px). **No agrega cabeza** (hallazgo 5) | Cara: medido. Cabeza: no lo da la variante |
+| `IMPERATIVE` | Ceño fruncido y expresión firme durante toda la frase | **abierto** | El único candidato «firme» es `_negacion` (3,66 mm), que se confunde con negación; `_tristeza` (6,24 mm) lee como tristeza | **Hipótesis lingüística** |
+
+Propuesta de **corte mínimo** (opción A con la cautela de la C): activar solo las tres filas
+medidas y dejar `CONTENT_QUESTION` e `IMPERATIVE` con el clip base hasta que el validador
+LSC diga qué cara corresponde. Eso permite correr PR-AVT-05 sin inventar expresiones, y las
+dos filas abiertas quedan como resultado explícito de la prueba, no como deuda escondida.
+
+Dos advertencias que salen de la medición y afectan la tabla:
+
+- **No usar `_sorpresa` y `_pregunta` para dos tipos distintos** si se quiere que la cara
+  distinga: son el par más parecido (0,86 mm de RMS) y comparten la subida de cejas. Si
+  `CONTENT_QUESTION` termina mapeada a `_sorpresa` y `YES_NO_QUESTION` a `_pregunta`, en
+  pantalla las dos preguntas se van a ver casi iguales.
+- **PR-AVT-05 pide para la negación un movimiento lateral de cabeza que la variante no
+  tiene.** La prueba debe separar «cara» (lo que mide el marcador) de «cabeza» (lo que
+  tendría que venir en el clip de la seña o en un trabajo nuevo de Cascadeur), o el criterio
+  va a fallar por una razón que no es la cara.
+
+### Cambios que haría falta para activarlos (no implementados)
+
+**App (`sign-ai-android`).** El punto único es `embeddedClipsFor` (`app.js:384`), que hoy
+descarta los sufijos con guion bajo a propósito, más el resolutor de variantes:
+
+1. `embeddedClipsFor`: reconocer los seis nombres de cada seña (`0000` y
+   `0000_alegria`/`_tristeza`/`_sorpresa`/`_pregunta`/`_negacion`) y devolverlos separados.
+   **No mezclar tomas con variantes**: hoy `pickVariant` (`app.js:802`) elige al azar entre
+   los clips con sufijo `.001`; si las variantes faciales entran a la misma lista, el
+   resolutor elegiría una cara al azar. Hay que distinguir «toma» (`id.<n>`) de «variante»
+   (`id_<sufijo>`).
+2. `pickVariant(clips, type)`: aplicar la tabla aprobada; si falta la variante, usar el base
+   y registrarlo. Mantener el azar solo entre tomas del mismo tipo de clip.
+3. `loadQueueItem` (`app.js:830`): pasar `item.type` a `pickVariant`. No hay cambio de
+   contrato: el tipo ya está en el ítem.
+4. Diagnóstico: agregar a la línea `tipo:` del overlay qué variante se eligió. Es lo que
+   PR-AVT-05 necesita como evidencia, y hoy no se puede leer.
+5. Caché: `signCache` sigue por URL y devuelve todos los clips; la selección ocurre después.
+   No hay que tocarla **si** se respeta el punto 1. Si se cacheara la variante elegida por
+   URL, dos oraciones con el mismo signo y distinto tipo se pisarían.
+
+**Backend (`sign-ai-backend`).** **Nada.** El tipo ya viaja por oración, con `index`/`total`
+reales y sin campo emocional. No hace falta tocar frames, métricas ni catálogo. Solo habría
+trabajo si se retomara la opción B, que el owner descartó.
+
+**Repo de animaciones (`../signai-avatar`).** Nada para la opción A. Solo habría trabajo si
+el validador LSC pide caras distintas por seña (hoy la misma cara se repite en las 50) o
+movimiento de cabeza para la negación; eso es una tanda nueva de Cascadeur.
+
+**Documentos.** Escribir la tabla aprobada en PR-AVT-05
+(`../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`), que hoy tiene una
+tabla con TODO y una expectativa de cabeza que la variante no cumple. Eso lo decide y lo
+pega el owner. En Overleaf no se tocó nada en esta sesión.
 
 ## Resumen de lo encontrado
 
@@ -140,8 +324,9 @@ Esta tabla registra cómo se relacionan el código, los assets, los requisitos, 
 | DOC-2 | Overleaf SDD, `main.tex`, versión 212; consultada 2026-10-24 | Describe 50 archivos GLB en la app y deja pendiente documentar avatares, señas y archivos faciales. | Dos archivos recibidos; cada uno contiene 50 señas y 300 clips. El owner eligió empaquetarlos como un GLB completo por avatar. | **Divergencia; dirección resuelta por el owner.** | Actualizar la descripción de assets del SDD para reflejar dos GLB completos. Solo el owner edita Overleaf. |
 | DOC-3 | `../sign-ai-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`, 2026-10-21, RF-AVT-03 | El alcance actual del requisito es mover las cejas según el tipo de oración. | El owner decidió usar expresiones de todo el rostro disponibles en los GLB. | **Divergencia; dirección resuelta por el owner.** | Proponer al owner ampliar RF-AVT-03 y alinear la documentación consolidada antes de implementar. El agente no edita el documento de requisitos. |
 | DOC-4 | Overleaf SRS, `main.tex`, versión 524; consultada 2026-10-24 | El resumen pide marcadores faciales según el tipo de frase y el ajuste Personaje selecciona el personaje. No fija clips ni una tabla de expresiones. | El owner eligió Juan/Pauline y rostro completo; falta el mapeo tipo→variante. | **Compatible en el objetivo general; detalle abierto.** | Mantener la decisión de mapeo pendiente y reflejarla en la tabla aprobada de PR-AVT-05. Overleaf sigue siendo de solo lectura para el agente. |
-| DOC-5 | `../sign-ai-docs/plan-pruebas/01-diseno/avatar/pruebas.md`, PR-AVT-05 | Hace falta una tabla de expresiones esperadas por los cinco tipos gramaticales; la tabla se escribe antes de la ronda. | Aún no se decidió qué variante representa cada tipo. | **Pendiente.** | El owner consultará la correspondencia. Luego actualizar PR-AVT-05, sin cambiarla por inferencia técnica. |
-| DOC-6 | Backend, commit `78006a5`; `PhraseType`, `GlossAnalyzer`, contrato WS | Entrega un tipo gramatical entre cinco; no clasifica emociones. `secondary_signals` es de colisiones gramaticales y no viaja en `segment`. | Los clips incluyen sufijos de alegría, tristeza y sorpresa, además de pregunta y negación. | **Sin correspondencia emocional disponible.** | Opción A/C: mapear solo tipos gramaticales con tabla aprobada. Opción B: diseñar una clasificación emocional y nuevo campo WS, coordinando backend y app. Decisión pendiente del owner. |
+| DOC-5 | `../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`, PR-AVT-05 | Hace falta una tabla de expresiones esperadas por los cinco tipos gramaticales; la tabla se escribe antes de la ronda. | El 2026-11-04 hay una **propuesta** de tabla medida (ver «Propuesta de tabla tipo → variante» en este plan): afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`; pregunta de contenido y orden quedan abiertas a validación LSC. | **Propuesta lista; falta la validación y la escritura en PR-AVT-05.** La tabla actual de PR-AVT-05 sigue con TODO y pide para la negación un movimiento de cabeza que la variante no aporta. | El owner decide y pega la tabla en PR-AVT-05 antes de correr la prueba. No se editó `pruebas.md` en esta sesión. |
+| DOC-6 | Backend, commit `c8aa516` (2026-11-04); `PhraseType`, `GlossAnalyzer`, contrato WS | Entrega un tipo gramatical entre cinco; **el tipo se calcula por oración**, no por frase. No clasifica emociones. `secondary_signals` es de colisiones gramaticales y no viaja en `segment`. | El recorrido completo está verificado: el tipo llega en cada `segment`, se guarda por ítem de cola y está disponible en `app.js` al elegir el clip (`state.currentType`), donde hoy solo se usa en el diagnóstico. | **Opción B descartada por el owner (2026-11-04); se trabaja la A.** No hace falta cambiar el contrato: el dato ya está donde se necesita. | Implementar la tabla aprobada solo en `app.js` (`embeddedClipsFor` + `pickVariant`). Backend: nada. |
+| DOC-9 | `models/juan.glb` y `models/pauline.glb` empaquetados (2026-10-27); medición 2026-11-04 | Las variantes existen para las 50 señas, pero no se sabía cuánto mueven la cara ni si se distinguen. | Cada variante es **la misma cara en las 50 señas**, es una **pose fija** (0,00 mm de cambio durante el clip) y **solo mueve la cara**: los 250 clips variantes tienen los mismos huesos que su base. Δ pico: 3,66–8,31 mm. Par más parecido: `_sorpresa`–`_pregunta` (0,86 mm de RMS). | **Medición hecha; consecuencia de alcance.** El marcador se puede decidir por tipo de oración, no por seña. La cabeza de la negación no la da la variante. | Escribir la tabla con esta limitación explícita; si LSC pide caras por seña o cabeza, es trabajo nuevo en `../signai-avatar`. |
 | DOC-7 | OpenSpec local, `specs/ui/spec.md` y `specs/avatar/spec.md` | Describe el selector como UI-only y una escena con un único GLB sin animación de expresiones. | El owner decidió selector funcional con dos avatares; el rostro quedó fuera de alcance el 2026-10-26. | **Resuelto el 2026-10-26.** Los dos specs describen los dos GLB, el selector funcional y el bloqueo en reposo; `specs/pipeline/spec.md` describe el empaquetado nuevo. | Hecho. El mapeo facial sigue pendiente y así se declara en los specs. |
 | DOC-8 | Overleaf SRS, versión 524; `../sign-ai-docs` PR-AVT-06 | El tamaño del APK con todos los GLB está pendiente de medir; PR-AVT-06 pide medir los assets y el instalador. | Los dos GLB empaquetados suman 63,74 MB (34,28 + 29,46). Medido el 2026-10-26 en el Redmi Note 9S: APK debug 48 MB, release sin firmar 34 MB, PSS ~390 MB con Juan. | **Medición del APK hecha; falta el registro formal en PR-AVT-06.** | Registrar build, modelo y dispositivo en el plan de pruebas y en `docs/PLAN-MEDICION.md`. Responsable: el owner al actualizar los documentos. |
 
@@ -152,8 +337,9 @@ Agregar una fila por cada trabajo posterior relacionado con esta iniciativa. No 
 | Fecha | Trabajo realizado | Repo/archivos y fuentes | Diferencias/decisiones actualizadas | Pendiente |
 |---|---|---|---|---|
 | 2026-10-24 | Investigación inicial de GLB, backend, selector y documentos; `git pull --ff-only` de `../sign-ai-docs` (ya estaba al día). | Ver “Fuentes técnicas y procedencia” al final. | Se registraron DOC-1–DOC-8; owner decidió dos GLB completos, rostro completo y cambio solo en reposo. | Correspondencia tipo gramatical→variante, por consultar con validadores LSC. |
-| 2026-10-26 | Implementación del selector y del empaquetado; los marcadores faciales quedaron fuera de alcance por decisión del owner. | `tools/pack_avatars.py` nuevo; `models/juan.glb`, `models/pauline.glb` y `models/avatares.json`; `app.js`; `Settings.kt`, `SignAiCommands.kt`, `MainScreenState.kt`, `AvatarWebView.kt`, `SignAiWebViewController.kt`, `CharacterPicker.kt`; specs `avatar`, `ui` y `pipeline`; `AGENTS.md`. | DOC-1 y DOC-7 resueltos; DOC-8 con la medición del APK; rostro completo pasa a «fuera de alcance» hasta que el owner lo retome. | La tabla facial (DOC-5) queda sin uso; el SDD de Overleaf (DOC-2) sigue sin describir los dos GLB. |
-| 2026-10-27 | Reempaquetado con los GLB del repo hermano `../signai-avatar` (rama `dev`, commit `cf014ef`), que corrigen la cadera. | `tools/pack_avatars.py`; `models/juan.glb`, `models/pauline.glb`, `models/avatares.json`, `manifest.json`; `AGENTS.md`, `docs/SISTEMA.md`, `openspec/config.yaml`, `specs/pipeline/spec.md`, `specs/avatar/spec.md`, `tools/README.md`. | DOC-8 actualizado a 63,74 MB. Sin cambios en nombres ni duraciones de clip; `spine` pasa de 8,89/8,92 cm de desvío a 0,00 cm. | Probar en el dispositivo que la representación ya no se va de costado. Los pies pueden deslizarse un poco en alguna seña (efecto secundario anotado en el hermano). |
+| 2026-10-26 | Implementación del selector y del empaquetado; los marcadores faciales quedaron fuera de alcance por decisión del owner. | `tools/pack_avatars.py` nuevo; `models/juan.glb`, `models/pauline.glb` y `models/avatars.json`; `app.js`; `Settings.kt`, `SignAiCommands.kt`, `MainScreenState.kt`, `AvatarWebView.kt`, `SignAiWebViewController.kt`, `CharacterPicker.kt`; specs `avatar`, `ui` y `pipeline`; `AGENTS.md`. | DOC-1 y DOC-7 resueltos; DOC-8 con la medición del APK; rostro completo pasa a «fuera de alcance» hasta que el owner lo retome. | La tabla facial (DOC-5) queda sin uso; el SDD de Overleaf (DOC-2) sigue sin describir los dos GLB. |
+| 2026-10-27 | Reempaquetado con los GLB del repo hermano `../signai-avatar` (rama `dev`, commit `cf014ef`), que corrigen la cadera. | `tools/pack_avatars.py`; `models/juan.glb`, `models/pauline.glb`, `models/avatars.json`, `manifest.json`; `AGENTS.md`, `docs/SISTEMA.md`, `openspec/config.yaml`, `specs/pipeline/spec.md`, `specs/avatar/spec.md`, `tools/README.md`. | DOC-8 actualizado a 63,74 MB. Sin cambios en nombres ni duraciones de clip; `spine` pasa de 8,89/8,92 cm de desvío a 0,00 cm. | Probar en el dispositivo que la representación ya no se va de costado. Los pies pueden deslizarse un poco en alguna seña (efecto secundario anotado en el hermano). |
+| 2026-11-04 | Orden 8 de `docs/PLAN-SEMANA-13.md`: medición real de las cinco variantes faciales, recorrido del tipo gramatical y propuesta de tabla y de cambios, **sin activar la función**. El owner fijó el enfoque A y descartó B. | `tools/measure_face_markers.py` (nuevo); `docs/mediciones/marcadores-2026-11-04.md` y `.json` (nuevos); este plan; `openspec/sessions/2026-11-04-marcadores-faciales-medicion.md`. Backend leído en `c8aa516`; app leída en `3cf2be2`. | DOC-5 y DOC-6 actualizados; DOC-9 agregado con la limitación de los assets. Se corrigió el nombre del inventario: es `models/avatars.json`, no `avatares.json` (el script y el archivo siempre dijeron `avatars.json`; los documentos repetían el nombre equivocado). | Validación LSC de las filas de pregunta de contenido y orden; escribir la tabla aprobada en PR-AVT-05; implementar `embeddedClipsFor` + `pickVariant`. `AGENTS.md` y otros documentos todavía dicen `avatares.json`. |
 
 ### Qué significa «el backend decide cuándo» en el estado actual
 
@@ -177,15 +363,19 @@ Por lo tanto, el backend puede decir «esta oración es una pregunta» o «es ne
 
 1. Antes de implementar, proponer la actualización de RF-AVT-03 en `../sign-ai-docs`: el alcance decidido es rostro completo, mientras v0.16 solo pide cejas. El owner gestiona los documentos de requisitos.
 2. Proponer la actualización del SDD de Overleaf: el empaquetado decidido es dos GLB completos (Juan y Pauline), con 50 señas × seis variantes cada uno, no 50 GLB por seña. El owner debe aplicar los cambios en Overleaf.
-3. La tabla rostro completo ↔ tipo de oración sigue abierta. PR-AVT-05 ya exige escribir lo esperado para cada tipo antes de probar; el owner consultará esa correspondencia con quien valide LSC.
+3. La tabla rostro completo ↔ tipo de oración está **propuesta y medida** desde el 2026-11-04; falta la validación LSC y la aprobación del owner. PR-AVT-05 ya exige escribir lo esperado para cada tipo antes de probar, y `pruebas.md` todavía tiene el TODO.
 
-#### Opciones que quedan abiertas para elegir cuándo usar los clips
+#### Opciones para elegir cuándo usar los clips
 
-| Opción | Qué haría | Ventaja | Coste o límite |
-|---|---|---|---|
-| **A. Tabla gramatical revisada** | Mantener los cinco tipos que ya entrega el backend y acordar para cada tipo qué variante facial usar. `_pregunta` y `_negacion` son candidatos por nombre, no decisiones; afirmativa e imperativa tampoco tienen un sufijo equivalente. | No cambia el backend ni el WebSocket. Está dentro del flujo gramatical que la tesis ya define. | El equipo LSC debe validar y documentar la expresión de cada tipo. No permite seleccionar alegría, tristeza o sorpresa si el tipo no las informa. |
-| **B. Agregar clasificación emocional** | Definir cómo reconocer alegría, tristeza y sorpresa, y enviar esa señal a la app con un campo nuevo del segmento WebSocket. | Permite elegir explícitamente los clips con esos sufijos. | Amplía el alcance y requiere diseño y validación lingüística, cambios coordinados en backend y app, pruebas del contrato y actualización de los documentos. El backend actual no ofrece esa clasificación. |
-| **C. Habilitar primero solo las categorías validadas** | Activar únicamente las variantes para las que el equipo haya aprobado una correspondencia; usar el clip base para las demás hasta que exista una definición. | Evita inventar expresiones y permite entregar por etapas. | La cara no reflejará todos los tipos desde el primer corte. |
+El 2026-11-04 el owner eligió la **A** y descartó la **B**. La **C** no es una opción
+aparte: es la forma prudente de arrancar la A (activar solo las filas validadas y dejar el
+base en las demás).
+
+| Opción | Qué haría | Estado |
+|---|---|---|
+| **A. Tabla gramatical revisada** | Mantener los cinco tipos que ya entrega el backend y acordar para cada tipo qué variante facial usar. No cambia el backend ni el WebSocket. La propuesta medida está en «Medición y propuesta de marcadores (2026-11-04)». | **Elegida por el owner el 2026-11-04.** Falta la validación LSC de las filas de pregunta de contenido y orden. |
+| **B. Agregar clasificación emocional** | Definir cómo reconocer alegría, tristeza y sorpresa y enviar esa señal con un campo nuevo del segmento. | **Descartada el 2026-11-04:** la clasificación se intentó y no se logró, y el backend no manda ninguna señal emocional. |
+| **C. Habilitar primero solo las categorías validadas** | Activar solo las variantes con correspondencia aprobada; usar el clip base en las demás. | **Corte mínimo propuesto dentro de la A**: tres filas medidas y dos en base hasta que LSC defina. |
 
 ### 1. Preparar y verificar los assets
 
@@ -233,13 +423,15 @@ Por lo tanto, el backend puede decir «esta oración es una pregunta» o «es ne
 ## Situación después de las respuestas del owner
 
 - Resueltos: dos GLB completos; rostro completo; selector bloqueado hasta el reposo absoluto; Juan como predeterminado.
-- Abierta: cuál de las opciones A, B o C se usará para relacionar tipo de oración y variante facial. El owner consultará la decisión. No implementar ese mapeo hasta tener respuesta.
+- **Resuelto el 2026-11-04:** se trabaja la **opción A** (tabla tipo gramatical → variante). La **B** queda descartada porque la clasificación emocional se intentó y no se logró, y el backend no manda ninguna señal emocional. Los marcadores son gramaticales, no emocionales.
+- **Abierto:** la tabla concreta. Hay una propuesta medida en este documento (afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`; contenido y orden abiertos) que tiene que validar alguien que sepa LSC, y la aprueba el owner. No implementar el mapeo hasta tener respuesta.
 - `../sign-ai-docs` se actualizó mediante `git pull --ff-only` el 2026-10-24. `main` ya estaba al día, sin cambios nuevos: commit `dc8d49c79285489815164adaf8a1fa7ef6e83b24`.
 
 ## Fuentes técnicas y procedencia
 
 - App en `main`, commit `1c027f002af29c5bc67a2a67671546bc704d66d6`: `Settings.kt`, `SettingsRepository.kt`, `CharacterPicker.kt`, `MainScreenState.kt`, `SignAiWebViewController.kt`, `SignAiCommands.kt`, `assets/web/app.js`.
 - Backend, commit `78006a523875adaa11c72831e4997310d47191ab`: `app/domain/models.py`, `app/nlp/gloss_analyzer.py`, `app/controller/controller.py`, `docs/android-integration.md` y `docs/sdd.md`.
+- Backend leído el 2026-11-04 (HEAD `c8aa516`, con cambios locales del owner sin commitear): `app/domain/models.py`, `app/nlp/gloss_analyzer.py`, `app/nlp/nlp_service_impl.py`, `app/orchestrator/orchestrator.py` y `app/controller/controller.py`. App leída en `3cf2be2`.
 - Documentación consolidada, `main` actualizado por pull sin cambios, commit `dc8d49c79285489815164adaf8a1fa7ef6e83b24`: `documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`, `modificaciones/requerimientos.md` y `plan-pruebas/01-diseno/avatar/`.
 - Tesis consultada el 2026-10-24: Overleaf SRS (`main.tex`, versión 524), SDD (`main.tex`, versión 212) y Memoria (`sections/descripcionGeneral.tex`, versión 98). Las versiones consultadas no indican por sí mismas la fecha en que el owner editó cada archivo.
 - Reglas de trabajo aplicadas: `AGENTS.md`, y los skills `tres-fuentes-de-verdad`, `contrato-websocket`, `overleaf-lectura`, `compose-best-practices` y `sesion-openspec`.

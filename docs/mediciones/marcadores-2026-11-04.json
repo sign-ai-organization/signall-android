@@ -1,0 +1,3038 @@
+[
+ {
+  "avatar": "juan",
+  "meshes": [
+   {
+    "mesh": "Female_Body_Default.001",
+    "targets": 31,
+    "facial_targets": 29,
+    "max_reach_mm": 15.757442128090021
+   },
+   {
+    "mesh": "Mesh.008",
+    "targets": 29,
+    "facial_targets": 29,
+    "max_reach_mm": 9.443200602013464
+   }
+  ],
+  "signatures": {
+   "alegria": [
+    [
+     "mouthSmile_L",
+     0.75,
+     7.28
+    ],
+    [
+     "mouthSmile_R",
+     0.75,
+     6.89
+    ],
+    [
+     "cheekSquint_L",
+     0.5,
+     3.71
+    ],
+    [
+     "cheekSquint_R",
+     0.5,
+     3.71
+    ],
+    [
+     "mouthDimple_L",
+     0.2,
+     1.46
+    ],
+    [
+     "mouthDimple_R",
+     0.2,
+     1.45
+    ],
+    [
+     "eyeSquint_L",
+     0.25,
+     0.73
+    ],
+    [
+     "eyeSquint_R",
+     0.25,
+     0.73
+    ]
+   ],
+   "tristeza": [
+    [
+     "browInnerUp",
+     0.75,
+     6.23
+    ],
+    [
+     "mouthFrown_R",
+     0.65,
+     2.75
+    ],
+    [
+     "mouthFrown_L",
+     0.65,
+     2.44
+    ],
+    [
+     "mouthShrugLower",
+     0.3,
+     2.44
+    ],
+    [
+     "browDown_L",
+     0.15,
+     0.78
+    ],
+    [
+     "browDown_R",
+     0.15,
+     0.78
+    ],
+    [
+     "eyeSquint_L",
+     0.1,
+     0.29
+    ],
+    [
+     "eyeSquint_R",
+     0.1,
+     0.29
+    ]
+   ],
+   "sorpresa": [
+    [
+     "browInnerUp",
+     0.85,
+     7.07
+    ],
+    [
+     "browOuterUp_L",
+     0.85,
+     6.39
+    ],
+    [
+     "browOuterUp_R",
+     0.85,
+     6.39
+    ],
+    [
+     "mouthFunnel",
+     0.2,
+     2.5
+    ],
+    [
+     "eyeWide_L",
+     0.7,
+     1.95
+    ],
+    [
+     "eyeWide_R",
+     0.7,
+     1.95
+    ],
+    [
+     "mouthLowerDown_L",
+     0.25,
+     1.42
+    ],
+    [
+     "mouthLowerDown_R",
+     0.25,
+     1.42
+    ]
+   ],
+   "pregunta": [
+    [
+     "browInnerUp",
+     1.0,
+     8.31
+    ],
+    [
+     "browOuterUp_L",
+     1.0,
+     7.51
+    ],
+    [
+     "browOuterUp_R",
+     1.0,
+     7.51
+    ],
+    [
+     "mouthPress_L",
+     0.3,
+     2.89
+    ],
+    [
+     "mouthPress_R",
+     0.3,
+     2.89
+    ],
+    [
+     "mouthRollLower",
+     0.15,
+     2.36
+    ],
+    [
+     "eyeWide_L",
+     0.55,
+     1.53
+    ],
+    [
+     "eyeWide_R",
+     0.55,
+     1.53
+    ],
+    [
+     "mouthShrugUpper",
+     0.25,
+     1.39
+    ]
+   ],
+   "negacion": [
+    [
+     "mouthShrugLower",
+     0.45,
+     3.66
+    ],
+    [
+     "mouthPress_L",
+     0.35,
+     3.37
+    ],
+    [
+     "mouthPress_R",
+     0.35,
+     3.37
+    ],
+    [
+     "browDown_L",
+     0.45,
+     2.34
+    ],
+    [
+     "browDown_R",
+     0.45,
+     2.34
+    ],
+    [
+     "mouthFrown_R",
+     0.55,
+     2.33
+    ],
+    [
+     "mouthFrown_L",
+     0.55,
+     2.06
+    ],
+    [
+     "noseSneer_L",
+     0.15,
+     0.94
+    ],
+    [
+     "noseSneer_R",
+     0.15,
+     0.94
+    ],
+    [
+     "browInnerUp",
+     0.1,
+     0.83
+    ],
+    [
+     "eyeSquint_L",
+     0.2,
+     0.58
+    ],
+    [
+     "eyeSquint_R",
+     0.2,
+     0.58
+    ]
+   ]
+  },
+  "temporal": {
+   "alegria": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "tristeza": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "sorpresa": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "pregunta": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "negacion": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   }
+  },
+  "variant_pairs": {
+   "alegria|tristeza": {
+    "mean_peak_mm": 7.281345403066716,
+    "mean_rms_mm": 1.9170464607463884,
+    "min_peak_mm": 7.281345403066716,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.44,
+     "boca": 7.28,
+     "cejas": 6.23,
+     "mejillas": 3.71,
+     "nariz": 0.0
+    }
+   },
+   "alegria|sorpresa": {
+    "mean_peak_mm": 7.281345403066716,
+    "mean_rms_mm": 2.3821104938851843,
+    "min_peak_mm": 7.281345403066716,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.95,
+     "boca": 7.28,
+     "cejas": 7.07,
+     "mejillas": 3.71,
+     "nariz": 0.0
+    }
+   },
+   "alegria|pregunta": {
+    "mean_peak_mm": 8.313243308546575,
+    "mean_rms_mm": 2.613461590698941,
+    "min_peak_mm": 8.313243308546575,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 7.28,
+     "cejas": 8.31,
+     "mejillas": 3.71,
+     "nariz": 0.0
+    }
+   },
+   "alegria|negacion": {
+    "mean_peak_mm": 7.281345403066716,
+    "mean_rms_mm": 1.9195820478760302,
+    "min_peak_mm": 7.281345403066716,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.15,
+     "boca": 7.28,
+     "cejas": 2.34,
+     "mejillas": 3.71,
+     "nariz": 0.94
+    }
+   },
+   "tristeza|sorpresa": {
+    "mean_peak_mm": 6.386741189954186,
+    "mean_rms_mm": 1.600637704935236,
+    "min_peak_mm": 6.386741189954186,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.95,
+     "boca": 2.75,
+     "cejas": 6.39,
+     "mejillas": 0.0,
+     "nariz": 0.0
+    }
+   },
+   "tristeza|pregunta": {
+    "mean_peak_mm": 7.513812953895207,
+    "mean_rms_mm": 1.8519361387211324,
+    "min_peak_mm": 7.513812953895207,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 2.89,
+     "cejas": 7.51,
+     "mejillas": 0.0,
+     "nariz": 0.0
+    }
+   },
+   "tristeza|negacion": {
+    "mean_peak_mm": 5.403608138167576,
+    "mean_rms_mm": 1.0673441248286535,
+    "min_peak_mm": 5.403608138167576,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.29,
+     "boca": 3.37,
+     "cejas": 5.4,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   },
+   "sorpresa|pregunta": {
+    "mean_peak_mm": 2.8895056616568966,
+    "mean_rms_mm": 0.8563888062879151,
+    "min_peak_mm": 2.889505661656897,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.42,
+     "boca": 2.89,
+     "cejas": 1.25,
+     "mejillas": 0.0,
+     "nariz": 0.0
+    }
+   },
+   "sorpresa|negacion": {
+    "mean_peak_mm": 6.386741189954186,
+    "mean_rms_mm": 2.004495405362497,
+    "min_peak_mm": 6.386741189954186,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.95,
+     "boca": 3.66,
+     "cejas": 6.39,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   },
+   "pregunta|negacion": {
+    "mean_peak_mm": 7.513812953895207,
+    "mean_rms_mm": 2.100834628091227,
+    "min_peak_mm": 7.513812953895207,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 3.66,
+     "cejas": 7.51,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   }
+  },
+  "across_signs": {
+   "alegria": true,
+   "tristeza": true,
+   "sorpresa": true,
+   "pregunta": true,
+   "negacion": true
+  },
+  "bone_differences": [],
+  "per_sign": {
+   "0000": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0001": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0002": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0003": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0004": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0005": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0006": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0007": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0008": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0009": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0010": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0011": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0012": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0013": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0014": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0015": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0016": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0017": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0018": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0019": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0020": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0021": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0022": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0023": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0024": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0025": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0026": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0027": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0028": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0029": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0030": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0031": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0032": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0033": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0034": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0035": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0036": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0037": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0038": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0039": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0040": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0041": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0042": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0043": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0044": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0045": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0046": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0047": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0048": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0049": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   }
+  }
+ },
+ {
+  "avatar": "pauline",
+  "meshes": [
+   {
+    "mesh": "Mesh.017",
+    "targets": 29,
+    "facial_targets": 29,
+    "max_reach_mm": 7.903759242555229
+   },
+   {
+    "mesh": "Female_Body_Default.005",
+    "targets": 31,
+    "facial_targets": 29,
+    "max_reach_mm": 15.757428127729009
+   }
+  ],
+  "signatures": {
+   "alegria": [
+    [
+     "mouthSmile_L",
+     0.75,
+     7.28
+    ],
+    [
+     "mouthSmile_R",
+     0.75,
+     6.89
+    ],
+    [
+     "cheekSquint_L",
+     0.5,
+     3.71
+    ],
+    [
+     "cheekSquint_R",
+     0.5,
+     3.71
+    ],
+    [
+     "mouthDimple_L",
+     0.2,
+     1.46
+    ],
+    [
+     "mouthDimple_R",
+     0.2,
+     1.45
+    ],
+    [
+     "eyeSquint_L",
+     0.25,
+     0.73
+    ],
+    [
+     "eyeSquint_R",
+     0.25,
+     0.73
+    ]
+   ],
+   "tristeza": [
+    [
+     "browInnerUp",
+     0.75,
+     6.23
+    ],
+    [
+     "mouthFrown_R",
+     0.65,
+     2.75
+    ],
+    [
+     "mouthFrown_L",
+     0.65,
+     2.44
+    ],
+    [
+     "mouthShrugLower",
+     0.3,
+     2.44
+    ],
+    [
+     "browDown_L",
+     0.15,
+     0.78
+    ],
+    [
+     "browDown_R",
+     0.15,
+     0.78
+    ],
+    [
+     "eyeSquint_L",
+     0.1,
+     0.29
+    ],
+    [
+     "eyeSquint_R",
+     0.1,
+     0.29
+    ]
+   ],
+   "sorpresa": [
+    [
+     "browInnerUp",
+     0.85,
+     7.07
+    ],
+    [
+     "browOuterUp_R",
+     0.85,
+     6.39
+    ],
+    [
+     "browOuterUp_L",
+     0.85,
+     6.39
+    ],
+    [
+     "mouthFunnel",
+     0.2,
+     2.5
+    ],
+    [
+     "eyeWide_L",
+     0.7,
+     1.95
+    ],
+    [
+     "eyeWide_R",
+     0.7,
+     1.95
+    ],
+    [
+     "mouthLowerDown_L",
+     0.25,
+     1.42
+    ],
+    [
+     "mouthLowerDown_R",
+     0.25,
+     1.42
+    ]
+   ],
+   "pregunta": [
+    [
+     "browInnerUp",
+     1.0,
+     8.31
+    ],
+    [
+     "browOuterUp_R",
+     1.0,
+     7.51
+    ],
+    [
+     "browOuterUp_L",
+     1.0,
+     7.51
+    ],
+    [
+     "mouthPress_L",
+     0.3,
+     2.89
+    ],
+    [
+     "mouthPress_R",
+     0.3,
+     2.89
+    ],
+    [
+     "mouthRollLower",
+     0.15,
+     2.36
+    ],
+    [
+     "eyeWide_L",
+     0.55,
+     1.53
+    ],
+    [
+     "eyeWide_R",
+     0.55,
+     1.53
+    ],
+    [
+     "mouthShrugUpper",
+     0.25,
+     1.39
+    ]
+   ],
+   "negacion": [
+    [
+     "mouthShrugLower",
+     0.45,
+     3.66
+    ],
+    [
+     "mouthPress_L",
+     0.35,
+     3.37
+    ],
+    [
+     "mouthPress_R",
+     0.35,
+     3.37
+    ],
+    [
+     "browDown_L",
+     0.45,
+     2.34
+    ],
+    [
+     "browDown_R",
+     0.45,
+     2.34
+    ],
+    [
+     "mouthFrown_R",
+     0.55,
+     2.33
+    ],
+    [
+     "mouthFrown_L",
+     0.55,
+     2.06
+    ],
+    [
+     "noseSneer_L",
+     0.15,
+     0.94
+    ],
+    [
+     "noseSneer_R",
+     0.15,
+     0.94
+    ],
+    [
+     "browInnerUp",
+     0.1,
+     0.83
+    ],
+    [
+     "eyeSquint_L",
+     0.2,
+     0.58
+    ],
+    [
+     "eyeSquint_R",
+     0.2,
+     0.58
+    ]
+   ]
+  },
+  "temporal": {
+   "alegria": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "tristeza": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "sorpresa": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "pregunta": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "negacion": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   }
+  },
+  "variant_pairs": {
+   "alegria|tristeza": {
+    "mean_peak_mm": 7.281359372243154,
+    "mean_rms_mm": 1.9032563278574712,
+    "min_peak_mm": 7.281359372243154,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.44,
+     "boca": 7.28,
+     "cejas": 6.23,
+     "mejillas": 3.71,
+     "nariz": 0.0
+    }
+   },
+   "alegria|sorpresa": {
+    "mean_peak_mm": 7.281359372243154,
+    "mean_rms_mm": 2.402877088603191,
+    "min_peak_mm": 7.281359372243154,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.95,
+     "boca": 7.28,
+     "cejas": 7.07,
+     "mejillas": 3.71,
+     "nariz": 0.0
+    }
+   },
+   "alegria|pregunta": {
+    "mean_peak_mm": 8.31324583602254,
+    "mean_rms_mm": 2.65330544572029,
+    "min_peak_mm": 8.31324583602254,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 7.28,
+     "cejas": 8.31,
+     "mejillas": 3.71,
+     "nariz": 0.0
+    }
+   },
+   "alegria|negacion": {
+    "mean_peak_mm": 7.281359372243154,
+    "mean_rms_mm": 1.925561436619975,
+    "min_peak_mm": 7.281359372243154,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.15,
+     "boca": 7.28,
+     "cejas": 2.34,
+     "mejillas": 3.71,
+     "nariz": 0.94
+    }
+   },
+   "tristeza|sorpresa": {
+    "mean_peak_mm": 6.386742412156087,
+    "mean_rms_mm": 1.6529943167564225,
+    "min_peak_mm": 6.386742412156088,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.95,
+     "boca": 2.75,
+     "cejas": 6.39,
+     "mejillas": 0.0,
+     "nariz": 0.0
+    }
+   },
+   "tristeza|pregunta": {
+    "mean_peak_mm": 7.513814391779756,
+    "mean_rms_mm": 1.9255083247648637,
+    "min_peak_mm": 7.513814391779756,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 2.89,
+     "cejas": 7.51,
+     "mejillas": 0.0,
+     "nariz": 0.0
+    }
+   },
+   "tristeza|negacion": {
+    "mean_peak_mm": 5.403609781026949,
+    "mean_rms_mm": 1.0890313943053997,
+    "min_peak_mm": 5.403609781026949,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.29,
+     "boca": 3.37,
+     "cejas": 5.4,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   },
+   "sorpresa|pregunta": {
+    "mean_peak_mm": 2.8894969035473212,
+    "mean_rms_mm": 0.8588836556648853,
+    "min_peak_mm": 2.8894969035473212,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.42,
+     "boca": 2.89,
+     "cejas": 1.25,
+     "mejillas": 0.0,
+     "nariz": 0.0
+    }
+   },
+   "sorpresa|negacion": {
+    "mean_peak_mm": 6.386742412156087,
+    "mean_rms_mm": 2.068385391263857,
+    "min_peak_mm": 6.386742412156088,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.95,
+     "boca": 3.66,
+     "cejas": 6.39,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   },
+   "pregunta|negacion": {
+    "mean_peak_mm": 7.513814391779756,
+    "mean_rms_mm": 2.187222056825409,
+    "min_peak_mm": 7.513814391779756,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 3.66,
+     "cejas": 7.51,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   }
+  },
+  "across_signs": {
+   "alegria": true,
+   "tristeza": true,
+   "sorpresa": true,
+   "pregunta": true,
+   "negacion": true
+  },
+  "bone_differences": [],
+  "per_sign": {
+   "0000": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0001": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0002": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0003": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0004": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0005": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0006": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0007": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0008": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0009": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0010": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0011": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0012": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0013": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0014": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0015": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0016": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0017": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0018": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0019": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0020": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0021": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0022": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0023": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0024": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0025": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0026": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0027": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0028": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0029": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0030": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0031": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0032": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0033": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0034": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0035": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0036": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0037": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0038": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0039": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0040": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0041": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0042": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0043": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0044": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0045": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0046": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0047": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0048": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   },
+   "0049": {
+    "alegria": {
+     "peak_mm": 7.281,
+     "rms_mm": 2.223
+    },
+    "tristeza": {
+     "peak_mm": 6.235,
+     "rms_mm": 1.487
+    },
+    "sorpresa": {
+     "peak_mm": 7.066,
+     "rms_mm": 2.352
+    },
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 2.795
+    },
+    "negacion": {
+     "peak_mm": 3.658,
+     "rms_mm": 1.489
+    }
+   }
+  }
+ }
+]

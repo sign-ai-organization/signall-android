@@ -51,7 +51,7 @@
   skins, articulaciones y nombres de clip, hornea la pose de descanso, **poda los
   morph targets que ninguna variante anima** y compacta el buffer. Escribe
   `assets/web/models/juan.glb` (34,28 MB), `pauline.glb` (29,46 MB),
-  `models/avatares.json` (inventario con hashes), `manifest.json` y
+  `models/avatars.json` (inventario con hashes), `manifest.json` y
   `SignsCatalog.kt`. La escena resuelve `signs/<id>.glb` por nombre contra los
   clips del avatar elegido, sin descargar nada. Sin dependencias externas (no
   necesita Blender ni Node). Uso: `python3 tools/pack_avatars.py [--dry-run]`.
@@ -100,6 +100,14 @@
   pose sin instalar la app. Genera las comparaciones de
   `openspec/changes/archive/2026-10-17-reposo-y-crossfade/img/`. Es el único de los tres que pide
   `numpy` y `PIL`; el pipeline de assets no.
+- **`measure_face_markers.py`** — cuánto mueve la cara cada variante facial
+  (`_alegria`, `_tristeza`, `_sorpresa`, `_pregunta`, `_negacion`) de los dos
+  avatares. Lee el alcance geométrico de cada morph target (mm a peso 1) y las
+  curvas de pesos de los canales `weights`, y compara cada variante contra el
+  clip base de su seña en tiempo normalizado. Sirve para decidir el mapeo
+  tipo gramatical → variante sin renderizar. Salida: tabla Markdown y JSON con
+  el detalle por seña y por avatar. La medición del 2026-11-04 está en
+  `docs/mediciones/marcadores-2026-11-04.md`. Sin dependencias.
 - **`local_stt.py`** — transcripción local con `whisper.cpp`, para probar el
   micrófono sin backend (`--stt` en `mock_backend.py`).
 
