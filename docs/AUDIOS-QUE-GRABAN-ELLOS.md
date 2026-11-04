@@ -38,9 +38,10 @@ La consecuencia es de conteo: AU-01 queda con tres voces (H1, H2 y H4) y las dos
 ruido son H1 y H4. El detalle está en
 [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo que hay que revisar».
 
-La ficha de la grabación sigue pendiente: **qué celular grabó cada persona** y **en qué cuarto
-se grabaron los de silencio**. Los diez de Samuel y los de Sergio vienen del mismo tipo de
-archivo (estéreo a ~130 kbps), así que conviene anotar si los procesó la misma persona.
+De la ficha de grabación se sabe que **cada uno grabó en su propio cuarto, en silencio**, y que
+el ruido de Sergio fue una televisión a unos 10 m. Falta **con qué celular grabaron Samuel,
+Julián y Sergio**: los archivos de Samuel y los diez con ruido son estéreo a ~130 kbps y los de
+Julián mono a 70, así que al menos hay tres formas distintas de grabar.
 
 ## Cómo se graba (vale para los 40)
 

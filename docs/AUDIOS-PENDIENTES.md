@@ -15,11 +15,14 @@ El detalle de cada audio, con duración, silencio y transcripción, está en
 
 ## Lo que falta anotar
 
-Tres datos que no son audios y que hacen falta para defender la prueba de transcripción:
+La ficha está casi completa: **iPhone 14 Pro Max** el del owner, el celular a **10 cm** de la
+boca, el ruido a **10 cm** (y a 5 cm en el audio «más cerca»), ruido de un **video de ruido
+estudiantil desde un iPad**, cada uno en **su cuarto en silencio**, y en el caso de Sergio una
+**televisión a unos 10 m**. Falta:
 
-- **Qué celular grabó cada persona.**
-- **En qué cuarto se grabaron los de silencio** y si alguien grabó en otro sitio.
-- **Cuál fue el ruido** del bloque con ruido y a qué distancia estaba el celular.
+- **Confirmar los 10 cm**: el owner dijo «unos 1 centímetros» y después que era la misma
+  distancia que la de la fuente de ruido.
+- **Con qué celular grabaron Samuel, Julián y Sergio.**
 
 ## Dos cosas sobre los diez audios con ruido
 

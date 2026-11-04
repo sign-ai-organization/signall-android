@@ -157,3 +157,27 @@ El ZIP se borró del repo apenas se extrajo, como pidió el owner, y quedó copi
 
 Con esto el corpus tiene **79 audios** (60 + 10 + 8 + 1) y `MANIFIESTO.md` se regeneró: AU-01
 pasó de 50 a 60, con los diez bloques de seis completos.
+
+## La ficha de la grabación
+
+El owner informó cómo se grabaron los 79 audios. Lo que se sabe y lo que se midió:
+
+| Dato | Valor | Comprobación |
+|---|---|---|
+| Celular de H1 | iPhone 14 Pro Max | los archivos traen la firma de Grabaciones de voz de iPhone |
+| Celular a la boca | 10 cm (por confirmar) | con 1 cm el nivel habría sido mucho más alto y con soplidos |
+| Fuente de ruido | a 10 cm; el «más cerca» (`AU-03-004`) a 5 cm | `AU-03-004` tiene ~8 dB más de ruido, lo que corresponde a la mitad de distancia |
+| Ruido de H1 | video de ruido estudiantil desde un iPad | — |
+| Ruido de H4 | televisión de fondo a unos 10 m, en su cuarto | — |
+| Cuarto | cada uno en el suyo, en silencio | pisos medidos: H1 −57/−58, H2 −55 a −67, H3 −71, H4 −66 dB |
+
+**Lo que esto cambia:** el bloque con ruido de Sergio no es el mismo ruido que el del owner. No
+es un problema de nivel —eso ya se corrigió— sino de fuente y de distancia: iPad a 10 cm contra
+televisión a 10 m. Con eso, los diez `-006` no se pueden promediar con el bloque de H1 como si
+fueran una sola condición, y la copia con el nivel igualado no alcanza para igualarlos: arregla
+el volumen, no el ruido ni la voz.
+
+Queda por confirmar si la boca estaba a 10 cm (el owner dijo «unos 1 centímetros») y con qué
+celular grabaron Samuel, Julián y Sergio. Los archivos muestran al menos tres formas distintas de
+grabar: mono a 70 kbps (Julián), mono con Grabaciones de voz (Sergio en silencio) y estéreo a
+~130 kbps exportado en lote (Samuel y los diez con ruido).
