@@ -22,13 +22,14 @@ Los archivos venían nombrados con el número del ID (`002.m4a` … `060.m4a`), 
 los pares: por eso llegaron 30 y no 40. Cada uno se identificó por su contenido —se
 transcribieron los 30 y se comparó contra la frase que le toca— y los 30 coinciden.
 
-**Los diez con ruido no están en la voz de Julián.** Se midió de tres maneras y las tres
-apuntan a la voz de Sergio: el tono de esos diez (120–137 Hz) no coincide con el de los diez
-de Julián en silencio (86–107 Hz) y sí con el de Sergio (110–131 Hz); el timbre se parece más
-a los audios de Sergio en 9 de los 10 casos; y los archivos son estéreo a 135 kbps con la
-misma hora de creación en los diez, mientras los otros son mono a 63–70 kbps. Es consistente
-con que Sergio haya grabado el bloque con ruido. Además, ese ruido está unos 6 dB por debajo
-del bloque con ruido del owner. El detalle está en
+**Los diez con ruido son la voz de Sergio.** Así lo dijo el owner al entregarlos —Sergio
+grabó el bloque que iba a ser de Julián— y la medición lo confirma: el tono de esos diez
+(120–137 Hz) no coincide con el de los diez de Julián en silencio (86–107 Hz) y sí con el de
+Sergio (110–131 Hz); el timbre se parece más a los audios de Sergio en 9 de los 10 casos; y
+los archivos son estéreo a 135 kbps con la misma hora de creación en los diez, mientras los
+otros son mono a 63–70 kbps. Además, ese ruido está unos 6 dB por debajo del bloque con ruido
+del owner. La consecuencia es de conteo: AU-01 queda con tres voces (H1, H2 y H4) y las dos
+voces con ruido son H1 y H4. El detalle está en
 [`MANIFIESTO.md`](../../data/audios/MANIFIESTO.md), sección «Lo que hay que revisar».
 
 Lo que hay que anotar al recibir los diez de Samuel y para cerrar los 40: qué teléfono grabó
