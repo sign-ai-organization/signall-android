@@ -362,8 +362,15 @@ Para cada problema de `CONCLUSIONES` se aplica una de tres etiquetas después de
 | 22 | F10 | `PR-LLM-01`: nombrar el «modelo más grande de la nube» y dejar escrito que el local es parte de la comparación | Plan | Sí |
 | 23 | F11 | `PR-SEC-01`: decir «con el proveedor oficial» en el entorno | Plan | No |
 | 24 | F12 | `PR-STT-04`: exigir GPU libre y solo el STT, como ya dice el procedimiento | Plan | No |
-| 25 | D1 | `RNF-AV-03` duplicado | SRS | No |
-| 26 | D2 | APK de 78,19 MB contra 38,94/33,88 medidos | SRS | Sí |
+| 25 | D1 | `RNF-AV-03` duplicado — **hecho el 2026-11-05**: se quitó el bloque repetido que estaba bajo «Requerimientos de Desempeño» y se dejó el de «Atributos del Sistema» | SRS | No |
+| 26 | D2 | APK de 78,19 MB — **hecho el 2026-11-05**: el SRS ahora dice 33,9 MB release / 39,0 MB debug, medidos sobre los APK del 2026-11-05 | SRS | Sí |
+
+**Nota del 2026-11-05 — GLB nuevo con marcas faciales.** Samuel dejó en
+`../signai-avatar` un GLB nuevo con cuatro marcas faciales (por confirmar:
+afirmación, negación, orden y pregunta). Eso **no se resuelve en este plan**: va en una
+sesión aparte que hace `pull`, verifica las variantes reales, corre `tools/pack_avatars.py`
+y ajusta `FACE_VARIANT_BY_TYPE` si cambian los nombres. `PR-AVT-05` sigue pendiente de la
+validación con una persona de LSC; el GLB nuevo es la materia prima, no la validación.
 
 **P2 — mejoras que no bloquean**
 
