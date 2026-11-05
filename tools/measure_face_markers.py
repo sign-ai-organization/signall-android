@@ -320,6 +320,14 @@ def measure_avatar(avatar):
         details[mesh_index] = {"names": names, "reaches": reaches, "facial": facial}
 
     clips = {anim.get("name"): i for i, anim in enumerate(js["animations"])}
+    needed = ["0000"] + [f"0000_{suffix}" for suffix in SUFFIXES]
+    missing = [name for name in needed if name not in clips]
+    if missing:
+        raise SystemExit(
+            "measure_face_markers.py todavía asume el layout viejo (clip base + "
+            "cinco variantes emocionales). Los GLB del 2026-11-04 traen cuatro "
+            "marcas gramaticales y ningún clip base: hay que adaptar la "
+            f"comparación antes de volver a medir (faltan {missing})")
     result = {
         "avatar": avatar,
         "meshes": [],

@@ -90,7 +90,7 @@ Cualquier sesión que toque el pipeline tiene que mirar los hermanos antes de de
 | `../sign-ai-backend` | FastAPI: WS con el cliente, NLP de glosas, catálogo, caché semántico, Neon | `develop` | 8080 |
 | `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 |
 | `../sign-ai-docs` | **Los documentos de la tesis**: los formales en `latex/` (SRS, SDD, memoria, plan de pruebas, SPMP) y los borradores en `borradores/`. Se compilan con `make` | `main` | — |
-| `../signai-avatar` | Producción de las animaciones (Cascadeur): versiona los **GLB finales** de Juan y Pauline, 300 clips cada uno. La demo Flask de landmarks que también vive ahí está congelada | `dev` | — |
+| `../signai-avatar` | Producción de las animaciones (Cascadeur): versiona los **GLB finales** de Juan y Pauline, 200 clips cada uno (50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada | `dev` | — |
 
 Reglas por repo:
 
@@ -102,8 +102,8 @@ Reglas por repo:
 - **Los `.drawio` y el `.md` de requerimientos los edita el owner**: los cambios grandes
   se proponen, no se aplican en silencio.
 - **`../signai-avatar` es la fuente de los GLB de esta app.** En su rama `dev` versiona
-  `models/Juan.glb` y `models/Pauline.glb` (300 clips cada uno; desde el 2026-10-26 con la
-  cadera centrada). De ahí los lee `tools/pack_avatars.py`; no se copian ni se editan a
+  `models/Juan.glb` y `models/Pauline.glb` (200 clips cada uno: 50 señas × 4 marcas
+  faciales; desde el 2026-11-04 con esas caras). De ahí los lee `tools/pack_avatars.py`; no se copian ni se editan a
   mano, y sus commits no los hace esta sesión sin que el owner lo pida. La demo Flask de
   landmarks que también vive en ese repo está **congelada desde el 2026-09-19**: no se le
   copian scripts a esta app.
@@ -272,7 +272,7 @@ El WebView carga por `WebViewAssetLoader` en
 avance real de la escena para la barra del splash y `signStart:<idx>:<jsMs>` por cada seña.
 
 **`avatarReady` es "todo listo", no "el archivo llegó":** se manda después de indexar los
-300 clips del avatar, resolver la seña de arranque, compilar los shaders
+200 clips del avatar, resolver la seña de arranque, compilar los shaders
 (`renderer.compileAsync`) y pintar un frame con el avatar adentro. El splash de Compose se
 esconde con ese aviso, así que si se manda antes se ve el canvas vacío y la primera seña
 paga el arranque del WebGL.
@@ -356,14 +356,15 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
 - **Nunca pongas la normalización (escala/offset) en la raíz de la escena cargada.** Las
   exportaciones de Cascadeur animan la raíz del armature en posición, rotación *y* escala,
   así que el mixer la sobrescribe cada frame. Va en un objeto pivote padre.
-- **Dos `.glb` completos, uno por avatar.** `models/juan.glb` (34,28 MB) y
-  `models/pauline.glb` (29,46 MB) traen el personaje, la cara y las **50 señas como
-  clips** `0000`..`0049`, cada una con sus variantes faciales (`_alegria`, `_tristeza`,
-  `_sorpresa`, `_pregunta`, `_negacion`): **300 clips por archivo**. La escena indexa
-  solo el avatar elegido (`embeddedClipsFor` en `app.js`) y resuelve `signs/<id>.glb`
-  **por nombre, sin pedir nada por red**. Hoy reproduce únicamente el clip base de cada
-  seña: los marcadores faciales están fuera de alcance hasta que se apruebe el mapeo.
-- **`models/avatares.json`** es el inventario reproducible: hash y tamaño de cada fuente
+- **Dos `.glb` completos, uno por avatar.** `models/juan.glb` (30,32 MB) y
+  `models/pauline.glb` (27,85 MB) traen el personaje, la cara y las **50 señas como
+  clips** `0000_afirmativo`..`0049_orden`: **200 clips por archivo**, cuatro marcas
+  faciales por seña (`_afirmativo`, `_pregunta`, `_negacion`, `_orden`) y **ningún clip
+  base**. La escena indexa solo el avatar elegido (`embeddedClipsFor` en `app.js`) y
+  resuelve `signs/<id>.glb` **por nombre, sin pedir nada por red**. Desde el 2026-11-04
+  reproduce la cara que corresponde al tipo de oración (`FACE_VARIANT_BY_TYPE`): las
+  cuatro variantes se distinguen solo por los pesos de la cara, los huesos son idénticos.
+- **`models/avatars.json`** es el inventario reproducible: hash y tamaño de cada fuente
   original, del archivo empaquetado, clips, articulaciones, variantes y la advertencia de
   pose de bind de Pauline. Los originales `Juan.glb` y `Pauline.glb` viven versionados en
   `../signai-avatar/models/` (rama `dev`) y no se editan. `../material-3d/Avatares/`
@@ -375,9 +376,9 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
   lo que ya no hay es un archivo detrás. No la "limpies" del código: es el contrato.
 - **Nunca edites `models/juan.glb` ni `models/pauline.glb` a mano**: se regeneran con
   `tools/pack_avatars.py` desde `../signai-avatar/models/Juan.glb` y
-  `.../Pauline.glb`, que también reescriben `models/avatares.json`, `manifest.json` y
+  `.../Pauline.glb`, que también reescriben `models/avatars.json`, `manifest.json` y
   `domain/SignsCatalog.kt`. El script hornea la pose de descanso y poda los morph targets
-  que ninguna de las 300 variantes mueve. `tools/pack_signall.py` es el pipeline viejo de
+  que ninguna de las 200 variantes mueve. `tools/pack_signall.py` es el pipeline viejo de
   un solo avatar: no procesa estos dos archivos.
 - **Arranque medido el 2026-10-26 en el Redmi Note 9S**: Juan, **1,81–3,42 s** según
   caché de página (3,42 s en frío, 1,95–2,50 s en caliente); Pauline, **1,95 s**. Un

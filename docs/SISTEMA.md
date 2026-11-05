@@ -22,7 +22,7 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
 | `../sign-ai-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `develop` | 8080 | `docker compose up --build` (levanta **también** el STT) |
 | `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 | incluido en el compose del backend, o solo desde su repo |
 | `../sign-ai-docs` | **Los documentos de la tesis**: los formales en LaTeX (SRS, SDD, memoria, plan de pruebas, SPMP), los borradores en Markdown y los diagramas | `main` | — | `make` (compila los PDF) |
-| `../signai-avatar` | Producción de las animaciones con Cascadeur; versiona en `models/` los GLB finales de Juan y Pauline (300 clips cada uno). La demo Flask de landmarks que también vive ahí está congelada desde 2026-09-19 | `dev` | — | — |
+| `../signai-avatar` | Producción de las animaciones con Cascadeur; versiona en `models/` los GLB finales de Juan y Pauline (200 clips cada uno: 50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada desde 2026-09-19 | `dev` | — | — |
 
 **El contrato entre ellos son frames de WebSocket, no imports.** Un cambio acá rompe allá
 sin que el compilador avise. Ese es el motivo de que este archivo exista.
@@ -132,12 +132,14 @@ versiones-pasadas/           ← historia, no se edita
 las señas se hacen en Cascadeur sobre los avatares HumGen3D (Juan y Pauline) y el
 resultado final se versiona en su carpeta `models/`, en la rama **`dev`**:
 
-- `models/Juan.glb` — 37,99 MB, 300 clips, 102 articulaciones.
-- `models/Pauline.glb` — 35,27 MB, ídem.
+- `models/Juan.glb` — 34,27 MB, 200 clips, 102 articulaciones.
+- `models/Pauline.glb` — 33,88 MB, ídem.
 
-Desde el commit `cf014ef` (2026-10-26) esos archivos traen la **cadera centrada** en las
-50 señas: antes el `spine` venía corrido y girado, y el avatar se iba de costado al
-representar. `tools/pack_avatars.py` los lee de ahí, hornea la pose de descanso, poda los
+Desde el commit `fc6f372` (2026-11-04) esos archivos traen **cuatro marcas faciales**
+por seña (`_afirmativo`, `_pregunta`, `_negacion`, `_orden`) y ningún clip base. La
+versión anterior (`cf014ef`, 2026-10-26) traía la **cadera centrada** en las 50 señas:
+antes el `spine` venía corrido y girado, y el avatar se iba de costado al representar.
+`tools/pack_avatars.py` los lee de ahí, hornea la pose de descanso, poda los
 morph targets que nadie anima y escribe los dos `.glb` de la app. El proceso completo está
 en su `openspec/specs/animacion-cascadeur/spec.md`; los cambios de expresión facial, en
 `openspec/changes/avatar-expresiones-faciales/`.

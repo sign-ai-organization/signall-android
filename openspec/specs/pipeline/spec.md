@@ -1,5 +1,12 @@
 # Pipeline SignAI (WebView) — flujo de datos
 
+> **Actualización del 2026-11-05:** los dos `.glb` de origen pasan a la versión del
+> 2026-11-04 (`fc6f372`), con **cuatro marcas faciales** (`_afirmativo`, `_pregunta`,
+> `_negacion`, `_orden`) y **sin clip base**. Cada archivo tiene **200 clips** (50 × 4),
+> 102 articulaciones y los mismos canales de hueso entre variantes; solo cambian los pesos
+> de la cara. `app.js` elige la variante por tipo de oración. `../material-3d/Avatares/`
+> sigue siendo la versión anterior.
+>
 > **Actualización del 2026-10-27:** los dos `.glb` de origen pasan a leerse del repo
 > hermano `../signai-avatar/models/` (rama `dev`, commit `cf014ef`), que versiona la
 > versión con la **cadera centrada** del 2026-10-26. `tools/pack_avatars.py` no cambia
@@ -39,16 +46,16 @@ runtime.
 
 ```
 ../signai-avatar/models/Juan.glb               los dos exports finales de Cascadeur:
-../signai-avatar/models/Pauline.glb            personaje, esqueleto y 300 clips cada uno
-      │                            (fuente versionada, rama dev; 37,99 y 35,27 MB)
+../signai-avatar/models/Pauline.glb            personaje, esqueleto y 200 clips cada uno
+      │                            (fuente versionada, rama dev; 34,27 y 33,88 MB)
       ▼
 tools/pack_avatars.py              verifica skins, articulaciones y nombres de clip;
       │                            hornea la pose de descanso y poda los morph
       │                            targets que ninguna variante anima
-      │  · models/juan.glb          ← 34,28 MB: personaje + cara + 300 clips
-      │  · models/pauline.glb       ← 29,46 MB: idem
-      │  · models/avatares.json     ← inventario: hashes, clips, articulaciones
-      │  · manifest.json            ← inventario de los 50 clips base
+      │  · models/juan.glb          ← 30,32 MB: personaje + cara + 200 clips
+      │  · models/pauline.glb       ← 27,85 MB: idem
+      │  · models/avatars.json      ← inventario: hashes, clips, articulaciones
+      │  · manifest.json            ← inventario de las 50 señas y sus 4 variantes
       │  · domain/SignsCatalog.kt   ← reescrito, para que el asset y el código no divergan
       ▼
 app/src/main/assets/web/           dentro del APK
@@ -196,7 +203,7 @@ falsos "sin resolver".
 >
 > **Verificá contra el archivo antes de confiar en cualquier lista de nombres.**
 
-### La cara no la anima la app
+### La cara se anima por morph targets, no por huesos
 
 Los nodos de cara usan nombres al estilo ARKit y **son articulaciones del skin** (están
 entre los 102 joints, no son nodos sueltos):
@@ -208,23 +215,24 @@ eyeball.L, eyeball.lookat.L, eyeball_lookat_master
 jaw, jaw_upper, jaw_dwn_mouth_clsd, jaw_open_lt_rt_frwd
 ```
 
-`app.js` no los menciona ni los maneja: la escena no tiene código de expresión facial. En
-los clips, esos huesos **casi no se mueven**: el mayor rango de un componente del cuaternión
-de rotación de un nodo de cara en los 50 clips base del archivo anterior es **0,0012**
-(`jaw`, clip `0015`), contra **1,996** del mayor hueso del cuerpo (`thigh.L`, clip `0034`)
-—medido el 2026-10-24 leyendo los accessors del GLB—, así que hoy la cara queda
-prácticamente neutra. Los dos archivos vigentes **sí conservan morph targets** que alguna
-de las 300 variantes anima —65 bloques de target en Juan y 64 en Pauline, contados el
-2026-10-26—, pero la escena no los maneja y solo reproduce el clip base, así que nada de
-eso llega a pantalla.
+En los clips esos huesos **casi no se mueven**: el mayor rango de un componente del
+cuaternión de rotación de un nodo de cara en los 50 clips base de un archivo anterior es
+**0,0012** (`jaw`, clip `0015`), contra **1,996** del mayor hueso del cuerpo (`thigh.L`,
+clip `0034`) —medido el 2026-10-24—. La expresión facial de los exports del 2026-11-04
+vive en los **canales `weights`** de los morph targets, no en los huesos.
+
+Desde el 2026-11-04 la escena **sí maneja esa cara**: cada seña tiene cuatro clips
+(`_afirmativo`, `_pregunta`, `_negacion`, `_orden`) cuyos canales de hueso son idénticos y
+cuyos pesos cambian; `pickVariant` elige uno según el tipo de oración que llega en el
+`segment`. Ya no hay clip base: las cuatro variantes son caras gramaticales y la app usa
+`afirmativo` como respaldo cuando el tipo no viene o no está en la tabla. Los dos archivos
+vigentes conservan los morph targets que alguna de las 200 variantes anima —59 bloques en
+Juan y 58 en Pauline, contados el 2026-11-05—.
 
 Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide un marcador facial
-según el tipo de frase y no hay implementación. El owner decidió el **2026-10-26** dejarlo
-fuera de alcance —se sigue representando solo el clip base—, así que la deuda es de
-documento, no de código. Si algún día se implementa, se toca acá y en `app.js`: **los huesos
-de cara existen y son joints** y los morph targets están conservados en los dos archivos,
-así que el material está; falta la tabla tipo→variante y la decisión de hornearla o
-animarla desde la escena. No es un cambio de una línea.
+según el tipo de frase y desde el 2026-11-04 hay implementación para los cinco tipos del
+backend, con cuatro caras (pregunta sí/no y pregunta de contenido comparten `_pregunta`).
+Lo que falta es la validación lingüística de LSC, no el código.
 
 ## Constantes de la escena en `app.js` (valores reales)
 
@@ -285,7 +293,7 @@ Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe e
 
 | Mensaje | Cuándo |
 |---|---|
-| `avatarReady` | La escena está entera: **300 clips indexados**, seña de arranque resuelta, shaders compilados y un frame pintado con el avatar adentro |
+| `avatarReady` | La escena está entera: **200 clips indexados**, seña de arranque resuelta, shaders compilados y un frame pintado con el avatar adentro |
 | `avatarLoaded:<id>` | Un cambio de avatar en caliente terminó (2026-10-26) |
 | `avatarFailed:<id>` | El cambio de avatar falló; el anterior sigue en pantalla (2026-10-26) |
 | `onPlaybackDone` | La cola terminó |

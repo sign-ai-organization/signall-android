@@ -27,16 +27,18 @@ context: |
     Compose BOM 2024.12.01
 
   ### Assets: dos GLB completos, uno por avatar
-  - **Dos archivos, `models/juan.glb` (34,28 MB) y `models/pauline.glb` (29,46 MB)**: cada
-    uno trae el personaje, la cara y las 50 señas como clips base `0000`..`0049` más sus
-    variantes faciales —**300 clips**—, reproducidos con `THREE.AnimationMixer`. La escena
+  - **Dos archivos, `models/juan.glb` (30,32 MB) y `models/pauline.glb` (27,85 MB)**: cada
+    uno trae el personaje, la cara y las 50 señas como clips (`0000_afirmativo`..`0049_orden`)
+    con sus cuatro marcas faciales (`_afirmativo`, `_pregunta`, `_negacion`, `_orden`)
+    —**200 clips**—, reproducidos con `THREE.AnimationMixer`. No hay clip base. La escena
     carga solo el avatar elegido en Ajustes. `signs/<SSSS_VVVV_RRRR>.glb` sigue siendo el
     **identificador lógico** que manda el backend; `app.js` lo traduce al clip `<id>` por
     nombre (`embeddedClipsFor`) y no pide nada por red. No hay archivo por seña.
   - Los originales vienen de **Cascadeur** y viven versionados en el repo hermano
-    `../signai-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev` desde el commit
-    `cf014ef`, 2026-10-26): son la entrada inmutable del empaquetado y no se editan.
-    Esa versión corrigió la cadera (el avatar se iba de costado al representar) y volvió
+    `../signai-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev`, commit `fc6f372`,
+    2026-11-04): son la entrada inmutable del empaquetado y no se editan.
+    Esa versión reemplazó las caras emocionales por las cuatro marcas gramaticales y mantuvo
+    la cadera centrada.
     a aplicar la corrección de cabeza. `../material-3d/Avatares/` conserva la versión
     anterior (2026-10-24).
   - El pipeline vigente es `tools/pack_avatars.py`: verifica skins, articulaciones y
@@ -74,17 +76,18 @@ context: |
   `DEF-jaw_master` **está equivocado**. Este mismo archivo afirmaba lo contrario hasta el
   2026-10-17, y también lo afirmaban `specs/pipeline/spec.md` y `specs/avatar/spec.md`.
 
-  **La cara no la anima la app.** Los nodos de cara existen con nombres al estilo ARKit
-  (`brow_dwn_L`, `brow_outer_up_L`, `eye_blink_open_L`, `jaw_open_lt_rt_frwd`,
-  `eyeball.lookat.L`) y **son articulaciones de skin** (están entre los 102 joints), pero
-  `app.js` no los menciona ni los maneja, y solo reproduce el clip base de cada seña. Los
-  dos archivos vigentes conservan los morph targets que alguna variante anima (**65**
-  bloques de target en Juan y **64** en Pauline, contados el 2026-10-26), pero la escena no
-  los escribe. Medido sobre los 50 clips del archivo anterior, los huesos de cara se mueven
-  casi nada (rango máximo de un componente del cuaternión: 0,0012). Es el punto **A6** de
-  `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores por tipo de frase y no hay
-  implementación. **El owner decidió el 2026-10-26 dejarlo fuera de alcance**: se sigue
-  representando solo la seña base.
+  **La cara se anima por morph targets.** Los nodos de cara existen con nombres al estilo
+  ARKit (`brow_dwn_L`, `brow_outer_up_L`, `eye_blink_open_L`, `jaw_open_lt_rt_frwd`,
+  `eyeball.lookat.L`) y **son articulaciones de skin** (están entre los 102 joints), pero la
+  expresión de los exports del 2026-11-04 vive en los **canales `weights`** de los morph
+  targets, no en los huesos. Desde el 2026-11-04 `app.js` elige una de las cuatro variantes
+  según el tipo de oración (`FACE_VARIANT_BY_TYPE`) y reproduce su clip; los dos archivos
+  conservan los morph targets que alguna variante anima (**59** bloques de target en Juan y
+  **58** en Pauline, contados el 2026-11-05). Los huesos de cara se mueven casi nada (rango
+  máximo de un componente del cuaternión: 0,0012, medido sobre el archivo anterior). Es el
+  punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores por tipo de
+  frase y desde el 2026-11-04 hay implementación con cuatro caras (pregunta sí/no y pregunta
+  de contenido comparten `_pregunta`); falta la validación lingüística de LSC.
 
   ### Constantes reales de la escena (`app/src/main/assets/web/app.js`)
   `CROSSFADE_MS = 100` · `MAX_DPR = 1.75` (tope a propósito) ·
@@ -225,9 +228,9 @@ operations:
         pendiente del hermano"
       - "Respetar `MAX_DPR = 1.75` y no forzar `DoubleSide` en las mallas: sin eso el
         Redmi Note 9S va a 99 % de jank"
-      - "La cara no la anima la app: `app.js` no menciona los huesos de cara y solo
-        reproduce el clip base. Los morph targets faciales están conservados en el asset,
-        pero la escena no los escribe. No prometer marcadores faciales (RF-AVT-03)"
+      - "La cara se anima por morph targets: `app.js` elige una de las cuatro variantes
+        (`_afirmativo`, `_pregunta`, `_negacion`, `_orden`) según el tipo de oración. No
+        hay clip base; no prometer emociones ni una cara neutra (RF-AVT-03)"
   archive:
     guidance:
       - "Actualizar el `context` de este archivo si cambió algo relevante del proyecto"
