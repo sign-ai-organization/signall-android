@@ -152,6 +152,22 @@ validador:
 17 + 9 = **26 de 30 (87 %)**; con la reubicación del interrogativo, **27 (90 %)**.
 Si además se corrige el pronombre de `FR-01-010`, **28 (93 %)**.
 
+**Los dos casos que no son de forma** (los únicos donde el modelo no dijo lo correcto):
+
+- **`FR-01-015` — completar, no adivinar.** El modelo se comió un `QUIEN` que la frase
+  dice explícitamente. Regla: si la oración tiene una palabra interrogativa y la
+  respuesta no la trae, se agrega al principio de esa oración. Como el segmentador ya
+  trabaja oración por oración, la posición sale sola (`QUIEN, HOMBRE`). El dato está
+  en el texto de entrada, así que no se inventa nada.
+- **`FR-01-010` — borrar, que es más delicado.** El modelo puso `YO` donde la
+  referencia espera `TU`. Regla posible: si hay posesivo `TU`, el sujeto es tercera
+  persona y sobra un pronombre de primera. El riesgo es que la capa no puede
+  distinguir un `YO` equivocado de uno correcto —`FR-01-019` («Yo nunca como mucho»)
+  lo necesita y hoy pasa—, así que la regla tiene que mirar el sujeto, no la lista de
+  glosas. Y antes hay una decisión de interpretación: **«¿Se siente mal?» es ambiguo**
+  (usted o él); la referencia eligió `TU` y el modelo eligió `YO`. Hasta que el owner
+  fije esa lectura, la regla no se escribe.
+
 `FR-01-024` y `FR-01-029` no se arreglan con esta capa: una necesita reordenamiento
 real, la otra tiene una glosa inventada (`SENTIR` por «siéntanse»).
 
