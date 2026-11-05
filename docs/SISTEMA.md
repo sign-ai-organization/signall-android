@@ -115,12 +115,12 @@ versiones-pasadas/           ← historia, no se edita
 
 ### Dos cosas que confunden
 
-- **El nombre del sistema**: los documentos usan `SignAll` (34 apariciones en el SRS) y el
-  código, los repos y este archivo usan `SignAI`. Quedan 3 `SignAI` sueltos en el SRS y 9 en
-  el SDD. **Cuál de los dos vale lo decide el owner**; no unificar por cuenta propia.
-- **La copia quedó congelada el 2026-11-04**: Overleaf tenía correcciones posteriores (SDD
-  `SignAI`→`SignAll`, `TODO` de `RF-UI-06`, §7.3 del plan de pruebas, `PR-PER-06`) que **no
-  llegaron al repositorio**. Están listadas en `ESTADO.md` como deuda, no como errores nuevos.
+- **El nombre del sistema**: **los documentos dicen `SignAll` y el código dice `SignAI`**, a
+  propósito. El owner decidió el 2026-11-04 que en la tesis el nombre es `SignAll`; los
+  repositorios de GitHub y los documentos internos de los repos no se renombraron.
+- **La copia quedó congelada el 2026-11-04** y las correcciones que se habían hecho en
+  Overleaf después se volvieron a aplicar el mismo día. Lo que se corrigió y lo que sigue
+  abierto está en `ESTADO.md`.
 
 ## `../signai-avatar`
 

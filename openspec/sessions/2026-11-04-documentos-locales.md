@@ -80,19 +80,62 @@ Overleaf y dejar una forma fácil de ver los documentos mientras se editan.
 
 ## Qué quedó pendiente
 
-- **La copia local está congelada el 2026-11-04 y Overleaf tenía correcciones posteriores**
-  que no llegaron al repositorio. Están listadas en `../sign-ai-docs/ESTADO.md`: SDD
-  `SignAI`→`SignAll`, `TODO` de `RF-UI-06`, redacciones de AVANZADO y velocidad, §7.3 del
-  plan de pruebas y **`PR-PER-06` «Flujo completo por voz», que existía solo en Overleaf**.
-  La ficha de PER-06 se conserva en `docs/plan-pruebas/plantilla-resultados.xlsx` de este
-  repo, pero no como texto del plan.
-- **`SignAI` contra `SignAll`**: los documentos usan `SignAll` (34 en el SRS) y el código y
-  los repos usan `SignAI`. **No se unificó**: decide el owner.
+- **La copia local estaba congelada el 2026-11-04 y Overleaf tenía correcciones posteriores**
+  que no llegaron al repositorio: SDD `SignAI`→`SignAll`, `TODO` de `RF-UI-06`, redacciones de
+  AVANZADO y velocidad, §7.3 del plan de pruebas y **`PR-PER-06` «Flujo completo por voz», que
+  existía solo en Overleaf**. **Resuelto en la segunda parte de esta sesión.**
+- **`SignAI` contra `SignAll`**: los documentos usaban `SignAll` (34 en el SRS) y el código y
+  los repos `SignAI`. **El owner decidió `SignAll` para los documentos** en la segunda parte.
 - **La instalación de TeX Live** la corre el owner (necesita sudo):
   `sudo pacman -S --needed texlive-langspanish texlive-latexextra texlive-pictures
   texlive-bibtexextra texlive-fontsrecommended texlive-binextra biber`.
 - **`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` y `docs/sdd-changes.md`**
   siguen citando a Overleaf como fuente. No se tocaron: ese repo no se edita sin que el owner
   lo pida.
-- **Los conteos de los borradores del plan de pruebas** no cuadran entre sí (72, 73 y 74 en
-  `00-bases/resumen.md` y `secciones/09-casos-de-prueba.md`). Queda anotado, no corregido.
+- **Los conteos de los borradores del plan de pruebas** no cuadraban entre sí (72, 73 y 74 en
+  `00-bases/resumen.md` y `secciones/09-casos-de-prueba.md`). **Resuelto en la segunda parte
+  de esta sesión.**
+
+## Segunda parte: las correcciones que se habían hecho en Overleaf
+
+A pedido del owner, se aplicaron todas las correcciones que se habían hecho en Overleaf y no
+habían llegado al repositorio, más las que dependían de decisiones abiertas.
+
+**Decisión del owner:** en los documentos el sistema se llama **`SignAll`**.
+
+- **SRS** (`latex/srs/main.tex`): las 3 `SignAI` que quedaban pasaron a `SignAll` (ahora 37);
+  se quitó el `TODO` de `RF-UI-06` (la app ya impide cambiar de modo mientras graba desde el
+  2026-11-02); `RF-AVT-08` y la tabla de Ajustes describen la velocidad como **botones −/+ con
+  el valor visible, paso 10 y rango 10–100**; y el bloque **Avanzado** pasa a ser de
+  desarrollo —solo existe si la compilación trae las herramientas activadas y no va en la
+  versión final—, sin el «modo de depuración».
+- **SDD** (`latex/sdd/main.tex`): las 9 `SignAI` pasaron a `SignAll`.
+- **Plan de pruebas** (`latex/plan-pruebas/main.tex`):
+  - Se reescribió la **sección 7.3** sin el `TODO` rojo, con una tabla de instrumentación y
+    los nombres verificados contra el código: backend en el 8080 (`/metrics` y
+    `/metrics.json`, sin autenticación) con `rt_first_sign_ms`, `rt_phrase_total_ms`,
+    `rt_sentence_delay_ms`, los contadores `rt_*` y las sesiones; la traza por frase con
+    `DEBUG_TRACE_ENABLED` y los frames `trace` y `sentence_trace`; el STT en el 8000 con sus
+    `stt_*`; el celular con `SignAiMetrics`, `SignAiNet` y `SignAIWeb` (este último solo con
+    `-Psignai.devTools=true`); y las herramientas concretas de seguridad y resiliencia.
+  - Entró **`PR-PER-06` «Flujo completo por voz»**, recuperada de
+    `docs/plan-pruebas/plantilla-resultados.xlsx` (la única copia que había quedado), con su
+    ficha, su fila en la tabla del bloque, la trazabilidad de RF-STT-01, RF-STT-02, RF-NLP-01
+    y RF-AVT-02, y su formato de registro.
+  - Entró **`PR-REN-09` «Tasa de procesamiento»** desde el borrador, con la fila del bloque y
+    `RNF-DES-09` en el inventario de requerimientos.
+  - El plan pasa de **72 a 74 pruebas** y de **85 a 86 requerimientos** (75 por prueba y 11
+    por inspección, contados sobre la tabla del inventario).
+- **Borradores** (`borradores/plan-pruebas/`): `resumen.md` quedó con 74 pruebas, 35
+  obligatorias, 28 recomendadas y 11 complementarias, y la ficha de PER-06 se agregó a
+  `01-diseno/personas/pruebas.md`; se corrigieron los conteos de `secciones/09-casos-de-prueba.md`
+  y de `02-datos/catalogo.md`.
+- **`cambios/requerimientos.md`**: cuatro filas nuevas en la sección 9 con la fecha, el
+  requisito y de dónde sale cada cambio.
+
+**No se pudo compilar**: TeX Live está incompleto en la máquina (faltan babel-español, biber,
+latexmk, tikz y biblatex) y la instalación necesita `sudo`, que lo corre el owner. La
+verificación estructural que sí se hizo: los entornos `\begin`/`\end` y las llaves quedaron
+balanceados en los tres `.tex`, y el plan tiene 74 fichas y 74 IDs distintos.
+
+**Lo que queda**: correr `make` cuando TeX esté instalado y revisar los PDF.
