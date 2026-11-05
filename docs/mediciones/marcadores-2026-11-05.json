@@ -1,0 +1,2022 @@
+[
+ {
+  "avatar": "juan",
+  "reference": "afirmativo",
+  "meshes": [
+   {
+    "mesh": "Female_Body_Default.001",
+    "targets": 28,
+    "facial_targets": 26,
+    "max_reach_mm": 15.757442128090021
+   },
+   {
+    "mesh": "Mesh.008",
+    "targets": 26,
+    "facial_targets": 26,
+    "max_reach_mm": 9.443200602013464
+   }
+  ],
+  "signatures": {
+   "afirmativo": [
+    [
+     "mouthSmile_L",
+     0.55,
+     5.34
+    ],
+    [
+     "mouthSmile_R",
+     0.55,
+     5.06
+    ],
+    [
+     "cheekSquint_L",
+     0.25,
+     1.85
+    ],
+    [
+     "cheekSquint_R",
+     0.25,
+     1.85
+    ],
+    [
+     "mouthDimple_L",
+     0.1,
+     0.73
+    ],
+    [
+     "mouthDimple_R",
+     0.1,
+     0.73
+    ]
+   ],
+   "pregunta": [
+    [
+     "browInnerUp",
+     1.25,
+     10.39
+    ],
+    [
+     "browOuterUp_L",
+     1.25,
+     9.39
+    ],
+    [
+     "browOuterUp_R",
+     1.25,
+     9.39
+    ],
+    [
+     "mouthPress_L",
+     0.3,
+     2.89
+    ],
+    [
+     "mouthPress_R",
+     0.3,
+     2.89
+    ],
+    [
+     "mouthRollLower",
+     0.15,
+     2.36
+    ],
+    [
+     "eyeWide_L",
+     0.55,
+     1.53
+    ],
+    [
+     "eyeWide_R",
+     0.55,
+     1.53
+    ],
+    [
+     "mouthShrugUpper",
+     0.25,
+     1.39
+    ]
+   ],
+   "negacion": [
+    [
+     "mouthShrugLower",
+     0.45,
+     3.66
+    ],
+    [
+     "mouthPress_L",
+     0.35,
+     3.37
+    ],
+    [
+     "mouthPress_R",
+     0.35,
+     3.37
+    ],
+    [
+     "mouthFrown_R",
+     0.7,
+     2.96
+    ],
+    [
+     "browDown_L",
+     0.55,
+     2.86
+    ],
+    [
+     "browDown_R",
+     0.55,
+     2.86
+    ],
+    [
+     "mouthFrown_L",
+     0.7,
+     2.62
+    ],
+    [
+     "noseSneer_L",
+     0.15,
+     0.94
+    ],
+    [
+     "noseSneer_R",
+     0.15,
+     0.94
+    ],
+    [
+     "browInnerUp",
+     0.1,
+     0.83
+    ],
+    [
+     "eyeSquint_L",
+     0.2,
+     0.58
+    ],
+    [
+     "eyeSquint_R",
+     0.2,
+     0.58
+    ]
+   ],
+   "orden": [
+    [
+     "browDown_L",
+     0.75,
+     3.9
+    ],
+    [
+     "browDown_R",
+     0.75,
+     3.9
+    ],
+    [
+     "mouthPress_L",
+     0.4,
+     3.85
+    ],
+    [
+     "mouthPress_R",
+     0.4,
+     3.85
+    ],
+    [
+     "eyeSquint_L",
+     0.3,
+     0.88
+    ],
+    [
+     "eyeSquint_R",
+     0.3,
+     0.88
+    ],
+    [
+     "mouthFrown_R",
+     0.18,
+     0.76
+    ],
+    [
+     "mouthFrown_L",
+     0.18,
+     0.67
+    ]
+   ]
+  },
+  "temporal": {
+   "afirmativo": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "pregunta": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "negacion": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "orden": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   }
+  },
+  "variant_pairs": {
+   "afirmativo|pregunta": {
+    "mean_peak_mm": 10.391554135683219,
+    "mean_rms_mm": 2.8953595025787537,
+    "min_peak_mm": 10.391554135683219,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 5.34,
+     "cejas": 10.39,
+     "mejillas": 1.85,
+     "nariz": 0.0
+    }
+   },
+   "afirmativo|negacion": {
+    "mean_peak_mm": 5.339653411316127,
+    "mean_rms_mm": 1.6908670727727295,
+    "min_peak_mm": 5.339653411316127,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.35,
+     "boca": 5.34,
+     "cejas": 2.86,
+     "mejillas": 1.85,
+     "nariz": 0.94
+    }
+   },
+   "afirmativo|orden": {
+    "mean_peak_mm": 5.339653411316127,
+    "mean_rms_mm": 1.6530663496475997,
+    "min_peak_mm": 5.339653411316127,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.64,
+     "boca": 5.34,
+     "cejas": 3.9,
+     "mejillas": 1.85,
+     "nariz": 0.0
+    }
+   },
+   "pregunta|negacion": {
+    "mean_peak_mm": 9.560229792440863,
+    "mean_rms_mm": 2.727303234050156,
+    "min_peak_mm": 9.560229792440863,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 3.66,
+     "cejas": 9.56,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   },
+   "pregunta|orden": {
+    "mean_peak_mm": 10.391554135683219,
+    "mean_rms_mm": 2.75085071753622,
+    "min_peak_mm": 10.391554135683219,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 2.36,
+     "cejas": 10.39,
+     "mejillas": 0.0,
+     "nariz": 0.0
+    }
+   },
+   "negacion|orden": {
+    "mean_peak_mm": 3.657960599388212,
+    "mean_rms_mm": 0.7612881625166652,
+    "min_peak_mm": 3.657960599388212,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.29,
+     "boca": 3.66,
+     "cejas": 1.04,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   }
+  },
+  "across_signs": {
+   "afirmativo": true,
+   "pregunta": true,
+   "negacion": true,
+   "orden": true
+  },
+  "bone_differences": [],
+  "per_sign": {
+   "0000": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0001": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0002": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0003": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0004": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0005": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0006": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0007": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0008": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0009": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0010": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0011": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0012": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0013": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0014": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0015": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0016": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0017": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0018": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0019": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0020": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0021": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0022": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0023": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0024": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0025": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0026": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0027": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0028": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0029": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0030": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0031": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0032": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0033": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0034": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0035": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0036": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0037": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0038": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0039": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0040": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0041": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0042": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0043": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0044": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0045": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0046": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0047": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0048": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0049": {
+    "pregunta": {
+     "peak_mm": 10.392,
+     "rms_mm": 3.955
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   }
+  }
+ },
+ {
+  "avatar": "pauline",
+  "reference": "afirmativo",
+  "meshes": [
+   {
+    "mesh": "Mesh.017",
+    "targets": 26,
+    "facial_targets": 26,
+    "max_reach_mm": 7.903759242555229
+   },
+   {
+    "mesh": "Female_Body_Default.005",
+    "targets": 28,
+    "facial_targets": 26,
+    "max_reach_mm": 15.757428127729009
+   }
+  ],
+  "signatures": {
+   "afirmativo": [
+    [
+     "mouthSmile_L",
+     0.55,
+     5.34
+    ],
+    [
+     "mouthSmile_R",
+     0.55,
+     5.06
+    ],
+    [
+     "cheekSquint_L",
+     0.25,
+     1.85
+    ],
+    [
+     "cheekSquint_R",
+     0.25,
+     1.85
+    ],
+    [
+     "mouthDimple_L",
+     0.1,
+     0.73
+    ],
+    [
+     "mouthDimple_R",
+     0.1,
+     0.73
+    ]
+   ],
+   "pregunta": [
+    [
+     "browInnerUp",
+     1.0,
+     8.31
+    ],
+    [
+     "browOuterUp_R",
+     1.0,
+     7.51
+    ],
+    [
+     "browOuterUp_L",
+     1.0,
+     7.51
+    ],
+    [
+     "mouthPress_L",
+     0.3,
+     2.89
+    ],
+    [
+     "mouthPress_R",
+     0.3,
+     2.89
+    ],
+    [
+     "mouthRollLower",
+     0.15,
+     2.36
+    ],
+    [
+     "eyeWide_L",
+     0.55,
+     1.53
+    ],
+    [
+     "eyeWide_R",
+     0.55,
+     1.53
+    ],
+    [
+     "mouthShrugUpper",
+     0.25,
+     1.39
+    ]
+   ],
+   "negacion": [
+    [
+     "mouthShrugLower",
+     0.45,
+     3.66
+    ],
+    [
+     "mouthPress_L",
+     0.35,
+     3.37
+    ],
+    [
+     "mouthPress_R",
+     0.35,
+     3.37
+    ],
+    [
+     "mouthFrown_R",
+     0.7,
+     2.96
+    ],
+    [
+     "browDown_L",
+     0.55,
+     2.86
+    ],
+    [
+     "browDown_R",
+     0.55,
+     2.86
+    ],
+    [
+     "mouthFrown_L",
+     0.7,
+     2.62
+    ],
+    [
+     "noseSneer_L",
+     0.15,
+     0.94
+    ],
+    [
+     "noseSneer_R",
+     0.15,
+     0.94
+    ],
+    [
+     "browInnerUp",
+     0.1,
+     0.83
+    ],
+    [
+     "eyeSquint_L",
+     0.2,
+     0.58
+    ],
+    [
+     "eyeSquint_R",
+     0.2,
+     0.58
+    ]
+   ],
+   "orden": [
+    [
+     "browDown_L",
+     0.75,
+     3.9
+    ],
+    [
+     "browDown_R",
+     0.75,
+     3.9
+    ],
+    [
+     "mouthPress_L",
+     0.4,
+     3.85
+    ],
+    [
+     "mouthPress_R",
+     0.4,
+     3.85
+    ],
+    [
+     "eyeSquint_L",
+     0.3,
+     0.88
+    ],
+    [
+     "eyeSquint_R",
+     0.3,
+     0.88
+    ],
+    [
+     "mouthFrown_R",
+     0.18,
+     0.76
+    ],
+    [
+     "mouthFrown_L",
+     0.18,
+     0.67
+    ]
+   ]
+  },
+  "temporal": {
+   "afirmativo": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "pregunta": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "negacion": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   },
+   "orden": {
+    "weight_range": 0.0,
+    "mm": 0.0
+   }
+  },
+  "variant_pairs": {
+   "afirmativo|pregunta": {
+    "mean_peak_mm": 8.31324583602254,
+    "mean_rms_mm": 2.5274143139006098,
+    "min_peak_mm": 8.31324583602254,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 5.34,
+     "cejas": 8.31,
+     "mejillas": 1.85,
+     "nariz": 0.0
+    }
+   },
+   "afirmativo|negacion": {
+    "mean_peak_mm": 5.339663655379069,
+    "mean_rms_mm": 1.7303813841514548,
+    "min_peak_mm": 5.339663655379069,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.35,
+     "boca": 5.34,
+     "cejas": 2.86,
+     "mejillas": 1.85,
+     "nariz": 0.94
+    }
+   },
+   "afirmativo|orden": {
+    "mean_peak_mm": 5.339663655379069,
+    "mean_rms_mm": 1.732780849757994,
+    "min_peak_mm": 5.339663655379069,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.64,
+     "boca": 5.34,
+     "cejas": 3.9,
+     "mejillas": 1.85,
+     "nariz": 0.0
+    }
+   },
+   "pregunta|negacion": {
+    "mean_peak_mm": 7.513814391779756,
+    "mean_rms_mm": 2.3852403507202604,
+    "min_peak_mm": 7.513814391779756,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 3.66,
+     "cejas": 7.51,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   },
+   "pregunta|orden": {
+    "mean_peak_mm": 8.31324583602254,
+    "mean_rms_mm": 2.4256846873042632,
+    "min_peak_mm": 8.31324583602254,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 1.53,
+     "boca": 2.36,
+     "cejas": 8.31,
+     "mejillas": 0.0,
+     "nariz": 0.0
+    }
+   },
+   "negacion|orden": {
+    "mean_peak_mm": 3.65797742770623,
+    "mean_rms_mm": 0.774680685901528,
+    "min_peak_mm": 3.65797742770623,
+    "signs_under_1mm": 0,
+    "regions_mm": {
+     "ojos": 0.29,
+     "boca": 3.66,
+     "cejas": 1.04,
+     "mejillas": 0.0,
+     "nariz": 0.94
+    }
+   }
+  },
+  "across_signs": {
+   "afirmativo": true,
+   "pregunta": true,
+   "negacion": true,
+   "orden": true
+  },
+  "bone_differences": [],
+  "per_sign": {
+   "0000": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0001": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0002": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0003": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0004": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0005": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0006": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0007": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0008": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0009": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0010": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0011": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0012": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0013": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0014": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0015": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0016": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0017": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0018": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0019": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0020": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0021": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0022": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0023": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0024": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0025": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0026": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0027": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0028": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0029": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0030": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0031": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0032": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0033": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0034": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0035": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0036": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0037": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0038": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0039": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0040": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0041": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0042": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0043": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0044": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0045": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0046": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0047": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0048": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   },
+   "0049": {
+    "pregunta": {
+     "peak_mm": 8.313,
+     "rms_mm": 3.373
+    },
+    "negacion": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.353
+    },
+    "orden": {
+     "peak_mm": 5.34,
+     "rms_mm": 2.273
+    }
+   }
+  }
+ }
+]

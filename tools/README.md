@@ -104,13 +104,13 @@
   `numpy` y `PIL`; el pipeline de assets no.
 - **`measure_face_markers.py`** — cuánto mueve la cara cada variante facial.
   Lee el alcance geométrico de cada morph target (mm a peso 1) y las curvas de
-  pesos de los canales `weights`, y compara cada variante contra el clip base de
-  su seña en tiempo normalizado. **Todavía asume el layout viejo** (clip base +
-  `_alegria`, `_tristeza`, `_sorpresa`, `_pregunta`, `_negacion`): con los GLB
-  del 2026-11-04, que traen cuatro marcas gramaticales y ningún clip base, hay
-  que adaptar la comparación antes de volver a medir. La medición histórica del
-  2026-11-04 está en `docs/mediciones/marcadores-2026-11-04.md`. Sin
-  dependencias.
+  pesos de los canales `weights`, y compara cada variante contra `_afirmativo`
+  —la cara que la app usa por defecto— en la misma seña y en tiempo normalizado.
+  Sirve para decidir o revisar el mapeo tipo gramatical → variante sin
+  renderizar. Salida: tabla Markdown y JSON con el detalle por seña y por avatar.
+  La medición del 2026-11-05 (cuatro caras, layout de 200 clips) está en
+  `docs/mediciones/marcadores-2026-11-05.md`; la del 2026-11-04 es historia del
+  layout anterior. Sin dependencias.
 - **`local_stt.py`** — transcripción local con `whisper.cpp`, para probar el
   micrófono sin backend (`--stt` en `mock_backend.py`).
 

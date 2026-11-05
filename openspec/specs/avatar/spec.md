@@ -205,9 +205,13 @@ Desde el **2026-11-04** la app también elige una **variante facial** según el 
 oración que manda el backend (`FACE_VARIANT_BY_TYPE` y `pickVariant(clips, variants,
 type)`): afirmación → `_afirmativo`, pregunta sí/no y pregunta de contenido → `_pregunta`,
 negación → `_negacion`, orden → `_orden`. El export del 2026-11-04 trae exactamente esas
-cuatro marcas, así que no quedan filas abiertas. La medición de las variantes viejas
-(`_alegria`, `_tristeza`, `_sorpresa`) está en `docs/mediciones/marcadores-2026-11-04.md`
-como historia: esas caras ya no existen en el asset. En las cuatro actuales los huesos son
+cuatro marcas, así que no quedan filas abiertas. La medición vigente de esas cuatro caras
+está en `docs/mediciones/marcadores-2026-11-05.md` (2026-11-05, 200 clips, referencia
+`_afirmativo`): `_pregunta` es la que más mueve —sube las cejas 10,39 mm de pico—,
+`_negacion` y `_orden` mueven la boca y bajan las cejas, y las cuatro son una pose fija
+que no cambia dentro de la seña. La medición de las variantes viejas (`_alegria`,
+`_tristeza`, `_sorpresa`) está en `docs/mediciones/marcadores-2026-11-04.md` como
+historia: esas caras ya no existen en el asset. En las cuatro actuales los huesos son
 idénticos entre sí y solo cambian los morph targets. Los dos archivos vigentes conservan
 los morph targets que alguna de las 200 variantes anima —59 bloques en Juan, 58 en
 Pauline, contados el 2026-11-05—.
