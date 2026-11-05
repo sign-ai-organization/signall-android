@@ -1,0 +1,106 @@
+vocabulario: 50 glosas
+
+### FR-01-001
+  frase     : Hola, buenos días, bienvenidos.
+  esperado  : HOLA, BUENOS DIAS, BIENVENIDO
+  crudo     : 'HOLA,BUENOS DIAS,BIENVENIDOS'
+  reparado  : HOLA, BUENOS DIAS
+  se pierde : BIENVENIDOS
+  exacta    : NO
+
+### FR-01-006
+  frase     : Gracias a todos. Los niños y las niñas comen con gusto.
+  esperado  : GRACIAS, TODOS, NIÑO, NIÑA, COMER, CON GUSTO
+  crudo     : 'GRACIAS,TODOS,NINOS,NINAS,COMER,GUSTO'
+  reparado  : GRACIAS, TODOS, COMER
+  se pierde : NINOS, NINAS, GUSTO
+  exacta    : NO
+
+### FR-01-008
+  frase     : ¿Estás bien?
+  esperado  : TU, BIEN
+  crudo     : 'ESTAR,BIEN'
+  reparado  : BIEN
+  se pierde : ESTAR
+  exacta    : NO
+
+### FR-01-010
+  frase     : Tu hermano está triste. ¿Se siente mal?
+  esperado  : TU, HERMANO, TRISTE, SENTIR, MAL
+  crudo     : 'HERMANO,TRISTE,YO,SENTIR,MAL'
+  reparado  : HERMANO, TRISTE, YO, SENTIR, MAL
+  se pierde : —
+  exacta    : NO
+
+### FR-01-011
+  frase     : Perdón. ¿Estás triste?
+  esperado  : PERDON, TU, TRISTE
+  crudo     : 'PERDON,ESTAR,TRISTE'
+  reparado  : PERDON, TRISTE
+  se pierde : ESTAR
+  exacta    : NO
+
+### FR-01-012
+  frase     : ¿Tu hermano está aburrido?
+  esperado  : TU, HERMANO, ABURRIDO
+  crudo     : 'HERMANO,ABURRIDO'
+  reparado  : HERMANO, ABURRIDO
+  se pierde : —
+  exacta    : NO
+
+### FR-01-013
+  frase     : Hola, ¿cómo estás? ¿Cómo te llamas?
+  esperado  : HOLA, COMO ESTAS, COMO, TU, NOMBRE
+  crudo     : 'HOLA,COMO ESTAS,COMO,TU,LLAMAR'
+  reparado  : HOLA, COMO ESTAS, COMO, TU
+  se pierde : LLAMAR
+  exacta    : NO
+
+### FR-01-015
+  frase     : La mujer es juiciosa. ¿Quién es el hombre?
+  esperado  : MUJER, JUCIOSO, QUIEN, HOMBRE
+  crudo     : 'MUJER,JUICIOSA,HOMBRE'
+  reparado  : MUJER, HOMBRE
+  se pierde : JUICIOSA
+  exacta    : NO
+
+### FR-01-016
+  frase     : ¿Por qué estás triste?
+  esperado  : POR QUE, TU, TRISTE
+  crudo     : 'POR QUE,ESTAS,TRISTE'
+  reparado  : POR QUE, TRISTE
+  se pierde : ESTAS
+  exacta    : NO
+
+### FR-01-024
+  frase     : Se siente muy bien. La niña nunca está triste.
+  esperado  : NIÑA, SENTIR, MUCHO, BIEN, NUNCA, TRISTE
+  crudo     : 'SENTIR,MUY,BIEN,NIÑA,NUNCA,TRISTE'
+  reparado  : SENTIR, BIEN, NIÑA, NUNCA, TRISTE
+  se pierde : MUY
+  exacta    : NO
+
+### FR-01-026
+  frase     : Con permiso. Déjame pasar, por favor.
+  esperado  : PERMISO, POR FAVOR
+  crudo     : 'CON PERMISO,DAME PASAR,POR FAVOR'
+  reparado  : POR FAVOR
+  se pierde : CON PERMISO, DAME PASAR
+  exacta    : NO
+
+### FR-01-027
+  frase     : Niños, trabajen todos.
+  esperado  : NIÑO, TODOS, TRABAJAR
+  crudo     : 'NINOS,TRABAJAR,TODOS'
+  reparado  : TRABAJAR, TODOS
+  se pierde : NINOS
+  exacta    : NO
+
+### FR-01-029
+  frase     : Hola, familia, siéntanse bienvenidos.
+  esperado  : HOLA, FAMILIA, BIENVENIDO
+  crudo     : 'HOLA,FAMILIA,SENTIR,BIENVENIDOS'
+  reparado  : HOLA, FAMILIA, SENTIR
+  se pierde : BIENVENIDOS
+  exacta    : NO
+
