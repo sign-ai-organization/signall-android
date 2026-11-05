@@ -12,14 +12,13 @@ obtuvo al ejecutar.
 
 | Parte | Origen |
 |---|---|
-| Las 73 fichas (ID, nombre, tipo, objetivo, trazabilidad, entorno, datos, procedimiento, métrica, criterio y evidencia) | `../sign-ai-docs/latex/plan-pruebas/main.tex`, copiadas literalmente: nadie las retipea. Esas 73 incluyen `PR-PER-06`, que existía solo en Overleaf. |
-| PR-REN-09 «Tasa de procesamiento» | `../sign-ai-docs/borradores/plan-pruebas/01-diseno/rendimiento/pruebas.md`. **Todavía no está en el plan formal** (ver «Lo que falta»). |
+| Las 74 fichas (ID, nombre, tipo, objetivo, trazabilidad, entorno, datos, procedimiento, métrica, criterio y evidencia) | `../sign-ai-docs/latex/plan-pruebas/main.tex`, copiadas literalmente: nadie las retipea. |
+| PR-REN-09 «Tasa de procesamiento» | También está ya en el plan formal desde el 2026-11-04. |
 | Los cuatro estados y los doce campos de la ficha | Sección 9.1 del plan (tablas `tab:estados` y `tab:ficha`). |
 
-**El plan formal vive en el repositorio desde el 2026-11-04**: Overleaf se retiró ese día y
-`../sign-ai-docs/latex/plan-pruebas/main.tex` es la fuente de verdad. Esa copia tiene **72
-pruebas**: le falta `PR-REN-09` y le falta `PR-PER-06`, que se perdió con Overleaf salvo por
-estas fichas.
+**El plan formal vive en el repositorio desde el 2026-11-04** y tiene **74 pruebas**:
+`PR-PER-06`, que existía solo en Overleaf, se recuperó de este libro y se volvió a escribir
+en el plan.
 
 ## Las hojas
 
@@ -120,18 +119,12 @@ Reglas:
 
 ## Lo que falta
 
-- **PR-REN-09 no está en el plan formal.** La ficha existe en el borrador y en este libro,
-  pero `../sign-ai-docs/latex/plan-pruebas/main.tex` tiene 72 pruebas. Para que el libro y el
-  plan coincidan hay que agregarla ahí (texto 73→74, tabla REN 8→9, inventario de
-  requerimientos y tablas de trazabilidad). La decisión del owner del 2026-11-04 es que
-  entra, porque **RNF-DES-09 sí está en el SRS del repositorio**:
-  `../sign-ai-docs/latex/srs/main.tex` desde el commit `059eeaf` del 2026-10-27.
-- **PR-PER-06 «Flujo completo por voz» no está en el repositorio.** Existía solo en Overleaf
-  y se perdió al retirarlo. Si se quiere conservar, hay que volver a escribir la ficha; este
-  libro la tiene copiada.
-- **Los conteos.** El `main.tex` tiene 72; los `.md` tienen 73 fichas con secciones que dicen
-  72; `00-bases/resumen.md` dice 73 en un renglón y 74 en el total; este libro tiene 74. El
-  número correcto es **74** cuando el plan formal tenga PR-REN-09 y PR-PER-06.
+- **Nada del contenido:** el plan formal tiene 74 pruebas y este libro, 74 filas. `PR-REN-09`
+  y `PR-PER-06` ya están en `../sign-ai-docs/latex/plan-pruebas/main.tex`.
+- **Los conteos de los `.md`** se unificaron el 2026-11-04 en `00-bases/resumen.md`,
+  `secciones/09-casos-de-prueba.md` y `02-datos/catalogo.md`.
+- **El plan todavía no se compiló en esta máquina**, porque falta instalar TeX Live. El primer
+  `make plan-pruebas` lo verifica.
 
 ## Regenerar
 

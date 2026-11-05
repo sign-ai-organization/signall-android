@@ -59,12 +59,13 @@ make open DOC=srs    # abre el PDF
 
 ## Lo que hay que saber antes de creerle a un documento
 
-- **El nombre del sistema está en discusión**: los documentos usan `SignAll` y el código y los
-  repos usan `SignAI`. No unificar por cuenta propia.
-- **Los documentos formales son una copia de Overleaf congelada el 2026-11-04**, y Overleaf
-  tenía correcciones posteriores que no llegaron al repositorio. `ESTADO.md` lista cuáles:
-  antes de «corregir» algo, mirar esa tabla, porque puede ser deuda conocida y no un error
-  nuevo.
+- **El nombre del sistema**: en los documentos es **`SignAll`** (decisión del owner del
+  2026-11-04) y en el código, los repos y los documentos internos es `SignAI`. Las dos cosas
+  son correctas en su lugar: no unificar.
+- **Los documentos formales son una copia de Overleaf congelada el 2026-11-04**, y las
+  correcciones que se hicieron allá después se volvieron a aplicar el mismo día. `ESTADO.md`
+  lista qué se corrigió y qué sigue abierto: conviene mirarlo antes de «arreglar» algo que ya
+  está anotado como deuda.
 - **`versiones-pasadas/` no es fuente de nada.**
 
 ## Verificar que lo escrito es cierto
