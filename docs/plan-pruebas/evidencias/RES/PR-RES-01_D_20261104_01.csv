@@ -1,0 +1,4 @@
+﻿momento;aviso;avatar;texto_en_la_barra;traducir;reconexion_ms;intentos;frase_nueva;se_bloquea
+antes de mandar;indicador «Desconectado» (detectado en 1126 ms);vuelve a reposo (no había representación);sí, exacto: 'Niños, trabajen todos.';se toca y no pasa nada;4065;ver log (session failed);14341;no
+mientras traduce;indicador «Desconectado» (inmediato: el primer muestreo ya lo ve);vuelve a reposo (no llegó a representar);sí, exacto y editable: 'El vecino prepara café cada mañana. Los estud'…;el envío reenvía el texto que volvió a la barra;1084;ver log (session failed);el reenvío produjo 14 glosas y 0 representables (glosas fuera del catálogo), sin señas que mostrar;no
+mientras reproduce;"indicador «Desconectado» (detectado en 1018 ms); log «sesión perdida: interrumpiendo=true»";"se interrumpe y la cola se vacía (webView.stop(); caption y cola limpiadas)";no aplica: la frase ya se había enviado;queda disponible;2412;ver log (session failed);14033;no

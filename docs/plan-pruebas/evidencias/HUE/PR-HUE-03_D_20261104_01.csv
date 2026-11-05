@@ -1,0 +1,201 @@
+﻿id;tipo_esperado;tipo_texto;variante;texto;obtenido;correcto;borde;colision;senales_secundarias;ms
+CO-02-001;AFFIRMATIVE;Afirmación;con;Su información fue registrada.;AFFIRMATIVE;sí;no;no;;0.155
+CO-02-001;AFFIRMATIVE;Afirmación;sin;su información fue registrada;AFFIRMATIVE;sí;no;no;;0.029
+CO-02-002;AFFIRMATIVE;Afirmación;con;Gracias por su tiempo.;AFFIRMATIVE;sí;no;no;;0.019
+CO-02-002;AFFIRMATIVE;Afirmación;sin;gracias por su tiempo;AFFIRMATIVE;sí;no;no;;0.015
+CO-02-003;AFFIRMATIVE;Afirmación;con;La dirección coincide con la que tenemos registrada.;AFFIRMATIVE;sí;no;no;;0.024
+CO-02-003;AFFIRMATIVE;Afirmación;sin;la dirección coincide con la que tenemos registrada;AFFIRMATIVE;sí;no;no;;0.021
+CO-02-004;AFFIRMATIVE;Afirmación;con;El sistema guardó los cambios correctamente.;AFFIRMATIVE;sí;no;no;;0.021
+CO-02-004;AFFIRMATIVE;Afirmación;sin;el sistema guardó los cambios correctamente;AFFIRMATIVE;sí;no;no;;0.019
+CO-02-005;AFFIRMATIVE;Afirmación;con;Vivo en Bogotá desde hace diez años.;AFFIRMATIVE;sí;no;no;;0.032
+CO-02-005;AFFIRMATIVE;Afirmación;sin;vivo en bogotá desde hace diez años;AFFIRMATIVE;sí;no;no;;0.02
+CO-02-006;AFFIRMATIVE;Afirmación;con;Tengo treinta y dos años.;AFFIRMATIVE;sí;no;no;;0.018
+CO-02-006;AFFIRMATIVE;Afirmación;sin;tengo treinta y dos años;AFFIRMATIVE;sí;no;no;;0.017
+CO-02-007;AFFIRMATIVE;Afirmación;con;Mi nombre completo aparece en el documento.;AFFIRMATIVE;sí;no;no;;0.021
+CO-02-007;AFFIRMATIVE;Afirmación;sin;mi nombre completo aparece en el documento;AFFIRMATIVE;sí;no;no;;0.018
+CO-02-008;AFFIRMATIVE;Afirmación;con;Estamos listos para continuar con el proceso.;AFFIRMATIVE;sí;no;no;;0.019
+CO-02-008;AFFIRMATIVE;Afirmación;sin;estamos listos para continuar con el proceso;AFFIRMATIVE;sí;no;no;;0.018
+CO-02-009;AFFIRMATIVE;Afirmación;con;El pago quedó registrado esta mañana.;AFFIRMATIVE;sí;no;no;;0.022
+CO-02-009;AFFIRMATIVE;Afirmación;sin;el pago quedó registrado esta mañana;AFFIRMATIVE;sí;no;no;;0.017
+CO-02-010;AFFIRMATIVE;Afirmación;con;Nohora es la encargada de esta ventanilla.;AFFIRMATIVE;sí;no;no;;0.019
+CO-02-010;AFFIRMATIVE;Afirmación;sin;nohora es la encargada de esta ventanilla;AFFIRMATIVE;sí;no;no;;0.017
+CO-02-011;AFFIRMATIVE;Afirmación;con;Pase de abordar entregado en la ventanilla dos.;IMPERATIVE;no;sí;no;;0.02
+CO-02-011;AFFIRMATIVE;Afirmación;sin;pase de abordar entregado en la ventanilla dos;IMPERATIVE;no;sí;no;;0.019
+CO-02-012;AFFIRMATIVE;Afirmación;con;Cuando termine el trámite le avisaremos por correo.;AFFIRMATIVE;sí;no;no;;0.021
+CO-02-012;AFFIRMATIVE;Afirmación;sin;cuando termine el trámite le avisaremos por correo;AFFIRMATIVE;sí;no;no;;0.02
+CO-02-013;AFFIRMATIVE;Afirmación;con;Quien firmó el documento aparece en el registro.;AFFIRMATIVE;sí;no;no;;0.019
+CO-02-013;AFFIRMATIVE;Afirmación;sin;quien firmó el documento aparece en el registro;AFFIRMATIVE;sí;no;no;;0.018
+CO-02-014;AFFIRMATIVE;Afirmación;con;El avatar 3D mostró la seña correctamente.;AFFIRMATIVE;sí;no;no;;0.021
+CO-02-014;AFFIRMATIVE;Afirmación;sin;el avatar 3d mostró la seña correctamente;AFFIRMATIVE;sí;no;no;;0.02
+CO-02-015;AFFIRMATIVE;Afirmación;con;El corpus del proyecto tiene cincuenta señas.;AFFIRMATIVE;sí;no;no;;0.02
+CO-02-015;AFFIRMATIVE;Afirmación;sin;el corpus del proyecto tiene cincuenta señas;AFFIRMATIVE;sí;no;no;;0.019
+CO-02-016;AFFIRMATIVE;Afirmación;con;El caché semántico todavía no está implementado.;NEGATIVE;no;sí;no;;0.023
+CO-02-016;AFFIRMATIVE;Afirmación;sin;el caché semántico todavía no está implementado;NEGATIVE;no;sí;no;;0.021
+CO-02-017;AFFIRMATIVE;Afirmación;con;El embedding de la frase se calculará después.;AFFIRMATIVE;sí;no;no;;0.021
+CO-02-017;AFFIRMATIVE;Afirmación;sin;el embedding de la frase se calculará después;AFFIRMATIVE;sí;no;no;;0.02
+CO-02-018;AFFIRMATIVE;Afirmación;con;El fingerprint de la oración fue afirmativa.;AFFIRMATIVE;sí;no;no;;0.019
+CO-02-018;AFFIRMATIVE;Afirmación;sin;el fingerprint de la oración fue afirmativa;AFFIRMATIVE;sí;no;no;;0.019
+CO-02-019;AFFIRMATIVE;Afirmación;con;El documento de identidad quedó verificado.;AFFIRMATIVE;sí;no;no;;0.022
+CO-02-019;AFFIRMATIVE;Afirmación;sin;el documento de identidad quedó verificado;AFFIRMATIVE;sí;no;no;;0.018
+CO-02-020;AFFIRMATIVE;Afirmación;con;No obstante, el trámite se completó a tiempo.;NEGATIVE;no;sí;no;;0.021
+CO-02-020;AFFIRMATIVE;Afirmación;sin;no obstante el trámite se completó a tiempo;NEGATIVE;no;sí;no;;0.022
+CO-02-021;YES_NO_QUESTION;Pregunta de sí o no;con;¿Tiene alguna pregunta?;YES_NO_QUESTION;sí;no;no;;0.018
+CO-02-021;YES_NO_QUESTION;Pregunta de sí o no;sin;tiene alguna pregunta;AFFIRMATIVE;no;no;no;;0.013
+CO-02-022;YES_NO_QUESTION;Pregunta de sí o no;con;¿Ya diligenció el formulario?;YES_NO_QUESTION;sí;no;no;;0.017
+CO-02-022;YES_NO_QUESTION;Pregunta de sí o no;sin;ya diligenció el formulario;AFFIRMATIVE;no;no;no;;0.015
+CO-02-023;YES_NO_QUESTION;Pregunta de sí o no;con;¿Tiene su documento a la mano?;YES_NO_QUESTION;sí;no;no;;0.018
+CO-02-023;YES_NO_QUESTION;Pregunta de sí o no;sin;tiene su documento a la mano;AFFIRMATIVE;no;no;no;;0.016
+CO-02-024;YES_NO_QUESTION;Pregunta de sí o no;con;¿Ya realizó el pago correspondiente?;YES_NO_QUESTION;sí;no;no;;0.018
+CO-02-024;YES_NO_QUESTION;Pregunta de sí o no;sin;ya realizó el pago correspondiente;AFFIRMATIVE;no;no;no;;0.017
+CO-02-025;YES_NO_QUESTION;Pregunta de sí o no;con;¿Desea continuar con el registro?;YES_NO_QUESTION;sí;no;no;;0.017
+CO-02-025;YES_NO_QUESTION;Pregunta de sí o no;sin;desea continuar con el registro;AFFIRMATIVE;no;no;no;;0.015
+CO-02-026;YES_NO_QUESTION;Pregunta de sí o no;con;¿Ya recibió la confirmación por correo?;YES_NO_QUESTION;sí;no;no;;0.019
+CO-02-026;YES_NO_QUESTION;Pregunta de sí o no;sin;ya recibió la confirmación por correo;AFFIRMATIVE;no;no;no;;0.017
+CO-02-027;YES_NO_QUESTION;Pregunta de sí o no;con;¿Tiene el código de la cita?;YES_NO_QUESTION;sí;no;no;;0.017
+CO-02-027;YES_NO_QUESTION;Pregunta de sí o no;sin;tiene el código de la cita;AFFIRMATIVE;no;no;no;;0.015
+CO-02-028;YES_NO_QUESTION;Pregunta de sí o no;con;¿Está todo en orden?;YES_NO_QUESTION;sí;no;no;;0.015
+CO-02-028;YES_NO_QUESTION;Pregunta de sí o no;sin;está todo en orden;AFFIRMATIVE;no;no;no;;0.016
+CO-02-029;YES_NO_QUESTION;Pregunta de sí o no;con;¿Le parece bien que continuemos?;CONTENT_QUESTION;no;sí;no;;0.017
+CO-02-029;YES_NO_QUESTION;Pregunta de sí o no;sin;le parece bien que continuemos;AFFIRMATIVE;no;sí;no;;0.017
+CO-02-030;YES_NO_QUESTION;Pregunta de sí o no;con;¿Seguro que no le falta ningún documento?;CONTENT_QUESTION;no;sí;sí;NEGATIVE;0.027
+CO-02-030;YES_NO_QUESTION;Pregunta de sí o no;sin;seguro que no le falta ningún documento;NEGATIVE;no;sí;no;;0.019
+CO-02-031;YES_NO_QUESTION;Pregunta de sí o no;con;¿Todo bien?;YES_NO_QUESTION;sí;no;no;;0.012
+CO-02-031;YES_NO_QUESTION;Pregunta de sí o no;sin;todo bien;AFFIRMATIVE;no;no;no;;0.011
+CO-02-032;YES_NO_QUESTION;Pregunta de sí o no;con;¿Es correcto o no?;YES_NO_QUESTION;sí;no;sí;NEGATIVE;0.016
+CO-02-032;YES_NO_QUESTION;Pregunta de sí o no;sin;es correcto o no;NEGATIVE;no;no;no;;0.013
+CO-02-033;YES_NO_QUESTION;Pregunta de sí o no;con;¿No trajo el formulario firmado?;YES_NO_QUESTION;sí;sí;sí;NEGATIVE;0.017
+CO-02-033;YES_NO_QUESTION;Pregunta de sí o no;sin;no trajo el formulario firmado;NEGATIVE;no;sí;no;;0.015
+CO-02-034;YES_NO_QUESTION;Pregunta de sí o no;con;¿No es este su número de documento?;YES_NO_QUESTION;sí;sí;sí;NEGATIVE;0.02
+CO-02-034;YES_NO_QUESTION;Pregunta de sí o no;sin;no es este su número de documento;NEGATIVE;no;sí;no;;0.018
+CO-02-035;YES_NO_QUESTION;Pregunta de sí o no;con;¿Se encuentra bien?;YES_NO_QUESTION;sí;no;no;;0.013
+CO-02-035;YES_NO_QUESTION;Pregunta de sí o no;sin;se encuentra bien;AFFIRMATIVE;no;no;no;;0.012
+CO-02-036;YES_NO_QUESTION;Pregunta de sí o no;con;¿Confirma que la información es correcta?;CONTENT_QUESTION;no;sí;no;;0.019
+CO-02-036;YES_NO_QUESTION;Pregunta de sí o no;sin;confirma que la información es correcta;AFFIRMATIVE;no;sí;no;;0.02
+CO-02-037;YES_NO_QUESTION;Pregunta de sí o no;con;¿Recuerda si trajo el documento?;YES_NO_QUESTION;sí;no;no;;0.017
+CO-02-037;YES_NO_QUESTION;Pregunta de sí o no;sin;recuerda si trajo el documento;AFFIRMATIVE;no;no;no;;0.015
+CO-02-038;YES_NO_QUESTION;Pregunta de sí o no;con;¿Le molesta si tomamos su firma digital?;YES_NO_QUESTION;sí;no;no;;0.019
+CO-02-038;YES_NO_QUESTION;Pregunta de sí o no;sin;le molesta si tomamos su firma digital;AFFIRMATIVE;no;no;no;;0.02
+CO-02-039;YES_NO_QUESTION;Pregunta de sí o no;con;¿Está el intérprete disponible ahora?;YES_NO_QUESTION;sí;no;no;;0.019
+CO-02-039;YES_NO_QUESTION;Pregunta de sí o no;sin;está el intérprete disponible ahora;AFFIRMATIVE;no;no;no;;0.025
+CO-02-040;YES_NO_QUESTION;Pregunta de sí o no;con;¿Cerramos el caso entonces?;YES_NO_QUESTION;sí;no;no;;0.025
+CO-02-040;YES_NO_QUESTION;Pregunta de sí o no;sin;cerramos el caso entonces;AFFIRMATIVE;no;no;no;;0.015
+CO-02-041;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuál es su número de documento?;CONTENT_QUESTION;sí;no;no;;0.017
+CO-02-041;CONTENT_QUESTION;Pregunta de contenido;sin;cuál es su número de documento;AFFIRMATIVE;no;no;no;;0.015
+CO-02-042;CONTENT_QUESTION;Pregunta de contenido;con;¿Dónde vive?;CONTENT_QUESTION;sí;no;no;;0.012
+CO-02-042;CONTENT_QUESTION;Pregunta de contenido;sin;dónde vive;AFFIRMATIVE;no;no;no;;0.011
+CO-02-043;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuál es su teléfono?;CONTENT_QUESTION;sí;no;no;;0.013
+CO-02-043;CONTENT_QUESTION;Pregunta de contenido;sin;cuál es su teléfono;AFFIRMATIVE;no;no;no;;0.013
+CO-02-044;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuál es su estado civil?;CONTENT_QUESTION;sí;no;no;;0.014
+CO-02-044;CONTENT_QUESTION;Pregunta de contenido;sin;cuál es su estado civil;AFFIRMATIVE;no;no;no;;0.013
+CO-02-045;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuándo fue su última visita?;CONTENT_QUESTION;sí;no;no;;0.016
+CO-02-045;CONTENT_QUESTION;Pregunta de contenido;sin;cuándo fue su última visita;AFFIRMATIVE;no;no;no;;0.015
+CO-02-046;CONTENT_QUESTION;Pregunta de contenido;con;¿Por qué necesita este trámite?;CONTENT_QUESTION;sí;no;no;;0.016
+CO-02-046;CONTENT_QUESTION;Pregunta de contenido;sin;por qué necesita este trámite;AFFIRMATIVE;no;no;no;;0.015
+CO-02-047;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuál es el motivo de su visita?;CONTENT_QUESTION;sí;no;no;;0.016
+CO-02-047;CONTENT_QUESTION;Pregunta de contenido;sin;cuál es el motivo de su visita;AFFIRMATIVE;no;no;no;;0.015
+CO-02-048;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuál de estas opciones prefiere?;CONTENT_QUESTION;sí;no;no;;0.018
+CO-02-048;CONTENT_QUESTION;Pregunta de contenido;sin;cuál de estas opciones prefiere;AFFIRMATIVE;no;no;no;;0.014
+CO-02-049;CONTENT_QUESTION;Pregunta de contenido;con;¿Qué documento trajo?;CONTENT_QUESTION;sí;no;no;;0.014
+CO-02-049;CONTENT_QUESTION;Pregunta de contenido;sin;qué documento trajo;AFFIRMATIVE;no;no;no;;0.012
+CO-02-050;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuáles documentos le faltan?;CONTENT_QUESTION;sí;no;no;;0.015
+CO-02-050;CONTENT_QUESTION;Pregunta de contenido;sin;cuáles documentos le faltan;AFFIRMATIVE;no;no;no;;0.014
+CO-02-051;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuántas veces ha venido a esta oficina?;CONTENT_QUESTION;sí;no;no;;0.018
+CO-02-051;CONTENT_QUESTION;Pregunta de contenido;sin;cuántas veces ha venido a esta oficina;AFFIRMATIVE;no;no;no;;0.017
+CO-02-052;CONTENT_QUESTION;Pregunta de contenido;con;¿Cómo quiere que le expliquemos el proceso?;CONTENT_QUESTION;sí;no;no;;0.019
+CO-02-052;CONTENT_QUESTION;Pregunta de contenido;sin;cómo quiere que le expliquemos el proceso;AFFIRMATIVE;no;no;no;;0.017
+CO-02-053;CONTENT_QUESTION;Pregunta de contenido;con;¿Dónde firmo, aquí o en la siguiente página?;CONTENT_QUESTION;sí;no;no;;0.022
+CO-02-053;CONTENT_QUESTION;Pregunta de contenido;sin;dónde firmo aquí o en la siguiente página;AFFIRMATIVE;no;no;no;;0.018
+CO-02-054;CONTENT_QUESTION;Pregunta de contenido;con;¿Para qué necesita el certificado?;CONTENT_QUESTION;sí;no;no;;0.017
+CO-02-054;CONTENT_QUESTION;Pregunta de contenido;sin;para qué necesita el certificado;AFFIRMATIVE;no;no;no;;0.015
+CO-02-055;CONTENT_QUESTION;Pregunta de contenido;con;¿Qué seña corresponde a este dato?;CONTENT_QUESTION;sí;no;no;;0.018
+CO-02-055;CONTENT_QUESTION;Pregunta de contenido;sin;qué seña corresponde a este dato;AFFIRMATIVE;no;no;no;;0.072
+CO-02-056;CONTENT_QUESTION;Pregunta de contenido;con;¿Qué categoría le asignó el analizador?;CONTENT_QUESTION;sí;no;no;;0.027
+CO-02-056;CONTENT_QUESTION;Pregunta de contenido;sin;qué categoría le asignó el analizador;AFFIRMATIVE;no;no;no;;0.019
+CO-02-057;CONTENT_QUESTION;Pregunta de contenido;con;¿Qué pasa si no hay coincidencia en el caché?;CONTENT_QUESTION;sí;no;sí;NEGATIVE;0.024
+CO-02-057;CONTENT_QUESTION;Pregunta de contenido;sin;qué pasa si no hay coincidencia en el caché;NEGATIVE;no;no;no;;0.021
+CO-02-058;CONTENT_QUESTION;Pregunta de contenido;con;¿Quién valida la lista de verbos imperativos?;CONTENT_QUESTION;sí;no;no;;0.022
+CO-02-058;CONTENT_QUESTION;Pregunta de contenido;sin;quién valida la lista de verbos imperativos;AFFIRMATIVE;no;no;no;;0.018
+CO-02-059;CONTENT_QUESTION;Pregunta de contenido;con;¿Dónde se guarda la traducción en producción?;CONTENT_QUESTION;sí;no;no;;0.019
+CO-02-059;CONTENT_QUESTION;Pregunta de contenido;sin;dónde se guarda la traducción en producción;AFFIRMATIVE;no;no;no;;0.018
+CO-02-060;CONTENT_QUESTION;Pregunta de contenido;con;¿Cuál intérprete revisará la categoría imperativa?;CONTENT_QUESTION;sí;no;no;;0.019
+CO-02-060;CONTENT_QUESTION;Pregunta de contenido;sin;cuál intérprete revisará la categoría imperativa;AFFIRMATIVE;no;no;no;;0.017
+CO-02-061;NEGATIVE;Negación;con;No vivo en esta ciudad.;NEGATIVE;sí;no;no;;0.016
+CO-02-061;NEGATIVE;Negación;sin;no vivo en esta ciudad;NEGATIVE;sí;no;no;;0.014
+CO-02-062;NEGATIVE;Negación;con;No es necesario traer copias adicionales.;NEGATIVE;sí;no;no;;0.018
+CO-02-062;NEGATIVE;Negación;sin;no es necesario traer copias adicionales;NEGATIVE;sí;no;no;;0.017
+CO-02-063;NEGATIVE;Negación;con;Nunca he tramitado este documento antes.;NEGATIVE;sí;no;no;;0.017
+CO-02-063;NEGATIVE;Negación;sin;nunca he tramitado este documento antes;NEGATIVE;sí;no;no;;0.016
+CO-02-064;NEGATIVE;Negación;con;No hay citas disponibles esta semana.;NEGATIVE;sí;no;no;;0.017
+CO-02-064;NEGATIVE;Negación;sin;no hay citas disponibles esta semana;NEGATIVE;sí;no;no;;0.016
+CO-02-065;NEGATIVE;Negación;con;No es el mismo documento que entregó antes.;NEGATIVE;sí;no;no;;0.019
+CO-02-065;NEGATIVE;Negación;sin;no es el mismo documento que entregó antes;NEGATIVE;sí;no;no;;0.018
+CO-02-066;NEGATIVE;Negación;con;No podemos procesar la solicitud sin la firma.;NEGATIVE;sí;no;no;;0.019
+CO-02-066;NEGATIVE;Negación;sin;no podemos procesar la solicitud sin la firma;NEGATIVE;sí;no;no;;0.018
+CO-02-067;NEGATIVE;Negación;con;No hay ningún problema con su información.;NEGATIVE;sí;no;no;;0.02
+CO-02-067;NEGATIVE;Negación;sin;no hay ningún problema con su información;NEGATIVE;sí;no;no;;0.021
+CO-02-068;NEGATIVE;Negación;con;Ni siquiera trajo una copia del recibo.;NEGATIVE;sí;no;no;;0.018
+CO-02-068;NEGATIVE;Negación;sin;ni siquiera trajo una copia del recibo;NEGATIVE;sí;no;no;;0.017
+CO-02-069;NEGATIVE;Negación;con;No creo que el sistema esté funcionando bien.;NEGATIVE;sí;no;no;;0.022
+CO-02-069;NEGATIVE;Negación;sin;no creo que el sistema esté funcionando bien;NEGATIVE;sí;no;no;;0.019
+CO-02-070;NEGATIVE;Negación;con;No hay forma de confirmar esto sin el intérprete.;NEGATIVE;sí;no;no;;0.021
+CO-02-070;NEGATIVE;Negación;sin;no hay forma de confirmar esto sin el intérprete;NEGATIVE;sí;no;no;;0.02
+CO-02-071;NEGATIVE;Negación;con;No hubo coincidencia en la búsqueda semántica.;NEGATIVE;sí;no;no;;0.02
+CO-02-071;NEGATIVE;Negación;sin;no hubo coincidencia en la búsqueda semántica;NEGATIVE;sí;no;no;;0.019
+CO-02-072;NEGATIVE;Negación;con;No firme nada todavía.;NEGATIVE;sí;sí;no;;0.015
+CO-02-072;NEGATIVE;Negación;sin;no firme nada todavía;NEGATIVE;sí;sí;no;;0.014
+CO-02-073;NEGATIVE;Negación;con;No confirme los datos sin revisarlos antes.;NEGATIVE;sí;sí;no;;0.018
+CO-02-073;NEGATIVE;Negación;sin;no confirme los datos sin revisarlos antes;NEGATIVE;sí;sí;no;;0.017
+CO-02-074;NEGATIVE;Negación;con;Nohora nunca trabajó en esta área.;NEGATIVE;sí;no;no;;0.018
+CO-02-074;NEGATIVE;Negación;sin;nohora nunca trabajó en esta área;NEGATIVE;sí;no;no;;0.017
+CO-02-075;NEGATIVE;Negación;con;Ni modo, tendremos que esperar la próxima cita.;NEGATIVE;sí;no;no;;0.02
+CO-02-075;NEGATIVE;Negación;sin;ni modo tendremos que esperar la próxima cita;NEGATIVE;sí;no;no;;0.018
+CO-02-076;NEGATIVE;Negación;con;Todavía no hemos recibido respuesta del área legal.;NEGATIVE;sí;no;no;;0.021
+CO-02-076;NEGATIVE;Negación;sin;todavía no hemos recibido respuesta del área legal;NEGATIVE;sí;no;no;;0.02
+CO-02-077;NEGATIVE;Negación;con;El sistema todavía no reconoce esa seña.;NEGATIVE;sí;no;no;;0.019
+CO-02-077;NEGATIVE;Negación;sin;el sistema todavía no reconoce esa seña;NEGATIVE;sí;no;no;;0.021
+CO-02-078;NEGATIVE;Negación;con;Nada de esto quedó registrado correctamente.;AFFIRMATIVE;no;sí;no;;0.019
+CO-02-078;NEGATIVE;Negación;sin;nada de esto quedó registrado correctamente;AFFIRMATIVE;no;sí;no;;0.018
+CO-02-079;NEGATIVE;Negación;con;No hace falta repetir el proceso completo.;NEGATIVE;sí;no;no;;0.018
+CO-02-079;NEGATIVE;Negación;sin;no hace falta repetir el proceso completo;NEGATIVE;sí;no;no;;0.017
+CO-02-080;NEGATIVE;Negación;con;Donde vive usted no afecta el proceso de registro.;NEGATIVE;sí;sí;no;;0.019
+CO-02-080;NEGATIVE;Negación;sin;donde vive usted no afecta el proceso de registro;NEGATIVE;sí;sí;no;;0.018
+CO-02-081;IMPERATIVE;Orden;con;Espere un momento, por favor.;IMPERATIVE;sí;no;no;;0.017
+CO-02-081;IMPERATIVE;Orden;sin;espere un momento por favor;IMPERATIVE;sí;no;no;;0.018
+CO-02-082;IMPERATIVE;Orden;con;Tome asiento, por favor.;IMPERATIVE;sí;no;no;;0.021
+CO-02-082;IMPERATIVE;Orden;sin;tome asiento por favor;IMPERATIVE;sí;no;no;;0.013
+CO-02-083;IMPERATIVE;Orden;con;Confirme sus datos antes de continuar.;IMPERATIVE;sí;no;no;;0.017
+CO-02-083;IMPERATIVE;Orden;sin;confirme sus datos antes de continuar;IMPERATIVE;sí;no;no;;0.015
+CO-02-084;IMPERATIVE;Orden;con;Muestre su documento de identidad.;IMPERATIVE;sí;no;no;;0.016
+CO-02-084;IMPERATIVE;Orden;sin;muestre su documento de identidad;IMPERATIVE;sí;no;no;;0.017
+CO-02-085;IMPERATIVE;Orden;con;Llene todos los campos obligatorios.;IMPERATIVE;sí;no;no;;0.016
+CO-02-085;IMPERATIVE;Orden;sin;llene todos los campos obligatorios;IMPERATIVE;sí;no;no;;0.015
+CO-02-086;IMPERATIVE;Orden;con;Presente su documento en la entrada.;IMPERATIVE;sí;no;no;;0.017
+CO-02-086;IMPERATIVE;Orden;sin;presente su documento en la entrada;IMPERATIVE;sí;no;no;;0.015
+CO-02-087;IMPERATIVE;Orden;con;Pase a la siguiente sala.;IMPERATIVE;sí;no;no;;0.017
+CO-02-087;IMPERATIVE;Orden;sin;pase a la siguiente sala;IMPERATIVE;sí;no;no;;0.014
+CO-02-088;IMPERATIVE;Orden;con;Espere aquí hasta que lo llamen.;IMPERATIVE;sí;no;no;;0.017
+CO-02-088;IMPERATIVE;Orden;sin;espere aquí hasta que lo llamen;IMPERATIVE;sí;no;no;;0.015
+CO-02-089;IMPERATIVE;Orden;con;Escriba en letra clara, por favor.;IMPERATIVE;sí;no;no;;0.016
+CO-02-089;IMPERATIVE;Orden;sin;escriba en letra clara por favor;IMPERATIVE;sí;no;no;;0.015
+CO-02-090;IMPERATIVE;Orden;con;Complete los datos faltantes.;IMPERATIVE;sí;no;no;;0.015
+CO-02-090;IMPERATIVE;Orden;sin;complete los datos faltantes;IMPERATIVE;sí;no;no;;0.014
+CO-02-091;IMPERATIVE;Orden;con;Por-favor complete el formulario completo.;IMPERATIVE;sí;no;no;;0.018
+CO-02-091;IMPERATIVE;Orden;sin;por-favor complete el formulario completo;IMPERATIVE;sí;no;no;;0.016
+CO-02-092;IMPERATIVE;Orden;con;Antes de continuar, firme el consentimiento.;AFFIRMATIVE;no;sí;no;;0.018
+CO-02-092;IMPERATIVE;Orden;sin;antes de continuar firme el consentimiento;AFFIRMATIVE;no;sí;no;;0.016
+CO-02-093;IMPERATIVE;Orden;con;Entonces confirme sus datos personales.;AFFIRMATIVE;no;sí;no;;0.016
+CO-02-093;IMPERATIVE;Orden;sin;entonces confirme sus datos personales;AFFIRMATIVE;no;sí;no;;0.016
+CO-02-094;IMPERATIVE;Orden;con;Deme su documento de identidad.;AFFIRMATIVE;no;sí;no;;0.015
+CO-02-094;IMPERATIVE;Orden;sin;deme su documento de identidad;AFFIRMATIVE;no;sí;no;;0.014
+CO-02-095;IMPERATIVE;Orden;con;Anote su número de contacto.;AFFIRMATIVE;no;sí;no;;0.016
+CO-02-095;IMPERATIVE;Orden;sin;anote su número de contacto;AFFIRMATIVE;no;sí;no;;0.015
+CO-02-096;IMPERATIVE;Orden;con;Adjunte una copia de su documento.;AFFIRMATIVE;no;sí;no;;0.016
+CO-02-096;IMPERATIVE;Orden;sin;adjunte una copia de su documento;AFFIRMATIVE;no;sí;no;;0.015
+CO-02-097;IMPERATIVE;Orden;con;Acompáñeme a la siguiente sala.;AFFIRMATIVE;no;sí;no;;0.02
+CO-02-097;IMPERATIVE;Orden;sin;acompáñeme a la siguiente sala;AFFIRMATIVE;no;sí;no;;0.016
+CO-02-098;IMPERATIVE;Orden;con;Vuelva en veinte minutos.;AFFIRMATIVE;no;sí;no;;0.014
+CO-02-098;IMPERATIVE;Orden;sin;vuelva en veinte minutos;AFFIRMATIVE;no;sí;no;;0.013
+CO-02-099;IMPERATIVE;Orden;con;Explique el motivo de su visita.;AFFIRMATIVE;no;sí;no;;0.016
+CO-02-099;IMPERATIVE;Orden;sin;explique el motivo de su visita;AFFIRMATIVE;no;sí;no;;0.015
+CO-02-100;IMPERATIVE;Orden;con;Actualice sus datos de contacto.;AFFIRMATIVE;no;sí;no;;0.015
+CO-02-100;IMPERATIVE;Orden;sin;actualice sus datos de contacto;AFFIRMATIVE;no;sí;no;;0.017

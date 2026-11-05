@@ -1,0 +1,530 @@
+logs_avt01.txt:         1793830088.288  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+logs_avt01.txt:         1793830088.643  7393  7420 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS
+logs_avt01.txt:         1793830092.861  7393  7393 I SignAiMetrics: representado: 2 señas en 4180ms (p50=4180ms p95=4180ms max=4180ms n=1)
+logs_avt01.txt:         1793830110.550  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+logs_avt01.txt:         1793830110.558  7393  7420 D SignAiNet: segment 0/1 turn=2 -> TU,HAMBRE
+logs_avt01.txt:         1793830114.453  7393  7393 I SignAiMetrics: representado: 2 señas en 3812ms (p50=3812ms p95=3812ms max=4180ms n=2)
+logs_avt01.txt:         1793830132.254  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Estás bien?"
+logs_avt01.txt:         1793830132.298  7393  7420 D SignAiNet: segment 0/1 turn=3 -> BIEN
+logs_avt01.txt:         1793830134.855  7393  7393 I SignAiMetrics: representado: 1 señas en 2514ms (p50=3812ms p95=3812ms max=4180ms n=3)
+logs_avt01.txt:         1793830152.808  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Ustedes trabajan en familia?"
+logs_avt01.txt:         1793830152.815  7393  7420 D SignAiNet: segment 0/1 turn=4 -> USTEDES,TRABAJAR,FAMILIA
+logs_avt01.txt:         1793830158.382  7393  7393 I SignAiMetrics: representado: 3 señas en 5512ms (p50=3812ms p95=4180ms max=5512ms n=4)
+logs_avt01.txt:         1793830176.041  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tu hermano está aburrido?"
+logs_avt01.txt:         1793830176.050  7393  7420 D SignAiNet: segment 0/1 turn=5 -> TU,HERMANO,ABURRIDO
+logs_avt01.txt:         1793830182.166  7393  7393 I SignAiMetrics: representado: 3 señas en 6062ms (p50=4180ms p95=5512ms max=6062ms n=5)
+logs_avt01.txt:         1793830209.862  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Por qué estás triste?"
+logs_avt01.txt:         1793830209.872  7393  7420 D SignAiNet: segment 0/1 turn=6 -> POR QUE,TU,TRISTE
+logs_avt01.txt:         1793830216.782  7393  7393 I SignAiMetrics: representado: 3 señas en 6851ms (p50=4180ms p95=6062ms max=6851ms n=6)
+logs_avt01.txt:         1793830234.597  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Cuándo comen ustedes?"
+logs_avt01.txt:         1793830234.605  7393  7420 D SignAiNet: segment 0/1 turn=7 -> CUANDO,USTEDES,COMER
+logs_avt01.txt:         1793830238.967  7393  7393 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+logs_avt01.txt:         1793830240.017  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830240.039  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830240.040  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830241.077  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830241.078  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830241.080  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830242.102  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830242.109  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830242.110  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830243.127  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830243.129  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830243.131  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830244.152  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830244.168  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830244.169  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830245.199  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830245.200  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830245.201  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830246.218  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830246.221  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830246.222  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830247.240  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830247.242  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830247.243  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830248.258  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830248.259  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830248.261  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830249.283  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830249.284  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830249.286  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830250.321  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830250.331  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830250.332  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830251.354  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830251.370  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830251.372  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830252.389  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830252.392  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830252.393  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830253.422  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830253.434  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830253.435  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830254.472  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830254.480  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830254.481  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830255.498  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830255.499  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830255.500  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830256.515  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830256.517  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830256.519  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830257.531  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830257.532  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830257.533  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830258.552  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830271.199  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Por favor, come poco."
+logs_avt01.txt:         1793830271.205  7393  7420 D SignAiNet: segment 0/1 turn=1 -> POR FAVOR,COMER,POCO
+logs_avt01.txt:         1793830277.451  7393  7393 I SignAiMetrics: representado: 3 señas en 6200ms (p50=5512ms p95=6200ms max=6851ms n=7)
+logs_avt01.txt:         1793830295.803  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Niños, trabajen todos."
+logs_avt01.txt:         1793830295.838  7393  7420 D SignAiNet: segment 0/1 turn=2 -> TODOS,TRABAJAR
+logs_avt01.txt:         1793830300.035  7393  7393 I SignAiMetrics: representado: 2 señas en 4153ms (p50=4180ms p95=6200ms max=6851ms n=8)
+logs_avt01.txt:         1793830313.972  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830315.002  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830315.008  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830315.010  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830316.030  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830316.049  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830316.050  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830317.064  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830317.078  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830317.079  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830318.138  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830318.178  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830318.179  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830319.198  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830319.202  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830319.203  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830320.228  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830401.491  7393  7393 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+logs_avt01.txt:         1793830401.513  7393  7420 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA
+logs_avt01.txt:         1793830405.765  7393  7393 I SignAiMetrics: representado: 2 señas en 4233ms (p50=4233ms p95=6200ms max=6851ms n=9)
+logs_avt01.txt:         1793830411.064  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830412.088  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830412.090  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830412.091  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830413.108  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830413.110  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830413.111  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830414.127  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830414.129  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830414.130  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830415.146  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830415.147  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830415.148  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830416.167  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830416.168  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830416.169  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830417.198  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830417.201  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830417.202  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830418.220  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830418.222  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830418.223  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830419.243  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830419.258  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830419.259  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830420.276  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830420.277  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830420.293  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830421.309  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830421.312  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830421.313  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830422.331  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830422.346  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830422.347  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830423.387  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830423.400  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830423.401  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830424.422  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830424.427  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830424.428  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830425.454  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830425.455  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830425.457  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830426.472  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830426.473  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830426.475  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830427.503  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830427.504  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830427.507  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830428.529  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830428.532  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830428.549  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830429.562  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830429.564  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830429.566  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830430.582  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830430.587  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830430.588  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830431.605  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830431.606  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830431.607  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830432.625  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830432.641  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830432.642  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830433.661  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830433.662  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830433.663  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830434.687  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830434.689  7393  7393 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830434.691  7393  7393 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830435.724  7393  7420 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830451.907  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830456.040  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830456.584  9546  9546 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2688 ms @681
+logs_avt01.txt:         1793830457.061  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830457.068  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830457.069  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830458.083  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830458.086  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830458.087  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830459.104  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830459.105  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830459.107  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830460.121  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830460.154  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830460.155  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830461.175  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830461.176  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830461.178  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830462.192  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830462.196  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830462.197  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830463.233  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830463.235  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830463.236  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830464.250  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830464.252  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830464.253  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830465.269  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830465.271  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830465.272  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830466.287  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830466.289  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830466.290  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830467.306  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830467.311  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830467.312  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830468.329  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830468.332  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830468.334  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830469.386  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830469.389  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830469.392  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830470.418  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830470.421  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830470.422  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830471.473  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830471.486  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830471.489  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830472.511  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830472.517  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830472.519  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830473.538  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830473.542  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830473.544  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830474.565  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830474.580  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830474.581  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830475.628  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830475.630  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830475.631  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830476.646  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830476.657  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830476.658  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830477.688  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830477.714  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830477.715  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830478.753  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830478.755  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830478.757  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830479.774  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830479.777  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830479.779  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830480.802  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830480.815  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830480.816  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830483.097  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830483.136  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830483.137  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830484.165  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830484.167  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830484.169  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830485.200  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830485.203  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830485.204  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830486.227  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830486.254  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830486.255  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830487.274  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830487.278  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830487.279  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830488.300  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830488.304  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830488.306  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830489.322  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830489.330  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830489.332  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830490.356  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830490.377  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830490.378  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830491.395  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830491.400  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830491.402  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830492.417  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830492.421  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830492.422  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830493.443  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830493.445  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830493.447  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830494.483  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830494.491  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830494.492  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830495.515  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830495.546  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830495.547  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830496.565  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830496.567  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830496.569  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830497.586  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830497.588  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830497.589  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830498.603  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830498.607  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830498.608  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830499.629  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830499.637  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830499.639  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830500.657  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830500.659  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830500.660  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830501.678  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830501.679  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830501.681  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830502.702  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830502.709  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830502.710  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830503.728  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830503.732  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830503.734  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830504.753  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830504.754  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830504.756  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830505.779  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830505.783  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830505.787  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830506.807  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830506.809  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830506.810  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830507.829  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830507.831  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830507.832  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830508.880  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830508.882  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830508.884  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830509.900  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830509.902  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830509.903  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830510.920  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830510.922  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830510.923  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830511.945  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830511.947  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830511.949  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830512.993  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830513.032  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830513.033  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830514.052  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830514.054  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830514.057  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830515.073  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830515.076  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830515.077  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830516.106  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830516.117  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830516.118  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830517.136  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830517.170  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830517.171  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830518.194  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830518.195  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830518.197  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830519.214  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830519.220  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830519.221  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830520.245  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830520.246  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830520.247  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830521.271  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830521.273  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830521.274  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830522.288  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830522.298  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830522.300  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830523.324  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830523.339  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830523.340  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830524.363  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830524.364  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830524.367  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830525.387  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830525.389  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830525.390  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830526.408  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830526.415  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830526.416  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830527.457  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830527.461  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830527.462  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830528.477  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830528.478  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830528.479  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830529.512  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830529.542  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830529.544  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830530.583  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830530.588  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830530.589  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830531.630  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830531.643  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830531.644  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830532.689  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830532.694  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830532.695  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830533.755  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830533.756  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830533.758  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830534.793  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830534.795  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830534.796  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830535.834  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830535.856  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830535.857  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830536.905  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830536.924  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830536.924  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830537.974  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830537.980  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830537.982  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830539.018  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830539.032  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830539.033  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830540.056  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830540.057  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830540.058  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830541.086  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830541.110  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830541.111  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830542.153  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830542.174  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830542.175  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830543.197  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830543.200  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830543.201  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830544.223  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830544.259  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830544.260  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830545.296  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830545.306  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830545.307  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830546.327  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830547.545  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830547.546  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830548.563  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830548.568  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830548.569  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830549.610  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830549.612  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830549.613  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830550.634  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830634.810  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830635.832  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830635.851  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830635.851  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830636.875  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830636.902  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830636.903  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830637.917  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830637.921  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830637.922  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830638.938  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830638.939  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830638.941  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830639.991  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830640.027  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830640.028  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830641.042  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830645.118  9546  9546 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+logs_avt01.txt:         1793830645.142  9546  9573 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+logs_avt01.txt:         1793830648.995  9546  9546 I SignAiMetrics: representado: 2 señas en 3786ms (p50=3786ms p95=3786ms max=3786ms n=1)
+logs_avt01.txt:         1793830672.225  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830673.252  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830673.258  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830673.259  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830674.277  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830674.278  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830674.279  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830675.294  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830675.295  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830675.296  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830676.315  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830676.317  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830676.318  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830677.334  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830677.337  9546  9546 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793830677.338  9546  9546 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793830678.353  9546  9573 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830695.809 10953 10979 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830701.181 10953 10953 D SignAIWeb: LOG: [SignAI] escena lista (juan) · 3477 ms @681
+logs_avt01.txt:         1793830778.020 10953 10953 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Mi abuelo y mi tío trabajan en familia."
+logs_avt01.txt:         1793830778.150 10953 10979 D SignAiNet: segment 0/1 turn=1 -> ABUELO,TU,TIO,FAMILIA
+logs_avt01.txt:         1793830785.989 10953 10953 I SignAiMetrics: representado: 4 señas en 7824ms (p50=7824ms p95=7824ms max=7824ms n=1)
+logs_avt01.txt:         1793830814.494 11643 11669 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830818.813 11643 11643 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2592 ms @681
+logs_avt01.txt:         1793830857.638 11643 11643 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Mi abuelo y mi tío trabajan en familia."
+logs_avt01.txt:         1793830857.648 11643 11669 D SignAiNet: segment 0/1 turn=1 -> ABUELO,TU,TIO,FAMILIA
+logs_avt01.txt:         1793830865.507 11643 11643 I SignAiMetrics: representado: 4 señas en 7783ms (p50=7783ms p95=7783ms max=7783ms n=1)
+logs_avt01.txt:         1793830910.585 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793830914.938 12365 12365 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2637 ms @681
+logs_avt01.txt:         1793831022.243 12365 12365 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+logs_avt01.txt:         1793831022.252 12365 12391 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA
+logs_avt01.txt:         1793831026.504 12365 12365 I SignAiMetrics: representado: 2 señas en 4164ms (p50=4164ms p95=4164ms max=4164ms n=1)
+logs_avt01.txt:         1793831108.893 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793831109.921 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793831109.926 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793831109.928 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793831110.952 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793831110.954 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793831110.956 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793831111.988 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793831111.989 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793831111.991 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793831113.019 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793831113.020 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793831113.022 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793831114.053 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01.txt:         1793831114.054 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01.txt:         1793831114.055 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01.txt:         1793831115.076 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01b.txt:         1793831022.243 12365 12365 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+logs_avt01b.txt:         1793831022.252 12365 12391 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA
+logs_avt01b.txt:         1793831026.504 12365 12365 I SignAiMetrics: representado: 2 señas en 4164ms (p50=4164ms p95=4164ms max=4164ms n=1)
+logs_avt01b.txt:         1793831108.893 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01b.txt:         1793831109.921 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01b.txt:         1793831109.926 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01b.txt:         1793831109.928 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01b.txt:         1793831110.952 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01b.txt:         1793831110.954 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01b.txt:         1793831110.956 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01b.txt:         1793831111.988 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01b.txt:         1793831111.989 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01b.txt:         1793831111.991 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01b.txt:         1793831113.019 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01b.txt:         1793831113.020 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01b.txt:         1793831113.022 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01b.txt:         1793831114.053 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+logs_avt01b.txt:         1793831114.054 12365 12365 I SignAiState: fallo: El servicio de transcripción no está disponible.
+logs_avt01b.txt:         1793831114.055 12365 12365 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+logs_avt01b.txt:         1793831115.076 12365 12391 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)

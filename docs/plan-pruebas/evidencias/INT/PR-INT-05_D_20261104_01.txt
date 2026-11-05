@@ -1,0 +1,112 @@
+===== /tmp/opencode/pruebas/logs_int05.txt =====
+--------- beginning of main
+--------- beginning of system
+         1793847333.771 22130 22130 I SignAiState: backend session starting
+         1793847333.779 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847334.612 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847335.650 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847335.691 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847337.317 22130 22130 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1718 ms @628
+         1793847337.317 22130 22130 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793847337.363 22130 22130 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793847337.707 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847337.708 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847338.351 22130 22130 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2826 ms @681
+         1793847338.442 22130 22270 I SignAiHealth: no se pudo leer /health: Failed to connect to /127.0.0.1:8080
+         1793847338.480 22130 22130 I SignAiState: silencio del STT: desconocido
+         1793847340.718 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847340.718 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847344.727 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847344.727 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847349.751 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847349.771 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847354.786 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847354.786 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847359.801 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847359.808 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847364.822 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847364.823 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847369.850 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847369.861 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847374.872 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847374.873 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847379.890 22130 22157 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847379.896 22130 22130 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847384.926 22130 22157 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793847390.209 22965 22965 I SignAiState: backend session starting
+         1793847390.229 22965 23032 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793847394.625 22965 22965 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 2053 ms @628
+         1793847394.625 22965 22965 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793847394.673 22965 22965 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793847395.658 22965 22965 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 3166 ms @681
+         1793847395.825 22965 22965 I SignAiState: silencio del STT: 1500 ms
+         1793847421.784 22965 22965 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793847421.796 22965 23032 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS
+         1793847421.875 22965 22965 I SignAiMetrics: frase #1: 91ms, 1 oraciones, 2 glosas (p50=91ms p95=91ms max=91ms n=1)
+         1793847421.875 22965 22965 I SignAiState: resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=91ms p95=91ms max=91ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793847422.009 22965 22965 I SignAiState: signStart: oración→avatar 139 ms (seña 0, reloj JS 30139 ms)
+         1793847422.009 22965 22965 I SignAiMetrics: oración→avatar: 139 ms (p50=139ms p95=139ms max=139ms n=1)
+         1793847422.009 22965 22965 I SignAiMetrics: envío→primera seña: 226 ms (p50=226ms p95=226ms max=226ms n=1)
+         1793847423.302 22965 22965 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793847423.969 22965 22965 I SignAiState: signStart: oración→avatar 2098 ms (seña 1, reloj JS 32184 ms)
+         1793847426.083 22965 22965 I SignAiMetrics: representado: 2 señas en 4210ms (p50=4210ms p95=4210ms max=4210ms n=1)
+         1793847433.925 22965 22965 I SignAiState: micrófono prendido en modo Dictation
+         1793847434.114 22965 22965 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793847438.796 22965 22965 I SignAiState: micrófono apagado (venía de Dictation)
+         1793847438.853 22965 22965 I SignAiNet: recording stopped
+         1793847438.854 22965 22965 I SignAiState: dictado detenido: esperando el final de la frase
+         1793847438.854 22965 22965 I SignAiState: el dictado se apagó sin transcripción
+         1793847438.854 22965 22965 I SignAiState: aviso (no va al indicador): No se escuchó nada.
+         1793847438.925 22965 22965 I SignAiState: final vacío: el utterance se cerró sin palabras
+         1793847587.801 24857 24857 I SignAiState: backend session starting
+         1793847587.810 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847588.682 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847589.828 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847589.867 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847591.892 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847591.894 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847594.922 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847594.923 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847596.817 24857 24988 I SignAiHealth: no se pudo leer /health: Failed to connect to /127.0.0.1:8080
+         1793847596.820 24857 24857 I SignAiState: silencio del STT: desconocido
+         1793847598.952 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847598.954 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847603.990 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847603.992 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847609.026 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847609.027 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847614.245 25185 25185 I SignAiState: backend session starting
+         1793847614.262 25185 25212 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793847623.170 25185 25185 I SignAiState: silencio del STT: 1500 ms
+         1793847626.362 25185 25185 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1634 ms @628
+         1793847626.363 25185 25185 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793847626.413 25185 25185 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793847627.479 25185 25185 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2780 ms @681
+
+===== /tmp/opencode/pruebas/logs_int05c.txt =====
+--------- beginning of main
+--------- beginning of system
+         1793847587.801 24857 24857 I SignAiState: backend session starting
+         1793847587.810 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847588.682 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847589.828 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847589.867 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847591.892 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847591.894 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847594.922 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847594.923 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847596.817 24857 24988 I SignAiHealth: no se pudo leer /health: Failed to connect to /127.0.0.1:8080
+         1793847596.820 24857 24857 I SignAiState: silencio del STT: desconocido
+         1793847598.952 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847598.954 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847603.990 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847603.992 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847609.026 24857 24884 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793847609.027 24857 24857 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793847614.245 25185 25185 I SignAiState: backend session starting
+         1793847614.262 25185 25212 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793847623.170 25185 25185 I SignAiState: silencio del STT: 1500 ms
+         1793847626.362 25185 25185 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1634 ms @628
+         1793847626.363 25185 25185 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793847626.413 25185 25185 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793847627.479 25185 25185 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2780 ms @681

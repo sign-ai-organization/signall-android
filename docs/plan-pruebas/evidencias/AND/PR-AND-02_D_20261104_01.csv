@@ -1,0 +1,5 @@
+﻿paso;indicador;campo;observacion
+escribir;Inactivo;Hola, buenos días, bienvenidos.;"el texto entró completo; el indicador sigue en «Inactivo» (Texto listo es solo para lo dictado)"
+editar;Inactivo;Hola, buenos días, bienvenidos.;"insertó « fin» en el cursor: 'Hola, buenos día fins, bienvenidos.'; después 4 DEL: 'Hola, buenos días, bienvenidos.'"
+mandar;Reproduciendo → ® Inactivo;;"el campo se vació y volvió el placeholder; no se vio «Procesando» con muestreo de 0,4 s"
+dictar con texto pendiente;"antes Inactivo; durante Grabando (Dictando...); después Inactivo";"antes 'Frase vieja que no se manda.'; durante ''; después ''";"el texto pendiente se descartó al prender el micrófono; no llegó transcripción (silencio/sonido ambiente sin frase)"

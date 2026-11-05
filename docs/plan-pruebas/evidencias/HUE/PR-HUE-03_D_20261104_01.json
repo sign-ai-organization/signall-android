@@ -1,0 +1,642 @@
+{
+  "total": {
+    "n": 200,
+    "correctos": 131,
+    "pct": 65.5
+  },
+  "con_puntuacion": {
+    "n": 100,
+    "correctos": 84,
+    "pct": 84.0
+  },
+  "sin_puntuacion": {
+    "n": 100,
+    "correctos": 47,
+    "pct": 47.0
+  },
+  "borde": {
+    "n": 42,
+    "correctos": 8,
+    "pct": 19.0
+  },
+  "no_borde": {
+    "n": 158,
+    "correctos": 123,
+    "pct": 77.8
+  },
+  "por_tipo": {
+    "AFFIRMATIVE": {
+      "total": {
+        "n": 40,
+        "correctos": 34,
+        "pct": 85.0
+      },
+      "con": {
+        "n": 20,
+        "correctos": 17,
+        "pct": 85.0
+      },
+      "sin": {
+        "n": 20,
+        "correctos": 17,
+        "pct": 85.0
+      }
+    },
+    "YES_NO_QUESTION": {
+      "total": {
+        "n": 40,
+        "correctos": 17,
+        "pct": 42.5
+      },
+      "con": {
+        "n": 20,
+        "correctos": 17,
+        "pct": 85.0
+      },
+      "sin": {
+        "n": 20,
+        "correctos": 0,
+        "pct": 0.0
+      }
+    },
+    "CONTENT_QUESTION": {
+      "total": {
+        "n": 40,
+        "correctos": 20,
+        "pct": 50.0
+      },
+      "con": {
+        "n": 20,
+        "correctos": 20,
+        "pct": 100.0
+      },
+      "sin": {
+        "n": 20,
+        "correctos": 0,
+        "pct": 0.0
+      }
+    },
+    "NEGATIVE": {
+      "total": {
+        "n": 40,
+        "correctos": 38,
+        "pct": 95.0
+      },
+      "con": {
+        "n": 20,
+        "correctos": 19,
+        "pct": 95.0
+      },
+      "sin": {
+        "n": 20,
+        "correctos": 19,
+        "pct": 95.0
+      }
+    },
+    "IMPERATIVE": {
+      "total": {
+        "n": 40,
+        "correctos": 22,
+        "pct": 55.0
+      },
+      "con": {
+        "n": 20,
+        "correctos": 11,
+        "pct": 55.0
+      },
+      "sin": {
+        "n": 20,
+        "correctos": 11,
+        "pct": 55.0
+      }
+    }
+  },
+  "matriz_confusion": {
+    "AFFIRMATIVE": {
+      "AFFIRMATIVE": 34,
+      "YES_NO_QUESTION": 0,
+      "CONTENT_QUESTION": 0,
+      "NEGATIVE": 4,
+      "IMPERATIVE": 2
+    },
+    "YES_NO_QUESTION": {
+      "AFFIRMATIVE": 16,
+      "YES_NO_QUESTION": 17,
+      "CONTENT_QUESTION": 3,
+      "NEGATIVE": 4,
+      "IMPERATIVE": 0
+    },
+    "CONTENT_QUESTION": {
+      "AFFIRMATIVE": 19,
+      "YES_NO_QUESTION": 0,
+      "CONTENT_QUESTION": 20,
+      "NEGATIVE": 1,
+      "IMPERATIVE": 0
+    },
+    "NEGATIVE": {
+      "AFFIRMATIVE": 2,
+      "YES_NO_QUESTION": 0,
+      "CONTENT_QUESTION": 0,
+      "NEGATIVE": 38,
+      "IMPERATIVE": 0
+    },
+    "IMPERATIVE": {
+      "AFFIRMATIVE": 18,
+      "YES_NO_QUESTION": 0,
+      "CONTENT_QUESTION": 0,
+      "NEGATIVE": 0,
+      "IMPERATIVE": 22
+    }
+  },
+  "colisiones": 5,
+  "colisiones_por_tipo_esperado": {
+    "YES_NO_QUESTION": 4,
+    "CONTENT_QUESTION": 1
+  },
+  "errores": [
+    [
+      "CO-02-011",
+      "con",
+      "Pase de abordar entregado en la ventanilla dos.",
+      "AFFIRMATIVE",
+      "IMPERATIVE"
+    ],
+    [
+      "CO-02-011",
+      "sin",
+      "pase de abordar entregado en la ventanilla dos",
+      "AFFIRMATIVE",
+      "IMPERATIVE"
+    ],
+    [
+      "CO-02-016",
+      "con",
+      "El caché semántico todavía no está implementado.",
+      "AFFIRMATIVE",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-016",
+      "sin",
+      "el caché semántico todavía no está implementado",
+      "AFFIRMATIVE",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-020",
+      "con",
+      "No obstante, el trámite se completó a tiempo.",
+      "AFFIRMATIVE",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-020",
+      "sin",
+      "no obstante el trámite se completó a tiempo",
+      "AFFIRMATIVE",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-021",
+      "sin",
+      "tiene alguna pregunta",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-022",
+      "sin",
+      "ya diligenció el formulario",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-023",
+      "sin",
+      "tiene su documento a la mano",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-024",
+      "sin",
+      "ya realizó el pago correspondiente",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-025",
+      "sin",
+      "desea continuar con el registro",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-026",
+      "sin",
+      "ya recibió la confirmación por correo",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-027",
+      "sin",
+      "tiene el código de la cita",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-028",
+      "sin",
+      "está todo en orden",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-029",
+      "con",
+      "¿Le parece bien que continuemos?",
+      "YES_NO_QUESTION",
+      "CONTENT_QUESTION"
+    ],
+    [
+      "CO-02-029",
+      "sin",
+      "le parece bien que continuemos",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-030",
+      "con",
+      "¿Seguro que no le falta ningún documento?",
+      "YES_NO_QUESTION",
+      "CONTENT_QUESTION"
+    ],
+    [
+      "CO-02-030",
+      "sin",
+      "seguro que no le falta ningún documento",
+      "YES_NO_QUESTION",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-031",
+      "sin",
+      "todo bien",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-032",
+      "sin",
+      "es correcto o no",
+      "YES_NO_QUESTION",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-033",
+      "sin",
+      "no trajo el formulario firmado",
+      "YES_NO_QUESTION",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-034",
+      "sin",
+      "no es este su número de documento",
+      "YES_NO_QUESTION",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-035",
+      "sin",
+      "se encuentra bien",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-036",
+      "con",
+      "¿Confirma que la información es correcta?",
+      "YES_NO_QUESTION",
+      "CONTENT_QUESTION"
+    ],
+    [
+      "CO-02-036",
+      "sin",
+      "confirma que la información es correcta",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-037",
+      "sin",
+      "recuerda si trajo el documento",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-038",
+      "sin",
+      "le molesta si tomamos su firma digital",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-039",
+      "sin",
+      "está el intérprete disponible ahora",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-040",
+      "sin",
+      "cerramos el caso entonces",
+      "YES_NO_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-041",
+      "sin",
+      "cuál es su número de documento",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-042",
+      "sin",
+      "dónde vive",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-043",
+      "sin",
+      "cuál es su teléfono",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-044",
+      "sin",
+      "cuál es su estado civil",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-045",
+      "sin",
+      "cuándo fue su última visita",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-046",
+      "sin",
+      "por qué necesita este trámite",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-047",
+      "sin",
+      "cuál es el motivo de su visita",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-048",
+      "sin",
+      "cuál de estas opciones prefiere",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-049",
+      "sin",
+      "qué documento trajo",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-050",
+      "sin",
+      "cuáles documentos le faltan",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-051",
+      "sin",
+      "cuántas veces ha venido a esta oficina",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-052",
+      "sin",
+      "cómo quiere que le expliquemos el proceso",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-053",
+      "sin",
+      "dónde firmo aquí o en la siguiente página",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-054",
+      "sin",
+      "para qué necesita el certificado",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-055",
+      "sin",
+      "qué seña corresponde a este dato",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-056",
+      "sin",
+      "qué categoría le asignó el analizador",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-057",
+      "sin",
+      "qué pasa si no hay coincidencia en el caché",
+      "CONTENT_QUESTION",
+      "NEGATIVE"
+    ],
+    [
+      "CO-02-058",
+      "sin",
+      "quién valida la lista de verbos imperativos",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-059",
+      "sin",
+      "dónde se guarda la traducción en producción",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-060",
+      "sin",
+      "cuál intérprete revisará la categoría imperativa",
+      "CONTENT_QUESTION",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-078",
+      "con",
+      "Nada de esto quedó registrado correctamente.",
+      "NEGATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-078",
+      "sin",
+      "nada de esto quedó registrado correctamente",
+      "NEGATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-092",
+      "con",
+      "Antes de continuar, firme el consentimiento.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-092",
+      "sin",
+      "antes de continuar firme el consentimiento",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-093",
+      "con",
+      "Entonces confirme sus datos personales.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-093",
+      "sin",
+      "entonces confirme sus datos personales",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-094",
+      "con",
+      "Deme su documento de identidad.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-094",
+      "sin",
+      "deme su documento de identidad",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-095",
+      "con",
+      "Anote su número de contacto.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-095",
+      "sin",
+      "anote su número de contacto",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-096",
+      "con",
+      "Adjunte una copia de su documento.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-096",
+      "sin",
+      "adjunte una copia de su documento",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-097",
+      "con",
+      "Acompáñeme a la siguiente sala.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-097",
+      "sin",
+      "acompáñeme a la siguiente sala",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-098",
+      "con",
+      "Vuelva en veinte minutos.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-098",
+      "sin",
+      "vuelva en veinte minutos",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-099",
+      "con",
+      "Explique el motivo de su visita.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-099",
+      "sin",
+      "explique el motivo de su visita",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-100",
+      "con",
+      "Actualice sus datos de contacto.",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ],
+    [
+      "CO-02-100",
+      "sin",
+      "actualice sus datos de contacto",
+      "IMPERATIVE",
+      "AFFIRMATIVE"
+    ]
+  ],
+  "ms_p50": 0.017
+}

@@ -1,0 +1,4 @@
+﻿caso;red;avatar;indicador;traducir_marcado;al_tocar_traducir;al_tocar_mic;se_cuelga;ms_arranque
+sin servidor (sin adb reverse, internet sí);"{""avion"": ""0"", ""wifi"": ""1"", ""reverse"": """", ""internet"": ""s\u00ed""}";"sí (escena lista; píxeles con desvío 65,2)";Desconectado;habilitado;"no pasa nada; el texto queda en el campo";no prende el micrófono;no;15302
+modo avión con el túnel USB puesto;"{""avion"": ""1"", ""wifi"": ""3"", ""reverse"": ""UsbFfs tcp:8080 tcp:8080"", ""internet"": ""no""}";sí (escena lista);Inactivo (la app alcanza el backend por adb reverse);habilitado;traduce y representa normalmente;n/d;no;17639
+modo avión, sin túnel y sin caché del WebView (caso extra);"{""avion"": ""1"", ""internet"": """"}";"no: el escenario queda negro y uniforme (media 15,0; desvío 2,4)";Desconectado;habilitado;no se probó en este caso;no se probó;no;

@@ -1,0 +1,65 @@
+{
+  "precalentado_cache_frase_FR-01-001": {
+    "backend": "original (LLM arriba)",
+    "texto": "Hola, buenos días, bienvenidos.",
+    "sentence_trace": {
+      "source": "cache",
+      "steps_ms": {
+        "fingerprint": 0.0,
+        "cache.exact": 0.0
+      }
+    },
+    "ms": 6.2,
+    "glosas": [
+      "HOLA",
+      "BUENOS DIAS"
+    ]
+  },
+  "barrido_cache_LLM_caido": [
+    {
+      "frase": "Hola, buenos días, bienvenidos.",
+      "fuente": "cache",
+      "ms": 5.9
+    },
+    {
+      "frase": "¿Ustedes cuándo comen?",
+      "fuente": "cache (semantic)",
+      "ms": 33.6
+    },
+    {
+      "frase": "¿Está aburrido tu hermano?",
+      "fuente": "cache (semantic)",
+      "ms": 31.7
+    },
+    {
+      "frase": "¿Trabajan ustedes en familia?",
+      "fuente": "cache (semantic)",
+      "ms": 20.8
+    },
+    {
+      "frase": "Hola familia siéntanse bienvenidos",
+      "fuente": "cache",
+      "ms": 9.7
+    },
+    {
+      "frase": "Las niñas comen con gusto y el tío trabaja.",
+      "fuente": "miss -> error",
+      "ms": 506.2
+    },
+    {
+      "frase": "¿A qué hora almuerzan tus primos?",
+      "fuente": "miss -> error",
+      "ms": 453.8
+    },
+    {
+      "frase": "FR-04-017 ¿Cuándo comen ellos?",
+      "fuente": "miss -> error",
+      "ms": 489
+    }
+  ],
+  "nota": "Las 30 frases de FR-01 y las 10 variantes de FR-03 de FR-01-C ya estaban en la cache (56 filas), asi que la frase nueva se tomo de FR-04 (variantes trampa), que es la que el plan usa para forzar el camino del LLM.",
+  "error_frame_backend": {
+    "type": "error",
+    "message": "No se pudo traducir el texto."
+  }
+}

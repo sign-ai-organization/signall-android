@@ -1,0 +1,130 @@
+{
+  "situacion_llm": {
+    "fingerprint": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.1,
+      "max": 0.2
+    },
+    "cache.exact": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "cache.embed": {
+      "n": 85,
+      "p50": 52.0,
+      "p95": 71.2,
+      "max": 166.3
+    },
+    "cache.similarity": {
+      "n": 85,
+      "p50": 0.1,
+      "p95": 0.1,
+      "max": 9.2
+    },
+    "llm": {
+      "n": 85,
+      "p50": 456.3,
+      "p95": 914.8,
+      "max": 953.2
+    }
+  },
+  "situacion_cache": {
+    "fingerprint": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.1,
+      "max": 0.1
+    },
+    "cache.exact": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    }
+  },
+  "total_llm": {
+    "p50": 692.1,
+    "p95": 1001.0
+  },
+  "total_cache": {
+    "p50": 0.8,
+    "p95": 4.1
+  },
+  "llm_por_longitud": {
+    "corta (<=4 palabras)": {
+      "n": 20,
+      "p50": 396.7,
+      "p95": 459.2
+    },
+    "media (5-8)": {
+      "n": 45,
+      "p50": 557.3,
+      "p95": 739.4
+    },
+    "larga (>=9)": {
+      "n": 20,
+      "p50": 701.2,
+      "p95": 948.7
+    }
+  },
+  "reinicios": [
+    {
+      "rep": 1,
+      "segundos": 23.6,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500,
+      "espera_s": 10
+    },
+    {
+      "rep": 2,
+      "segundos": 22.2,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500,
+      "espera_s": 10
+    },
+    {
+      "rep": 3,
+      "segundos": 21.5,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500,
+      "espera_s": 10
+    },
+    {
+      "rep": 4,
+      "segundos": 18.0,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500,
+      "espera_s": 10
+    },
+    {
+      "rep": 5,
+      "segundos": 23.0,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500,
+      "espera_s": 10
+    }
+  ]
+}

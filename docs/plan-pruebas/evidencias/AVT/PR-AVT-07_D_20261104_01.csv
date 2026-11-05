@@ -1,0 +1,8 @@
+﻿paso;observado;dato
+selector de Personaje;2 opciones: Juan y Pauline;fila 'Personaje' con el valor actual a la derecha
+elegir Juan;"cambio de avatar: pauline -> juan; avatar listo: juan en 3660 ms";"fila Personaje = Juan; prefs character=Juan"
+frase FR-01-029 con Juan;signStart seña 0 y 1, representado;capturas avt07_juan_reproduciendo / _reposo
+elegir Pauline;"cambio de avatar: juan -> pauline; avatar listo: pauline en 2599 ms";"fila Personaje = Pauline; prefs character=Pauline"
+frase FR-01-029 con Pauline;signStart seña 0 y 1, representado;capturas avt07_pauline_reproduciendo / _reposo
+elegir Juan y reabrir en frío;"escena lista (juan); prefs character=Juan; fila Personaje = Juan";captura avt07e_reabierta_juan
+restaurar Pauline;"avatar listo: pauline en 2663 ms; fila Personaje = Pauline";estado inicial restaurado

@@ -1,0 +1,124 @@
+{
+  "AU-03-005": {
+    "audio": "AU-03-005.wav",
+    "audio_ms": 21760,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Cof",
+        "audio_ms": 300,
+        "_t": 5700.8,
+        "_ms_audio_enviado": 5760.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "COUGH",
+        "audio_ms": 960,
+        "_t": 6360.8,
+        "_ms_audio_enviado": 6420.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "COUGH",
+        "audio_ms": 1110,
+        "_t": 7681.0,
+        "_ms_audio_enviado": 7740.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Cof",
+        "audio_ms": 300,
+        "_t": 10740.7,
+        "_ms_audio_enviado": 10800.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Cof Cof",
+        "audio_ms": 960,
+        "_t": 11400.7,
+        "_ms_audio_enviado": 11460.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "Cof Cof",
+        "audio_ms": 930,
+        "_t": 12617.8,
+        "_ms_audio_enviado": 12660.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "COF",
+        "audio_ms": 300,
+        "_t": 15900.9,
+        "_ms_audio_enviado": 15960.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "COUGH COUGH",
+        "audio_ms": 960,
+        "_t": 16651.7,
+        "_ms_audio_enviado": 16710.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "COUGH COUGH",
+        "audio_ms": 1140,
+        "_t": 17975.7,
+        "_ms_audio_enviado": 18030.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "COF",
+        "audio_ms": 300,
+        "_t": 20730.8,
+        "_ms_audio_enviado": 20790.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "COUGH COUGH",
+        "audio_ms": 960,
+        "_t": 21481.7,
+        "_ms_audio_enviado": 21540.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "COUGH COUGH",
+        "audio_ms": 960,
+        "_t": 22336.8,
+        "_ms_audio_enviado": 21760,
+        "_end_enviado": true
+      }
+    ],
+    "t_fin_audio_ms": 21750.1,
+    "t_end_ms": 22050.1,
+    "ms": 22953.2
+  },
+  "AU-03-008": {
+    "audio": "AU-03-008.wav",
+    "audio_ms": 21312,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 5610,
+        "_t": 21945.2,
+        "_ms_audio_enviado": 21312,
+        "_end_enviado": true
+      }
+    ],
+    "t_fin_audio_ms": 21301.0,
+    "t_end_ms": 21601.0,
+    "ms": 22560.5
+  }
+}

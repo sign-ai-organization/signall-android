@@ -1,0 +1,38 @@
+===== KTLINT (app) =====
+> Task :app:runKtlintCheckOverAndroidTestDebugSourceSet NO-SOURCE
+> Task :app:ktlintAndroidTestDebugSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverAndroidTestDemoSourceSet NO-SOURCE
+> Task :app:ktlintAndroidTestDemoSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverAndroidTestReleaseSourceSet NO-SOURCE
+> Task :app:ktlintAndroidTestReleaseSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverAndroidTestSourceSet NO-SOURCE
+> Task :app:ktlintAndroidTestSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverDebugSourceSet NO-SOURCE
+> Task :app:ktlintDebugSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverDemoSourceSet NO-SOURCE
+> Task :app:ktlintDemoSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverReleaseSourceSet NO-SOURCE
+> Task :app:ktlintReleaseSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverTestDebugSourceSet NO-SOURCE
+> Task :app:ktlintTestDebugSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverTestDemoSourceSet NO-SOURCE
+> Task :app:ktlintTestDemoSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverTestFixturesDebugSourceSet NO-SOURCE
+> Task :app:ktlintTestFixturesDebugSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverTestFixturesDemoSourceSet NO-SOURCE
+> Task :app:ktlintTestFixturesDemoSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverTestFixturesReleaseSourceSet NO-SOURCE
+> Task :app:ktlintTestFixturesReleaseSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverTestFixturesSourceSet NO-SOURCE
+> Task :app:ktlintTestFixturesSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverTestReleaseSourceSet NO-SOURCE
+> Task :app:ktlintTestReleaseSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverTestSourceSet NO-SOURCE
+> Task :app:ktlintTestSourceSetCheck SKIPPED
+> Task :app:runKtlintCheckOverKotlinScripts
+> Task :app:ktlintKotlinScriptCheck
+> Task :app:runKtlintCheckOverMainSourceSet
+> Task :app:ktlintMainSourceSetCheck
+> Task :app:ktlintCheck
+BUILD SUCCESSFUL in 8s
+5 actionable tasks: 5 executed

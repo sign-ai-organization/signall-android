@@ -1,0 +1,17 @@
+PR-TRA-02 · Análisis estático · 04/11/2026
+Backend: ../sign-ai-backend, commit c8aa516 + cambios sin commitear en el árbol de trabajo.
+ruff 0.17.1 y mypy 2.4.0 (versiones de requirements-dev.txt) en un venv aparte /tmp/opencode/analisis; configuración del repositorio (pyproject.toml).
+
+COMANDO 1: /tmp/opencode/analisis/bin/ruff check app   (cwd ../sign-ai-backend)
+COMANDO 2: /tmp/opencode/analisis/bin/mypy app        (cwd ../sign-ai-backend, SIN dependencias instaladas)
+COMANDO 3: idem con las dependencias de requirements.txt instaladas salvo sentence-transformers/torch
+
+RESULTADO ruff: 0 advertencias.
+RESULTADO mypy sin dependencias: 0 errores (todos los imports resuelven a Any por ignore_missing_imports).
+RESULTADO mypy con dependencias: 7 errores de tipos, ninguno crítico (ver abajo).
+
+App: ./gradlew ktlintCheck --rerun-tasks en ../sign-ai-android (ktlint de org.jlleitschuh.gradle.ktlint 14.2.0).
+RESULTADO app: BUILD SUCCESSFUL, 0 advertencias.
+
+===== RUFF =====
+All checks passed!

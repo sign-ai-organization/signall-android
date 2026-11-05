@@ -1,0 +1,2722 @@
+{
+  "modelo": "qwen3:4b-instruct",
+  "temperatura": 0.0,
+  "calentamiento": {
+    "glosas": [
+      "HOLA"
+    ],
+    "ms": 199.8
+  },
+  "filas": [
+    {
+      "id": "FR-01-001",
+      "vuelta": 1,
+      "texto": "Hola, buenos días, bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "BUENOS DIAS",
+        "BIENVENIDO"
+      ],
+      "ms": 446.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-001",
+      "vuelta": 2,
+      "texto": "Hola, buenos días, bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "BUENOS DIAS",
+        "BIENVENIDO"
+      ],
+      "ms": 369.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-001",
+      "vuelta": 3,
+      "texto": "Hola, buenos días, bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "BUENOS DIAS",
+        "BIENVENIDO"
+      ],
+      "ms": 377.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-001",
+      "vuelta": 4,
+      "texto": "Hola, buenos días, bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "BUENOS DIAS",
+        "BIENVENIDO"
+      ],
+      "ms": 411.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-001",
+      "vuelta": 5,
+      "texto": "Hola, buenos días, bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "BUENOS DIAS",
+        "BIENVENIDO"
+      ],
+      "ms": 379.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-002",
+      "vuelta": 1,
+      "texto": "Adiós a todos. Buenas noches.",
+      "glosas": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "referencia": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "ms": 401.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-002",
+      "vuelta": 2,
+      "texto": "Adiós a todos. Buenas noches.",
+      "glosas": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "referencia": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "ms": 320.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-002",
+      "vuelta": 3,
+      "texto": "Adiós a todos. Buenas noches.",
+      "glosas": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "referencia": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "ms": 321.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-002",
+      "vuelta": 4,
+      "texto": "Adiós a todos. Buenas noches.",
+      "glosas": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "referencia": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "ms": 331.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-002",
+      "vuelta": 5,
+      "texto": "Adiós a todos. Buenas noches.",
+      "glosas": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "referencia": [
+        "ADIOS",
+        "TODOS",
+        "BUENAS NOCHES"
+      ],
+      "ms": 329.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-003",
+      "vuelta": 1,
+      "texto": "Mi abuelo y mi tío trabajan en familia.",
+      "glosas": [
+        "ABUELO",
+        "TU",
+        "TIO",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "ABUELO",
+        "TIO",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 561.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-003",
+      "vuelta": 2,
+      "texto": "Mi abuelo y mi tío trabajan en familia.",
+      "glosas": [
+        "ABUELO",
+        "TU",
+        "TIO",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "ABUELO",
+        "TIO",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 465.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-003",
+      "vuelta": 3,
+      "texto": "Mi abuelo y mi tío trabajan en familia.",
+      "glosas": [
+        "ABUELO",
+        "TU",
+        "TIO",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "ABUELO",
+        "TIO",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 484.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-003",
+      "vuelta": 4,
+      "texto": "Mi abuelo y mi tío trabajan en familia.",
+      "glosas": [
+        "ABUELO",
+        "TU",
+        "TIO",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "ABUELO",
+        "TIO",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 488.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-003",
+      "vuelta": 5,
+      "texto": "Mi abuelo y mi tío trabajan en familia.",
+      "glosas": [
+        "ABUELO",
+        "TU",
+        "TIO",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "ABUELO",
+        "TIO",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 473.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-004",
+      "vuelta": 1,
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "glosas": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "referencia": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "ms": 594.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-004",
+      "vuelta": 2,
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "glosas": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "referencia": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "ms": 483.0,
+      "error": null
+    },
+    {
+      "id": "FR-01-004",
+      "vuelta": 3,
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "glosas": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "referencia": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "ms": 493.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-004",
+      "vuelta": 4,
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "glosas": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "referencia": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "ms": 486.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-004",
+      "vuelta": 5,
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "glosas": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "referencia": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "ms": 483.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-005",
+      "vuelta": 1,
+      "texto": "Buenas tardes. Hoy me siento más o menos.",
+      "glosas": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "referencia": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "ms": 520.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-005",
+      "vuelta": 2,
+      "texto": "Buenas tardes. Hoy me siento más o menos.",
+      "glosas": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "referencia": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "ms": 406.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-005",
+      "vuelta": 3,
+      "texto": "Buenas tardes. Hoy me siento más o menos.",
+      "glosas": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "referencia": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "ms": 396.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-005",
+      "vuelta": 4,
+      "texto": "Buenas tardes. Hoy me siento más o menos.",
+      "glosas": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "referencia": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "ms": 389.0,
+      "error": null
+    },
+    {
+      "id": "FR-01-005",
+      "vuelta": 5,
+      "texto": "Buenas tardes. Hoy me siento más o menos.",
+      "glosas": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "referencia": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "ms": 390.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-006",
+      "vuelta": 1,
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "referencia": [
+        "GRACIAS",
+        "TODOS",
+        "NIÑO",
+        "NIÑA",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 684.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-006",
+      "vuelta": 2,
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "referencia": [
+        "GRACIAS",
+        "TODOS",
+        "NIÑO",
+        "NIÑA",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 582.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-006",
+      "vuelta": 3,
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "referencia": [
+        "GRACIAS",
+        "TODOS",
+        "NIÑO",
+        "NIÑA",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 554.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-006",
+      "vuelta": 4,
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "referencia": [
+        "GRACIAS",
+        "TODOS",
+        "NIÑO",
+        "NIÑA",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 555.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-006",
+      "vuelta": 5,
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "referencia": [
+        "GRACIAS",
+        "TODOS",
+        "NIÑO",
+        "NIÑA",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 572.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-007",
+      "vuelta": 1,
+      "texto": "¿Tienes hambre?",
+      "glosas": [
+        "TU",
+        "HAMBRE"
+      ],
+      "referencia": [
+        "TU",
+        "HAMBRE"
+      ],
+      "ms": 240.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-007",
+      "vuelta": 2,
+      "texto": "¿Tienes hambre?",
+      "glosas": [
+        "TU",
+        "HAMBRE"
+      ],
+      "referencia": [
+        "TU",
+        "HAMBRE"
+      ],
+      "ms": 177.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-007",
+      "vuelta": 3,
+      "texto": "¿Tienes hambre?",
+      "glosas": [
+        "TU",
+        "HAMBRE"
+      ],
+      "referencia": [
+        "TU",
+        "HAMBRE"
+      ],
+      "ms": 191.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-007",
+      "vuelta": 4,
+      "texto": "¿Tienes hambre?",
+      "glosas": [
+        "TU",
+        "HAMBRE"
+      ],
+      "referencia": [
+        "TU",
+        "HAMBRE"
+      ],
+      "ms": 244.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-007",
+      "vuelta": 5,
+      "texto": "¿Tienes hambre?",
+      "glosas": [
+        "TU",
+        "HAMBRE"
+      ],
+      "referencia": [
+        "TU",
+        "HAMBRE"
+      ],
+      "ms": 188.0,
+      "error": null
+    },
+    {
+      "id": "FR-01-008",
+      "vuelta": 1,
+      "texto": "¿Estás bien?",
+      "glosas": [
+        "BIEN"
+      ],
+      "referencia": [
+        "TU",
+        "BIEN"
+      ],
+      "ms": 237.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-008",
+      "vuelta": 2,
+      "texto": "¿Estás bien?",
+      "glosas": [
+        "BIEN"
+      ],
+      "referencia": [
+        "TU",
+        "BIEN"
+      ],
+      "ms": 184.0,
+      "error": null
+    },
+    {
+      "id": "FR-01-008",
+      "vuelta": 3,
+      "texto": "¿Estás bien?",
+      "glosas": [
+        "BIEN"
+      ],
+      "referencia": [
+        "TU",
+        "BIEN"
+      ],
+      "ms": 194.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-008",
+      "vuelta": 4,
+      "texto": "¿Estás bien?",
+      "glosas": [
+        "BIEN"
+      ],
+      "referencia": [
+        "TU",
+        "BIEN"
+      ],
+      "ms": 207.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-008",
+      "vuelta": 5,
+      "texto": "¿Estás bien?",
+      "glosas": [
+        "BIEN"
+      ],
+      "referencia": [
+        "TU",
+        "BIEN"
+      ],
+      "ms": 212.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-009",
+      "vuelta": 1,
+      "texto": "¿Ustedes trabajan en familia?",
+      "glosas": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 462.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-009",
+      "vuelta": 2,
+      "texto": "¿Ustedes trabajan en familia?",
+      "glosas": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 337.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-009",
+      "vuelta": 3,
+      "texto": "¿Ustedes trabajan en familia?",
+      "glosas": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 324.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-009",
+      "vuelta": 4,
+      "texto": "¿Ustedes trabajan en familia?",
+      "glosas": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 334.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-009",
+      "vuelta": 5,
+      "texto": "¿Ustedes trabajan en familia?",
+      "glosas": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "ms": 378.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-010",
+      "vuelta": 1,
+      "texto": "Tu hermano está triste. ¿Se siente mal?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "MAL"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 758.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-010",
+      "vuelta": 2,
+      "texto": "Tu hermano está triste. ¿Se siente mal?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "MAL"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 575.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-010",
+      "vuelta": 3,
+      "texto": "Tu hermano está triste. ¿Se siente mal?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "MAL"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 579.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-010",
+      "vuelta": 4,
+      "texto": "Tu hermano está triste. ¿Se siente mal?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "MAL"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 533.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-010",
+      "vuelta": 5,
+      "texto": "Tu hermano está triste. ¿Se siente mal?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "MAL"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "TRISTE",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 744.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-011",
+      "vuelta": 1,
+      "texto": "Perdón. ¿Estás triste?",
+      "glosas": [
+        "PERDON",
+        "TRISTE"
+      ],
+      "referencia": [
+        "PERDON",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 437.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-011",
+      "vuelta": 2,
+      "texto": "Perdón. ¿Estás triste?",
+      "glosas": [
+        "PERDON",
+        "TRISTE"
+      ],
+      "referencia": [
+        "PERDON",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 531.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-011",
+      "vuelta": 3,
+      "texto": "Perdón. ¿Estás triste?",
+      "glosas": [
+        "PERDON",
+        "TRISTE"
+      ],
+      "referencia": [
+        "PERDON",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 279.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-011",
+      "vuelta": 4,
+      "texto": "Perdón. ¿Estás triste?",
+      "glosas": [
+        "PERDON",
+        "TRISTE"
+      ],
+      "referencia": [
+        "PERDON",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 512.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-011",
+      "vuelta": 5,
+      "texto": "Perdón. ¿Estás triste?",
+      "glosas": [
+        "PERDON",
+        "TRISTE"
+      ],
+      "referencia": [
+        "PERDON",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 309.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-012",
+      "vuelta": 1,
+      "texto": "¿Tu hermano está aburrido?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "ms": 701.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-012",
+      "vuelta": 2,
+      "texto": "¿Tu hermano está aburrido?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "ms": 640.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-012",
+      "vuelta": 3,
+      "texto": "¿Tu hermano está aburrido?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "ms": 559.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-012",
+      "vuelta": 4,
+      "texto": "¿Tu hermano está aburrido?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "ms": 393.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-012",
+      "vuelta": 5,
+      "texto": "¿Tu hermano está aburrido?",
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "ms": 561.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-013",
+      "vuelta": 1,
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "glosas": [
+        "HOLA",
+        "COMO ESTAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "COMO ESTAS",
+        "COMO",
+        "TU",
+        "NOMBRE"
+      ],
+      "ms": 710.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-013",
+      "vuelta": 2,
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "glosas": [
+        "HOLA",
+        "COMO ESTAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "COMO ESTAS",
+        "COMO",
+        "TU",
+        "NOMBRE"
+      ],
+      "ms": 592.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-013",
+      "vuelta": 3,
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "glosas": [
+        "HOLA",
+        "COMO ESTAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "COMO ESTAS",
+        "COMO",
+        "TU",
+        "NOMBRE"
+      ],
+      "ms": 405.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-013",
+      "vuelta": 4,
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "glosas": [
+        "HOLA",
+        "COMO ESTAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "COMO ESTAS",
+        "COMO",
+        "TU",
+        "NOMBRE"
+      ],
+      "ms": 662.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-013",
+      "vuelta": 5,
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "glosas": [
+        "HOLA",
+        "COMO ESTAS"
+      ],
+      "referencia": [
+        "HOLA",
+        "COMO ESTAS",
+        "COMO",
+        "TU",
+        "NOMBRE"
+      ],
+      "ms": 428.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-014",
+      "vuelta": 1,
+      "texto": "¿Dónde vive tu familia?",
+      "glosas": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "referencia": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "ms": 413.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-014",
+      "vuelta": 2,
+      "texto": "¿Dónde vive tu familia?",
+      "glosas": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "referencia": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "ms": 320.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-014",
+      "vuelta": 3,
+      "texto": "¿Dónde vive tu familia?",
+      "glosas": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "referencia": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "ms": 324.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-014",
+      "vuelta": 4,
+      "texto": "¿Dónde vive tu familia?",
+      "glosas": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "referencia": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "ms": 332.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-014",
+      "vuelta": 5,
+      "texto": "¿Dónde vive tu familia?",
+      "glosas": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "referencia": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "ms": 444.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-015",
+      "vuelta": 1,
+      "texto": "La mujer es juiciosa. ¿Quién es el hombre?",
+      "glosas": [
+        "MUJER",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "referencia": [
+        "MUJER",
+        "JUCIOSO",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "ms": 642.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-015",
+      "vuelta": 2,
+      "texto": "La mujer es juiciosa. ¿Quién es el hombre?",
+      "glosas": [
+        "MUJER",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "referencia": [
+        "MUJER",
+        "JUCIOSO",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "ms": 523.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-015",
+      "vuelta": 3,
+      "texto": "La mujer es juiciosa. ¿Quién es el hombre?",
+      "glosas": [
+        "MUJER",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "referencia": [
+        "MUJER",
+        "JUCIOSO",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "ms": 487.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-015",
+      "vuelta": 4,
+      "texto": "La mujer es juiciosa. ¿Quién es el hombre?",
+      "glosas": [
+        "MUJER",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "referencia": [
+        "MUJER",
+        "JUCIOSO",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "ms": 433.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-015",
+      "vuelta": 5,
+      "texto": "La mujer es juiciosa. ¿Quién es el hombre?",
+      "glosas": [
+        "MUJER",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "referencia": [
+        "MUJER",
+        "JUCIOSO",
+        "QUIEN",
+        "HOMBRE"
+      ],
+      "ms": 438.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-016",
+      "vuelta": 1,
+      "texto": "¿Por qué estás triste?",
+      "glosas": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "referencia": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 328.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-016",
+      "vuelta": 2,
+      "texto": "¿Por qué estás triste?",
+      "glosas": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "referencia": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 238.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-016",
+      "vuelta": 3,
+      "texto": "¿Por qué estás triste?",
+      "glosas": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "referencia": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 238.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-016",
+      "vuelta": 4,
+      "texto": "¿Por qué estás triste?",
+      "glosas": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "referencia": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 234.0,
+      "error": null
+    },
+    {
+      "id": "FR-01-016",
+      "vuelta": 5,
+      "texto": "¿Por qué estás triste?",
+      "glosas": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "referencia": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "ms": 234.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-017",
+      "vuelta": 1,
+      "texto": "¿Cuándo comen ustedes?",
+      "glosas": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "referencia": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "ms": 358.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-017",
+      "vuelta": 2,
+      "texto": "¿Cuándo comen ustedes?",
+      "glosas": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "referencia": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "ms": 276.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-017",
+      "vuelta": 3,
+      "texto": "¿Cuándo comen ustedes?",
+      "glosas": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "referencia": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "ms": 278.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-017",
+      "vuelta": 4,
+      "texto": "¿Cuándo comen ustedes?",
+      "glosas": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "referencia": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "ms": 285.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-017",
+      "vuelta": 5,
+      "texto": "¿Cuándo comen ustedes?",
+      "glosas": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "referencia": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "ms": 283.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-018",
+      "vuelta": 1,
+      "texto": "Las personas son diferentes. ¿Qué seña usas tú?",
+      "glosas": [
+        "PERSONAS",
+        "DIFERENTE",
+        "TU"
+      ],
+      "referencia": [
+        "PERSONAS",
+        "DIFERENTE",
+        "QUE",
+        "SEÑA",
+        "TU"
+      ],
+      "ms": 471.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-018",
+      "vuelta": 2,
+      "texto": "Las personas son diferentes. ¿Qué seña usas tú?",
+      "glosas": [
+        "PERSONAS",
+        "DIFERENTE",
+        "TU"
+      ],
+      "referencia": [
+        "PERSONAS",
+        "DIFERENTE",
+        "QUE",
+        "SEÑA",
+        "TU"
+      ],
+      "ms": 345.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-018",
+      "vuelta": 3,
+      "texto": "Las personas son diferentes. ¿Qué seña usas tú?",
+      "glosas": [
+        "PERSONAS",
+        "DIFERENTE",
+        "TU"
+      ],
+      "referencia": [
+        "PERSONAS",
+        "DIFERENTE",
+        "QUE",
+        "SEÑA",
+        "TU"
+      ],
+      "ms": 346.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-018",
+      "vuelta": 4,
+      "texto": "Las personas son diferentes. ¿Qué seña usas tú?",
+      "glosas": [
+        "PERSONAS",
+        "DIFERENTE",
+        "TU"
+      ],
+      "referencia": [
+        "PERSONAS",
+        "DIFERENTE",
+        "QUE",
+        "SEÑA",
+        "TU"
+      ],
+      "ms": 349.0,
+      "error": null
+    },
+    {
+      "id": "FR-01-018",
+      "vuelta": 5,
+      "texto": "Las personas son diferentes. ¿Qué seña usas tú?",
+      "glosas": [
+        "PERSONAS",
+        "DIFERENTE",
+        "TU"
+      ],
+      "referencia": [
+        "PERSONAS",
+        "DIFERENTE",
+        "QUE",
+        "SEÑA",
+        "TU"
+      ],
+      "ms": 368.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-019",
+      "vuelta": 1,
+      "texto": "Yo nunca como mucho.",
+      "glosas": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "referencia": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "ms": 345.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-019",
+      "vuelta": 2,
+      "texto": "Yo nunca como mucho.",
+      "glosas": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "referencia": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "ms": 283.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-019",
+      "vuelta": 3,
+      "texto": "Yo nunca como mucho.",
+      "glosas": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "referencia": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "ms": 294.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-019",
+      "vuelta": 4,
+      "texto": "Yo nunca como mucho.",
+      "glosas": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "referencia": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "ms": 287.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-019",
+      "vuelta": 5,
+      "texto": "Yo nunca como mucho.",
+      "glosas": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "referencia": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "ms": 295.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-020",
+      "vuelta": 1,
+      "texto": "Mi abuelo nunca trabaja.",
+      "glosas": [
+        "YO",
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "ms": 490.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-020",
+      "vuelta": 2,
+      "texto": "Mi abuelo nunca trabaja.",
+      "glosas": [
+        "YO",
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "ms": 351.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-020",
+      "vuelta": 3,
+      "texto": "Mi abuelo nunca trabaja.",
+      "glosas": [
+        "YO",
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "ms": 348.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-020",
+      "vuelta": 4,
+      "texto": "Mi abuelo nunca trabaja.",
+      "glosas": [
+        "YO",
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "ms": 346.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-020",
+      "vuelta": 5,
+      "texto": "Mi abuelo nunca trabaja.",
+      "glosas": [
+        "YO",
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "ABUELO",
+        "NUNCA",
+        "TRABAJAR"
+      ],
+      "ms": 344.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-021",
+      "vuelta": 1,
+      "texto": "Mi tío nunca está aburrido.",
+      "glosas": [
+        "TU",
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "ms": 450.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-021",
+      "vuelta": 2,
+      "texto": "Mi tío nunca está aburrido.",
+      "glosas": [
+        "TU",
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "ms": 402.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-021",
+      "vuelta": 3,
+      "texto": "Mi tío nunca está aburrido.",
+      "glosas": [
+        "TU",
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "ms": 382.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-021",
+      "vuelta": 4,
+      "texto": "Mi tío nunca está aburrido.",
+      "glosas": [
+        "TU",
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "ms": 373.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-021",
+      "vuelta": 5,
+      "texto": "Mi tío nunca está aburrido.",
+      "glosas": [
+        "TU",
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "referencia": [
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "ms": 371.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-022",
+      "vuelta": 1,
+      "texto": "Ustedes nunca se sienten mal.",
+      "glosas": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "referencia": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 386.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-022",
+      "vuelta": 2,
+      "texto": "Ustedes nunca se sienten mal.",
+      "glosas": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "referencia": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 313.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-022",
+      "vuelta": 3,
+      "texto": "Ustedes nunca se sienten mal.",
+      "glosas": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "referencia": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 308.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-022",
+      "vuelta": 4,
+      "texto": "Ustedes nunca se sienten mal.",
+      "glosas": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "referencia": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 297.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-022",
+      "vuelta": 5,
+      "texto": "Ustedes nunca se sienten mal.",
+      "glosas": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "referencia": [
+        "USTEDES",
+        "NUNCA",
+        "SENTIR",
+        "MAL"
+      ],
+      "ms": 307.0,
+      "error": null
+    },
+    {
+      "id": "FR-01-023",
+      "vuelta": 1,
+      "texto": "Perdón. Mi hermano nunca está contento.",
+      "glosas": [
+        "PERDON",
+        "TU",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "referencia": [
+        "PERDON",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "ms": 549.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-023",
+      "vuelta": 2,
+      "texto": "Perdón. Mi hermano nunca está contento.",
+      "glosas": [
+        "PERDON",
+        "TU",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "referencia": [
+        "PERDON",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "ms": 455.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-023",
+      "vuelta": 3,
+      "texto": "Perdón. Mi hermano nunca está contento.",
+      "glosas": [
+        "PERDON",
+        "TU",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "referencia": [
+        "PERDON",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "ms": 446.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-023",
+      "vuelta": 4,
+      "texto": "Perdón. Mi hermano nunca está contento.",
+      "glosas": [
+        "PERDON",
+        "TU",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "referencia": [
+        "PERDON",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "ms": 443.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-023",
+      "vuelta": 5,
+      "texto": "Perdón. Mi hermano nunca está contento.",
+      "glosas": [
+        "PERDON",
+        "TU",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "referencia": [
+        "PERDON",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "ms": 445.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-024",
+      "vuelta": 1,
+      "texto": "Se siente muy bien. La niña nunca está triste.",
+      "glosas": [
+        "YO",
+        "SENTIR",
+        "NIÑA",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "referencia": [
+        "NIÑA",
+        "SENTIR",
+        "MUCHO",
+        "BIEN",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "ms": 659.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-024",
+      "vuelta": 2,
+      "texto": "Se siente muy bien. La niña nunca está triste.",
+      "glosas": [
+        "YO",
+        "SENTIR",
+        "NIÑA",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "referencia": [
+        "NIÑA",
+        "SENTIR",
+        "MUCHO",
+        "BIEN",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "ms": 552.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-024",
+      "vuelta": 3,
+      "texto": "Se siente muy bien. La niña nunca está triste.",
+      "glosas": [
+        "YO",
+        "SENTIR",
+        "NIÑA",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "referencia": [
+        "NIÑA",
+        "SENTIR",
+        "MUCHO",
+        "BIEN",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "ms": 533.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-024",
+      "vuelta": 4,
+      "texto": "Se siente muy bien. La niña nunca está triste.",
+      "glosas": [
+        "YO",
+        "SENTIR",
+        "NIÑA",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "referencia": [
+        "NIÑA",
+        "SENTIR",
+        "MUCHO",
+        "BIEN",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "ms": 530.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-024",
+      "vuelta": 5,
+      "texto": "Se siente muy bien. La niña nunca está triste.",
+      "glosas": [
+        "YO",
+        "SENTIR",
+        "NIÑA",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "referencia": [
+        "NIÑA",
+        "SENTIR",
+        "MUCHO",
+        "BIEN",
+        "NUNCA",
+        "TRISTE"
+      ],
+      "ms": 562.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-025",
+      "vuelta": 1,
+      "texto": "Por favor, come poco.",
+      "glosas": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 329.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-025",
+      "vuelta": 2,
+      "texto": "Por favor, come poco.",
+      "glosas": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 267.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-025",
+      "vuelta": 3,
+      "texto": "Por favor, come poco.",
+      "glosas": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 255.8,
+      "error": null
+    },
+    {
+      "id": "FR-01-025",
+      "vuelta": 4,
+      "texto": "Por favor, come poco.",
+      "glosas": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 254.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-025",
+      "vuelta": 5,
+      "texto": "Por favor, come poco.",
+      "glosas": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 268.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-026",
+      "vuelta": 1,
+      "texto": "Con permiso. Déjame pasar, por favor.",
+      "glosas": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "referencia": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "ms": 510.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-026",
+      "vuelta": 2,
+      "texto": "Con permiso. Déjame pasar, por favor.",
+      "glosas": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "referencia": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "ms": 382.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-026",
+      "vuelta": 3,
+      "texto": "Con permiso. Déjame pasar, por favor.",
+      "glosas": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "referencia": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "ms": 372.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-026",
+      "vuelta": 4,
+      "texto": "Con permiso. Déjame pasar, por favor.",
+      "glosas": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "referencia": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "ms": 372.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-026",
+      "vuelta": 5,
+      "texto": "Con permiso. Déjame pasar, por favor.",
+      "glosas": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "referencia": [
+        "PERMISO",
+        "POR FAVOR"
+      ],
+      "ms": 374.3,
+      "error": null
+    },
+    {
+      "id": "FR-01-027",
+      "vuelta": 1,
+      "texto": "Niños, trabajen todos.",
+      "glosas": [
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "NIÑO",
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "ms": 387.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-027",
+      "vuelta": 2,
+      "texto": "Niños, trabajen todos.",
+      "glosas": [
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "NIÑO",
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "ms": 314.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-027",
+      "vuelta": 3,
+      "texto": "Niños, trabajen todos.",
+      "glosas": [
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "NIÑO",
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "ms": 307.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-027",
+      "vuelta": 4,
+      "texto": "Niños, trabajen todos.",
+      "glosas": [
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "NIÑO",
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "ms": 299.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-027",
+      "vuelta": 5,
+      "texto": "Niños, trabajen todos.",
+      "glosas": [
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "referencia": [
+        "NIÑO",
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "ms": 301.4,
+      "error": null
+    },
+    {
+      "id": "FR-01-028",
+      "vuelta": 1,
+      "texto": "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "glosas": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "referencia": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "ms": 580.2,
+      "error": null
+    },
+    {
+      "id": "FR-01-028",
+      "vuelta": 2,
+      "texto": "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "glosas": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "referencia": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "ms": 451.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-028",
+      "vuelta": 3,
+      "texto": "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "glosas": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "referencia": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "ms": 459.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-028",
+      "vuelta": 4,
+      "texto": "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "glosas": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "referencia": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "ms": 435.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-028",
+      "vuelta": 5,
+      "texto": "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "glosas": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "referencia": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "ms": 436.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-029",
+      "vuelta": 1,
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "HOLA",
+        "FAMILIA",
+        "BIENVENIDO"
+      ],
+      "ms": 508.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-029",
+      "vuelta": 2,
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "HOLA",
+        "FAMILIA",
+        "BIENVENIDO"
+      ],
+      "ms": 402.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-029",
+      "vuelta": 3,
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "HOLA",
+        "FAMILIA",
+        "BIENVENIDO"
+      ],
+      "ms": 396.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-029",
+      "vuelta": 4,
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "HOLA",
+        "FAMILIA",
+        "BIENVENIDO"
+      ],
+      "ms": 397.1,
+      "error": null
+    },
+    {
+      "id": "FR-01-029",
+      "vuelta": 5,
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "glosas": [
+        "HOLA",
+        "FAMILIA"
+      ],
+      "referencia": [
+        "HOLA",
+        "FAMILIA",
+        "BIENVENIDO"
+      ],
+      "ms": 403.5,
+      "error": null
+    },
+    {
+      "id": "FR-01-030",
+      "vuelta": 1,
+      "texto": "Tío, come mucho. Hermano, come poco.",
+      "glosas": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 583.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-030",
+      "vuelta": 2,
+      "texto": "Tío, come mucho. Hermano, come poco.",
+      "glosas": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 468.6,
+      "error": null
+    },
+    {
+      "id": "FR-01-030",
+      "vuelta": 3,
+      "texto": "Tío, come mucho. Hermano, come poco.",
+      "glosas": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 480.9,
+      "error": null
+    },
+    {
+      "id": "FR-01-030",
+      "vuelta": 4,
+      "texto": "Tío, come mucho. Hermano, come poco.",
+      "glosas": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 467.7,
+      "error": null
+    },
+    {
+      "id": "FR-01-030",
+      "vuelta": 5,
+      "texto": "Tío, come mucho. Hermano, come poco.",
+      "glosas": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "referencia": [
+        "TIO",
+        "COMER",
+        "MUCHO",
+        "HERMANO",
+        "COMER",
+        "POCO"
+      ],
+      "ms": 492.3,
+      "error": null
+    }
+  ]
+}

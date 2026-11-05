@@ -1,0 +1,71 @@
+﻿nivel;configuracion;sesion;frase;audio;audio_ms;transcrito;esperado;wer;glosas;latencia_post_audio_ms;total_ms;errores
+1;1 sesión(es), caché caliente;0;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;233.3;4691.7;0
+1;1 sesión(es), caché caliente;0;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;279.2;5484.6;0
+1;1 sesión(es), caché caliente;0;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;233.9;2922.2;0
+1;1 sesión(es), caché caliente;0;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TRISTE;220.6;4209.9;0
+1;1 sesión(es), caché caliente;0;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;256.9;4267.2;0
+1;1 sesión(es), caché caliente;0;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;245.4;3850.6;0
+1;1 sesión(es), caché caliente;0;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;205.6;3853.8;0
+1;1 sesión(es), caché caliente;0;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON TU HERMANO NUNCA CONTENTO;249.3;5369.6;0
+1;1 sesión(es), caché caliente;0;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;218.9;3867.2;0
+1;1 sesión(es), caché caliente;0;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;PERMISO POR FAVOR;262.2;5318.4;0
+2;2 sesión(es), caché caliente;0;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;234.4;4692.7;0
+2;2 sesión(es), caché caliente;0;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;456.6;5662.0;0
+2;2 sesión(es), caché caliente;0;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;231.4;2919.7;0
+2;2 sesión(es), caché caliente;0;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TRISTE;222.4;4211.6;0
+2;2 sesión(es), caché caliente;0;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;256.2;4266.5;0
+2;2 sesión(es), caché caliente;0;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;244.5;3849.8;0
+2;2 sesión(es), caché caliente;0;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;213.0;3861.4;0
+2;2 sesión(es), caché caliente;0;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON TU HERMANO NUNCA CONTENTO;251.1;5371.3;0
+2;2 sesión(es), caché caliente;0;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;288.4;3936.7;0
+2;2 sesión(es), caché caliente;0;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;PERMISO POR FAVOR;264.0;5320.6;0
+2;2 sesión(es), caché caliente;1;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;279.3;5484.6;0
+2;2 sesión(es), caché caliente;1;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;219.3;2907.5;0
+2;2 sesión(es), caché caliente;1;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TRISTE;223.8;4213.4;0
+2;2 sesión(es), caché caliente;1;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;258.3;4268.5;0
+2;2 sesión(es), caché caliente;1;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;420.2;4025.5;0
+2;2 sesión(es), caché caliente;1;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;349.9;3998.3;0
+2;2 sesión(es), caché caliente;1;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON TU HERMANO NUNCA CONTENTO;255.5;5375.8;0
+2;2 sesión(es), caché caliente;1;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;218.6;3867.0;0
+2;2 sesión(es), caché caliente;1;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;PERMISO POR FAVOR;265.1;5321.7;0
+2;2 sesión(es), caché caliente;1;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;422.6;4880.9;0
+3;3 sesión(es), caché caliente;0;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;263.9;4722.1;0
+3;3 sesión(es), caché caliente;0;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;349.8;5555.1;0
+3;3 sesión(es), caché caliente;0;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;223.5;2911.8;0
+3;3 sesión(es), caché caliente;0;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TRISTE;253.3;4242.7;0
+3;3 sesión(es), caché caliente;0;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;449.8;4460.1;0
+3;3 sesión(es), caché caliente;0;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;243.1;3848.6;0
+3;3 sesión(es), caché caliente;0;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;341.3;3989.6;0
+3;3 sesión(es), caché caliente;0;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON TU HERMANO NUNCA CONTENTO;392.0;5512.4;0
+3;3 sesión(es), caché caliente;0;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;382.7;4031.5;0
+3;3 sesión(es), caché caliente;0;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;PERMISO POR FAVOR;439.9;5498.1;0
+3;3 sesión(es), caché caliente;1;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;268.4;5474.2;0
+3;3 sesión(es), caché caliente;1;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;254.7;2943.0;0
+3;3 sesión(es), caché caliente;1;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TRISTE;247.4;4236.7;0
+3;3 sesión(es), caché caliente;1;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;263.3;4275.1;0
+3;3 sesión(es), caché caliente;1;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;250.7;3856.4;0
+3;3 sesión(es), caché caliente;1;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;241.9;3890.2;0
+3;3 sesión(es), caché caliente;1;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON TU HERMANO NUNCA CONTENTO;256.5;5376.8;0
+3;3 sesión(es), caché caliente;1;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;427.1;4076.6;0
+3;3 sesión(es), caché caliente;1;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;PERMISO POR FAVOR;371.1;5427.7;0
+3;3 sesión(es), caché caliente;1;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;449.0;4907.8;0
+3;3 sesión(es), caché caliente;2;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;493.9;3182.5;0
+3;3 sesión(es), caché caliente;2;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TRISTE;488.1;4477.4;0
+3;3 sesión(es), caché caliente;2;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;486.9;4497.1;0
+3;3 sesión(es), caché caliente;2;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;243.8;3850.7;0
+3;3 sesión(es), caché caliente;2;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;391.1;4039.5;0
+3;3 sesión(es), caché caliente;2;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON TU HERMANO NUNCA CONTENTO;261.6;5382.0;0
+3;3 sesión(es), caché caliente;2;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;423.3;4071.8;0
+3;3 sesión(es), caché caliente;2;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;PERMISO POR FAVOR;410.3;5467.8;0
+3;3 sesión(es), caché caliente;2;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;379.3;4837.6;0
+3;3 sesión(es), caché caliente;2;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;315.0;5520.3;0
+1;1 sesión, caché caliente (repetición);0;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;229.2;4687.5;0
+1;1 sesión, caché caliente (repetición);0;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;276.4;5481.7;0
+1;1 sesión, caché caliente (repetición);0;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;230.8;2919.1;0
+1;1 sesión, caché caliente (repetición);0;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TRISTE;220.3;4209.7;0
+1;1 sesión, caché caliente (repetición);0;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;254.7;4264.9;0
+1;1 sesión, caché caliente (repetición);0;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;252.9;3858.2;0
+1;1 sesión, caché caliente (repetición);0;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;217.4;3865.7;0
+1;1 sesión, caché caliente (repetición);0;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON TU HERMANO NUNCA CONTENTO;252.7;5373.0;0
+1;1 sesión, caché caliente (repetición);0;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;217.8;3866.1;0
+1;1 sesión, caché caliente (repetición);0;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;PERMISO POR FAVOR;259.5;5315.8;0

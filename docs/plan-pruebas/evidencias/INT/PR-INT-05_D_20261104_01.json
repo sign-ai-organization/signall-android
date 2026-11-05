@@ -1,0 +1,493 @@
+{
+  "encargo": {
+    "red_inicial": {
+      "avion": "0",
+      "wifi": "1",
+      "reverse": "UsbFfs tcp:8080 tcp:8080",
+      "internet": "sí"
+    },
+    "casos": [
+      {
+        "caso": "sin servidor (sin adb reverse)",
+        "red": {
+          "avion": "0",
+          "wifi": "1",
+          "reverse": "",
+          "internet": "sí"
+        },
+        "ms_arranque": 15302,
+        "escena": [
+          "         1793847338.351 22130 22130 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2826 ms @681"
+        ],
+        "panel_abierta": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "9:55 PM",
+            "97",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "pixeles": {
+          "media": 64.1,
+          "desvio": 65.2,
+          "png": "/tmp/opencode/pruebas/shots/int05_01_sin_servidor_abierta.png"
+        },
+        "escrita": {
+          "campo_antes": "Hola, buenos días, bienvenidos.",
+          "campo_despues": "Hola, buenos días, bienvenidos.",
+          "panel": {
+            "indicador": "Desconectado",
+            "campo": "Hola, buenos días, bienvenidos.",
+            "botones": {
+              "Entrada por voz": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Historial reciente": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Traducir": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Modo en vivo": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Abrir Conversación": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Abrir Ajustes": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              }
+            },
+            "textos": [
+              "9:56 PM",
+              "97",
+              "Desconectado",
+              "Hola, buenos días, bienvenidos.",
+              "Traducir",
+              "TR"
+            ]
+          },
+          "ms": 21534,
+          "png": "/tmp/opencode/pruebas/shots/int05_tras_enviar.png"
+        },
+        "mic": {
+          "panel": {
+            "indicador": "Desconectado",
+            "campo": "Hola, buenos días, bienvenidos.",
+            "botones": {
+              "Entrada por voz": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Historial reciente": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Traducir": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Modo en vivo": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Abrir Conversación": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Abrir Ajustes": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              }
+            },
+            "textos": [
+              "9:56 PM",
+              "97",
+              "Desconectado",
+              "Hola, buenos días, bienvenidos.",
+              "Traducir",
+              "TR"
+            ]
+          },
+          "png": "/tmp/opencode/pruebas/shots/int05_tras_mic.png"
+        }
+      },
+      {
+        "caso": "sin internet (modo avión)",
+        "red": {
+          "avion": "1",
+          "wifi": "3",
+          "reverse": "UsbFfs tcp:8080 tcp:8080",
+          "internet": "no"
+        },
+        "ms_arranque": 17639,
+        "escena": [
+          "         1793847338.351 22130 22130 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2826 ms @681",
+          "         1793847395.658 22965 22965 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 3166 ms @681"
+        ],
+        "panel_abierta": {
+          "indicador": "Inactivo",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "9:56 PM",
+            "97",
+            "Inactivo",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "pixeles": {
+          "media": 64.1,
+          "desvio": 65.2,
+          "png": "/tmp/opencode/pruebas/shots/int05_02_sin_internet_abierta.png"
+        },
+        "escrita": {
+          "campo_antes": "Hola, buenos días, bienvenidos.",
+          "campo_despues": "",
+          "panel": {
+            "indicador": "Inactivo",
+            "campo": "",
+            "botones": {
+              "Entrada por voz": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Historial reciente": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Traducir": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Modo en vivo": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Abrir Conversación": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Abrir Ajustes": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              }
+            },
+            "textos": [
+              "9:57 PM",
+              "97",
+              "Inactivo",
+              "Repetir",
+              "Escribe una frase...",
+              "Traducir",
+              "TR"
+            ]
+          },
+          "ms": 21378,
+          "png": "/tmp/opencode/pruebas/shots/int05_tras_enviar.png"
+        },
+        "mic": {
+          "panel": {
+            "indicador": "Grabando",
+            "campo": "",
+            "botones": {
+              "Entrada por voz": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Historial reciente": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Traducir": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Modo en vivo": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Abrir Conversación": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              },
+              "Abrir Ajustes": {
+                "enabled": true,
+                "visible": true,
+                "checked": false
+              }
+            },
+            "textos": [
+              "9:57 PM",
+              "97",
+              "Grabando",
+              "Repetir",
+              "Dictando...",
+              "Traducir",
+              "TR"
+            ]
+          },
+          "png": "/tmp/opencode/pruebas/shots/int05_tras_mic.png"
+        },
+        "cmd": ""
+      }
+    ],
+    "reconexion_sin_servidor_ms": 4341,
+    "panel_reconectado": {
+      "indicador": "Inactivo",
+      "campo": "Hola, buenos días, bienvenidos.",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "9:56 PM",
+        "97",
+        "Inactivo",
+        "Hola, buenos días, bienvenidos.",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "red_final": {
+      "avion": "0",
+      "wifi": "1",
+      "reverse": "UsbFfs tcp:8080 tcp:8080",
+      "internet": "sí"
+    }
+  },
+  "sin_red_ni_cache": {
+    "red": {
+      "avion": "1",
+      "internet": ""
+    },
+    "borrado": "",
+    "panel": {
+      "indicador": "Desconectado",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "10:00 PM",
+        "97",
+        "Desconectado",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "pixeles": {
+      "media": 15.0,
+      "desvio": 2.4,
+      "png": "/tmp/opencode/pruebas/shots/int05c_sin_red_ni_cache.png"
+    },
+    "escena": [],
+    "red_final": {
+      "avion": "0",
+      "reverse": "UsbFfs tcp:8080 tcp:8080"
+    },
+    "panel_final": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "10:00 PM",
+        "97",
+        "Inactivo",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "escena_final": [
+      "1793847627.479 25185 25185 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2780 ms @681"
+    ]
+  }
+}

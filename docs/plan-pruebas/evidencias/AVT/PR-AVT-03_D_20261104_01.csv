@@ -1,0 +1,5 @@
+﻿orden;turn;frase;glosas;senas_que_arrancaron;senas_que_terminaron;llego_a_representado;ms_representado;ultima_sena_cortada_ms
+1;51;FR-01-006;GRACIAS TODOS COMER CON GUSTO;4;3;no;;
+2;52;FR-01-013;HOLA COMO ESTAS COMO TU;3;2;no;;
+3;53;FR-01-024;BIEN NIÑA NUNCA TRISTE;3;3;si;7654;
+4;54;Repetir de FR-01-024;BIEN NIÑA NUNCA TRISTE;4;4;si;10539;

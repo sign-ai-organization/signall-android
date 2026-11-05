@@ -65,3 +65,7 @@ env
 # versión de Python (cpython-314) y de la máquina, no del proyecto.
 __pycache__/
 *.pyc
+
+# Archivos de bloqueo de LibreOffice: los crea al abrir un .xlsx y se van solos.
+# No son datos, y el nombre lleva el de la máquina.
+.~lock.*#

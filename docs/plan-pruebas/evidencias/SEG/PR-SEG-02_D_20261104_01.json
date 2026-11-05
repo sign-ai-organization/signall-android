@@ -1,0 +1,31 @@
+{
+  "con": {
+    "config": {
+      "llm_model": "qwen3:4b-instruct",
+      "llm_base_url": "http://***/v1",
+      "semantic_cache_preload": true,
+      "semantic_cache_threshold": 0.05,
+      "sentence_segmenter_enabled": true,
+      "stt_ws_url": "ws://***/ws/transcribe"
+    },
+    "cache": 43,
+    "prueba_dos_oraciones": [
+      "cache",
+      "cache"
+    ]
+  },
+  "sin": {
+    "config": {
+      "llm_model": "qwen3:4b-instruct",
+      "llm_base_url": "http://***/v1",
+      "semantic_cache_preload": true,
+      "semantic_cache_threshold": 0.05,
+      "sentence_segmenter_enabled": false,
+      "stt_ws_url": "ws://***/ws/transcribe"
+    },
+    "cache": 38,
+    "prueba_dos_oraciones": [
+      "cache"
+    ]
+  }
+}

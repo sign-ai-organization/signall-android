@@ -1,0 +1,35 @@
+{
+  "catalogo_en_memoria": 50,
+  "por_tipo": {
+    "Real": {
+      "n": 50,
+      "ok": 50
+    },
+    "Inexistente": {
+      "n": 10,
+      "ok": 10
+    },
+    "Variante: con tilde": {
+      "n": 3,
+      "ok": 3
+    },
+    "Variante: en minúsculas": {
+      "n": 3,
+      "ok": 3
+    },
+    "Variante: con punto": {
+      "n": 2,
+      "ok": 0
+    },
+    "Variante: con un espacio de más": {
+      "n": 2,
+      "ok": 2
+    }
+  },
+  "correctos": 68,
+  "total": 70,
+  "fallos": [
+    "CO-03-067 'FAMILIA.'",
+    "CO-03-068 'ADIOS.'"
+  ]
+}

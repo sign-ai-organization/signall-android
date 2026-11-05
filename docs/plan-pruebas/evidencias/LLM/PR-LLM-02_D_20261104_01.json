@@ -1,0 +1,595 @@
+{
+  "parte_a": [
+    {
+      "id": "FR-01-001",
+      "texto": "Hola, buenos días, bienvenidos.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "HOLA | BUENOS DIAS",
+      "glosas_referencia": "HOLA, BUENOS DIAS, BIENVENIDO",
+      "fuente": "{\"0\": \"cache\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 20.2
+    },
+    {
+      "id": "FR-01-002",
+      "texto": "Adiós a todos. Buenas noches.",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "ADIOS | TODOS | BUENAS NOCHES",
+      "glosas_referencia": "ADIOS, TODOS, BUENAS NOCHES",
+      "fuente": "{\"0\": \"llm\", \"1\": \"cache\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 488.4
+    },
+    {
+      "id": "FR-01-003",
+      "texto": "Mi abuelo y mi tío trabajan en familia.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "ABUELO | TU | TIO | FAMILIA",
+      "glosas_referencia": "ABUELO, TIO, TRABAJAR, FAMILIA",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 646.4
+    },
+    {
+      "id": "FR-01-004",
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "YO | CONTENTO | HERMANO | FELIZ",
+      "glosas_referencia": "YO, CONTENTO, HERMANO, FELIZ",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 626.6
+    },
+    {
+      "id": "FR-01-005",
+      "texto": "Buenas tardes. Hoy me siento más o menos.",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "BUENAS TARDES | YO | SENTIR | MAS O MENOS",
+      "glosas_referencia": "BUENAS TARDES, YO, SENTIR, MAS O MENOS",
+      "fuente": "{\"0\": \"cache\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 486.9
+    },
+    {
+      "id": "FR-01-006",
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "GRACIAS | TODOS | COMER | CON GUSTO",
+      "glosas_referencia": "GRACIAS, TODOS, NIÑO, NIÑA, COMER, CON GUSTO",
+      "fuente": "{\"0\": \"cache\", \"1\": \"cache\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 18.3
+    },
+    {
+      "id": "FR-01-007",
+      "texto": "¿Tienes hambre?",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "TU | HAMBRE",
+      "glosas_referencia": "TU, HAMBRE",
+      "fuente": "{\"0\": \"cache\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 14.8
+    },
+    {
+      "id": "FR-01-008",
+      "texto": "¿Estás bien?",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "BIEN",
+      "glosas_referencia": "TU, BIEN",
+      "fuente": "{\"0\": \"cache\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 60.9
+    },
+    {
+      "id": "FR-01-009",
+      "texto": "¿Ustedes trabajan en familia?",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "USTEDES | TRABAJAR | FAMILIA",
+      "glosas_referencia": "USTEDES, TRABAJAR, FAMILIA",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 419.6
+    },
+    {
+      "id": "FR-01-010",
+      "texto": "Tu hermano está triste. ¿Se siente mal?",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "TU | HERMANO | TRISTE | MAL",
+      "glosas_referencia": "TU, HERMANO, TRISTE, SENTIR, MAL",
+      "fuente": "{\"0\": \"llm\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 724.8
+    },
+    {
+      "id": "FR-01-011",
+      "texto": "Perdón. ¿Estás triste?",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "PERDON | TRISTE",
+      "glosas_referencia": "PERDON, TU, TRISTE",
+      "fuente": "{\"0\": \"cache\", \"1\": \"cache\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 5.8
+    },
+    {
+      "id": "FR-01-012",
+      "texto": "¿Tu hermano está aburrido?",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "TU | HERMANO | ABURRIDO",
+      "glosas_referencia": "TU, HERMANO, ABURRIDO",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 561.4
+    },
+    {
+      "id": "FR-01-013",
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "oraciones_esperadas": 2,
+      "segments": 3,
+      "glosas": "HOLA | COMO ESTAS | COMO | TU",
+      "glosas_referencia": "HOLA, COMO ESTAS, COMO, TU, NOMBRE",
+      "fuente": "{\"0\": \"cache\", \"1\": \"cache\", \"2\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 515.6
+    },
+    {
+      "id": "FR-01-014",
+      "texto": "¿Dónde vive tu familia?",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "DONDE | TU | FAMILIA | VIVIR",
+      "glosas_referencia": "DONDE, TU, FAMILIA, VIVIR",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 386.1
+    },
+    {
+      "id": "FR-01-015",
+      "texto": "La mujer es juiciosa. ¿Quién es el hombre?",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "MUJER | QUIEN | HOMBRE",
+      "glosas_referencia": "MUJER, JUCIOSO, QUIEN, HOMBRE",
+      "fuente": "{\"0\": \"llm\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 582.7
+    },
+    {
+      "id": "FR-01-016",
+      "texto": "¿Por qué estás triste?",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "POR QUE | TU | TRISTE",
+      "glosas_referencia": "POR QUE, TU, TRISTE",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 476.9
+    },
+    {
+      "id": "FR-01-017",
+      "texto": "¿Cuándo comen ustedes?",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "CUANDO | USTEDES | COMER",
+      "glosas_referencia": "CUANDO, USTEDES, COMER",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 394.2
+    },
+    {
+      "id": "FR-01-018",
+      "texto": "Las personas son diferentes. ¿Qué seña usas tú?",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "DIFERENTE | YO",
+      "glosas_referencia": "PERSONAS, DIFERENTE, QUE, SEÑA, TU",
+      "fuente": "{\"0\": \"llm\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 581.3
+    },
+    {
+      "id": "FR-01-019",
+      "texto": "Yo nunca como mucho.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "YO | NUNCA | COMER | MUCHO",
+      "glosas_referencia": "YO, NUNCA, COMER, MUCHO",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 374.5
+    },
+    {
+      "id": "FR-01-020",
+      "texto": "Mi abuelo nunca trabaja.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "YO | ABUELO | NUNCA | TRABAJAR",
+      "glosas_referencia": "ABUELO, NUNCA, TRABAJAR",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 454.9
+    },
+    {
+      "id": "FR-01-021",
+      "texto": "Mi tío nunca está aburrido.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "TU | TIO | NUNCA | ABURRIDO",
+      "glosas_referencia": "TIO, NUNCA, ABURRIDO",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 507.5
+    },
+    {
+      "id": "FR-01-022",
+      "texto": "Ustedes nunca se sienten mal.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "USTEDES | NUNCA | SENTIR | MAL",
+      "glosas_referencia": "USTEDES, NUNCA, SENTIR, MAL",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 504.0
+    },
+    {
+      "id": "FR-01-023",
+      "texto": "Perdón. Mi hermano nunca está contento.",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "PERDON | HERMANO | NUNCA | CONTENTO",
+      "glosas_referencia": "PERDON, HERMANO, NUNCA, CONTENTO",
+      "fuente": "{\"0\": \"cache\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 690.9
+    },
+    {
+      "id": "FR-01-024",
+      "texto": "Se siente muy bien. La niña nunca está triste.",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "BIEN | NIÑA | NUNCA | TRISTE",
+      "glosas_referencia": "NIÑA, SENTIR, MUCHO, BIEN, NUNCA, TRISTE",
+      "fuente": "{\"0\": \"llm\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 995.4
+    },
+    {
+      "id": "FR-01-025",
+      "texto": "Por favor, come poco.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "POR FAVOR | COMER | POCO",
+      "glosas_referencia": "POR FAVOR, COMER, POCO",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 455.2
+    },
+    {
+      "id": "FR-01-026",
+      "texto": "Con permiso. Déjame pasar, por favor.",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "PERMISO | POR FAVOR",
+      "glosas_referencia": "PERMISO, POR FAVOR",
+      "fuente": "{\"0\": \"cache\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 421.8
+    },
+    {
+      "id": "FR-01-027",
+      "texto": "Niños, trabajen todos.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "TODOS | TRABAJAR",
+      "glosas_referencia": "NIÑO, TODOS, TRABAJAR",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 403.2
+    },
+    {
+      "id": "FR-01-028",
+      "texto": "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "HERMANO | ABUELO | TU | TRABAJAR",
+      "glosas_referencia": "HERMANO, VIVIR, ABUELO, TRABAJAR, TIO",
+      "fuente": "{\"0\": \"llm\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 780.5
+    },
+    {
+      "id": "FR-01-029",
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "oraciones_esperadas": 1,
+      "segments": 1,
+      "glosas": "HOLA | FAMILIA",
+      "glosas_referencia": "HOLA, FAMILIA, BIENVENIDO",
+      "fuente": "{\"0\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 531.8
+    },
+    {
+      "id": "FR-01-030",
+      "texto": "Tío, come mucho. Hermano, come poco.",
+      "oraciones_esperadas": 2,
+      "segments": 2,
+      "glosas": "TU | COMER | MUCHO | HERMANO | COMER | POCO",
+      "glosas_referencia": "TIO, COMER, MUCHO, HERMANO, COMER, POCO",
+      "fuente": "{\"0\": \"llm\", \"1\": \"llm\"}",
+      "done": "sí",
+      "error": "no",
+      "problemas_formato": "",
+      "cumple": "sí",
+      "ms": 680.9
+    }
+  ],
+  "parte_b": {
+    "vocabulario": 50,
+    "filas": [
+      {
+        "id": "CO-04-001",
+        "tipo": "En minúsculas",
+        "fabricada": "hola, buenos dias, bienvenido",
+        "esperado": "HOLA,BUENOS DIAS,BIENVENIDO",
+        "comprueba": "Que pase las glosas a mayúsculas",
+        "parseado": [
+          "HOLA",
+          "BUENOS DIAS",
+          "BIENVENIDO"
+        ],
+        "leido": [
+          "HOLA",
+          "BUENOS DIAS",
+          "BIENVENIDO"
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-002",
+        "tipo": "En minúsculas",
+        "fabricada": "yo, nunca, comer, mucho",
+        "esperado": "YO,NUNCA,COMER,MUCHO",
+        "comprueba": "Lo mismo, con glosas de una palabra",
+        "parseado": [
+          "YO",
+          "NUNCA",
+          "COMER",
+          "MUCHO"
+        ],
+        "leido": [
+          "YO",
+          "NUNCA",
+          "COMER",
+          "MUCHO"
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-003",
+        "tipo": "Con tildes",
+        "fabricada": "HOLA, CÓMO ESTÁS",
+        "esperado": "HOLA,COMO ESTAS",
+        "comprueba": "Que la glosa con tildes se lea como la del catálogo",
+        "parseado": [
+          "HOLA",
+          "CÓMO ESTÁS"
+        ],
+        "leido": [
+          "HOLA",
+          "COMO ESTAS"
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-004",
+        "tipo": "Con tildes",
+        "fabricada": "PERDÓN, TÚ, TRISTE",
+        "esperado": "PERDON,TU,TRISTE",
+        "comprueba": "Lo mismo, con tildes en varias glosas",
+        "parseado": [
+          "PERDÓN",
+          "TÚ",
+          "TRISTE"
+        ],
+        "leido": [
+          "PERDON",
+          "TU",
+          "TRISTE"
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-005",
+        "tipo": "Con puntos",
+        "fabricada": "HOLA. BUENOS DIAS. BIENVENIDO.",
+        "esperado": "HOLA,BUENOS DIAS,BIENVENIDO",
+        "comprueba": "Que los puntos no se queden pegados a las glosas, y que \"BUENOS DIAS\" no se parta, aunque no haya comas",
+        "parseado": [
+          "HOLA.",
+          "BUENOS",
+          "DIAS.",
+          "BIENVENIDO."
+        ],
+        "leido": [
+          "HOLA.",
+          "BUENOS",
+          "DIAS.",
+          "BIENVENIDO."
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-006",
+        "tipo": "Con puntos",
+        "fabricada": "ABUELO, NUNCA, TRABAJAR.",
+        "esperado": "ABUELO,NUNCA,TRABAJAR",
+        "comprueba": "Que un punto al final no cambie la última glosa",
+        "parseado": [
+          "ABUELO",
+          "NUNCA",
+          "TRABAJAR."
+        ],
+        "leido": [
+          "ABUELO",
+          "NUNCA"
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-007",
+        "tipo": "Con texto extra",
+        "fabricada": "Claro, aquí tienes la traducción: TU, HAMBRE",
+        "esperado": "TU,HAMBRE",
+        "comprueba": "Que una explicación antes de las glosas no cambie lo que se lee",
+        "parseado": [
+          "CLARO",
+          "AQUÍ TIENES LA TRADUCCIÓN: TU",
+          "HAMBRE"
+        ],
+        "leido": [
+          "HAMBRE"
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-008",
+        "tipo": "Con texto extra",
+        "fabricada": "TIO, TRABAJAR. Espero que te sirva.",
+        "esperado": "TIO,TRABAJAR",
+        "comprueba": "Que una frase después de las glosas no se lea como glosas",
+        "parseado": [
+          "TIO",
+          "TRABAJAR. ESPERO QUE TE SIRVA."
+        ],
+        "leido": [
+          "TIO"
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-009",
+        "tipo": "Con espacios dentro de una glosa",
+        "fabricada": "POR   FAVOR, COMER",
+        "esperado": "POR FAVOR,COMER",
+        "comprueba": "Que los espacios repetidos dentro de una glosa de dos palabras no la rompan",
+        "parseado": [
+          "POR   FAVOR",
+          "COMER"
+        ],
+        "leido": [
+          "POR FAVOR",
+          "COMER"
+        ],
+        "error": null
+      },
+      {
+        "id": "CO-04-010",
+        "tipo": "Vacía",
+        "fabricada": "",
+        "esperado": "(ninguna glosa)",
+        "comprueba": "Que una respuesta vacía no rompa el sistema",
+        "parseado": [],
+        "leido": [],
+        "error": null
+      }
+    ]
+  }
+}

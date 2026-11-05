@@ -1,0 +1,367 @@
+{
+  "frames": [
+    {
+      "caso": "FR-01-001",
+      "entrada": "text",
+      "texto": "Hola, buenos días, bienvenidos.",
+      "oraciones_esperadas": 1,
+      "resultado": {
+        "texto": "Hola, buenos días, bienvenidos.",
+        "frames": [
+          {
+            "type": "sentence_trace",
+            "index": 0,
+            "text": "Hola, buenos días, bienvenidos.",
+            "source": "cache",
+            "steps_ms": {
+              "fingerprint": 0.0,
+              "cache.exact": 0.0,
+              "cache.embed": 13.5,
+              "cache.similarity": 0.1
+            },
+            "_t": 18.9
+          },
+          {
+            "type": "segment",
+            "index": 0,
+            "total": 1,
+            "segment": {
+              "type": "AFFIRMATIVE",
+              "glosses": [
+                {
+                  "text": "HOLA",
+                  "available": true,
+                  "glb_path": "signs/0030_0000_0000.glb",
+                  "semantic_category": "interjección"
+                },
+                {
+                  "text": "BUENOS DIAS",
+                  "available": true,
+                  "glb_path": "signs/0001_0000_0000.glb",
+                  "semantic_category": "locución"
+                }
+              ]
+            },
+            "_t": 19.0
+          },
+          {
+            "type": "trace",
+            "steps_ms": {
+              "segmentation": 0.1,
+              "validation": 0.0,
+              "total": 14.3
+            },
+            "_t": 19.0
+          },
+          {
+            "type": "done",
+            "_t": 19.0
+          }
+        ],
+        "ms": 19.4
+      }
+    },
+    {
+      "caso": "FR-01-006",
+      "entrada": "text",
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "oraciones_esperadas": 2,
+      "resultado": {
+        "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+        "frames": [
+          {
+            "type": "sentence_trace",
+            "index": 0,
+            "text": "Gracias a todos.",
+            "source": "llm",
+            "steps_ms": {
+              "fingerprint": 0.0,
+              "cache.exact": 0.0,
+              "cache.embed": 27.6,
+              "cache.similarity": 0.1,
+              "llm": 285.6
+            },
+            "_t": 330.7
+          },
+          {
+            "type": "segment",
+            "index": 0,
+            "total": 2,
+            "segment": {
+              "type": "AFFIRMATIVE",
+              "glosses": [
+                {
+                  "text": "GRACIAS",
+                  "available": true,
+                  "glb_path": "signs/0000_0000_0000.glb",
+                  "semantic_category": "sustantivo"
+                },
+                {
+                  "text": "TODOS",
+                  "available": true,
+                  "glb_path": "signs/0048_0000_0000.glb",
+                  "semantic_category": "determinante"
+                }
+              ]
+            },
+            "_t": 330.8
+          },
+          {
+            "type": "sentence_trace",
+            "index": 1,
+            "text": "Los niños y las niñas comen con gusto.",
+            "source": "llm",
+            "steps_ms": {
+              "fingerprint": 0.0,
+              "cache.exact": 0.0,
+              "cache.embed": 142.8,
+              "cache.similarity": 0.1,
+              "llm": 650.9
+            },
+            "_t": 812.6
+          },
+          {
+            "type": "segment",
+            "index": 1,
+            "total": 2,
+            "segment": {
+              "type": "AFFIRMATIVE",
+              "glosses": [
+                {
+                  "text": "COMER",
+                  "available": true,
+                  "glb_path": "signs/0007_0000_0000.glb",
+                  "semantic_category": "verbo"
+                },
+                {
+                  "text": "CON GUSTO",
+                  "available": true,
+                  "glb_path": "signs/0033_0000_0000.glb",
+                  "semantic_category": "locución"
+                }
+              ]
+            },
+            "_t": 812.7
+          },
+          {
+            "type": "trace",
+            "steps_ms": {
+              "segmentation": 12.9,
+              "validation": 0.1,
+              "total": 809.6
+            },
+            "_t": 812.8
+          },
+          {
+            "type": "done",
+            "_t": 812.9
+          }
+        ],
+        "ms": 813.3
+      }
+    },
+    {
+      "caso": "AU-01-013",
+      "entrada": "audio",
+      "texto": "",
+      "oraciones_esperadas": null,
+      "resultado": {
+        "audio": "AU-01-013.wav",
+        "transcrito": "¿Tienes hambre?",
+        "frames": [
+          {
+            "type": "transcript",
+            "text": "¿Tienes hambre?",
+            "final": false,
+            "_t": 2671.4
+          },
+          {
+            "type": "transcript",
+            "text": "¿Tienes hambre?",
+            "final": true,
+            "_t": 3080.0
+          },
+          {
+            "type": "_reenvio_texto",
+            "text": "¿Tienes hambre?",
+            "_t": 3080.0
+          },
+          {
+            "type": "sentence_trace",
+            "index": 0,
+            "text": "¿Tienes hambre?",
+            "source": "cache",
+            "steps_ms": {
+              "fingerprint": 0.0,
+              "cache.exact": 0.0
+            },
+            "_t": 3080.7
+          },
+          {
+            "type": "segment",
+            "index": 0,
+            "total": 1,
+            "segment": {
+              "type": "YES_NO_QUESTION",
+              "glosses": [
+                {
+                  "text": "TU",
+                  "available": true,
+                  "glb_path": "signs/0039_0000_0000.glb",
+                  "semantic_category": "pronombre"
+                },
+                {
+                  "text": "HAMBRE",
+                  "available": true,
+                  "glb_path": "signs/0019_0000_0000.glb",
+                  "semantic_category": "sustantivo"
+                }
+              ]
+            },
+            "_t": 3080.8
+          },
+          {
+            "type": "trace",
+            "steps_ms": {
+              "segmentation": 0.1,
+              "validation": 0.0,
+              "total": 0.5
+            },
+            "_t": 3080.9
+          },
+          {
+            "type": "done",
+            "_t": 3080.9
+          }
+        ],
+        "ms": 3081.1
+      }
+    }
+  ],
+  "comprobaciones": [
+    {
+      "caso": "FR-01-001",
+      "entrada": "text",
+      "frames": 4,
+      "tipos": "sentence_trace>segment>trace>done",
+      "segments": 1,
+      "indices": [
+        0
+      ],
+      "totales": [
+        1
+      ],
+      "formato_segment_ok": true,
+      "orden_indices_ok": true,
+      "total_coincide": true,
+      "done_al_final": true,
+      "sin_error": true,
+      "transcript_se_traduce_solo": false,
+      "ms_total": 19.4,
+      "glosas": [
+        [
+          {
+            "text": "HOLA",
+            "available": true,
+            "glb_path": "signs/0030_0000_0000.glb",
+            "semantic_category": "interjección"
+          },
+          {
+            "text": "BUENOS DIAS",
+            "available": true,
+            "glb_path": "signs/0001_0000_0000.glb",
+            "semantic_category": "locución"
+          }
+        ]
+      ]
+    },
+    {
+      "caso": "FR-01-006",
+      "entrada": "text",
+      "frames": 6,
+      "tipos": "sentence_trace>segment>sentence_trace>segment>trace>done",
+      "segments": 2,
+      "indices": [
+        0,
+        1
+      ],
+      "totales": [
+        2,
+        2
+      ],
+      "formato_segment_ok": true,
+      "orden_indices_ok": true,
+      "total_coincide": true,
+      "done_al_final": true,
+      "sin_error": true,
+      "transcript_se_traduce_solo": false,
+      "ms_total": 813.3,
+      "glosas": [
+        [
+          {
+            "text": "GRACIAS",
+            "available": true,
+            "glb_path": "signs/0000_0000_0000.glb",
+            "semantic_category": "sustantivo"
+          },
+          {
+            "text": "TODOS",
+            "available": true,
+            "glb_path": "signs/0048_0000_0000.glb",
+            "semantic_category": "determinante"
+          }
+        ],
+        [
+          {
+            "text": "COMER",
+            "available": true,
+            "glb_path": "signs/0007_0000_0000.glb",
+            "semantic_category": "verbo"
+          },
+          {
+            "text": "CON GUSTO",
+            "available": true,
+            "glb_path": "signs/0033_0000_0000.glb",
+            "semantic_category": "locución"
+          }
+        ]
+      ]
+    },
+    {
+      "caso": "AU-01-013",
+      "entrada": "audio",
+      "frames": 7,
+      "tipos": "transcript>transcript>_reenvio_texto>sentence_trace>segment>trace>done",
+      "segments": 1,
+      "indices": [
+        0
+      ],
+      "totales": [
+        1
+      ],
+      "formato_segment_ok": true,
+      "orden_indices_ok": true,
+      "total_coincide": true,
+      "done_al_final": true,
+      "sin_error": true,
+      "transcript_se_traduce_solo": false,
+      "ms_total": 3081.1,
+      "glosas": [
+        [
+          {
+            "text": "TU",
+            "available": true,
+            "glb_path": "signs/0039_0000_0000.glb",
+            "semantic_category": "pronombre"
+          },
+          {
+            "text": "HAMBRE",
+            "available": true,
+            "glb_path": "signs/0019_0000_0000.glb",
+            "semantic_category": "sustantivo"
+          }
+        ]
+      ]
+    }
+  ]
+}

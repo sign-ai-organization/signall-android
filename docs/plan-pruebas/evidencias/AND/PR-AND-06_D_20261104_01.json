@@ -1,0 +1,303 @@
+{
+  "filas": [
+    {
+      "tema": "oscuro",
+      "opcion": "bold",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.492,
+      "texto_traducir": "173x49",
+      "estado": "160x46",
+      "solapes": 0,
+      "frase_ms": 13409
+    },
+    {
+      "tema": "oscuro",
+      "opcion": "contrast",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.51,
+      "texto_traducir": "173x49",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 13761
+    },
+    {
+      "tema": "oscuro",
+      "opcion": "large",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.716,
+      "texto_traducir": "199x57",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 13617
+    },
+    {
+      "tema": "oscuro",
+      "opcion": "reduce_motion",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.014,
+      "texto_traducir": "173x49",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 13679
+    },
+    {
+      "tema": "claro",
+      "opcion": "bold",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.513,
+      "texto_traducir": "173x49",
+      "estado": "160x46",
+      "solapes": 0,
+      "frase_ms": 13877
+    },
+    {
+      "tema": "claro",
+      "opcion": "contrast",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.513,
+      "texto_traducir": "173x49",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 13425
+    },
+    {
+      "tema": "claro",
+      "opcion": "large",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.775,
+      "texto_traducir": "199x57",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 13574
+    },
+    {
+      "tema": "claro",
+      "opcion": "reduce_motion",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.019,
+      "texto_traducir": "173x49",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 13789
+    }
+  ],
+  "contraste_borde": {
+    "oscuro": {
+      "off": [
+        [
+          39,
+          41,
+          47
+        ],
+        [
+          14,
+          15,
+          17
+        ]
+      ],
+      "on": [
+        [
+          91,
+          91,
+          91
+        ],
+        [
+          14,
+          15,
+          17
+        ]
+      ]
+    },
+    "claro": {
+      "off": [
+        [
+          170,
+          170,
+          166
+        ],
+        [
+          187,
+          187,
+          185
+        ]
+      ],
+      "on": [
+        [
+          91,
+          91,
+          91
+        ],
+        [
+          187,
+          187,
+          185
+        ]
+      ]
+    }
+  },
+  "ratios": {
+    "oscuro": {
+      "off": 1.32,
+      "on": 2.82
+    },
+    "claro": {
+      "off": 1.21,
+      "on": 3.53
+    }
+  },
+  "on_tras_reabrir": {
+    "bold": "true",
+    "contrast": "true",
+    "large": "true",
+    "reduce_motion": "true"
+  },
+  "ui_tras_reabrir": {
+    "estado": {
+      "x": 115,
+      "y": 135,
+      "width": 160,
+      "height": 46
+    },
+    "campo": {
+      "x": 50,
+      "y": 2019,
+      "width": 654,
+      "height": 138
+    },
+    "traducir_texto": {
+      "x": 227,
+      "y": 2226,
+      "width": 199,
+      "height": 57
+    },
+    "solapes": []
+  },
+  "original": {
+    "freecam": "false",
+    "large": "false",
+    "bg": "false",
+    "reduce_motion": "false",
+    "bold": "false",
+    "speed": "50",
+    "dark_theme": "true",
+    "demo_sign_fallback": "false",
+    "grid": "true",
+    "contrast": "false",
+    "interface_size": "50"
+  },
+  "restaurado": {
+    "freecam": "false",
+    "large": "false",
+    "bg": "false",
+    "reduce_motion": "false",
+    "bold": "false",
+    "speed": "50",
+    "dark_theme": "true",
+    "demo_sign_fallback": "false",
+    "grid": "true",
+    "contrast": "false",
+    "interface_size": "50"
+  },
+  "turnos": [
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8585,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8583,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8617,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8567,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8837,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8614,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8574,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8537,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8599,
+      "fin": true
+    },
+    {
+      "glosas": [
+        "GRACIAS",
+        "TODOS",
+        "COMER",
+        "CON GUSTO"
+      ],
+      "ms": 8921,
+      "fin": true
+    }
+  ]
+}

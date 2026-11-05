@@ -1,0 +1,10 @@
+﻿ajuste;tipo;valor_inicial;observado;persiste
+Personaje;selector;Pauline;"2 opciones (Juan, Pauline); se prueba en PR-AVT-07";si (PR-AVT-07)
+Velocidad de señas;paso 5;50;"10: 21009 ms para 2 señas (10210 y 10681 ms); 50: 4275 ms (1993 y 2169); 100: 2191 ms (1007 y 1114). Cambio 100→90 con la seña en curso: el turno terminó con sus 2 señas, sin corte.";si (quedó en 30 tras reabrir)
+Tamaño de interfaz;paso 5;50;"50→70 al momento: el texto 'Traducir' pasó de 173x49 a 179x51 y el campo de 654x138 a 640x143; 55 no cambia los bounds (menos de 1 px).";si (55 tras reabrir)
+Texto en negrita;interruptor;apagado;se prende y se apaga al momento (prefs bold);si
+Contraste aumentado;interruptor;apagado;se prende y se apaga al momento (prefs contrast);si
+Texto más grande;interruptor;apagado;se prende y se apaga al momento (prefs large);si
+Reducir animaciones;interruptor;apagado;se prende y se apaga al momento (prefs reduce_motion);si
+Modo oscuro;interruptor;encendido;"apagado: luminancia media del panel 21,0 → 167,0 al instante; la frase se reprodujo en los dos temas (4275 ms y 4255 ms, 2 señas)";si (luminancia 167,0 tras reabrir)
+Acerca de;enlace;—;"no es un ajuste; abre la pantalla Acerca de";—

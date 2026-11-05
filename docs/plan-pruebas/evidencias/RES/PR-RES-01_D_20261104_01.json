@@ -1,0 +1,823 @@
+{
+  "corrida_con_tres_casos": {
+    "casos": [
+      {
+        "caso": "antes de mandar",
+        "deteccion": {
+          "ms": 978,
+          "visto": [
+            "Desconectado"
+          ]
+        },
+        "panel": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "10:17 PM",
+            "92",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png": "/tmp/opencode/pruebas/shots/res01b_01_antes_de_mandar.png",
+        "intento": {
+          "texto": "¿Estás bien?",
+          "campo": "¿Estás bien?",
+          "ms": null,
+          "t_envio": 1793848628298,
+          "t_fin": null
+        },
+        "panel_tras_intento": {
+          "indicador": "Desconectado",
+          "campo": "¿Estás bien?",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "10:17 PM",
+            "92",
+            "Desconectado",
+            "¿Estás bien?",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png_intento": "/tmp/opencode/pruebas/shots/res01b_01b_envio_sin_servidor.png",
+        "reconexion": {
+          "ms": 6444,
+          "estado": {
+            "ms": 6432,
+            "visto": [
+              "Desconectado",
+              "Inactivo"
+            ]
+          },
+          "reverse": "UsbFfs tcp:8080 tcp:8080"
+        },
+        "panel_al_volver": {
+          "indicador": "Inactivo",
+          "campo": "¿Estás bien?",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "10:17 PM",
+            "92",
+            "Inactivo",
+            "¿Estás bien?",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "frase_nueva": {
+          "texto": "Hola, familia, siéntanse bienvenidos.",
+          "campo": "Hola, familia, siéntanse bienvenidos.",
+          "ms": 14499,
+          "t_envio": 1793848657188,
+          "t_fin": 1793848671687
+        }
+      },
+      {
+        "caso": "mientras traduce",
+        "texto": "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia.",
+        "campo_antes": "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia.",
+        "estados_antes_del_corte": [
+          "Reproduciendo",
+          "Reproduciendo"
+        ],
+        "deteccion": {
+          "ms": 982,
+          "visto": [
+            "Desconectado"
+          ]
+        },
+        "panel": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "10:18 PM",
+            "91",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "campo_tras_corte": "",
+        "png": "/tmp/opencode/pruebas/shots/res01b_02_traduciendo.png",
+        "reconexion": {
+          "ms": 2368,
+          "estado": {
+            "ms": 2356,
+            "visto": [
+              "Desconectado",
+              "Inactivo"
+            ]
+          },
+          "reverse": "UsbFfs tcp:8080 tcp:8080"
+        },
+        "panel_al_volver": {
+          "indicador": "Inactivo",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "10:18 PM",
+            "91",
+            "Inactivo",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "campo_al_volver": "",
+        "reenvio_ms": null
+      },
+      {
+        "caso": "mientras reproduce",
+        "reproduciendo": {
+          "ms": 1027,
+          "visto": [
+            "Reproduciendo"
+          ]
+        },
+        "deteccion": {
+          "ms": 1018,
+          "visto": [
+            "Desconectado"
+          ]
+        },
+        "panel": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "10:20 PM",
+            "91",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png": "/tmp/opencode/pruebas/shots/res01b_03_reproduciendo.png",
+        "panel_1_5s_despues": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "10:20 PM",
+            "91",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "reconexion": {
+          "ms": 2412,
+          "estado": {
+            "ms": 2397,
+            "visto": [
+              "Desconectado",
+              "Inactivo"
+            ]
+          },
+          "reverse": "UsbFfs tcp:8080 tcp:8080"
+        },
+        "panel_al_volver": {
+          "indicador": "Inactivo",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "10:20 PM",
+            "91",
+            "Inactivo",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "frase_nueva": {
+          "texto": "¿Tienes hambre?",
+          "campo": "¿Tienes hambre?",
+          "ms": 14033,
+          "t_envio": 1793848840591,
+          "t_fin": 1793848854624
+        }
+      }
+    ],
+    "control_remove": {
+      "panel": {
+        "indicador": "Inactivo",
+        "campo": "",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "10:16 PM",
+          "92",
+          "Inactivo",
+          "Escribe una frase...",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "envio": {
+        "texto": "Hola, familia, siéntanse bienvenidos.",
+        "campo": "Hola, familia, siéntanse bienvenidos.",
+        "ms": 14446,
+        "t_envio": 1793848602593,
+        "t_fin": 1793848617039
+      },
+      "sigue_traduciendo": true
+    },
+    "corte1": {
+      "kill_rc": 0,
+      "reverse": ""
+    },
+    "corte2": {
+      "kill_rc": 0,
+      "reverse": ""
+    },
+    "corte3": {
+      "kill_rc": 0,
+      "reverse": ""
+    },
+    "log_eventos": [
+      "         1793848835.042 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793848835.046 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793848838.064 25185 25212 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+      "         1793848850.793 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. \"¿Tienes hambre?\"",
+      "         1793848850.835 25185 25185 I SignAiMetrics: frase #11: 42ms, 1 oraciones, 2 glosas (p50=64ms p95=189ms max=9803ms n=11)",
+      "         1793848854.624 25185 25185 I SignAiMetrics: representado: 2 señas en 3790ms (p50=4169ms p95=4210ms max=4213ms n=6)"
+    ]
+  },
+  "repeticion_casos_1_y_2": {
+    "frase_caso1": "Niños, trabajen todos.",
+    "frase_caso2": "El vecino prepara café cada mañana. Los estudiantes leen libros antiguos. La profesora explica la lección con paciencia.",
+    "corte1": {
+      "kill_rc": 0,
+      "reverse": ""
+    },
+    "caso1": {
+      "deteccion": {
+        "ms": 1126,
+        "visto": [
+          "Desconectado"
+        ]
+      },
+      "panel": {
+        "indicador": "Desconectado",
+        "campo": "Niños, trabajen todos.",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "10:24 PM",
+          "89",
+          "Desconectado",
+          "Niños, trabajen todos.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png": "/tmp/opencode/pruebas/shots/res01c_01_antes_de_mandar.png",
+      "intento": {
+        "texto": "Niños, trabajen todos.",
+        "campo": "Niños, trabajen todos.",
+        "ms": null,
+        "t_envio": 1793849060968,
+        "t_fin": null
+      },
+      "panel_tras_intento": {
+        "indicador": "Desconectado",
+        "campo": "Niños, trabajen todos.",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "10:24 PM",
+          "89",
+          "Desconectado",
+          "Niños, trabajen todos.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png_intento": "/tmp/opencode/pruebas/shots/res01c_01b_envio_sin_servidor.png",
+      "reconexion": {
+        "ms": 4065,
+        "estado": {
+          "ms": 4051,
+          "visto": [
+            "Desconectado",
+            "Inactivo"
+          ]
+        },
+        "reverse": "UsbFfs tcp:8080 tcp:8080"
+      },
+      "panel_al_volver": {
+        "indicador": "Inactivo",
+        "campo": "Niños, trabajen todos.",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "10:24 PM",
+          "89",
+          "Inactivo",
+          "Niños, trabajen todos.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "frase_nueva": {
+        "texto": "Niños, trabajen todos.",
+        "campo": "Niños, trabajen todos.",
+        "ms": 14341,
+        "t_envio": 1793849089298,
+        "t_fin": 1793849103639
+      },
+      "texto_exacto": true
+    },
+    "corte2": {
+      "kill_rc": 0,
+      "reverse": ""
+    },
+    "caso2": {
+      "campo_antes": "El vecino prepara café cada mañana. Los estudiantes leen libros antiguos. La profesora explica la lección con paciencia.",
+      "texto_exacto": true,
+      "estados": [
+        "Desconectado",
+        "Desconectado",
+        "Desconectado",
+        "Desconectado",
+        "Desconectado"
+      ],
+      "panel": {
+        "indicador": "Desconectado",
+        "campo": "El vecino prepara café cada mañana. Los estudiantes leen libros antiguos. La profesora explica la lección con paciencia.",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "10:25 PM",
+          "89",
+          "Desconectado",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "campo_tras_corte": "El vecino prepara café cada mañana. Los estudiantes leen libros antiguos. La profesora explica la lección con paciencia.",
+      "png": "/tmp/opencode/pruebas/shots/res01c_02_traduciendo.png",
+      "reconexion": {
+        "ms": 1084,
+        "estado": {
+          "ms": 1063,
+          "visto": [
+            "Inactivo"
+          ]
+        },
+        "reverse": "UsbFfs tcp:8080 tcp:8080"
+      },
+      "panel_al_volver": {
+        "indicador": "Inactivo",
+        "campo": "El vecino prepara café cada mañana. Los estudiantes leen libros antiguos. La profesora explica la lección con paciencia.",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "10:25 PM",
+          "89",
+          "Inactivo",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "campo_al_volver": "El vecino prepara café cada mañana. Los estudiantes leen libros antiguos. La profesora explica la lección con paciencia.",
+      "reenvio_ms": null
+    }
+  }
+}

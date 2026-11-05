@@ -1,0 +1,96 @@
+{
+  "niveles": [
+    {
+      "nivel": 1,
+      "duracion_s": 43.9,
+      "gauge_antes": 1.0,
+      "gauge_max": 2.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 239.7,
+      "lat_p95": 271.5,
+      "frases": 10,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 2,
+      "duracion_s": 44.4,
+      "gauge_antes": 1.0,
+      "gauge_max": 3.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 255.8,
+      "lat_p95": 424.3,
+      "frases": 20,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 3,
+      "duracion_s": 45.5,
+      "gauge_antes": 1.0,
+      "gauge_max": 4.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 345.6,
+      "lat_p95": 487.6,
+      "frases": 30,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 1,
+      "variante": "caché caliente (frases ya guardadas)",
+      "duracion_s": 43.9,
+      "gauge_antes": 1.0,
+      "gauge_max": 1.0,
+      "gauge_despues": 1.0,
+      "frases": 10,
+      "lat_p50": 241.8,
+      "lat_p95": 268.8,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    }
+  ],
+  "nota": "Las tres primeras tandas de este archivo son la segunda serie: la caché ya tenía las 10 frases de la primera serie, así que las tres miden el camino de caché. La cuarta es una repetición de 1 sesión.",
+  "primera_serie": [
+    {
+      "nivel": 1,
+      "cache": "fría (primer envío de cada frase, camino LLM)",
+      "lat_p50": 614.3,
+      "lat_p95": 814.9,
+      "gauge_antes": 1.0,
+      "gauge_max": 2.0,
+      "gauge_despues": 1.0,
+      "errores": 0,
+      "ajenas": 0,
+      "duracion_s": 47.1
+    },
+    {
+      "nivel": 2,
+      "cache": "caliente",
+      "lat_p50": 255.6,
+      "lat_p95": 404.7,
+      "gauge_antes": 1.0,
+      "gauge_max": 3.0,
+      "gauge_despues": 1.0,
+      "errores": 0,
+      "ajenas": 0,
+      "duracion_s": 44.4
+    },
+    {
+      "nivel": 3,
+      "cache": "caliente",
+      "lat_p50": 352.9,
+      "lat_p95": 487.8,
+      "gauge_antes": 1.0,
+      "gauge_max": 4.0,
+      "gauge_despues": 1.0,
+      "errores": 0,
+      "ajenas": 0,
+      "duracion_s": 45.3
+    }
+  ]
+}

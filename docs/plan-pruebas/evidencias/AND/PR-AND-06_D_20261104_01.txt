@@ -1,0 +1,139 @@
+--------- beginning of main
+--------- beginning of system
+         1793838165.174 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838165.188 20723 21388 D SignAiNet: segment 0/2 turn=4 -> GRACIAS,TODOS
+         1793838165.192 20723 21388 D SignAiNet: segment 1/2 turn=4 -> COMER,CON GUSTO
+         1793838165.234 20723 20723 I SignAiMetrics: frase #4: 60ms, 2 oraciones, 4 glosas (p50=59ms p95=60ms max=81ms n=4)
+         1793838165.234 20723 20723 I SignAiState: resumen: frases=4 oraciones=8 glosas=16 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=59ms p95=60ms max=81ms n=4 duracion_representada=p50=8604ms p95=8604ms max=8640ms n=3 oracion_a_avatar=p50=60ms p95=60ms max=124ms n=3 envio_a_primera_sena=p50=107ms p95=107ms max=195ms n=3
+         1793838165.262 20723 20723 I SignAiState: signStart: oración→avatar 33 ms (seña 0, reloj JS 428300 ms)
+         1793838165.262 20723 20723 I SignAiMetrics: oración→avatar: 33 ms (p50=49ms p95=60ms max=124ms n=4)
+         1793838165.262 20723 20723 I SignAiMetrics: envío→primera seña: 89 ms (p50=103ms p95=107ms max=195ms n=4)
+         1793838166.715 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838167.610 20723 20723 I SignAiState: signStart: oración→avatar 2381 ms (seña 1, reloj JS 430644 ms)
+         1793838169.622 20723 20723 I SignAiState: signStart: oración→avatar 4393 ms (seña 2, reloj JS 432679 ms)
+         1793838171.675 20723 20723 I SignAiState: signStart: oración→avatar 6446 ms (seña 3, reloj JS 434706 ms)
+         1793838173.817 20723 20723 I SignAiMetrics: representado: 4 señas en 8585ms (p50=8585ms p95=8604ms max=8640ms n=4)
+         1793838201.636 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838201.647 20723 21388 D SignAiNet: segment 0/2 turn=5 -> GRACIAS,TODOS
+         1793838201.650 20723 21388 D SignAiNet: segment 1/2 turn=5 -> COMER,CON GUSTO
+         1793838201.678 20723 20723 I SignAiMetrics: frase #5: 42ms, 2 oraciones, 4 glosas (p50=59ms p95=60ms max=81ms n=5)
+         1793838201.678 20723 20723 I SignAiState: resumen: frases=5 oraciones=10 glosas=20 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=59ms p95=60ms max=81ms n=5 duracion_representada=p50=8585ms p95=8604ms max=8640ms n=4 oracion_a_avatar=p50=49ms p95=60ms max=124ms n=4 envio_a_primera_sena=p50=103ms p95=107ms max=195ms n=4
+         1793838201.711 20723 20723 I SignAiState: signStart: oración→avatar 36 ms (seña 0, reloj JS 464744 ms)
+         1793838201.711 20723 20723 I SignAiMetrics: oración→avatar: 36 ms (p50=49ms p95=60ms max=124ms n=5)
+         1793838201.711 20723 20723 I SignAiMetrics: envío→primera seña: 75 ms (p50=103ms p95=107ms max=195ms n=5)
+         1793838203.162 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838204.066 20723 20723 I SignAiState: signStart: oración→avatar 2391 ms (seña 1, reloj JS 467084 ms)
+         1793838206.061 20723 20723 I SignAiState: signStart: oración→avatar 4387 ms (seña 2, reloj JS 469117 ms)
+         1793838208.115 20723 20723 I SignAiState: signStart: oración→avatar 6441 ms (seña 3, reloj JS 471173 ms)
+         1793838210.259 20723 20723 I SignAiMetrics: representado: 4 señas en 8583ms (p50=8585ms p95=8604ms max=8640ms n=5)
+         1793838256.374 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838256.397 20723 21388 D SignAiNet: segment 0/2 turn=6 -> GRACIAS,TODOS
+         1793838256.409 20723 21388 D SignAiNet: segment 1/2 turn=6 -> COMER,CON GUSTO
+         1793838256.509 20723 20723 I SignAiMetrics: frase #6: 130ms, 2 oraciones, 4 glosas (p50=59ms p95=81ms max=130ms n=6)
+         1793838256.509 20723 20723 I SignAiState: resumen: frases=6 oraciones=12 glosas=24 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=59ms p95=81ms max=130ms n=6 duracion_representada=p50=8585ms p95=8604ms max=8640ms n=5 oracion_a_avatar=p50=49ms p95=60ms max=124ms n=5 envio_a_primera_sena=p50=103ms p95=107ms max=195ms n=5
+         1793838256.565 20723 20723 I SignAiState: signStart: oración→avatar 83 ms (seña 0, reloj JS 519582 ms)
+         1793838256.565 20723 20723 I SignAiMetrics: oración→avatar: 83 ms (p50=49ms p95=83ms max=124ms n=6)
+         1793838256.565 20723 20723 I SignAiMetrics: envío→primera seña: 193 ms (p50=103ms p95=193ms max=195ms n=6)
+         1793838257.891 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838258.873 20723 20723 I SignAiState: signStart: oración→avatar 2391 ms (seña 1, reloj JS 521915 ms)
+         1793838260.926 20723 20723 I SignAiState: signStart: oración→avatar 4444 ms (seña 2, reloj JS 523939 ms)
+         1793838262.947 20723 20723 I SignAiState: signStart: oración→avatar 6465 ms (seña 3, reloj JS 525976 ms)
+         1793838265.116 20723 20723 I SignAiMetrics: representado: 4 señas en 8617ms (p50=8585ms p95=8617ms max=8640ms n=6)
+         1793838310.291 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838310.305 20723 21388 D SignAiNet: segment 0/2 turn=7 -> GRACIAS,TODOS
+         1793838310.308 20723 21388 D SignAiNet: segment 1/2 turn=7 -> COMER,CON GUSTO
+         1793838310.343 20723 20723 I SignAiMetrics: frase #7: 52ms, 2 oraciones, 4 glosas (p50=59ms p95=81ms max=130ms n=7)
+         1793838310.344 20723 20723 I SignAiState: resumen: frases=7 oraciones=14 glosas=28 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=59ms p95=81ms max=130ms n=7 duracion_representada=p50=8585ms p95=8617ms max=8640ms n=6 oracion_a_avatar=p50=49ms p95=83ms max=124ms n=6 envio_a_primera_sena=p50=103ms p95=193ms max=195ms n=6
+         1793838310.412 20723 20723 I SignAiState: signStart: oración→avatar 77 ms (seña 0, reloj JS 573418 ms)
+         1793838310.412 20723 20723 I SignAiMetrics: oración→avatar: 77 ms (p50=60ms p95=83ms max=124ms n=7)
+         1793838310.412 20723 20723 I SignAiMetrics: envío→primera seña: 120 ms (p50=107ms p95=193ms max=195ms n=7)
+         1793838311.793 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838312.701 20723 20723 I SignAiState: signStart: oración→avatar 2366 ms (seña 1, reloj JS 575728 ms)
+         1793838314.701 20723 20723 I SignAiState: signStart: oración→avatar 4367 ms (seña 2, reloj JS 577762 ms)
+         1793838316.775 20723 20723 I SignAiState: signStart: oración→avatar 6440 ms (seña 3, reloj JS 579800 ms)
+         1793838318.909 20723 20723 I SignAiMetrics: representado: 4 señas en 8567ms (p50=8585ms p95=8617ms max=8640ms n=7)
+         1793838363.392 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838363.403 20723 21388 D SignAiNet: segment 0/2 turn=8 -> GRACIAS,TODOS
+         1793838363.405 20723 21388 D SignAiNet: segment 1/2 turn=8 -> COMER,CON GUSTO
+         1793838363.437 20723 20723 I SignAiMetrics: frase #8: 44ms, 2 oraciones, 4 glosas (p50=52ms p95=81ms max=130ms n=8)
+         1793838363.437 20723 20723 I SignAiState: resumen: frases=8 oraciones=16 glosas=32 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=52ms p95=81ms max=130ms n=8 duracion_representada=p50=8585ms p95=8617ms max=8640ms n=7 oracion_a_avatar=p50=60ms p95=83ms max=124ms n=7 envio_a_primera_sena=p50=107ms p95=193ms max=195ms n=7
+         1793838363.499 20723 20723 I SignAiState: signStart: oración→avatar 65 ms (seña 0, reloj JS 626509 ms)
+         1793838363.499 20723 20723 I SignAiMetrics: oración→avatar: 65 ms (p50=60ms p95=83ms max=124ms n=8)
+         1793838363.499 20723 20723 I SignAiMetrics: envío→primera seña: 106 ms (p50=106ms p95=193ms max=195ms n=8)
+         1793838364.912 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838365.870 20723 20723 I SignAiState: signStart: oración→avatar 2437 ms (seña 1, reloj JS 628936 ms)
+         1793838368.038 20723 20723 I SignAiState: signStart: oración→avatar 4604 ms (seña 2, reloj JS 631080 ms)
+         1793838370.182 20723 20723 I SignAiState: signStart: oración→avatar 6748 ms (seña 3, reloj JS 633210 ms)
+         1793838372.272 20723 20723 I SignAiMetrics: representado: 4 señas en 8837ms (p50=8585ms p95=8640ms max=8837ms n=8)
+         1793838418.925 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838418.941 20723 21388 D SignAiNet: segment 0/2 turn=9 -> GRACIAS,TODOS
+         1793838418.944 20723 21388 D SignAiNet: segment 1/2 turn=9 -> COMER,CON GUSTO
+         1793838418.997 20723 20723 I SignAiMetrics: frase #9: 72ms, 2 oraciones, 4 glosas (p50=59ms p95=81ms max=130ms n=9)
+         1793838418.997 20723 20723 I SignAiState: resumen: frases=9 oraciones=18 glosas=36 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=59ms p95=81ms max=130ms n=9 duracion_representada=p50=8585ms p95=8640ms max=8837ms n=8 oracion_a_avatar=p50=60ms p95=83ms max=124ms n=8 envio_a_primera_sena=p50=106ms p95=193ms max=195ms n=8
+         1793838419.026 20723 20723 I SignAiState: signStart: oración→avatar 33 ms (seña 0, reloj JS 682063 ms)
+         1793838419.026 20723 20723 I SignAiMetrics: oración→avatar: 33 ms (p50=60ms p95=83ms max=124ms n=9)
+         1793838419.026 20723 20723 I SignAiMetrics: envío→primera seña: 101 ms (p50=106ms p95=193ms max=195ms n=9)
+         1793838420.462 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838421.367 20723 20723 I SignAiState: signStart: oración→avatar 2374 ms (seña 1, reloj JS 684428 ms)
+         1793838423.407 20723 20723 I SignAiState: signStart: oración→avatar 4414 ms (seña 2, reloj JS 686460 ms)
+         1793838425.456 20723 20723 I SignAiState: signStart: oración→avatar 6463 ms (seña 3, reloj JS 688486 ms)
+         1793838427.608 20723 20723 I SignAiMetrics: representado: 4 señas en 8614ms (p50=8604ms p95=8640ms max=8837ms n=9)
+         1793838456.188 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838456.202 20723 21388 D SignAiNet: segment 0/2 turn=10 -> GRACIAS,TODOS
+         1793838456.203 20723 21388 D SignAiNet: segment 1/2 turn=10 -> COMER,CON GUSTO
+         1793838456.249 20723 20723 I SignAiMetrics: frase #10: 61ms, 2 oraciones, 4 glosas (p50=59ms p95=81ms max=130ms n=10)
+         1793838456.249 20723 20723 I SignAiState: resumen: frases=10 oraciones=20 glosas=40 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=59ms p95=81ms max=130ms n=10 duracion_representada=p50=8604ms p95=8640ms max=8837ms n=9 oracion_a_avatar=p50=60ms p95=83ms max=124ms n=9 envio_a_primera_sena=p50=106ms p95=193ms max=195ms n=9
+         1793838456.299 20723 20723 I SignAiState: signStart: oración→avatar 64 ms (seña 0, reloj JS 719328 ms)
+         1793838456.299 20723 20723 I SignAiMetrics: oración→avatar: 64 ms (p50=60ms p95=83ms max=124ms n=10)
+         1793838456.299 20723 20723 I SignAiMetrics: envío→primera seña: 114 ms (p50=106ms p95=193ms max=195ms n=10)
+         1793838457.708 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838458.617 20723 20723 I SignAiState: signStart: oración→avatar 2381 ms (seña 1, reloj JS 721636 ms)
+         1793838460.625 20723 20723 I SignAiState: signStart: oración→avatar 4390 ms (seña 2, reloj JS 723669 ms)
+         1793838462.672 20723 20723 I SignAiState: signStart: oración→avatar 6437 ms (seña 3, reloj JS 725704 ms)
+         1793838464.819 20723 20723 I SignAiMetrics: representado: 4 señas en 8574ms (p50=8585ms p95=8640ms max=8837ms n=10)
+         1793838510.495 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838510.505 20723 21388 D SignAiNet: segment 0/2 turn=11 -> GRACIAS,TODOS
+         1793838510.506 20723 21388 D SignAiNet: segment 1/2 turn=11 -> COMER,CON GUSTO
+         1793838510.542 20723 20723 I SignAiMetrics: frase #11: 44ms, 2 oraciones, 4 glosas (p50=59ms p95=81ms max=130ms n=11)
+         1793838510.542 20723 20723 I SignAiState: resumen: frases=11 oraciones=22 glosas=44 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=59ms p95=81ms max=130ms n=11 duracion_representada=p50=8585ms p95=8640ms max=8837ms n=10 oracion_a_avatar=p50=60ms p95=83ms max=124ms n=10 envio_a_primera_sena=p50=106ms p95=193ms max=195ms n=10
+         1793838510.563 20723 20723 I SignAiState: signStart: oración→avatar 28 ms (seña 0, reloj JS 773607 ms)
+         1793838510.563 20723 20723 I SignAiMetrics: oración→avatar: 28 ms (p50=60ms p95=83ms max=124ms n=11)
+         1793838510.563 20723 20723 I SignAiMetrics: envío→primera seña: 67 ms (p50=106ms p95=193ms max=195ms n=11)
+         1793838512.020 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838512.895 20723 20723 I SignAiState: signStart: oración→avatar 2361 ms (seña 1, reloj JS 775927 ms)
+         1793838514.929 20723 20723 I SignAiState: signStart: oración→avatar 4395 ms (seña 2, reloj JS 777959 ms)
+         1793838516.921 20723 20723 I SignAiState: signStart: oración→avatar 6387 ms (seña 3, reloj JS 779985 ms)
+         1793838519.075 20723 20723 I SignAiMetrics: representado: 4 señas en 8537ms (p50=8585ms p95=8640ms max=8837ms n=11)
+         1793838564.242 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838564.262 20723 21388 D SignAiNet: segment 0/2 turn=12 -> GRACIAS,TODOS
+         1793838564.265 20723 21388 D SignAiNet: segment 1/2 turn=12 -> COMER,CON GUSTO
+         1793838564.295 20723 20723 I SignAiMetrics: frase #12: 54ms, 2 oraciones, 4 glosas (p50=54ms p95=81ms max=130ms n=12)
+         1793838564.295 20723 20723 I SignAiState: resumen: frases=12 oraciones=24 glosas=48 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=54ms p95=81ms max=130ms n=12 duracion_representada=p50=8585ms p95=8640ms max=8837ms n=11 oracion_a_avatar=p50=60ms p95=83ms max=124ms n=11 envio_a_primera_sena=p50=106ms p95=193ms max=195ms n=11
+         1793838564.312 20723 20723 I SignAiState: signStart: oración→avatar 22 ms (seña 0, reloj JS 827362 ms)
+         1793838564.312 20723 20723 I SignAiMetrics: oración→avatar: 22 ms (p50=49ms p95=83ms max=124ms n=12)
+         1793838564.312 20723 20723 I SignAiMetrics: envío→primera seña: 71 ms (p50=103ms p95=193ms max=195ms n=12)
+         1793838565.759 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838566.691 20723 20723 I SignAiState: signStart: oración→avatar 2400 ms (seña 1, reloj JS 829720 ms)
+         1793838568.715 20723 20723 I SignAiState: signStart: oración→avatar 4425 ms (seña 2, reloj JS 831746 ms)
+         1793838570.751 20723 20723 I SignAiState: signStart: oración→avatar 6461 ms (seña 3, reloj JS 833771 ms)
+         1793838572.892 20723 20723 I SignAiMetrics: representado: 4 señas en 8599ms (p50=8585ms p95=8640ms max=8837ms n=12)
+         1793838617.598 20723 20723 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793838617.614 20723 21388 D SignAiNet: segment 0/2 turn=13 -> GRACIAS,TODOS
+         1793838617.616 20723 21388 D SignAiNet: segment 1/2 turn=13 -> COMER,CON GUSTO
+         1793838617.669 20723 20723 I SignAiMetrics: frase #13: 71ms, 2 oraciones, 4 glosas (p50=59ms p95=81ms max=130ms n=13)
+         1793838617.669 20723 20723 I SignAiState: resumen: frases=13 oraciones=26 glosas=52 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=59ms p95=81ms max=130ms n=13 duracion_representada=p50=8585ms p95=8640ms max=8837ms n=12 oracion_a_avatar=p50=49ms p95=83ms max=124ms n=12 envio_a_primera_sena=p50=103ms p95=193ms max=195ms n=12
+         1793838617.721 20723 20723 I SignAiState: signStart: oración→avatar 58 ms (seña 0, reloj JS 880741 ms)
+         1793838617.722 20723 20723 I SignAiMetrics: oración→avatar: 58 ms (p50=58ms p95=83ms max=124ms n=13)
+         1793838617.722 20723 20723 I SignAiMetrics: envío→primera seña: 124 ms (p50=106ms p95=193ms max=195ms n=13)
+         1793838619.140 20723 20723 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793838620.178 20723 20723 I SignAiState: signStart: oración→avatar 2514 ms (seña 1, reloj JS 883204 ms)
+         1793838622.318 20723 20723 I SignAiState: signStart: oración→avatar 4654 ms (seña 2, reloj JS 885347 ms)
+         1793838624.451 20723 20723 I SignAiState: signStart: oración→avatar 6787 ms (seña 3, reloj JS 887484 ms)
+         1793838626.587 20723 20723 I SignAiMetrics: representado: 4 señas en 8921ms (p50=8599ms p95=8837ms max=8921ms n=13)
+         1793838713.240 30421 30421 I SignAiState: backend session starting
+         1793838713.272 30421 30450 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793838717.749 30421 30421 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1910 ms @628
+         1793838717.751 30421 30421 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793838717.815 30421 30421 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793838718.779 30421 30421 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 3000 ms @681
+         1793838718.931 30421 30421 I SignAiState: silencio del STT: 1500 ms

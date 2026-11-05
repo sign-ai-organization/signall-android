@@ -1,0 +1,81 @@
+{
+  "que_se_cuenta": "Bytes de animación atribuidos a cada clip = unión de los rangos de bytes de sus accesores input/output dentro del buffer (byteOffset del bufferView + byteOffset del accesor, largo = count x componentes x tamaño de componente), sin contar dos veces un mismo rango. NO incluye el contenedor: ni cabecera GLB, ni chunk JSON (13,8 MB en juan), ni texturas/mallas. También se midió el método literal de la ficha (sumar byteLength de los bufferViews usados): sobrecuenta, porque 30.252 de los accesores de juan viven en un único bufferView compartido por las 300 animaciones, así que cada clip 'pesa' 3,49 MB y el total da 509 % del archivo.",
+  "glb": {
+    "juan": {
+      "archivo_bytes": 34280444,
+      "archivo_mb": 32.69,
+      "chunk_bin_bytes": 20471400,
+      "clips": 300,
+      "senas": 50,
+      "variantes_por_sena": [
+        "alegria",
+        "base",
+        "negacion",
+        "pregunta",
+        "sorpresa",
+        "tristeza"
+      ],
+      "bases": 50,
+      "base_promedio_bytes": 53269,
+      "base_min_bytes": 37920,
+      "base_min_sena": "0002",
+      "base_max_bytes": 76376,
+      "base_max_sena": "0000",
+      "base_total_bytes": 2663440,
+      "base_total_mb": 2.54,
+      "los_300_total_bytes": 15980640,
+      "los_300_total_mb": 15.24,
+      "union_global_bytes": 2971136,
+      "union_global_mb": 2.83,
+      "pct_del_bin_que_es_animacion": 14.5,
+      "metodo_bufferView_base_promedio": 3493456,
+      "metodo_bufferView_total_300": 1048036800,
+      "bufferViews_del_archivo": 1881
+    },
+    "pauline": {
+      "archivo_bytes": 29460916,
+      "archivo_mb": 28.1,
+      "chunk_bin_bytes": 25464520,
+      "clips": 300,
+      "senas": 50,
+      "variantes_por_sena": [
+        "alegria",
+        "base",
+        "negacion",
+        "pregunta",
+        "sorpresa",
+        "tristeza"
+      ],
+      "bases": 50,
+      "base_promedio_bytes": 86718,
+      "base_min_bytes": 57252,
+      "base_min_sena": "0040",
+      "base_max_bytes": 111636,
+      "base_max_sena": "0022",
+      "base_total_bytes": 4335912,
+      "base_total_mb": 4.14,
+      "los_300_total_bytes": 26015472,
+      "los_300_total_mb": 24.81,
+      "union_global_bytes": 4635912,
+      "union_global_mb": 4.42,
+      "pct_del_bin_que_es_animacion": 18.2,
+      "metodo_bufferView_base_promedio": 4985112,
+      "metodo_bufferView_total_300": 1495533600,
+      "bufferViews_del_archivo": 676
+    }
+  },
+  "glb_total_bytes": 63741360,
+  "glb_total_mb": 60.79,
+  "apks": {
+    "debug": {
+      "bytes": 40830518,
+      "mb": 38.94,
+      "mtime": "2026-11-04T12:09:52"
+    },
+    "release": {
+      "bytes": 35530657,
+      "mb": 33.88,
+      "mtime": "2026-11-04T12:10:01"
+    }
+  }
+}

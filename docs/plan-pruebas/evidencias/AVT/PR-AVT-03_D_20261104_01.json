@@ -1,0 +1,75 @@
+{
+  "filas": [
+    {
+      "orden": 1,
+      "turn": 51,
+      "frase": "FR-01-006",
+      "glosas": "GRACIAS TODOS COMER CON GUSTO",
+      "senas_que_arrancaron": 4,
+      "senas_que_terminaron": 3,
+      "llego_a_representado": "no",
+      "ms_representado": "",
+      "ultima_sena_cortada_ms": null
+    },
+    {
+      "orden": 2,
+      "turn": 52,
+      "frase": "FR-01-013",
+      "glosas": "HOLA COMO ESTAS COMO TU",
+      "senas_que_arrancaron": 3,
+      "senas_que_terminaron": 2,
+      "llego_a_representado": "no",
+      "ms_representado": "",
+      "ultima_sena_cortada_ms": null
+    },
+    {
+      "orden": 3,
+      "turn": 53,
+      "frase": "FR-01-024",
+      "glosas": "BIEN NIÑA NUNCA TRISTE",
+      "senas_que_arrancaron": 3,
+      "senas_que_terminaron": 3,
+      "llego_a_representado": "si",
+      "ms_representado": 7654,
+      "ultima_sena_cortada_ms": ""
+    },
+    {
+      "orden": 4,
+      "turn": 54,
+      "frase": "Repetir de FR-01-024",
+      "glosas": "BIEN NIÑA NUNCA TRISTE",
+      "senas_que_arrancaron": 4,
+      "senas_que_terminaron": 4,
+      "llego_a_representado": "si",
+      "ms_representado": 10539,
+      "ultima_sena_cortada_ms": ""
+    }
+  ],
+  "envios": {
+    "envios": [
+      {
+        "id": "FR-01-006",
+        "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+        "toque_ms": 1793836081675,
+        "rel": 4510
+      },
+      {
+        "id": "FR-01-013",
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "toque_ms": 1793836088434,
+        "rel": 11269
+      },
+      {
+        "id": "FR-01-024",
+        "texto": "Se siente muy bien. La niña nunca está triste.",
+        "toque_ms": 1793836095130,
+        "rel": 17965
+      }
+    ],
+    "t0": 1793836077165,
+    "velocidad": [
+      50,
+      40
+    ]
+  }
+}

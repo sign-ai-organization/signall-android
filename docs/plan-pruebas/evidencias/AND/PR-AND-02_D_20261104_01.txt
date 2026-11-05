@@ -1,0 +1,20 @@
+--------- beginning of main
+--------- beginning of system
+         1793846289.841 12236 12236 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793846289.907 12236 12270 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS
+         1793846289.928 12236 12236 I SignAiMetrics: frase #1: 87ms, 1 oraciones, 2 glosas (p50=87ms p95=87ms max=87ms n=1)
+         1793846289.928 12236 12236 I SignAiState: resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=87ms p95=87ms max=87ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793846290.080 12236 12236 I SignAiState: signStart: oración→avatar 163 ms (seña 0, reloj JS 143071 ms)
+         1793846290.080 12236 12236 I SignAiMetrics: oración→avatar: 163 ms (p50=163ms p95=163ms max=163ms n=1)
+         1793846290.080 12236 12236 I SignAiMetrics: envío→primera seña: 239 ms (p50=239ms p95=239ms max=239ms n=1)
+         1793846291.349 12236 12236 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793846292.005 12236 12236 I SignAiState: signStart: oración→avatar 2089 ms (seña 1, reloj JS 145119 ms)
+         1793846294.146 12236 12236 I SignAiMetrics: representado: 2 señas en 4219ms (p50=4219ms p95=4219ms max=4219ms n=1)
+         1793846316.836 12236 12236 I SignAiState: micrófono prendido en modo Dictation
+         1793846316.937 12236 12236 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793846334.009 12236 12236 I SignAiState: micrófono apagado (venía de Dictation)
+         1793846334.063 12236 12236 I SignAiNet: recording stopped
+         1793846334.064 12236 12236 I SignAiState: dictado detenido: esperando el final de la frase
+         1793846334.064 12236 12236 I SignAiState: el dictado se apagó sin transcripción
+         1793846334.064 12236 12236 I SignAiState: aviso (no va al indicador): No se escuchó nada.
+         1793846334.134 12236 12236 I SignAiState: final vacío: el utterance se cerró sin palabras

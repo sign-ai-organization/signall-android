@@ -1,0 +1,53 @@
+{
+  "aristas_entre_componentes": 5,
+  "pasan_por_interfaz": 3,
+  "se_saltan_la_interfaz": 2,
+  "saltos": [
+    {
+      "desde": "nlp/llm_client.py",
+      "desde_componente": "nlp",
+      "hacia": "app.validation.catalog_repository",
+      "hacia_componente": "validation",
+      "simbolo": "normalize_gloss",
+      "clase": "implementación concreta",
+      "pasa_por_interfaz": "no"
+    },
+    {
+      "desde": "orchestrator/orchestrator.py",
+      "desde_componente": "orchestrator",
+      "hacia": "app.nlp.nlp_service",
+      "hacia_componente": "nlp",
+      "simbolo": "NLPService",
+      "clase": "interfaz",
+      "pasa_por_interfaz": "sí"
+    },
+    {
+      "desde": "orchestrator/orchestrator.py",
+      "desde_componente": "orchestrator",
+      "hacia": "app.validation.validator_service",
+      "hacia_componente": "validation",
+      "simbolo": "ValidatorService",
+      "clase": "interfaz",
+      "pasa_por_interfaz": "sí"
+    },
+    {
+      "desde": "controller/controller.py",
+      "desde_componente": "controlador",
+      "hacia": "app.controller.stt_service_client",
+      "hacia_componente": "transcripcion",
+      "simbolo": "SttServiceClient",
+      "clase": "interfaz",
+      "pasa_por_interfaz": "sí"
+    },
+    {
+      "desde": "controller/controller.py",
+      "desde_componente": "controlador",
+      "hacia": "app.orchestrator.orchestrator",
+      "hacia_componente": "orchestrator",
+      "simbolo": "Orchestrator",
+      "clase": "implementación concreta",
+      "pasa_por_interfaz": "no"
+    }
+  ],
+  "total_importaciones_app_revisadas": 75
+}

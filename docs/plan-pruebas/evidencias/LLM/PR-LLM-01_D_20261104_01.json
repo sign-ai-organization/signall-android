@@ -1,0 +1,129 @@
+{
+  "resumen": {
+    "qwen3:4b-instruct": {
+      "n": 30,
+      "conjunto": 14,
+      "orden_relativo": 29,
+      "secuencia": 14,
+      "producidas": 98,
+      "en_catalogo": 98,
+      "errores": 0,
+      "ms_mediana": 604.2,
+      "ms_media": 605.5,
+      "ms_min": 289.3,
+      "ms_max": 974.2,
+      "filas_cache": 43,
+      "config": "qwen3:4b-instruct"
+    },
+    "qwen3:4b": {
+      "n": 30,
+      "conjunto": 0,
+      "orden_relativo": 30,
+      "secuencia": 0,
+      "producidas": 0,
+      "en_catalogo": 0,
+      "errores": 30,
+      "ms_mediana": 10065.0,
+      "ms_media": 10108.8,
+      "ms_min": 10045.8,
+      "ms_max": 10490.2,
+      "filas_cache": 0,
+      "config": "qwen3:4b"
+    }
+  },
+  "qwen3_4b_timeout_60s": [
+    {
+      "id": "FR-01-001",
+      "ms": 60148.8,
+      "frames": [
+        {
+          "type": "error",
+          "message": "No se pudo traducir el texto.",
+          "_t": 60147.9
+        }
+      ],
+      "glosas": []
+    },
+    {
+      "id": "FR-01-002",
+      "ms": 60244.3,
+      "frames": [
+        {
+          "type": "error",
+          "message": "No se pudo traducir el texto.",
+          "_t": 60243.8
+        }
+      ],
+      "glosas": []
+    },
+    {
+      "id": "FR-01-003",
+      "ms": 60212.5,
+      "frames": [
+        {
+          "type": "error",
+          "message": "No se pudo traducir el texto.",
+          "_t": 60212.0
+        }
+      ],
+      "glosas": []
+    }
+  ],
+  "ollama_directo_qwen3_4b": {
+    "peticion": "POST /v1/chat/completions, max_tokens=30, temperature=0, 'Di hola en una palabra.'",
+    "respuesta": "choices[0].message.content = '' (vacío) y todo el texto en message.reasoning; finish_reason = 'length'",
+    "segundos": 6.2
+  },
+  "catalogo": [
+    "GRACIAS",
+    "BUENOS DIAS",
+    "BUENAS TARDES",
+    "BUENAS NOCHES",
+    "SEÑA",
+    "NOMBRE",
+    "TRABAJAR",
+    "COMER",
+    "VIVIR",
+    "POCO",
+    "FAMILIA",
+    "PERSONAS",
+    "MUJER",
+    "HOMBRE",
+    "NIÑO",
+    "NIÑA",
+    "ABUELO",
+    "TIO",
+    "HERMANO",
+    "HAMBRE",
+    "FELIZ",
+    "CONTENTO",
+    "TRISTE",
+    "ABURRIDO",
+    "BIEN",
+    "MAL",
+    "COMO ESTAS",
+    "MAS O MENOS",
+    "SENTIR",
+    "JUCIOSO",
+    "HOLA",
+    "ADIOS",
+    "POR FAVOR",
+    "CON GUSTO",
+    "BIENVENIDO",
+    "PERDON",
+    "PERMISO",
+    "NUNCA",
+    "YO",
+    "TU",
+    "USTEDES",
+    "QUE",
+    "CUANDO",
+    "DONDE",
+    "COMO",
+    "POR QUE",
+    "QUIEN",
+    "DIFERENTE",
+    "TODOS",
+    "MUCHO"
+  ]
+}

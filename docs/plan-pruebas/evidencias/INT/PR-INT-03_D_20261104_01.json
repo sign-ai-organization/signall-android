@@ -1,0 +1,479 @@
+{
+  "fallback_original": "false",
+  "backend": [
+    {
+      "id": "FR-11-001",
+      "glosas": [
+        {
+          "texto": "YO",
+          "available": true,
+          "glb": "signs/0038_0000_0000.glb"
+        },
+        {
+          "texto": "CONTENTO",
+          "available": true,
+          "glb": "signs/0021_0000_0000.glb"
+        },
+        {
+          "texto": "HERMANO",
+          "available": true,
+          "glb": "signs/0018_0000_0000.glb"
+        },
+        {
+          "texto": "FELIZ",
+          "available": true,
+          "glb": "signs/0020_0000_0000.glb"
+        }
+      ],
+      "ms": 21.6
+    },
+    {
+      "id": "FR-11-002",
+      "glosas": [
+        {
+          "texto": "BUENAS TARDES",
+          "available": true,
+          "glb": "signs/0002_0000_0000.glb"
+        },
+        {
+          "texto": "YO",
+          "available": true,
+          "glb": "signs/0038_0000_0000.glb"
+        },
+        {
+          "texto": "SENTIR",
+          "available": true,
+          "glb": "signs/0028_0000_0000.glb"
+        },
+        {
+          "texto": "MAS O MENOS",
+          "available": true,
+          "glb": "signs/0027_0000_0000.glb"
+        }
+      ],
+      "ms": 14.9
+    },
+    {
+      "id": "FR-11-003",
+      "glosas": [
+        {
+          "texto": "ABUELO",
+          "available": true,
+          "glb": "signs/0016_0000_0000.glb"
+        },
+        {
+          "texto": "TU",
+          "available": true,
+          "glb": "signs/0039_0000_0000.glb"
+        },
+        {
+          "texto": "TIO",
+          "available": true,
+          "glb": "signs/0017_0000_0000.glb"
+        },
+        {
+          "texto": "FAMILIA",
+          "available": true,
+          "glb": "signs/0010_0000_0000.glb"
+        }
+      ],
+      "ms": 19.4
+    },
+    {
+      "id": "FR-11-004",
+      "glosas": [
+        {
+          "texto": "ADIOS",
+          "available": true,
+          "glb": "signs/0031_0000_0000.glb"
+        },
+        {
+          "texto": "TODOS",
+          "available": true,
+          "glb": "signs/0048_0000_0000.glb"
+        },
+        {
+          "texto": "BUENAS NOCHES",
+          "available": true,
+          "glb": "signs/0003_0000_0000.glb"
+        }
+      ],
+      "ms": 12.3
+    },
+    {
+      "id": "FR-11-005",
+      "glosas": [
+        {
+          "texto": "TU",
+          "available": true,
+          "glb": "signs/0039_0000_0000.glb"
+        },
+        {
+          "texto": "HAMBRE",
+          "available": true,
+          "glb": "signs/0019_0000_0000.glb"
+        }
+      ],
+      "ms": 8.5
+    },
+    {
+      "id": "FR-11-006",
+      "glosas": [
+        {
+          "texto": "BIEN",
+          "available": true,
+          "glb": "signs/0024_0000_0000.glb"
+        }
+      ],
+      "ms": 81.3
+    }
+  ],
+  "fases": [
+    {
+      "fase": "reserva desactivada",
+      "fallback": false,
+      "filas": [
+        {
+          "id": "FR-11-001",
+          "caso": "Una glosa sin seña",
+          "sin_sena_esperadas": [
+            "FELIZ"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847036334,
+          "ms": 13992,
+          "textos": [
+            "9:50 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-001.png",
+          "recibidas": [
+            "YO",
+            "CONTENTO",
+            "HERMANO",
+            "FELIZ"
+          ],
+          "senas_representadas": 4,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-002",
+          "caso": "Una glosa sin seña",
+          "sin_sena_esperadas": [
+            "MAS O MENOS"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847056518,
+          "ms": 13478,
+          "textos": [
+            "9:51 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-002.png",
+          "recibidas": [
+            "BUENAS TARDES",
+            "YO",
+            "SENTIR",
+            "MAS O MENOS"
+          ],
+          "senas_representadas": 4,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-003",
+          "caso": "Varias glosas sin seña",
+          "sin_sena_esperadas": [
+            "ABUELO",
+            "TIO"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847075639,
+          "ms": 12627,
+          "textos": [
+            "9:51 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-003.png",
+          "recibidas": [
+            "ABUELO",
+            "TU",
+            "TIO",
+            "FAMILIA"
+          ],
+          "senas_representadas": 4,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-004",
+          "caso": "Varias glosas sin seña",
+          "sin_sena_esperadas": [
+            "ADIOS",
+            "BUENAS NOCHES"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847093208,
+          "ms": 11077,
+          "textos": [
+            "9:51 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-004.png",
+          "recibidas": [
+            "ADIOS",
+            "TODOS",
+            "BUENAS NOCHES"
+          ],
+          "senas_representadas": 3,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-005",
+          "caso": "Todas las glosas sin seña",
+          "sin_sena_esperadas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847108298,
+          "ms": 8629,
+          "textos": [
+            "9:51 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-005.png",
+          "recibidas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "senas_representadas": 2,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-006",
+          "caso": "Todas las glosas sin seña",
+          "sin_sena_esperadas": [
+            "TU",
+            "BIEN"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847122281,
+          "ms": 7470,
+          "textos": [
+            "9:52 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-006.png",
+          "recibidas": [
+            "BIEN"
+          ],
+          "senas_representadas": 1,
+          "avisos_sin_animacion": []
+        }
+      ]
+    },
+    {
+      "fase": "reserva activada",
+      "fallback": true,
+      "filas": [
+        {
+          "id": "FR-11-001",
+          "caso": "Una glosa sin seña",
+          "sin_sena_esperadas": [
+            "FELIZ"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847154047,
+          "ms": 13331,
+          "textos": [
+            "9:52 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-001.png",
+          "recibidas": [
+            "YO",
+            "CONTENTO",
+            "HERMANO",
+            "FELIZ"
+          ],
+          "senas_representadas": 4,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-002",
+          "caso": "Una glosa sin seña",
+          "sin_sena_esperadas": [
+            "MAS O MENOS"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847173776,
+          "ms": 13226,
+          "textos": [
+            "9:52 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-002.png",
+          "recibidas": [
+            "BUENAS TARDES",
+            "YO",
+            "SENTIR",
+            "MAS O MENOS"
+          ],
+          "senas_representadas": 4,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-003",
+          "caso": "Varias glosas sin seña",
+          "sin_sena_esperadas": [
+            "ABUELO",
+            "TIO"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847193165,
+          "ms": 12845,
+          "textos": [
+            "9:53 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-003.png",
+          "recibidas": [
+            "ABUELO",
+            "TU",
+            "TIO",
+            "FAMILIA"
+          ],
+          "senas_representadas": 4,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-004",
+          "caso": "Varias glosas sin seña",
+          "sin_sena_esperadas": [
+            "ADIOS",
+            "BUENAS NOCHES"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847210483,
+          "ms": 11052,
+          "textos": [
+            "9:53 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-004.png",
+          "recibidas": [
+            "ADIOS",
+            "TODOS",
+            "BUENAS NOCHES"
+          ],
+          "senas_representadas": 3,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-005",
+          "caso": "Todas las glosas sin seña",
+          "sin_sena_esperadas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847225646,
+          "ms": 8754,
+          "textos": [
+            "9:53 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-005.png",
+          "recibidas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "senas_representadas": 2,
+          "avisos_sin_animacion": []
+        },
+        {
+          "id": "FR-11-006",
+          "caso": "Todas las glosas sin seña",
+          "sin_sena_esperadas": [
+            "TU",
+            "BIEN"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793847239344,
+          "ms": 7348,
+          "textos": [
+            "9:54 PM",
+            "97",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-006.png",
+          "recibidas": [
+            "BIEN"
+          ],
+          "senas_representadas": 1,
+          "avisos_sin_animacion": []
+        }
+      ]
+    }
+  ],
+  "turnos": 12,
+  "avisos": []
+}

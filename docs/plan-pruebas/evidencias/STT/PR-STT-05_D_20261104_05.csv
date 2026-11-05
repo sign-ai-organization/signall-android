@@ -1,0 +1,5 @@
+﻿umbral;wer_pct;errores;palabras;audios_voz;audios_voz_sin_texto;cuales_voz_sin_texto;audios_sin_voz;audios_sin_voz_con_texto;cuales_sin_voz_con_texto;ms_mediana_voz;timeouts
+0;3.9;11;282;60;1;AU-01-014;8;3;"AU-03-004=¡Suscríbete al canal!; AU-03-005=COUGH; AU-03-006=Grrrr";3818.5;0
+1;3.9;11;282;60;1;AU-01-014;8;3;"AU-03-004=¡Gracias por ver el vídeo!; AU-03-005=COUGH; AU-03-006=Grrrr";3846.25;0
+2;3.9;11;282;60;1;AU-01-014;8;2;"AU-03-005=COUGH; AU-03-006=Grrrr";3833.95;0
+3;3.9;11;282;60;1;AU-01-014;8;2;"AU-03-005=COUGH; AU-03-006=Ejem";3850.55;0

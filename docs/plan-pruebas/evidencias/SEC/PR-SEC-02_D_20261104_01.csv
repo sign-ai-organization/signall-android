@@ -1,0 +1,14 @@
+﻿id;tipo;como;bytes;respuesta;mensaje_error;cierre;siguiente_valida_ok;glosas_siguiente;health_ok;ms_observacion
+CO-05-001;Audio en otro formato;WAV completo de AU-01-001 con encabezado, un mensaje binario;142756;error;El audio recibido no es válido.;1008;sí;HOLA,BUENOS DIAS;sí;7.3
+CO-05-002;Audio en otro formato;float32 16 kHz 1 canal, 1 s de ceros (64.000 B);64000;error;El audio recibido no es válido.;1008;sí;HOLA,BUENOS DIAS;sí;3.3
+CO-05-003;Bytes que no son audio;4.096 bytes aleatorios con semilla fija;4096;(sin respuesta);;(el servidor no cerró);sí;HOLA,BUENOS DIAS;sí;6002.0
+CO-05-004;Bytes que no son audio;«esto no es audio» en UTF-8 repetido a 4.096 B;4096;(sin respuesta);;(el servidor no cerró);sí;HOLA,BUENOS DIAS;sí;6002.2
+CO-05-005;Mal formado;"{""type"":""text"",""text"":""hola"" (sin llave de cierre)";28;(sin respuesta);;(el servidor no cerró);sí;HOLA,BUENOS DIAS;sí;6002.3
+CO-05-006;Mal formado;esto no es json;15;(sin respuesta);;(el servidor no cerró);sí;HOLA,BUENOS DIAS;sí;6001.9
+CO-05-007;Tipo desconocido;"{""type"":""video"",""text"":""hola""}";30;(sin respuesta);;(el servidor no cerró);sí;HOLA,BUENOS DIAS;sí;6002.1
+CO-05-008;Vacío;"{""type"":""text"",""text"":""""}";25;(sin respuesta);;(el servidor no cerró);sí;HOLA,BUENOS DIAS;sí;6001.9
+CO-05-009;Muy largo;«hola » repetido 10.000 veces (50.000 caracteres);50028;error | done;No se pudo traducir el texto.;(el servidor no cerró);sí;HOLA,BUENOS DIAS;sí;6873.2
+CO-05-010;Audio de tamaño excesivo;2 MB de ceros en un mensaje binario;2097152;error;El audio recibido no es válido.;1008;sí;HOLA,BUENOS DIAS;sí;7.9
+CO-05-011;Audio de tamaño excesivo;20 MB de ceros en un mensaje binario;20971520;(sin respuesta);;1009 frame exceeds limit of 16777216 bytes;sí;HOLA,BUENOS DIAS;sí;50.7
+CO-05-012;Audio de número impar de bytes;321 bytes de ceros (160 muestras + 1 byte);321;error;El audio recibido no es válido.;1008;sí;HOLA,BUENOS DIAS;sí;3.3
+CO-05-013;Audio de número impar de bytes;1 byte;1;error;El audio recibido no es válido.;1008;sí;HOLA,BUENOS DIAS;sí;2.9

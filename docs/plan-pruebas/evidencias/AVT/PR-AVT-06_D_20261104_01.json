@@ -1,0 +1,71 @@
+{
+  "que_se_cuenta": "Bytes de los bufferView de los accessores input/output de los samplers de cada clip, sin contar dos veces un mismo bufferView dentro de un clip; no incluye el contenedor (cabecera GLB, chunk JSON, texturas ni mallas).",
+  "glb": {
+    "juan": {
+      "archivo_bytes": 34280444,
+      "archivo_mb": 32.69,
+      "chunk_bin_bytes": 20471400,
+      "clips": 300,
+      "bases": 50,
+      "bases_bytes_total": 174672800,
+      "bases_promedio": 3493456.0,
+      "bases_min": 3493456,
+      "bases_max": 3493456,
+      "bases_min_sena": "0000",
+      "bases_max_sena": "0000",
+      "todos_clips_bytes_total": 1048036800,
+      "bufferViews_unicos_bytes": 3861824,
+      "bases_pct_del_archivo": 509.5,
+      "clips_pct_del_archivo": 11.3,
+      "variantes_por_sena": [
+        "alegria",
+        "base",
+        "negacion",
+        "pregunta",
+        "sorpresa",
+        "tristeza"
+      ],
+      "senas": 50
+    },
+    "pauline": {
+      "archivo_bytes": 29460916,
+      "archivo_mb": 28.1,
+      "chunk_bin_bytes": 25464520,
+      "clips": 300,
+      "bases": 50,
+      "bases_bytes_total": 249255600,
+      "bases_promedio": 4985112.0,
+      "bases_min": 4985112,
+      "bases_max": 4985112,
+      "bases_min_sena": "0000",
+      "bases_max_sena": "0000",
+      "todos_clips_bytes_total": 1495533600,
+      "bufferViews_unicos_bytes": 5343912,
+      "bases_pct_del_archivo": 846.1,
+      "clips_pct_del_archivo": 18.1,
+      "variantes_por_sena": [
+        "alegria",
+        "base",
+        "negacion",
+        "pregunta",
+        "sorpresa",
+        "tristeza"
+      ],
+      "senas": 50
+    }
+  },
+  "glb_total_bytes": 63741360,
+  "glb_total_mb": 60.79,
+  "apks": {
+    "debug": {
+      "bytes": 40830518,
+      "mb": 38.94,
+      "mtime": "2026-11-04T12:09:52"
+    },
+    "release": {
+      "bytes": 35530657,
+      "mb": 33.88,
+      "mtime": "2026-11-04T12:10:01"
+    }
+  }
+}

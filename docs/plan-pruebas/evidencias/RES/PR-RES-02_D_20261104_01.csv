@@ -1,0 +1,6 @@
+﻿Situacion;Frase;Origen_en_backend;Tiempo_backend_ms;Tiempo_app_hasta_aviso_ms;Mensaje_que_ve_el_usuario;Estado_final_app;Se_traduce
+Frase de la cache, LLM caido;Hola, buenos días, bienvenidos. (FR-01-001);cache (exact);5,9 (cache 6,2 ms en la verificacion previa);no aplica: se tradujo;Reproduciendo -> Inactivo;Inactivo, frase representada (2 señas, 4231 ms);si
+Frase nueva, LLM caido (envio 1);¿Cuándo comen ellos? (FR-04-017, trampa de FR-01-017);miss -> error;506 (error del socket);775 (toque -> estado Error);Error (log: 'No se pudo traducir el texto.');"Error 3 s y vuelve a Inactivo; el texto sigue en el campo";no
+Frase nueva, LLM caido (envio 2);¿Cuándo comen ellos?;miss -> error;489 (error del socket);803 (toque -> estado Error);Error (log: 'No se pudo traducir el texto.');"Error 3 s y vuelve a Inactivo; el texto sigue en el campo";no
+Frase nueva, LLM caido (envio 3);¿Cuándo comen ellos?;miss -> error;450 (error del socket);806 (toque -> estado Error);Error (log: 'No se pudo traducir el texto.');"Error 3 s y vuelve a Inactivo; el texto sigue en el campo";no
+Recuperacion: backend original restablecido, app SIN reiniciar;¿Cuándo comen ellos?;miss -> LLM;430 hasta el primer segment;no aplica: se tradujo;Reproduciendo -> Inactivo;Inactivo, frase representada (1 seña, 2244 ms);si

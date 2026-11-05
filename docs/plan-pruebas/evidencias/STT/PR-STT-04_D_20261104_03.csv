@@ -1,0 +1,5 @@
+﻿audio;ms_pared;elapsed_ms;nota
+AU-01-001;10477;8410;"large-v3 no cargó en la GPU (CUDA out of memory); corrió en CPU int8"
+AU-01-002;8038;8027;"large-v3 no cargó en la GPU (CUDA out of memory); corrió en CPU int8"
+AU-01-003;7804;7800;"large-v3 no cargó en la GPU (CUDA out of memory); corrió en CPU int8"
+(60 audios de AU-01);;;no se midió WER: el modelo solo corre en CPU a ~8 s por audio y la GPU queda bloqueada por la reserva fallida

@@ -1,0 +1,33 @@
+{
+  "falsos_aciertos_reales": [
+    {
+      "trampa": "FR-04-023",
+      "tipo": "Negación",
+      "original": "Perdón. Mi hermano nunca está contento.",
+      "variante": "Perdón. Mi hermano está contento.",
+      "oracion": "Mi hermano está contento.",
+      "glosas": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "source": "cache"
+    }
+  ],
+  "fila_de_la_cache_que_los_causo": [
+    {
+      "original_text": "Estoy contento porque mi hermano está feliz.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "distancia_medida": 0.042,
+      "oracion_trampa": "Mi hermano está contento."
+    }
+  ],
+  "cache_tras_FR01": 43
+}

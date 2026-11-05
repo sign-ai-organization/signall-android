@@ -1,0 +1,82 @@
+===== /tmp/opencode/pruebas/logs_and01.txt =====
+--------- beginning of main
+--------- beginning of system
+         1793845737.513  9433  9433 I SignAiState: backend session starting
+         1793845737.526  9433  9459 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793845739.039  9433  9433 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793845740.460  9433  9433 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1286 ms @628
+         1793845740.460  9433  9433 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793845740.503  9433  9433 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793845741.321  9433  9433 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2167 ms @681
+         1793845741.402  9433  9433 I SignAiState: silencio del STT: 1500 ms
+         1793845774.501  9433  9433 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793845793.554  9433  9433 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793845793.581  9433  9459 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS
+         1793845793.638  9433  9433 I SignAiMetrics: frase #1: 85ms, 1 oraciones, 2 glosas (p50=85ms p95=85ms max=85ms n=1)
+         1793845793.638  9433  9433 I SignAiState: resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=85ms p95=85ms max=85ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793845793.757  9433  9433 I SignAiState: signStart: oración→avatar 123 ms (seña 0, reloj JS 54948 ms)
+         1793845793.757  9433  9433 I SignAiMetrics: oración→avatar: 123 ms (p50=123ms p95=123ms max=123ms n=1)
+         1793845793.757  9433  9433 I SignAiMetrics: envío→primera seña: 203 ms (p50=203ms p95=203ms max=203ms n=1)
+         1793845795.055  9433  9433 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793845795.703  9433  9433 I SignAiState: signStart: oración→avatar 2070 ms (seña 1, reloj JS 56999 ms)
+         1793845797.859  9433  9433 I SignAiMetrics: representado: 2 señas en 4223ms (p50=4223ms p95=4223ms max=4223ms n=1)
+         1793845806.124  9433  9433 I SignAiState: micrófono prendido en modo Dictation
+         1793845806.232  9433  9433 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+ate: signStart: oración→avatar 123 ms (seña 0, reloj JS 54948 ms)
+         1793845793.757  9433  9433 I SignAiMetrics: oración→avatar: 123 ms (p50=123ms p95=123ms max=123ms n=1)
+         1793845793.757  9433  9433 I SignAiMetrics: envío→primera seña: 203 ms (p50=203ms p95=203ms max=203ms n=1)
+         1793845795.055  9433  9433 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793845795.703  9433  9433 I SignAiState: signStart: oración→avatar 2070 ms (seña 1, reloj JS 56999 ms)
+         1793845797.859  9433  9433 I SignAiMetrics: representado: 2 señas en 4223ms (p50=4223ms p95=4223ms max=4223ms n=1)
+         1793845806.124  9433  9433 I SignAiState: micrófono prendido en modo Dictation
+         1793845806.232  9433  9433 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+
+===== /tmp/opencode/pruebas/logs_and01b.txt =====
+--------- beginning of main
+--------- beginning of system
+         1793845917.356 10646 10646 I SignAiState: backend session starting
+         1793845917.368 10646 10674 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793845918.465 10646 10646 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793845920.034 10646 10646 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1251 ms @628
+         1793845920.034 10646 10646 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793845920.069 10646 10646 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793845920.837 10646 10646 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2081 ms @681
+         1793845920.960 10646 10646 I SignAiState: silencio del STT: 1500 ms
+         1793845949.677 10646 10646 I SignAiState: micrófono prendido en modo Dictation
+         1793845949.711 10646 10646 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793845982.723 10646 10646 I SignAiState: micrófono apagado (venía de Dictation)
+         1793845982.816 10646 10646 I SignAiNet: recording stopped
+         1793845982.817 10646 10646 I SignAiState: dictado detenido: esperando el final de la frase
+         1793845983.215 10646 10646 I SignAiMetrics: dictado #1: 1 palabras, 5 caracteres
+         1793845983.215 10646 10646 I SignAiState: aviso (no va al indicador): Texto listo. Toca Traducir para enviarlo.
+         1793845983.215 10646 10646 I SignAiState: dictado cerrado: 5 caracteres a la espera de confirmación
+         1793845985.932 10646 10646 I SignAiState: micrófono prendido en modo Live
+         1793845985.966 10646 10646 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793846003.340 10646 10646 I SignAiState: micrófono apagado (venía de Live)
+         1793846003.408 10646 10646 I SignAiNet: recording stopped
+         1793846003.409 10646 10646 I SignAiState: el micrófono se apagó sin transcripción: no hay nada que traducir
+         1793846003.409 10646 10646 I SignAiState: aviso (no va al indicador): No se escuchó nada.
+         1793846003.480 10646 10646 I SignAiState: final vacío: el utterance se cerró sin palabras
+         1793846022.791 11489 11489 I SignAiState: backend session starting
+         1793846022.806 11489 11516 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793846026.117 11489 11489 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1588 ms @628
+         1793846026.121 11489 11489 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793846026.169 11489 11489 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793846027.215 11489 11489 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2728 ms @681
+         1793846027.339 11489 11489 I SignAiState: silencio del STT: 1500 ms
+         1793846041.931 11489 11489 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793846145.737 12236 12236 I SignAiState: backend session starting
+         1793846145.772 12236 12270 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793846148.903 12236 12236 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1550 ms @628
+         1793846148.903 12236 12236 D SignAIWeb: LOG: [SignAI] pauline: 300 clips indexados @648
+         1793846148.936 12236 12236 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793846150.175 12236 12236 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2870 ms @681
+         1793846150.319 12236 12236 I SignAiState: silencio del STT: 1500 ms
+         1793846165.793 12236 12236 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793846189.202 12236 12236 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+
+===== diálogo del sistema (GrantPermissionsViewModel) =====
+         1793846165.682  9469  9469 V GrantPermissionsViewModel: Logged buttons presented and clicked permissionGroupName=android.permission-group.MICROPHONE uid=10330 selectedLocations=0 package=com.signai.webview presentedButtons=44 clickedButton=8 sessionId=-3985038057483790311 targetSdk=36
+         1793846165.693  9469  9469 V GrantPermissionsViewModel: Permission grant result requestId=-3985038057483790311 callingUid=10330 callingPackage=com.signai.webview permission=android.permission.RECORD_AUDIO isImplicit=false result=6
+         1793846189.100  9469  9469 V GrantPermissionsViewModel: Logged buttons presented and clicked permissionGroupName=android.permission-group.MICROPHONE uid=10330 selectedLocations=0 package=com.signai.webview presentedButtons=52 clickedButton=16 sessionId=-2495035814085565044 targetSdk=36
+         1793846189.102  9469  9469 V GrantPermissionsViewModel: Permission grant result requestId=-2495035814085565044 callingUid=10330 callingPackage=com.signai.webview permission=android.permission.RECORD_AUDIO isImplicit=false result=7

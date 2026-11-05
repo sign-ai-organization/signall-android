@@ -1,0 +1,256 @@
+{
+  "salud_inicio": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 206,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "filas": [
+    {
+      "id": "CO-05-001",
+      "tipo": "Audio en otro formato",
+      "como": "WAV completo de AU-01-001 con encabezado, un mensaje binario",
+      "tamano_bytes": 142756,
+      "respuesta": "error",
+      "mensajes_error": [
+        "El audio recibido no es válido."
+      ],
+      "frames": [
+        {
+          "type": "error",
+          "message": "El audio recibido no es válido."
+        }
+      ],
+      "cierre": "1008",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 7.3
+    },
+    {
+      "id": "CO-05-002",
+      "tipo": "Audio en otro formato",
+      "como": "float32 16 kHz 1 canal, 1 s de ceros (64.000 B)",
+      "tamano_bytes": 64000,
+      "respuesta": "error",
+      "mensajes_error": [
+        "El audio recibido no es válido."
+      ],
+      "frames": [
+        {
+          "type": "error",
+          "message": "El audio recibido no es válido."
+        }
+      ],
+      "cierre": "1008",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 3.3
+    },
+    {
+      "id": "CO-05-003",
+      "tipo": "Bytes que no son audio",
+      "como": "4.096 bytes aleatorios con semilla fija",
+      "tamano_bytes": 4096,
+      "respuesta": "(sin respuesta)",
+      "mensajes_error": [],
+      "frames": [],
+      "cierre": "(el servidor no cerró)",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 6002.0
+    },
+    {
+      "id": "CO-05-004",
+      "tipo": "Bytes que no son audio",
+      "como": "«esto no es audio» en UTF-8 repetido a 4.096 B",
+      "tamano_bytes": 4096,
+      "respuesta": "(sin respuesta)",
+      "mensajes_error": [],
+      "frames": [],
+      "cierre": "(el servidor no cerró)",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 6002.2
+    },
+    {
+      "id": "CO-05-005",
+      "tipo": "Mal formado",
+      "como": "{\"type\":\"text\",\"text\":\"hola\" (sin llave de cierre)",
+      "tamano_bytes": 28,
+      "respuesta": "(sin respuesta)",
+      "mensajes_error": [],
+      "frames": [],
+      "cierre": "(el servidor no cerró)",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 6002.3
+    },
+    {
+      "id": "CO-05-006",
+      "tipo": "Mal formado",
+      "como": "esto no es json",
+      "tamano_bytes": 15,
+      "respuesta": "(sin respuesta)",
+      "mensajes_error": [],
+      "frames": [],
+      "cierre": "(el servidor no cerró)",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 6001.9
+    },
+    {
+      "id": "CO-05-007",
+      "tipo": "Tipo desconocido",
+      "como": "{\"type\":\"video\",\"text\":\"hola\"}",
+      "tamano_bytes": 30,
+      "respuesta": "(sin respuesta)",
+      "mensajes_error": [],
+      "frames": [],
+      "cierre": "(el servidor no cerró)",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 6002.1
+    },
+    {
+      "id": "CO-05-008",
+      "tipo": "Vacío",
+      "como": "{\"type\":\"text\",\"text\":\"\"}",
+      "tamano_bytes": 25,
+      "respuesta": "(sin respuesta)",
+      "mensajes_error": [],
+      "frames": [],
+      "cierre": "(el servidor no cerró)",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 6001.9
+    },
+    {
+      "id": "CO-05-009",
+      "tipo": "Muy largo",
+      "como": "«hola » repetido 10.000 veces (50.000 caracteres)",
+      "tamano_bytes": 50028,
+      "respuesta": "error | done",
+      "mensajes_error": [
+        "No se pudo traducir el texto."
+      ],
+      "frames": [
+        {
+          "type": "error",
+          "message": "No se pudo traducir el texto."
+        },
+        {
+          "type": "done"
+        }
+      ],
+      "cierre": "(el servidor no cerró)",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 6873.2
+    },
+    {
+      "id": "CO-05-010",
+      "tipo": "Audio de tamaño excesivo",
+      "como": "2 MB de ceros en un mensaje binario",
+      "tamano_bytes": 2097152,
+      "respuesta": "error",
+      "mensajes_error": [
+        "El audio recibido no es válido."
+      ],
+      "frames": [
+        {
+          "type": "error",
+          "message": "El audio recibido no es válido."
+        }
+      ],
+      "cierre": "1008",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 7.9
+    },
+    {
+      "id": "CO-05-011",
+      "tipo": "Audio de tamaño excesivo",
+      "como": "20 MB de ceros en un mensaje binario",
+      "tamano_bytes": 20971520,
+      "respuesta": "(sin respuesta)",
+      "mensajes_error": [],
+      "frames": [],
+      "cierre": "1009 frame exceeds limit of 16777216 bytes",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 50.7
+    },
+    {
+      "id": "CO-05-012",
+      "tipo": "Audio de número impar de bytes",
+      "como": "321 bytes de ceros (160 muestras + 1 byte)",
+      "tamano_bytes": 321,
+      "respuesta": "error",
+      "mensajes_error": [
+        "El audio recibido no es válido."
+      ],
+      "frames": [
+        {
+          "type": "error",
+          "message": "El audio recibido no es válido."
+        }
+      ],
+      "cierre": "1008",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 3.3
+    },
+    {
+      "id": "CO-05-013",
+      "tipo": "Audio de número impar de bytes",
+      "como": "1 byte",
+      "tamano_bytes": 1,
+      "respuesta": "error",
+      "mensajes_error": [
+        "El audio recibido no es válido."
+      ],
+      "frames": [
+        {
+          "type": "error",
+          "message": "El audio recibido no es válido."
+        }
+      ],
+      "cierre": "1008",
+      "siguiente_valida_ok": "sí",
+      "siguiente_valida_glosas": "HOLA,BUENOS DIAS",
+      "health_ok": true,
+      "ms_observacion": 2.9
+    }
+  ],
+  "sesion_normal": {
+    "frames": [
+      "sentence_trace",
+      "segment",
+      "trace",
+      "done"
+    ],
+    "ok": true
+  },
+  "salud_final": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 206,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  }
+}

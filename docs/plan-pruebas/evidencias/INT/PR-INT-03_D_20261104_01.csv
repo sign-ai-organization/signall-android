@@ -1,0 +1,13 @@
+﻿reserva;id;caso;glosas_sin_sena_en_el_plan;glosas_recibidas;senas_representadas;indicador_durante;aviso_sena_no_disponible;ms_hasta_fin
+desactivada;FR-11-001;Una glosa sin seña;FELIZ;YO, CONTENTO, HERMANO, FELIZ;4;Reproduciendo;no;13992
+desactivada;FR-11-002;Una glosa sin seña;MAS O MENOS;BUENAS TARDES, YO, SENTIR, MAS O MENOS;4;Reproduciendo;no;13478
+desactivada;FR-11-003;Varias glosas sin seña;ABUELO, TIO;ABUELO, TU, TIO, FAMILIA;4;Reproduciendo;no;12627
+desactivada;FR-11-004;Varias glosas sin seña;ADIOS, BUENAS NOCHES;ADIOS, TODOS, BUENAS NOCHES;3;Reproduciendo;no;11077
+desactivada;FR-11-005;Todas las glosas sin seña;TU, HAMBRE;TU, HAMBRE;2;Reproduciendo;no;8629
+desactivada;FR-11-006;Todas las glosas sin seña;TU, BIEN;BIEN;1;Reproduciendo;no;7470
+activada;FR-11-001;Una glosa sin seña;FELIZ;YO, CONTENTO, HERMANO, FELIZ;4;Reproduciendo;no;13331
+activada;FR-11-002;Una glosa sin seña;MAS O MENOS;BUENAS TARDES, YO, SENTIR, MAS O MENOS;4;Reproduciendo;no;13226
+activada;FR-11-003;Varias glosas sin seña;ABUELO, TIO;ABUELO, TU, TIO, FAMILIA;4;Reproduciendo;no;12845
+activada;FR-11-004;Varias glosas sin seña;ADIOS, BUENAS NOCHES;ADIOS, TODOS, BUENAS NOCHES;3;Reproduciendo;no;11052
+activada;FR-11-005;Todas las glosas sin seña;TU, HAMBRE;TU, HAMBRE;2;Reproduciendo;no;8754
+activada;FR-11-006;Todas las glosas sin seña;TU, BIEN;BIEN;1;Reproduciendo;no;7348

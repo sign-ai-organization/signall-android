@@ -1,0 +1,39 @@
+         1793828611.776 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793828611.811 25696 27606 D SignAiNet: segment 0/1 turn=5 -> HOLA,BUENOS DIAS
+         1793828831.266 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Mi abuelo y mi tío trabajan en familia."
+         1793828831.292 25696 27606 D SignAiNet: segment 0/1 turn=6 -> ABUELO,TU,TIO,FAMILIA
+         1793828852.855 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793828852.900 25696 27606 D SignAiNet: segment 0/1 turn=7 -> TU,HAMBRE
+         1793829153.207 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793829153.271 25696 27606 D SignAiNet: segment 0/1 turn=8 -> HOLA,BUENOS DIAS
+         1793829175.339 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Mi abuelo y mi tío trabajan en familia."
+         1793829175.383 25696 27606 D SignAiNet: segment 0/1 turn=9 -> ABUELO,TU,TIO,FAMILIA
+         1793829200.685 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793829200.694 25696 27606 D SignAiNet: segment 0/1 turn=10 -> TU,HAMBRE
+         1793829222.526 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Tu hermano está triste. ¿Se siente mal?"
+         1793829222.537 25696 27606 D SignAiNet: segment 0/2 turn=11 -> TU,HERMANO,TRISTE
+         1793829222.540 25696 27606 D SignAiNet: segment 1/2 turn=11 -> MAL
+         1793829256.432 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, ¿cómo estás? ¿Cómo te llamas?"
+         1793829256.489 25696 27606 D SignAiNet: segment 0/3 turn=12 -> HOLA
+         1793829256.490 25696 27606 D SignAiNet: segment 1/3 turn=12 -> COMO ESTAS
+         1793829256.491 25696 27606 D SignAiNet: segment 2/3 turn=12 -> COMO,TU
+         1793829281.393 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Dónde vive tu familia?"
+         1793829281.403 25696 27606 D SignAiNet: segment 0/1 turn=13 -> DONDE,TU,FAMILIA,VIVIR
+         1793829307.806 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Yo nunca como mucho."
+         1793829307.835 25696 27606 D SignAiNet: segment 0/1 turn=14 -> YO,NUNCA,COMER,MUCHO
+         1793829333.625 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Mi tío nunca está aburrido."
+         1793829333.669 25696 27606 D SignAiNet: segment 0/1 turn=15 -> TU,TIO,NUNCA,ABURRIDO
+         1793829367.094 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Se siente muy bien. La niña nunca está triste."
+         1793829367.102 25696 27606 D SignAiNet: segment 0/2 turn=16 -> BIEN
+         1793829367.105 25696 27606 D SignAiNet: segment 1/2 turn=16 -> NIÑA,NUNCA,TRISTE
+         1793829394.237 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Con permiso. Déjame pasar, por favor."
+         1793829395.350 25696 27606 D SignAiNet: segment 0/2 turn=17 -> PERMISO
+         1793829395.353 25696 27606 D SignAiNet: segment 1/2 turn=17 -> POR FAVOR
+         1793829416.993 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hermano, vive con el abuelo. Trabaja con el tío."
+         1793829417.048 25696 27606 D SignAiNet: segment 0/2 turn=18 -> HERMANO,ABUELO
+         1793829417.050 25696 27606 D SignAiNet: segment 1/2 turn=18 -> TU,TRABAJAR
+         1793829443.086 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793829443.093 25696 27606 D SignAiNet: segment 0/1 turn=19 -> HOLA,FAMILIA
+         1793829491.013 25696 25696 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Con permiso. Déjame pasar, por favor."
+         1793829491.704 25696 27606 D SignAiNet: segment 0/2 turn=20 -> PERMISO
+         1793829491.710 25696 27606 D SignAiNet: segment 1/2 turn=20 -> POR FAVOR

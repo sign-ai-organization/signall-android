@@ -1,0 +1,87 @@
+"""Proxy TCP que cuenta bytes en los dos sentidos (para PR-REN-08).
+
+Escucha en 127.0.0.1:8081 y reenvía a 127.0.0.1:8080. Publica los acumulados en
+http://127.0.0.1:8099/ para que el runner tome una foto antes y después de cada frase.
+"""
+from __future__ import annotations
+
+import json
+import socket
+import threading
+import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+ESCUCHA = ("127.0.0.1", 8081)
+DESTINO = ("127.0.0.1", 8080)
+PUERTO_STATS = 8099
+
+lock = threading.Lock()
+up = 0
+down = 0
+conexiones = 0
+
+
+def pump(origen, destino, sentido):
+    global up, down
+    try:
+        while True:
+            datos = origen.recv(65536)
+            if not datos:
+                break
+            with lock:
+                if sentido == "up":
+                    up += len(datos)
+                else:
+                    down += len(datos)
+            destino.sendall(datos)
+    except OSError:
+        pass
+    finally:
+        try:
+            destino.shutdown(socket.SHUT_WR)
+        except OSError:
+            pass
+
+
+def atender(cliente):
+    global conexiones
+    try:
+        servidor = socket.create_connection(DESTINO, timeout=10)
+    except OSError:
+        cliente.close()
+        return
+    with lock:
+        conexiones += 1
+    threading.Thread(target=pump, args=(cliente, servidor, "up"), daemon=True).start()
+    threading.Thread(target=pump, args=(servidor, cliente, "down"), daemon=True).start()
+
+
+def aceptar():
+    ls = socket.socket()
+    ls.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    ls.bind(ESCUCHA)
+    ls.listen(64)
+    print(f"proxy escuchando en {ESCUCHA} -> {DESTINO}", flush=True)
+    while True:
+        c, _ = ls.accept()
+        atender(c)
+
+
+class Stats(BaseHTTPRequestHandler):
+    def do_GET(self):
+        with lock:
+            cuerpo = json.dumps({"up": up, "down": down, "conexiones": conexiones,
+                                 "t": round(time.time() * 1000)}).encode()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(cuerpo)))
+        self.end_headers()
+        self.wfile.write(cuerpo)
+
+    def log_message(self, *_):
+        pass
+
+
+if __name__ == "__main__":
+    threading.Thread(target=aceptar, daemon=True).start()
+    HTTPServer(("127.0.0.1", PUERTO_STATS), Stats).serve_forever()

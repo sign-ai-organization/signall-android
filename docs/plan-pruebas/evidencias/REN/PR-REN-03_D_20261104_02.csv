@@ -1,0 +1,101 @@
+﻿situacion;rep;id;texto;oraciones;glosas;envio_primera_sena_ms;envio_ultima_oracion_ms;representacion_ms;ultima_sena_ms_suma;senas;pid_app
+caché vacía;1;FR-01-001;Hola, buenos días, bienvenidos.;1;2;672;640;4220;4860;2;32490
+caché vacía;1;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;415;892;8349;9241;4;32490
+caché vacía;1;FR-01-007;¿Tienes hambre?;1;2;413;390;3816;4206;2;32490
+caché vacía;1;FR-01-011;Perdón. ¿Estás triste?;2;2;311;597;4897;5494;2;32490
+caché vacía;1;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;706;982;7875;8857;4;32490
+caché vacía;1;FR-01-014;¿Dónde vive tu familia?;1;4;541;505;7863;8368;4;32490
+caché vacía;1;FR-01-019;Yo nunca como mucho.;1;4;486;450;8326;8776;4;32490
+caché vacía;1;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;61;627;8293;8920;4;32490
+caché vacía;1;FR-01-025;Por favor, come poco.;1;3;525;499;6261;6760;3;32490
+caché vacía;1;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;394;789;4200;4989;2;32490
+caché vacía;2;FR-01-001;Hola, buenos días, bienvenidos.;1;2;91;29;4257;4286;2;32490
+caché vacía;2;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;65;44;8372;8416;4;32490
+caché vacía;2;FR-01-007;¿Tienes hambre?;1;2;56;33;3786;3819;2;32490
+caché vacía;2;FR-01-011;Perdón. ¿Estás triste?;2;2;59;44;4883;4927;2;32490
+caché vacía;2;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;49;29;7852;7881;4;32490
+caché vacía;2;FR-01-014;¿Dónde vive tu familia?;1;4;75;57;7860;7917;4;32490
+caché vacía;2;FR-01-019;Yo nunca como mucho.;1;4;101;34;8292;8326;4;32490
+caché vacía;2;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;78;49;8312;8361;4;32490
+caché vacía;2;FR-01-025;Por favor, come poco.;1;3;75;49;6261;6310;3;32490
+caché vacía;2;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;56;35;4200;4235;2;32490
+caché vacía;3;FR-01-001;Hola, buenos días, bienvenidos.;1;2;66;29;4226;4255;2;32490
+caché vacía;3;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;58;31;8316;8347;4;32490
+caché vacía;3;FR-01-007;¿Tienes hambre?;1;2;55;35;3774;3809;2;32490
+caché vacía;3;FR-01-011;Perdón. ¿Estás triste?;2;2;70;42;4878;4920;2;32490
+caché vacía;3;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;54;39;7870;7909;4;32490
+caché vacía;3;FR-01-014;¿Dónde vive tu familia?;1;4;55;43;7843;7886;4;32490
+caché vacía;3;FR-01-019;Yo nunca como mucho.;1;4;81;57;8270;8327;4;32490
+caché vacía;3;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;67;48;8310;8358;4;32490
+caché vacía;3;FR-01-025;Por favor, come poco.;1;3;76;50;6212;6262;3;32490
+caché vacía;3;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;61;42;4193;4235;2;32490
+caché vacía;4;FR-01-001;Hola, buenos días, bienvenidos.;1;2;95;76;4195;4271;2;32490
+caché vacía;4;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;51;36;8339;8375;4;32490
+caché vacía;4;FR-01-007;¿Tienes hambre?;1;2;96;27;3791;3818;2;32490
+caché vacía;4;FR-01-011;Perdón. ¿Estás triste?;2;2;77;48;4856;4904;2;32490
+caché vacía;4;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;46;26;7919;7945;4;32490
+caché vacía;4;FR-01-014;¿Dónde vive tu familia?;1;4;66;50;7812;7862;4;32490
+caché vacía;4;FR-01-019;Yo nunca como mucho.;1;4;70;38;8311;8349;4;32490
+caché vacía;4;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;49;34;8260;8294;4;32490
+caché vacía;4;FR-01-025;Por favor, come poco.;1;3;60;28;6238;6266;3;32490
+caché vacía;4;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;77;28;4158;4186;2;32490
+caché vacía;5;FR-01-001;Hola, buenos días, bienvenidos.;1;2;67;37;4217;4254;2;32490
+caché vacía;5;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;48;31;8327;8358;4;32490
+caché vacía;5;FR-01-007;¿Tienes hambre?;1;2;77;29;3818;3847;2;32490
+caché vacía;5;FR-01-011;Perdón. ¿Estás triste?;2;2;59;39;4900;4939;2;32490
+caché vacía;5;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;69;45;7892;7937;4;32490
+caché vacía;5;FR-01-014;¿Dónde vive tu familia?;1;4;72;33;7840;7873;4;32490
+caché vacía;5;FR-01-019;Yo nunca como mucho.;1;4;92;50;8317;8367;4;32490
+caché vacía;5;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;48;29;8302;8331;4;32490
+caché vacía;5;FR-01-025;Por favor, come poco.;1;3;83;26;6252;6278;3;32490
+caché vacía;5;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;47;30;4151;4181;2;32490
+caché llena;1;FR-01-001;Hola, buenos días, bienvenidos.;1;2;48;32;4184;4216;2;32490
+caché llena;1;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;81;50;8310;8360;4;32490
+caché llena;1;FR-01-007;¿Tienes hambre?;1;2;92;34;3813;3847;2;32490
+caché llena;1;FR-01-011;Perdón. ¿Estás triste?;2;2;90;30;4861;4891;2;32490
+caché llena;1;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;64;44;7878;7922;4;32490
+caché llena;1;FR-01-014;¿Dónde vive tu familia?;1;4;70;39;7874;7913;4;32490
+caché llena;1;FR-01-019;Yo nunca como mucho.;1;4;67;55;8340;8395;4;32490
+caché llena;1;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;73;25;8281;8306;4;32490
+caché llena;1;FR-01-025;Por favor, come poco.;1;3;85;28;6243;6271;3;32490
+caché llena;1;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;75;30;4170;4200;2;32490
+caché llena;2;FR-01-001;Hola, buenos días, bienvenidos.;1;2;72;36;4235;4271;2;32490
+caché llena;2;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;66;35;8331;8366;4;32490
+caché llena;2;FR-01-007;¿Tienes hambre?;1;2;47;11;3828;3839;2;32490
+caché llena;2;FR-01-011;Perdón. ¿Estás triste?;2;2;45;32;4866;4898;2;32490
+caché llena;2;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;74;30;7885;7915;4;32490
+caché llena;2;FR-01-014;¿Dónde vive tu familia?;1;4;58;43;7840;7883;4;32490
+caché llena;2;FR-01-019;Yo nunca como mucho.;1;4;50;30;8341;8371;4;32490
+caché llena;2;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;64;37;8279;8316;4;32490
+caché llena;2;FR-01-025;Por favor, come poco.;1;3;89;37;6272;6309;3;32490
+caché llena;2;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;55;36;4196;4232;2;32490
+caché llena;3;FR-01-001;Hola, buenos días, bienvenidos.;1;2;81;27;4243;4270;2;32490
+caché llena;3;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;70;30;8289;8319;4;32490
+caché llena;3;FR-01-007;¿Tienes hambre?;1;2;55;32;3814;3846;2;32490
+caché llena;3;FR-01-011;Perdón. ¿Estás triste?;2;2;56;30;4880;4910;2;32490
+caché llena;3;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;78;55;7876;7931;4;32490
+caché llena;3;FR-01-014;¿Dónde vive tu familia?;1;4;81;54;7837;7891;4;32490
+caché llena;3;FR-01-019;Yo nunca como mucho.;1;4;77;31;8307;8338;4;32490
+caché llena;3;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;52;33;8286;8319;4;32490
+caché llena;3;FR-01-025;Por favor, come poco.;1;3;64;40;6289;6329;3;32490
+caché llena;3;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;58;41;4152;4193;2;32490
+caché llena;4;FR-01-001;Hola, buenos días, bienvenidos.;1;2;67;35;4220;4255;2;32490
+caché llena;4;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;48;32;8314;8346;4;32490
+caché llena;4;FR-01-007;¿Tienes hambre?;1;2;52;34;3754;3788;2;32490
+caché llena;4;FR-01-011;Perdón. ¿Estás triste?;2;2;73;47;4880;4927;2;32490
+caché llena;4;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;47;32;7866;7898;4;32490
+caché llena;4;FR-01-014;¿Dónde vive tu familia?;1;4;98;37;7838;7875;4;32490
+caché llena;4;FR-01-019;Yo nunca como mucho.;1;4;61;28;8343;8371;4;32490
+caché llena;4;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;60;39;8280;8319;4;32490
+caché llena;4;FR-01-025;Por favor, come poco.;1;3;73;9;6265;6274;3;32490
+caché llena;4;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;44;30;4186;4216;2;32490
+caché llena;5;FR-01-001;Hola, buenos días, bienvenidos.;1;2;81;56;4194;4250;2;32490
+caché llena;5;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;4;48;28;8343;8371;4;32490
+caché llena;5;FR-01-007;¿Tienes hambre?;1;2;68;27;3800;3827;2;32490
+caché llena;5;FR-01-011;Perdón. ¿Estás triste?;2;2;41;10;4892;4902;2;32490
+caché llena;5;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;3;4;66;49;7873;7922;4;32490
+caché llena;5;FR-01-014;¿Dónde vive tu familia?;1;4;83;32;7845;7877;4;32490
+caché llena;5;FR-01-019;Yo nunca como mucho.;1;4;49;33;8318;8351;4;32490
+caché llena;5;FR-01-023;Perdón. Mi hermano nunca está contento.;2;4;80;26;8302;8328;4;32490
+caché llena;5;FR-01-025;Por favor, come poco.;1;3;62;30;6245;6275;3;32490
+caché llena;5;FR-01-026;Con permiso. Déjame pasar, por favor.;2;2;50;34;4172;4206;2;32490

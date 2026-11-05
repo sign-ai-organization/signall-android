@@ -1,0 +1,10 @@
+﻿caso;paso;permiso;dialogo;indicador;modo;campo;aviso_visible;nota
+permiso revocado antes de abrir;abrir la app;false;sí: «¿Permitir que SignALL grabe audio?» (MIENTRAS LA APP ESTÁ EN USO / SOLO ESTA VEZ / NO PERMITIR);-;-;-;sí (diálogo del sistema);"la pide al abrir, una sola vez; el diálogo del sistema no se puede capturar con screencap (FLAG_SECURE): se leyó del árbol de accesibilidad"
+denegado en el diálogo;tocar NO PERMITIR;false;no;Inactivo;-;;no;"solo el log: «aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.»; con DEV_TOOLS apagado ese texto no llega a pantalla"
+tocar el micrófono con el permiso negado;tocar 🎤;false;sí: el diálogo del sistema vuelve a salir;Inactivo;-;;sí (diálogo);red de seguridad de MainScreen: sin permiso vuelve a pedirlo en vez de abrir el mic
+usable sin permiso;enviar una frase por texto;false;no;Inactivo → Reproduciendo → Inactivo;-;Hola, buenos días, bienvenidos.;n/a;"la frase se representó (2 señas en 4223 ms); el permiso no bloquea el texto"
+revocado con la app abierta;pm revoke con la app en primer plano;false;no;la app deja de existir;-;-;no;Android mata el proceso al revocar un permiso de runtime: pid 10646 → sin proceso
+reabrir con el permiso revocado (USER_FIXED);abrir + tocar 🎤;false;no (el sistema lo auto-deniega);Inactivo;-;;no;"tras dos negativas el sistema deja USER_FIXED: no hay diálogo y el pedido se deniega en el acto; se volvió a ver el diálogo con `pm reset-permissions`"
+modo manual, un toque sin hablar;tocar 🎤 y esperar 26 s;true;no;Grabando (26 s);Dictando...;¡BOS! (parcial del sonido ambiente);-;"no cerró por silencio: el STT nunca oyó 1,5 s seguidos de silencio; el micrófono se apagó al volver a tocar 🎤"
+modo en vivo, prendido;tocar TR y esperar 10 s;true;no;Grabando (10 s);Escuchando...;;-;queda prendido hasta apagarlo
+modo en vivo, apagado;tocar TR;true;no;Texto listo;-;¡BOS!;no;log: «el micrófono se apagó sin transcripción: no hay nada que traducir» y «aviso ... No se escuchó nada.» (texto de depuración)

@@ -1,0 +1,4 @@
+﻿tamaño;audios;wer_pct;errores;palabras;ms_p50;ms_media;ms_p95;elapsed_p50;gpu_mem_pico_total_mib;gpu_mem_reposo_total_mib;gpu_util_media_pct;nota
+small;60;3.9;11;282;120.7;128.5;150.7;113.0;3864;3544;52;
+medium;60;1.77;5;282;285.95;290.5;315.1;276.5;4952;4792;79.6;
+large-v3;0;;;;;;;;;;;"CUDA out of memory al cargar en la GPU de 6 GB; cayó a CPU (10,5/8,0/7,8 s por audio en 3 audios, ~29 veces medium en GPU) y /health siguió diciendo device=cuda"

@@ -1,0 +1,51 @@
+--------- beginning of main
+--------- beginning of system
+         1793836082.022 12365 12365 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Gracias a todos. Los niños y las niñas comen con gusto."
+         1793836082.070 12365 12391 D SignAiNet: segment 0/2 turn=51 -> GRACIAS,TODOS
+         1793836082.071 12365 12391 D SignAiNet: segment 1/2 turn=51 -> COMER,CON GUSTO
+         1793836082.074 12365 12365 I SignAiMetrics: frase #101: 53ms, 2 oraciones, 4 glosas (p50=55ms p95=106ms max=5845ms n=101)
+         1793836082.074 12365 12365 I SignAiState: resumen: frases=101 oraciones=151 glosas=312 sin_seña=2 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=55ms p95=106ms max=5845ms n=101 duracion_representada=p50=6313ms p95=9311ms max=11991ms n=98 oracion_a_avatar=p50=29ms p95=68ms max=147ms n=99 envio_a_primera_sena=p50=82ms p95=187ms max=5875ms n=99
+         1793836082.090 12365 12365 I SignAiState: signStart: oración→avatar 19 ms (seña 0, reloj JS 5170189 ms)
+         1793836082.090 12365 12365 I SignAiMetrics: oración→avatar: 19 ms (p50=29ms p95=68ms max=147ms n=100)
+         1793836082.090 12365 12365 I SignAiMetrics: envío→primera seña: 69 ms (p50=81ms p95=187ms max=5875ms n=100)
+         1793836083.537 12365 12365 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793836084.431 12365 12365 I SignAiState: signStart: oración→avatar 2360 ms (seña 1, reloj JS 5172543 ms)
+         1793836086.506 12365 12365 I SignAiState: signStart: oración→avatar 4435 ms (seña 2, reloj JS 5174599 ms)
+         1793836088.559 12365 12365 I SignAiState: signStart: oración→avatar 6487 ms (seña 3, reloj JS 5176619 ms)
+         1793836088.759 12365 12365 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, ¿cómo estás? ¿Cómo te llamas?"
+         1793836088.766 12365 12391 D SignAiNet: segment 0/3 turn=52 -> HOLA
+         1793836088.766 12365 12391 D SignAiNet: segment 1/3 turn=52 -> COMO ESTAS
+         1793836088.771 12365 12391 D SignAiNet: segment 2/3 turn=52 -> COMO,TU
+         1793836088.789 12365 12365 I SignAiMetrics: frase #102: 31ms, 3 oraciones, 4 glosas (p50=55ms p95=99ms max=5845ms n=102)
+         1793836088.789 12365 12365 I SignAiState: resumen: frases=102 oraciones=154 glosas=316 sin_seña=2 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=55ms p95=99ms max=5845ms n=102 duracion_representada=p50=6313ms p95=9311ms max=11991ms n=98 oracion_a_avatar=p50=29ms p95=68ms max=147ms n=100 envio_a_primera_sena=p50=81ms p95=187ms max=5875ms n=100
+         1793836090.282 12365 12365 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793836090.563 12365 12365 I SignAiState: signStart: oración→avatar 1778 ms (seña 1, reloj JS 5178651 ms)
+         1793836090.564 12365 12365 I SignAiMetrics: oración→avatar: 1778 ms (p50=29ms p95=68ms max=1778ms n=101)
+         1793836090.564 12365 12365 I SignAiMetrics: envío→primera seña: 1805 ms (p50=82ms p95=212ms max=5875ms n=101)
+         1793836092.600 12365 12365 I SignAiState: signStart: oración→avatar 3814 ms (seña 2, reloj JS 5180682 ms)
+         1793836094.638 12365 12365 I SignAiState: signStart: oración→avatar 5853 ms (seña 3, reloj JS 5182719 ms)
+         1793836095.491 12365 12365 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Se siente muy bien. La niña nunca está triste."
+         1793836095.529 12365 12391 D SignAiNet: segment 0/2 turn=53 -> BIEN
+         1793836095.530 12365 12391 D SignAiNet: segment 1/2 turn=53 -> NIÑA,NUNCA,TRISTE
+         1793836095.564 12365 12365 I SignAiMetrics: frase #103: 73ms, 2 oraciones, 4 glosas (p50=55ms p95=99ms max=5845ms n=103)
+         1793836095.564 12365 12365 I SignAiState: resumen: frases=103 oraciones=156 glosas=320 sin_seña=2 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=55ms p95=99ms max=5845ms n=103 duracion_representada=p50=6313ms p95=9311ms max=11991ms n=98 oracion_a_avatar=p50=29ms p95=68ms max=1778ms n=101 envio_a_primera_sena=p50=82ms p95=212ms max=5875ms n=101
+         1793836096.263 12365 12365 I SignAiState: signStart: oración→avatar 702 ms (seña 1, reloj JS 5184339 ms)
+         1793836096.264 12365 12365 I SignAiMetrics: oración→avatar: 702 ms (p50=29ms p95=68ms max=1778ms n=102)
+         1793836096.264 12365 12365 I SignAiMetrics: envío→primera seña: 773 ms (p50=82ms p95=212ms max=5875ms n=102)
+         1793836097.012 12365 12365 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793836098.310 12365 12365 I SignAiState: signStart: oración→avatar 2749 ms (seña 2, reloj JS 5186412 ms)
+         1793836100.385 12365 12365 I SignAiState: signStart: oración→avatar 4823 ms (seña 3, reloj JS 5188439 ms)
+         1793836103.216 12365 12365 I SignAiMetrics: representado: 4 señas en 7654ms (p50=6868ms p95=9311ms max=11991ms n=99)
+         1793836107.583 12365 12365 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Se siente muy bien. La niña nunca está triste."
+         1793836107.593 12365 12391 D SignAiNet: segment 0/2 turn=54 -> BIEN
+         1793836107.595 12365 12391 D SignAiNet: segment 1/2 turn=54 -> NIÑA,NUNCA,TRISTE
+         1793836107.640 12365 12365 I SignAiMetrics: frase #104: 58ms, 2 oraciones, 4 glosas (p50=55ms p95=99ms max=5845ms n=104)
+         1793836107.640 12365 12365 I SignAiState: resumen: frases=104 oraciones=158 glosas=324 sin_seña=2 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=55ms p95=99ms max=5845ms n=104 duracion_representada=p50=6868ms p95=9311ms max=11991ms n=99 oracion_a_avatar=p50=29ms p95=68ms max=1778ms n=102 envio_a_primera_sena=p50=82ms p95=212ms max=5875ms n=102
+         1793836107.658 12365 12365 I SignAiState: signStart: oración→avatar 21 ms (seña 0, reloj JS 5195755 ms)
+         1793836107.658 12365 12365 I SignAiMetrics: oración→avatar: 21 ms (p50=29ms p95=68ms max=1778ms n=103)
+         1793836107.658 12365 12365 I SignAiMetrics: envío→primera seña: 76 ms (p50=82ms p95=212ms max=5875ms n=103)
+         1793836109.095 12365 12365 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793836110.026 12365 12365 I SignAiState: signStart: oración→avatar 2389 ms (seña 1, reloj JS 5198094 ms)
+         1793836112.097 12365 12365 I SignAiState: signStart: oración→avatar 4460 ms (seña 2, reloj JS 5200154 ms)
+         1793836114.670 12365 12365 I SignAiState: signStart: oración→avatar 7033 ms (seña 3, reloj JS 5202716 ms)
+         1793836118.176 12365 12365 I SignAiMetrics: representado: 4 señas en 10539ms (p50=6868ms p95=9312ms max=11991ms n=100)

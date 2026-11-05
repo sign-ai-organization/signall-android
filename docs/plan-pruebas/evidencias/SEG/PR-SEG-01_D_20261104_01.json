@@ -1,0 +1,147 @@
+{
+  "convencion": "Se compara la lista de fragmentos devuelta por SentenceSegmenter.segment con la lista esperada, tras normalizar espacios; el orden importa. Casos de solo muletillas (CO-01-199/200) y texto vacío: esperado = cero fragmentos. Los 29 casos de borde son los 20 de 09_trampas (CO-01-172..191) más los 9 límite de CO-01 §4 (CO-01-192..200). Los cortes se miden como el offset de carácter donde empieza cada fragmento en el texto original: precisión = cortes producidos que coinciden / producidos; cobertura = cortes esperados que coinciden / esperados.",
+  "arranque_segmentador_ms": 769.9,
+  "total": {
+    "n": 210,
+    "exactos": 169,
+    "pct": 80.5
+  },
+  "co01_200": {
+    "n": 200,
+    "exactos": 160,
+    "pct": 80.0
+  },
+  "co01_191_fixtures": {
+    "n": 191,
+    "exactos": 156,
+    "pct": 81.7
+  },
+  "co01_171_sin_trampas": {
+    "n": 171,
+    "exactos": 142,
+    "pct": 83.0
+  },
+  "co01_29_borde": {
+    "n": 29,
+    "exactos": 18,
+    "pct": 62.1
+  },
+  "au05_10": {
+    "n": 10,
+    "exactos": 9,
+    "pct": 90.0
+  },
+  "por_archivo": {
+    "01_puntuados_basicos.txt": {
+      "n": 20,
+      "exactos": 19,
+      "pct": 95.0
+    },
+    "02_sin_puntuacion.txt": {
+      "n": 20,
+      "exactos": 11,
+      "pct": 55.0
+    },
+    "03_registro_datos.txt": {
+      "n": 28,
+      "exactos": 22,
+      "pct": 78.6
+    },
+    "04_coloquial_colombiano.txt": {
+      "n": 23,
+      "exactos": 18,
+      "pct": 78.3
+    },
+    "05_muletillas.txt": {
+      "n": 20,
+      "exactos": 18,
+      "pct": 90.0
+    },
+    "06_negativas_imperativas.txt": {
+      "n": 21,
+      "exactos": 17,
+      "pct": 81.0
+    },
+    "07_no_dividir.txt": {
+      "n": 22,
+      "exactos": 22,
+      "pct": 100.0
+    },
+    "08_numeros_dictados.txt": {
+      "n": 17,
+      "exactos": 15,
+      "pct": 88.2
+    },
+    "09_trampas.txt": {
+      "n": 20,
+      "exactos": 14,
+      "pct": 70.0
+    },
+    "CO-01-límite": {
+      "n": 9,
+      "exactos": 4,
+      "pct": 44.4
+    },
+    "au05": {
+      "n": 10,
+      "exactos": 9,
+      "pct": 90.0
+    }
+  },
+  "cortes": {
+    "tp": 129,
+    "fp": 21,
+    "fn": 32,
+    "precision": 0.86,
+    "cobertura": 0.801
+  },
+  "problemas": {
+    "sobre-segmenta": 16,
+    "sub-segmenta": 24,
+    "mismo número de fragmentos, distinto corte": 1
+  },
+  "ms_por_texto_p50": 1.7,
+  "fallos": [
+    "CO-01-001",
+    "CO-01-021",
+    "CO-01-023",
+    "CO-01-025",
+    "CO-01-026",
+    "CO-01-029",
+    "CO-01-031",
+    "CO-01-035",
+    "CO-01-038",
+    "CO-01-040",
+    "CO-01-044",
+    "CO-01-046",
+    "CO-01-051",
+    "CO-01-060",
+    "CO-01-064",
+    "CO-01-068",
+    "CO-01-070",
+    "CO-01-071",
+    "CO-01-072",
+    "CO-01-080",
+    "CO-01-090",
+    "CO-01-094",
+    "CO-01-105",
+    "CO-01-119",
+    "CO-01-123",
+    "CO-01-125",
+    "CO-01-129",
+    "CO-01-167",
+    "CO-01-170",
+    "CO-01-176",
+    "CO-01-179",
+    "CO-01-183",
+    "CO-01-184",
+    "CO-01-187",
+    "CO-01-189",
+    "CO-01-196",
+    "CO-01-197",
+    "CO-01-198",
+    "CO-01-199",
+    "CO-01-200",
+    "AU-05-005"
+  ]
+}

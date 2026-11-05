@@ -1,0 +1,115 @@
+{
+  "audio_ms": 96085,
+  "t_fin_audio_ms": 96060.1,
+  "fin_ms": 126063.4,
+  "frames_tipos": {
+    "transcript": 85,
+    "sentence_trace": 23,
+    "segment": 23,
+    "trace": 20,
+    "done": 20
+  },
+  "errores": [],
+  "transcripts": [
+    {
+      "n": 1,
+      "texto": "Hola, buenos días, bienvenidos.",
+      "_t": 5760.3
+    },
+    {
+      "n": 2,
+      "texto": "¿Tienes hambre?",
+      "_t": 9120.2
+    },
+    {
+      "n": 3,
+      "texto": "Yo nunca como mucho.",
+      "_t": 13440.6
+    },
+    {
+      "n": 4,
+      "texto": "Por favor, come poco.",
+      "_t": 18000.2
+    },
+    {
+      "n": 5,
+      "texto": "mi abuelo y mi tío trabajan en familia.",
+      "_t": 23340.3
+    },
+    {
+      "n": 6,
+      "texto": "¿Por qué estás triste?",
+      "_t": 27420.3
+    },
+    {
+      "n": 7,
+      "texto": "mi abuelo nunca trabaja.",
+      "_t": 31950.3
+    },
+    {
+      "n": 8,
+      "texto": "Niños, trabajen todos.",
+      "_t": 36420.3
+    },
+    {
+      "n": 9,
+      "texto": "¿Dónde vive tu familia?",
+      "_t": 40350.3
+    },
+    {
+      "n": 10,
+      "texto": "¿Estás bien?",
+      "_t": 43980.3
+    },
+    {
+      "n": 11,
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "_t": 50010.3
+    },
+    {
+      "n": 12,
+      "texto": "mi tío nunca está aburrido.",
+      "_t": 55020.2
+    },
+    {
+      "n": 13,
+      "texto": "Hola, familia. Siéntanse bienvenidos.",
+      "_t": 60810.3
+    },
+    {
+      "n": 14,
+      "texto": "¿Cuándo comen ustedes?",
+      "_t": 65310.3
+    },
+    {
+      "n": 15,
+      "texto": "Ustedes nunca se sienten mal.",
+      "_t": 70320.2
+    },
+    {
+      "n": 16,
+      "texto": "¿Ustedes trabajan en familia?",
+      "_t": 74940.3
+    },
+    {
+      "n": 17,
+      "texto": "¿Tu hermano está aburrido?",
+      "_t": 79380.3
+    },
+    {
+      "n": 18,
+      "texto": "Adiós a todos. Buenas noches.",
+      "_t": 84750.3
+    },
+    {
+      "n": 19,
+      "texto": "Perdón, ¿estás triste?",
+      "_t": 89730.3
+    },
+    {
+      "n": 20,
+      "texto": "Con permiso, déjame pasar, por favor.",
+      "_t": 95670.3
+    }
+  ]
+}

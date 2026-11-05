@@ -1,0 +1,135 @@
+{
+  "metodo": "distancia coseno (1 - producto punto con vectores unitarios) al vecino más cercano del mismo phrase_type, calculada con el EmbeddingModel del backend dentro del contenedor",
+  "modelo": "paraphrase-multilingual-MiniLM-L12-v2",
+  "umbral_actual": 0.05,
+  "validacion": [
+    {
+      "id": "FR-03-001",
+      "original_id": "FR-01-001",
+      "variante": "HOLA, BUENOS DÍAS, BIENVENIDOS.",
+      "source": [
+        "cache"
+      ],
+      "oraciones": [
+        "HOLA, BUENOS DÍAS, BIENVENIDOS."
+      ],
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "glosas_original": [
+        "HOLA",
+        "BUENOS DIAS",
+        "BIENVENIDO"
+      ],
+      "igual_glosas": false,
+      "cache_antes": 43,
+      "cache_despues": 43,
+      "ms": 7.3
+    },
+    {
+      "id": "FR-03-003",
+      "original_id": "FR-01-003",
+      "variante": "En familia trabajan mi abuelo y mi tío.",
+      "source": [
+        "cache"
+      ],
+      "oraciones": [
+        "En familia trabajan mi abuelo y mi tío."
+      ],
+      "glosas": [
+        "ABUELO",
+        "TU",
+        "TIO",
+        "FAMILIA"
+      ],
+      "glosas_original": [
+        "ABUELO",
+        "TIO",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "igual_glosas": false,
+      "cache_antes": 43,
+      "cache_despues": 43,
+      "ms": 29.0
+    },
+    {
+      "id": "FR-03-011",
+      "original_id": "FR-01-011",
+      "variante": "Perdon. ¿Estas triste?",
+      "source": [
+        "cache",
+        "cache"
+      ],
+      "oraciones": [
+        "Perdon.",
+        "¿Estas triste?"
+      ],
+      "glosas": [
+        "PERDON",
+        "TRISTE"
+      ],
+      "glosas_original": [
+        "PERDON",
+        "TU",
+        "TRISTE"
+      ],
+      "igual_glosas": false,
+      "cache_antes": 43,
+      "cache_despues": 43,
+      "ms": 4.6
+    },
+    {
+      "id": "FR-03-021",
+      "original_id": "FR-01-021",
+      "variante": "Nunca está aburrido mi tío.",
+      "source": [
+        "cache"
+      ],
+      "oraciones": [
+        "Nunca está aburrido mi tío."
+      ],
+      "glosas": [
+        "YO",
+        "TU",
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "glosas_original": [
+        "TIO",
+        "NUNCA",
+        "ABURRIDO"
+      ],
+      "igual_glosas": false,
+      "cache_antes": 43,
+      "cache_despues": 43,
+      "ms": 19.3
+    },
+    {
+      "id": "FR-03-027",
+      "original_id": "FR-01-027",
+      "variante": "Chicos, trabajen todos.",
+      "source": [
+        "llm"
+      ],
+      "oraciones": [
+        "Chicos, trabajen todos."
+      ],
+      "glosas": [
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "glosas_original": [
+        "NIÑO",
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "igual_glosas": false,
+      "cache_antes": 43,
+      "cache_despues": 44,
+      "ms": 481.7
+    }
+  ]
+}

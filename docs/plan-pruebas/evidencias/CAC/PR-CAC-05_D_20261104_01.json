@@ -1,0 +1,909 @@
+{
+  "delete": "DELETE 9",
+  "restart": {
+    "segundos": 20.6,
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 0,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "cache_vacia": 0,
+  "envios": [
+    {
+      "texto": "Hola, buenos días, bienvenidos.",
+      "ms": 570.1,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "Hola, buenos días, bienvenidos.",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.1,
+            "cache.exact": 0.0,
+            "cache.embed": 24.2,
+            "cache.similarity": 0.0,
+            "llm": 538.4
+          },
+          "glosas": [
+            "HOLA",
+            "BUENOS DIAS"
+          ],
+          "disponibles": [
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "done": 569.5,
+      "frames_extra": [],
+      "envio": 1,
+      "id_frase": "FR-01-001",
+      "tipo": "Primera vez",
+      "done_ms": 569.5,
+      "t_guardado_ms": 519.6,
+      "filas_base": 1
+    },
+    {
+      "texto": "¿Tienes hambre?",
+      "ms": 285.1,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "¿Tienes hambre?",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.1,
+            "cache.exact": 0.0,
+            "cache.embed": 12.5,
+            "cache.similarity": 0.0,
+            "llm": 267.3
+          },
+          "glosas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "disponibles": [
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "TU",
+        "HAMBRE"
+      ],
+      "done": 284.6,
+      "frames_extra": [],
+      "envio": 2,
+      "id_frase": "FR-01-007",
+      "tipo": "Primera vez",
+      "done_ms": 284.6,
+      "t_guardado_ms": 763.1,
+      "filas_base": 2
+    },
+    {
+      "texto": "¿Estás bien?",
+      "ms": 283.3,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "¿Estás bien?",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.1,
+            "cache.exact": 0.0,
+            "cache.embed": 16.5,
+            "cache.similarity": 0.1,
+            "llm": 260.4
+          },
+          "glosas": [
+            "BIEN"
+          ],
+          "disponibles": [
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "BIEN"
+      ],
+      "done": 282.6,
+      "frames_extra": [],
+      "envio": 3,
+      "id_frase": "FR-01-008",
+      "tipo": "Primera vez",
+      "done_ms": 282.6,
+      "t_guardado_ms": 1851.2,
+      "filas_base": 3
+    },
+    {
+      "texto": "¿Ustedes trabajan en familia?",
+      "ms": 460.6,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "¿Ustedes trabajan en familia?",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0,
+            "cache.embed": 12.6,
+            "cache.similarity": 0.1,
+            "llm": 442.9
+          },
+          "glosas": [
+            "USTEDES",
+            "TRABAJAR",
+            "FAMILIA"
+          ],
+          "disponibles": [
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "USTEDES",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "done": 460.2,
+      "frames_extra": [],
+      "envio": 4,
+      "id_frase": "FR-01-009",
+      "tipo": "Primera vez",
+      "done_ms": 460.2,
+      "t_guardado_ms": 697.5,
+      "filas_base": 4
+    },
+    {
+      "texto": "¿Tu hermano está aburrido?",
+      "ms": 527.1,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "¿Tu hermano está aburrido?",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0,
+            "cache.embed": 15.1,
+            "cache.similarity": 0.1,
+            "llm": 505.0
+          },
+          "glosas": [
+            "TU",
+            "HERMANO",
+            "ABURRIDO"
+          ],
+          "disponibles": [
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "TU",
+        "HERMANO",
+        "ABURRIDO"
+      ],
+      "done": 526.6,
+      "frames_extra": [],
+      "envio": 5,
+      "id_frase": "FR-01-012",
+      "tipo": "Primera vez",
+      "done_ms": 526.6,
+      "t_guardado_ms": 553.1,
+      "filas_base": 5
+    },
+    {
+      "texto": "¿Por qué estás triste?",
+      "ms": 388.0,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "¿Por qué estás triste?",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0,
+            "cache.embed": 12.6,
+            "cache.similarity": 0.0,
+            "llm": 370.5
+          },
+          "glosas": [
+            "POR QUE",
+            "TU",
+            "TRISTE"
+          ],
+          "disponibles": [
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "POR QUE",
+        "TU",
+        "TRISTE"
+      ],
+      "done": 387.7,
+      "frames_extra": [],
+      "envio": 6,
+      "id_frase": "FR-01-016",
+      "tipo": "Primera vez",
+      "done_ms": 387.7,
+      "t_guardado_ms": 2214.1,
+      "filas_base": 6
+    },
+    {
+      "texto": "¿Cuándo comen ustedes?",
+      "ms": 429.1,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "¿Cuándo comen ustedes?",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0,
+            "cache.embed": 15.6,
+            "cache.similarity": 0.1,
+            "llm": 408.3
+          },
+          "glosas": [
+            "CUANDO",
+            "USTEDES",
+            "COMER"
+          ],
+          "disponibles": [
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "done": 428.7,
+      "frames_extra": [],
+      "envio": 7,
+      "id_frase": "FR-01-017",
+      "tipo": "Primera vez",
+      "done_ms": 428.7,
+      "t_guardado_ms": 590.8,
+      "filas_base": 7
+    },
+    {
+      "texto": "Por favor, come poco.",
+      "ms": 381.2,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "Por favor, come poco.",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0,
+            "cache.embed": 14.2,
+            "cache.similarity": 0.1,
+            "llm": 362.1
+          },
+          "glosas": [
+            "POR FAVOR",
+            "COMER",
+            "POCO"
+          ],
+          "disponibles": [
+            true,
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "done": 380.7,
+      "frames_extra": [],
+      "envio": 8,
+      "id_frase": "FR-01-025",
+      "tipo": "Primera vez",
+      "done_ms": 380.7,
+      "t_guardado_ms": 661.6,
+      "filas_base": 8
+    },
+    {
+      "texto": "Niños, trabajen todos.",
+      "ms": 458.1,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "Niños, trabajen todos.",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0,
+            "cache.embed": 12.8,
+            "cache.similarity": 0.1,
+            "llm": 437.0
+          },
+          "glosas": [
+            "TODOS",
+            "TRABAJAR"
+          ],
+          "disponibles": [
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "TODOS",
+        "TRABAJAR"
+      ],
+      "done": 456.4,
+      "frames_extra": [],
+      "envio": 9,
+      "id_frase": "FR-01-027",
+      "tipo": "Primera vez",
+      "done_ms": 456.4,
+      "t_guardado_ms": 614.5,
+      "filas_base": 9
+    },
+    {
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "ms": 629.8,
+      "sources": [
+        "llm"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "Hola, familia, siéntanse bienvenidos.",
+          "source": "llm",
+          "steps_ms": {
+            "fingerprint": 0.1,
+            "cache.exact": 0.0,
+            "cache.embed": 16.1,
+            "cache.similarity": 0.1,
+            "llm": 607.4
+          },
+          "glosas": [
+            "HOLA",
+            "FAMILIA"
+          ],
+          "disponibles": [
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "HOLA",
+        "FAMILIA"
+      ],
+      "done": 629.5,
+      "frames_extra": [],
+      "envio": 10,
+      "id_frase": "FR-01-029",
+      "tipo": "Primera vez",
+      "done_ms": 629.5,
+      "t_guardado_ms": 1474.9,
+      "filas_base": 10
+    },
+    {
+      "texto": "Hola, buenos días, bienvenidos.",
+      "ms": 4.0,
+      "sources": [
+        "cache"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "Hola, buenos días, bienvenidos.",
+          "source": "cache",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0
+          },
+          "glosas": [
+            "HOLA",
+            "BUENOS DIAS"
+          ],
+          "disponibles": [
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "done": 3.7,
+      "frames_extra": [],
+      "envio": 11,
+      "id_frase": "FR-01-001",
+      "tipo": "Repetida",
+      "done_ms": 3.7,
+      "filas_base": 10
+    },
+    {
+      "texto": "¿Tienes hambre?",
+      "ms": 4.1,
+      "sources": [
+        "cache"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "¿Tienes hambre?",
+          "source": "cache",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0
+          },
+          "glosas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "disponibles": [
+            true,
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "TU",
+        "HAMBRE"
+      ],
+      "done": 3.8,
+      "frames_extra": [],
+      "envio": 12,
+      "id_frase": "FR-01-007",
+      "tipo": "Repetida",
+      "done_ms": 3.8,
+      "filas_base": 10
+    },
+    {
+      "texto": "¿Estás bien?",
+      "ms": 4.6,
+      "sources": [
+        "cache"
+      ],
+      "oraciones": [
+        {
+          "indice": 0,
+          "texto": "¿Estás bien?",
+          "source": "cache",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0
+          },
+          "glosas": [
+            "BIEN"
+          ],
+          "disponibles": [
+            true
+          ]
+        }
+      ],
+      "glosas": [
+        "BIEN"
+      ],
+      "done": 4.3,
+      "frames_extra": [],
+      "envio": 13,
+      "id_frase": "FR-01-008",
+      "tipo": "Repetida",
+      "done_ms": 4.3,
+      "filas_base": 10
+    }
+  ],
+  "filas": [
+    {
+      "id": "1513",
+      "original_text": "Hola, buenos días, bienvenidos.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": "['HOLA', 'BUENOS DIAS']",
+      "n": "2"
+    },
+    {
+      "id": "1514",
+      "original_text": "¿Tienes hambre?",
+      "phrase_type": "YES_NO_QUESTION",
+      "glosses": "['TU', 'HAMBRE']",
+      "n": "2"
+    },
+    {
+      "id": "1515",
+      "original_text": "¿Estás bien?",
+      "phrase_type": "YES_NO_QUESTION",
+      "glosses": "['BIEN']",
+      "n": "1"
+    },
+    {
+      "id": "1516",
+      "original_text": "¿Ustedes trabajan en familia?",
+      "phrase_type": "YES_NO_QUESTION",
+      "glosses": "['USTEDES', 'TRABAJAR', 'FAMILIA']",
+      "n": "3"
+    },
+    {
+      "id": "1517",
+      "original_text": "¿Tu hermano está aburrido?",
+      "phrase_type": "YES_NO_QUESTION",
+      "glosses": "['TU', 'HERMANO', 'ABURRIDO']",
+      "n": "3"
+    },
+    {
+      "id": "1518",
+      "original_text": "¿Por qué estás triste?",
+      "phrase_type": "CONTENT_QUESTION",
+      "glosses": "['POR QUE', 'TU', 'TRISTE']",
+      "n": "3"
+    },
+    {
+      "id": "1519",
+      "original_text": "¿Cuándo comen ustedes?",
+      "phrase_type": "CONTENT_QUESTION",
+      "glosses": "['CUANDO', 'USTEDES', 'COMER']",
+      "n": "3"
+    },
+    {
+      "id": "1520",
+      "original_text": "Por favor, come poco.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": "['POR FAVOR', 'COMER', 'POCO']",
+      "n": "3"
+    },
+    {
+      "id": "1521",
+      "original_text": "Niños, trabajen todos.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": "['TODOS', 'TRABAJAR']",
+      "n": "2"
+    },
+    {
+      "id": "1522",
+      "original_text": "Hola, familia, siéntanse bienvenidos.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": "['HOLA', 'FAMILIA']",
+      "n": "2"
+    }
+  ],
+  "duplicados": [],
+  "vacias": [
+    {
+      "n": "0"
+    }
+  ],
+  "borrado": "DELETE 1",
+  "filas_antes_borrado": 10,
+  "filas_tras_borrado": 9,
+  "tras_borrar": {
+    "texto": "¿Estás bien?",
+    "ms": 4.6,
+    "sources": [
+      "cache"
+    ],
+    "oraciones": [
+      {
+        "indice": 0,
+        "texto": "¿Estás bien?",
+        "source": "cache",
+        "steps_ms": {
+          "fingerprint": 0.0,
+          "cache.exact": 0.0
+        },
+        "glosas": [
+          "BIEN"
+        ],
+        "disponibles": [
+          true
+        ]
+      }
+    ],
+    "glosas": [
+      "BIEN"
+    ],
+    "done": 4.3,
+    "frames_extra": [],
+    "fila_en_base": "0"
+  },
+  "update": "UPDATE 1",
+  "fila_base_corregida": [
+    {
+      "id": "1514",
+      "original_text": "¿Tienes hambre?",
+      "phrase_type": "YES_NO_QUESTION",
+      "glosses": "['HOLA', 'FAMILIA']",
+      "n": "2"
+    }
+  ],
+  "tras_corregir": {
+    "texto": "¿Tienes hambre?",
+    "ms": 4.0,
+    "sources": [
+      "cache"
+    ],
+    "oraciones": [
+      {
+        "indice": 0,
+        "texto": "¿Tienes hambre?",
+        "source": "cache",
+        "steps_ms": {
+          "fingerprint": 0.0,
+          "cache.exact": 0.0
+        },
+        "glosas": [
+          "TU",
+          "HAMBRE"
+        ],
+        "disponibles": [
+          true,
+          true
+        ]
+      }
+    ],
+    "glosas": [
+      "TU",
+      "HAMBRE"
+    ],
+    "done": 3.7,
+    "frames_extra": []
+  },
+  "restore_glosses": "UPDATE 1",
+  "filas_final": [
+    {
+      "id": "1513",
+      "original_text": "Hola, buenos días, bienvenidos.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": "['HOLA', 'BUENOS DIAS']",
+      "n": "2"
+    },
+    {
+      "id": "1514",
+      "original_text": "¿Tienes hambre?",
+      "phrase_type": "YES_NO_QUESTION",
+      "glosses": "['TU', 'HAMBRE']",
+      "n": "2"
+    },
+    {
+      "id": "1516",
+      "original_text": "¿Ustedes trabajan en familia?",
+      "phrase_type": "YES_NO_QUESTION",
+      "glosses": "['USTEDES', 'TRABAJAR', 'FAMILIA']",
+      "n": "3"
+    },
+    {
+      "id": "1517",
+      "original_text": "¿Tu hermano está aburrido?",
+      "phrase_type": "YES_NO_QUESTION",
+      "glosses": "['TU', 'HERMANO', 'ABURRIDO']",
+      "n": "3"
+    },
+    {
+      "id": "1518",
+      "original_text": "¿Por qué estás triste?",
+      "phrase_type": "CONTENT_QUESTION",
+      "glosses": "['POR QUE', 'TU', 'TRISTE']",
+      "n": "3"
+    },
+    {
+      "id": "1519",
+      "original_text": "¿Cuándo comen ustedes?",
+      "phrase_type": "CONTENT_QUESTION",
+      "glosses": "['CUANDO', 'USTEDES', 'COMER']",
+      "n": "3"
+    },
+    {
+      "id": "1520",
+      "original_text": "Por favor, come poco.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": "['POR FAVOR', 'COMER', 'POCO']",
+      "n": "3"
+    },
+    {
+      "id": "1521",
+      "original_text": "Niños, trabajen todos.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": "['TODOS', 'TRABAJAR']",
+      "n": "2"
+    },
+    {
+      "id": "1522",
+      "original_text": "Hola, familia, siéntanse bienvenidos.",
+      "phrase_type": "AFFIRMATIVE",
+      "glosses": "['HOLA', 'FAMILIA']",
+      "n": "2"
+    }
+  ],
+  "restart_tras_borrar": {
+    "segundos": 18.5,
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 9,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "filas_tras_reinicio": 9,
+  "tras_borrar_reinicio": {
+    "texto": "¿Estás bien?",
+    "ms": 282.2,
+    "sources": [
+      "llm"
+    ],
+    "oraciones": [
+      {
+        "indice": 0,
+        "texto": "¿Estás bien?",
+        "source": "llm",
+        "steps_ms": {
+          "fingerprint": 0.1,
+          "cache.exact": 0.0,
+          "cache.embed": 19.1,
+          "cache.similarity": 0.1,
+          "llm": 256.5
+        },
+        "glosas": [
+          "BIEN"
+        ],
+        "disponibles": [
+          true
+        ]
+      }
+    ],
+    "glosas": [
+      "BIEN"
+    ],
+    "done": 281.8,
+    "frames_extra": [],
+    "fila_en_base": "1"
+  },
+  "update2": "UPDATE 1",
+  "restart_correccion": {
+    "segundos": 17.5,
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 10,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "health_correccion": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 10,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "tras_corregir_reinicio": {
+    "texto": "¿Tienes hambre?",
+    "ms": 4.4,
+    "sources": [
+      "cache"
+    ],
+    "oraciones": [
+      {
+        "indice": 0,
+        "texto": "¿Tienes hambre?",
+        "source": "cache",
+        "steps_ms": {
+          "fingerprint": 0.1,
+          "cache.exact": 0.0
+        },
+        "glosas": [
+          "HOLA",
+          "FAMILIA"
+        ],
+        "disponibles": [
+          true,
+          true
+        ]
+      }
+    ],
+    "glosas": [
+      "HOLA",
+      "FAMILIA"
+    ],
+    "done": 4.1,
+    "frames_extra": []
+  },
+  "restore_glosses2": "UPDATE 1",
+  "filas_final2": 10,
+  "tmp": {
+    "health": {
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 10,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    "metrics_config": {
+      "llm_model": "qwen3:4b-instruct",
+      "llm_base_url": "http://***/v1",
+      "semantic_cache_preload": true,
+      "semantic_cache_threshold": 0.05,
+      "sentence_segmenter_enabled": true,
+      "stt_ws_url": "ws://***/ws/transcribe"
+    },
+    "env": "DB_KEEPALIVE_INTERVAL_SECONDS=240\nLLM_MODEL=qwen3:4b-instruct\nLLM_BASE_URL=http://127.0.0.1:11434/v1\nDEBUG_TRACE_ENABLED=true\nSEMANTIC_CACHE_SIMILARITY_THRESHOLD=0.05\nDB_POOL_MAX_INACTIVE_CONNECTION_LIFETIME_SECONDS=0\nLLM_TEMPERATURE=0.0\nAPP_HOST=127.0.0.1\nDB_RETRY_DELAY_SECONDS=0.5\nLLM_TIMEOUT_MS=10000\nLLM_MAX_RETRIES=0\nDATABASE_URL=postgresql://neondb_owner:npg_ZHx1bak6oKds@ep-shy-meadow-axe2zkz4-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require\nDB_MAX_RETRIES=1\nLLM_API_KEY=ollama\nDB_COMMAND_TIMEOUT_SECONDS=5\nSTT_WS_URL=ws://127.0.0.1:8000/ws/transcribe\nAPP_PORT=8080\nLOG_LEVEL=INFO\nDB_KEEPALIVE_IDLE_WINDOW_SECONDS=1200\nLLM_MAX_RETRIES=0\nLLM_BASE_URL=http://127.0.0.1:9/v1\nLLM_TIMEOUT_MS=2000\nPATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\nLANG=C.UTF-8\nGPG_KEY=7169605F62C751356D054A26A821E680E5FA6305\nPYTHON_VERSION=3.12.16\nPYTHON_SHA256=b5796915dc45ff745cfb4e990a7e7c93d6f546328a102ce31448d69ebc37575c\n\n"
+  },
+  "filas_antes_falla": 10,
+  "falla": {
+    "frames": [
+      {
+        "type": "error",
+        "message": "No se pudo traducir el texto.",
+        "_t": 27.0
+      }
+    ],
+    "ms": 27.3
+  },
+  "filas_despues_falla": 10,
+  "fila_de_la_frase": "0",
+  "stop": {
+    "segundos": 17.9,
+    "salida": "backend original arriba",
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 10,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "health_final": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 10,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  }
+}

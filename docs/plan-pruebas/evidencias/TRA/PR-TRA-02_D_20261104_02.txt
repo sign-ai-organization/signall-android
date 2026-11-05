@@ -1,0 +1,12 @@
+===== MYPY sin dependencias =====
+Success: no issues found in 39 source files
+
+===== MYPY con dependencias (sin sentence-transformers) =====
+app/config/settings.py:109: error: Missing named argument "database_url" for "Settings"  [call-arg]
+app/config/settings.py:109: error: Missing named argument "llm_api_key" for "Settings"  [call-arg]
+app/config/settings.py:109: error: Missing named argument "llm_model" for "Settings"  [call-arg]
+app/nlp/segmenter/_clauses.py:10: error: Missing positional argument "default" in call to "get" of "MorphAnalysis"  [call-arg]
+app/nlp/segmenter/_clauses.py:65: error: Missing positional argument "default" in call to "get" of "MorphAnalysis"  [call-arg]
+app/nlp/llm_client.py:167: error: Argument "api_key" to "ChatOpenAI" has incompatible type "str"; expected "SecretStr | Callable[[], str] | Callable[[], Awaitable[str]] | None"  [arg-type]
+app/nlp/llm_client.py:194: error: Argument 1 to "_parse_glosses" of "LLMClient" has incompatible type "str | list[str | dict[Any, Any]]"; expected "str"  [arg-type]
+Found 7 errors in 3 files (checked 39 source files)

@@ -1,0 +1,16 @@
+﻿tipo;n;frase;avatar;am_total_ms;ms_hasta_avatar_listo;ms_interno_escena;glosas;estado_final
+apertura en frío;1;;pauline;799;3669;2179;;avatar listo
+apertura en frío;2;;pauline;829;3607;2080;;avatar listo
+apertura en frío;3;;pauline;799;3685;2181;;avatar listo
+apertura en frío;4;;pauline;817;3709;2147;;avatar listo
+apertura en frío;5;;pauline;838;3855;2250;;avatar listo
+secuencia FR-01-C;1;Hola, buenos días, bienvenidos.;pauline;;;4180;HOLA,BUENOS DIAS;Inactivo
+secuencia FR-01-C;2;¿Tienes hambre?;pauline;;;3812;TU,HAMBRE;Inactivo
+secuencia FR-01-C;3;¿Estás bien?;pauline;;;2514;BIEN;Inactivo
+secuencia FR-01-C;4;¿Ustedes trabajan en familia?;pauline;;;5512;USTEDES,TRABAJAR,FAMILIA;Inactivo
+secuencia FR-01-C;5;¿Tu hermano está aburrido?;pauline;;;6062;TU,HERMANO,ABURRIDO;Inactivo
+secuencia FR-01-C;6;¿Por qué estás triste?;pauline;;;6851;POR QUE,TU,TRISTE;Inactivo
+secuencia FR-01-C;7;¿Cuándo comen ustedes?;pauline;;;;CUANDO,USTEDES,COMER;Inactivo (sin línea 'representado')
+secuencia FR-01-C;8;Por favor, come poco.;pauline;;;6200;POR FAVOR,COMER,POCO;Inactivo
+secuencia FR-01-C;9;Niños, trabajen todos.;pauline;;;4153;TODOS,TRABAJAR;Inactivo
+secuencia FR-01-C;10;Hola, familia, siéntanse bienvenidos.;pauline;;;4233;HOLA,FAMILIA;Inactivo

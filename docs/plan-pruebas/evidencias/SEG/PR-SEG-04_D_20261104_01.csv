@@ -1,0 +1,88 @@
+﻿configuracion;id;frase;num_oraciones;source;oraciones_de_cache;glosas;igual_al_baseline;sonda;sonda_oraciones
+completa (línea base);FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;sí;;
+completa (línea base);FR-05-002;Buenas tardes. ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;sí;;
+completa (línea base);FR-05-003;Hoy me siento más o menos. ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;sí;;
+completa (línea base);FR-05-004;Tu hermano está triste. ¿Estás triste?;2;cache | cache;2;TU HERMANO TRISTE TRISTE;sí;;
+completa (línea base);FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;DIFERENTE ABUELO TU TIO FAMILIA;sí;;
+completa (línea base);FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE YO ABUELO NUNCA TRABAJAR;sí;;
+completa (línea base);FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;2;cache | cache;2;BIEN YO CONTENTO HERMANO FELIZ;sí;;
+completa (línea base);FR-05-008;Adiós a todos. Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;sí;;
+completa (línea base);FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;3;cache | cache | cache;3;HOLA COMO ESTAS COMER CON GUSTO;sí;;
+completa (línea base);FR-05-010;Niños, trabajen todos. Por favor, come poco.;2;cache | cache;2;TODOS TRABAJAR POR FAVOR COMER POCO;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-002;Buenas tardes. ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-004;Tu hermano está triste. ¿Estás triste?;2;cache | cache;2;TU HERMANO TRISTE TRISTE;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;DIFERENTE ABUELO TU TIO FAMILIA;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE YO ABUELO NUNCA TRABAJAR;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;2;cache | cache;2;BIEN YO CONTENTO HERMANO FELIZ;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-008;Adiós a todos. Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;3;cache | cache | cache;3;HOLA COMO ESTAS COMER CON GUSTO;sí;;
+POST_PROCESSING_ENABLED=false;FR-05-010;Niños, trabajen todos. Por favor, come poco.;2;cache | cache;2;TODOS TRABAJAR POR FAVOR COMER POCO;sí;;
+POST_PROCESSING_ENABLED=false;SONDA;Hola. ¿Tienes hambre?;2;cache | cache;2;HOLA TU HAMBRE;;Hola. ¿Tienes hambre?;Hola. | ¿Tienes hambre?
+MIN_FRAGMENT_WORDS=2;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-002;Buenas tardes. ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-004;Tu hermano está triste. ¿Estás triste?;2;cache | llm;1;TU HERMANO TRISTE TRISTE;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;DIFERENTE ABUELO TU TIO FAMILIA;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE YO ABUELO NUNCA TRABAJAR;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;2;cache | cache;2;BIEN YO CONTENTO HERMANO FELIZ;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-008;Adiós a todos. Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;2;cache | cache;2;HOLA COMO ESTAS COMER CON GUSTO;sí;;
+MIN_FRAGMENT_WORDS=2;FR-05-010;Niños, trabajen todos. Por favor, come poco.;2;cache | cache;2;TODOS TRABAJAR POR FAVOR COMER POCO;sí;;
+MIN_FRAGMENT_WORDS=2;SONDA;Hola. ¿Tienes hambre?;1;llm;0;HOLA TU HAMBRE;;Hola. ¿Tienes hambre?;Hola. ¿Tienes hambre?
+CUT_BEFORE_OPENING_MARK=false;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-002;Buenas tardes. ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-004;Tu hermano está triste. ¿Estás triste?;2;cache | cache;2;TU HERMANO TRISTE TRISTE;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;DIFERENTE ABUELO TU TIO FAMILIA;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE YO ABUELO NUNCA TRABAJAR;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;2;cache | cache;2;BIEN YO CONTENTO HERMANO FELIZ;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-008;Adiós a todos. Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;2;cache | cache;2;HOLA COMO ESTAS COMER CON GUSTO;sí;;
+CUT_BEFORE_OPENING_MARK=false;FR-05-010;Niños, trabajen todos. Por favor, come poco.;2;cache | cache;2;TODOS TRABAJAR POR FAVOR COMER POCO;sí;;
+CUT_BEFORE_OPENING_MARK=false;SONDA;Hola, ¿cómo estás?;1;cache;1;HOLA COMO ESTAS;;Hola, ¿cómo estás?;Hola, ¿cómo estás?
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-002;Buenas tardes. ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-004;Tu hermano está triste. ¿Estás triste?;2;cache | cache;2;TU HERMANO TRISTE TRISTE;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;DIFERENTE ABUELO TU TIO FAMILIA;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE YO ABUELO NUNCA TRABAJAR;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;2;cache | cache;2;BIEN YO CONTENTO HERMANO FELIZ;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-008;Adiós a todos. Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;3;cache | cache | cache;3;HOLA COMO ESTAS COMER CON GUSTO;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;FR-05-010;Niños, trabajen todos. Por favor, come poco.;2;cache | cache;2;TODOS TRABAJAR POR FAVOR COMER POCO;sí;;
+INFINITIVE_INTRODUCES_INDIRECT=false;SONDA;Quiero saber cómo estás.;1;llm;0;COMO ESTAS;;Quiero saber cómo estás.;Quiero saber cómo estás.
+FILLER_POLICY=discard;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;sí;;
+FILLER_POLICY=discard;FR-05-002;Buenas tardes. ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;sí;;
+FILLER_POLICY=discard;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;sí;;
+FILLER_POLICY=discard;FR-05-004;Tu hermano está triste. ¿Estás triste?;2;cache | cache;2;TU HERMANO TRISTE TRISTE;sí;;
+FILLER_POLICY=discard;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;DIFERENTE ABUELO TU TIO FAMILIA;sí;;
+FILLER_POLICY=discard;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE YO ABUELO NUNCA TRABAJAR;sí;;
+FILLER_POLICY=discard;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;2;cache | cache;2;BIEN YO CONTENTO HERMANO FELIZ;sí;;
+FILLER_POLICY=discard;FR-05-008;Adiós a todos. Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;sí;;
+FILLER_POLICY=discard;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;3;cache | cache | cache;3;HOLA COMO ESTAS COMER CON GUSTO;sí;;
+FILLER_POLICY=discard;FR-05-010;Niños, trabajen todos. Por favor, come poco.;2;cache | cache;2;TODOS TRABAJAR POR FAVOR COMER POCO;sí;;
+FILLER_POLICY=discard;SONDA;Bueno, o sea, ¿tienes hambre?;1;cache;1;TU HAMBRE;;Bueno, o sea, ¿tienes hambre?;¿tienes hambre?
+MIN_WORDS_PER_SIDE=1;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-002;Buenas tardes. ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-004;Tu hermano está triste. ¿Estás triste?;2;cache | cache;2;TU HERMANO TRISTE TRISTE;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;DIFERENTE ABUELO TU TIO FAMILIA;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE YO ABUELO NUNCA TRABAJAR;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;2;cache | cache;2;BIEN YO CONTENTO HERMANO FELIZ;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-008;Adiós a todos. Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;3;cache | cache | cache;3;HOLA COMO ESTAS COMER CON GUSTO;sí;;
+MIN_WORDS_PER_SIDE=1;FR-05-010;Niños, trabajen todos. Por favor, come poco.;2;cache | cache;2;TODOS TRABAJAR POR FAVOR COMER POCO;sí;;
+MIN_WORDS_PER_SIDE=1;SONDA;Yo como. Tú trabajas.;2;llm | llm;0;YO COMER TU TRABAJAR;;Yo como. Tú trabajas.;Yo como. | Tú trabajas.
+CUT_MARKERS=[];FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;sí;;
+CUT_MARKERS=[];FR-05-002;Buenas tardes. ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;sí;;
+CUT_MARKERS=[];FR-05-003;Hoy me siento más o menos. ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;sí;;
+CUT_MARKERS=[];FR-05-004;Tu hermano está triste. ¿Estás triste?;2;cache | cache;2;TU HERMANO TRISTE TRISTE;sí;;
+CUT_MARKERS=[];FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;DIFERENTE ABUELO TU TIO FAMILIA;sí;;
+CUT_MARKERS=[];FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE YO ABUELO NUNCA TRABAJAR;sí;;
+CUT_MARKERS=[];FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;2;cache | cache;2;BIEN YO CONTENTO HERMANO FELIZ;sí;;
+CUT_MARKERS=[];FR-05-008;Adiós a todos. Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;sí;;
+CUT_MARKERS=[];FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;3;cache | cache | cache;3;HOLA COMO ESTAS COMER CON GUSTO;sí;;
+CUT_MARKERS=[];FR-05-010;Niños, trabajen todos. Por favor, come poco.;2;cache | cache;2;TODOS TRABAJAR POR FAVOR COMER POCO;sí;;
+CUT_MARKERS=[];SONDA;Hola, o sea, ¿tienes hambre?;2;llm | cache;1;HOLA TU HAMBRE;;Hola, o sea, ¿tienes hambre?;Hola, o sea, | ¿tienes hambre?

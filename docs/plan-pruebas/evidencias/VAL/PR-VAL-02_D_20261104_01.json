@@ -1,0 +1,57 @@
+{
+  "n": 50,
+  "glosas_distintas": 50,
+  "ids_distintos": 50,
+  "categorias_vacias": [],
+  "rutas_fuera_del_inventario": [],
+  "glosas_duplicadas": [],
+  "intento_mismo_id": {
+    "resultado": "RECHAZADO",
+    "error": "Command 'docker exec sign-ai-backend-backend-1 python /tmp/db.py \"INSERT INTO catalog (id_sign, gloss, semantic_category, glb_animation_path) VALUES (19, 'HAMBRE', 'sustantivo', 'signs/0019_0000_0000.glb')\"' returned non-zero exit status 1."
+  },
+  "intento_glosa_repetida": {
+    "resultado": "ACEPTADO"
+  },
+  "tras_limpieza": "50",
+  "metrics_tras_reinicio": {
+    "catalog_glosses": 50,
+    "health": {
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 33,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    }
+  },
+  "stats_catalog": {
+    "antes": {
+      "seq_scan": "282",
+      "idx_scan": "30",
+      "seq_tup_read": "11365",
+      "idx_tup_fetch": "92",
+      "n_tup_ins": "55",
+      "n_tup_upd": "0",
+      "n_tup_del": "4"
+    },
+    "despues": {
+      "seq_scan": "282",
+      "idx_scan": "30",
+      "seq_tup_read": "11365",
+      "idx_tup_fetch": "92",
+      "n_tup_ins": "55",
+      "n_tup_upd": "0",
+      "n_tup_del": "4"
+    },
+    "delta": {
+      "seq_scan": 0,
+      "idx_scan": 0,
+      "seq_tup_read": 0,
+      "idx_tup_fetch": 0,
+      "n_tup_ins": 0,
+      "n_tup_upd": 0,
+      "n_tup_del": 0
+    }
+  },
+  "traduccion_s": 6.0
+}

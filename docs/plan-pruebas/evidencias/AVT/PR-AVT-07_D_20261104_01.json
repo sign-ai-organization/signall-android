@@ -1,0 +1,61 @@
+{
+  "metricas_pixeles": {
+    "juan_vs_pauline_reposo": [
+      63.57,
+      33.34
+    ],
+    "juan_vs_pauline_reproduciendo": [
+      66.47,
+      33.54
+    ],
+    "reabierta_pauline_vs_pauline": [
+      0.0,
+      0.0
+    ],
+    "reabierta_juan_vs_juan": [
+      0.0,
+      0.0
+    ],
+    "reabierta_juan_vs_pauline": [
+      63.57,
+      33.34
+    ]
+  },
+  "filas": [
+    {
+      "paso": "selector de Personaje",
+      "observado": "2 opciones: Juan y Pauline",
+      "dato": "fila 'Personaje' con el valor actual a la derecha"
+    },
+    {
+      "paso": "elegir Juan",
+      "observado": "cambio de avatar: pauline -> juan; avatar listo: juan en 3660 ms",
+      "dato": "fila Personaje = Juan; prefs character=Juan"
+    },
+    {
+      "paso": "frase FR-01-029 con Juan",
+      "observado": "signStart seña 0 y 1, representado",
+      "dato": "capturas avt07_juan_reproduciendo / _reposo"
+    },
+    {
+      "paso": "elegir Pauline",
+      "observado": "cambio de avatar: juan -> pauline; avatar listo: pauline en 2599 ms",
+      "dato": "fila Personaje = Pauline; prefs character=Pauline"
+    },
+    {
+      "paso": "frase FR-01-029 con Pauline",
+      "observado": "signStart seña 0 y 1, representado",
+      "dato": "capturas avt07_pauline_reproduciendo / _reposo"
+    },
+    {
+      "paso": "elegir Juan y reabrir en frío",
+      "observado": "escena lista (juan); prefs character=Juan; fila Personaje = Juan",
+      "dato": "captura avt07e_reabierta_juan"
+    },
+    {
+      "paso": "restaurar Pauline",
+      "observado": "avatar listo: pauline en 2663 ms; fila Personaje = Pauline",
+      "dato": "estado inicial restaurado"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "filas": [
+    {
+      "ajuste": "Personaje",
+      "tipo": "selector",
+      "valor_inicial": "Pauline",
+      "observado": "2 opciones (Juan, Pauline); se prueba en PR-AVT-07",
+      "persiste": "si (PR-AVT-07)"
+    },
+    {
+      "ajuste": "Velocidad de señas",
+      "tipo": "paso 5",
+      "valor_inicial": "50",
+      "observado": "10: 21009 ms para 2 señas (10210 y 10681 ms); 50: 4275 ms (1993 y 2169); 100: 2191 ms (1007 y 1114). Cambio 100→90 con la seña en curso: el turno terminó con sus 2 señas, sin corte.",
+      "persiste": "si (quedó en 30 tras reabrir)"
+    },
+    {
+      "ajuste": "Tamaño de interfaz",
+      "tipo": "paso 5",
+      "valor_inicial": "50",
+      "observado": "50→70 al momento: el texto 'Traducir' pasó de 173x49 a 179x51 y el campo de 654x138 a 640x143; 55 no cambia los bounds (menos de 1 px).",
+      "persiste": "si (55 tras reabrir)"
+    },
+    {
+      "ajuste": "Texto en negrita",
+      "tipo": "interruptor",
+      "valor_inicial": "apagado",
+      "observado": "se prende y se apaga al momento (prefs bold)",
+      "persiste": "si"
+    },
+    {
+      "ajuste": "Contraste aumentado",
+      "tipo": "interruptor",
+      "valor_inicial": "apagado",
+      "observado": "se prende y se apaga al momento (prefs contrast)",
+      "persiste": "si"
+    },
+    {
+      "ajuste": "Texto más grande",
+      "tipo": "interruptor",
+      "valor_inicial": "apagado",
+      "observado": "se prende y se apaga al momento (prefs large)",
+      "persiste": "si"
+    },
+    {
+      "ajuste": "Reducir animaciones",
+      "tipo": "interruptor",
+      "valor_inicial": "apagado",
+      "observado": "se prende y se apaga al momento (prefs reduce_motion)",
+      "persiste": "si"
+    },
+    {
+      "ajuste": "Modo oscuro",
+      "tipo": "interruptor",
+      "valor_inicial": "encendido",
+      "observado": "apagado: luminancia media del panel 21,0 → 167,0 al instante; la frase se reprodujo en los dos temas (4275 ms y 4255 ms, 2 señas)",
+      "persiste": "si (luminancia 167,0 tras reabrir)"
+    },
+    {
+      "ajuste": "Acerca de",
+      "tipo": "enlace",
+      "valor_inicial": "—",
+      "observado": "no es un ajuste; abre la pantalla Acerca de",
+      "persiste": "—"
+    }
+  ],
+  "crudo": {
+    "tema_oscuro_lum": 21.0,
+    "tema_oscuro_frase": {
+      "t": 1793836703200,
+      "fin": 1793836712565,
+      "ms": 9365
+    },
+    "tema_claro_pref": "false",
+    "tema_claro_lum": 167.0,
+    "tema_claro_frase": {
+      "t": 1793836730545,
+      "fin": 1793836739746,
+      "ms": 9201
+    },
+    "tema_claro_tras_reabrir": "false",
+    "tema_claro_tras_reabrir_lum": 167.0,
+    "speed_10": 10,
+    "speed10_frase": {
+      "t": 1793836770211,
+      "fin": 1793836796147,
+      "ms": 25936
+    },
+    "speed_100": 100,
+    "speed_mitad": "90",
+    "speed100_mitad_fin": 1793836829322,
+    "speed_final": 50,
+    "tema_final": "true",
+    "interface_size": "60",
+    "traducir_antes": null,
+    "traducir_despues": null,
+    "interface_size_final": "50",
+    "accesibilidad_on": {
+      "bold": "true",
+      "contrast": "true",
+      "large": "true",
+      "reduce_motion": "true"
+    },
+    "accesibilidad_tras_reabrir": {
+      "bold": "true",
+      "contrast": "true",
+      "large": "true",
+      "reduce_motion": "true"
+    },
+    "accesibilidad_off": {
+      "bold": "false",
+      "contrast": "false",
+      "large": "false",
+      "reduce_motion": "false"
+    },
+    "speed_tras_reabrir": "30",
+    "speed_restaurada": 50
+  },
+  "prefs_inicial": {
+    "freecam": "false",
+    "large": "false",
+    "bg": "false",
+    "reduce_motion": "false",
+    "bold": "false",
+    "speed": "50",
+    "dark_theme": "true",
+    "demo_sign_fallback": "false",
+    "grid": "true",
+    "contrast": "false",
+    "interface_size": "50"
+  },
+  "prefs_final": {
+    "freecam": "false",
+    "large": "false",
+    "bg": "false",
+    "reduce_motion": "false",
+    "bold": "false",
+    "speed": "50",
+    "dark_theme": "true",
+    "demo_sign_fallback": "false",
+    "grid": "true",
+    "contrast": "false",
+    "interface_size": "50"
+  }
+}

@@ -1,0 +1,314 @@
+PR-TRA-03 — Levantar el entorno desde cero
+==============================================================================
+Fecha: 04/11/2026 · Ronda diagnóstica · Ejecutor: Agente IA (sesión orden 9)
+Máquina: la del propietario de la tesis (Linux, Docker 29.9.2/Compose 5.6.1, RTX 4050
+Laptop 6.1 GB). Se trabajó SOLO en /tmp/opencode/tra03 con los puertos 18080
+(backend) y 18000 (STT) y el proyecto de compose `tra03`. Los contenedores de la
+tesis (sign-ai-backend-backend-1, sign-ai-stt-stt-1, sign-ai-backend-caddy-1) no
+se detuvieron ni se reiniciaron en ningún momento.
+
+Punto de partida (importante para leer los tiempos): la máquina NO estaba
+limpia. Ya tenía JDK 17.0.20.1, el SDK de Android (platform 36), el caché de
+Gradle en ~/.gradle (11 GB) y las imágenes Docker del proyecto (backend 10 GB,
+STT 4,58 GB). Por eso se midió todo dos veces: con caché y en frío donde se pudo
+(ver §6, §8 y §10).
+
+==============================================================================
+1. CLONADA DESDE EL REMOTO
+==============================================================================
+Comandos (repositorio remoto, no copia del árbol de trabajo):
+
+  mkdir -p /tmp/opencode/tra03 && cd /tmp/opencode/tra03
+  git clone --depth 1 git@github.com:sign-ai-organization/sign-ai-backend.git
+  git clone --depth 1 git@github.com:sign-ai-organization/sign-ai-stt.git
+  git clone --depth 1 git@github.com:sign-ai-organization/sign-ai-android.git
+
+  repo              tiempo   tamaño   HEAD
+  ----------------  -------  -------  ------------------------------------------
+  sign-ai-backend     2,51 s   4,3 MB  c8aa516 refactor(llm_client): update LLM
+                                      prompt, now it keeps de pronoun
+  sign-ai-stt         1,58 s   488 KB  7a571c2 Merge branch 'develop' into main
+  sign-ai-android     8,94 s   101 MB  d9ce26c docs(plan): cerrar la tarjeta 7 y
+                                      fijar el plan en 74 pruebas
+  TOTAL              13,03 s
+
+El clon de la app coincide exactamente con origin/main (d9ce26c...).
+La autenticación SSH con GitHub ya estaba configurada en la máquina: si no lo
+estuviera, clonar por SSH sería un paso manual previo no documentado.
+
+==============================================================================
+2. DÓNDE ESTÁN LAS INSTRUCCIONES (primer tropiezo de documentación)
+==============================================================================
+`README.md` del backend NO dice cómo arrancar el servicio. Solo documenta:
+  - crear el venv, activarlo e instalar requirements.txt,
+  - notas de los modelos de embeddings y de spaCy,
+  - qué hay en scripts/ y requirements-dev.txt.
+No trae ningún comando de arranque (ni uvicorn ni docker compose) y no menciona
+`.env` ni `docker-compose.yml`.
+
+El comando de arranque está en OTRO archivo: `docs/android-integration.md` §1
+("Opción recomendada: Docker, un solo comando"):
+
+  docker compose up --build
+
+Esa guía sí aclara los requisitos: los dos repos uno al lado del otro
+(`../sign-ai-stt`), que levanta backend (8080) y STT (8000), que hay que esperar
+"Application startup complete" y que la primera vez tarda varios minutos.
+El README de la app Android SÍ documenta lo suyo (JDK 17, SDK 36, ANDROID_HOME
+o local.properties).
+
+==============================================================================
+3. INTENTO A — `.env.example` TAL CUAL (falla)
+==============================================================================
+Lo único que el compose exige y el repo no trae es `.env` (gitignored):
+
+  cp .env.example .env            # 10 s, no documentado en el README
+
+Se levantó el backend con los puertos del override:
+
+  docker compose -f docker-compose.yml -f /tmp/opencode/tra03/override.yml \
+      -p tra03 up -d --build backend
+
+  build de la imagen: 4,1 s (todas las capas CACHED, ver §10a)
+  contenedor arriba a los 4,1 s
+  el proceso MURIÓ a los ~18 s sin responder /health
+
+Error exacto (final del log):
+
+  File "/app/app/main.py", line 70, in lifespan
+    llm_client = LLMClient(
+  File "/usr/local/lib/python3.12/site-packages/openai/_client.py", line 323 ...
+  openai.OpenAIError: Missing credentials. Please pass an `api_key`, ...
+  ERROR:    Application startup failed. Exiting.
+
+Conclusión medida: `.env.example` copiado sin tocar nada NO levanta el backend.
+Falta `LLM_API_KEY`, que en el ejemplo viene vacío y no está marcado como
+obligatorio en ninguna parte.
+
+Dato adicional del mismo arranque: con `DATABASE_URL` vacía el servicio NO
+aborta; registra
+  WARNING app.nlp.semantic_cache: No database pool: the semantic cache starts
+  empty and is not persisted
+y sigue. Es decir: sin base de datos el proceso arranca, pero sin catálogo.
+
+==============================================================================
+4. PASOS MANUALES NO DOCUMENTADOS (los que hicieron falta de verdad)
+==============================================================================
+    #  paso                                                     tiempo  ¿dónde está documentado?
+    1  Descubrir que el arranque está en docs/android-           ~2 min  NO en README.md; sí en
+       integration.md y no en el README                                  docs/android-integration.md §1
+    2  Crear `.env` a partir de `.env.example`                    10 s   NO (implícito en el
+       (el compose usa `env_file: .env`)                                 `env_file` del compose)
+    3  Poner `DATABASE_URL` (cadena de Neon con usuario y         ~1 min  NO. El ejemplo la deja
+       contraseña). Se tomó del contenedor que ya corre                   vacía y no dice de dónde
+       (`docker inspect sign-ai-backend-backend-1`): los                  sacarla; no está versionada
+       secretos no están en el repo
+    4  Poner `LLM_API_KEY` con un valor NO vacío. Se usó el       ~1 min  NO. Sin ella el backend
+       placeholder `ollama` (6 caracteres) del contenedor vivo            no arranca (§3). El
+                                                                          ejemplo no avisa que sea
+                                                                          obligatoria
+    5  Apuntar el LLM al Ollama del host:                         ~2 min  Parcial: solo como
+       `LLM_BASE_URL=http://host.docker.internal:11434/v1`                comentario dentro de
+       y `LLM_MODEL=qwen3:4b-instruct` (el ejemplo deja                   .env.example, no como paso
+       `LLM_BASE_URL` vacío, que significa OpenAI)                        del procedimiento
+    6  Apuntar `STT_WS_URL` al STT del host:                      ~1 min  Parcial: el ejemplo
+       `ws://host.docker.internal:8000/ws/transcribe` porque              documenta el override a
+       el servicio `stt` del compose de prueba no se levantó              `localhost` para correr
+       (GPU ocupada por el STT real, ver §5)                              fuera de Docker, pero no
+                                                                          el caso `host.docker.internal`
+                                                                          ni el de saltarse el STT
+    7  Escribir el override de puertos con `!override`            ~5 min  NO. Es específico de esta
+       porque compose CONCATENA las listas de `ports`: sin                prueba (8080/8000 ya
+       `!override` el backend de prueba intenta publicar también          ocupados), pero el
+       el 8080 del host y choca con el backend de la tesis                comportamiento de
+                                                                          concatenación de `ports`
+                                                                          no está advertido en ningún
+                                                                          lado del repo
+
+Total: 7 pasos manuales, ~12 min de trabajo humano, de los cuales 2 bloquean el
+arranque (3 y 4) y 1 es la propia documentación (1).
+
+Nota: el paso 7 no es un defecto del repo, es de la convivencia con el sistema
+ya levantado. Pero el `!override` es imprescindible y no está escrito en ningún
+sitio del backend.
+
+==============================================================================
+5. EL SERVICIO STT DEL COMPOSE DE PRUEBA NO SE LEVANTÓ (y por qué)
+==============================================================================
+`docker-compose.yml` del backend construye el STT desde `../sign-ai-stt` y lo
+levanta con reserva de GPU:
+
+  deploy: resources: reservations: devices: [driver: nvidia, count: 1, gpu]
+
+Estado medido de la GPU al empezar:
+
+  NVIDIA GeForce RTX 4050 Laptop GPU · 6141 MiB totales · 2011 MiB en uso ·
+  3843 MiB libres
+  proceso GPU: pid 503423 /usr/local/bin/python3.11 (el STT de la tesis,
+  whisper `medium` en CUDA)
+
+No se levantó el segundo STT a propósito: cargar otro `medium` float16 en los
+3,8 GB libres podía provocar un OOM de CUDA y desestabilizar el STT que la
+sesión de STT de la ronda está usando. El encargo de esta prueba autoriza
+explícitamente esta salida (§3: "Si el servicio stt no puede levantar (GPU
+ocupada...), apuntá el backend al STT que ya corre y anotá el paso").
+Consecuencia honesta: el tiempo de build de la imagen `stt` NO se midió, y el
+test valida el backend contra el STT real, no contra un STT recién construido.
+
+==============================================================================
+6. INTENTO B — CON EL `.env` COMPLETADO (funciona)
+==============================================================================
+  docker compose -f docker-compose.yml -f /tmp/opencode/tra03/override.yml \
+      -p tra03 up -d --build backend
+
+  `up -d --build` completo (capas CACHED de la imagen + crear + arrancar):
+                                              2,4 s
+  /health responde 200 con cuerpo válido .... 108,7 s desde el inicio del `up`
+
+Desglose de los 108,7 s (del log del contenedor, hora UTC):
+  23:22:30  arranca uvicorn y el lifespan
+  23:22:31  empieza a cargar el modelo de embeddings desde HuggingFace
+  23:24:00  termina la descarga del modelo (≈89 s; es la primera vez, el
+            contenedor no tenía caché de HF)
+  23:24:01  SemanticCache preloaded 210 rows in 1007 ms
+  23:24:02  Application startup complete
+  23:24:0x  GET /health 200 OK
+
+Reproducción: de los 108,7 s, ~2 s son el `up` (imagen ya construida), ~89 s
+son la descarga del modelo de embeddings y ~17 s el resto (importar torch, pool
+de Neon, catálogo, caché, arranque de uvicorn). Sin esa descarga el arranque en
+caliente queda del orden de 20 s.
+
+Salida cruda de /health (curl http://127.0.0.1:18080/health):
+
+  {"status":"ok","cache_loaded":true,"cache_rows":210,"silence_timeout_ms":1500}
+
+Respuesta a "¿arrancó sin catálogo?": NO. Se apuntó a la base de Neon de la
+tesis (paso manual 3) y el catálogo se cargó completo. Gauges de /metrics.json:
+
+  catalog_glosses = 50
+  cache_rows      = 210
+  cache_loaded    = 1
+  stt_silence_timeout_ms = 1500
+
+El `silence_timeout_ms: 1500` prueba además que el backend alcanzó el /health
+del STT del host a través de `host.docker.internal:8000`.
+
+==============================================================================
+7. ¿NECESITÓ LA RED DEL EQUIPO ANFITRIÓN? (medido, no supuesto)
+==============================================================================
+Prueba de conectividad desde un contenedor en la red bridge normal, con
+`--add-host host.docker.internal:host-gateway` (lo mismo que declara el compose):
+
+  host.docker.internal:11434  (Ollama del host)  -> TimeoutError: timed out
+  172.17.0.1:11434            (gateway directo)  -> TimeoutError: timed out
+  host.docker.internal:8000   (STT del host)     -> OK
+  1.1.1.1:443                 (control, internet) -> OK
+
+Consecuencia medida:
+  - Para el STT y para Neon, la red de compose alcanza; NO hace falta red host.
+  - Para el LLM NO alcanza en esta máquina: el Ollama del host (11434) está
+    filtrado por el firewall del equipo, tal como advierte el comentario de
+    `docker-compose.yml`. El síntoma en el backend es:
+
+      WARNING app.nlp.llm_client: LLM warm-up failed; the first real phrase
+      will pay the model load
+      (TimeoutError: Request timed out., tras 10,4 s)
+
+    Es decir: /health responde, pero con la red de compose el backend NO puede
+    traducir nada porque no llega al modelo. Para un backend funcional en esta
+    máquina hace falta `docker-compose.host.yml` (red host) o abrir el firewall.
+  - El backend de la tesis, de hecho, corre con la variante de red host: su
+    entorno tiene STT_WS_URL=ws://127.0.0.1:8000 y
+    LLM_BASE_URL=http://127.0.0.1:11434/v1.
+
+Respuesta a la métrica "si el contenedor necesitó la red del equipo anfitrión
+(no debería)": para responder /health, NO. Para funcionar de verdad (LLM),
+SÍ, en esta máquina, o hay que abrir el firewall para la subred de docker0.
+No se pudo probar `docker-compose.host.yml` porque toma el 8080 del host, que
+está ocupado por el backend de la tesis y no se podía reiniciar.
+
+==============================================================================
+8. COMPILACIÓN DE LA APLICACIÓN
+==============================================================================
+  cd sign-ai-android && ./gradlew assembleDebug
+
+  con el caché de Gradle de la máquina .. BUILD SUCCESSFUL in 39 s (39,6 s)
+  con GRADLE_USER_HOME vacío (en frío) . BUILD SUCCESSFUL in 1m 41s (101,3 s)
+
+  APK: app/build/outputs/apk/debug/app-debug.apk · 40.830.514 bytes (40,8 MB)
+
+En frío el build descargó 1,1 GB (146 MB de la distribución de Gradle 8.11.1 y
+~940 MB de dependencias) y no necesitó nada que no esté documentado:
+  - JDK 17 ya presente (el README de la app lo pide: JDK 17) ✔
+  - SDK de Android ya presente con platform 36 (lo pide el README) ✔
+  - `local.properties` NO fue necesario: el README documenta la alternativa
+    `ANDROID_HOME`, que estaba exportada en el entorno.
+Único aviso del build (no rompe nada, es del entorno, no del repo):
+
+  Warning: SDK processing. This version only understands SDK XML versions up to
+  3 but an SDK XML file of version 4 was encountered.
+
+No hubo conflictos de dependencias: `:app:checkDebugDuplicateClasses` pasó y el
+build no emitió ningún "conflict"/"incompatible". Cero descargas con el caché
+caliente.
+
+Salida cruda del final del build:
+
+  > Task :app:assembleDebug
+
+  BUILD SUCCESSFUL in 39s
+  37 actionable tasks: 37 executed
+
+==============================================================================
+9. CONFLICTOS DE VERSIÓN Y PARCHES LOCALES
+==============================================================================
+Conflictos de versión: ninguno que impidiera levantar o compilar.
+  - Python: `python -m pip check` dentro de la imagen -> "No broken requirements
+    found." (rc=0). `requirements.txt` está con versiones fijas (fastapi 0.143.0,
+    uvicorn 0.54.0, pydantic 2.14.1, sentence-transformers 6.1.0, langchain
+    1.4.5, websockets 16.1.1); solo spaCy usa rango (>=3.8,<3.9) y el modelo
+    es_core_news_md va por rueda exacta.
+  - Android: Gradle 8.11.1, AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, JVM
+    17. Build limpio. El único roce de versiones es el aviso de SDK XML v4 vs
+    herramientas que entienden v3, que viene de la instalación local y no del
+    repo.
+
+Parches locales no versionados que hicieron falta: 0.
+  Los tres clones quedaron con 0 archivos modificados (`git status --porcelain`
+  sin líneas). Lo único que se agregó fue `.env` (ignorado por git a propósito,
+  `.gitignore:4`) y `override.yml`, que vive FUERA del repo
+  (/tmp/opencode/tra03/override.yml). No se editó ni una línea de código.
+  El clon de la app es idéntico a origin/main (d9ce26c).
+
+==============================================================================
+10. LO QUE NO SE PUDO MEDIR (dicho explícitamente)
+==============================================================================
+  a) Build de la imagen Docker del backend EN FRÍO (sin caché de capas). La
+     imagen pesa 10 GB porque instala torch; el disco de la máquina tiene
+     8,6 GB libres de 473 GB (99 %), así que un `--no-cache` no cabe. El 4,1 s
+     medido es un piso, no lo que tardaría en una máquina limpia.
+  b) Build de la imagen del STT: no se levantó el servicio (§5), así que ni se
+     construyó.
+  c) Ruta `docker-compose.host.yml`: publica el 8080 del host, ocupado por el
+     backend de la tesis, que no se podía reiniciar.
+  d) No se probó una traducción de punta a punta contra este backend de prueba:
+     el LLM no es alcanzable desde la red de compose (§7), y además escribiría
+     en la base de Neon compartida.
+
+==============================================================================
+11. BAJADA DEL ENTORNO
+==============================================================================
+  docker compose -p tra03 down -v
+    Container tra03-backend-1 Stopped / Removed
+    Network tra03_default Removed
+
+Verificación posterior:
+  contenedores del proyecto tra03 ......... ninguno
+  volúmenes del proyecto tra03 ............ ninguno
+  redes del proyecto tra03 ................ ninguna
+  algo escuchando en :18080 o :18000 ...... no (libres)
+  contenedores de la tesis ................ los tres siguen Up, sin reinicio
+     sign-ai-stt-stt-1 (Up), sign-ai-backend-backend-1 (Up 7 h),
+     sign-ai-backend-caddy-1 (Up 7 h)
+  También se borró el GRADLE_USER_HOME temporal (1,1 GB en /tmp).

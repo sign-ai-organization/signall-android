@@ -1,0 +1,39 @@
+﻿orden;turn;frase;texto_enviado;glosas_devueltas;senas_arrancadas;senas_reportadas;ms_representado;suma_duraciones_efectivas_ms;termino
+1;2;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS;2;2;4228;4194;si
+2;3;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;3;3;6238;6218;si
+3;4;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TU TIO FAMILIA;4;4;7869;7845;si
+4;5;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;4;4;8360;8345;si
+5;6;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;4;4;8363;8340;si
+6;7;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS COMER CON GUSTO;4;4;8602;8585;si
+7;8;FR-01-007;¿Tienes hambre?;TU HAMBRE;2;2;3854;3825;si
+8;9;FR-01-008;¿Estás bien?;BIEN;1;1;2561;2542;si
+9;10;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;3;3;5588;5557;si
+10;11;FR-01-010;Tu hermano está triste. ¿Se siente mal?;TU HERMANO TRISTE MAL;4;4;8719;8697;si
+11;12;FR-01-011;Perdón. ¿Estás triste?;PERDON TRISTE;2;2;4889;4854;si
+12;13;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;3;3;6077;6058;si
+13;14;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;4;4;7886;7872;si
+14;15;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;4;4;7840;7820;si
+15;16;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER QUIEN HOMBRE;3;3;6313;6296;si
+16;17;FR-01-016;¿Por qué estás triste?;POR QUE TU TRISTE;3;3;6875;6859;si
+17;18;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;3;3;5605;5585;si
+18;19;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;DIFERENTE YO;2;2;4283;4263;si
+19;20;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;4;4;8327;8311;si
+20;21;FR-01-020;Mi abuelo nunca trabaja.;YO ABUELO NUNCA TRABAJAR;4;4;8296;8279;si
+21;22;FR-01-021;Mi tío nunca está aburrido.;TU TIO NUNCA ABURRIDO;4;4;8140;8111;si
+22;23;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;4;4;7756;7721;si
+23;24;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON HERMANO NUNCA CONTENTO;4;4;8299;8283;si
+24;25;FR-01-024;Se siente muy bien. La niña nunca está triste.;BIEN NIÑA NUNCA TRISTE;4;4;9313;9290;si
+25;26;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;3;3;6262;6247;si
+26;27;FR-01-026;Con permiso. Déjame pasar, por favor.;PERMISO POR FAVOR;2;2;4193;4173;si
+27;28;FR-01-027;Niños, trabajen todos.;TODOS TRABAJAR;2;2;4193;4162;si
+28;29;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO ABUELO TU TRABAJAR;4;4;7851;7825;si
+29;30;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA;2;2;4265;4241;si
+30;31;FR-01-030;Tío, come mucho. Hermano, come poco.;TU COMER MUCHO HERMANO COMER POCO;6;6;11991;11970;si
+31;32;sonda;;NIÑO;1;1;2154;2136;si
+32;33;sonda;;NOMBRE;1;1;2130;2102;si
+33;34;sonda;;JUICIOSO;0;;;0;no
+34;35;sonda;;PERSONAS;1;1;2163;2135;si
+35;36;sonda;;BIENVENIDO;1;1;2384;2357;si
+36;37;sonda;;SEÑA;1;1;2103;2082;si
+37;38;sonda;;QUE;1;1;2158;2133;si
+38;41;sonda;;JUCIOSO;1;1;2244;2218;si
