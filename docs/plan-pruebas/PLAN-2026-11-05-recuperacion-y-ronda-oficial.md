@@ -353,7 +353,7 @@ Para cada problema de `CONCLUSIONES` se aplica una de tres etiquetas después de
 |---|---|---|---|---|
 | 13 | F1 | `PR-CAC-05`: la ficha debe incluir el reinicio que `RNF-MNT-05` ya exige | `../sign-ai-docs/latex/plan-pruebas/main.tex` | Sí: ficha o SRS |
 | 14 | F2 | `PR-INT-03`: cirugía temporal del catálogo — **aprobada el 2026-11-05**: camino real, con respaldo y el MCP de Neon; se ejecuta al final de la fase 2 | Datos / plan | Sí |
-| 15 | F3 | `PR-AVT-05`: escribir la ficha y validar las caras con una persona de LSC | Plan | Sí |
+| 15 | F3 | `PR-AVT-05`: las cuatro caras ya están en el GLB nuevo; falta escribir la ficha y validarlas con una persona de LSC | Plan | Sí |
 | 16 | F4 | `PR-AVT-06`: método por rangos de accesores (el literal sobrecuenta 5×) | Plan | No |
 | 17 | F5 | `PR-STT-02`: describir el corte real («pausa más cercana», no «forzado») | Plan | No |
 | 18 | F6 | `PR-STT-03`: trazabilidad a un RF de no-voz, no a `RF-STT-02` | Plan / SRS | Sí |
@@ -366,12 +366,15 @@ Para cada problema de `CONCLUSIONES` se aplica una de tres etiquetas después de
 | 25 | D1 | `RNF-AV-03` duplicado — **hecho el 2026-11-05**: se quitó el bloque repetido que estaba bajo «Requerimientos de Desempeño» y se dejó el de «Atributos del Sistema» | SRS | No |
 | 26 | D2 | APK de 78,19 MB — **hecho el 2026-11-05**: el SRS ahora dice 33,9 MB release / 39,0 MB debug, medidos sobre los APK del 2026-11-05 | SRS | Sí |
 
-**Nota del 2026-11-05 — GLB nuevo con marcas faciales.** Samuel dejó en
-`../signai-avatar` un GLB nuevo con cuatro marcas faciales (por confirmar:
-afirmación, negación, orden y pregunta). Eso **no se resuelve en este plan**: va en una
-sesión aparte que hace `pull`, verifica las variantes reales, corre `tools/pack_avatars.py`
-y ajusta `FACE_VARIANT_BY_TYPE` si cambian los nombres. `PR-AVT-05` sigue pendiente de la
-validación con una persona de LSC; el GLB nuevo es la materia prima, no la validación.
+**Nota del 2026-11-05 — GLB nuevo con cuatro caras (hecho en otra sesión).**
+`../signai-avatar` quedó en `fc6f372`: **200 clips** (50 señas × 4 caras: `afirmativo`,
+`pregunta`, `negacion`, `orden`), **sin clip base** y sin las caras emocionales anteriores.
+`juan.glb` pesa 30,32 MB y `pauline.glb` 27,85 MB. Se adaptó `tools/pack_avatars.py`, se
+regeneraron `models/avatars.json`, `manifest.json` y `domain/SignsCatalog.kt`, y `app.js`
+elige la cara por tipo de oración. **Consecuencia para este plan:** `PR-AVT-06` hay que
+re-medirlo (los tamaños y el APK cambiaron) y el SRS ya se actualizó a 35,1/40,3 MB;
+`PR-AVT-02` sigue en las 24; `PR-AVT-05` sigue bloqueada hasta la validación con una persona
+de LSC. **No se rehace la actualización del GLB.**
 
 **P2 — mejoras que no bloquean**
 
