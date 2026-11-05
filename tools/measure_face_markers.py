@@ -2,7 +2,7 @@
 """Mide cuánto mueve la cara cada variante facial de los avatares (DOC-5/DOC-6).
 
 La pregunta del plan no es «los tracks difieren» —eso ya se sabía— sino **cuánto**
-mueve la cara cada variante, si las cinco se distinguen entre sí y si alguna es
+mueve la cara cada variante, si las cuatro se distinguen entre sí y si alguna es
 tan sutil que en pantalla no se ve. Este script contesta eso con tres lecturas
 del GLB empaquetado, sin renderizar y sin abrir Blender:
 
@@ -13,10 +13,12 @@ del GLB empaquetado, sin renderizar y sin abrir Blender:
   2. **Curva de pesos del clip.** Los canales `weights` de la animación dan el
      peso de cada target en cada keyframe. Se samplea el clip completo y se
      calculan pico, media y desplazamiento efectivo `peso · alcance`.
-  3. **Diferencia contra el clip base.** Para cada seña se compara la variante
-     contra su base en tiempo normalizado, así que un clip más largo no infla
-     la diferencia. Esa es la cara que el usuario **ve cambiar** al activar el
-     marcador: si el base ya trae la expresión, la variante no agrega nada.
+  3. **Diferencia contra el clip de referencia.** Los GLB del 2026-11-04 no
+     traen clip base: cada seña tiene cuatro caras gramaticales. Para cada seña
+     se compara cada variante contra `_afirmativo` —la que la app usa como
+     respaldo— en tiempo normalizado, así que un clip más largo no infla la
+     diferencia. Esa es la cara que el usuario **ve cambiar** al cambiar el tipo
+     de oración: si dos variantes pesan lo mismo, no se distinguen.
 
 Los umbrales de visibilidad son una **hipótesis**, no una medición en device:
 < 1 mm apenas se percibe en el encuadre de la app, 1–2 mm es marginal y > 3 mm
@@ -30,6 +32,7 @@ Uso:
     python3 tools/measure_face_markers.py --json out.json --md out.md
 """
 import argparse
+import datetime
 import json
 import math
 import struct
@@ -42,7 +45,12 @@ import glb_pose as gp  # noqa: E402
 REPO = Path(__file__).resolve().parent.parent
 MODELS = REPO / "app/src/main/assets/web/models"
 AVATARS = ("juan", "pauline")
-SUFFIXES = ("alegria", "tristeza", "sorpresa", "pregunta", "negacion")
+# Las cuatro marcas gramaticales del export del 2026-11-04. No hay clip base.
+SUFFIXES = ("afirmativo", "pregunta", "negacion", "orden")
+# La app usa `_afirmativo` cuando el tipo de oración falta o no está en la
+# tabla, así que es la referencia natural para medir cuánto agrega cada otra.
+REFERENCE_VARIANT = "afirmativo"
+COMPARED_SUFFIXES = tuple(v for v in SUFFIXES if v != REFERENCE_VARIANT)
 SIGN_IDS = [f"{i:04d}" for i in range(50)]
 
 # Los morphs de forma base no son expresión facial: vienen con peso 1 o con un
@@ -212,19 +220,19 @@ def summarize_curve(samples, reaches, facial):
     }
 
 
-def compare_curves(samples, base_samples, reaches, names, facial):
-    """Diferencia de la variante contra su base, en mm."""
+def compare_curves(samples, reference_samples, reaches, names, facial):
+    """Diferencia de la variante contra la referencia, en mm."""
     per_target_weight = [0.0] * len(reaches)
     per_target_mm = [0.0] * len(reaches)
     rms_acc = 0.0
     n = 0
-    for row, base_row in zip(samples, base_samples):
-        for t, (weight, base) in enumerate(zip(row, base_row)):
+    for row, reference_row in zip(samples, reference_samples):
+        for t, (weight, reference) in enumerate(zip(row, reference_row)):
             if not facial[t][0] or not facial[t][1]:
-                # El parpadeo existe igual en base y variante y no es un
-                # marcador gramatical: se excluye del delta.
+                # El parpadeo existe igual en la referencia y en la variante y
+                # no es un marcador gramatical: se excluye del delta.
                 continue
-            delta = abs(weight - base)
+            delta = abs(weight - reference)
             per_target_weight[t] = max(per_target_weight[t], delta)
             per_target_mm[t] = max(per_target_mm[t], delta * reaches[t])
             rms_acc += (delta * reaches[t]) ** 2
@@ -320,16 +328,16 @@ def measure_avatar(avatar):
         details[mesh_index] = {"names": names, "reaches": reaches, "facial": facial}
 
     clips = {anim.get("name"): i for i, anim in enumerate(js["animations"])}
-    needed = ["0000"] + [f"0000_{suffix}" for suffix in SUFFIXES]
+    needed = [f"0000_{suffix}" for suffix in SUFFIXES]
     missing = [name for name in needed if name not in clips]
     if missing:
         raise SystemExit(
-            "measure_face_markers.py todavía asume el layout viejo (clip base + "
-            "cinco variantes emocionales). Los GLB del 2026-11-04 traen cuatro "
-            "marcas gramaticales y ningún clip base: hay que adaptar la "
-            f"comparación antes de volver a medir (faltan {missing})")
+            "measure_face_markers.py espera el layout del 2026-11-04: cuatro "
+            "marcas gramaticales (_afirmativo, _pregunta, _negacion, _orden) y "
+            f"ningún clip base. En {avatar}.glb faltan {missing}.")
     result = {
         "avatar": avatar,
+        "reference": REFERENCE_VARIANT,
         "meshes": [],
         "signatures": {},
         "signs": {},
@@ -389,14 +397,16 @@ def measure_avatar(avatar):
 
     for sign in SIGN_IDS:
         per_sign = {}
-        base_index = clips[sign]
-        base_sigs = bone_channel_signature(js, binary, base_index)
-        for variant in ("base",) + SUFFIXES:
-            name = sign if variant == "base" else f"{sign}_{variant}"
+        # No hay clip base: la referencia es la variante que la app usa por
+        # defecto (`_afirmativo`). Se compara cada otra cara contra ella.
+        reference_index = clips[f"{sign}_{REFERENCE_VARIANT}"]
+        reference_sigs = bone_channel_signature(js, binary, reference_index)
+        for variant in SUFFIXES:
+            name = f"{sign}_{variant}"
             index = clips[name]
             entry = {"clip": name, "faces": {}, "bone": None}
-            if variant != "base":
-                diff = bone_difference(base_sigs,
+            if variant != REFERENCE_VARIANT:
+                diff = bone_difference(reference_sigs,
                                        bone_channel_signature(js, binary, index))
                 entry["bone"] = diff
                 if diff is None or diff["rotation_deg"] > 0.01 \
@@ -413,11 +423,11 @@ def measure_avatar(avatar):
                     "absolute_peak_mm": round(absolute["peak_mm"], 3),
                     "absolute_mean_mm": round(absolute["mean_mm"], 3),
                 }
-                if variant != "base":
-                    base_track = weight_tracks(js, binary, base_index, mesh_index)
-                    base_samples = (curve(*base_track) if base_track
-                                    else [[0.0] * len(info["names"])] * len(samples))
-                    delta = compare_curves(samples, base_samples, info["reaches"],
+                if variant != REFERENCE_VARIANT:
+                    ref_track = weight_tracks(js, binary, reference_index, mesh_index)
+                    ref_samples = (curve(*ref_track) if ref_track
+                                   else [[0.0] * len(info["names"])] * len(samples))
+                    delta = compare_curves(samples, ref_samples, info["reaches"],
                                            info["names"], info["facial"])
                     face["delta_peak_mm"] = round(delta["peak_mm"], 3)
                     face["delta_rms_mm"] = round(delta["rms_mm"], 3)
@@ -499,10 +509,12 @@ def json_summary(results):
                     "rms_mm": round(max(f["delta_rms_mm"]
                                         for f in entry["faces"].values()), 3),
                 }
-                for variant, entry in variants.items() if variant != "base"
+                for variant, entry in variants.items()
+                if variant != REFERENCE_VARIANT
             }
         out.append({
             "avatar": result["avatar"],
+            "reference": result["reference"],
             "meshes": result["meshes"],
             "signatures": result["signatures"],
             "temporal": result["temporal"],
@@ -521,19 +533,23 @@ def _median(values):
 
 
 def build_markdown(results):
+    today = datetime.date.today().isoformat()
     lines = []
     lines.append("# Medición de los marcadores faciales (morph targets)\n")
-    lines.append("Generado por `tools/measure_face_markers.py` el 2026-11-04 sobre "
+    lines.append(f"Generado por `tools/measure_face_markers.py` el {today} sobre "
                  "los GLB empaquetados de la app (`models/juan.glb` y "
-                 "`models/pauline.glb`).\n")
+                 "`models/pauline.glb`), con el layout del 2026-11-04: **200 clips "
+                 "por avatar** (50 señas × `_afirmativo`, `_pregunta`, `_negacion`, "
+                 "`_orden`) y **sin clip base**.\n")
     lines.append("Cómo se mide: cada target de malla trae el desplazamiento de sus "
                  "vértices a peso 1 (mm). El clip dice cuánto pesa cada target en "
                  "cada momento. `peso × alcance` es cuánto se mueve la cara de "
-                 "verdad. El **Δ contra el clip base** es lo que la variante agrega "
-                 "sobre la cara que ya se ve hoy, comparando en tiempo normalizado. "
-                 "El parpadeo (`eyeBlink`) se excluye del Δ porque está en todas las "
-                 "variantes. `≈px` usa el encuadre por defecto (1 mm ≈ 1,26 px en un "
-                 "canvas de 2400 px): es una cuenta, no una captura.\n")
+                 "verdad. El **Δ contra el clip de referencia** (`_afirmativo`, la "
+                 "variante que la app usa por defecto) es lo que cada cara agrega "
+                 "sobre esa, comparando en tiempo normalizado. El parpadeo "
+                 "(`eyeBlink`) se excluye del Δ porque está en todas las "
+                 "variantes. `≈px` usa el encuadre por defecto (1 mm ≈ 1,26 px en "
+                 "un canvas de 2400 px): es una cuenta, no una captura.\n")
     for result in results:
         avatar = result["avatar"]
         lines.append(f"## {avatar.capitalize()}\n")
@@ -557,12 +573,14 @@ def build_markdown(results):
                 text += f" (+{rest} más)"
             lines.append(f"| `_{variant}` | {text} |")
         lines.append("")
-        lines.append("### Δ contra el clip base, por variante\n")
-        lines.append("Mediana de las 50 señas; entre paréntesis, mínimo y máximo. "
-                     "«Δ RMS» mide el parecido de toda la curva, no solo el pico.\n")
+        lines.append("### Δ contra el clip de referencia, por variante\n")
+        lines.append("La referencia es `_afirmativo` (la cara que la app usa por "
+                     "defecto). Mediana de las 50 señas; entre paréntesis, mínimo y "
+                     "máximo. «Δ RMS» mide el parecido de toda la curva, no solo el "
+                     "pico. La referencia no se compara consigo misma.\n")
         lines.append("| Variante | Δ pico (mm) | ≈px | Δ RMS (mm) | Cambia durante la seña (mm) | Target que más mueve | Misma cara en las 50 señas |")
         lines.append("|---|---:|---:|---:|---:|---|---|")
-        for variant in SUFFIXES:
+        for variant in COMPARED_SUFFIXES:
             peaks, rms_values = [], []
             for sign in SIGN_IDS:
                 face = [v for v in result["signs"][sign][variant]["faces"].values() if v]
@@ -575,7 +593,10 @@ def build_markdown(results):
                 f"| {_median(peaks) * PX_PER_MM:.1f} | {_median(rms_values):.2f} "
                 f"| {result['temporal'][variant]['mm']:.2f} "
                 f"| `{top[0]}` (peso {top[1]:g}) | {'sí' if same else 'no'} |")
+        same_reference = all(result["across_signs"].get(REFERENCE_VARIANT, [True]))
         lines.append("")
+        lines.append(f"`_{REFERENCE_VARIANT}` (referencia) también es la misma cara "
+                     f"en las 50 señas: {'sí' if same_reference else 'no'}.\n")
         lines.append("### Distinción entre variantes\n")
         lines.append("Diferencia de las curvas completas. `Δ pico` es el target que "
                      "más difiere; `Δ RMS` es el parecido de la cara entera. Regiones: "
@@ -589,21 +610,21 @@ def build_markdown(results):
                 f"| {data['mean_rms_mm']:.2f} | {data['min_peak_mm']:.2f} "
                 f"| {region} ({data['regions_mm'][region]:.2f} mm) |")
         lines.append("")
-        lines.append("### Por seña: Δ pico contra el clip base (mm)\n")
+        lines.append("### Por seña: Δ pico contra la referencia (mm)\n")
         lines.append("Cada celda es el máximo desplazamiento facial que agrega esa "
-                     "variante sobre el clip base de la misma seña. Si una columna "
+                     "variante sobre `_afirmativo` en la misma seña. Si una columna "
                      "sale idéntica en las 50 filas, no es un error de la tabla: la "
                      "variante es la misma cara en todas las señas.\n")
-        lines.append("| Seña | " + " | ".join(f"`_{v}`" for v in SUFFIXES) + " |")
-        lines.append("|---|" + "---:|" * len(SUFFIXES))
+        lines.append("| Seña | " + " | ".join(f"`_{v}`" for v in COMPARED_SUFFIXES) + " |")
+        lines.append("|---|" + "---:|" * len(COMPARED_SUFFIXES))
         for sign in SIGN_IDS:
             cells = []
-            for variant in SUFFIXES:
+            for variant in COMPARED_SUFFIXES:
                 face = [v for v in result["signs"][sign][variant]["faces"].values() if v]
                 cells.append(f"{max(v['delta_peak_mm'] for v in face):.2f}")
             lines.append(f"| {sign} | " + " | ".join(cells) + " |")
         lines.append("")
-        lines.append("### Huesos: base contra variantes\n")
+        lines.append("### Huesos: referencia contra las otras caras\n")
         if result["bone_differences"]:
             lines.append("| Clip | Rotación (grados) | Traslación/escala (mm) |")
             lines.append("|---|---:|---:|")
@@ -614,10 +635,11 @@ def build_markdown(results):
                     lines.append(f"| {diff['clip']} | {diff['diff']['rotation_deg']:.4f} "
                                  f"| {diff['diff']['linear_mm']:.4f} |")
         else:
-            lines.append("Ninguna diferencia: los 250 clips variantes tienen los "
-                         "mismos canales de hueso y los mismos valores que su base "
-                         "(tolerancia 0,01° / 0,01 mm). **Las variantes mueven la "
-                         "cara y nada más**: no agregan cabeza, tronco ni manos.\n")
+            lines.append("Ninguna diferencia: los 150 clips variantes (50 señas × 3 "
+                         "caras) tienen los mismos canales de hueso y los mismos "
+                         "valores que la referencia de su seña (tolerancia 0,01° / "
+                         "0,01 mm). **Las variantes mueven la cara y nada más**: no "
+                         "agregan cabeza, tronco ni manos.\n")
         lines.append("")
     return "\n".join(lines) + "\n"
 
