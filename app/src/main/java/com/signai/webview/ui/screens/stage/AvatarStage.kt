@@ -175,8 +175,9 @@ fun AvatarStage(
 
         // Rótulo de la seña en curso: arriba al centro, en la banda libre que
         // queda sobre la cabeza del avatar. Muestra **una** seña, la que la
-        // escena acaba de arrancar, no la frase entera (eso es el `caption` de
-        // depuración, que sigue viviendo en el indicador de la izquierda).
+        // escena acaba de arrancar, no la frase entera. Es la única superficie
+        // que dice qué seña se está representando: el indicador de la izquierda
+        // ya no la repite (owner, 2026-11-05).
         //
         // Sin `clickable` ni `pointerInput` a propósito: un nodo sin entrada no
         // participa del hit-test, así que un toque en esta zona sigue llegando

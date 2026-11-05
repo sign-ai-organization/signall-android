@@ -371,9 +371,6 @@ class MainScreenState(
         }
     }
 
-    /** Glosses of the sequence being played, shown in the stage hint while signing. */
-    private var caption by mutableStateOf("")
-
     /**
      * La glosa que la escena está representando en este momento, o `null`.
      *
@@ -382,11 +379,11 @@ class MainScreenState(
      * resuelto contra [turnQueueItems] —la misma cola que se le entregó— así que
      * no hay un canal nuevo entre Kotlin y la escena ni un cambio de protocolo.
      *
-     * No reemplaza a [caption]: aquel dice la frase entera y solo se ve con
-     * depuración prendida, y sirve para diagnosticar. Este es el que lee quien
-     * mira, y por eso se apaga en los mismos lugares en que la representación
-     * termina o se corta: si quedara prendido, la última palabra se leería como
-     * "todavía se está representando" con el muñeco en reposo.
+     * Es la **única** superficie que dice qué seña se está representando: el
+     * indicador de la esquina ya no la repite (owner, 2026-11-05). Se apaga en
+     * los mismos lugares en que la representación termina o se corta: si quedara
+     * prendido, la última palabra se leería como "todavía se está representando"
+     * con el muñeco en reposo.
      */
     var currentGloss by mutableStateOf<String?>(null)
         private set
@@ -523,7 +520,7 @@ class MainScreenState(
      * mientras tanto: medido, 569 ms parado con la primera seña ya disponible en
      * una frase fría de tres oraciones.
      *
-     * El mapa se queda igual porque hace falta lo otro: el caption, la entrada de
+     * El mapa se queda igual porque hace falta lo otro: la entrada de
      * conversación y `metrics.onTurn` son de la frase entera. Lo que cambió es
      * [flushedThrough]: una oración ya entregada a la escena no se vuelve a
      * entregar, así que llegar tarde no la representa dos veces.
@@ -575,11 +572,11 @@ class MainScreenState(
      *
      * Distingue el `setQueue` + `play()` del primer lote de los `appendQueue` de
      * las oraciones siguientes. La escena lleva su propio estado, pero el de
-     * Kotlin es el que decide historial, caption y conversación, así que vive acá.
+     * Kotlin es el que decide historial y conversación, así que vive acá.
      */
     private var queueStarted = false
 
-    /** Ítems ya entregados a la escena en este turno, para armar el caption. */
+    /** Ítems ya entregados a la escena en este turno, para resolver la glosa en curso. */
     private val turnQueueItems = mutableListOf<SignQueueItem>()
 
     /**
@@ -804,21 +801,18 @@ class MainScreenState(
      */
     val backendConnected: Boolean get() = backend.isConnected
 
-    /** What the stage hint shows: the glosses while signing, else state or message. */
+    /** What the stage hint shows: the state name, a loading label or a message. */
     val statusLine: String
         get() = when {
             // Cambio de avatar en curso: es un estado de carga propio, no uno
             // de los siete del SRS. Mientras dura, el panel está deshabilitado.
             avatarLoading -> "Cargando avatar…"
-            // Depuración primero: en una compilación con `DEV_TOOLS` el indicador
-            // se usa como pantalla de diagnóstico y puede llevar glosas y mensajes
-            // en detalle. Ya no depende de una preferencia del teléfono.
-            BuildConfig.DEV_TOOLS -> when {
-                playbackState == PlaybackState.Reproduciendo && caption.isNotBlank() ->
-                    "Reproduciendo · ${caption}"
-                statusOverride != null -> statusOverride!!
-                else -> stateLabel
-            }
+            // Depuración: el indicador se usa como pantalla de diagnóstico y
+            // puede mostrar el mensaje detallado de `statusOverride`. **No**
+            // muestra las glosas: la píldora sobre el avatar ya dice qué seña se
+            // está representando, y repetirlo acá era redundante (owner,
+            // 2026-11-05). Con la depuración apagada esto tampoco cambia.
+            BuildConfig.DEV_TOOLS -> statusOverride ?: stateLabel
             // Fuera de depuración sale el nombre del estado y nada más. La única
             // excepción es `statusOverride`, que hoy solo se usa para
             // "Seña no disponible": el único texto propio que la tabla permite
@@ -1144,7 +1138,6 @@ class MainScreenState(
             // inactiva mientras el canvas seguía con la seña adelante.
             webView.stop()
             queuePlaying = false
-            caption = ""
             turnQueueItems.clear()
         }
 
@@ -1573,7 +1566,6 @@ class MainScreenState(
         queuePlaying = false
         doneVisible = false
         resetTurn()
-        caption = ""
         // *Error* es un estado del SRS (`main.tex:726-773`) y antes no existía: los
         // fallos eran un mensaje de 3 s sobre la etiqueta de otro estado, así que
         // el indicador decía "Listo para traducir" mientras la app acababa de
@@ -1716,7 +1708,6 @@ class MainScreenState(
             }
 
             turnQueueItems += items
-            caption = turnQueueItems.joinToString(" · ") { it.gloss }.ifBlank { "Seña no disponible" }
 
             // Aviso por glosa, que es lo que pide el SRS (`main.tex:201` y `:753`):
             // "Seña no disponible" en vez de mandar al avatar una instrucción
@@ -2290,7 +2281,6 @@ class MainScreenState(
             // volvía a inactivo con el canvas todavía en la seña a medias.
             webView.stop()
             queuePlaying = false
-            caption = ""
             turnQueueItems.clear()
         }
 
@@ -2541,7 +2531,6 @@ class MainScreenState(
                 if (!dictationPending) doneVisible = true
             }
         }
-        caption = ""
         // The control panel stays disabled until the sign ends (`CNV-7`); clear
         // the flag here so it is released even while a drawer is closing.
         replayPending = false

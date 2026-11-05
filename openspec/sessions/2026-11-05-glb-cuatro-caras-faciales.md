@@ -41,8 +41,6 @@ en el teléfono físico.
    `openspec/specs/pipeline/spec.md`, `openspec/specs/ui/spec.md`,
    `openspec/config.yaml`, `docs/SISTEMA.md`, `tools/README.md` y
    `docs/PLAN-AVATARES-Y-MARCADORES.md` quedaron con los conteos y nombres nuevos.
-   `tools/measure_face_markers.py` ahora falla con un mensaje explícito si se lo corre
-   contra el layout nuevo, porque sigue midiendo contra el clip base viejo.
 
 ## Qué se decidió
 
@@ -84,11 +82,51 @@ reinició; al relanzarla cargó y reprodujo sin problema. No se reprodujo de nue
 GLB nuevo es más chico que el anterior, así que queda como observación, no como
 diagnóstico.
 
+## Seguimiento: pendientes cerrados y dos ajustes de UI (misma noche)
+
+### `measure_face_markers.py` adaptado y medición nueva
+
+- El script pasa a `SUFFIXES = ("afirmativo", "pregunta", "negacion", "orden")` y usa
+  **`_afirmativo` como referencia** (la cara que la app usa por defecto), porque el
+  layout nuevo no tiene clip base. Las secciones de Δ, la tabla por seña y la
+  comparación de huesos se reescribieron contra esa referencia; la fecha del informe
+  sale de `datetime.date.today()`.
+- Se corrió sobre los dos GLB empaquetados y quedó en
+  `docs/mediciones/marcadores-2026-11-05.md` y `.json`:
+  - `_pregunta` es la cara que más se distingue: sube las cejas **10,39 mm** de pico
+    (`browInnerUp`, peso 1,25) y **3,96 mm** de RMS contra `_afirmativo`.
+  - `_negacion` mueve la boca y baja las cejas: **5,34 mm** de pico, **2,35 mm** de RMS.
+  - `_orden` baja las cejas y aprieta la boca: **5,34 mm** de pico, **2,27 mm** de RMS
+    (`browDown_L` peso 0,75).
+  - Las tres se distinguen entre sí (`negacion` vs `orden`: 3,66 mm de pico, 0,76 mm de
+    RMS) y **las cuatro son una pose fija**: 0,00 mm de cambio dentro de la seña.
+  - Huesos: los 150 clips variantes (50 señas × 3 caras) tienen los mismos canales y
+    valores que `_afirmativo`; solo cambia la cara.
+
+### Grilla del suelo apagada por defecto
+
+- `Settings.grid` pasa de `true` a `false`. `SettingsRepository` **no lee** el valor
+  guardado cuando `DEV_TOOLS` está apagado, y una instalación vieja se limpia **una sola
+  vez** con la marca `grid_default_off`: el `true` viejo lo escribía cualquier cambio de
+  ajustes, así que no era una elección. Desde esa marca, prenderla en AVANZADO la
+  persiste.
+- Verificado en el Redmi Note 9S con build `devTools`: la escena ya no dibuja el suelo y
+  el valor guardado viejo no reaparece.
+
+### El indicador ya no repite la glosa
+
+- Se eliminó el `caption` de `MainScreenState`. `statusLine` ya no arma
+  `"Reproduciendo · <glosas>"` ni siquiera con `DEV_TOOLS`: el indicador dice el nombre
+  del estado y, con depuración, el aviso de `statusOverride`.
+- La píldora sobre el avatar (`STG-10`) queda como la **única** superficie que dice qué
+  seña se está representando. Verificado con una captura durante la reproducción:
+  arriba a la izquierda `Reproduciendo` y en la píldora `YO`, al mismo tiempo.
+- Specs `ui` actualizadas: `STA-13`, `STG-10` y `SET-8`.
+
 ## Qué quedó pendiente
 
-- `tools/measure_face_markers.py` sigue midiendo el layout viejo (clip base + cinco
-  caras). Hay que adaptarlo si se quieren medir las cuatro caras nuevas.
 - Validación **LSC** de las cuatro caras y de la decisión de compartir `pregunta` entre
-  pregunta sí/no y pregunta de contenido.
+  pregunta sí/no y pregunta de contenido. La medición del 2026-11-05 da el material para
+  esa revisión, pero no la reemplaza.
 - `../signai-avatar` quedó con `dev` en `fc6f372` (fast-forward local); esta sesión no
   creó commits ahí.
