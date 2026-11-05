@@ -1,0 +1,44 @@
+{
+  "niveles": [
+    {
+      "nivel": 1,
+      "duracion_s": 44.2,
+      "gauge_antes": 1.0,
+      "gauge_max": 2.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 246.8,
+      "lat_p95": 262.9,
+      "frases": 10,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 2,
+      "duracion_s": 44.4,
+      "gauge_antes": 1.0,
+      "gauge_max": 3.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 248.8,
+      "lat_p95": 400.9,
+      "frases": 20,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 3,
+      "duracion_s": 45.2,
+      "gauge_antes": 1.0,
+      "gauge_max": 4.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 277.9,
+      "lat_p95": 450.6,
+      "frases": 30,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    }
+  ],
+  "nota": ""
+}

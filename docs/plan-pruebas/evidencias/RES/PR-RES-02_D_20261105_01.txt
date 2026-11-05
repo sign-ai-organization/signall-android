@@ -1,0 +1,50 @@
+--------- beginning of main
+--------- beginning of system
+         1793874787.419 14655 14682 W SignAiNet: session failed: null
+         1793874787.454 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874788.057 14655 14655 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1085 ms @637
+         1793874788.058 14655 14655 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793874788.098 14655 14655 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793874788.474 14655 14682 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874788.478 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874788.867 14655 14655 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 1903 ms @690
+         1793874788.948 14655 14779 I SignAiHealth: no se pudo leer /health: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874788.957 14655 14655 I SignAiState: silencio del STT: desconocido
+         1793874790.490 14655 14682 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874790.490 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874793.500 14655 14682 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874793.504 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874797.519 14655 14682 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874797.519 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874802.541 14655 14682 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874802.543 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874807.563 14655 14682 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874807.563 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874812.582 14655 14682 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874812.585 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874817.600 14655 14682 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793874817.601 14655 14655 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793874822.617 14655 14682 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793874842.761 14841 14841 I SignAiState: backend session starting
+         1793874842.799 14841 14922 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793874845.834 14841 14841 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1196 ms @637
+         1793874845.834 14841 14841 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793874845.867 14841 14841 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793874846.634 14841 14841 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2015 ms @690
+         1793874846.710 14841 14841 I SignAiState: silencio del STT: 1500 ms
+         1793874863.132 14841 14841 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793874863.140 14841 14922 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS
+         1793874863.192 14841 14841 I SignAiMetrics: frase #1: 60ms, 1 oraciones, 2 glosas (p50=60ms p95=60ms max=60ms n=1)
+         1793874863.192 14841 14841 I SignAiState: resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=60ms p95=60ms max=60ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793874863.285 14841 14841 I SignAiState: signStart: oración→avatar 97 ms (seña 0, reloj JS 18990 ms)
+         1793874863.285 14841 14841 I SignAiMetrics: oración→avatar: 97 ms (p50=97ms p95=97ms max=97ms n=1)
+         1793874863.285 14841 14841 I SignAiMetrics: envío→primera seña: 154 ms (p50=154ms p95=154ms max=154ms n=1)
+         1793874864.651 14841 14841 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793874865.294 14841 14841 I SignAiState: signStart: oración→avatar 2106 ms (seña 1, reloj JS 21075 ms)
+         1793874867.449 14841 14841 I SignAiMetrics: representado: 2 señas en 4257ms (p50=4257ms p95=4257ms max=4257ms n=1)
+         1793874877.423 14841 14841 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Cuándo comen ellos?"
+         1793874878.925 14841 14841 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793874888.048 14841 14841 I SignAiState: fallo: No se pudo traducir el texto.
+         1793874888.049 14841 14841 I SignAiNet: stop() sin grabación activa
+         1793874888.049 14841 14841 I SignAiState: aviso (no va al indicador): No se pudo traducir el texto.
+         1793874888.050 14841 14841 I SignAiState: frame 'done' del turno 2 descartado (turno en vuelo=null)

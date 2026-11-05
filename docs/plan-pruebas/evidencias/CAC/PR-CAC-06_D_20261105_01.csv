@@ -1,0 +1,121 @@
+﻿configuracion;orden;id;texto;source;sin_llm;ms;glosas
+con caché;1;FR-01-001;Hola, buenos días, bienvenidos.;llm;no;945.5;HOLA BUENOS DIAS
+con caché;2;FR-01-002;Adiós a todos. Buenas noches.;llm | llm;no;553.3;ADIOS TODOS BUENAS NOCHES
+con caché;3;FR-01-003;Mi abuelo y mi tío trabajan en familia.;llm;no;734.8;TRABAJAR FAMILIA
+con caché;4;FR-01-004;Estoy contento porque mi hermano está feliz.;llm;no;742.9;YO CONTENTO HERMANO FELIZ
+con caché;5;FR-01-005;Buenas tardes. Hoy me siento más o menos.;llm | llm;no;818.0;BUENAS TARDES YO SENTIR MAS O MENOS
+con caché;6;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;llm | llm;no;795.6;GRACIAS TODOS COMER CON GUSTO
+con caché;7;FR-01-007;¿Tienes hambre?;llm;no;920.8;TU HAMBRE
+con caché;8;FR-01-008;¿Estás bien?;llm;no;711.7;TU BIEN
+con caché;9;FR-01-009;¿Ustedes trabajan en familia?;llm;no;722.1;USTEDES TRABAJAR FAMILIA
+con caché;10;FR-01-010;Tu hermano está triste. ¿Se siente mal?;llm | llm;no;588.4;TU HERMANO TRISTE SENTIR MAL
+con caché;11;FR-01-011;Perdón. ¿Estás triste?;llm | llm;no;590.2;PERDON TU TRISTE
+con caché;12;FR-01-012;¿Tu hermano está aburrido?;llm;no;766.4;TU HERMANO ABURRIDO
+con caché;13;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;llm | llm | llm;no;1187.7;HOLA COMO ESTAS COMO
+con caché;14;FR-01-014;¿Dónde vive tu familia?;llm;no;610.2;DONDE TU FAMILIA VIVIR
+con caché;15;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;llm | llm;no;867.1;MUJER QUIEN HOMBRE
+con caché;16;FR-01-016;¿Por qué estás triste?;llm;no;669.1;POR QUE TRISTE
+con caché;17;FR-01-017;¿Cuándo comen ustedes?;llm;no;864.5;CUANDO USTEDES COMER
+con caché;18;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;llm | llm;no;1295.8;PERSONAS DIFERENTE QUE SEÑA TU
+con caché;19;FR-01-019;Yo nunca como mucho.;llm;no;961.0;YO NUNCA COMER MUCHO
+con caché;20;FR-01-020;Mi abuelo nunca trabaja.;llm;no;714.7;YO ABUELO NUNCA TRABAJAR
+con caché;21;FR-01-021;Mi tío nunca está aburrido.;llm;no;554.2;NUNCA ABURRIDO
+con caché;22;FR-01-022;Ustedes nunca se sienten mal.;llm;no;669.6;USTEDES NUNCA SENTIR MAL
+con caché;23;FR-01-023;Perdón. Mi hermano nunca está contento.;cache | llm;no;696.6;PERDON NUNCA CONTENTO
+con caché;24;FR-01-024;Se siente muy bien. La niña nunca está triste.;llm | llm;no;875.5;SENTIR BIEN NIÑA NUNCA TRISTE
+con caché;25;FR-01-025;Por favor, come poco.;llm;no;717.1;POR FAVOR COMER POCO
+con caché;26;FR-01-026;Con permiso. Déjame pasar, por favor.;llm | llm;no;715.2;PERMISO POR FAVOR
+con caché;27;FR-01-027;Niños, trabajen todos.;llm;no;684.6;TRABAJAR TODOS
+con caché;28;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;llm | llm;no;628.7;HERMANO VIVIR ABUELO TRABAJAR TIO
+con caché;29;FR-01-029;Hola, familia, siéntanse bienvenidos.;llm;no;799.4;HOLA FAMILIA SENTIR
+con caché;30;FR-01-030;Tío, come mucho. Hermano, come poco.;llm | llm;no;635.3;TIO COMER MUCHO HERMANO COMER POCO
+con caché;31;FR-03-001;HOLA, BUENOS DÍAS, BIENVENIDOS.;cache;sí;7.0;HOLA BUENOS DIAS
+con caché;32;FR-03-002;Adios a todos. Buenas noches.;cache | cache;sí;5.3;ADIOS TODOS BUENAS NOCHES
+con caché;33;FR-03-003;En familia trabajan mi abuelo y mi tío.;cache;sí;26.8;TRABAJAR FAMILIA
+con caché;34;FR-03-004;Porque mi hermano está feliz, estoy contento.;cache;sí;19.7;YO CONTENTO HERMANO FELIZ
+con caché;35;FR-03-005;Buenas tardes. Hoy me siento regular.;cache | llm;no;913.9;BUENAS TARDES YO SENTIR
+con caché;36;FR-03-006;¡Gracias a todos! Los niños y las niñas comen con gusto.;cache | cache;sí;9.6;GRACIAS TODOS COMER CON GUSTO
+con caché;37;FR-03-007;Tienes hambre;llm;no;1195.3;TU HAMBRE
+con caché;38;FR-03-008;¿Estas bien?;cache;sí;6.1;TU BIEN
+con caché;39;FR-03-009;¿Trabajan ustedes en familia?;cache;sí;25.9;USTEDES TRABAJAR FAMILIA
+con caché;40;FR-03-010;Está triste tu hermano. ¿Se siente mal?;cache | cache;sí;17.7;TU HERMANO TRISTE SENTIR MAL
+con caché;41;FR-03-011;Perdon. ¿Estas triste?;cache | cache;sí;3.9;PERDON TU TRISTE
+con caché;42;FR-03-012;¿Está aburrido tu hermano?;cache;sí;22.2;TU HERMANO ABURRIDO
+con caché;43;FR-03-013;Hola ¿cómo estás? ¿Cómo te llamas?;cache | cache | cache;sí;4.3;HOLA COMO ESTAS COMO
+con caché;44;FR-03-014;¿Tu familia dónde vive?;llm;no;764.5;TU FAMILIA DONDE VIVIR
+con caché;45;FR-03-015;La mujer es prudente. ¿Quién es el señor?;llm | llm;no;797.8;MUJER QUIEN
+con caché;46;FR-03-016;¿POR QUÉ ESTÁS TRISTE?;cache;sí;5.4;POR QUE TRISTE
+con caché;47;FR-03-017;¿Ustedes cuándo comen?;cache;sí;26.2;CUANDO USTEDES COMER
+con caché;48;FR-03-018;Las personas son diferentes. ¿Tú qué seña usas?;cache | cache;sí;18.6;PERSONAS DIFERENTE QUE SEÑA TU
+con caché;49;FR-03-019;Yo jamás como mucho.;llm;no;1233.2;YO COMER MUCHO
+con caché;50;FR-03-020;Mi abuelo jamás trabaja.;llm;no;565.4;YO ABUELO TRABAJAR
+con caché;51;FR-03-021;Nunca está aburrido mi tío.;cache;sí;29.5;NUNCA ABURRIDO
+con caché;52;FR-03-022;Nunca se sienten mal ustedes.;cache;sí;18.1;USTEDES NUNCA SENTIR MAL
+con caché;53;FR-03-023;Disculpe. Mi hermano nunca está contento.;llm | cache;no;466.8;DISCULPE NUNCA CONTENTO
+con caché;54;FR-03-024;Se siente excelente. La niña nunca está triste.;llm | cache;no;905.9;YO SENTIR NIÑA NUNCA TRISTE
+con caché;55;FR-03-025;Por favor, come un poquito.;llm;no;607.6;POR FAVOR COMER
+con caché;56;FR-03-026;con permiso. déjame pasar, por favor.;cache | cache;sí;7.2;PERMISO POR FAVOR
+con caché;57;FR-03-027;Chicos, trabajen todos.;llm;no;670.0;TRABAJAR TODOS
+con caché;58;FR-03-028;Hermano, reside con el abuelo. Trabaja con el tío.;cache | cache;sí;32.9;HERMANO VIVIR ABUELO TRABAJAR TIO
+con caché;59;FR-03-029;Hola familia siéntanse bienvenidos;cache;sí;6.2;HOLA FAMILIA SENTIR
+con caché;60;FR-03-030;Tío, come bastante. Hermano, come un poquito.;llm | llm;no;1263.6;TIO COMER HERMANO COMER
+sin caché (aproximada);1;FR-01-001;Hola, buenos días, bienvenidos.;llm;no;652.8;HOLA BUENOS DIAS
+sin caché (aproximada);2;FR-01-002;Adiós a todos. Buenas noches.;llm | llm;no;643.1;ADIOS TODOS BUENAS NOCHES
+sin caché (aproximada);3;FR-01-003;Mi abuelo y mi tío trabajan en familia.;llm;no;775.1;TRABAJAR FAMILIA
+sin caché (aproximada);4;FR-01-004;Estoy contento porque mi hermano está feliz.;llm;no;595.0;YO CONTENTO HERMANO FELIZ
+sin caché (aproximada);5;FR-01-005;Buenas tardes. Hoy me siento más o menos.;llm | llm;no;845.9;BUENAS TARDES YO SENTIR MAS O MENOS
+sin caché (aproximada);6;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;llm | llm;no;594.8;GRACIAS TODOS COMER CON GUSTO
+sin caché (aproximada);7;FR-01-007;¿Tienes hambre?;llm;no;801.3;TU HAMBRE
+sin caché (aproximada);8;FR-01-008;¿Estás bien?;llm;no;560.7;TU BIEN
+sin caché (aproximada);9;FR-01-009;¿Ustedes trabajan en familia?;llm;no;1183.5;USTEDES TRABAJAR FAMILIA
+sin caché (aproximada);10;FR-01-010;Tu hermano está triste. ¿Se siente mal?;llm | llm;no;983.9;TU HERMANO TRISTE SENTIR MAL
+sin caché (aproximada);11;FR-01-011;Perdón. ¿Estás triste?;llm | llm;no;654.1;PERDON TU TRISTE
+sin caché (aproximada);12;FR-01-012;¿Tu hermano está aburrido?;llm;no;657.5;TU HERMANO ABURRIDO
+sin caché (aproximada);13;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;llm | llm | llm;no;836.3;HOLA COMO ESTAS COMO
+sin caché (aproximada);14;FR-01-014;¿Dónde vive tu familia?;llm;no;591.8;DONDE TU FAMILIA VIVIR
+sin caché (aproximada);15;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;llm | llm;no;783.1;MUJER QUIEN HOMBRE
+sin caché (aproximada);16;FR-01-016;¿Por qué estás triste?;llm;no;813.0;POR QUE TRISTE
+sin caché (aproximada);17;FR-01-017;¿Cuándo comen ustedes?;llm;no;930.3;CUANDO USTEDES COMER
+sin caché (aproximada);18;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;llm | llm;no;629.4;PERSONAS DIFERENTE QUE SEÑA TU
+sin caché (aproximada);19;FR-01-019;Yo nunca como mucho.;llm;no;608.2;YO NUNCA COMER MUCHO
+sin caché (aproximada);20;FR-01-020;Mi abuelo nunca trabaja.;llm;no;830.4;YO ABUELO NUNCA TRABAJAR
+sin caché (aproximada);21;FR-01-021;Mi tío nunca está aburrido.;llm;no;656.5;NUNCA ABURRIDO
+sin caché (aproximada);22;FR-01-022;Ustedes nunca se sienten mal.;llm;no;858.1;USTEDES NUNCA SENTIR MAL
+sin caché (aproximada);23;FR-01-023;Perdón. Mi hermano nunca está contento.;llm | llm;no;621.5;PERDON NUNCA CONTENTO
+sin caché (aproximada);24;FR-01-024;Se siente muy bien. La niña nunca está triste.;llm | llm;no;1161.6;SENTIR BIEN NIÑA NUNCA TRISTE
+sin caché (aproximada);25;FR-01-025;Por favor, come poco.;llm;no;586.9;POR FAVOR COMER POCO
+sin caché (aproximada);26;FR-01-026;Con permiso. Déjame pasar, por favor.;llm | llm;no;738.0;PERMISO POR FAVOR
+sin caché (aproximada);27;FR-01-027;Niños, trabajen todos.;llm;no;930.6;TRABAJAR TODOS
+sin caché (aproximada);28;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;llm | llm;no;919.6;HERMANO VIVIR ABUELO TRABAJAR TIO
+sin caché (aproximada);29;FR-01-029;Hola, familia, siéntanse bienvenidos.;llm;no;618.0;HOLA FAMILIA SENTIR
+sin caché (aproximada);30;FR-01-030;Tío, come mucho. Hermano, come poco.;llm | llm;no;790.3;TIO COMER MUCHO HERMANO COMER POCO
+sin caché (aproximada);31;FR-03-001;HOLA, BUENOS DÍAS, BIENVENIDOS.;llm;no;897.8;HOLA BUENOS DIAS
+sin caché (aproximada);32;FR-03-002;Adios a todos. Buenas noches.;llm | llm;no;1516.6;ADIOS TODOS BUENAS NOCHES
+sin caché (aproximada);33;FR-03-003;En familia trabajan mi abuelo y mi tío.;llm;no;648.7;FAMILIA TRABAJAR ABUELO TIO
+sin caché (aproximada);34;FR-03-004;Porque mi hermano está feliz, estoy contento.;llm;no;654.4;HERMANO FELIZ YO CONTENTO
+sin caché (aproximada);35;FR-03-005;Buenas tardes. Hoy me siento regular.;llm | llm;no;791.9;BUENAS TARDES YO SENTIR
+sin caché (aproximada);36;FR-03-006;¡Gracias a todos! Los niños y las niñas comen con gusto.;llm | llm;no;731.1;GRACIAS TODOS COMER CON GUSTO
+sin caché (aproximada);37;FR-03-007;Tienes hambre;llm;no;2522.2;TU HAMBRE
+sin caché (aproximada);38;FR-03-008;¿Estas bien?;llm;no;7032.5;TU BIEN
+sin caché (aproximada);39;FR-03-009;¿Trabajan ustedes en familia?;llm;no;985.8;USTEDES TRABAJAR FAMILIA
+sin caché (aproximada);40;FR-03-010;Está triste tu hermano. ¿Se siente mal?;llm | llm;no;974.0;TU HERMANO TRISTE SENTIR MAL
+sin caché (aproximada);41;FR-03-011;Perdon. ¿Estas triste?;llm | llm;no;1064.3;PERDON TU TRISTE
+sin caché (aproximada);42;FR-03-012;¿Está aburrido tu hermano?;llm;no;980.6;TU HERMANO ABURRIDO
+sin caché (aproximada);43;FR-03-013;Hola ¿cómo estás? ¿Cómo te llamas?;llm | llm | llm;no;748.6;HOLA COMO ESTAS COMO
+sin caché (aproximada);44;FR-03-014;¿Tu familia dónde vive?;llm;no;645.4;TU FAMILIA DONDE VIVIR
+sin caché (aproximada);45;FR-03-015;La mujer es prudente. ¿Quién es el señor?;llm | llm;no;733.4;MUJER QUIEN
+sin caché (aproximada);46;FR-03-016;¿POR QUÉ ESTÁS TRISTE?;llm;no;669.9;POR QUE TU TRISTE
+sin caché (aproximada);47;FR-03-017;¿Ustedes cuándo comen?;llm;no;821.4;USTEDES COMER
+sin caché (aproximada);48;FR-03-018;Las personas son diferentes. ¿Tú qué seña usas?;llm | llm;no;858.4;PERSONAS DIFERENTE TU QUE SEÑA
+sin caché (aproximada);49;FR-03-019;Yo jamás como mucho.;llm;no;706.5;YO COMER MUCHO
+sin caché (aproximada);50;FR-03-020;Mi abuelo jamás trabaja.;llm;no;679.5;YO ABUELO TRABAJAR
+sin caché (aproximada);51;FR-03-021;Nunca está aburrido mi tío.;llm;no;660.5;NUNCA ABURRIDO
+sin caché (aproximada);52;FR-03-022;Nunca se sienten mal ustedes.;llm;no;874.6;USTEDES NUNCA SENTIR MAL
+sin caché (aproximada);53;FR-03-023;Disculpe. Mi hermano nunca está contento.;llm | llm;no;614.2;DISCULPE NUNCA CONTENTO
+sin caché (aproximada);54;FR-03-024;Se siente excelente. La niña nunca está triste.;llm | llm;no;731.0;SENTIR NIÑA NUNCA TRISTE
+sin caché (aproximada);55;FR-03-025;Por favor, come un poquito.;llm;no;791.7;POR FAVOR COMER
+sin caché (aproximada);56;FR-03-026;con permiso. déjame pasar, por favor.;llm | llm;no;617.3;PERMISO POR FAVOR
+sin caché (aproximada);57;FR-03-027;Chicos, trabajen todos.;llm;no;1025.6;TRABAJAR TODOS
+sin caché (aproximada);58;FR-03-028;Hermano, reside con el abuelo. Trabaja con el tío.;llm | llm;no;642.9;HERMANO ABUELO TRABAJAR TIO
+sin caché (aproximada);59;FR-03-029;Hola familia siéntanse bienvenidos;llm;no;729.4;HOLA FAMILIA SENTIR
+sin caché (aproximada);60;FR-03-030;Tío, come bastante. Hermano, come un poquito.;llm | llm;no;864.0;TIO COMER HERMANO COMER

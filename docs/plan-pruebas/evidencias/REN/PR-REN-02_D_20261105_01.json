@@ -1,0 +1,130 @@
+{
+  "situacion_llm": {
+    "fingerprint": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.1,
+      "max": 0.1
+    },
+    "cache.exact": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "cache.embed": {
+      "n": 85,
+      "p50": 36.2,
+      "p95": 57.9,
+      "max": 67.1
+    },
+    "cache.similarity": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.1,
+      "max": 0.1
+    },
+    "llm": {
+      "n": 85,
+      "p50": 581.8,
+      "p95": 787.2,
+      "max": 959.4
+    }
+  },
+  "situacion_cache": {
+    "fingerprint": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.1
+    },
+    "cache.exact": {
+      "n": 85,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    }
+  },
+  "total_llm": {
+    "p50": 692.8,
+    "p95": 837.9
+  },
+  "total_cache": {
+    "p50": 0.8,
+    "p95": 3.8
+  },
+  "llm_por_longitud": {
+    "corta (<=4 palabras)": {
+      "n": 20,
+      "p50": 553.7,
+      "p95": 738.8
+    },
+    "media (5-8)": {
+      "n": 45,
+      "p50": 580.9,
+      "p95": 817.7
+    },
+    "larga (>=9)": {
+      "n": 20,
+      "p50": 597.5,
+      "p95": 740.4
+    }
+  },
+  "reinicios": [
+    {
+      "rep": 1,
+      "segundos": 16.5,
+      "intentos": 1,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    {
+      "rep": 2,
+      "segundos": 15.1,
+      "intentos": 1,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    {
+      "rep": 3,
+      "segundos": 15.9,
+      "intentos": 1,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    {
+      "rep": 4,
+      "segundos": 50.3,
+      "intentos": 2,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    {
+      "rep": 5,
+      "segundos": 22.6,
+      "intentos": 1,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    }
+  ]
+}

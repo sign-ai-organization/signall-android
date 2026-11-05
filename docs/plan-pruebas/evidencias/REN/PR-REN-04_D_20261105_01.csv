@@ -1,0 +1,8 @@
+﻿arranque;frase_orden;texto;glosas;source;backend_listo_ms;stt_listo_ms;app_lista_ms;ms_frase;total_hasta_primera_frase_ms
+1;1;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS;llm;16083.5;3704.2;5850;1200.4;23133.9
+1;2;¿Tienes hambre?;TU HAMBRE;llm;16083.5;3704.2;5850;710.7;22644.2
+2;1;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS;cache;12918.5;3152.6;6157;5.2;19080.7
+2;2;¿Tienes hambre?;TU HAMBRE;cache;12918.5;3152.6;6157;4.1;19079.6
+3;1;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS;cache;24918.2;3267.5;6219;3.7;31140.9
+3;2;¿Tienes hambre?;TU HAMBRE;cache;24918.2;3267.5;6219;3.5;31140.7
+base dormida;1;;;cache;13655.2;;;5.0;5.0

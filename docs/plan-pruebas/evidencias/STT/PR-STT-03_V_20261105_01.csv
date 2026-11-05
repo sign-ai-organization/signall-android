@@ -1,0 +1,9 @@
+﻿id;tipo;produce;duracion_ms;n_finales_stream;n_parciales_stream;texto_stream;produce_texto_stream;drop_reason_stream;texto_post;produce_texto_post;drop_reason_post;audio_ms_post
+AU-03-001;Silencio;Habitación cerrada, con el celular apoyado en una mesa. No se provoca ningún sonido;22037;1;0;;no;;;no;rms;22037
+AU-03-002;Silencio;El mismo lugar de las grabaciones en silencio de AU-01, con el celular sostenido en la mano. No se provoca ningún sonido;20544;1;0;;no;;;no;rms;20544
+AU-03-003;Ruido;El ruido de las grabaciones con ruido de AU-01, al mismo nivel y con el celular a la misma distancia que en esas grabaciones, sin voz;20352;1;0;;no;"{""no_speech"": 1.0, ""logprob"": 34.0}";;no;logprob;20352
+AU-03-004;Ruido;El mismo ruido, con el celular más cerca de la fuente, sin voz;20373;1;0;;no;"{""no_speech"": 5.0, ""logprob"": 30.0}";;no;logprob;20373
+AU-03-005;Tos;4 tosidos, uno cada 5 s;21760;1;0;;no;"{""non_speech"": 12.0}";;no;logprob;21760
+AU-03-006;Tos;4 carraspeos, uno cada 5 s;21333;1;1;;no;"{""logprob"": 5.0, ""non_speech"": 2.0}";;no;rms;21333
+AU-03-007;Golpes;10 golpes con la mano sobre una mesa, uno cada 2 s;21269;1;0;;no;;;no;rms;21269
+AU-03-008;Golpes;Teclear sin parar en el teclado de un computador, durante los 20 s;21312;1;0;;no;"{""no_speech"": 4.0, ""logprob"": 6.0}";;no;no_speech;21312

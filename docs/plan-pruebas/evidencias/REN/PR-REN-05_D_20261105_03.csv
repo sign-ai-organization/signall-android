@@ -1,0 +1,53 @@
+﻿corrida;fase;componente;metrica;medio;maximo;minimo;n
+corrida1;reposo;sign-ai-backend-backend-1;CPU % del contenedor;0.09;0.11;0.09;9
+corrida1;reposo;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1108.1;1109.0;1108.0;9
+corrida1;reposo;sign-ai-stt-stt-1;CPU % del contenedor;0.19;0.34;0.13;9
+corrida1;reposo;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);737.6;737.8;737.5;9
+corrida1;reposo;GPU;utilización GPU %;0;0;0;58
+corrida1;reposo;GPU;memoria GPU usada total (MiB);2011;2011;2011;58
+corrida1;texto;sign-ai-backend-backend-1;CPU % del contenedor;5.82;9.46;0.11;3
+corrida1;texto;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1122.3;1124.4;1119.2;3
+corrida1;texto;sign-ai-stt-stt-1;CPU % del contenedor;0.28;0.43;0.13;3
+corrida1;texto;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);737.9;738.0;737.7;3
+corrida1;texto;GPU;utilización GPU %;0;0;0;22
+corrida1;texto;GPU;memoria GPU usada total (MiB);2011;2011;2011;22
+corrida1;audio;sign-ai-backend-backend-1;CPU % del contenedor;1.99;5.21;0.09;8
+corrida1;audio;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1123.8;1124.4;1123.3;8
+corrida1;audio;sign-ai-stt-stt-1;CPU % del contenedor;116.54;222.05;0.13;8
+corrida1;audio;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);755.6;756.4;755.1;8
+corrida1;audio;GPU;utilización GPU %;18.7;100;0;54
+corrida1;audio;GPU;memoria GPU usada total (MiB);2028.8;2171;2011;54
+corrida1;post_gpu;sign-ai-backend-backend-1;CPU % del contenedor;0.09;0.09;0.09;1
+corrida1;post_gpu;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1124.4;1124.4;1124.4;1
+corrida1;post_gpu;sign-ai-stt-stt-1;CPU % del contenedor;0.22;0.22;0.22;1
+corrida1;post_gpu;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);758.1;758.1;758.1;1
+corrida1;post_gpu;GPU;utilización GPU %;14.1;99;0;7
+corrida1;post_gpu;GPU;memoria GPU usada total (MiB);2024.7;2107;2011;7
+corrida2;reposo;sign-ai-backend-backend-1;CPU % del contenedor;0.34;1.92;0.11;9
+corrida2;reposo;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);35.5;38.0;28.6;9
+corrida2;reposo;sign-ai-stt-stt-1;CPU % del contenedor;0.22;0.35;0.14;9
+corrida2;reposo;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);632.1;858.6;61.4;9
+corrida2;reposo;GPU;utilización GPU %;0;0;0;58
+corrida2;reposo;GPU;memoria GPU usada total (MiB);2011;2011;2011;58
+corrida2;texto;sign-ai-backend-backend-1;CPU % del contenedor;0.12;0.12;0.12;1
+corrida2;texto;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);58.6;58.6;58.6;1
+corrida2;texto;sign-ai-stt-stt-1;CPU % del contenedor;0.19;0.19;0.19;1
+corrida2;texto;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);72.4;72.4;72.4;1
+corrida2;texto;GPU;utilización GPU %;0;0;0;10
+corrida2;texto;GPU;memoria GPU usada total (MiB);2011;2011;2011;10
+corrida2;audio;sign-ai-backend-backend-1;CPU % del contenedor;2.23;2.71;0.12;8
+corrida2;audio;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);71.9;92.8;59.5;8
+corrida2;audio;sign-ai-stt-stt-1;CPU % del contenedor;83.74;200.66;0.15;8
+corrida2;audio;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);102.7;109.9;75.5;8
+corrida2;audio;GPU;utilización GPU %;22.0;100;0;53
+corrida2;audio;GPU;memoria GPU usada total (MiB);2035.2;2171;2011;53
+corrida2;post_gpu;sign-ai-backend-backend-1;CPU % del contenedor;0.12;0.12;0.12;1
+corrida2;post_gpu;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);61.8;61.8;61.8;1
+corrida2;post_gpu;sign-ai-stt-stt-1;CPU % del contenedor;0.32;0.32;0.32;1
+corrida2;post_gpu;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);99.4;99.4;99.4;1
+corrida2;post_gpu;GPU;utilización GPU %;14.3;100;0;7
+corrida2;post_gpu;GPU;memoria GPU usada total (MiB);2033.9;2171;2011;7
+cpu_int8;post_cpu;sign-ai-backend-backend-1;CPU % del contenedor;0.23;0.53;0.09;8
+cpu_int8;post_cpu;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1090.4;1122.3;1040.4;8
+cpu_int8;post_cpu;GPU;utilización GPU %;0;0;0;41
+cpu_int8;post_cpu;GPU;memoria GPU usada total (MiB);15;15;15;41

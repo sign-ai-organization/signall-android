@@ -77,6 +77,20 @@ sealed interface BackendEvent {
         val turn: Int? = null,
     ) : BackendEvent
 
+    /**
+     * What the session can do right now, as the backend sees it.
+     *
+     * `audio` false means the transcription service is unreachable: text still
+     * works, voice does not. The app disables the microphone and says why
+     * instead of closing the session (RNF-AV-03). It is an additive frame: an
+     * older backend never sends it, and an older app ignores unknown types, so
+     * the default must be `audio = true`.
+     */
+    data class Capabilities(
+        val audio: Boolean,
+        val reason: String? = null,
+    ) : BackendEvent
+
     data object Disconnected : BackendEvent
 }
 

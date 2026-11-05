@@ -1,0 +1,6 @@
+mypy 2.4.0 SIN las dependencias instaladas (uvx)
+comando: uvx mypy==2.4.0  (usa [tool.mypy] de pyproject.toml,
+files = ["app"], ignore_missing_imports = true)
+
+Success: no issues found in 39 source files
+EXIT=0

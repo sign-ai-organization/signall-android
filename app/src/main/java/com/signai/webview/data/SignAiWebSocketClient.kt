@@ -232,6 +232,13 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
             turn = obj.optTurn(),
         )
 
+        // What the session can do. Additive on purpose: `optBoolean("audio", true)`
+        // keeps an old backend —which never sends this— on the "voice works" path.
+        "capability" -> BackendEvent.Capabilities(
+            audio = obj.optBoolean("audio", true),
+            reason = obj.optString("reason").ifBlank { null },
+        )
+
         // `trace` / `sentence_trace` are the debug-only pipeline timings. Ignoring
         // every unknown type is what lets the backend add messages without
         // breaking this client — including the `mode` frame an older backend

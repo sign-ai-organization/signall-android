@@ -1,0 +1,15 @@
+{
+  "config": {
+    "llm_model": "gpt-4o-mini",
+    "llm_base_url": "",
+    "semantic_cache_preload": true,
+    "semantic_cache_threshold": 0.05,
+    "sentence_segmenter_enabled": true,
+    "stt_ws_url": "ws://***/ws/transcribe"
+  },
+  "gauges": {
+    "catalog_glosses": 50,
+    "cache_rows": 73,
+    "sessions_active": 1.0
+  }
+}

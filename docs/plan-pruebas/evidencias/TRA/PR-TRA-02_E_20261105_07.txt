@@ -1,0 +1,32 @@
+backend: python3 -m scripts.verify_dependencies_pinned
+(comprueba que requirements.txt fija cada versión)
+
+
+every dependency of the service is pinned
+  PASS  fastapi is there
+  PASS  fastapi is pinned to 0.143.0
+  PASS  uvicorn[standard] is there
+  PASS  uvicorn[standard] is pinned to 0.54.0
+  PASS  pydantic is there
+  PASS  pydantic is pinned to 2.14.1
+  PASS  pydantic-settings is there
+  PASS  pydantic-settings is pinned to 2.15.0
+  PASS  asyncpg is there
+  PASS  asyncpg is pinned to 0.32.0
+  PASS  sentence-transformers is there
+  PASS  sentence-transformers is pinned to 6.1.0
+  PASS  langchain is there
+  PASS  langchain is pinned to 1.4.5
+  PASS  langchain-openai is there
+  PASS  langchain-openai is pinned to 1.7.1
+  PASS  websockets is there
+  PASS  websockets is pinned to 16.1.1
+
+the two that were already pinned stay the way they are
+  PASS  spacy keeps its range
+  PASS  the Spanish model keeps its exact wheel
+
+nothing else floats
+
+all OK
+EXIT=0

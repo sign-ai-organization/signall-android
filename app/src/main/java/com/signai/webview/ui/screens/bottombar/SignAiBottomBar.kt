@@ -29,7 +29,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -90,6 +92,7 @@ fun SignAiBottomBar(
     dictationReadyToSend: Boolean = false,
     sentTextLocked: Boolean = false,
     micAvailable: Boolean = true,
+    micNotice: String? = null,
     enabled: Boolean = true,
 ) {
     val dismissKeyboard = rememberKeyboardDismissAction()
@@ -192,6 +195,22 @@ fun SignAiBottomBar(
             modifier = Modifier.padding(horizontal = 18.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
+            // Aviso del micrófono (RF-UI-04, PR-AND-01). Antes solo existía como
+            // texto de depuración —`showStatus` no escribe nada sin `DEV_TOOLS`—,
+            // así que quien negaba el permiso no veía ninguna explicación. Va
+            // acá, pegado al botón del micrófono, y no en el indicador del
+            // escenario: la tabla de estados del SRS solo permite ahí el nombre
+            // del estado y «Seña no disponible».
+            if (micNotice != null) {
+                SignAiText(
+                    text = micNotice,
+                    color = SignAiTheme.colors.text,
+                    style = SignAiTheme.typography.caption,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .semantics { liveRegion = LiveRegionMode.Polite },
+                )
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(9.dp),

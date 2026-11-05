@@ -1,0 +1,5 @@
+﻿situacion;frase;campo_con_el_texto;tiempo_hasta_aviso_ms;toque_hasta_aviso_ms;resultado;nota
+LLM caído · frase ya guardada en caché;Hola, buenos días, bienvenidos.;sí;4317;14458;traducida;el backend no debería llamar al LLM
+LLM caído · frase nueva;¿Cuándo comen ellos?;sí;10625;20468;aviso de error;el puerto sin listener del anfitrión descarta los paquetes en vez de rechazarlos, así que se agota el tiempo de espera
+LLM colgado · frase nueva;¿Cuándo comen ellos?;sí;10674;20525;aviso de error;el proveedor acepta la conexión y no contesta
+LLM restablecido · frase nueva;¿Cuándo comen ellos?;sí;5702;15447;se representó;sin reiniciar la app ni el backend

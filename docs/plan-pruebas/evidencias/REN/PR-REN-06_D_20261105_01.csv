@@ -1,0 +1,61 @@
+﻿nivel;sesion;frase;audio;audio_ms;transcrito;esperado;wer;glosas;latencia_post_audio_ms;total_ms;errores
+1;0;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;249.7;4708.3;0
+1;0;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;264.7;5470.0;0
+1;0;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;223.9;2912.2;0
+1;0;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TU TRISTE;218.4;4207.8;0
+1;0;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;260.8;4271.2;0
+1;0;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;246.3;3851.7;0
+1;0;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;216.8;3865.1;0
+1;0;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON HERMANO NUNCA CONTENTO;247.2;5367.5;0
+1;0;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;217.0;3865.3;0
+1;0;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;POR FAVOR;254.6;5310.9;0
+2;0;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;228.3;4686.6;0
+2;0;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;433.4;5638.7;0
+2;0;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;217.0;2905.3;0
+2;0;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TU TRISTE;212.5;4201.7;0
+2;0;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;255.0;4265.2;0
+2;0;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;254.2;3859.6;0
+2;0;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;205.3;3853.6;0
+2;0;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON HERMANO NUNCA CONTENTO;246.5;5366.8;0
+2;0;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;211.5;3859.8;0
+2;0;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;POR FAVOR;277.7;5335.6;0
+2;1;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;255.1;5460.4;0
+2;1;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;216.5;2904.9;0
+2;1;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TU TRISTE;213.8;4203.2;0
+2;1;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;251.2;4261.5;0
+2;1;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;378.0;3983.2;0
+2;1;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;343.4;3991.7;0
+2;1;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON HERMANO NUNCA CONTENTO;245.6;5365.9;0
+2;1;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;214.2;3862.5;0
+2;1;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;POR FAVOR;267.9;5324.2;0
+2;1;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;399.2;4857.5;0
+3;0;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;230.0;4688.4;0
+3;0;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;330.3;5535.6;0
+3;0;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;218.7;2907.0;0
+3;0;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TU TRISTE;222.0;4211.3;0
+3;0;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;441.5;4451.8;0
+3;0;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;241.2;3846.5;0
+3;0;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;270.8;3919.1;0
+3;0;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON HERMANO NUNCA CONTENTO;284.9;5406.1;0
+3;0;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;435.3;4084.2;0
+3;0;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;POR FAVOR;292.4;5349.1;0
+3;1;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;257.6;5463.0;0
+3;1;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;221.6;2909.9;0
+3;1;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TU TRISTE;217.9;4207.2;0
+3;1;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;255.9;4267.8;0
+3;1;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;241.5;3848.6;0
+3;1;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;207.7;3856.5;0
+3;1;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON HERMANO NUNCA CONTENTO;254.6;5375.0;0
+3;1;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;306.2;3955.5;0
+3;1;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;POR FAVOR;384.3;5441.2;0
+3;1;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;343.2;4802.4;0
+3;2;FR-01-007;AU-01-013;2688;¿Tienes hambre?;¿Tienes hambre?;0.0;TU HAMBRE;448.7;3138.2;0
+3;2;FR-01-011;AU-01-019;3989;Perdón, ¿estás triste?;Perdón, ¿estás triste?;0.0;PERDON TU TRISTE;486.2;4475.5;0
+3;2;FR-01-013;AU-01-025;4010;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;HOLA COMO ESTAS COMO TU;452.1;4462.5;0
+3;2;FR-01-014;AU-01-031;3605;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;DONDE TU FAMILIA VIVIR;250.9;3856.5;0
+3;2;FR-01-019;AU-01-037;3648;Yo nunca como mucho.;Yo nunca como mucho.;0.0;YO NUNCA COMER MUCHO;379.3;4028.0;0
+3;2;FR-01-023;AU-01-043;5120;Perdón, mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;PERDON HERMANO NUNCA CONTENTO;246.8;5367.1;0
+3;2;FR-01-025;AU-01-049;3648;Por favor, come poco.;Por favor, come poco.;0.0;POR FAVOR COMER POCO;357.5;4006.2;0
+3;2;FR-01-026;AU-01-055;5056;Con permiso, déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;POR FAVOR;307.0;5365.1;0
+3;2;FR-01-001;AU-01-001;4458;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;HOLA BUENOS DIAS;415.6;4875.2;0
+3;2;FR-01-005;AU-01-007;5205;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;BUENAS TARDES YO SENTIR MAS O MENOS;259.4;5464.7;0

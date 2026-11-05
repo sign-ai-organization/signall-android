@@ -1,0 +1,5 @@
+ruff 0.17.1 — también los scripts de verificación
+comando: uvx ruff==0.17.1 check app scripts --output-format=concise
+
+All checks passed!
+EXIT=0

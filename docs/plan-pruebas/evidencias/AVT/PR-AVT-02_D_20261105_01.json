@@ -1,0 +1,837 @@
+{
+  "por_glosa": [
+    {
+      "glosa": "GRACIAS",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2377,
+      "duracion_min_ms": 2377,
+      "duracion_max_ms": 2377,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "BUENOS DIAS",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2146,
+      "duracion_min_ms": 2146,
+      "duracion_max_ms": 2146,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "BUENAS TARDES",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2033,
+      "duracion_min_ms": 2033,
+      "duracion_max_ms": 2033,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "BUENAS NOCHES",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2153,
+      "duracion_min_ms": 2153,
+      "duracion_max_ms": 2153,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "SEÑA",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2132,
+      "duracion_min_ms": 2132,
+      "duracion_max_ms": 2132,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "NOMBRE",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2147,
+      "duracion_min_ms": 2147,
+      "duracion_max_ms": 2147,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "TRABAJAR",
+      "ocurrencias": 4,
+      "duracion_media_ms": 2126,
+      "duracion_min_ms": 2050,
+      "duracion_max_ms": 2156,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "COMER",
+      "ocurrencias": 6,
+      "duracion_media_ms": 2051,
+      "duracion_min_ms": 2030,
+      "duracion_max_ms": 2147,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "VIVIR",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2150,
+      "duracion_min_ms": 2150,
+      "duracion_max_ms": 2150,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "POCO",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2176,
+      "duracion_min_ms": 2157,
+      "duracion_max_ms": 2196,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "FAMILIA",
+      "ocurrencias": 4,
+      "duracion_media_ms": 2124,
+      "duracion_min_ms": 2049,
+      "duracion_max_ms": 2153,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "PERSONAS",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2166,
+      "duracion_min_ms": 2166,
+      "duracion_max_ms": 2166,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "MUJER",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2048,
+      "duracion_min_ms": 2048,
+      "duracion_max_ms": 2048,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "HOMBRE",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2143,
+      "duracion_min_ms": 2143,
+      "duracion_max_ms": 2143,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "NIÑO",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2142,
+      "duracion_min_ms": 2142,
+      "duracion_max_ms": 2142,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "NIÑA",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2034,
+      "duracion_min_ms": 2034,
+      "duracion_max_ms": 2034,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "ABUELO",
+      "ocurrencias": 3,
+      "duracion_media_ms": 2020,
+      "duracion_min_ms": 1994,
+      "duracion_max_ms": 2035,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "TIO",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2070,
+      "duracion_min_ms": 2070,
+      "duracion_max_ms": 2071,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "HERMANO",
+      "ocurrencias": 6,
+      "duracion_media_ms": 2041,
+      "duracion_min_ms": 2018,
+      "duracion_max_ms": 2086,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "HAMBRE",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2144,
+      "duracion_min_ms": 2144,
+      "duracion_max_ms": 2144,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "FELIZ",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2283,
+      "duracion_min_ms": 2283,
+      "duracion_max_ms": 2283,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "CONTENTO",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2078,
+      "duracion_min_ms": 2025,
+      "duracion_max_ms": 2131,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "TRISTE",
+      "ocurrencias": 4,
+      "duracion_media_ms": 2793,
+      "duracion_min_ms": 2686,
+      "duracion_max_ms": 2841,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "ABURRIDO",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2394,
+      "duracion_min_ms": 2393,
+      "duracion_max_ms": 2394,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "BIEN",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2408,
+      "duracion_min_ms": 2349,
+      "duracion_max_ms": 2467,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "MAL",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2320,
+      "duracion_min_ms": 2319,
+      "duracion_max_ms": 2321,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "COMO ESTAS",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2011,
+      "duracion_min_ms": 2011,
+      "duracion_max_ms": 2011,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "MAS O MENOS",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2223,
+      "duracion_min_ms": 2223,
+      "duracion_max_ms": 2223,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "SENTIR",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2064,
+      "duracion_min_ms": 2047,
+      "duracion_max_ms": 2081,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "JUCIOSO",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2239,
+      "duracion_min_ms": 2239,
+      "duracion_max_ms": 2239,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "HOLA",
+      "ocurrencias": 3,
+      "duracion_media_ms": 2055,
+      "duracion_min_ms": 2014,
+      "duracion_max_ms": 2083,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "ADIOS",
+      "ocurrencias": 1,
+      "duracion_media_ms": 1990,
+      "duracion_min_ms": 1990,
+      "duracion_max_ms": 1990,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "POR FAVOR",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2093,
+      "duracion_min_ms": 2027,
+      "duracion_max_ms": 2159,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "CON GUSTO",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2142,
+      "duracion_min_ms": 2142,
+      "duracion_max_ms": 2142,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "BIENVENIDO",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2371,
+      "duracion_min_ms": 2371,
+      "duracion_max_ms": 2371,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "PERDON",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2032,
+      "duracion_min_ms": 2021,
+      "duracion_max_ms": 2044,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "PERMISO",
+      "ocurrencias": 1,
+      "duracion_media_ms": 1996,
+      "duracion_min_ms": 1996,
+      "duracion_max_ms": 1996,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "NUNCA",
+      "ocurrencias": 6,
+      "duracion_media_ms": 2033,
+      "duracion_min_ms": 2013,
+      "duracion_max_ms": 2046,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "YO",
+      "ocurrencias": 5,
+      "duracion_media_ms": 2055,
+      "duracion_min_ms": 2011,
+      "duracion_max_ms": 2158,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "TU",
+      "ocurrencias": 10,
+      "duracion_media_ms": 1618,
+      "duracion_min_ms": 1541,
+      "duracion_max_ms": 1743,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "USTEDES",
+      "ocurrencias": 3,
+      "duracion_media_ms": 1317,
+      "duracion_min_ms": 1298,
+      "duracion_max_ms": 1331,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "QUE",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2136,
+      "duracion_min_ms": 2136,
+      "duracion_max_ms": 2136,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "CUANDO",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2076,
+      "duracion_min_ms": 2076,
+      "duracion_max_ms": 2076,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "DONDE",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2019,
+      "duracion_min_ms": 2019,
+      "duracion_max_ms": 2019,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "COMO",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2041,
+      "duracion_min_ms": 2041,
+      "duracion_max_ms": 2041,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "POR QUE",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2439,
+      "duracion_min_ms": 2439,
+      "duracion_max_ms": 2439,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "QUIEN",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2107,
+      "duracion_min_ms": 2107,
+      "duracion_max_ms": 2107,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "DIFERENTE",
+      "ocurrencias": 1,
+      "duracion_media_ms": 2107,
+      "duracion_min_ms": 2107,
+      "duracion_max_ms": 2107,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "TODOS",
+      "ocurrencias": 3,
+      "duracion_media_ms": 2025,
+      "duracion_min_ms": 2007,
+      "duracion_max_ms": 2037,
+      "reproducida": "sí"
+    },
+    {
+      "glosa": "MUCHO",
+      "ocurrencias": 2,
+      "duracion_media_ms": 2092,
+      "duracion_min_ms": 2033,
+      "duracion_max_ms": 2152,
+      "reproducida": "sí"
+    }
+  ],
+  "por_turno": [
+    {
+      "orden": 1,
+      "turn": 1,
+      "frase": "FR-01-001",
+      "glosas_devueltas": "HOLA BUENOS DIAS",
+      "senas_arrancadas": 2,
+      "senas_reportadas": 2,
+      "ms_representado": 4268,
+      "termino": "sí"
+    },
+    {
+      "orden": 2,
+      "turn": 2,
+      "frase": "FR-01-002",
+      "glosas_devueltas": "ADIOS TODOS BUENAS NOCHES",
+      "senas_arrancadas": 3,
+      "senas_reportadas": 3,
+      "ms_representado": 6237,
+      "termino": "sí"
+    },
+    {
+      "orden": 3,
+      "turn": 3,
+      "frase": "FR-01-003",
+      "glosas_devueltas": "ABUELO TU TIO FAMILIA",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 7868,
+      "termino": "sí"
+    },
+    {
+      "orden": 4,
+      "turn": 4,
+      "frase": "FR-01-004",
+      "glosas_devueltas": "YO CONTENTO HERMANO FELIZ",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 8416,
+      "termino": "sí"
+    },
+    {
+      "orden": 5,
+      "turn": 5,
+      "frase": "FR-01-005",
+      "glosas_devueltas": "BUENAS TARDES YO SENTIR MAS O MENOS",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 8369,
+      "termino": "sí"
+    },
+    {
+      "orden": 6,
+      "turn": 6,
+      "frase": "FR-01-006",
+      "glosas_devueltas": "GRACIAS TODOS COMER CON GUSTO",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 8609,
+      "termino": "sí"
+    },
+    {
+      "orden": 7,
+      "turn": 7,
+      "frase": "FR-01-007",
+      "glosas_devueltas": "TU HAMBRE",
+      "senas_arrancadas": 2,
+      "senas_reportadas": 2,
+      "ms_representado": 3799,
+      "termino": "sí"
+    },
+    {
+      "orden": 8,
+      "turn": 8,
+      "frase": "FR-01-008",
+      "glosas_devueltas": "BIEN",
+      "senas_arrancadas": 1,
+      "senas_reportadas": 1,
+      "ms_representado": 2489,
+      "termino": "sí"
+    },
+    {
+      "orden": 9,
+      "turn": 9,
+      "frase": "FR-01-009",
+      "glosas_devueltas": "USTEDES TRABAJAR FAMILIA",
+      "senas_arrancadas": 3,
+      "senas_reportadas": 3,
+      "ms_representado": 5543,
+      "termino": "sí"
+    },
+    {
+      "orden": 10,
+      "turn": 10,
+      "frase": "FR-01-010",
+      "glosas_devueltas": "TU HERMANO TRISTE MAL",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 8695,
+      "termino": "sí"
+    },
+    {
+      "orden": 11,
+      "turn": 11,
+      "frase": "FR-01-011",
+      "glosas_devueltas": "PERDON TRISTE",
+      "senas_arrancadas": 2,
+      "senas_reportadas": 2,
+      "ms_representado": 4893,
+      "termino": "sí"
+    },
+    {
+      "orden": 12,
+      "turn": 12,
+      "frase": "FR-01-012",
+      "glosas_devueltas": "TU HERMANO ABURRIDO",
+      "senas_arrancadas": 3,
+      "senas_reportadas": 3,
+      "ms_representado": 6086,
+      "termino": "sí"
+    },
+    {
+      "orden": 13,
+      "turn": 13,
+      "frase": "FR-01-013",
+      "glosas_devueltas": "HOLA COMO ESTAS COMO TU",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 7902,
+      "termino": "sí"
+    },
+    {
+      "orden": 14,
+      "turn": 14,
+      "frase": "FR-01-014",
+      "glosas_devueltas": "DONDE TU FAMILIA VIVIR",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 7855,
+      "termino": "sí"
+    },
+    {
+      "orden": 15,
+      "turn": 15,
+      "frase": "FR-01-015",
+      "glosas_devueltas": "MUJER QUIEN HOMBRE",
+      "senas_arrancadas": 3,
+      "senas_reportadas": 3,
+      "ms_representado": 6322,
+      "termino": "sí"
+    },
+    {
+      "orden": 16,
+      "turn": 16,
+      "frase": "FR-01-016",
+      "glosas_devueltas": "POR QUE TU TRISTE",
+      "senas_arrancadas": 3,
+      "senas_reportadas": 3,
+      "ms_representado": 6919,
+      "termino": "sí"
+    },
+    {
+      "orden": 17,
+      "turn": 17,
+      "frase": "FR-01-017",
+      "glosas_devueltas": "CUANDO USTEDES COMER",
+      "senas_arrancadas": 3,
+      "senas_reportadas": 3,
+      "ms_representado": 5620,
+      "termino": "sí"
+    },
+    {
+      "orden": 18,
+      "turn": 18,
+      "frase": "FR-01-018",
+      "glosas_devueltas": "DIFERENTE YO",
+      "senas_arrancadas": 2,
+      "senas_reportadas": 2,
+      "ms_representado": 4286,
+      "termino": "sí"
+    },
+    {
+      "orden": 19,
+      "turn": 19,
+      "frase": "FR-01-019",
+      "glosas_devueltas": "YO NUNCA COMER MUCHO",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 8274,
+      "termino": "sí"
+    },
+    {
+      "orden": 20,
+      "turn": 20,
+      "frase": "FR-01-020",
+      "glosas_devueltas": "YO ABUELO NUNCA TRABAJAR",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 8276,
+      "termino": "sí"
+    },
+    {
+      "orden": 21,
+      "turn": 21,
+      "frase": "FR-01-021",
+      "glosas_devueltas": "TU TIO NUNCA ABURRIDO",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 8114,
+      "termino": "sí"
+    },
+    {
+      "orden": 22,
+      "turn": 22,
+      "frase": "FR-01-022",
+      "glosas_devueltas": "USTEDES NUNCA SENTIR MAL",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 7773,
+      "termino": "sí"
+    },
+    {
+      "orden": 23,
+      "turn": 23,
+      "frase": "FR-01-023",
+      "glosas_devueltas": "PERDON HERMANO NUNCA CONTENTO",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 8257,
+      "termino": "sí"
+    },
+    {
+      "orden": 24,
+      "turn": 24,
+      "frase": "FR-01-024",
+      "glosas_devueltas": "BIEN NIÑA NUNCA TRISTE",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 9303,
+      "termino": "sí"
+    },
+    {
+      "orden": 25,
+      "turn": 25,
+      "frase": "FR-01-025",
+      "glosas_devueltas": "POR FAVOR COMER POCO",
+      "senas_arrancadas": 3,
+      "senas_reportadas": 3,
+      "ms_representado": 6251,
+      "termino": "sí"
+    },
+    {
+      "orden": 26,
+      "turn": 26,
+      "frase": "FR-01-026",
+      "glosas_devueltas": "PERMISO POR FAVOR",
+      "senas_arrancadas": 2,
+      "senas_reportadas": 2,
+      "ms_representado": 4220,
+      "termino": "sí"
+    },
+    {
+      "orden": 27,
+      "turn": 27,
+      "frase": "FR-01-027",
+      "glosas_devueltas": "TODOS TRABAJAR",
+      "senas_arrancadas": 2,
+      "senas_reportadas": 2,
+      "ms_representado": 4208,
+      "termino": "sí"
+    },
+    {
+      "orden": 28,
+      "turn": 28,
+      "frase": "FR-01-028",
+      "glosas_devueltas": "HERMANO ABUELO TU TRABAJAR",
+      "senas_arrancadas": 4,
+      "senas_reportadas": 4,
+      "ms_representado": 7866,
+      "termino": "sí"
+    },
+    {
+      "orden": 29,
+      "turn": 29,
+      "frase": "FR-01-029",
+      "glosas_devueltas": "HOLA FAMILIA",
+      "senas_arrancadas": 2,
+      "senas_reportadas": 2,
+      "ms_representado": 4253,
+      "termino": "sí"
+    },
+    {
+      "orden": 30,
+      "turn": 30,
+      "frase": "FR-01-030",
+      "glosas_devueltas": "TU COMER MUCHO HERMANO COMER POCO",
+      "senas_arrancadas": 6,
+      "senas_reportadas": 6,
+      "ms_representado": 11986,
+      "termino": "sí"
+    },
+    {
+      "orden": 31,
+      "turn": 31,
+      "frase": "sonda",
+      "glosas_devueltas": "SEÑA",
+      "senas_arrancadas": 1,
+      "senas_reportadas": 1,
+      "ms_representado": 2154,
+      "termino": "sí"
+    },
+    {
+      "orden": 32,
+      "turn": 32,
+      "frase": "sonda",
+      "glosas_devueltas": "NOMBRE",
+      "senas_arrancadas": 1,
+      "senas_reportadas": 1,
+      "ms_representado": 2174,
+      "termino": "sí"
+    },
+    {
+      "orden": 33,
+      "turn": 33,
+      "frase": "sonda",
+      "glosas_devueltas": "PERSONAS",
+      "senas_arrancadas": 1,
+      "senas_reportadas": 1,
+      "ms_representado": 2183,
+      "termino": "sí"
+    },
+    {
+      "orden": 34,
+      "turn": 34,
+      "frase": "sonda",
+      "glosas_devueltas": "NIÑO",
+      "senas_arrancadas": 1,
+      "senas_reportadas": 1,
+      "ms_representado": 2171,
+      "termino": "sí"
+    },
+    {
+      "orden": 35,
+      "turn": 35,
+      "frase": "sonda",
+      "glosas_devueltas": "JUCIOSO",
+      "senas_arrancadas": 1,
+      "senas_reportadas": 1,
+      "ms_representado": 2273,
+      "termino": "sí"
+    },
+    {
+      "orden": 36,
+      "turn": 36,
+      "frase": "sonda",
+      "glosas_devueltas": "BIENVENIDO",
+      "senas_arrancadas": 1,
+      "senas_reportadas": 1,
+      "ms_representado": 2393,
+      "termino": "sí"
+    },
+    {
+      "orden": 37,
+      "turn": 37,
+      "frase": "sonda",
+      "glosas_devueltas": "QUE",
+      "senas_arrancadas": 1,
+      "senas_reportadas": 1,
+      "ms_representado": 2158,
+      "termino": "sí"
+    }
+  ],
+  "glosas_solo_en_sonda": [
+    "SEÑA",
+    "NOMBRE",
+    "PERSONAS",
+    "NIÑO",
+    "JUCIOSO",
+    "BIENVENIDO",
+    "QUE"
+  ],
+  "catalogo": [
+    "GRACIAS",
+    "BUENOS DIAS",
+    "BUENAS TARDES",
+    "BUENAS NOCHES",
+    "SEÑA",
+    "NOMBRE",
+    "TRABAJAR",
+    "COMER",
+    "VIVIR",
+    "POCO",
+    "FAMILIA",
+    "PERSONAS",
+    "MUJER",
+    "HOMBRE",
+    "NIÑO",
+    "NIÑA",
+    "ABUELO",
+    "TIO",
+    "HERMANO",
+    "HAMBRE",
+    "FELIZ",
+    "CONTENTO",
+    "TRISTE",
+    "ABURRIDO",
+    "BIEN",
+    "MAL",
+    "COMO ESTAS",
+    "MAS O MENOS",
+    "SENTIR",
+    "JUCIOSO",
+    "HOLA",
+    "ADIOS",
+    "POR FAVOR",
+    "CON GUSTO",
+    "BIENVENIDO",
+    "PERDON",
+    "PERMISO",
+    "NUNCA",
+    "YO",
+    "TU",
+    "USTEDES",
+    "QUE",
+    "CUANDO",
+    "DONDE",
+    "COMO",
+    "POR QUE",
+    "QUIEN",
+    "DIFERENTE",
+    "TODOS",
+    "MUCHO"
+  ]
+}

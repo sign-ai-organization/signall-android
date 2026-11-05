@@ -1,0 +1,36 @@
+{
+  "AU-03-005": {
+    "audio": "AU-03-005.wav",
+    "audio_ms": 21760,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 960,
+        "_t": 22291.2,
+        "_ms_audio_enviado": 21760,
+        "_end_enviado": true
+      }
+    ],
+    "t_fin_audio_ms": 21750.1,
+    "t_end_ms": 22050.2,
+    "ms": 22901.7
+  },
+  "AU-03-008": {
+    "audio": "AU-03-008.wav",
+    "audio_ms": 21312,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 5610,
+        "_t": 21799.1,
+        "_ms_audio_enviado": 21312,
+        "_end_enviado": true
+      }
+    ],
+    "t_fin_audio_ms": 21300.1,
+    "t_end_ms": 21600.7,
+    "ms": 22403.2
+  }
+}

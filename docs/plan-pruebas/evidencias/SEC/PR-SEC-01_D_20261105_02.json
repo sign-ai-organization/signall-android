@@ -1,0 +1,23 @@
+{
+  "pcap": "/tmp/opencode/pruebas/recuperacion/sec01/sec01.pcap",
+  "conteos_de_palabras": {
+    "cita": 0,
+    "noviembre": 0,
+    "diez": 0,
+    "media": 0
+  },
+  "paquetes_tls": 817,
+  "config": {
+    "llm_model": "gpt-4o-mini",
+    "llm_base_url": "",
+    "semantic_cache_preload": true,
+    "semantic_cache_threshold": 0.05,
+    "sentence_segmenter_enabled": true,
+    "stt_ws_url": "ws://***/ws/transcribe"
+  },
+  "reverse": "UsbFfs tcp:8443 tcp:443\nUsbFfs tcp:8080 tcp:8080",
+  "ws_sin_compresion": "{'type': 'done'}\n",
+  "logcat_tls": "--------- beginning of main\n--------- beginning of system\n11-05 05:03:22.224  8375  8375 I SignAiState: backend session starting\n11-05 05:03:22.332  8375  8452 I SignAiNet: sesión abierta: wss://127.0.0.1:8443/ws/translate (TLS)\n",
+  "logcat_plano": "--------- beginning of main\n--------- beginning of system\n11-05 05:05:04.972  8865  8865 I SignAiState: backend session starting\n11-05 05:05:04.995  8865  8895 W SignAiNet: session failed: Unable to parse TLS packet header\n11-05 05:05:05.974  8865  8865 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off\n11-05 05:05:07.016  8865  8895 W SignAiNet: session failed: Unable to parse TLS packet header\n11-05 05:05:07.023  8865  8865 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off\n11-05 05:05:08.904  8865  8865 I SignAiState: silencio del STT: desconocido\n11-05 05:05:09.089  8865  8895 W SignAiNet: session failed: Unable to parse TLS packet header\n11-05 05:05:09.089  8865  8865 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off\n11-05 05:05:12.103  8865  8895 W SignAiNet: session failed: Unable to parse TLS packet header\n11-05 05:05:12.104  8865  8865 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off\n11-05 05:05:16.124  8865  8895 W SignAiNet: session failed: Unable to parse TLS packet header\n11-05 05:05:16.125  8865  8865 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off\n",
+  "llamadas_openai": 509
+}

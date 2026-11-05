@@ -1,0 +1,29 @@
+﻿corrida;fase;componente;metrica;medio;maximo;minimo;n
+gpu_medium;reposo;sign-ai-backend-backend-1;CPU % del contenedor;0.09;0.11;0.09;9
+gpu_medium;reposo;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1108.1;1109.0;1108.0;9
+gpu_medium;reposo;sign-ai-stt-stt-1;CPU % del contenedor;0.19;0.34;0.13;9
+gpu_medium;reposo;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);737.6;737.8;737.5;9
+gpu_medium;reposo;GPU;utilización GPU %;0;0;0;58
+gpu_medium;reposo;GPU;memoria GPU usada total (MiB);2011;2011;2011;58
+gpu_medium;texto;sign-ai-backend-backend-1;CPU % del contenedor;5.82;9.46;0.11;3
+gpu_medium;texto;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1122.3;1124.4;1119.2;3
+gpu_medium;texto;sign-ai-stt-stt-1;CPU % del contenedor;0.28;0.43;0.13;3
+gpu_medium;texto;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);737.9;738.0;737.7;3
+gpu_medium;texto;GPU;utilización GPU %;0;0;0;22
+gpu_medium;texto;GPU;memoria GPU usada total (MiB);2011;2011;2011;22
+gpu_medium;audio;sign-ai-backend-backend-1;CPU % del contenedor;1.99;5.21;0.09;8
+gpu_medium;audio;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1123.8;1124.4;1123.3;8
+gpu_medium;audio;sign-ai-stt-stt-1;CPU % del contenedor;116.54;222.05;0.13;8
+gpu_medium;audio;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);755.6;756.4;755.1;8
+gpu_medium;audio;GPU;utilización GPU %;18.7;100;0;54
+gpu_medium;audio;GPU;memoria GPU usada total (MiB);2028.8;2171;2011;54
+gpu_medium;post_gpu;sign-ai-backend-backend-1;CPU % del contenedor;0.09;0.09;0.09;1
+gpu_medium;post_gpu;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1124.4;1124.4;1124.4;1
+gpu_medium;post_gpu;sign-ai-stt-stt-1;CPU % del contenedor;0.22;0.22;0.22;1
+gpu_medium;post_gpu;sign-ai-stt-stt-1;memoria RAM del contenedor (MiB);758.1;758.1;758.1;1
+gpu_medium;post_gpu;GPU;utilización GPU %;14.1;99;0;7
+gpu_medium;post_gpu;GPU;memoria GPU usada total (MiB);2024.7;2107;2011;7
+cpu_int8;post_cpu;sign-ai-backend-backend-1;CPU % del contenedor;0.23;0.53;0.09;8
+cpu_int8;post_cpu;sign-ai-backend-backend-1;memoria RAM del contenedor (MiB);1090.4;1122.3;1040.4;8
+cpu_int8;post_cpu;GPU;utilización GPU %;0;0;0;41
+cpu_int8;post_cpu;GPU;memoria GPU usada total (MiB);15;15;15;41

@@ -1,0 +1,51 @@
+PR-AVT-06 · tamaño de las animaciones por rangos de accesores
+medido el 05/11/2026 sobre el árbol de trabajo del repo de la app
+método: se suman los rangos de bytes de los accessors de geometría, cara, piel y
+animación. El tamaño de cada seña une sus cuatro caras, que comparten los mismos
+accessors de huesos: sumarlas sería contarlas cuatro veces. El tamaño literal del
+GLB no sirve: sobrecuenta el descriptor JSON y los bloques sin datos.
+
+## juan
+archivo                30,323,680 B
+  chunk JSON           10,306,572 B (31619 accessors)
+  chunk BIN            20,017,080 B
+  datos alcanzables    14,954,798 B
+  BIN sin datos        5,062,282 B
+animación (unión)      2,823,936 B (9.31 % del archivo)
+geometría              3,533,994 B (11.65 %)
+cara (morph targets)   7,839,354 B (25.85 %)
+texturas               750,826 B (2.48 %)
+matrices de piel       6,688 B (los JOINTS/WEIGHTS van entrelazados con la geometría)
+clips                  200 (50 señas × 4 caras)
+por clip (nominal)     prom 53,148.8 B · mín 37,800 B (0002_afirmativo) · máx 76,256 B (0000_afirmativo)
+  los 200 clips        10,629,760 B
+por seña (4 caras)     prom 56,484.8 B · mín 41,136 B (0002) · máx 79,592 B (0000)
+  las 50 señas         2,824,240 B
+
+## pauline
+archivo                27,850,104 B
+  chunk JSON           2,834,676 B (5805 accessors)
+  chunk BIN            25,015,400 B
+  datos alcanzables    19,841,548 B
+  BIN sin datos        5,173,852 B
+animación (unión)      4,491,912 B (16.13 % del archivo)
+geometría              3,882,882 B (13.94 %)
+cara (morph targets)   9,007,560 B (32.34 %)
+texturas               2,452,522 B (8.81 %)
+matrices de piel       6,672 B (los JOINTS/WEIGHTS van entrelazados con la geometría)
+clips                  200 (50 señas × 4 caras)
+por clip (nominal)     prom 86,598.2 B · mín 57,132 B (0040_afirmativo) · máx 111,516 B (0022_afirmativo)
+  los 200 clips        17,319,648 B
+por seña (4 caras)     prom 89,838.2 B · mín 60,372 B (0040) · máx 114,756 B (0022)
+  las 50 señas         4,491,912 B
+
+## instalador
+APK debug    app-debug.apk  40,431,738 B = 38.56 MiB
+   assets/web/models/pauline.glb: 27,850,104 B sin comprimir, 14,678,764 B comprimido (deflate)
+   assets/web/models/juan.glb: 30,323,680 B sin comprimir, 12,544,008 B comprimido (deflate)
+APK release  app-release-unsigned.apk  35,065,281 B = 33.44 MiB
+   assets/web/models/pauline.glb: 27,850,104 B sin comprimir, 13,916,240 B comprimido (deflate)
+   assets/web/models/juan.glb: 30,323,680 B sin comprimir, 11,798,144 B comprimido (deflate)
+
+Evidencias: este txt, el json con todo el detalle, un csv por avatar
+(tamaño de cada seña) y un csv con los 200 clips.

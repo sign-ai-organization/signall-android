@@ -1,0 +1,12 @@
+﻿n;id;texto;bytes_suben;bytes_bajan;bytes_total;ms_envio_a_fin
+1;FR-01-001;Hola, buenos días, bienvenidos.;72;344;416;8897
+2;FR-01-005;Buenas tardes. Hoy me siento más o menos.;98;180;278;12842
+3;FR-01-007;¿Tienes hambre?;56;105;161;8333
+4;FR-01-011;Perdón. ¿Estás triste?;65;169;234;12145
+5;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;96;209;305;11359
+6;FR-01-014;¿Dónde vive tu familia?;81;135;216;13544
+7;FR-01-019;Yo nunca como mucho.;76;152;228;13649
+8;FR-01-023;Perdón. Mi hermano nunca está contento.;81;113;194;10692
+9;FR-01-025;Por favor, come poco.;77;112;189;11857
+10;FR-01-026;Con permiso. Déjame pasar, por favor.;79;126;205;9384
+reposo 10 s;-;(sin mandar nada);16;8;24;

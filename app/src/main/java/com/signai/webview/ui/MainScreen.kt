@@ -48,6 +48,8 @@ import com.signai.webview.ui.screens.conversation.ConversationPanel
 import com.signai.webview.ui.screens.settings.SettingsSidebar
 import com.signai.webview.ui.screens.stage.AvatarStage
 import com.signai.webview.ui.state.MainScreenState
+import com.signai.webview.ui.state.MicPermissionNotice
+import com.signai.webview.ui.state.MicUnavailableNotice
 import com.signai.webview.ui.theme.SignAiTheme
 import com.signai.webview.ui.webview.AvatarWebView
 import kotlinx.coroutines.delay
@@ -91,6 +93,10 @@ fun MainScreen(state: MainScreenState) {
     val context = LocalContext.current
     val micPrompt = remember(context) { MicPermissionPrompt(context) }
     var pendingMicAction by remember { mutableStateOf<(() -> Unit)?>(null) }
+    // El permiso se lee al componer y se actualiza con la respuesta del
+    // diálogo: `hasMicPermission()` no es estado de Compose y sin esto el aviso
+    // del panel no se enteraba de que el usuario acababa de concederlo.
+    var micGranted by remember { mutableStateOf(context.hasMicPermission()) }
     val micPermission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { granted ->
@@ -99,6 +105,7 @@ fun MainScreen(state: MainScreenState) {
         // Sin acción pendiente no hay nada que retomar: conceder el permiso deja
         // el micrófono disponible, no lo prende. Negarlo nunca rompe nada, solo
         // avisa —`RF-UI-04` exige el aviso y la app sigue con el texto—.
+        micGranted = granted
         if (granted) action?.invoke() else state.onMicPermissionDenied()
     }
 
@@ -107,9 +114,16 @@ fun MainScreen(state: MainScreenState) {
     // diálogo se repetiría en cada arranque mientras el permiso siga sin
     // concederse, y con el aviso de la negativa al lado sería insistente.
     LaunchedEffect(Unit) {
-        if (!context.hasMicPermission() && !micPrompt.alreadyAsked) {
-            micPrompt.alreadyAsked = true
-            micPermission.launch(Manifest.permission.RECORD_AUDIO)
+        if (!context.hasMicPermission()) {
+            if (!micPrompt.alreadyAsked) {
+                micPrompt.alreadyAsked = true
+                micPermission.launch(Manifest.permission.RECORD_AUDIO)
+            } else {
+                // El diálogo ya se pidió y el permiso sigue negado: el usuario
+                // abre la app con el micrófono muerto y antes no había ninguna
+                // explicación visible (`RF-UI-04`, PR-AND-01).
+                state.onMicPermissionMissingAtLaunch()
+            }
         }
     }
 
@@ -304,7 +318,15 @@ fun MainScreen(state: MainScreenState) {
                                 // puede leer, pero no se la puede volver a mandar
                                 // (`STA-20`).
                                 sentTextLocked = state.sentTextLocked,
-                                micAvailable = state.backendConnected,
+                                // Dos cosas distintas pueden apagar el micrófono y
+                                // el aviso tiene que decir cuál: falta el permiso,
+                                // o no hay servicio de voz pero el texto sigue.
+                                micAvailable = state.backendConnected && state.sttAvailable,
+                                micNotice = when {
+                                    !micGranted -> MicPermissionNotice
+                                    !state.sttAvailable -> MicUnavailableNotice
+                                    else -> null
+                                },
                                 // Un cambio de avatar deja el modelo a medio
                                 // construir: el panel espera a `avatarLoaded`.
                                 enabled = !state.replayPending && !state.avatarLoading,

@@ -91,6 +91,28 @@ private const val MaxReconnectWaitMs = 5_000L
 private const val StatusOverrideMs = 3_000L
 
 /**
+ * Cuánto se queda el aviso del micrófono.
+ *
+ * Sale sin depuración (`RF-UI-04`) y tiene que alcanzar para leerlo: 5 s en vez
+ * de los 3 s de un aviso de depuración, y en el panel, junto al botón.
+ */
+private const val NoticeMs = 5_000L
+
+/** Texto del aviso cuando el servicio de transcripción no está. */
+const val MicUnavailableNotice =
+    "Sin servicio de voz: podés seguir traduciendo por texto."
+
+/** Tope de frases esperando detrás de la que se representa (decisión D3). */
+private const val MaxQueuedPhrases = 1
+
+/** Aviso cuando una frase nueva descarta la cola por estar lleno el tope. */
+const val QueueFullNotice = "Ya hay dos frases en cola: la nueva reemplaza la anterior."
+
+/** Texto del aviso cuando falta el permiso de micrófono. */
+const val MicPermissionNotice =
+    "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes."
+
+/**
  * Cuánto se deja a la vista la frase que la app ya mandó.
  *
  * El campo tiene que conservarla —es la frase que el avatar está representando— pero
@@ -391,6 +413,18 @@ class MainScreenState(
     /** Transient message (errors) that replaces the state label in the hint. */
     private var statusOverride by mutableStateOf<String?>(null)
 
+    /**
+     * Whether the session can transcribe voice right now.
+     *
+     * It is what the backend reports on the `capability` frame, not a guess: a
+     * session whose transcription service is down keeps working for text
+     * (`RNF-AV-03`), and this flag is what disables only the microphone. It
+     * starts true because that is the normal case and an older backend never
+     * sends the frame.
+     */
+    var sttAvailable by mutableStateOf(true)
+        private set
+
     private var statusJob: Job? = null
 
     /**
@@ -575,6 +609,15 @@ class MainScreenState(
      * Kotlin es el que decide historial y conversación, así que vive acá.
      */
     private var queueStarted = false
+
+    /**
+     * Frases encoladas detrás de la que se está representando (decisión D3).
+     *
+     * El tope es una frase esperando, así que como mucho hay dos en la escena:
+     * la que suena y la que sigue. Se reinicia cuando la escena avisa que la
+     * cola terminó, que es cuando de verdad no queda nada encolado.
+     */
+    private var queuedPhrases = 0
 
     /** Ítems ya entregados a la escena en este turno, para resolver la glosa en curso. */
     private val turnQueueItems = mutableListOf<SignQueueItem>()
@@ -1010,6 +1053,11 @@ class MainScreenState(
                 // Antes nunca volvía a cero, así que después de unas horas de app
                 // abierta la primera caída esperaba el tope en vez de 1 s.
                 reconnectAttempts = 0
+                // La sesión nueva arranca con voz disponible; el frame
+                // `capability` la corrige en el mismo instante si el STT no
+                // está. Sin esto una sesión degradada dejaba el micrófono
+                // apagado para siempre, incluso al reconectar.
+                sttAvailable = true
                 if (playbackState == PlaybackState.Desconectado) {
                     playbackState = PlaybackState.Inactivo
                 }
@@ -1059,6 +1107,17 @@ class MainScreenState(
             is BackendEvent.Failure -> {
                 if (belongsToCurrentTurn(event.turn)) fail(event.message)
                 else dropStaleFrame("error", event.turn)
+            }
+
+            // `RNF-AV-03`: si el servicio de transcripción no está, la sesión
+            // sigue viva y el texto se puede traducir. Lo único que se apaga es
+            // la voz, y el aviso dice cuál de las dos cosas falló.
+            is BackendEvent.Capabilities -> {
+                sttAvailable = event.audio
+                if (!event.audio) {
+                    if (micMode != MicMode.Off) changeMicMode(MicMode.Off)
+                    showNotice(MicUnavailableNotice)
+                }
             }
 
             is BackendEvent.Disconnected -> onDisconnected()
@@ -1138,6 +1197,8 @@ class MainScreenState(
             // inactiva mientras el canvas seguía con la seña adelante.
             webView.stop()
             queuePlaying = false
+            // La escena se vació: lo que estaba encolado tampoco va a sonar.
+            queuedPhrases = 0
             turnQueueItems.clear()
         }
 
@@ -1632,6 +1693,20 @@ class MainScreenState(
         writeStatusOverride("Seña no disponible", StatusOverrideMs)
     }
 
+    /**
+     * Un aviso que **sí** se ve sin depuración.
+     *
+     * [showStatus] es el camino de los avisos de diagnóstico y no escribe nada
+     * fuera de `DEV_TOOLS`; esto es lo contrario: el permiso del micrófono y el
+     * servicio de voz caído son cosas que el usuario tiene que poder leer
+     * (`RF-UI-04`, `RNF-AV-03`). El texto va al indicador y a la línea del panel
+     * que lo explica junto al botón.
+     */
+    fun showNotice(message: String, ms: Long = NoticeMs) {
+        Log.i(TAG, "aviso visible: $message")
+        writeStatusOverride(message, ms)
+    }
+
     /** Escribe el texto transitorio y lo retira solo. [showStatus] / [showMissingSign]. */
     private fun writeStatusOverride(message: String, ms: Long) {
         statusOverride = message
@@ -1752,10 +1827,28 @@ class MainScreenState(
 
             if (first) {
                 queueStarted = true
-                webView.setQueue(items)
-                webView.play()
-                startPlaybackClock()
-                queuePlaying = true
+                // Frase nueva con el avatar todavía representando la anterior:
+                // se **encola** en vez de reemplazar (decisión D3 del
+                // 2026-11-05). Reemplazar cortaba la frase en curso a la mitad
+                // —PR-AVT-03 lo midió: la frase 1 se cortó en su 4.ª seña a los
+                // 200 ms y la 2 en la 4.ª a los 891 ms— y el usuario nunca veía
+                // terminar lo que ya había pedido.
+                if (queuePlaying && queuedPhrases < MaxQueuedPhrases) {
+                    queuedPhrases += 1
+                    webView.appendQueue(items)
+                    if (!queuePlaying) startPlaybackClock()
+                    queuePlaying = true
+                } else {
+                    // Tope alcanzado (o cola vacía): la nueva reemplaza, que es
+                    // descartar la más vieja. Se avisa, y el aviso se ve sin
+                    // depuración porque es una frase que se cae.
+                    if (queuePlaying) showNotice(QueueFullNotice)
+                    queuedPhrases = 0
+                    webView.setQueue(items)
+                    webView.play()
+                    startPlaybackClock()
+                    queuePlaying = true
+                }
             } else {
                 // La escena decide sola si hay que arrancar: `appendQueue` vuelve
                 // a llamar `playFrom` si la cola ya se había vaciado mientras esta
@@ -1920,8 +2013,23 @@ class MainScreenState(
         }
     }
 
+    /**
+     * Las glosas que el usuario puede leer: solo las que tienen seña.
+     *
+     * El panel de conversación y el historial muestran glosas, no la respuesta
+     * cruda del modelo. Una glosa con `available = false` es texto que el
+     * catálogo no sabe representar —una negativa en inglés, una fecha, una
+     * instrucción glosada palabra por palabra— y mostrarla era exactamente lo
+     * que `PR-LLM-05` encontró: 14 de 18 frases de inyección dejaban texto que
+     * no era glosa a la vista (decisión D4 del 2026-11-05, criterio estricto).
+     *
+     * El aviso de «Seña no disponible» sigue saliendo por glosa, que es lo que
+     * pide el SRS: lo que se esconde es el texto, no el hecho de que falte.
+     */
     private fun formatGlosses(segments: List<TranslationSegment>): String =
-        segments.flatMap { it.glosses }.joinToString(" ") { it.text }
+        segments.flatMap { it.glosses }
+            .filter { it.available }
+            .joinToString(" ") { it.text }
 
     // ── Micrófono ───────────────────────────────────────────────────────────
     //
@@ -2281,6 +2389,8 @@ class MainScreenState(
             // volvía a inactivo con el canvas todavía en la seña a medias.
             webView.stop()
             queuePlaying = false
+            // La escena se vació: lo que estaba encolado tampoco va a sonar.
+            queuedPhrases = 0
             turnQueueItems.clear()
         }
 
@@ -2332,6 +2442,20 @@ class MainScreenState(
         micMode = MicMode.Off
         playbackState = PlaybackState.Inactivo
         showStatus("Sin permiso de micrófono la app no puede traducir voz.")
+        // El aviso de arriba es de depuración y no se ve sin `DEV_TOOLS`; este sí
+        // (`RF-UI-04`, PR-AND-01). Va al panel, pegado al micrófono.
+        showNotice(MicPermissionNotice)
+    }
+
+    /**
+     * El permiso está revocado al abrir la app y el diálogo ya se pidió antes.
+     *
+     * Sin esto la app arrancaba con el micrófono muerto y ninguna explicación:
+     * el diálogo no vuelve a salir —`RF-UI-04` pide preguntar una sola vez— y el
+     * único aviso era de depuración.
+     */
+    fun onMicPermissionMissingAtLaunch() {
+        showNotice(MicPermissionNotice)
     }
 
     private fun sendAudio(chunk: ByteArray) {
@@ -2510,6 +2634,9 @@ class MainScreenState(
         if (sceneDead) return
         if (queuePlaying) {
             queuePlaying = false
+            // La escena terminó **toda** la cola, incluidas las frases que se
+            // encolaron detrás: no queda nada esperando.
+            queuedPhrases = 0
             if (playbackStartedAt > 0L) {
                 metrics.onPlayback(
                     totalMs = SystemClock.elapsedRealtime() - playbackStartedAt,

@@ -1,0 +1,221 @@
+{
+  "entradas": [
+    {
+      "caso": "texto-una-oracion",
+      "id": "FR-01-001",
+      "texto": "Hola, buenos días, bienvenidos.",
+      "frames": [
+        {
+          "type": "sentence_trace",
+          "index": 0,
+          "text": "Hola, buenos días, bienvenidos.",
+          "source": "cache",
+          "steps_ms": {
+            "fingerprint": 0.1,
+            "cache.exact": 0.0
+          },
+          "_t": 6.2
+        },
+        {
+          "type": "segment",
+          "index": 0,
+          "total": 1,
+          "segment": {
+            "type": "AFFIRMATIVE",
+            "glosses": [
+              {
+                "text": "HOLA",
+                "available": true,
+                "glb_path": "signs/0030_0000_0000.glb",
+                "semantic_category": "interjección"
+              },
+              {
+                "text": "BUENOS DIAS",
+                "available": true,
+                "glb_path": "signs/0001_0000_0000.glb",
+                "semantic_category": "locución"
+              }
+            ]
+          },
+          "_t": 6.3
+        },
+        {
+          "type": "trace",
+          "steps_ms": {
+            "segmentation": 0.1,
+            "validation": 0.0,
+            "total": 0.8
+          },
+          "_t": 6.4
+        },
+        {
+          "type": "done",
+          "_t": 6.5
+        }
+      ],
+      "ms": 6.9
+    },
+    {
+      "caso": "texto-varias-oraciones",
+      "id": "FR-01-006",
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "frames": [
+        {
+          "type": "sentence_trace",
+          "index": 0,
+          "text": "Gracias a todos.",
+          "source": "cache",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0
+          },
+          "_t": 7.2
+        },
+        {
+          "type": "segment",
+          "index": 0,
+          "total": 2,
+          "segment": {
+            "type": "AFFIRMATIVE",
+            "glosses": [
+              {
+                "text": "GRACIAS",
+                "available": true,
+                "glb_path": "signs/0000_0000_0000.glb",
+                "semantic_category": "sustantivo"
+              },
+              {
+                "text": "TODOS",
+                "available": true,
+                "glb_path": "signs/0048_0000_0000.glb",
+                "semantic_category": "determinante"
+              }
+            ]
+          },
+          "_t": 7.3
+        },
+        {
+          "type": "sentence_trace",
+          "index": 1,
+          "text": "Los niños y las niñas comen con gusto.",
+          "source": "cache",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0
+          },
+          "_t": 7.3
+        },
+        {
+          "type": "segment",
+          "index": 1,
+          "total": 2,
+          "segment": {
+            "type": "AFFIRMATIVE",
+            "glosses": [
+              {
+                "text": "COMER",
+                "available": true,
+                "glb_path": "signs/0007_0000_0000.glb",
+                "semantic_category": "verbo"
+              },
+              {
+                "text": "CON GUSTO",
+                "available": true,
+                "glb_path": "signs/0033_0000_0000.glb",
+                "semantic_category": "locución"
+              }
+            ]
+          },
+          "_t": 7.4
+        },
+        {
+          "type": "trace",
+          "steps_ms": {
+            "segmentation": 3.1,
+            "validation": 0.0,
+            "total": 4.0
+          },
+          "_t": 7.5
+        },
+        {
+          "type": "done",
+          "_t": 7.5
+        }
+      ],
+      "ms": 8.0
+    },
+    {
+      "caso": "audio",
+      "id": "AU-01-013",
+      "texto": null,
+      "frames": [
+        {
+          "type": "transcript",
+          "text": "¿Tienes hambre?",
+          "final": false,
+          "_t": 2670.2
+        },
+        {
+          "type": "transcript",
+          "text": "¿Tienes hambre?",
+          "final": true,
+          "_t": 2918.4
+        },
+        {
+          "type": "_reenvio_texto",
+          "text": "¿Tienes hambre?",
+          "_t": 2918.4
+        },
+        {
+          "type": "sentence_trace",
+          "index": 0,
+          "text": "¿Tienes hambre?",
+          "source": "cache",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0
+          },
+          "_t": 2919.4
+        },
+        {
+          "type": "segment",
+          "index": 0,
+          "total": 1,
+          "segment": {
+            "type": "YES_NO_QUESTION",
+            "glosses": [
+              {
+                "text": "TU",
+                "available": true,
+                "glb_path": "signs/0039_0000_0000.glb",
+                "semantic_category": "pronombre"
+              },
+              {
+                "text": "HAMBRE",
+                "available": true,
+                "glb_path": "signs/0019_0000_0000.glb",
+                "semantic_category": "sustantivo"
+              }
+            ]
+          },
+          "_t": 2919.5
+        },
+        {
+          "type": "trace",
+          "steps_ms": {
+            "segmentation": 0.1,
+            "validation": 0.0,
+            "total": 0.5
+          },
+          "_t": 2919.5
+        },
+        {
+          "type": "done",
+          "_t": 2919.6
+        }
+      ],
+      "ms": 2919.9,
+      "transcrito": "¿Tienes hambre?"
+    }
+  ]
+}

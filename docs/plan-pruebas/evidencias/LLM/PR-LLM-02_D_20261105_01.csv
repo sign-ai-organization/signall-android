@@ -1,0 +1,41 @@
+﻿parte;id;frase;glosas;esperado;oraciones;problemas;rompio;ms
+A-real;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS;HOLA BUENOS DIAS BIENVENIDO;1;;no;839.8
+A-real;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;ADIOS TODOS BUENAS NOCHES;2;;no;706.0
+A-real;FR-01-003;Mi abuelo y mi tío trabajan en familia.;TRABAJAR FAMILIA;ABUELO TIO TRABAJAR FAMILIA;1;;no;766.1
+A-real;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;YO CONTENTO HERMANO FELIZ;1;;no;669.4
+A-real;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;BUENAS TARDES YO SENTIR MAS O MENOS;2;;no;1245.5
+A-real;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS COMER CON GUSTO;GRACIAS TODOS NIÑO NIÑA COMER CON GUSTO;2;;no;1008.5
+A-real;FR-01-007;¿Tienes hambre?;TU HAMBRE;TU HAMBRE;1;;no;654.5
+A-real;FR-01-008;¿Estás bien?;TU BIEN;TU BIEN;1;;no;763.7
+A-real;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;USTEDES TRABAJAR FAMILIA;1;;no;621.4
+A-real;FR-01-010;Tu hermano está triste. ¿Se siente mal?;TU HERMANO TRISTE SENTIR MAL;TU HERMANO TRISTE SENTIR MAL;2;;no;638.4
+A-real;FR-01-011;Perdón. ¿Estás triste?;PERDON TU TRISTE;PERDON TU TRISTE;2;;no;711.2
+A-real;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;TU HERMANO ABURRIDO;1;;no;677.3
+A-real;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO;HOLA COMO ESTAS COMO TU NOMBRE;3;;no;933.9
+A-real;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;DONDE TU FAMILIA VIVIR;1;;no;770.8
+A-real;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER QUIEN HOMBRE;MUJER JUCIOSO QUIEN HOMBRE;2;;no;618.9
+A-real;FR-01-016;¿Por qué estás triste?;POR QUE TRISTE;POR QUE TU TRISTE;1;;no;586.2
+A-real;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;CUANDO USTEDES COMER;1;;no;579.3
+A-real;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;PERSONAS DIFERENTE QUE SEÑA TU;PERSONAS DIFERENTE QUE SEÑA TU;2;;no;577.7
+A-real;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;YO NUNCA COMER MUCHO;1;;no;566.9
+A-real;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;ABUELO NUNCA TRABAJAR;1;;no;666.4
+A-real;FR-01-021;Mi tío nunca está aburrido.;NUNCA ABURRIDO;TIO NUNCA ABURRIDO;1;;no;520.0
+A-real;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;USTEDES NUNCA SENTIR MAL;1;;no;623.6
+A-real;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON NUNCA CONTENTO;PERDON HERMANO NUNCA CONTENTO;2;;no;802.7
+A-real;FR-01-024;Se siente muy bien. La niña nunca está triste.;SENTIR BIEN NIÑA NUNCA TRISTE;NIÑA SENTIR MUCHO BIEN NUNCA TRISTE;2;;no;613.1
+A-real;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;POR FAVOR COMER POCO;1;;no;682.6
+A-real;FR-01-026;Con permiso. Déjame pasar, por favor.;PERMISO POR FAVOR;PERMISO POR FAVOR;2;;no;621.2
+A-real;FR-01-027;Niños, trabajen todos.;TRABAJAR TODOS;NIÑO TODOS TRABAJAR;1;;no;797.1
+A-real;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;HERMANO VIVIR ABUELO TRABAJAR TIO;2;;no;680.4
+A-real;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA SENTIR;HOLA FAMILIA BIENVENIDO;1;;no;536.2
+A-real;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;TIO COMER MUCHO HERMANO COMER POCO;2;;no;639.9
+B-fabricada;CO-04-001;hola, buenos dias, bienvenido;HOLA BUENOS DIAS BIENVENIDO;HOLA BUENOS DIAS BIENVENIDO;0;;no;0
+B-fabricada;CO-04-002;yo, nunca, comer, mucho;YO NUNCA COMER MUCHO;YO NUNCA COMER MUCHO;0;;no;0
+B-fabricada;CO-04-003;HOLA, CÓMO ESTÁS;HOLA COMO ESTAS;HOLA COMO ESTAS;0;;no;0
+B-fabricada;CO-04-004;PERDÓN, TÚ, TRISTE;PERDON TU TRISTE;PERDON TU TRISTE;0;;no;0
+B-fabricada;CO-04-005;HOLA. BUENOS DIAS. BIENVENIDO.;HOLA. BUENOS DIAS. BIENVENIDO.;HOLA BUENOS DIAS BIENVENIDO;0;se lee mal;no;0
+B-fabricada;CO-04-006;ABUELO, NUNCA, TRABAJAR.;ABUELO NUNCA;ABUELO NUNCA TRABAJAR;0;se lee mal;no;0
+B-fabricada;CO-04-007;Claro, aquí tienes la traducción: TU, HAMBRE;HAMBRE;TU HAMBRE;0;se lee mal;no;0
+B-fabricada;CO-04-008;TIO, TRABAJAR. Espero que te sirva.;TIO;TIO TRABAJAR;0;se lee mal;no;0
+B-fabricada;CO-04-009;POR   FAVOR, COMER;POR FAVOR COMER;POR FAVOR COMER;0;;no;0
+B-fabricada;CO-04-010;;;;0;;no;0

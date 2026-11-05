@@ -1,0 +1,50 @@
+--------- beginning of system
+--------- beginning of main
+         1793872271.708 26968 26968 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Chicos, trabajen todos."
+         1793872272.669 26968 27001 D SignAiNet: segment 0/1 turn=57 -> TRABAJAR,TODOS
+         1793872272.700 26968 26968 I SignAiMetrics: frase #57: 993ms, 1 oraciones, 2 glosas (p50=779ms p95=1330ms max=1767ms n=57)
+         1793872272.700 26968 26968 I SignAiState: resumen: frases=57 oraciones=83 glosas=181 sin_seña=1 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=779ms p95=1330ms max=1767ms n=57 duracion_representada=p50=6259ms p95=10776ms max=12394ms n=56 oracion_a_avatar=p50=32ms p95=69ms max=98ms n=56 envio_a_primera_sena=p50=742ms p95=1277ms max=1800ms n=56
+         1793872272.740 26968 26968 I SignAiState: signStart: oración→avatar 41 ms (seña 0, reloj JS 1694807 ms)
+         1793872272.740 26968 26968 I SignAiMetrics: oración→avatar: 41 ms (p50=33ms p95=69ms max=98ms n=57)
+         1793872272.740 26968 26968 I SignAiMetrics: envío→primera seña: 1032 ms (p50=758ms p95=1277ms max=1800ms n=57)
+         1793872273.235 26968 26968 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793872274.744 26968 26968 I SignAiState: signStart: oración→avatar 2046 ms (seña 1, reloj JS 1696806 ms)
+         1793872276.901 26968 26968 I SignAiMetrics: representado: 2 señas en 4201ms (p50=6259ms p95=10776ms max=12394ms n=57)
+         1793872301.655 26968 26968 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hermano, reside con el abuelo. Trabaja con el tío."
+         1793872301.696 26968 27001 D SignAiNet: segment 0/2 turn=58 -> HERMANO,VIVIR,ABUELO
+         1793872301.699 26968 27001 D SignAiNet: segment 1/2 turn=58 -> TRABAJAR,TIO
+         1793872301.711 26968 26968 I SignAiMetrics: frase #58: 56ms, 2 oraciones, 5 glosas (p50=776ms p95=1330ms max=1767ms n=58)
+         1793872301.711 26968 26968 I SignAiState: resumen: frases=58 oraciones=85 glosas=186 sin_seña=1 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=776ms p95=1330ms max=1767ms n=58 duracion_representada=p50=6259ms p95=10776ms max=12394ms n=57 oracion_a_avatar=p50=33ms p95=69ms max=98ms n=57 envio_a_primera_sena=p50=758ms p95=1277ms max=1800ms n=57
+         1793872301.727 26968 26968 I SignAiState: signStart: oración→avatar 21 ms (seña 0, reloj JS 1723813 ms)
+         1793872301.727 26968 26968 I SignAiMetrics: oración→avatar: 21 ms (p50=32ms p95=69ms max=98ms n=58)
+         1793872301.727 26968 26968 I SignAiMetrics: envío→primera seña: 73 ms (p50=742ms p95=1277ms max=1800ms n=58)
+         1793872303.166 26968 26968 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793872303.793 26968 26968 I SignAiState: signStart: oración→avatar 2086 ms (seña 1, reloj JS 1725858 ms)
+         1793872305.824 26968 26968 I SignAiState: signStart: oración→avatar 4117 ms (seña 2, reloj JS 1727885 ms)
+         1793872307.870 26968 26968 I SignAiState: signStart: oración→avatar 6163 ms (seña 3, reloj JS 1729928 ms)
+         1793872309.907 26968 26968 I SignAiState: signStart: oración→avatar 8200 ms (seña 4, reloj JS 1731970 ms)
+         1793872312.061 26968 26968 I SignAiMetrics: representado: 5 señas en 10353ms (p50=6259ms p95=10776ms max=12394ms n=58)
+         1793872331.606 26968 26968 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola familia siéntanse bienvenidos"
+         1793872331.620 26968 27001 D SignAiNet: segment 0/1 turn=59 -> HOLA,FAMILIA,SENTIR
+         1793872331.638 26968 26968 I SignAiMetrics: frase #59: 32ms, 1 oraciones, 3 glosas (p50=776ms p95=1330ms max=1767ms n=59)
+         1793872331.639 26968 26968 I SignAiState: resumen: frases=59 oraciones=86 glosas=189 sin_seña=1 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=776ms p95=1330ms max=1767ms n=59 duracion_representada=p50=6259ms p95=10776ms max=12394ms n=58 oracion_a_avatar=p50=32ms p95=69ms max=98ms n=58 envio_a_primera_sena=p50=742ms p95=1277ms max=1800ms n=58
+         1793872331.656 26968 26968 I SignAiState: signStart: oración→avatar 20 ms (seña 0, reloj JS 1753742 ms)
+         1793872331.656 26968 26968 I SignAiMetrics: oración→avatar: 20 ms (p50=32ms p95=69ms max=98ms n=59)
+         1793872331.656 26968 26968 I SignAiMetrics: envío→primera seña: 50 ms (p50=742ms p95=1277ms max=1800ms n=59)
+         1793872333.133 26968 26968 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793872333.746 26968 26968 I SignAiState: signStart: oración→avatar 2109 ms (seña 1, reloj JS 1755812 ms)
+         1793872335.742 26968 26968 I SignAiState: signStart: oración→avatar 4106 ms (seña 2, reloj JS 1757838 ms)
+         1793872337.928 26968 26968 I SignAiMetrics: representado: 3 señas en 6289ms (p50=6262ms p95=10776ms max=12394ms n=59)
+         1793872361.701 26968 26968 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Tío, come bastante. Hermano, come un poquito."
+         1793872362.625 26968 27001 D SignAiNet: segment 0/2 turn=60 -> TIO,COMER
+         1793872362.656 26968 26968 I SignAiState: signStart: oración→avatar 29 ms (seña 0, reloj JS 1784734 ms)
+         1793872362.656 26968 26968 I SignAiMetrics: oración→avatar: 29 ms (p50=32ms p95=69ms max=98ms n=60)
+         1793872362.656 26968 26968 I SignAiMetrics: envío→primera seña: 955 ms (p50=742ms p95=1277ms max=1800ms n=60)
+         1793872362.732 26968 27001 D SignAiNet: segment 1/2 turn=60 -> HERMANO,COMER
+         1793872362.749 26968 26968 I SignAiMetrics: frase #60: 1048ms, 2 oraciones, 4 glosas (p50=776ms p95=1330ms max=1767ms n=60)
+         1793872362.749 26968 26968 I SignAiState: resumen: frases=60 oraciones=88 glosas=193 sin_seña=1 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=776ms p95=1330ms max=1767ms n=60 duracion_representada=p50=6262ms p95=10776ms max=12394ms n=59 oracion_a_avatar=p50=32ms p95=69ms max=98ms n=60 envio_a_primera_sena=p50=742ms p95=1277ms max=1800ms n=60
+         1793872363.226 26968 26968 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793872364.691 26968 26968 I SignAiState: signStart: oración→avatar 2064 ms (seña 1, reloj JS 1786755 ms)
+         1793872366.726 26968 26968 I SignAiState: signStart: oración→avatar 4100 ms (seña 2, reloj JS 1788783 ms)
+         1793872368.763 26968 26968 I SignAiState: signStart: oración→avatar 6137 ms (seña 3, reloj JS 1790825 ms)
+         1793872370.904 26968 26968 I SignAiMetrics: representado: 4 señas en 8276ms (p50=6262ms p95=10776ms max=12394ms n=60)

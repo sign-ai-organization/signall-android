@@ -1,0 +1,85 @@
+{
+  "importaciones_app_revisadas": 87,
+  "aristas_entre_componentes": 5,
+  "pasan_por_interfaz": 3,
+  "se_saltan_la_interfaz": 2,
+  "saltos": [
+    {
+      "desde": "controller/controller.py",
+      "desde_componente": "orquestacion_sesion",
+      "hacia": "app.orchestrator.orchestrator",
+      "hacia_componente": "orquestacion",
+      "simbolo": "Orchestrator",
+      "clase": "implementación concreta",
+      "pasa_por_interfaz": "no"
+    },
+    {
+      "desde": "nlp/llm_client.py",
+      "desde_componente": "nlp",
+      "hacia": "app.validation.catalog_repository",
+      "hacia_componente": "validacion",
+      "simbolo": "normalize_gloss",
+      "clase": "implementación concreta",
+      "pasa_por_interfaz": "no"
+    }
+  ],
+  "aristas": [
+    {
+      "desde": "controller/controller.py",
+      "desde_componente": "orquestacion_sesion",
+      "hacia": "app.controller.stt_service_client",
+      "hacia_componente": "transcripcion",
+      "simbolo": "SttServiceClient",
+      "clase": "interfaz (ABC)",
+      "pasa_por_interfaz": "sí"
+    },
+    {
+      "desde": "controller/controller.py",
+      "desde_componente": "orquestacion_sesion",
+      "hacia": "app.orchestrator.orchestrator",
+      "hacia_componente": "orquestacion",
+      "simbolo": "Orchestrator",
+      "clase": "implementación concreta",
+      "pasa_por_interfaz": "no"
+    },
+    {
+      "desde": "nlp/llm_client.py",
+      "desde_componente": "nlp",
+      "hacia": "app.validation.catalog_repository",
+      "hacia_componente": "validacion",
+      "simbolo": "normalize_gloss",
+      "clase": "implementación concreta",
+      "pasa_por_interfaz": "no"
+    },
+    {
+      "desde": "orchestrator/orchestrator.py",
+      "desde_componente": "orquestacion",
+      "hacia": "app.nlp.nlp_service",
+      "hacia_componente": "nlp",
+      "simbolo": "NLPService",
+      "clase": "interfaz (ABC)",
+      "pasa_por_interfaz": "sí"
+    },
+    {
+      "desde": "orchestrator/orchestrator.py",
+      "desde_componente": "orquestacion",
+      "hacia": "app.validation.validator_service",
+      "hacia_componente": "validacion",
+      "simbolo": "ValidatorService",
+      "clase": "interfaz (ABC)",
+      "pasa_por_interfaz": "sí"
+    }
+  ],
+  "arquitectura": {
+    "interfaces_abc": [
+      "app.controller.stt_service_client",
+      "app.nlp.nlp_service",
+      "app.validation.validator_service"
+    ],
+    "raices_de_composicion": [
+      "app/controller/router.py",
+      "app/main.py"
+    ],
+    "nota": "app/main.py y app/controller/router.py importan implementaciones a propósito: son la raíz de composición (wiring), no un salto de interfaz."
+  }
+}

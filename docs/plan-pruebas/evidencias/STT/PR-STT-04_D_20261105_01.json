@@ -1,0 +1,128 @@
+{
+  "resumen": {
+    "small": {
+      "wer_pct": 2.84,
+      "errores": 8,
+      "palabras": 282,
+      "por_tipo": {
+        "Afirmación": {
+          "wer_pct": 1.39,
+          "audios": 12
+        },
+        "Negación": {
+          "wer_pct": 1.67,
+          "audios": 12
+        },
+        "Orden": {
+          "wer_pct": 3.33,
+          "audios": 12
+        },
+        "Pregunta de contenido": {
+          "wer_pct": 1.67,
+          "audios": 12
+        },
+        "Pregunta de sí o no": {
+          "wer_pct": 10.0,
+          "audios": 12
+        }
+      },
+      "ms_p50": 116.2,
+      "ms_p95": 133.5,
+      "ms_max": 268.8,
+      "gpu_mem_mib_max": 859,
+      "gpu_mem_mib_mediana": 827,
+      "config": {
+        "model": "small",
+        "device": "cuda",
+        "silence_timeout_ms": 1500,
+        "partial_interval_ms": 400,
+        "onset_window_ms": 300,
+        "word_timestamps": false,
+        "max_concurrent_inference": 1
+      }
+    },
+    "medium": {
+      "wer_pct": 1.77,
+      "errores": 5,
+      "palabras": 282,
+      "por_tipo": {
+        "Afirmación": {
+          "wer_pct": 1.39,
+          "audios": 12
+        },
+        "Negación": {
+          "wer_pct": 0.0,
+          "audios": 12
+        },
+        "Orden": {
+          "wer_pct": 0.0,
+          "audios": 12
+        },
+        "Pregunta de contenido": {
+          "wer_pct": 0.0,
+          "audios": 12
+        },
+        "Pregunta de sí o no": {
+          "wer_pct": 13.33,
+          "audios": 12
+        }
+      },
+      "ms_p50": 253.3,
+      "ms_p95": 277.6,
+      "ms_max": 280.7,
+      "gpu_mem_mib_max": 2171,
+      "gpu_mem_mib_mediana": 2171,
+      "config": {
+        "model": "medium",
+        "device": "cuda",
+        "silence_timeout_ms": 1500,
+        "partial_interval_ms": 400,
+        "onset_window_ms": 300,
+        "word_timestamps": false,
+        "max_concurrent_inference": 1
+      }
+    },
+    "large-v3": {
+      "wer_pct": 0.35,
+      "errores": 1,
+      "palabras": 282,
+      "por_tipo": {
+        "Afirmación": {
+          "wer_pct": 1.39,
+          "audios": 12
+        },
+        "Negación": {
+          "wer_pct": 0.0,
+          "audios": 12
+        },
+        "Orden": {
+          "wer_pct": 0.0,
+          "audios": 12
+        },
+        "Pregunta de contenido": {
+          "wer_pct": 0.0,
+          "audios": 12
+        },
+        "Pregunta de sí o no": {
+          "wer_pct": 0.0,
+          "audios": 12
+        }
+      },
+      "ms_p50": 439.4,
+      "ms_p95": 493.1,
+      "ms_max": 502.1,
+      "gpu_mem_mib_max": 4123,
+      "gpu_mem_mib_mediana": 3995,
+      "config": {
+        "model": "large-v3",
+        "device": "cuda",
+        "silence_timeout_ms": 1500,
+        "partial_interval_ms": 400,
+        "onset_window_ms": 300,
+        "word_timestamps": false,
+        "max_concurrent_inference": 1
+      }
+    }
+  },
+  "audios": 180
+}

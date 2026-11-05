@@ -1,0 +1,2970 @@
+{
+  "modelos": [
+    {
+      "id": "juan",
+      "archivo_bytes": 30323680,
+      "sha256": "5ccf77f3aec4300e33e4d20b6e7edf41ccf577eff04379a87b6cd61dccddbd8c",
+      "json_chunk_bytes": 10306572,
+      "bin_chunk_bytes": 20017080,
+      "cabecera_y_relleno": 0,
+      "bin_sin_datos_alcanzables": 5062282,
+      "bufferViews": 1278,
+      "accessors": 31619,
+      "imagenes": 29,
+      "clips": 200,
+      "senas": 50,
+      "bytes_animacion": 2823936,
+      "bytes_geometria": 3533994,
+      "bytes_piel": 6688,
+      "bytes_morph_targets_cara": 7839354,
+      "bytes_texturas": 750826,
+      "bytes_bufferViews_sin_grupo": 0,
+      "suma_grupos": 14954798,
+      "union_global_grupos": 14954798,
+      "solape_entre_grupos": 0,
+      "porcentaje_animacion_del_archivo": 9.31,
+      "porcentaje_geometria_del_archivo": 11.65,
+      "porcentaje_cara_del_archivo": 25.85,
+      "porcentaje_texturas_del_archivo": 2.48,
+      "clip_bytes_promedio": 53148.8,
+      "clip_bytes_min": 37800,
+      "clip_bytes_max": 76256,
+      "clip_min_nombre": "0002_afirmativo",
+      "clip_max_nombre": "0000_afirmativo",
+      "sena_bytes_unicos_promedio": 56484.8,
+      "sena_bytes_unicos_min": [
+        41136,
+        "0002"
+      ],
+      "sena_bytes_unicos_max": [
+        79592,
+        "0000"
+      ],
+      "total_50_senas_unicos": 2824240,
+      "total_200_clips_nominal": 10629760,
+      "clips_detalle": [
+        {
+          "nombre": "0000_afirmativo",
+          "canales": 312,
+          "bytes": 76256,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0000_pregunta",
+          "canales": 312,
+          "bytes": 76256,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0000_negacion",
+          "canales": 312,
+          "bytes": 76256,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0000_orden",
+          "canales": 312,
+          "bytes": 76256,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0022_afirmativo",
+          "canales": 312,
+          "bytes": 72312,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0022_pregunta",
+          "canales": 312,
+          "bytes": 72312,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0022_negacion",
+          "canales": 312,
+          "bytes": 72312,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0022_orden",
+          "canales": 312,
+          "bytes": 72312,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0020_afirmativo",
+          "canales": 312,
+          "bytes": 71428,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0020_pregunta",
+          "canales": 312,
+          "bytes": 71428,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0020_negacion",
+          "canales": 312,
+          "bytes": 71428,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0020_orden",
+          "canales": 312,
+          "bytes": 71428,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0047_afirmativo",
+          "canales": 312,
+          "bytes": 69464,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0047_pregunta",
+          "canales": 312,
+          "bytes": 69464,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0047_negacion",
+          "canales": 312,
+          "bytes": 69464,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0047_orden",
+          "canales": 312,
+          "bytes": 69464,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0001_afirmativo",
+          "canales": 312,
+          "bytes": 67984,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0001_pregunta",
+          "canales": 312,
+          "bytes": 67984,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0001_negacion",
+          "canales": 312,
+          "bytes": 67984,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0001_orden",
+          "canales": 312,
+          "bytes": 67984,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0003_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0003_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0003_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0003_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0005_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0005_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0005_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0005_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0006_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0006_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0006_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0006_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0008_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0008_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0008_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0008_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0017_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0017_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0017_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0017_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0018_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0018_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0018_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0018_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0019_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0019_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0019_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0019_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0028_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0028_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0028_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0028_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0049_afirmativo",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0049_pregunta",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0049_negacion",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0049_orden",
+          "canales": 312,
+          "bytes": 67200,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0036_afirmativo",
+          "canales": 312,
+          "bytes": 64260,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0036_pregunta",
+          "canales": 312,
+          "bytes": 64260,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0036_negacion",
+          "canales": 312,
+          "bytes": 64260,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0036_orden",
+          "canales": 312,
+          "bytes": 64260,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0024_afirmativo",
+          "canales": 312,
+          "bytes": 59156,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0024_pregunta",
+          "canales": 312,
+          "bytes": 59156,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0024_negacion",
+          "canales": 312,
+          "bytes": 59156,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0024_orden",
+          "canales": 312,
+          "bytes": 59156,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0035_afirmativo",
+          "canales": 312,
+          "bytes": 58380,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0035_pregunta",
+          "canales": 312,
+          "bytes": 58380,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0035_negacion",
+          "canales": 312,
+          "bytes": 58380,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0035_orden",
+          "canales": 312,
+          "bytes": 58380,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0023_afirmativo",
+          "canales": 312,
+          "bytes": 57492,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0023_pregunta",
+          "canales": 312,
+          "bytes": 57492,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0023_negacion",
+          "canales": 312,
+          "bytes": 57492,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0023_orden",
+          "canales": 312,
+          "bytes": 57492,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0045_afirmativo",
+          "canales": 312,
+          "bytes": 57280,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0045_pregunta",
+          "canales": 312,
+          "bytes": 57280,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0045_negacion",
+          "canales": 312,
+          "bytes": 57280,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0045_orden",
+          "canales": 312,
+          "bytes": 57280,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0025_afirmativo",
+          "canales": 312,
+          "bytes": 55828,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0025_pregunta",
+          "canales": 312,
+          "bytes": 55828,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0025_negacion",
+          "canales": 312,
+          "bytes": 55828,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0025_orden",
+          "canales": 312,
+          "bytes": 55828,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0009_afirmativo",
+          "canales": 312,
+          "bytes": 53332,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0009_pregunta",
+          "canales": 312,
+          "bytes": 53332,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0009_negacion",
+          "canales": 312,
+          "bytes": 53332,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0009_orden",
+          "canales": 312,
+          "bytes": 53332,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0046_afirmativo",
+          "canales": 312,
+          "bytes": 53144,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0046_pregunta",
+          "canales": 312,
+          "bytes": 53144,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0046_negacion",
+          "canales": 312,
+          "bytes": 53144,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0046_orden",
+          "canales": 312,
+          "bytes": 53144,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0007_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0007_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0007_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0007_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0011_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0011_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0011_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0011_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0013_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0013_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0013_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0013_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0014_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0014_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0014_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0014_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0015_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0015_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0015_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0015_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0016_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0016_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0016_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0016_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0032_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0032_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0032_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0032_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0037_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0037_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0037_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0037_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0038_afirmativo",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0038_pregunta",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0038_negacion",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0038_orden",
+          "canales": 312,
+          "bytes": 52500,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0010_afirmativo",
+          "canales": 312,
+          "bytes": 51868,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0010_pregunta",
+          "canales": 312,
+          "bytes": 51868,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0010_negacion",
+          "canales": 312,
+          "bytes": 51868,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0010_orden",
+          "canales": 312,
+          "bytes": 51868,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0048_afirmativo",
+          "canales": 312,
+          "bytes": 49560,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0048_pregunta",
+          "canales": 312,
+          "bytes": 49560,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0048_negacion",
+          "canales": 312,
+          "bytes": 49560,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0048_orden",
+          "canales": 312,
+          "bytes": 49560,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0039_afirmativo",
+          "canales": 312,
+          "bytes": 44180,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0039_pregunta",
+          "canales": 312,
+          "bytes": 44180,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0039_negacion",
+          "canales": 312,
+          "bytes": 44180,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0039_orden",
+          "canales": 312,
+          "bytes": 44180,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0034_afirmativo",
+          "canales": 312,
+          "bytes": 43700,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0034_pregunta",
+          "canales": 312,
+          "bytes": 43700,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0034_negacion",
+          "canales": 312,
+          "bytes": 43700,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0034_orden",
+          "canales": 312,
+          "bytes": 43700,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0030_afirmativo",
+          "canales": 312,
+          "bytes": 41332,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0030_pregunta",
+          "canales": 312,
+          "bytes": 41332,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0030_negacion",
+          "canales": 312,
+          "bytes": 41332,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0030_orden",
+          "canales": 312,
+          "bytes": 41332,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0027_afirmativo",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0027_pregunta",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0027_negacion",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0027_orden",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0029_afirmativo",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0029_pregunta",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0029_negacion",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0029_orden",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0042_afirmativo",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0042_pregunta",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0042_negacion",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0042_orden",
+          "canales": 312,
+          "bytes": 38864,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0040_afirmativo",
+          "canales": 312,
+          "bytes": 38356,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0040_pregunta",
+          "canales": 312,
+          "bytes": 38356,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0040_negacion",
+          "canales": 312,
+          "bytes": 38356,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0040_orden",
+          "canales": 312,
+          "bytes": 38356,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0004_afirmativo",
+          "canales": 312,
+          "bytes": 38036,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0004_pregunta",
+          "canales": 312,
+          "bytes": 38036,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0004_negacion",
+          "canales": 312,
+          "bytes": 38036,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0004_orden",
+          "canales": 312,
+          "bytes": 38036,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0002_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0002_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0002_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0002_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0012_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0012_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0012_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0012_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0021_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0021_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0021_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0021_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0026_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0026_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0026_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0026_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0031_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0031_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0031_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0031_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0033_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0033_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0033_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0033_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0041_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0041_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0041_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0041_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0043_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0043_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0043_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0043_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0044_afirmativo",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0044_pregunta",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0044_negacion",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        },
+        {
+          "nombre": "0044_orden",
+          "canales": 312,
+          "bytes": 37800,
+          "bufferViews": 7
+        }
+      ],
+      "senas_detalle": {
+        "0000": {
+          "bytes_unicos": 79592,
+          "bytes_nominal": 305024
+        },
+        "0001": {
+          "bytes_unicos": 71320,
+          "bytes_nominal": 271936
+        },
+        "0002": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0003": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        },
+        "0004": {
+          "bytes_unicos": 41372,
+          "bytes_nominal": 152144
+        },
+        "0005": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        },
+        "0006": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        },
+        "0007": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0008": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        },
+        "0009": {
+          "bytes_unicos": 56668,
+          "bytes_nominal": 213328
+        },
+        "0010": {
+          "bytes_unicos": 55204,
+          "bytes_nominal": 207472
+        },
+        "0011": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0012": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0013": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0014": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0015": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0016": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0017": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        },
+        "0018": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        },
+        "0019": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        },
+        "0020": {
+          "bytes_unicos": 74764,
+          "bytes_nominal": 285712
+        },
+        "0021": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0022": {
+          "bytes_unicos": 75648,
+          "bytes_nominal": 289248
+        },
+        "0023": {
+          "bytes_unicos": 60828,
+          "bytes_nominal": 229968
+        },
+        "0024": {
+          "bytes_unicos": 62492,
+          "bytes_nominal": 236624
+        },
+        "0025": {
+          "bytes_unicos": 59164,
+          "bytes_nominal": 223312
+        },
+        "0026": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0027": {
+          "bytes_unicos": 42200,
+          "bytes_nominal": 155456
+        },
+        "0028": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        },
+        "0029": {
+          "bytes_unicos": 42200,
+          "bytes_nominal": 155456
+        },
+        "0030": {
+          "bytes_unicos": 44668,
+          "bytes_nominal": 165328
+        },
+        "0031": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0032": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0033": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0034": {
+          "bytes_unicos": 47036,
+          "bytes_nominal": 174800
+        },
+        "0035": {
+          "bytes_unicos": 61716,
+          "bytes_nominal": 233520
+        },
+        "0036": {
+          "bytes_unicos": 67596,
+          "bytes_nominal": 257040
+        },
+        "0037": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0038": {
+          "bytes_unicos": 55836,
+          "bytes_nominal": 210000
+        },
+        "0039": {
+          "bytes_unicos": 47516,
+          "bytes_nominal": 176720
+        },
+        "0040": {
+          "bytes_unicos": 41692,
+          "bytes_nominal": 153424
+        },
+        "0041": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0042": {
+          "bytes_unicos": 42200,
+          "bytes_nominal": 155456
+        },
+        "0043": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0044": {
+          "bytes_unicos": 41136,
+          "bytes_nominal": 151200
+        },
+        "0045": {
+          "bytes_unicos": 60616,
+          "bytes_nominal": 229120
+        },
+        "0046": {
+          "bytes_unicos": 56480,
+          "bytes_nominal": 212576
+        },
+        "0047": {
+          "bytes_unicos": 72800,
+          "bytes_nominal": 277856
+        },
+        "0048": {
+          "bytes_unicos": 52896,
+          "bytes_nominal": 198240
+        },
+        "0049": {
+          "bytes_unicos": 70536,
+          "bytes_nominal": 268800
+        }
+      }
+    },
+    {
+      "id": "pauline",
+      "archivo_bytes": 27850104,
+      "sha256": "663139385dbf8f9fdce41d5c1753124460a95abed322f4fd9e136e087482722b",
+      "json_chunk_bytes": 2834676,
+      "bin_chunk_bytes": 25015400,
+      "cabecera_y_relleno": 0,
+      "bin_sin_datos_alcanzables": 5173852,
+      "bufferViews": 473,
+      "accessors": 5805,
+      "imagenes": 26,
+      "clips": 200,
+      "senas": 50,
+      "bytes_animacion": 4491912,
+      "bytes_geometria": 3882882,
+      "bytes_piel": 6672,
+      "bytes_morph_targets_cara": 9007560,
+      "bytes_texturas": 2452522,
+      "bytes_bufferViews_sin_grupo": 0,
+      "suma_grupos": 19841548,
+      "union_global_grupos": 19841548,
+      "solape_entre_grupos": 0,
+      "porcentaje_animacion_del_archivo": 16.13,
+      "porcentaje_geometria_del_archivo": 13.94,
+      "porcentaje_cara_del_archivo": 32.34,
+      "porcentaje_texturas_del_archivo": 8.81,
+      "clip_bytes_promedio": 86598.2,
+      "clip_bytes_min": 57132,
+      "clip_bytes_max": 111516,
+      "clip_min_nombre": "0040_afirmativo",
+      "clip_max_nombre": "0022_afirmativo",
+      "sena_bytes_unicos_promedio": 89838.2,
+      "sena_bytes_unicos_min": [
+        60372,
+        "0040"
+      ],
+      "sena_bytes_unicos_max": [
+        114756,
+        "0022"
+      ],
+      "total_50_senas_unicos": 4491912,
+      "total_200_clips_nominal": 17319648,
+      "clips_detalle": [
+        {
+          "nombre": "0022_afirmativo",
+          "canales": 105,
+          "bytes": 111516,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0022_pregunta",
+          "canales": 105,
+          "bytes": 111516,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0022_negacion",
+          "canales": 105,
+          "bytes": 111516,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0022_orden",
+          "canales": 105,
+          "bytes": 111516,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0045_afirmativo",
+          "canales": 105,
+          "bytes": 101628,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0045_pregunta",
+          "canales": 105,
+          "bytes": 101628,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0045_negacion",
+          "canales": 105,
+          "bytes": 101628,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0045_orden",
+          "canales": 105,
+          "bytes": 101628,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0000_afirmativo",
+          "canales": 105,
+          "bytes": 98332,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0000_pregunta",
+          "canales": 105,
+          "bytes": 98332,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0000_negacion",
+          "canales": 105,
+          "bytes": 98332,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0000_orden",
+          "canales": 105,
+          "bytes": 98332,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0024_afirmativo",
+          "canales": 105,
+          "bytes": 98332,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0024_pregunta",
+          "canales": 105,
+          "bytes": 98332,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0024_negacion",
+          "canales": 105,
+          "bytes": 98332,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0024_orden",
+          "canales": 105,
+          "bytes": 98332,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0023_afirmativo",
+          "canales": 105,
+          "bytes": 95036,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0023_pregunta",
+          "canales": 105,
+          "bytes": 95036,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0023_negacion",
+          "canales": 105,
+          "bytes": 95036,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0023_orden",
+          "canales": 105,
+          "bytes": 95036,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0034_afirmativo",
+          "canales": 105,
+          "bytes": 93388,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0034_pregunta",
+          "canales": 105,
+          "bytes": 93388,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0034_negacion",
+          "canales": 105,
+          "bytes": 93388,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0034_orden",
+          "canales": 105,
+          "bytes": 93388,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0025_afirmativo",
+          "canales": 105,
+          "bytes": 91740,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0025_pregunta",
+          "canales": 105,
+          "bytes": 91740,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0025_negacion",
+          "canales": 105,
+          "bytes": 91740,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0025_orden",
+          "canales": 105,
+          "bytes": 91740,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0020_afirmativo",
+          "canales": 105,
+          "bytes": 90092,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0020_pregunta",
+          "canales": 105,
+          "bytes": 90092,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0020_negacion",
+          "canales": 105,
+          "bytes": 90092,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0020_orden",
+          "canales": 105,
+          "bytes": 90092,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0027_afirmativo",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0027_pregunta",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0027_negacion",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0027_orden",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0029_afirmativo",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0029_pregunta",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0029_negacion",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0029_orden",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0042_afirmativo",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0042_pregunta",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0042_negacion",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0042_orden",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0046_afirmativo",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0046_pregunta",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0046_negacion",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0046_orden",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0047_afirmativo",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0047_pregunta",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0047_negacion",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0047_orden",
+          "canales": 105,
+          "bytes": 88444,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0009_afirmativo",
+          "canales": 105,
+          "bytes": 86796,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0009_pregunta",
+          "canales": 105,
+          "bytes": 86796,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0009_negacion",
+          "canales": 105,
+          "bytes": 86796,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0009_orden",
+          "canales": 105,
+          "bytes": 86796,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0030_afirmativo",
+          "canales": 105,
+          "bytes": 86796,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0030_pregunta",
+          "canales": 105,
+          "bytes": 86796,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0030_negacion",
+          "canales": 105,
+          "bytes": 86796,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0030_orden",
+          "canales": 105,
+          "bytes": 86796,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0001_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0001_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0001_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0001_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0002_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0002_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0002_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0002_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0003_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0003_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0003_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0003_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0005_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0005_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0005_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0005_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0006_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0006_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0006_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0006_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0007_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0007_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0007_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0007_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0008_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0008_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0008_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0008_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0010_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0010_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0010_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0010_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0011_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0011_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0011_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0011_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0012_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0012_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0012_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0012_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0013_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0013_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0013_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0013_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0014_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0014_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0014_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0014_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0015_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0015_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0015_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0015_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0016_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0016_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0016_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0016_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0017_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0017_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0017_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0017_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0018_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0018_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0018_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0018_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0019_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0019_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0019_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0019_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0021_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0021_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0021_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0021_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0026_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0026_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0026_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0026_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0028_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0028_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0028_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0028_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0031_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0031_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0031_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0031_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0032_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0032_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0032_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0032_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0033_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0033_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0033_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0033_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0035_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0035_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0035_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0035_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0036_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0036_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0036_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0036_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0037_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0037_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0037_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0037_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0038_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0038_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0038_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0038_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0041_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0041_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0041_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0041_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0043_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0043_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0043_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0043_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0044_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0044_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0044_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0044_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0048_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0048_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0048_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0048_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0049_afirmativo",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0049_pregunta",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0049_negacion",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0049_orden",
+          "canales": 105,
+          "bytes": 85148,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0004_afirmativo",
+          "canales": 105,
+          "bytes": 83500,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0004_pregunta",
+          "canales": 105,
+          "bytes": 83500,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0004_negacion",
+          "canales": 105,
+          "bytes": 83500,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0004_orden",
+          "canales": 105,
+          "bytes": 83500,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0039_afirmativo",
+          "canales": 105,
+          "bytes": 68668,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0039_pregunta",
+          "canales": 105,
+          "bytes": 68668,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0039_negacion",
+          "canales": 105,
+          "bytes": 68668,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0039_orden",
+          "canales": 105,
+          "bytes": 68668,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0040_afirmativo",
+          "canales": 105,
+          "bytes": 57132,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0040_pregunta",
+          "canales": 105,
+          "bytes": 57132,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0040_negacion",
+          "canales": 105,
+          "bytes": 57132,
+          "bufferViews": 3
+        },
+        {
+          "nombre": "0040_orden",
+          "canales": 105,
+          "bytes": 57132,
+          "bufferViews": 3
+        }
+      ],
+      "senas_detalle": {
+        "0000": {
+          "bytes_unicos": 101572,
+          "bytes_nominal": 393328
+        },
+        "0001": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0002": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0003": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0004": {
+          "bytes_unicos": 86740,
+          "bytes_nominal": 334000
+        },
+        "0005": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0006": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0007": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0008": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0009": {
+          "bytes_unicos": 90036,
+          "bytes_nominal": 347184
+        },
+        "0010": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0011": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0012": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0013": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0014": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0015": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0016": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0017": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0018": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0019": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0020": {
+          "bytes_unicos": 93332,
+          "bytes_nominal": 360368
+        },
+        "0021": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0022": {
+          "bytes_unicos": 114756,
+          "bytes_nominal": 446064
+        },
+        "0023": {
+          "bytes_unicos": 98276,
+          "bytes_nominal": 380144
+        },
+        "0024": {
+          "bytes_unicos": 101572,
+          "bytes_nominal": 393328
+        },
+        "0025": {
+          "bytes_unicos": 94980,
+          "bytes_nominal": 366960
+        },
+        "0026": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0027": {
+          "bytes_unicos": 91684,
+          "bytes_nominal": 353776
+        },
+        "0028": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0029": {
+          "bytes_unicos": 91684,
+          "bytes_nominal": 353776
+        },
+        "0030": {
+          "bytes_unicos": 90036,
+          "bytes_nominal": 347184
+        },
+        "0031": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0032": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0033": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0034": {
+          "bytes_unicos": 96628,
+          "bytes_nominal": 373552
+        },
+        "0035": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0036": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0037": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0038": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0039": {
+          "bytes_unicos": 71908,
+          "bytes_nominal": 274672
+        },
+        "0040": {
+          "bytes_unicos": 60372,
+          "bytes_nominal": 228528
+        },
+        "0041": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0042": {
+          "bytes_unicos": 91684,
+          "bytes_nominal": 353776
+        },
+        "0043": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0044": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0045": {
+          "bytes_unicos": 104868,
+          "bytes_nominal": 406512
+        },
+        "0046": {
+          "bytes_unicos": 91684,
+          "bytes_nominal": 353776
+        },
+        "0047": {
+          "bytes_unicos": 91684,
+          "bytes_nominal": 353776
+        },
+        "0048": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        },
+        "0049": {
+          "bytes_unicos": 88388,
+          "bytes_nominal": 340592
+        }
+      }
+    }
+  ],
+  "apks": {
+    "debug": {
+      "archivo": "app-debug.apk",
+      "bytes": 40431738,
+      "mib": 38.56,
+      "mtime": 1793873963.030224,
+      "entradas_assets": [
+        {
+          "nombre": "assets/web/models/pauline.glb",
+          "comprimido": 14678764,
+          "sin_comprimir": 27850104,
+          "metodo": "deflate"
+        },
+        {
+          "nombre": "assets/web/models/juan.glb",
+          "comprimido": 12544008,
+          "sin_comprimir": 30323680,
+          "metodo": "deflate"
+        },
+        {
+          "nombre": "assets/web/manifest.json",
+          "comprimido": 1533,
+          "sin_comprimir": 22149,
+          "metodo": "deflate"
+        },
+        {
+          "nombre": "assets/web/models/avatars.json",
+          "comprimido": 605,
+          "sin_comprimir": 1366,
+          "metodo": "deflate"
+        }
+      ]
+    },
+    "release": {
+      "archivo": "app-release-unsigned.apk",
+      "bytes": 35065281,
+      "mib": 33.44,
+      "mtime": 1793873971.325319,
+      "entradas_assets": [
+        {
+          "nombre": "assets/web/models/pauline.glb",
+          "comprimido": 13916240,
+          "sin_comprimir": 27850104,
+          "metodo": "deflate"
+        },
+        {
+          "nombre": "assets/web/models/juan.glb",
+          "comprimido": 11798144,
+          "sin_comprimir": 30323680,
+          "metodo": "deflate"
+        },
+        {
+          "nombre": "assets/web/manifest.json",
+          "comprimido": 1353,
+          "sin_comprimir": 22149,
+          "metodo": "deflate"
+        },
+        {
+          "nombre": "assets/web/models/avatars.json",
+          "comprimido": 588,
+          "sin_comprimir": 1366,
+          "metodo": "deflate"
+        },
+        {
+          "nombre": "kotlin-tooling-metadata.json",
+          "comprimido": 284,
+          "sin_comprimir": 627,
+          "metodo": "deflate"
+        }
+      ]
+    }
+  }
+}

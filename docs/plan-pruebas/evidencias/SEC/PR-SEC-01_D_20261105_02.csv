@@ -1,0 +1,6 @@
+﻿enlace;cifrado;contenido_leible;detalle
+app–proxy (wss 8443 → 443);sí (TLS);no;"817 paquetes en el pcap; palabras de la frase encontradas 0 veces"
+proxy–backend (loopback 8080);no (a propósito);sí, con un cliente sin compresión;es el tramo interno del servidor, no un enlace externo
+backend–LLM (OpenAI);sí (HTTPS);no;llm_model=gpt-4o-mini, llm_base_url=''
+app contra un backend sin cifrar (8443→8080);no aplica;no aplica;la app no abrió sesión
+llamadas reales al proveedor;HTTPS;no;"509 llamadas en el log del backend; última: 2026-11-05 10:14:41,211 INFO httpx2: HTTP Request: POST https://api.openai.com/v1/chat/completions ""HTTP/1.1 200 OK"""

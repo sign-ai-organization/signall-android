@@ -1,0 +1,6 @@
+ruff 0.17.1 (versión fijada en requirements-dev.txt)
+comando: uvx ruff==0.17.1 check app --output-format=concise
+directorio: ../sign-ai-backend
+
+All checks passed!
+EXIT=0

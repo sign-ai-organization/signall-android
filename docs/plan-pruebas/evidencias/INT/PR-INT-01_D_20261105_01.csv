@@ -1,0 +1,5 @@
+﻿caso;frase;index;total;glosas;disponibles;tipo_oracion;ms_total
+texto-una-oracion;Hola, buenos días, bienvenidos.;0;1;HOLA, BUENOS DIAS;True, True;AFFIRMATIVE;6.9
+texto-varias-oraciones;Gracias a todos. Los niños y las niñas comen con gusto.;0;2;GRACIAS, TODOS;True, True;AFFIRMATIVE;8.0
+texto-varias-oraciones;Gracias a todos. Los niños y las niñas comen con gusto.;1;2;COMER, CON GUSTO;True, True;AFFIRMATIVE;8.0
+audio;¿Tienes hambre?;0;1;TU, HAMBRE;True, True;YES_NO_QUESTION;2919.9

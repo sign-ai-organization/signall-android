@@ -1,0 +1,34 @@
+﻿paso;comando;codigo;segundos;salida;error
+clone sign-ai-backend;git clone git@github.com:sign-ai-organization/sign-ai-backend.git /tmp/tra03-clon/sign-ai-backend;0;2.1;;Clonando en '/tmp/tra03-clon/sign-ai-backend'...
+clone sign-ai-stt;git clone git@github.com:sign-ai-organization/sign-ai-stt.git /tmp/tra03-clon/sign-ai-stt;0;1.7;;Clonando en '/tmp/tra03-clon/sign-ai-stt'...
+clone sign-ai-android;git clone git@github.com:sign-ai-organization/sign-ai-android.git /tmp/tra03-clon/sign-ai-android;0;27.8;;Clonando en '/tmp/tra03-clon/sign-ai-android'...
+compose up --build;docker compose -p tra03 -f docker-compose.yml up -d --build;0;4.5;"ba610a54ccdee83 0.1s done
+#24 naming to docker.io/library/tra03-backend:latest 0.0s done
+#24 unpacking to docker.io/library/tra03-backend:latest 0.0s done
+#24 DONE 0.4s
+
+#25 [backend] resolving provenance for metadata file
+#25 DONE 0.0s
+
+#26 [stt] resolving provenance for metadata file
+#26 DONE 0.0s";"rk tra03_default Created 
+ Container tra03-stt-1 Creating 
+ Container tra03-backend-1 Creating 
+ Container tra03-backend-1 Created 
+ Container tra03-stt-1 Created 
+ Container tra03-backend-1 Starting 
+ Container tra03-stt-1 Starting 
+ Container tra03-backend-1 Started 
+ Container tra03-stt-1 Started"
+gradlew assembleDebug;./gradlew assembleDebug;0;17.7;"rDebug
+> Task :app:mergeDebugGlobalSynthetics
+> Task :app:processDebugJavaRes
+> Task :app:mergeProjectDexDebug
+> Task :app:mergeDebugJavaResource
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+
+BUILD SUCCESSFUL in 17s
+37 actionable tasks: 37 executed";
+health del clon (espera de 600 s);curl /health;-;604.7;null;nunca respondió
