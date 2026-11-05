@@ -139,3 +139,48 @@ verificación estructural que sí se hizo: los entornos `\begin`/`\end` y las ll
 balanceados en los tres `.tex`, y el plan tiene 74 fichas y 74 IDs distintos.
 
 **Lo que queda**: correr `make` cuando TeX esté instalado y revisar los PDF.
+
+## Tercera parte: la copia local estaba 20 commits atrás
+
+Al revisar el estado de git, `../sign-ai-docs` estaba **3 adelante y 20 detrás** de
+`origin/main`. El equipo había seguido trabajando en `develop` y mergeado por PR (#6, #7 y
+#8): SRS con las secciones 4 y 5 (+584 líneas), la memoria reescrita, el SPMP revisado, los
+formularios del plan de pruebas y el `.gitignore` de auxiliares. La copia local era de antes
+de todo eso, así que **nuestras correcciones se habían hecho sobre una base vieja**.
+
+Lo que ya estaba resuelto del otro lado y no hacía falta repetir:
+
+| Qué | Dónde estaba ya |
+|---|---|
+| Los auxiliares de LaTeX y los PDF fuera del índice, con `.gitignore` | commit `c024b32` del equipo |
+| El `TODO` de `RF-UI-06` del SRS | commit `18178cd`, alineación del 2/11 |
+| El nombre `SignAll` en el SRS (39 apariciones) | commit `6a12042` |
+
+**Lo que se hizo:** `git merge origin/main` con dos ramas de respaldo
+(`respaldo/local-2026-11-04-pre-merge` y `respaldo/main-2026-11-04-pre-merge`, más las
+etiquetas `respaldo-local-2026-11-04` y `respaldo-remoto-2026-11-04`). Siete conflictos, todos
+resueltos conservando lo de las dos partes:
+
+| Archivo | Cómo quedó |
+|---|---|
+| `.gitignore` | La unión: el nuestro ya traía `main.pdf` y `*.xdv` |
+| `ESTADO.md` | El reescrito, actualizado con lo que trajo el merge |
+| `latex/memoria/sections/disenoSolucion.tex` | La versión del equipo, que ya usa `SignAll` |
+| `latex/plan-pruebas/main.tex` y su borrador de la sección 9 | La fila de `PR-PER-04` del equipo («facilidad para entender») + nuestra fila de `PR-PER-06` |
+| `cambios/requerimientos.md` | Nuestras reescrituras (RF-CAT-03, tabla de pendientes, TODO de `RF-UI-06` cerrado) con la **terminología del SRS** (`modo dictado` / `modo TR`), no la de «manual / en vivo» |
+| `latex/administracion/main.tex` | La versión del equipo; se le volvieron a cambiar las 3 `SignAI` nuevas a `SignAll` |
+| `main.pdf` y `main.synctex.gz` que volvieron con el merge | Fuera del índice otra vez (están en `.gitignore`) |
+
+**Estado verificado después del merge**: 74 fichas y 74 IDs en el plan; 86 requerimientos,
+75 por prueba y 11 por inspección; `SignAI` ya no aparece en ningún `.tex` (salvo el tag de
+logcat `SignAIWeb`, que se queda); entornos y llaves balanceados en los cinco `.tex`; el SRS
+conserva los botones −/+ y Avanzado como herramienta de desarrollo.
+
+**Commits**: `89ff970` (merge) sobre `c86811d` y `8526c30`. **Sin push.** El repo de
+documentos trabaja con `develop` y PR contra `main`, así que hay que decidir si esto va
+directo a `main` o por una rama con PR.
+
+**Hallazgo que queda abierto**: `cambios/requerimientos.md` venía renombrando los modos a
+«manual» y «en vivo» (sesión del 2026-11-03), pero el SRS dice **«modo dictado»** y **«modo
+TR»** en todo el texto (39 y 35 apariciones). Se volvió a la terminología del SRS y la
+decisión de renombrar en el SRS queda para el owner.

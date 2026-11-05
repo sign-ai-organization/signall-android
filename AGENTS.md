@@ -32,8 +32,8 @@ explicar, y el detalle técnico después de la idea, no antes.
   discutir, y una cifra de fixture no es una cifra de persona. Decí siempre
   "medido con 28 frases reproducidas por el socket", no "medido".
 - **No inventes terminología.** Si una palabra no está en
-  `../sign-ai-docs/documentos/requerimientos/`, es palabra mía hasta que el owner la
-  avale. Preguntá antes de escribir una en un documento.
+  `../sign-ai-docs/latex/` ni en `../sign-ai-docs/borradores/`, es palabra mía hasta que el
+  owner la avale. Preguntá antes de escribir una en un documento.
 - **Una decisión, una pregunta.** Cuando algo sea decisión del owner, presentá las
   opciones con lo que se gana y lo que se pierde, y pará ahí. No advanced por las
   opciones difíciles: preguntá.
