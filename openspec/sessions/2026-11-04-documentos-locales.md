@@ -184,3 +184,27 @@ directo a `main` o por una rama con PR.
 «manual» y «en vivo» (sesión del 2026-11-03), pero el SRS dice **«modo dictado»** y **«modo
 TR»** en todo el texto (39 y 35 apariciones). Se volvió a la terminología del SRS y la
 decisión de renombrar en el SRS queda para el owner.
+
+## Cuarta parte: TeX instalado y los cinco documentos compilan
+
+El owner instaló TeX Live (2026-11-05) y `make` compila los cinco sin errores:
+
+| Documento | Páginas |
+|---|---|
+| SRS | 126 |
+| SDD | 22 |
+| Memoria | 58 |
+| Plan de pruebas | 144 |
+| Plan de administración | 43 |
+
+Faltaba un paquete que no estaba en la lista original: **`texlive-publishers`**, que trae
+`IEEEtran.bst`. Sin él el SRS compilaba pero se quedaba sin bibliografía y con dos tablas sin
+resolver; con él, el `.bbl` sale con las 28 entradas y cero referencias indefinidas. El
+comando de instalación del `README.md` ya lo incluye.
+
+El `make` del repo también sirve de verificación: falla con el primer documento que no
+compila e imprime las primeras líneas del `main.log`.
+
+**Queda abierto**: la terminología de los modos no coincide entre documentos. El SRS dice
+«modo dictado» (39 veces) y «modo TR» (35); el plan de pruebas dice «modo manual» y «modo en
+vivo» (14). Es una contradicción entre dos documentos, así que la decide el owner.
