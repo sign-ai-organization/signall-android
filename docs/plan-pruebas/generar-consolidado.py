@@ -111,9 +111,17 @@ def main() -> int:
                         valores[COL_RONDA] = "Ronda de evaluación"
                     else:
                         sin_evaluacion.append(prueba)
-                        valores[COL_ESTADO] = "Sin ejecutar"
-                        for c in (COL_RESULTADO, COL_EVIDENCIA, COL_FECHA, COL_EJECUTOR):
-                            valores[c] = ""
+                        if copia["valores"].get(COL_ESTADO) == "Bloqueada":
+                            # Una prueba bloqueada sigue bloqueada en la ronda nueva:
+                            # se repite el motivo, no se marca "Sin ejecutar".
+                            valores[COL_RESULTADO] = (
+                                "Sigue bloqueada por el mismo motivo de la ronda "
+                                "diagnóstica: " + str(copia["valores"].get(COL_RESULTADO) or "")
+                            )
+                        else:
+                            valores[COL_ESTADO] = "Sin ejecutar"
+                            for c in (COL_RESULTADO, COL_EVIDENCIA, COL_FECHA, COL_EJECUTOR):
+                                valores[c] = ""
                         valores[COL_RONDA] = "Ronda de evaluación"
                 for col, val in valores.items():
                     celda = ws.cell(fila, col)
@@ -141,6 +149,15 @@ def main() -> int:
                     f'=COUNTIFS({bloque}!$L$4:$L$400,"{estado}",'
                     f'{bloque}!$Q$4:$Q$400,"Ronda diagnóstica")')
             ws.cell(r, 9).value = f"=D{r}-E{r}-F{r}-G{r}-H{r}"
+
+    # ── Portada: el consolidado no es la plantilla, y Overleaf ya no es la fuente ──
+    if "Portada" in wb.sheetnames:
+        ws = wb["Portada"]
+        ws["C6"] = "Plan de Pruebas, versión 39 (vive en ../sign-ai-docs/latex/plan-pruebas; Overleaf se retiró el 2026-11-04)"
+        ws["C7"] = "74 pruebas en 14 bloques, en dos rondas (148 filas)"
+        ws["C8"] = "una fila por prueba y por ronda; la columna Ronda dice cuál es cuál"
+        ws["C9"] = "Ronda diagnóstica (04/11/2026) y ronda de evaluación (05/11/2026)"
+        ws["C11"] = "05/11/2026"
 
     wb.save(args.salida)
     print(f"filas escritas: {escritas} (esperado 148)")

@@ -78,6 +78,49 @@ sign-ai-backend_default sign-ai-stt-stt-1`; quedó escrito en las reglas de los 
 - `PR-INT-03` pasó al carril D (19 pruebas): la cirugía del catálogo la hace quien puede tocar
   Neon y reiniciar el backend, con respaldo y restauración obligatoria.
 
+**Carril B · backend de texto (15 pruebas, cerrado a las 06:15).** 8 Se reporta, 5 Pasa,
+2 Falla. Números que importan: `gpt-4o-mini` 17/30 secuencias exactas y 795 ms de mediana (en
+la fase 1 había dado 18/30 porque el prompt cambió con S2); `gpt-4o` 20/30 por 16 veces el
+costo; el modelo local 17/30 con 516 ms, o sea que **el local no era el problema**: los
+timeouts viejos eran del camino bridge→host filtrado por `ufw`. `PR-LLM-02` queda en 9/10
+(la misma `CO-04-008` de S1). `PR-VAL-02` falla por el índice único que S12 dejó pendiente.
+`PR-CAC-03` baja a 17/30 con el umbral 0,03 (antes 19/30 con 0,05) y `PR-CAC-04` queda en
+**0/30 falsos aciertos**. `PR-HUE-03` 65,5 % y `PR-SEG-01` 79,0 % de acierto de corte.
+
+Dos cosas que deja anotadas el carril B: el `llm01_rec.py` de la recuperación todavía corre el
+modelo local por el camino de bridge (el bueno es `backend_tmp_host.sh`), y
+`../sign-ai-backend/docs/android-integration.md` no describe el frame `capability` y sigue
+hablando de «3 de las 50 señas» y de traducción automática de la voz.
+
+**Carril C · audio y STT (7 pruebas, cerrado).** 4 Se reporta, 2 Pasa, 1 Falla.
+`PR-STT-01` WER 1,77 % (los 5 errores en 3 audios); `PR-STT-02` 10/10 cierres por el mecanismo
+correcto; `PR-STT-05` los cuatro umbrales de VAD empatan (3,90 % de WER, 1/60 sin texto, 0/8
+sin voz con texto), así que no hay dato para mover el 2; `PR-REN-01` primer parcial p50 1,85 s
+y fin de voz → final p50 1,53 s; `PR-RES-06` 20/20 frases del audio largo de 96 s con WER 0.
+**`PR-STT-03` quedó en Falla**: los finales fueron 0/8, pero el servicio devolvió un parcial
+«¡Grr!» en AU-03-006 y la barrera `non_speech` no cubre los parciales. Se dejó anotado como
+pendiente en `ARREGLOS` §2 en vez de tocar el STT a mitad de la ronda.
+
+**Carril A · dispositivo y avatar (15 pruebas, cerrado).** 9 Pasa, 4 Se reporta, 2 Falla.
+`PR-AVT-01` abre en 4,60–4,83 s (mediana 4,66; interno 2,00 s) y vuelve al reposo 10/10;
+`PR-AVT-02` 50/50 animaciones (103 ocurrencias, mediana 2,55 s); `PR-AVT-07` cambia de avatar
+en 2,57 s / 2,07 s y persiste; `PR-AND-03` 12/12 frases en Historial, tope 20; `PR-AND-04` y
+`PR-AND-06` verifican tema, velocidad, tamaño y las cuatro opciones de accesibilidad con
+contraste 1,54 → 4,15. `PR-INT-06` 60 frases en 30 min con PSS estable en 375–384 MB, p50
+envío→1.ª seña 787 ms y representación p50 6,28 s; `PR-REN-07` 58,5 fps con 70,5 % de cuadros
+janky y intervalos entre señas p50 2,11 s; `PR-REN-08` 204 B por frase de texto (la mitad de
+voz no se pudo medir). **`PR-INT-02` sigue en Falla**: 29/30 frases completas y 98/99 señas,
+pero 17/30 frases exactas y 99 de 112 glosas (88,4 %) — todo lo que falta es NLP, no avatar.
+**`PR-AVT-03` sigue en Falla**: la cola nueva aguanta una frase pendiente, pero con tres
+envíos seguidos la tercera corta las dos anteriores en silencio (sin línea «cola cortada»).
+`PR-AND-05` documentó que la actividad es `portrait` fija: el giro no se puede probar, y eso es
+el producto, no un fallo. Teléfono restaurado byte a byte (`signai.xml` md5 `b3889a13…`),
+`RECORD_AUDIO` concedido, un solo `adb reverse` y ningún colector vivo.
+
+**Documentos desactualizados que encontró el carril C** (no se tocaron): `RNF-DES-02` del SRS
+sigue con un «TODO: fijar el rango con los datos reales», y las tablas de AU-02, AU-03 y AU-04
+dicen que faltan grabar audios que ya están grabados y se usaron.
+
 ## Decisiones de la sesión
 
 | Tema | Quedó |
