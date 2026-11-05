@@ -604,9 +604,10 @@ def build_markdown(results):
         lines.append("| Par | Δ pico medio (mm) | Δ RMS medio (mm) | Δ pico mínimo (mm) | Región que más difiere |")
         lines.append("|---|---:|---:|---:|---|")
         for pair, data in result["variant_pairs"].items():
+            first, second = pair.split("|")
             region = max(data["regions_mm"], key=data["regions_mm"].get)
             lines.append(
-                f"| `{pair.replace('|', '` vs `_')}` | {data['mean_peak_mm']:.2f} "
+                f"| `_{first}` vs `_{second}` | {data['mean_peak_mm']:.2f} "
                 f"| {data['mean_rms_mm']:.2f} | {data['min_peak_mm']:.2f} "
                 f"| {region} ({data['regions_mm'][region]:.2f} mm) |")
         lines.append("")
