@@ -13,7 +13,7 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
                                       │
                                       └──▶ Neon (Postgres 16 + pgvector): catalog, semantic_cache
 
-../sign-ai-docs  ← requerimientos, diagramas del SDD, plan de pruebas (nada corre)
+../sign-ai-docs  ← documentos de la tesis en LaTeX (se compilan con make)
 ../signai-avatar ← animaciones (Cascadeur): GLB finales de Juan y Pauline (rama dev)
 ```
 
@@ -96,6 +96,10 @@ versiones-pasadas/           ← historia, no se edita
 - **Se compila con `make`**: `make` (los cinco), `make srs` (uno), `make watch DOC=srs`
   (recompila al guardar). Los PDF y auxiliares están en `.gitignore` y se regeneran. Un
   cambio en un documento **no está terminado hasta que compila**.
+- **Ese repo trabaja con `develop` y PR contra `main`**, igual que el backend y el STT: los
+  commits llegan a `main` por *pull request* desde `develop`. Un commit directo en `main`
+  local queda por detrás en cuanto el equipo mergea, así que **antes de empezar hay que
+  hacer `git fetch`**: el 2026-11-04 la copia local estaba 20 commits atrás.
 - **El control de cambios es git**: `git diff` dice qué se tocó y `git log` cuándo.
 - **`cambios/requerimientos.md` es la bandeja de cambios pendientes**, con estados
   **Propuesto / Acordado / Hecho**: ahí caen las cosas que la app ya hace y el documento
