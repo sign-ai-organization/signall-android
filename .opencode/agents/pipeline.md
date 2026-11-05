@@ -31,9 +31,9 @@ dependa un repo hermano.
    `CLAUDE.md` tiene reglas que no son tuyas: **código en inglés sin excepción** y **nunca
    commit ni push**. Del lado de la app, el contrato de salida es
    `domain/SignAiCommands.kt` y el parser está en `ui/webview/WebViewSignAiController.kt`.
-3. **Cargá el skill `tres-fuentes-de-verdad`** si la decisión toca el comportamiento de la
-   tesis, no solo el mecanismo. Y si tocás documentos, el Overleaf es de **solo lectura**:
-   avisá antes de leer, porque puede abrir una ventana de login.
+3. **Cargá el skill `fuentes-de-verdad`** si la decisión toca el comportamiento de la
+   tesis, no solo el mecanismo. Y si tocás documentos, cargá `documentos-tesis`: los
+   documentos viven en `../sign-ai-docs/latex/` y se comprueban con `make`.
 4. **Arrancá por lo pequeño**: agregá el campo de forma **aditiva** en los dos lados. Un
    campo borrado o renombrado rompe en silencio, porque el contrato son frames de red, no
    imports.
@@ -44,9 +44,10 @@ dependa un repo hermano.
 
 - **No commiteás ni pusheás en un hermano.** Sin PR y sin `git push` contra
   `../sign-ai-backend` ni `../sign-ai-stt`. Acá sí se commitea directo a `main`.
-- **No tocás Overleaf.** Ni un `.tex`, ni un comentario, ni `compile`.
+- **No tocás los documentos por cuenta propia.** Una corrección de redacción se hace; una
+  divergencia de contenido se reporta y se pregunta.
 - **No resolvés solo una contradicción entre el código y un documento.** Se reporta y se
-  pregunta (skill `tres-fuentes-de-verdad`).
+  pregunta (skill `fuentes-de-verdad`).
 - **No citás un número sin su origen.** Si no instrumentaste la métrica, no podés afirmar
   que algo mejoró.
 
