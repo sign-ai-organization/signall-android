@@ -1,0 +1,4 @@
+﻿Situacion;Frase;Tiempo_hasta_error_ms;Nota
+LLM colgado (acepta y nunca responde), 5 s por intento y un reintento. Medido por el socket;¿Por qué nunca estás triste? (FR-04-016);10546;dos llamadas de 5 s: el reintento existe y se agota
+LLM colgado, segunda frase;Las niñas comen con gusto y el tío trabaja.;10453;el cerco es la suma de dos tiempos de espera, no un solo plazo de 10 s
+LLM colgado, medido en la app (toque -> estado Error);¿Por qué nunca estás triste? (FR-04-016);10819;"16 capturas entre 0,8 y 10,1 s muestran Procesando; el aviso llega a los 10,8 s"

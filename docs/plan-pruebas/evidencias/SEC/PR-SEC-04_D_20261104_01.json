@@ -1,0 +1,154 @@
+[
+  {
+    "frase": "FR-01-001",
+    "audio": "AU-01-001",
+    "duracion_audio_s": 4.459,
+    "transcrito": "Hola, buenos días, bienvenidos.",
+    "texto_plan": "Hola, buenos días, bienvenidos.",
+    "segmentos": 1,
+    "glosas": [
+      "HOLA",
+      "BUENOS DIAS"
+    ],
+    "error": null,
+    "ms": 4700.2
+  },
+  {
+    "frase": "FR-01-005",
+    "audio": "AU-01-007",
+    "duracion_audio_s": 5.205,
+    "transcrito": "Buenas tardes. Hoy me siento más o menos.",
+    "texto_plan": "Buenas tardes. Hoy me siento más o menos.",
+    "segmentos": 2,
+    "glosas": [
+      "BUENAS TARDES",
+      "YO",
+      "SENTIR",
+      "MAS O MENOS"
+    ],
+    "error": null,
+    "ms": 5460.7
+  },
+  {
+    "frase": "FR-01-007",
+    "audio": "AU-01-013",
+    "duracion_audio_s": 2.688,
+    "transcrito": "¿Tienes hambre?",
+    "texto_plan": "¿Tienes hambre?",
+    "segmentos": 1,
+    "glosas": [
+      "TU",
+      "HAMBRE"
+    ],
+    "error": null,
+    "ms": 2916.4
+  },
+  {
+    "frase": "FR-01-011",
+    "audio": "AU-01-019",
+    "duracion_audio_s": 3.989,
+    "transcrito": "Perdón, ¿estás triste?",
+    "texto_plan": "Perdón. ¿Estás triste?",
+    "segmentos": 2,
+    "glosas": [
+      "PERDON",
+      "TRISTE"
+    ],
+    "error": null,
+    "ms": 4204.7
+  },
+  {
+    "frase": "FR-01-013",
+    "audio": "AU-01-025",
+    "duracion_audio_s": 4.011,
+    "transcrito": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+    "texto_plan": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+    "segmentos": 3,
+    "glosas": [
+      "HOLA",
+      "COMO ESTAS",
+      "COMO",
+      "TU"
+    ],
+    "error": null,
+    "ms": 4261.8
+  },
+  {
+    "frase": "FR-01-014",
+    "audio": "AU-01-031",
+    "duracion_audio_s": 3.605,
+    "transcrito": "¿Dónde vive tu familia?",
+    "texto_plan": "¿Dónde vive tu familia?",
+    "segmentos": 1,
+    "glosas": [
+      "DONDE",
+      "TU",
+      "FAMILIA",
+      "VIVIR"
+    ],
+    "error": null,
+    "ms": 3851.5
+  },
+  {
+    "frase": "FR-01-019",
+    "audio": "AU-01-037",
+    "duracion_audio_s": 3.648,
+    "transcrito": "Yo nunca como mucho.",
+    "texto_plan": "Yo nunca como mucho.",
+    "segmentos": 1,
+    "glosas": [
+      "YO",
+      "NUNCA",
+      "COMER",
+      "MUCHO"
+    ],
+    "error": null,
+    "ms": 3855.8
+  },
+  {
+    "frase": "FR-01-023",
+    "audio": "AU-01-043",
+    "duracion_audio_s": 5.12,
+    "transcrito": "Perdón, mi hermano nunca está contento.",
+    "texto_plan": "Perdón. Mi hermano nunca está contento.",
+    "segmentos": 1,
+    "glosas": [
+      "PERDON",
+      "TU",
+      "HERMANO",
+      "NUNCA",
+      "CONTENTO"
+    ],
+    "error": null,
+    "ms": 5886.3
+  },
+  {
+    "frase": "FR-01-025",
+    "audio": "AU-01-049",
+    "duracion_audio_s": 3.648,
+    "transcrito": "Por favor, come poco.",
+    "texto_plan": "Por favor, come poco.",
+    "segmentos": 1,
+    "glosas": [
+      "POR FAVOR",
+      "COMER",
+      "POCO"
+    ],
+    "error": null,
+    "ms": 3861.2
+  },
+  {
+    "frase": "FR-01-026",
+    "audio": "AU-01-055",
+    "duracion_audio_s": 5.056,
+    "transcrito": "Con permiso, déjame pasar, por favor.",
+    "texto_plan": "Con permiso. Déjame pasar, por favor.",
+    "segmentos": 1,
+    "glosas": [
+      "PERMISO",
+      "POR FAVOR"
+    ],
+    "error": null,
+    "ms": 5840.7
+  }
+]

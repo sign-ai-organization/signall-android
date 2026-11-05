@@ -1,0 +1,712 @@
+PR-RES-03 · Falla de la transcripción — logcat crudo
+(adb logcat -v epoch -s SignAiState SignAiNet; STT detenido con docker stop sign-ai-stt-stt-1)
+
+Bucle de reconexion mientras el STT estuvo caido: entre 1793855804 y 1793855897 (93 s)
+hubo 90 aperturas de sesion y 180 lineas del mensaje "El servicio de transcripción no está
+disponible." (una de `fallo:` y una de `aviso` por ciclo), es decir un ciclo cada ~1,03 s.
+El contador de reintentos se reinicia en cada apertura, asi que la espera no crece.
+
+         1793855804.193  5053  5109 W SignAiNet: session failed: null
+         1793855804.194  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855805.220  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855805.222  5053  5109 W SignAiNet: session failed: null
+         1793855805.230  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855805.231  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855805.231  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855805.231  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855806.256  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855806.258  5053  5109 W SignAiNet: session failed: null
+         1793855806.263  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855806.263  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855806.263  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855806.264  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855807.283  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855807.284  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855807.285  5053  5109 W SignAiNet: session failed: null
+         1793855807.285  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855807.285  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855807.286  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855808.302  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855808.304  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855808.304  5053  5109 W SignAiNet: session failed: null
+         1793855808.304  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855808.304  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855808.305  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855809.319  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855809.320  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855809.321  5053  5109 W SignAiNet: session failed: null
+         1793855809.321  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855809.321  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855809.322  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855810.343  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855810.344  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855810.344  5053  5109 W SignAiNet: session failed: null
+         1793855810.344  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855810.344  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855810.345  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855811.360  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855811.361  5053  5109 W SignAiNet: session failed: null
+         1793855811.362  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855811.362  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855811.362  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855811.363  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855812.373  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855812.374  5053  5109 W SignAiNet: session failed: null
+         1793855812.394  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855812.395  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855812.395  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855812.395  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855813.436  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855813.437  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855813.437  5053  5109 W SignAiNet: session failed: null
+         1793855813.437  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855813.437  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855813.438  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855814.451  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855814.453  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855814.454  5053  5109 W SignAiNet: session failed: null
+         1793855814.454  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855814.454  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855814.454  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855815.478  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855815.479  5053  5109 W SignAiNet: session failed: null
+         1793855815.485  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855815.485  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855815.486  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855815.486  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855816.502  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855816.503  5053  5109 W SignAiNet: session failed: null
+         1793855816.509  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855816.509  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855816.509  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855816.510  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855817.526  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855817.528  5053  5109 W SignAiNet: session failed: null
+         1793855817.528  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855817.528  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855817.528  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855817.529  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855818.544  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855818.546  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855818.546  5053  5109 W SignAiNet: session failed: null
+         1793855818.546  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855818.546  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855818.547  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855819.562  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855819.566  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855819.566  5053  5109 W SignAiNet: session failed: null
+         1793855819.566  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855819.566  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855819.567  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855820.585  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855820.586  5053  5109 W SignAiNet: session failed: null
+         1793855820.586  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855820.587  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855820.587  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855820.588  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855821.604  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855821.606  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855821.606  5053  5109 W SignAiNet: session failed: null
+         1793855821.606  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855821.606  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855821.607  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855822.621  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855822.622  5053  5109 W SignAiNet: session failed: null
+         1793855822.624  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855822.625  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855822.625  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855822.625  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855823.645  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855823.646  5053  5109 W SignAiNet: session failed: null
+         1793855823.646  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855823.646  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855823.647  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855823.648  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855824.664  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855824.666  5053  5109 W SignAiNet: session failed: null
+         1793855824.666  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855824.667  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855824.667  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855824.668  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855825.685  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855825.686  5053  5109 W SignAiNet: session failed: null
+         1793855825.700  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855825.701  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855825.701  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855825.702  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855826.716  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855826.717  5053  5109 W SignAiNet: session failed: null
+         1793855826.730  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855826.730  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855826.730  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855826.731  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855827.747  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855827.748  5053  5109 W SignAiNet: session failed: null
+         1793855827.748  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855827.748  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855827.748  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855827.749  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855828.778  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855828.779  5053  5109 W SignAiNet: session failed: null
+         1793855828.797  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855828.797  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855828.798  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855828.798  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855829.813  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855829.815  5053  5109 W SignAiNet: session failed: null
+         1793855829.837  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855829.838  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855829.838  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855829.838  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855830.878  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855830.880  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855830.880  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855830.880  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855830.881  5053  5109 W SignAiNet: session failed: null
+         1793855830.881  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855831.898  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855831.900  5053  5109 W SignAiNet: session failed: null
+         1793855831.901  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855831.902  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855831.902  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855831.902  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855832.933  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855832.934  5053  5109 W SignAiNet: session failed: null
+         1793855832.935  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855832.935  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855832.935  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855832.936  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855833.951  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855833.953  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855833.953  5053  5109 W SignAiNet: session failed: null
+         1793855833.953  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855833.953  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855833.954  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855834.975  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855834.977  5053  5109 W SignAiNet: session failed: null
+         1793855834.980  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855834.981  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855834.981  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855834.982  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855836.052  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855836.055  5053  5109 W SignAiNet: session failed: null
+         1793855836.061  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855836.061  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855836.061  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855836.062  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855837.077  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855837.079  5053  5109 W SignAiNet: session failed: null
+         1793855837.080  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855837.080  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855837.081  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855837.081  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855838.094  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855838.095  5053  5109 W SignAiNet: session failed: null
+         1793855838.101  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855838.102  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855838.102  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855838.102  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855839.119  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855839.119  5053  5109 W SignAiNet: session failed: null
+         1793855839.119  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855839.119  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855839.120  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855839.131  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855840.147  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855840.148  5053  5109 W SignAiNet: session failed: null
+         1793855840.150  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855840.150  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855840.150  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855840.151  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855841.166  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855841.168  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855841.168  5053  5109 W SignAiNet: session failed: null
+         1793855841.168  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855841.168  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855841.169  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855842.184  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855842.185  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855842.185  5053  5109 W SignAiNet: session failed: null
+         1793855842.185  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855842.185  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855842.186  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855843.211  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855843.212  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855843.212  5053  5109 W SignAiNet: session failed: null
+         1793855843.213  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855843.213  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855843.213  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855844.232  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855844.234  5053  5109 W SignAiNet: session failed: null
+         1793855844.238  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855844.238  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855844.238  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855844.239  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855845.252  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855845.253  5053  5109 W SignAiNet: session failed: null
+         1793855845.260  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855845.260  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855845.260  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855845.261  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855846.277  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855846.278  5053  5109 W SignAiNet: session failed: null
+         1793855846.279  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855846.280  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855846.280  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855846.281  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855847.294  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855847.296  5053  5109 W SignAiNet: session failed: null
+         1793855847.297  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855847.298  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855847.298  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855847.299  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855848.313  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855848.314  5053  5109 W SignAiNet: session failed: null
+         1793855848.322  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855848.322  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855848.322  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855848.323  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855849.338  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855849.340  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855849.341  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855849.341  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855849.342  5053  5109 W SignAiNet: session failed: null
+         1793855849.343  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855850.359  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855850.360  5053  5109 W SignAiNet: session failed: null
+         1793855850.361  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855850.361  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855850.361  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855850.362  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855851.379  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855851.380  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855851.381  5053  5109 W SignAiNet: session failed: null
+         1793855851.381  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855851.381  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855851.382  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855852.401  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855852.403  5053  5109 W SignAiNet: session failed: null
+         1793855852.418  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855852.418  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855852.418  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855852.419  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855853.434  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855853.436  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855853.436  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855853.436  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855853.437  5053  5109 W SignAiNet: session failed: null
+         1793855853.438  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855854.455  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855854.456  5053  5109 W SignAiNet: session failed: null
+         1793855854.458  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855854.458  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855854.458  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855854.459  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855855.476  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855855.477  5053  5109 W SignAiNet: session failed: null
+         1793855855.494  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855855.495  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855855.495  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855855.496  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855856.520  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855856.529  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855856.529  5053  5109 W SignAiNet: session failed: null
+         1793855856.529  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855856.529  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855856.530  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855857.550  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855857.552  5053  5109 W SignAiNet: session failed: null
+         1793855857.556  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855857.557  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855857.557  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855857.558  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855858.581  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855858.582  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855858.582  5053  5109 W SignAiNet: session failed: null
+         1793855858.582  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855858.582  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855858.583  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855859.600  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855859.601  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855859.601  5053  5109 W SignAiNet: session failed: null
+         1793855859.601  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855859.601  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855859.602  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855860.621  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855860.622  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855860.622  5053  5109 W SignAiNet: session failed: null
+         1793855860.622  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855860.622  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855860.623  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855861.649  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855861.651  5053  5109 W SignAiNet: session failed: null
+         1793855861.651  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855861.651  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855861.651  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855861.651  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855862.667  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855862.668  5053  5109 W SignAiNet: session failed: null
+         1793855862.672  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855862.672  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855862.672  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855862.673  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855863.692  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855863.692  5053  5109 W SignAiNet: session failed: null
+         1793855863.698  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855863.699  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855863.699  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855863.699  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855864.722  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855864.724  5053  5109 W SignAiNet: session failed: null
+         1793855864.726  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855864.726  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855864.727  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855864.727  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855865.764  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855865.764  5053  5109 W SignAiNet: session failed: null
+         1793855865.771  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855865.771  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855865.771  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855865.772  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855866.798  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855866.799  5053  5109 W SignAiNet: session failed: null
+         1793855866.800  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855866.801  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855866.801  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855866.802  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855867.815  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855867.816  5053  5109 W SignAiNet: session failed: null
+         1793855867.822  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855867.823  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855867.823  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855867.823  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855868.850  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855868.851  5053  5109 W SignAiNet: session failed: null
+         1793855868.864  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855868.865  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855868.865  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855868.865  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855869.904  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855869.910  5053  5109 W SignAiNet: session failed: null
+         1793855869.923  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855869.924  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855869.924  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855869.924  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855870.956  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855870.958  5053  5109 W SignAiNet: session failed: null
+         1793855870.980  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855870.981  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855870.981  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855870.981  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855871.998  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855872.000  5053  5109 W SignAiNet: session failed: null
+         1793855872.001  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855872.001  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855872.001  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855872.002  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855873.036  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855873.044  5053  5109 W SignAiNet: session failed: null
+         1793855873.062  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855873.063  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855873.063  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855873.063  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855874.096  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855874.100  5053  5109 W SignAiNet: session failed: null
+         1793855874.114  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855874.114  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855874.114  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855874.114  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855875.134  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855875.137  5053  5109 W SignAiNet: session failed: null
+         1793855875.137  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855875.137  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855875.137  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855875.138  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855876.152  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855876.153  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855876.153  5053  5109 W SignAiNet: session failed: null
+         1793855876.153  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855876.153  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855876.154  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855877.191  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855877.193  5053  5109 W SignAiNet: session failed: null
+         1793855877.193  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855877.194  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855877.194  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855877.194  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855878.219  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855878.229  5053  5109 W SignAiNet: session failed: null
+         1793855878.230  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855878.230  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855878.230  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855878.231  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855879.255  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855879.256  5053  5109 W SignAiNet: session failed: null
+         1793855879.276  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855879.277  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855879.277  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855879.277  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855880.303  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855880.305  5053  5109 W SignAiNet: session failed: null
+         1793855880.309  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855880.309  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855880.309  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855880.310  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855881.324  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855881.325  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855881.326  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855881.326  5053  5109 W SignAiNet: session failed: null
+         1793855881.326  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855881.326  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855882.355  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855882.356  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855882.356  5053  5109 W SignAiNet: session failed: null
+         1793855882.356  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855882.356  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855882.357  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855883.371  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855883.372  5053  5109 W SignAiNet: session failed: null
+         1793855883.375  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855883.375  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855883.376  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855883.376  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855884.394  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855884.398  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855884.398  5053  5109 W SignAiNet: session failed: null
+         1793855884.398  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855884.399  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855884.399  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855885.429  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855885.434  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855885.434  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855885.434  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855885.435  5053  5109 W SignAiNet: session failed: null
+         1793855885.450  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855886.463  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855886.464  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855886.464  5053  5109 W SignAiNet: session failed: null
+         1793855886.464  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855886.465  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855886.465  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855887.479  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855887.481  5053  5109 W SignAiNet: session failed: null
+         1793855887.486  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855887.486  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855887.487  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855887.487  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855888.501  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855888.506  5053  5109 W SignAiNet: session failed: null
+         1793855888.507  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855888.508  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855888.508  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855888.508  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855889.525  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855889.527  5053  5109 W SignAiNet: session failed: null
+         1793855889.529  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855889.529  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855889.529  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855889.529  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855890.545  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855890.547  5053  5109 W SignAiNet: session failed: null
+         1793855890.547  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855890.547  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855890.547  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855890.548  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855891.566  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855891.567  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855891.567  5053  5109 W SignAiNet: session failed: null
+         1793855891.567  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855891.568  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855891.568  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855892.592  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855892.594  5053  5109 W SignAiNet: session failed: null
+         1793855892.595  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855892.596  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855892.596  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855892.597  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855893.615  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855893.620  5053  5109 W SignAiNet: session failed: null
+         1793855893.620  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855893.620  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855893.621  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855893.621  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855894.639  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855894.648  5053  5109 W SignAiNet: session failed: null
+         1793855894.655  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855894.655  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855894.655  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855894.656  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855895.670  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855895.674  5053  5109 W SignAiNet: session failed: null
+         1793855895.675  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855895.676  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855895.676  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855895.676  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855896.690  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855896.691  5053  5109 W SignAiNet: session failed: null
+         1793855896.691  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855896.692  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855896.692  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855896.692  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855897.710  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855912.817  5053  5053 I SignAiState: micrófono prendido en modo Dictation
+         1793855913.002  5053  5053 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793855928.828  5053  5053 I SignAiState: micrófono apagado (venía de Dictation)
+         1793855928.901  5053  5053 I SignAiNet: recording stopped
+         1793855928.902  5053  5053 I SignAiState: dictado detenido: esperando el final de la frase
+         1793855928.902  5053  5053 I SignAiState: el dictado se apagó sin transcripción
+         1793855928.902  5053  5053 I SignAiState: aviso (no va al indicador): No se escuchó nada.
+         1793855928.960  5053  5053 I SignAiState: final vacío: el utterance se cerró sin palabras
+         1793855938.342  5053  5053 I SignAiState: micrófono prendido en modo Live
+         1793855938.386  5053  5053 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793855942.010  5053  5053 I SignAiState: micrófono apagado (venía de Live)
+         1793855942.095  5053  5053 I SignAiNet: recording stopped
+         1793855942.095  5053  5053 I SignAiState: campo limpio: el TR se apagó y lo que había ya se representó
+         1793855942.095  5053  5053 I SignAiState: el micrófono se apagó sin transcripción: no hay nada que traducir
+         1793855942.095  5053  5053 I SignAiState: aviso (no va al indicador): No se escuchó nada.
+         1793855942.142  5053  5053 I SignAiState: final vacío: el utterance se cerró sin palabras
+         1793855961.141  5053  5053 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Por qué nunca estás triste?"
+         1793855961.823  5053  5109 D SignAiNet: segment 0/1 turn=1 -> POR QUE,NUNCA,TRISTE
+         1793855961.825  5053  5053 I SignAiMetrics: frase #1: 685ms, 1 oraciones, 3 glosas (p50=685ms p95=685ms max=685ms n=1)
+         1793855961.825  5053  5053 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=685ms p95=685ms max=685ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793855961.858  5053  5053 I SignAiState: signStart: oración→avatar 35 ms (seña 0, reloj JS 1681244 ms)
+         1793855961.858  5053  5053 I SignAiMetrics: oración→avatar: 35 ms (p50=35ms p95=35ms max=35ms n=1)
+         1793855961.858  5053  5053 I SignAiMetrics: envío→primera seña: 718 ms (p50=718ms p95=718ms max=718ms n=1)
+         1793855962.652  5053  5053 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793855964.290  5053  5053 I SignAiState: signStart: oración→avatar 2467 ms (seña 1, reloj JS 1683705 ms)
+         1793855966.339  5053  5053 I SignAiState: signStart: oración→avatar 4515 ms (seña 2, reloj JS 1685728 ms)
+         1793855969.149  5053  5053 I SignAiMetrics: representado: 3 señas en 7325ms (p50=7325ms p95=7325ms max=7325ms n=1)
+         1793855976.813  5053  5053 I SignAiState: micrófono prendido en modo Live
+         1793855976.855  5053  5053 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793855979.963  5053  5109 W SignAiNet: session failed: null
+         1793855979.964  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Live
+         1793855979.965  5053  5210 I SignAiState: micrófono apagado (venía de Live)
+         1793855980.025  5053  5053 I SignAiNet: recording stopped
+         1793855980.026  5053  5210 I SignAiNet: stop() sin grabación activa
+         1793855980.026  5053  5210 I SignAiState: campo limpio: el TR se apagó y lo que había ya se representó
+         1793855980.026  5053  5210 I SignAiState: el micrófono se apagó sin transcripción: no hay nada que traducir
+         1793855980.026  5053  5210 I SignAiState: aviso (no va al indicador): No se escuchó nada.
+         1793855980.027  5053  5210 I SignAiState: fallo: Se cortó la conexión mientras escuchaba.
+         1793855980.027  5053  5210 I SignAiNet: stop() sin grabación activa
+         1793855980.027  5053  5210 I SignAiState: aviso (no va al indicador): Se cortó la conexión mientras escuchaba.
+         1793855981.079  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855981.080  5053  5109 W SignAiNet: session failed: null
+         1793855981.091  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855981.091  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855981.091  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855981.091  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855982.108  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855982.109  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855982.109  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855982.109  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855982.113  5053  5109 W SignAiNet: session failed: null
+         1793855982.138  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855983.152  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855983.156  5053  5109 W SignAiNet: session failed: null
+         1793855983.167  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855983.167  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855983.167  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855983.168  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855984.182  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855984.185  5053  5109 W SignAiNet: session failed: null
+         1793855984.186  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855984.186  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855984.186  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855984.186  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855985.211  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855985.212  5053  5109 W SignAiNet: session failed: null
+         1793855985.212  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855985.212  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855985.212  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855985.213  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855986.232  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855986.236  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855986.236  5053  5109 W SignAiNet: session failed: null
+         1793855986.236  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855986.236  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855986.237  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855987.250  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855987.251  5053  5109 W SignAiNet: session failed: null
+         1793855987.252  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855987.252  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855987.252  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855987.253  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855988.270  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855988.271  5053  5109 W SignAiNet: session failed: null
+         1793855988.271  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855988.272  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855988.272  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855988.272  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855989.284  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855989.285  5053  5109 W SignAiNet: session failed: null
+         1793855989.290  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855989.290  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855989.290  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855989.291  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855990.303  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855990.304  5053  5109 W SignAiNet: session failed: null
+         1793855990.308  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855990.309  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855990.309  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855990.309  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855991.324  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855991.329  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855991.329  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855991.330  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855991.331  5053  5109 W SignAiNet: session failed: null
+         1793855991.332  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855992.345  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855992.346  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855992.346  5053  5109 W SignAiNet: session failed: null
+         1793855992.346  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855992.347  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855992.347  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855993.360  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855993.361  5053  5109 W SignAiNet: session failed: null
+         1793855993.367  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855993.367  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855993.367  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855993.368  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855994.386  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855994.388  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855994.388  5053  5109 W SignAiNet: session failed: null
+         1793855994.388  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855994.388  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855994.389  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855995.401  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855995.403  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855995.403  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855995.403  5053  5109 W SignAiNet: session failed: null
+         1793855995.403  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855995.404  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855996.423  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855996.424  5053  5109 W SignAiNet: session failed: null
+         1793855996.426  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855996.426  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855996.426  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855996.426  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855997.442  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855997.443  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855997.443  5053  5109 W SignAiNet: session failed: null
+         1793855997.443  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855997.443  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855997.444  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855998.457  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855998.460  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855998.461  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855998.461  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855998.463  5053  5109 W SignAiNet: session failed: null
+         1793855998.464  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855999.479  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855999.480  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793855999.481  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855999.481  5053  5109 W SignAiNet: session failed: null
+         1793855999.481  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793855999.481  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793856000.494  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793856000.495  5053  5109 W SignAiNet: session failed: null
+         1793856000.498  5053  5053 I SignAiState: fallo: El servicio de transcripción no está disponible.
+         1793856000.498  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793856000.498  5053  5053 I SignAiState: aviso (no va al indicador): El servicio de transcripción no está disponible.
+         1793856000.499  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793856001.513  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)

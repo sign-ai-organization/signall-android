@@ -1,0 +1,5 @@
+﻿Tramo;Cifrado;Se_lee_en_la_captura;Prueba
+app -> proxy inverso (wss://127.0.0.1:8443, tunel a 443);si (TLS);no;"logcat: 'sesión abierta: wss://127.0.0.1:8443/ws/translate (TLS)'; en la captura del puerto 443 las palabras de la frase aparecen 0 veces y solo hay bytes de TLS"
+proxy -> backend (127.0.0.1:8080, loopback);no;si, con un cliente sin permessage-deflate: el JSON completo. Con el cliente de la app las tramas van comprimidas (permessage-deflate) y no se leen con -A, pero no estan cifradas;"captura: {""type"":""sentence_trace"",...""text"":""¿Tu hermano está aburrido?"",""source"":""cache"",...} y el segmento con HERMANO"
+backend -> LLM (127.0.0.1:11434, Ollama local por HTTP);no;si, entera;"captura: {""model"":""qwen3:4b-instruct"",...""content"":""Por favor, nunca comas poco."",""role"":""user""}"
+app contra una direccion sin cifrar (tunel 8443 -> 8080);no aplica;no aplica;la app NO acepta: 'session failed: Unable to parse TLS packet header' en bucle, se queda en Desconectado y no cae a texto plano

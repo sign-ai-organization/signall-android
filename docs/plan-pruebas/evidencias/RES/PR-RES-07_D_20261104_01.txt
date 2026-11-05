@@ -1,0 +1,35 @@
+PR-RES-07 · Reinicio del backend con clientes conectados — logcat crudo
+(adb logcat -v epoch -s SignAiState SignAiNet SignAiMetrics; tres reinicios con
+`docker restart sign-ai-backend-backend-1`)
+
+         1793855491.597  5053  7165 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 4 successful ping/pongs)
+         1793855491.598  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855492.628  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855584.413  5053  5053 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Buenos días, quiero contarles que mi abuelo vive con mi tío y con toda la familia en una casa grande cerca del centro."
+         1793855584.708  5053  5109 D SignAiNet: segment 0/2 turn=1 -> BUENOS DIAS
+         1793855584.804  5053  5053 I SignAiState: signStart: oración→avatar 76 ms (seña 0, reloj JS 1304156 ms)
+         1793855584.804  5053  5053 I SignAiMetrics: oración→avatar: 76 ms (p50=76ms p95=86ms max=112ms n=4)
+         1793855584.804  5053  5053 I SignAiMetrics: envío→primera seña: 390 ms (p50=195ms p95=390ms max=512ms n=4)
+         1793855585.921  5053  5053 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793855586.879  5053  5053 I SignAiMetrics: representado: 1 señas en 2150ms (p50=2244ms p95=3806ms max=4231ms n=4)
+         1793855599.747  5053  5053 I SignAiState: fallo: El servidor no respondió.
+         1793855599.748  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793855599.748  5053  5053 I SignAiState: aviso (no va al indicador): El servidor no respondió.
+         1793855612.645  5053  7165 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 4 successful ping/pongs)
+         1793855612.646  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855613.680  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855640.111  5053  5053 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Estás bien?"
+         1793855640.126  5053  5109 D SignAiNet: segment 0/1 turn=1 -> BIEN
+         1793855640.182  5053  5053 I SignAiMetrics: frase #5: 72ms, 1 oraciones, 1 glosas (p50=88ms p95=268ms max=430ms n=5)
+         1793855640.183  5053  5053 I SignAiState: resumen: frases=5 oraciones=5 glosas=8 sin_seña=2 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=88ms p95=268ms max=430ms n=5 duracion_representada=p50=2244ms p95=3806ms max=4231ms n=4 oracion_a_avatar=p50=76ms p95=86ms max=112ms n=4 envio_a_primera_sena=p50=195ms p95=390ms max=512ms n=4
+         1793855640.231  5053  5053 I SignAiState: signStart: oración→avatar 49 ms (seña 0, reloj JS 1359604 ms)
+         1793855640.231  5053  5053 I SignAiMetrics: oración→avatar: 49 ms (p50=76ms p95=86ms max=112ms n=5)
+         1793855640.231  5053  5053 I SignAiMetrics: envío→primera seña: 120 ms (p50=195ms p95=390ms max=512ms n=5)
+         1793855641.618  5053  5053 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793855642.696  5053  5053 I SignAiMetrics: representado: 1 señas en 2513ms (p50=2513ms p95=3806ms max=4231ms n=5)
+         1793855693.685  5053  7165 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 2 successful ping/pongs)
+         1793855693.687  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855694.711  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855734.719  5053  7165 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 0 successful ping/pongs)
+         1793855734.730  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855735.760  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)

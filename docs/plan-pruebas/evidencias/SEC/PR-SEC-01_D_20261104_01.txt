@@ -1,0 +1,57 @@
+PR-SEC-01 · Cifrado del canal — capturas por tramo
+
+Captura hecha con tcpdump dentro de un contenedor alpine con red del host (`--net=host`),
+porque `tcpdump` en el host pide CAP_NET_RAW y no hay sudo sin contrasena:
+  docker run --rm --net=host -v /tmp/opencode/pruebas/caps:/cap alpine \
+    sh -c "apk add --no-cache tcpdump && tcpdump -i lo -n -s 0 -A 'tcp port 443 or tcp port 8443 or tcp port 8080 or tcp port 11434'"
+El tunel era `adb reverse tcp:8443 tcp:443`, asi que en el host el primer tramo aparece en el
+puerto 443 (el 8443 no existe del lado del host).
+
+1) Aplicacion demo instalada (`./gradlew installDemo`, compilada en 25 s). Sesion abierta:
+     1793857452.324 SignAiNet: sesión abierta: wss://127.0.0.1:8443/ws/translate (TLS)
+   La CA de laboratorio estaba instalada en el telefono: no hubo error de 'Trust anchor'.
+
+2) Frase enviada desde la app: «Por favor, nunca comas poco.» (escrita, no estaba en la cache
+   para forzar la llamada al LLM), y 4 s de microfono abierto (silencio: no habia hablante).
+
+3) Busqueda de las palabras de la frase en toda la captura:
+     'Por favor' -> 1 vez, en el puerto 11434 (prompt del LLM)
+     'nunca'     -> 1 vez, en el puerto 11434
+     'comas'     -> 1 vez, en el puerto 11434
+     'poco'      -> 1 vez, en el puerto 11434
+   En el puerto 443 (app -> proxy) no aparece ninguna: son bytes de TLS.
+
+4) El tramo 443, tal como se ve (cifrado):
+   05:44:32.163377 IP 127.0.0.1.56183 > 127.0.0.1.443: Flags [P.], seq 1:33, ack 29, win 83, options [nop,nop,TS 
+   :..O...z..........\..tX...8.glw.....wU..
+   05:44:32.200472 IP 127.0.0.1.56183 > 127.0.0.1.443: Flags [P.], seq 33:61, ack 29, win 83, options [nop,nop,TS
+   :..t...z......v...*.=B.>..J..k.....#
+
+5) El tramo 11434 (backend -> Ollama), tal como se ve (en claro, recortado):
+   E..E..@.@.s..........>,...4.P.o....@.:.....
+   ..z._..B{"model":"qwen3:4b-instruct","stream":false,"messages":[{"content":"You translate short Spanish sentences into LSC (Lengua de Se..as Colombiana) glosses.\n\nRules:\n- A gloss may be one or more words. \"COMO ESTAS\", \"BUENOS DIAS\" and \"MAS O MENOS\" are each ONE gloss, not three.\n- Never
+   
+
+6) El tramo 8080 (proxy -> backend). Con el cliente de la app las tramas llegan comprimidas
+   (permessage-deflate), por eso no se lee el JSON. Se repitio el envio con un cliente SIN
+   compresion, directo y por el proxy, y ahi el tramo se lee entero: NO esta cifrado.
+   Captura (`sec01_8080_sin_compresion.txt`, cliente directo al 8080):
+   ...[.jj..~..{"type":"sentence_trace","index":0,"text":"..Tu hermano est.. aburrido?","source":"cache","steps_ms":{"fingerprint":0.0,"cache.exact":0.0}}
+   ...[.jj..~..{"type":"segment","index":0,"total":1,"segment":{"type":"YES_NO_QUESTION","glosses":[{"text":"TU","available":true,"glb_path":"signs/0039_0000_0000.glb","semantic_category":"pronombre"},{"text":"HERMANO","available":true,"glb_path":"signs/0018_0000
+   Captura (`sec01_8080_via_caddy.txt`, mismo cliente por wss://443 -> 8080):
+   .^.~..{"type":"sentence_trace","index":0,"text":"..Tu hermano est.. aburrido?","source":"cache","steps_ms":{"fingerprint":0.0,"cache.exact":0.0}}
+   .^.~..{"type":"segment","index":0,"total":1,"segment":{"type":"YES_NO_QUESTION","glosses":[{"text":"TU","available":true,"glb_path":"signs/0039_0000_0000.glb","semantic_category":"pronombre"},{"text":"HERMANO","available":true,"glb_path":"signs/0018_0000_0000.
+
+7) Contra una direccion sin cifrar: se cambio el tunel a `adb reverse tcp:8443 tcp:8080`, de
+   modo que la app demo (que solo sabe hablar `wss://`) se encontro con el backend en claro.
+   Resultado, en bucle, sin caer nunca a texto plano:
+     SignAiNet: session failed: Unable to parse TLS packet header
+     SignAiHealth: no se pudo leer /health: Unable to parse TLS packet header
+   La app se queda en «Desconectado».
+   Ademas, el build `demo` declara `cleartextTrafficPermitted="false"` en
+   app/src/demo/res/xml/network_security_config.xml, que es lo que prohibe un `ws://`.
+
+8) Al terminar se reinstalo el build normal (`./gradlew installDebug
+   -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate`), se quito el tunel del 8443 y la app
+   volvio a abrir sesion por texto plano, como corresponde al build de uso:
+     1793857883.598 SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)

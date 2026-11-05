@@ -1,0 +1,9 @@
+﻿Revision;Antes;Despues;Veredicto
+Archivos nuevos en el contenedor del backend (desde la marca /tmp/marca_sec04);0 archivos de audio (solo fixtures .wav de scipy dentro de site-packages);"0 archivos nuevos; 0 con extension de audio";ninguno
+Archivos nuevos en el contenedor del STT;"/tmp vacio; 0 archivos de audio";"0 archivos nuevos; 0 con extension de audio";ninguno
+Columnas y tablas de la base (information_schema);"2 tablas (catalog, semantic_cache); 0 columnas bytea; 0 columnas con audio/wav/pcm/voz/voice/sound";igual: 2 tablas, 0 columnas bytea, 0 columnas de audio;ninguno
+Filas de semantic_cache;62 filas;64 filas (2 nuevas: 'Perdón, mi hermano nunca está contento.' y 'Con permiso, déjame pasar, por favor.');solo texto
+Lineas de log con audio (backend);-;0 lineas que mencionen audio/pcm/wav/chunk/bytes;ninguno
+Lineas de log con audio (STT);-;"54 lineas con la palabra 'audio', todas de tipo [timing] con la duracion procesada y el texto reconocido; ninguna con contenido de audio";solo duracion y texto
+Almacenamiento de la app en el telefono (run-as com.signai.webview);-;"0 archivos de audio; shared_prefs/signai.xml solo con el historial de texto";ninguno
+Texto transcrito en la cache;las 10 frases de FR-01-A ya estaban cubiertas por oracion (cache caliente de sesiones previas);10/10 frases con todas sus oraciones en semantic_cache (7 por coincidencia exacta del texto completo y 3 porque la cache guarda por oracion);si, queda el texto

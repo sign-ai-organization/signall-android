@@ -1,0 +1,19 @@
+         1793854887.672  5053  5053 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Por qué nunca estás triste?"
+         1793854889.184  5053  5053 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793854898.197  5053  5053 I SignAiState: fallo: No se pudo traducir el texto.
+         1793854898.198  5053  5053 I SignAiNet: stop() sin grabación activa
+         1793854898.198  5053  5053 I SignAiState: aviso (no va al indicador): No se pudo traducir el texto.
+         1793854898.198  5053  5053 I SignAiState: frame 'done' del turno 1 descartado (turno en vuelo=null)
+
+--- servidor de pega (acepta y nunca responde), /tmp/opencode/pruebas/logs/llm_colgado.log ---
+escuchando en 11435 (acepta y nunca responde)
+conexion aceptada
+conexion aceptada
+conexion aceptada
+conexion aceptada
+conexion aceptada
+conexion aceptada
+conexion aceptada
+conexion aceptada
+conexion aceptada
+conexion aceptada

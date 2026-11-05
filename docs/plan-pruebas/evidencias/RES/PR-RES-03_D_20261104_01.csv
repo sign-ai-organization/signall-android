@@ -1,0 +1,8 @@
+﻿Caso;Que_ve_el_usuario;Se_cuelga;Texto_sigue_funcionando;Nota
+STT detenido, tocar el micrófono (dictado);"«Desconectado»; el boton del microfono queda deshabilitado y el toque no hace nada ni dice nada";no;no;la app no llega a abrir captura: el backend cierra la sesion del cliente al no poder abrir la del STT
+STT detenido, tocar el microfono (modo en vivo);"«Desconectado»; el control queda deshabilitado igual que el dictado";no;no;mismo motivo: sin sesion de cliente no hay ni voz ni texto
+STT detenido, escribir una frase y tocar Traducir;nada: el indicador sigue en «Desconectado», no aparece ningun aviso y la frase se queda en el campo;no;no;el envio se descarta en silencio mientras el estado es Desconectado (play() sale sin mensaje)
+STT detenido a mitad de una captura en vivo (sin voz, silencio del microfono);«Desconectado» y la captura se corta sola;no;no;la app registra «Se cortó la conexión mientras escuchaba.» y apaga el microfono
+STT levantado (4,6 s y 3,5 s hasta /health), microfono de dictado, sin reiniciar la app;"«Grabando»; al apagarlo, final vacio y aviso «No se escuchó nada.»";no;no aplica;el microfono vuelve a abrir sesion sin reiniciar la app
+STT levantado, modo en vivo, sin reiniciar la app;«Grabando» y al apagarlo final vacio, «No se escuchó nada.»;no;no aplica;los dos modos vuelven
+STT levantado, frase escrita;Procesando y despues Reproduciendo;no;si;685 ms hasta el segmento, 3 glosas (POR QUE, NUNCA, TRISTE)

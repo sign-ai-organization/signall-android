@@ -1,0 +1,34 @@
+PR-SEC-04 · La voz no se guarda — listados antes y despues
+
+Marca de tiempo: /tmp/marca_sec04 = 2026-11-05T05:20:29Z, escrita dentro de los dos contenedores.
+
+1) Archivos nuevos en el backend (`find / -xdev -newer /tmp/marca_sec04 -type f`, sin
+   __pycache__/.pyc/site-packages): NINGUNO.
+   Archivos de audio nuevos (.wav .pcm .webm .ogg .m4a .mp3 .raw): NINGUNO.
+
+2) Archivos nuevos en el STT: NINGUNO. Audio nuevo: NINGUNO.
+   /tmp del STT: vacio antes y despues.
+
+3) Base de datos (Neon, proyecto sign-ai), information_schema:
+   tablas: catalog, semantic_cache  (las mismas antes y despues)
+   columnas de tipo bytea: 0
+   columnas con nombre audio/wav/pcm/voz/voice/sound: 0
+
+4) semantic_cache: 62 filas antes, 64 despues. Las dos nuevas son texto:
+   - Perdón, mi hermano nunca está contento. | NEGATIVE | [PERDON, TU, HERMANO, NUNCA, CONTENTO]
+   - Con permiso, déjame pasar, por favor. | AFFIRMATIVE | [PERMISO, POR FAVOR]
+   Tamano maximo de una fila: original_text 182 caracteres, glosses 63 bytes, embedding 1544
+   bytes (vector de 384 flotantes). No hay ningun campo binario grande.
+
+5) Registros de los contenedores desde la marca:
+   backend: 0 lineas que mencionen audio/pcm/wav/chunk/bytes.
+   STT: 54 lineas, todas [timing], por ejemplo
+     [timing] final (flush): audio=2.8s transcripcion=257ms atraso=0ms fin_habla->final=1367ms texto='Hola, buenos días, bienvenidos.'
+   Es la duracion del audio y el texto reconocido; no hay contenido de audio.
+
+6) Almacenamiento de la app (adb shell run-as com.signai.webview ls -lR): sin archivos de
+   audio; shared_prefs/signai.xml solo guarda el historial de frases en texto.
+
+7) Las 10 frases de FR-01-A enviadas como audio por /ws/translate, con su transcripcion y sus
+   glosas, estan en el .json de esta prueba; los 10 textos quedaron en la cache (7 exactos y
+   3 por oracion, porque la cache guarda oraciones).

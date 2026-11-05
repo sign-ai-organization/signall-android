@@ -1,0 +1,61 @@
+PR-RES-04 · Falla de la base de datos — registros crudos
+
+1. Arranque del backend temporal con DATABASE_URL=postgresql://nadie:nadie@127.0.0.1:9/nada?connect_timeout=2
+   (capturado con `docker logs --timestamps signai-backend-tmp` antes de que backend_tmp.sh stop
+   eliminara el contenedor):
+
+2026-11-05T05:06:28.853003616Z  (contenedor creado: StartedAt)
+2026-11-05T05:06:35.929727194Z INFO:     Started server process [1]
+2026-11-05T05:06:35.933973102Z WARNING app.persistence.database: could not open the database pool failed (attempt 1 of 2); retrying in 0.5 s
+2026-11-05T05:06:36.436589618Z ERROR app.persistence.database: The database is not reachable; starting without it
+2026-11-05T05:06:36.436846143Z WARNING app.validation.catalog_repository: No database pool: the catalog stays empty
+2026-11-05T05:08:20.380592044Z WARNING app.nlp.semantic_cache: No database pool: the semantic cache starts empty and is not persisted
+2026-11-05T05:08:21.401998115Z INFO app.main: STT SILENCE_TIMEOUT_MS is 1500 ms
+2026-11-05T05:08:21.523418675Z INFO app.main: LLM warm-up took 142 ms
+2026-11-05T05:08:21.523418675Z (a partir de aca /health responde)
+
+   Entre 05:06:36 y 05:08:20 el proceso esta cargando el modelo de embeddings
+   (sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) desde HuggingFace: es el
+   contenedor temporal, que nace sin la cache del modelo. No es tiempo de la base.
+
+2. /health del temporal:
+   {"status": "degraded", "cache_loaded": false, "cache_rows": 0, "catalog_loaded": false,
+    "catalog_glosses": 0, "silence_timeout_ms": 1500}
+
+3. Frase enviada por el socket contra el backend sin base (FR-01-013, tres oraciones):
+   traduce igual con el LLM y todas las glosas vuelven available=false, glb_path="", y
+   "No database pool: the answer for ... is not persisted".
+
+4. Logcat del dispositivo, tramo de la prueba (adb logcat -v epoch -s SignAiState SignAiNet SignAiMetrics):
+
+         1793855301.574  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855334.225  5053  5053 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793855334.466  5053  5109 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+         1793855334.492  5053  5053 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE
+         1793855334.493  5053  5053 I SignAiMetrics: frase #3: 268ms, 1 oraciones, 2 glosas (p50=268ms p95=268ms max=430ms n=3)
+         1793855334.493  5053  5053 I SignAiState: resumen: frases=3 oraciones=3 glosas=5 sin_seña=2 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=268ms p95=268ms max=430ms n=3 duracion_representada=p50=2244ms p95=2244ms max=4231ms n=2 oracion_a_avatar=p50=86ms p95=86ms max=112ms n=2 envio_a_primera_sena=p50=195ms p95=195ms max=512ms n=2
+         1793855334.493  5053  5053 I SignAiState: aviso (no va al indicador): Esa frase no produjo ninguna seña.
+         1793855335.725  5053  5053 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793855351.450  5053  5109 W SignAiNet: session failed: null
+         1793855351.450  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855352.476  5053  5109 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793855352.478  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855354.491  5053  5109 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793855354.491  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855357.505  5053  5109 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793855357.511  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855361.542  5053  5109 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793855361.545  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855366.562  5053  5109 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793855366.567  5053  5053 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793855371.585  5053  5109 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793855397.101  5053  5053 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793855397.116  5053  5109 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+         1793855397.184  5053  5053 I SignAiMetrics: frase #4: 83ms, 1 oraciones, 2 glosas (p50=88ms p95=268ms max=430ms n=4)
+         1793855397.184  5053  5053 I SignAiState: resumen: frases=4 oraciones=4 glosas=7 sin_seña=2 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=88ms p95=268ms max=430ms n=4 duracion_representada=p50=2244ms p95=2244ms max=4231ms n=2 oracion_a_avatar=p50=86ms p95=86ms max=112ms n=2 envio_a_primera_sena=p50=195ms p95=195ms max=512ms n=2
+         1793855397.247  5053  5053 I SignAiState: signStart: oración→avatar 67 ms (seña 0, reloj JS 1116606 ms)
+         1793855397.247  5053  5053 I SignAiMetrics: oración→avatar: 67 ms (p50=86ms p95=86ms max=112ms n=3)
+         1793855397.247  5053  5053 I SignAiMetrics: envío→primera seña: 145 ms (p50=195ms p95=195ms max=512ms n=3)
+         1793855398.613  5053  5053 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793855398.838  5053  5053 I SignAiState: signStart: oración→avatar 1659 ms (seña 1, reloj JS 1118206 ms)
+         1793855400.989  5053  5053 I SignAiMetrics: representado: 2 señas en 3806ms (p50=3806ms p95=3806ms max=4231ms n=3)

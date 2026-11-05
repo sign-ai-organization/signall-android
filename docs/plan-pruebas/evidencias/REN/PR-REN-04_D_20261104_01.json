@@ -1,0 +1,101 @@
+[
+  {
+    "arranque": "1",
+    "esperado": "cache",
+    "frase": "¿Tienes hambre?",
+    "done_ms": 14.3,
+    "total_ms": 14.7,
+    "source": [
+      "cache"
+    ],
+    "error": null
+  },
+  {
+    "arranque": "1",
+    "esperado": "cache",
+    "frase": "¿Estás bien?",
+    "done_ms": 6.4,
+    "total_ms": 6.7,
+    "source": [
+      "cache"
+    ],
+    "error": null
+  },
+  {
+    "arranque": "1",
+    "esperado": "llm",
+    "frase": "¿Por qué nunca estás triste?",
+    "done_ms": 3.4,
+    "total_ms": 3.7,
+    "source": [
+      "cache"
+    ],
+    "error": null
+  },
+  {
+    "arranque": "2",
+    "esperado": "cache",
+    "frase": "¿Tienes hambre?",
+    "done_ms": 8.1,
+    "total_ms": 8.4,
+    "source": [
+      "cache"
+    ],
+    "error": null
+  },
+  {
+    "arranque": "2",
+    "esperado": "cache",
+    "frase": "¿Estás bien?",
+    "done_ms": 3.8,
+    "total_ms": 4.0,
+    "source": [
+      "cache"
+    ],
+    "error": null
+  },
+  {
+    "arranque": "2",
+    "esperado": "llm",
+    "frase": "¿Tu tío está aburrido?",
+    "done_ms": 592.0,
+    "total_ms": 592.5,
+    "source": [
+      "llm"
+    ],
+    "error": null
+  },
+  {
+    "arranque": "3",
+    "esperado": "cache",
+    "frase": "¿Tienes hambre?",
+    "done_ms": 6.3,
+    "total_ms": 6.6,
+    "source": [
+      "cache"
+    ],
+    "error": null
+  },
+  {
+    "arranque": "3",
+    "esperado": "cache",
+    "frase": "¿Estás bien?",
+    "done_ms": 3.4,
+    "total_ms": 3.6,
+    "source": [
+      "cache"
+    ],
+    "error": null
+  },
+  {
+    "arranque": "3",
+    "esperado": "llm",
+    "frase": "¿Nunca estás bien?",
+    "done_ms": 429.8,
+    "total_ms": 430.2,
+    "source": [
+      "llm"
+    ],
+    "error": null
+  }
+]
