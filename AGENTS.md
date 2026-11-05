@@ -41,44 +41,43 @@ explicar, y el detalle técnico después de la idea, no antes.
 
 ---
 
-## Las tres fuentes de verdad
+## Las dos fuentes de verdad
 
-El owner decidió (2026-10-17) que hay **tres** fuentes que hay que revisar antes de
-decidir o implementar, y que ninguna se resuelve por cuenta propia:
+El owner decidió (2026-10-17) que ninguna fuente se resuelve por cuenta propia. Hasta el
+2026-11-04 eran tres, con el Overleaf de la tesis como tercera. Ese día **Overleaf se retiró**
+(«ya no es una fuente confiable»): los documentos formales pasaron a vivir en el repositorio y
+ahora son **dos**:
 
-1. **Este repo** (el código).
-2. **`../sign-ai-docs`** (requerimientos, diagramas del SDD, plan de pruebas).
-3. **El Overleaf de la tesis** (SRS, Memoria, SDD, PMP, PPP).
+1. **Este repo** — el código.
+2. **`../sign-ai-docs`** — los documentos: los formales en `latex/` (SRS, SDD, memoria, plan de
+   pruebas, plan de administración) y los borradores en `borradores/`, con los cambios
+   pendientes en `cambios/`.
 
 El flujo que pidió el owner:
 
-1. **Antes de decidir o de implementar**, leer qué dicen los documentos de las tres.
+1. **Antes de decidir o de implementar**, leer qué dicen los documentos.
 2. **Al implementar o al revisar**, comprobar que lo que hace el código está **alineado**
    con esos documentos.
 3. **Si no están alineados, no seguir por cuenta propia.** Primero determinar cuál de los
    dos está mal —el **documento** o el **código**— y ahí preguntarle al owner.
 
-Un detalle práctico: la revisión de Overleaf tiene un costo en tiempo, porque el MCP puede
-abrir una ventana de Chromium cuando la cookie venció (~5 días). **Avisá que vas a leer, no
-lo hagas por sorpresa** a mitad de una implementación.
+Un detalle práctico: los documentos son `.tex` que se compilan con `make` desde
+`../sign-ai-docs`. **Un cambio en un documento no está terminado hasta que compila**
+(`cd ../sign-ai-docs && make srs`), y lo que se tocó se ve en `git diff`: desde que Overleaf
+se retiró, el control de cambios es el historial de git, no una herramienta aparte.
 
-De Overleaf se usa la fuente para **revisar**, y desde el 2026-11-02 también para **escribir
-con permiso y con control de cambios**: el owner levantó `edit_file`, `find_and_replace` y
-`compile` en `~/.config/opencode/opencode.json` y dejó bloqueadas las que borran rastro. La
-regla completa está al final de este archivo y en el skill **`overleaf-lectura`**.
+### No hay desempate entre dos documentos
 
-### No hay desempate entre las dos fuentes de documento
-
-Cuando `../sign-ai-docs` y Overleaf se contradigan **entre ellos** —no cuando el código se
-aparta de los dos— **no hay ganador automático**: se reporta la contradicción y se pregunta.
+Cuando dos documentos se contradigan **entre ellos** —por ejemplo el SRS contra los
+requerimientos consolidados, o el plan de pruebas contra el SRS— y no cuando el código se
+aparta de los dos, **no hay ganador automático**: se reporta la contradicción y se pregunta.
 No se elige una fuente, no se promedian las dos y no se deja que ninguna gane por inercia.
 Las dos versiones se citan **con su fecha**: un "el SRS dice X" sin fecha no se puede
 discutir.
 
-Cuando el documento que está mal es uno de Overleaf, **cuál de los dos está mal lo decide el
-owner**. La sesión puede dejar el texto como sugerencia, con permiso y control de cambios
-(`track changes`), y anotarlo en `../sign-ai-docs/cambios/requerimientos.md` o en el
-log de sesión. Lo que no puede es aceptar ni rechazar el cambio: eso lo hace el owner.
+**Cuál de los dos está mal lo decide el owner.** La sesión puede proponer el texto y dejarlo
+en el `.tex`, pero una divergencia de contenido no se resuelve escribiendo por cuenta propia:
+se anota en `../sign-ai-docs/cambios/` o en el log de sesión y se pregunta.
 
 ---
 
@@ -90,7 +89,7 @@ Cualquier sesión que toque el pipeline tiene que mirar los hermanos antes de de
 |---|---|---|---|
 | `../sign-ai-backend` | FastAPI: WS con el cliente, NLP de glosas, catálogo, caché semántico, Neon | `develop` | 8080 |
 | `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 |
-| `../sign-ai-docs` | Requerimientos, diagramas del SDD, plan de pruebas (nada corre) | `main` | — |
+| `../sign-ai-docs` | **Los documentos de la tesis**: los formales en `latex/` (SRS, SDD, memoria, plan de pruebas, SPMP) y los borradores en `borradores/`. Se compilan con `make` | `main` | — |
 | `../signai-avatar` | Producción de las animaciones (Cascadeur): versiona los **GLB finales** de Juan y Pauline, 300 clips cada uno. La demo Flask de landmarks que también vive ahí está congelada | `dev` | — |
 
 Reglas por repo:
@@ -109,8 +108,8 @@ Reglas por repo:
   landmarks que también vive en ese repo está **congelada desde el 2026-09-19**: no se le
   copian scripts a esta app.
 
-Detalle de cada hermano, Carpetas hermanas que no son repositorios, y las IDs de los
-cinco proyectos de Overleaf: **[`docs/SISTEMA.md`](docs/SISTEMA.md)**.
+Detalle de cada hermano y de las carpetas hermanas que no son repositorios:
+**[`docs/SISTEMA.md`](docs/SISTEMA.md)**.
 
 ## El contrato entre repos (lo que se rompe en silencio)
 
@@ -434,9 +433,9 @@ pide. La regla es leer la fila antes de decidir, no después.
 | Si la tarea toca… | Cargá |
 |---|---|
 | **Un frame del WebSocket, un nombre de métrica, el catálogo, o cualquier cosa que cruce a otro repo** | skill **`contrato-websocket`** — el contrato se lee en los dos lados antes de cambiarse, y el otro lado tiene que quedar actualizado o la deuda se dice en voz alta |
-| **Si el código y los documentos no coinciden, o hay que decidir si manda el código o el documento** | skill **`tres-fuentes-de-verdad`** — las tres fuentes, el flujo de revisión y qué hacer cuando no alinean |
-| **Consultar o corregir el Overleaf de la tesis** | skill **`overleaf-lectura`** — leer libre, pedir permiso, escribir con control de cambios y reportar cada edición |
-| **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, IDs de Overleaf |
+| **Si el código y los documentos no coinciden, o hay que decidir si manda el código o el documento** | skill **`fuentes-de-verdad`** — las dos fuentes, el flujo de revisión y qué hacer cuando no alinean |
+| **Leer, corregir o compilar los documentos de la tesis** | skill **`documentos-tesis`** — dónde viven, cómo se editan, cómo se compilan con `make` y qué se hace con una divergencia |
+| **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, estructura de `sign-ai-docs` |
 | **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | **`ls docs/CONTRASTE-*.md`**. Los contrastes son documentos de trabajo de una sesión: se crean, se actualizan y a veces se borran, así que no hay una lista fija — se buscan por nombre. Cada repo tiene el suyo en su `docs/` (el del backend está en `../sign-ai-backend/docs/`) |
 | **El micrófono, el modo en vivo, la cola de la escena o la latencia** | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) + `tools/TIEMPO-REAL.md` |
 | **Probar o verificar en el device, o "va lento"** | skill **`controlar-app-movil`** — qué herramienta usar, y los errores ya pisados |
@@ -453,41 +452,28 @@ Se invocan con `@nombre`.
 
 ---
 
-# El Overleaf: se lee libre, se escribe con permiso
+# Los documentos de la tesis: locales y compilables
 
-De Overleaf **se lee libremente**, sin pedir permiso: `ping`, `list_projects`,
-`open_project`, `list_files`, `read_file`, `read_log`, `list_comments`,
-`read_comment_thread`, `list_tracked_changes`.
+Desde el **2026-11-04** los cinco documentos formales —SRS, SDD, memoria, plan de pruebas y
+plan de administración— viven en `../sign-ai-docs/latex/`, uno por carpeta, y **ese
+repositorio es la fuente de verdad**. Overleaf se retiró ese día y su MCP se quitó de la
+configuración global: no hay copia que sincronizar ni nada que se edite en dos lugares.
 
-**Escribir es otra cosa, y está habilitado desde el 2026-11-02.** El owner levantó tres
-permisos —`edit_file`, `find_and_replace` y `compile`— y dejó bloqueadas las cinco que
-borran rastro: `accept_changes`, `reject_changes`, `reply_comment`, `resolve_comment` y
-`reopen_comment`. La sesión **propone**; el owner **acepta o rechaza**. Nunca al revés, y
-nunca se acepta un cambio propio.
+- **Se edita el `.tex` y se compila**: `cd ../sign-ai-docs && make srs`. Un documento que no
+  compila no es un cambio terminado, y el error se lee; no se reintenta hasta que pase.
+- **El control de cambios es git.** `git diff` dice qué se tocó y `git log` cuándo. Los
+  cambios de fondo se anotan en `../sign-ai-docs/cambios/`.
+- **Escribir en `latex/` se pide, igual que antes**: una corrección de redacción se hace; una
+  divergencia de contenido se pregunta primero (ver § Las dos fuentes de verdad).
+- **Los diagramas** se editan en `../sign-ai-docs/diagramas/draw.io/` y se exportan a
+  `diagramas/png/`; los PNG que están dentro de `latex/` existen para que el documento
+  compile.
+- **`versiones-pasadas/` es historia**: no se edita ni se cita como si fuera vigente.
 
-Tres condiciones, en este orden:
+Los `.drawio` y los borradores de requerimientos los edita el owner: los cambios grandes se
+proponen, no se aplican en silencio.
 
-1. **Preguntar antes de escribir, en cada tanda.** Que esté habilitado no es permiso
-   permanente: el owner lo da en un mensaje y cubre esa tanda, no las siguientes.
-2. **Todo cambio tiene que quedar registrado** (track changes). Se mira
-   `track_changes_on_for_me` en `open_project`: va **por documento** y si dice `false` no se
-   escribe — se le pide al owner que lo prenda en ese documento. Después, la respuesta de la
-   herramienta tiene que traer `tracked: true`; si trae `false`, se para y se avisa. En esta
-   cuenta el control de cambios es **premium hasta el 2026-11-09**: si vence, no se escribe
-   igual — se vuelve a dejar el texto propuesto en un archivo y lo pega el owner.
-3. **Cada cambio se reporta en una tabla**, sin excepción: documento, qué cambió, línea
-   aproximada y el texto exacto que se puso. Sin eso no hay nada que auditar.
-
-Y lo de siempre: cuando el documento y el código no coinciden, **cuál de los dos está mal lo
-decide el owner**. Corregir una redacción no es lo mismo que resolver una divergencia.
-
-Editar `~/.config/opencode/opencode.json` requiere su confirmación explícita en un mensaje.
-Para tocar un `deny` de Overleaf hace falta que el mensaje **hable de Overleaf**: un "arreglá
-la config" no alcanza.
-
-Lo único que hay que avisar antes de leer: el MCP **abre una ventana de Chromium con perfil
-aislado cuando la cookie venció** (duran ~5 días), y hay que avisar porque rompe el flujo si
-aparece a mitad de una implementación.
-
-El detalle operativo —cómo se comprueba que el cambio quedó registrado, cómo se revierte, y
-por qué el bloqueo va en `policies`— está en el skill **`overleaf-lectura`**.
+Para mirar un documento mientras se edita: `make open DOC=srs` abre el PDF, `make watch
+DOC=srs` lo recompila al guardar, y con VS Code más la extensión LaTeX Workshop el PDF queda
+al lado del `.tex` y se recompila con `Ctrl+S`. El detalle está en el skill
+**`documentos-tesis`**.

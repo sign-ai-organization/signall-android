@@ -1,23 +1,26 @@
 ---
-name: tres-fuentes-de-verdad
-description: Revisar las tres fuentes de verdad del proyecto —el código, ../sign-ai-docs y el Overleaf de la tesis— antes de decidir o implementar, y resolver qué hacer cuando no coinciden. Usar cuando una decisión técnica tenga que contrastarse contra los documentos, cuando el código y un documento no digan lo mismo, cuando haya que decidir si se adapta el código al documento o al revés, o cuando el owner pida una auditoría de conformidad.
+name: fuentes-de-verdad
+description: Revisar las dos fuentes de verdad del proyecto —el código y ../sign-ai-docs, con los documentos formales en latex/— antes de decidir o implementar, y resolver qué hacer cuando no coinciden. Usar cuando una decisión técnica tenga que contrastarse contra los documentos, cuando el código y un documento no digan lo mismo, cuando haya que decidir si se adapta el código al documento o al revés, o cuando el owner pida una auditoría de conformidad.
 ---
 
-# Las tres fuentes de verdad
+# Las dos fuentes de verdad
 
-Decisión del owner del **2026-10-17**. Hay **tres** fuentes que hay que mirar antes de
-decidir o de implementar, y **ninguna se resuelve por cuenta propia**:
+Decisión del owner del **2026-10-17**, actualizada el **2026-11-04**.
 
 1. **Este repo** — el código.
-2. **`../sign-ai-docs`** — requerimientos consolidados, diagramas del SDD, plan de
-   pruebas.
-3. **El Overleaf de la tesis** — SRS, Memoria, SDD, PMP, PPP.
+2. **`../sign-ai-docs`** — los documentos: los formales en `latex/` (SRS, SDD, memoria, plan de
+   pruebas, plan de administración) y los borradores en `borradores/`, con los cambios
+   pendientes en `cambios/`.
 
-El owner considera el Overleaf **más importante** que este repo.
+Hasta el 2026-11-04 eran **tres**, con el **Overleaf de la tesis** como tercera y como la más
+importante para el owner. Ese día el owner la retiró —«el Overleaf ya no sirve de nada, ya no
+es una fuente confiable»— y los documentos formales pasaron a vivir en el repositorio. **No
+hay una tercera fuente: si algo existe solo en Overleaf, no cuenta como entregado.** El MCP de
+Overleaf ya no está en la configuración global.
 
 ## El flujo
 
-1. **Antes de decidir o de implementar**, leer qué dicen los documentos de las tres.
+1. **Antes de decidir o de implementar**, leer qué dicen los documentos.
 2. **Al implementar o al revisar**, comprobar que lo que hace el código está **alineado**
    con esos documentos.
 3. **Si no están alineados, no seguir por cuenta propia.** Primero determinar cuál de los
@@ -44,33 +47,27 @@ hace y el documento todavía no dice.
 **Si tras esa búsqueda sigue sin estar claro cuál está mal: preguntar.** No elegir por
 inercia.
 
-## Cuando `sign-ai-docs` y Overleaf se contradigan entre ellos
+## Cuando dos documentos se contradicen entre ellos
 
 **No hay ganador automático.** Esto es distinto del caso anterior, y es explícito: una
 sesión **reporta la contradicción y pregunta**. No elige una fuente, no promedia las dos
 y no deja que ninguna gane por costumbre.
 
-Se citan **las dos versiones con su fecha**. Un "el SRS dice X" sin fecha no se puede
-discutir.
+Pasa, por ejemplo, entre el SRS y los requerimientos consolidados, o entre el plan de pruebas
+y el SRS. Se citan **las dos versiones con su fecha y su archivo**: un «el SRS dice X» sin
+fecha no se puede discutir.
 
 ## Citas: fuente y fecha, siempre
 
-Cuando citemos una fuente, **decimos cuál y de qué fecha**. Es una regla del `AGENTS.md` y
-es lo que hace discutible una cifra o una afirmación.
+Cuando se cita una fuente, se dice **cuál y de qué fecha**: `latex/sdd/main.tex` (copia del
+2026-10-27) dice X. Y de qué commit, cuando importa. Es una regla del `AGENTS.md` y es lo que
+hace discutible una cifra o una afirmación.
 
-## Overleaf: aviso antes de leer
+## Cómo se lee un documento
 
-La revisión de Overleaf tiene un costo en tiempo: cuando la cookie venció (~5 días) el MCP
-**abre una ventana de Chromium con perfil aislado** para que el owner se loguee.
-
-**Avisale al owner que vas a leer, antes de hacerlo.** No se hace por sorpresa a mitad de
-una implementación.
-
-De Overleaf se **lee libre**, y desde el 2026-11-02 también **se escribe con permiso y con
-control de cambios**: cada edición queda como sugerencia que el owner acepta o rechaza, y
-antes de escribir se pregunta en el mensaje. El detalle —qué herramientas están habilitadas,
-cómo se comprueba el registro y por qué el bloqueo va en `policies`— está en el skill
-`overleaf-lectura`.
+Los documentos formales son `.tex`: se leen con el archivo abierto y, cuando hace falta ver
+el resultado, se compilan con `make` (ver el skill `documentos-tesis`). Una afirmación sobre
+«lo que dice el documento» se sostiene con **archivo y línea**, igual que una del código.
 
 ## El resultado
 
@@ -81,10 +78,9 @@ cuál**:
 - **Se anota que el documento quedó atrás**, con la evidencia de cuándo y por qué.
 - **Se pregunta**, cuando no se puede determinar cuál de los dos está mal.
 
-Cuando el documento que está mal es uno de Overleaf, **cuál de los dos está mal lo decide el
-owner**. Después de esa decisión, la sesión puede dejar el cambio como sugerencia con control
-de cambios, y anotarlo en `../sign-ai-docs/cambios/requerimientos.md` o en el log de
-sesión. Aceptar o rechazar el cambio es del owner, no de la sesión.
+**Cuál de los dos está mal lo decide el owner.** Después de esa decisión, la sesión puede
+escribir el cambio en el `.tex`, compilarlo y anotarlo en `../sign-ai-docs/cambios/`, pero el
+texto que resuelve una divergencia de contenido no se pone por cuenta propia: se propone.
 
 ## Una advertencia sobre los documentos de este repo
 
@@ -102,5 +98,5 @@ huesos y rompería la animación sin ver un error.
 
 ## Dónde queda el rastro
 
-Cerrada la decisión, cargá el skill `sesion-openspec`: la bitácora lleva la decisión, su
+Cerrada la decisión, cargar el skill `sesion-openspec`: la bitácora lleva la decisión, su
 fecha y la evidencia.

@@ -235,6 +235,7 @@ operations:
         fecha, y se corrigen antes las casillas que mienten sobre el estado real"
       - "Borrado no, archivado: las carpetas de septiembre de 2026 apuntan a un pipeline
         inexistente, pero **registran que ese trabajo existió**"
-      - "El Overleaf es de **solo lectura**: si el documento que está mal es uno de
-        Overleaf, lo corrige el owner. Nunca se escribe en él, y **nunca se tocan los
-        permisos que bloquean la escritura**"
+      - "Los documentos de la tesis viven en `../sign-ai-docs/latex/` desde el
+        2026-11-04; Overleaf quedó retirado. Una corrección de redacción se hace en el
+        `.tex` y se comprueba con `make`; una divergencia de contenido (el documento dice
+        una cosa y el código hace otra) la decide el owner"

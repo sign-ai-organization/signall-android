@@ -21,7 +21,7 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
 |---|---|---|---|---|
 | `../sign-ai-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `develop` | 8080 | `docker compose up --build` (levanta **también** el STT) |
 | `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 | incluido en el compose del backend, o solo desde su repo |
-| `../sign-ai-docs` | Requerimientos consolidados, diagramas del SDD (drawio + png), plan de pruebas, cambios pendientes | `main` | — | no corre nada |
+| `../sign-ai-docs` | **Los documentos de la tesis**: los formales en LaTeX (SRS, SDD, memoria, plan de pruebas, SPMP), los borradores en Markdown y los diagramas | `main` | — | `make` (compila los PDF) |
 | `../signai-avatar` | Producción de las animaciones con Cascadeur; versiona en `models/` los GLB finales de Juan y Pauline (300 clips cada uno). La demo Flask de landmarks que también vive ahí está congelada desde 2026-09-19 | `dev` | — | — |
 
 **El contrato entre ellos son frames de WebSocket, no imports.** Un cambio acá rompe allá
@@ -80,49 +80,47 @@ completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contr
 
 ## `../sign-ai-docs`
 
-Documentación de la tesis: `documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`
-(el documento formal), `diagramas/` (los `.drawio` editables y los `.png` del SDD:
-lógica, despliegue, procesos, clases, secuencia, persistencia y **estados de la UI**) y
-`plan-pruebas/` (el plan de pruebas del proyecto, con su `trazabilidad.md`).
+**Los documentos de la tesis.** Desde el **2026-11-04** este repositorio es la **única fuente
+de verdad**: Overleaf se retiró y su MCP se quitó de la configuración global. No hay copia que
+sincronizar ni nada que se edite en dos lugares.
 
-- **`cambios/requerimientos.md` es una bandeja de cambios pendientes**, con
-  estados **Propuesto / Acordado / Hecho**: ahí caen las cosas que la app ya hace y el
-  documento todavía no dice (modo en vivo, entrada de texto, historial, apagado del mic…).
-  Si se implementa algo sin requisito, se anota ahí.
-- Los `.drawio` y el `.md` de requerimientos los edita el owner: los cambios grandes
-  se proponen, no se aplican en silencio.
-- Los documentos en **Overleaf** son **una de las fuentes de verdad** de la tesis, y el
-  owner los considera **más importante** que este repo. Ver § Overleaf en `AGENTS.md`.
+```
+latex/<documento>/main.tex   ← el original, se edita acá
+  srs/ · sdd/ · memoria/ · plan-pruebas/ · administracion/
+borradores/                  ← Markdown de trabajo (requerimientos, casos de uso, plan de pruebas)
+cambios/requerimientos.md    ← bandeja de cambios: Propuesto / Acordado / Hecho
+diagramas/draw.io + png/     ← los .drawio editables y su exportación
+versiones-pasadas/           ← historia, no se edita
+```
 
-### El Overleaf de la tesis
+- **Se compila con `make`**: `make` (los cinco), `make srs` (uno), `make watch DOC=srs`
+  (recompila al guardar). Los PDF y auxiliares están en `.gitignore` y se regeneran. Un
+  cambio en un documento **no está terminado hasta que compila**.
+- **El control de cambios es git**: `git diff` dice qué se tocó y `git log` cuándo.
+- **`cambios/requerimientos.md` es la bandeja de cambios pendientes**, con estados
+  **Propuesto / Acordado / Hecho**: ahí caen las cosas que la app ya hace y el documento
+  todavía no dice (modo en vivo, entrada de texto, historial, apagado del mic…). Si se
+  implementa algo sin requisito, se anota ahí.
+- **`ESTADO.md` lista la deuda conocida** de cada documento: qué está atrasado, qué falta y
+  con qué evidencia. Conviene leerlo antes de «corregir» algo que ya está anotado.
+- **Los `.drawio` y los borradores de requerimientos los edita el owner**: los cambios
+  grandes se proponen, no se aplican en silencio.
 
-Cuenta `signai.tesis@gmail.com` (dedicada a la tesis, 7 proyectos activos y 5 en la papelera).
-Se lee con el MCP `@netique/overleaf-mcp` v0.3.7, registrado **global** en
-`~/.config/opencode/opencode.json` con `OL_BROWSER=/usr/bin/chromium`. La cookie de
-sesión vive en `~/.config/overleaf-mcp/cookie.json` (modo 600), dura ~5 días y se
-renueva sola: la próxima llamada abre una ventana de Chromium con perfil aislado para
-que el owner se loguee, y se cierra sola.
+### Cómo se entra en calor
 
-**Desde el 2026-11-02 también se escribe**, con permiso pedido en cada tanda y con el
-control de cambios prendido **por documento**: cada edición queda como sugerencia que el
-owner acepta o rechaza, y aceptar o rechazar está bloqueado para la sesión. El control de
-cambios es premium en esta cuenta y **vence el 2026-11-09**; si no se renueva, se vuelve a
-dejar el texto propuesto en un archivo. El detalle está en el skill `overleaf-lectura`.
+1. `../sign-ai-docs/README.md` — mapa de carpetas y cómo compilar.
+2. `../sign-ai-docs/ESTADO.md` — estado y pendientes de cada documento.
+3. `../sign-ai-docs/latex/<documento>/main.tex` — el documento.
+4. El skill **`documentos-tesis`** — el flujo de trabajo completo.
 
-| Proyecto | ID | Última edición |
-|---|---|---|
-| SRS - Especificación de Requisitos de Software | `6a122a19bb9a5dd9d390ba3d` | 2026-11-03 |
-| SDD - Documento de Diseño | `6a85c9a632974414503d9b82` | 2026-10-27 |
-| plan-pruebas | `6add1e0e35efb959c10cd0fb` | 2026-10-29 |
-| SPMP - Plan de administración | `6ade5197cb7fef15df51358d` | 2026-10-28 |
-| Memoria | `6a7c98a30e11208333279f4a` | 2026-09-17 |
-| PMP | `6a11da204de1f4e676e9e59a` | 2026-05-26 |
-| PPP | `6a11f38ec7df3c45f6caee2d` | 2026-05-24 |
+### Dos cosas que confunden
 
-Overleaf no tiene API pública: este MCP habla los endpoints internos que usa el editor
-web, con la cookie de sesión. En plan gratis es el único camino — el puente de Git es
-premium— así que **no hay MCP alternativo si este se rompe**: se actualiza el paquete
-o se baja el ZIP a mano.
+- **El nombre del sistema**: los documentos usan `SignAll` (34 apariciones en el SRS) y el
+  código, los repos y este archivo usan `SignAI`. Quedan 3 `SignAI` sueltos en el SRS y 9 en
+  el SDD. **Cuál de los dos vale lo decide el owner**; no unificar por cuenta propia.
+- **La copia quedó congelada el 2026-11-04**: Overleaf tenía correcciones posteriores (SDD
+  `SignAI`→`SignAll`, `TODO` de `RF-UI-06`, §7.3 del plan de pruebas, `PR-PER-06`) que **no
+  llegaron al repositorio**. Están listadas en `ESTADO.md` como deuda, no como errores nuevos.
 
 ## `../signai-avatar`
 
