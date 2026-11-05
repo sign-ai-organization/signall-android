@@ -199,9 +199,10 @@ sin repetir lo que no hacía falta y sin perder la trazabilidad de lo que se rep
 
 ### 4.1. Preparación (antes de correr nada)
 
-1. **Congelar el código.** Decidir D1: commit de los cambios pendientes del backend o parche
-   versionado. Anotar `git rev-parse HEAD` de los tres repos y el `sha256` de la imagen del
-   backend. Sin esto, la fase no es reproducible.
+1. **Congelar el código — hecho el 2026-11-05.** El backend quedó en `8f27bf8`, en `main` y
+   en `develop`, con los cambios que estaban en el árbol de trabajo. Anotar
+   `git rev-parse HEAD` de los tres repos y el `sha256` de la imagen del backend antes de
+   correr. Sin esto, la fase no es reproducible.
 2. **Sacar Ollama de la GPU, sin borrarlo.**
    ```bash
    ollama ps                      # debe quedar vacío
@@ -351,7 +352,7 @@ Para cada problema de `CONCLUSIONES` se aplica una de tres etiquetas después de
 | # | ID | Arreglo | Dónde | ¿Decisión del owner? |
 |---|---|---|---|---|
 | 13 | F1 | `PR-CAC-05`: la ficha debe incluir el reinicio que `RNF-MNT-05` ya exige | `../sign-ai-docs/latex/plan-pruebas/main.tex` | Sí: ficha o SRS |
-| 14 | F2 | `PR-INT-03`: cirugía temporal del catálogo o dejarla bloqueada | Datos / plan | Sí |
+| 14 | F2 | `PR-INT-03`: cirugía temporal del catálogo — **aprobada el 2026-11-05**: camino real, con respaldo y el MCP de Neon; se ejecuta al final de la fase 2 | Datos / plan | Sí |
 | 15 | F3 | `PR-AVT-05`: escribir la ficha y validar las caras con una persona de LSC | Plan | Sí |
 | 16 | F4 | `PR-AVT-06`: método por rangos de accesores (el literal sobrecuenta 5×) | Plan | No |
 | 17 | F5 | `PR-STT-02`: describir el corte real («pausa más cercana», no «forzado») | Plan | No |
@@ -589,6 +590,41 @@ Recomendación: dos columnas, porque el consolidado se lee para comparar.
 | **D8** | `JUCIOSO` | Corregir catálogo, clip y referencias / dejarlo | Cambia datos y posiblemente el GLB | Fase 2 |
 | **D9** | `RNF-DES-07` | Fijar el umbral con la fase 1 | Es el requisito de precisión de la tesis | Después de la fase 1 |
 | **D10** | Resumen del consolidado | Solo diagnóstico / dos columnas por ronda | Afecta cómo se lee el libro final | Fase 3 |
+
+### 8.1. Decisiones cerradas el 2026-11-05
+
+| # | Decisión | Quedó |
+|---|---|---|
+| **D1** | Congelar el backend | **Hecho**: commit `8f27bf8` en `main` y `develop`, pusheado a `origin` |
+| **D2** | Modelo grande para `PR-LLM-01` | **`gpt-4o`** |
+| **D3** | Cola del avatar | **Encolar**, con tope de 2 frases o ~20 s; al pasarse, descartar la más vieja y avisar |
+| **D4** | Criterio de inyección | **Estricto**: el usuario no ve texto que no sea glosa; se arregla con post-proceso, sin meter el catálogo en el prompt |
+| **D5** | Umbral de la caché | **0,03** |
+| **D6** | `PR-INT-03` | **Aprobada la cirugía temporal**, camino real, con respaldo y el MCP de Neon; al final de la fase 2 |
+| **D7** | `PR-AVT-05` | **Fuera de este plan**: el GLB nuevo está en `../signai-avatar`; la validación con LSC queda pendiente |
+| **D8** | `JUCIOSO` | **Se corrige en todos lados**, previa confirmación del listado original del LSC50 |
+| **D9** | `RNF-DES-07` | **Después de la fase 1**, con margen sobre lo medido |
+| **D10** | Resumen del consolidado | **Dos columnas** por bloque, una por ronda |
+| **S4** | Barrera de no-voz | **En el STT**, que es el único que ve el audio |
+| **D11** | Pruebas con personas | **Bloqueadas por ahora**; se declaran como tales en el libro |
+
+### 8.2. Verificación del MCP de Neon (2026-11-05)
+
+Se comprobó el acceso de solo lectura antes de aprobar la cirugía de `PR-INT-03`:
+
+- **Proyecto:** `sign-ai`, id `bold-shape-68007559`, org `org-orange-surf-39007829`.
+- **Catálogo:** 50 filas.
+- **Caché semántica:** 68 filas.
+- **Las 9 filas de FR-11 existen y tienen clip:** `BUENAS NOCHES` (3), `ABUELO` (16),
+  `TIO` (17), `HAMBRE` (19), `FELIZ` (20), `BIEN` (24), `MAS O MENOS` (27), `ADIOS` (31)
+  y `TU` (39).
+- **`JUCIOSO` es `id_sign 29`**, categoría `adjetivo`; se corrige cuando se confirme el
+  listado original.
+- **No se modificó nada** en esta verificación: fueron tres `SELECT`.
+
+Con esto, la cirugía de `PR-INT-03` es viable: se exportan las 9 filas, se borran, se
+reinicia el backend, se corren las 6 frases en los dos modos y se restauran. El respaldo
+queda como evidencia.
 
 ---
 
