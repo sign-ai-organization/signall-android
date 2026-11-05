@@ -40,12 +40,12 @@ Diferencia de las curvas completas. `Δ pico` es el target que más difiere; `Δ
 
 | Par | Δ pico medio (mm) | Δ RMS medio (mm) | Δ pico mínimo (mm) | Región que más difiere |
 |---|---:|---:|---:|---|
-| `afirmativo` vs `_pregunta` | 10.39 | 2.90 | 10.39 | cejas (10.39 mm) |
-| `afirmativo` vs `_negacion` | 5.34 | 1.69 | 5.34 | boca (5.34 mm) |
-| `afirmativo` vs `_orden` | 5.34 | 1.65 | 5.34 | boca (5.34 mm) |
-| `pregunta` vs `_negacion` | 9.56 | 2.73 | 9.56 | cejas (9.56 mm) |
-| `pregunta` vs `_orden` | 10.39 | 2.75 | 10.39 | cejas (10.39 mm) |
-| `negacion` vs `_orden` | 3.66 | 0.76 | 3.66 | boca (3.66 mm) |
+| `_afirmativo` vs `_pregunta` | 10.39 | 2.90 | 10.39 | cejas (10.39 mm) |
+| `_afirmativo` vs `_negacion` | 5.34 | 1.69 | 5.34 | boca (5.34 mm) |
+| `_afirmativo` vs `_orden` | 5.34 | 1.65 | 5.34 | boca (5.34 mm) |
+| `_pregunta` vs `_negacion` | 9.56 | 2.73 | 9.56 | cejas (9.56 mm) |
+| `_pregunta` vs `_orden` | 10.39 | 2.75 | 10.39 | cejas (10.39 mm) |
+| `_negacion` vs `_orden` | 3.66 | 0.76 | 3.66 | boca (3.66 mm) |
 
 ### Por seña: Δ pico contra la referencia (mm)
 
@@ -145,12 +145,12 @@ Diferencia de las curvas completas. `Δ pico` es el target que más difiere; `Δ
 
 | Par | Δ pico medio (mm) | Δ RMS medio (mm) | Δ pico mínimo (mm) | Región que más difiere |
 |---|---:|---:|---:|---|
-| `afirmativo` vs `_pregunta` | 8.31 | 2.53 | 8.31 | cejas (8.31 mm) |
-| `afirmativo` vs `_negacion` | 5.34 | 1.73 | 5.34 | boca (5.34 mm) |
-| `afirmativo` vs `_orden` | 5.34 | 1.73 | 5.34 | boca (5.34 mm) |
-| `pregunta` vs `_negacion` | 7.51 | 2.39 | 7.51 | cejas (7.51 mm) |
-| `pregunta` vs `_orden` | 8.31 | 2.43 | 8.31 | cejas (8.31 mm) |
-| `negacion` vs `_orden` | 3.66 | 0.77 | 3.66 | boca (3.66 mm) |
+| `_afirmativo` vs `_pregunta` | 8.31 | 2.53 | 8.31 | cejas (8.31 mm) |
+| `_afirmativo` vs `_negacion` | 5.34 | 1.73 | 5.34 | boca (5.34 mm) |
+| `_afirmativo` vs `_orden` | 5.34 | 1.73 | 5.34 | boca (5.34 mm) |
+| `_pregunta` vs `_negacion` | 7.51 | 2.39 | 7.51 | cejas (7.51 mm) |
+| `_pregunta` vs `_orden` | 8.31 | 2.43 | 8.31 | cejas (8.31 mm) |
+| `_negacion` vs `_orden` | 3.66 | 0.77 | 3.66 | boca (3.66 mm) |
 
 ### Por seña: Δ pico contra la referencia (mm)
 
