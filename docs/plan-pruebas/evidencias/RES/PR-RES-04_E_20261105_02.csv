@@ -1,0 +1,4 @@
+﻿situacion;arranca;catalogo;tiempo;frase_por_socket;app
+base caída al arrancar;sí, /health status=degraded;0 glosas, catalog_loaded=False;None s hasta /health (incluye cargar el modelo de embeddings en un contenedor sin caché);3/3 glosas con available=false, 732.9 ms;indicador «® Inactivo», representado=False, None ms
+base restablecida (backend original), app sin reiniciar;sí, /health status=ok, 50 glosas;catalog_loaded=True;reconexión de la app en 1567 ms;2 glosas, todas disponibles=True;representado=True, 13432 ms
+base dormida de Neon;no se puede forzar;;;;"no se pudo forzar: el keep-alive de 240 s y el uso del sistema mantienen la base despierta; no se apagó 6 minutos en esta corrida"

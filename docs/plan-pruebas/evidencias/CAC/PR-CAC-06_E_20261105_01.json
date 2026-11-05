@@ -1,0 +1,10 @@
+{
+  "con": {
+    "filas_cache": 58,
+    "segundos": 41.9
+  },
+  "sin": {
+    "filas_cache": 2,
+    "metodo": "DELETE antes de cada frase y reinicio cada 10 frases"
+  }
+}

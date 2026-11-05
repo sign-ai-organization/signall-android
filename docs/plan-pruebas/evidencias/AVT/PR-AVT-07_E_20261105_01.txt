@@ -1,0 +1,43 @@
+--------- beginning of main
+--------- beginning of system
+         1793891515.202 26798 26798 I SignAiState: cambio de avatar: pauline -> juan
+         1793891516.980 26798 26798 D SignAIWeb: LOG: [SignAI] juan parseado · nodos: 117 · 1749 ms @637
+         1793891516.984 26798 26798 D SignAIWeb: LOG: [SignAI] juan: 200 clips indexados @657
+         1793891517.774 26798 26798 D SignAIWeb: LOG: [SignAI] cambio de avatar a juan listo · 2568 ms @694
+         1793891517.774 26798 26798 D SignAIWeb: LOG: [SignAI] avatar cargado: juan · 38760 ms @489
+         1793891517.776 26798 26798 I SignAiState: avatar listo: juan en 2574 ms
+         1793891517.776 26798 26798 I SignAiState: aviso (no va al indicador): Avatar cargado.
+         1793891524.002 26798 26798 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793891524.010 26798 26824 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS
+         1793891524.048 26798 26798 I SignAiMetrics: frase #1: 46ms, 1 oraciones, 2 glosas (p50=46ms p95=46ms max=46ms n=1)
+         1793891524.048 26798 26798 I SignAiState: resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=46ms p95=46ms max=46ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793891524.146 26798 26798 I SignAiState: signStart: oración→avatar 102 ms (seña 0, reloj JS 45055 ms)
+         1793891524.146 26798 26798 I SignAiMetrics: oración→avatar: 102 ms (p50=102ms p95=102ms max=102ms n=1)
+         1793891524.147 26798 26798 I SignAiMetrics: envío→primera seña: 145 ms (p50=145ms p95=145ms max=145ms n=1)
+         1793891525.505 26798 26798 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793891526.082 26798 26798 I SignAiState: signStart: oración→avatar 2038 ms (seña 1, reloj JS 47069 ms)
+         1793891528.274 26798 26798 I SignAiMetrics: representado: 2 señas en 4227ms (p50=4227ms p95=4227ms max=4227ms n=1)
+         1793891544.427 26798 26798 I SignAiState: cambio de avatar: juan -> pauline
+         1793891545.791 26798 26798 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1324 ms @637
+         1793891545.791 26798 26798 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793891546.488 26798 26798 D SignAIWeb: LOG: [SignAI] cambio de avatar a pauline listo · 2027 ms @694
+         1793891546.489 26798 26798 D SignAIWeb: LOG: [SignAI] avatar cargado: pauline · 67444 ms @489
+         1793891546.498 26798 26798 I SignAiState: avatar listo: pauline en 2072 ms
+         1793891546.499 26798 26798 I SignAiState: aviso (no va al indicador): Avatar cargado.
+         1793891552.933 26798 26798 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793891552.939 26798 26824 D SignAiNet: segment 0/1 turn=2 -> HOLA,BUENOS DIAS
+         1793891552.976 26798 26798 I SignAiMetrics: frase #2: 42ms, 1 oraciones, 2 glosas (p50=42ms p95=42ms max=46ms n=2)
+         1793891552.976 26798 26798 I SignAiState: resumen: frases=2 oraciones=2 glosas=4 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=42ms p95=42ms max=46ms n=2 duracion_representada=p50=4227ms p95=4227ms max=4227ms n=1 oracion_a_avatar=p50=102ms p95=102ms max=102ms n=1 envio_a_primera_sena=p50=145ms p95=145ms max=145ms n=1
+         1793891553.030 26798 26798 I SignAiState: signStart: oración→avatar 56 ms (seña 0, reloj JS 73972 ms)
+         1793891553.030 26798 26798 I SignAiMetrics: oración→avatar: 56 ms (p50=56ms p95=56ms max=102ms n=2)
+         1793891553.030 26798 26798 I SignAiMetrics: envío→primera seña: 97 ms (p50=97ms p95=97ms max=145ms n=2)
+         1793891554.459 26798 26798 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793891555.057 26798 26798 I SignAiState: signStart: oración→avatar 2082 ms (seña 1, reloj JS 75999 ms)
+         1793891557.202 26798 26798 I SignAiMetrics: representado: 2 señas en 4227ms (p50=4227ms p95=4227ms max=4227ms n=2)
+         1793891573.681 28030 28030 I SignAiState: backend session starting
+         1793891573.706 28030 28056 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793891577.022 28030 28030 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1229 ms @637
+         1793891577.023 28030 28030 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793891577.059 28030 28030 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793891577.794 28030 28030 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2051 ms @690
+         1793891577.864 28030 28030 I SignAiState: silencio del STT: 1500 ms

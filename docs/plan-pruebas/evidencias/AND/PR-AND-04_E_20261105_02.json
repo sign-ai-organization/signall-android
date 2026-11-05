@@ -1,0 +1,66 @@
+{
+  "prefs_inicial": "50",
+  "lecturas": [],
+  "antes": {},
+  "prefs_60": "60",
+  "despues": {
+    "campo": {
+      "x": 50,
+      "y": 2014,
+      "width": 650,
+      "height": 140
+    },
+    "traducir": {
+      "x": 50,
+      "y": 2182,
+      "width": 477,
+      "height": 140
+    },
+    "estado": {
+      "x": 117,
+      "y": 136,
+      "width": 153,
+      "height": 47
+    },
+    "textos": [
+      "11:25 AM",
+      "100",
+      "Inactivo",
+      "Repetir",
+      "Escribe una frase...",
+      "Traducir",
+      "TR"
+    ]
+  },
+  "png": "/tmp/opencode/pruebas/shots/and04_iface60_medido.png",
+  "prefs_final": "50",
+  "final": {
+    "campo": {
+      "x": 50,
+      "y": 2019,
+      "width": 654,
+      "height": 138
+    },
+    "traducir": {
+      "x": 50,
+      "y": 2185,
+      "width": 477,
+      "height": 138
+    },
+    "estado": {
+      "x": 115,
+      "y": 135,
+      "width": 144,
+      "height": 46
+    },
+    "textos": [
+      "11:25 AM",
+      "100",
+      "Inactivo",
+      "Repetir",
+      "Escribe una frase...",
+      "Traducir",
+      "TR"
+    ]
+  }
+}

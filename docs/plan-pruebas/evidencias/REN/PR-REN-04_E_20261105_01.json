@@ -1,0 +1,137 @@
+{
+  "arranques": [
+    {
+      "n": 1,
+      "backend_ms": 14156.9,
+      "stt_ms": 4292.4,
+      "backend_health": {
+        "status": "ok",
+        "cache_loaded": true,
+        "cache_rows": 0,
+        "catalog_loaded": true,
+        "catalog_glosses": 50,
+        "silence_timeout_ms": 1500
+      },
+      "app_lista_ms": 6850,
+      "frases": [
+        {
+          "texto": "Hola, buenos días, bienvenidos.",
+          "ms": 989.5,
+          "source": [
+            "llm"
+          ],
+          "glosas": [
+            "HOLA",
+            "BUENOS DIAS"
+          ]
+        },
+        {
+          "texto": "¿Tienes hambre?",
+          "ms": 877.0,
+          "source": [
+            "llm"
+          ],
+          "glosas": [
+            "TU",
+            "HAMBRE"
+          ]
+        }
+      ],
+      "total_desde_encendido_ms": 21006.9
+    },
+    {
+      "n": 2,
+      "backend_ms": 14218.6,
+      "stt_ms": 2940.3,
+      "backend_health": {
+        "status": "ok",
+        "cache_loaded": true,
+        "cache_rows": 2,
+        "catalog_loaded": true,
+        "catalog_glosses": 50,
+        "silence_timeout_ms": 1500
+      },
+      "app_lista_ms": 6452,
+      "frases": [
+        {
+          "texto": "Hola, buenos días, bienvenidos.",
+          "ms": 4.9,
+          "source": [
+            "cache"
+          ],
+          "glosas": [
+            "HOLA",
+            "BUENOS DIAS"
+          ]
+        },
+        {
+          "texto": "¿Tienes hambre?",
+          "ms": 3.9,
+          "source": [
+            "cache"
+          ],
+          "glosas": [
+            "TU",
+            "HAMBRE"
+          ]
+        }
+      ],
+      "total_desde_encendido_ms": 20670.6
+    },
+    {
+      "n": 3,
+      "backend_ms": 13546.8,
+      "stt_ms": 3280.5,
+      "backend_health": {
+        "status": "ok",
+        "cache_loaded": true,
+        "cache_rows": 2,
+        "catalog_loaded": true,
+        "catalog_glosses": 50,
+        "silence_timeout_ms": 1500
+      },
+      "app_lista_ms": 6346,
+      "frases": [
+        {
+          "texto": "Hola, buenos días, bienvenidos.",
+          "ms": 5.1,
+          "source": [
+            "cache"
+          ],
+          "glosas": [
+            "HOLA",
+            "BUENOS DIAS"
+          ]
+        },
+        {
+          "texto": "¿Tienes hambre?",
+          "ms": 4.4,
+          "source": [
+            "cache"
+          ],
+          "glosas": [
+            "TU",
+            "HAMBRE"
+          ]
+        }
+      ],
+      "total_desde_encendido_ms": 19892.8
+    }
+  ],
+  "dormida": {
+    "apagado_s": 434.7,
+    "backend_ms": 14449.5,
+    "backend_health": {
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 2,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    "frase_ms": 5.5,
+    "source": [
+      "cache"
+    ]
+  }
+}

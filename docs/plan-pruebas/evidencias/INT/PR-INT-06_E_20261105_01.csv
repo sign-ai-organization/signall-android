@@ -1,0 +1,61 @@
+﻿n;orden;origen;texto;campo_ok;envio_primera_sena_ms;envio_ultima_oracion_ms;representacion_ms;senas;oraciones;ms_hasta_fin;pss_kb;gfx_dev_kb;mem_available_kb;pid
+1;1;FR-01-001;Hola, buenos días, bienvenidos.;True;;77;4278;2;1;15929;;;;
+2;2;FR-01-002;Adiós a todos. Buenas noches.;True;1160;1330;6289;3;2;17535;;;;
+3;3;FR-01-003;Mi abuelo y mi tío trabajan en familia.;True;;1035;4213;2;1;19988;;;;
+4;4;FR-01-004;Estoy contento porque mi hermano está feliz.;True;1100;1148;8406;4;1;20050;;;;
+5;5;FR-01-005;Buenas tardes. Hoy me siento más o menos.;True;1212;48;8341;4;2;20099;;;;
+6;6;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;True;75;949;8627;4;2;17768;;;;
+7;7;FR-01-007;¿Tienes hambre?;True;975;34;3759;2;1;14375;;;;
+8;8;FR-01-008;¿Estás bien?;True;101;704;4156;2;1;12783;;;;
+9;9;FR-01-009;¿Ustedes trabajan en familia?;True;742;933;5564;3;1;16797;;;;
+10;10;FR-01-010;Tu hermano está triste. ¿Se siente mal?;True;971;813;10732;5;2;21063;383734;217408;925708;14626
+11;11;FR-01-011;Perdón. ¿Estás triste?;True;848;38;6479;3;2;15800;;;;
+12;12;FR-01-012;¿Tu hermano está aburrido?;True;58;804;4049;2;1;15371;;;;
+13;13;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;True;836;53;7932;4;3;19975;;;;
+14;14;FR-01-014;¿Dónde vive tu familia?;True;66;27;7901;4;1;19507;;;;
+15;15;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;True;1119;1329;6364;3;2;17426;;;;
+16;16;FR-01-016;¿Por qué estás triste?;True;;1249;5303;2;1;16314;;;;
+17;17;FR-01-017;¿Cuándo comen ustedes?;True;1277;914;5634;3;1;17016;;;;
+18;18;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;True;939;1574;9948;5;2;22141;;;;
+19;19;FR-01-019;Yo nunca como mucho.;True;1607;28;8254;4;1;19963;;;;
+20;20;FR-01-020;Mi abuelo nunca trabaja.;True;94;776;8291;4;1;17431;378960;217532;890608;14626
+21;21;FR-01-021;Mi tío nunca está aburrido.;True;787;874;4473;2;1;17952;;;;
+22;22;FR-01-022;Ustedes nunca se sienten mal.;True;901;801;7762;4;1;19340;;;;
+23;23;FR-01-023;Perdón. Mi hermano nunca está contento.;True;59;1168;6262;3;2;20035;;;;
+24;24;FR-01-024;Se siente muy bien. La niña nunca está triste.;True;846;1077;11297;5;2;23947;;;;
+25;25;FR-01-025;Por favor, come poco.;True;;46;6333;3;1;17466;;;;
+26;26;FR-01-026;Con permiso. Déjame pasar, por favor.;True;60;915;4226;2;2;12485;;;;
+27;27;FR-01-027;Niños, trabajen todos.;True;943;728;4212;2;1;15217;;;;
+28;28;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;True;758;779;10302;5;2;23025;;;;
+29;29;FR-01-029;Hola, familia, siéntanse bienvenidos.;True;812;1202;6297;3;1;17551;;;;
+30;30;FR-01-030;Tío, come mucho. Hermano, come poco.;True;1233;840;12394;6;2;25154;377929;217556;824468;14626
+31;31;FR-03-001;HOLA, BUENOS DÍAS, BIENVENIDOS.;True;854;24;4247;2;1;14985;;;;
+32;32;FR-03-002;Adios a todos. Buenas noches.;True;92;28;6243;3;2;18052;;;;
+33;33;FR-03-003;En familia trabajan mi abuelo y mi tío.;True;65;40;4223;2;1;19960;;;;
+34;34;FR-03-004;Porque mi hermano está feliz, estoy contento.;True;55;40;8437;4;1;20088;;;;
+35;35;FR-03-005;Buenas tardes. Hoy me siento regular.;True;89;1118;6250;3;2;17330;;;;
+36;36;FR-03-006;¡Gracias a todos! Los niños y las niñas comen con gusto.;True;;26;8622;4;2;17897;;;;
+37;37;FR-03-007;Tienes hambre;True;40;793;3804;2;1;16262;;;;
+38;38;FR-03-008;¿Estas bien?;True;814;29;4120;2;1;12846;;;;
+39;39;FR-03-009;¿Trabajan ustedes en familia?;True;45;58;5557;3;1;16774;;;;
+40;40;FR-03-010;Está triste tu hermano. ¿Se siente mal?;True;75;47;10776;5;2;21004;376353;217572;806764;14626
+41;41;FR-03-011;Perdon. ¿Estas triste?;True;73;28;6492;3;2;15665;;;;
+42;42;FR-03-012;¿Está aburrido tu hermano?;True;48;42;4125;2;1;18761;;;;
+43;43;FR-03-013;Hola ¿cómo estás? ¿Cómo te llamas?;True;74;25;7920;4;3;19371;;;;
+44;44;FR-03-014;¿Tu familia dónde vive?;True;36;1513;7868;4;1;20637;;;;
+45;45;FR-03-015;La mujer es prudente. ¿Quién es el señor?;True;1547;936;4315;2;2;16233;;;;
+46;46;FR-03-016;¿POR QUÉ ESTÁS TRISTE?;True;957;29;5300;2;1;16098;;;;
+47;47;FR-03-017;¿Ustedes cuándo comen?;True;48;36;5658;3;1;16769;;;;
+48;48;FR-03-018;Las personas son diferentes. ¿Tú qué seña usas?;True;70;40;9959;5;2;22148;;;;
+49;49;FR-03-019;Yo jamás como mucho.;True;55;1767;6259;3;1;18645;;;;
+50;50;FR-03-020;Mi abuelo jamás trabaja.;True;1800;906;6253;3;1;15612;375416;217580;790928;14626
+51;51;FR-03-021;Nunca está aburrido mi tío.;True;909;31;4453;2;1;19060;;;;
+52;52;FR-03-022;Nunca se sienten mal ustedes.;True;52;66;7747;4;1;19421;;;;
+53;53;FR-03-023;Disculpe. Mi hermano nunca está contento.;True;85;859;4211;2;2;18312;;;;
+54;54;FR-03-024;Se siente excelente. La niña nunca está triste.;True;889;1056;11001;5;2;21406;;;;
+55;55;FR-03-025;Por favor, come un poquito.;True;1069;840;4214;2;1;15563;;;;
+56;56;FR-03-026;con permiso. déjame pasar, por favor.;True;867;29;4206;2;2;12259;;;;
+57;57;FR-03-027;Chicos, trabajen todos.;True;79;993;4201;2;1;15899;;;;
+58;58;FR-03-028;Hermano, reside con el abuelo. Trabaja con el tío.;True;1032;56;10353;5;2;22696;;;;
+59;59;FR-03-029;Hola familia siéntanse bienvenidos;True;73;32;6289;3;1;17431;;;;
+60;60;FR-03-030;Tío, come bastante. Hermano, come un poquito.;True;955;1048;8276;4;2;21186;378304;217596;825028;14626

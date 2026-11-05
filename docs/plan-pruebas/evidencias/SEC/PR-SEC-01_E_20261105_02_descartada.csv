@@ -1,0 +1,5 @@
+﻿tramo;cifrado;se_lee_el_contenido;prueba
+app → Caddy (wss://127.0.0.1:8443, túnel a 443);sí (TLS 1.2/1.3);no;"1033 paquetes en 443 por loopback (8443 en el host: 0); apariciones de las palabras en el volcado: {'hermano': 0, 'aburrido': 0, 'reunión': 0, 'oficina': 0}"
+backend → LLM (gpt-4o-mini por HTTPS del proveedor);sí (TLS);no;"100 paquetes en 443 desde la red de Docker; destinos {'172.18.0.3': 54, '172.66.0.243': 46}; apariciones: {'hermano': 0, 'aburrido': 0, 'reunión': 0, 'oficina': 0}"
+Caddy → backend (127.0.0.1:8080, loopback);no;sí (con cliente sin compresión);"528 paquetes en 8080 por loopback; apariciones de las palabras: {'hermano': 2, 'aburrido': 2, 'reunión': 0, 'oficina': 0}; el cliente sin compresión respondió {'type': 'done'}"
+app contra una dirección sin cifrar (8443 → 8080);no aplica;no aplica;la app NO acepta: 'Unable to parse TLS packet header' y queda en Desconectado

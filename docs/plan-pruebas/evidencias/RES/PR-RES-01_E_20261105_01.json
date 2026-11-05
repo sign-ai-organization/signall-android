@@ -1,0 +1,780 @@
+{
+  "tres_momentos": {
+    "casos": [
+      {
+        "caso": "antes de mandar",
+        "deteccion": {
+          "ms": 787,
+          "visto": [
+            "Desconectado"
+          ]
+        },
+        "panel": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "1:02 PM",
+            "100",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png": "/tmp/opencode/pruebas/shots/res01b_01_antes_de_mandar.png",
+        "intento": {
+          "texto": "¿Estás bien?",
+          "campo": "¿Estás bien?",
+          "ms": null,
+          "t_envio": 1793901750265,
+          "t_fin": null
+        },
+        "panel_tras_intento": {
+          "indicador": "Desconectado",
+          "campo": "¿Estás bien?",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "1:02 PM",
+            "100",
+            "Desconectado",
+            "¿Estás bien?",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png_intento": "/tmp/opencode/pruebas/shots/res01b_01b_envio_sin_servidor.png",
+        "reconexion": {
+          "ms": 1964,
+          "estado": {
+            "ms": 1953,
+            "visto": [
+              "Desconectado",
+              "Inactivo"
+            ]
+          },
+          "reverse": "UsbFfs tcp:8080 tcp:8080"
+        },
+        "panel_al_volver": {
+          "indicador": "Inactivo",
+          "campo": "¿Estás bien?",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "1:02 PM",
+            "100",
+            "Inactivo",
+            "¿Estás bien?",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "frase_nueva": {
+          "texto": "Hola, familia, siéntanse bienvenidos.",
+          "campo": "Hola, familia, siéntanse bienvenidos.",
+          "ms": 16199,
+          "t_envio": 1793901773920,
+          "t_fin": 1793901790119
+        }
+      },
+      {
+        "caso": "mientras traduce",
+        "texto": "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia.",
+        "campo_antes": "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia.",
+        "estados_antes_del_corte": [
+          "Reproduciendo",
+          "Reproduciendo"
+        ],
+        "deteccion": {
+          "ms": 760,
+          "visto": [
+            "Desconectado"
+          ]
+        },
+        "panel": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "1:03 PM",
+            "100",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "campo_tras_corte": "",
+        "png": "/tmp/opencode/pruebas/shots/res01b_02_traduciendo.png",
+        "reconexion": {
+          "ms": 3066,
+          "estado": {
+            "ms": 3055,
+            "visto": [
+              "Desconectado",
+              "Inactivo"
+            ]
+          },
+          "reverse": "UsbFfs tcp:8080 tcp:8080"
+        },
+        "panel_al_volver": {
+          "indicador": "Inactivo",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "1:03 PM",
+            "100",
+            "Inactivo",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "campo_al_volver": "",
+        "reenvio_ms": null
+      },
+      {
+        "caso": "mientras reproduce",
+        "reproduciendo": {
+          "ms": 830,
+          "visto": [
+            "Reproduciendo"
+          ]
+        },
+        "deteccion": {
+          "ms": 816,
+          "visto": [
+            "Desconectado"
+          ]
+        },
+        "panel": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "1:05 PM",
+            "100",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png": "/tmp/opencode/pruebas/shots/res01b_03_reproduciendo.png",
+        "panel_1_5s_despues": {
+          "indicador": "Desconectado",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "1:05 PM",
+            "100",
+            "Desconectado",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "reconexion": {
+          "ms": 1907,
+          "estado": {
+            "ms": 1895,
+            "visto": [
+              "Desconectado",
+              "Inactivo"
+            ]
+          },
+          "reverse": "UsbFfs tcp:8080 tcp:8080"
+        },
+        "panel_al_volver": {
+          "indicador": "Inactivo",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Historial reciente": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Traducir": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Modo en vivo": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Conversación": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            },
+            "Abrir Ajustes": {
+              "enabled": true,
+              "visible": true,
+              "checked": false
+            }
+          },
+          "textos": [
+            "1:05 PM",
+            "100",
+            "Inactivo",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "frase_nueva": {
+          "texto": "¿Tienes hambre?",
+          "campo": "¿Tienes hambre?",
+          "ms": 13502,
+          "t_envio": 1793901955664,
+          "t_fin": 1793901969166
+        }
+      }
+    ],
+    "control_remove": {
+      "panel": {
+        "indicador": "Inactivo",
+        "campo": "",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "1:02 PM",
+          "100",
+          "Inactivo",
+          "Escribe una frase...",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "envio": {
+        "texto": "Hola, familia, siéntanse bienvenidos.",
+        "campo": "Hola, familia, siéntanse bienvenidos.",
+        "ms": 17256,
+        "t_envio": 1793901722371,
+        "t_fin": 1793901739627
+      },
+      "sigue_traduciendo": true
+    },
+    "corte1": {
+      "kill_rc": 0,
+      "reverse": ""
+    },
+    "corte2": {
+      "kill_rc": 0,
+      "reverse": ""
+    },
+    "corte3": {
+      "kill_rc": 0,
+      "reverse": ""
+    },
+    "log_eventos": [
+      "         1793901783.804 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. \"Hola, familia, siéntanse bienvenidos.\"",
+      "         1793901783.849 14535 14535 I SignAiMetrics: frase #2: 45ms, 1 oraciones, 3 glosas (p50=45ms p95=45ms max=1220ms n=2)",
+      "         1793901790.119 14535 14535 I SignAiMetrics: representado: 3 señas en 6270ms (p50=6270ms p95=6270ms max=6292ms n=2)",
+      "         1793901800.669 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. \"Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia.\"",
+      "         1793901801.929 14535 14535 I SignAiMetrics: frase #3: 1260ms, 3 oraciones, 10 glosas (p50=1220ms p95=1220ms max=1260ms n=3)",
+      "         1793901803.387 14535 14561 W SignAiNet: session failed: null",
+      "         1793901803.408 14535 14535 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off",
+      "         1793901804.421 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901804.426 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901806.437 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901806.437 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901809.456 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901809.456 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901813.485 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+      "         1793901946.834 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. \"Hola, ¿cómo estás? ¿Cómo te llamas?\"",
+      "         1793901946.874 14535 14535 I SignAiMetrics: frase #4: 40ms, 3 oraciones, 4 glosas (p50=45ms p95=1220ms max=1260ms n=4)",
+      "         1793901948.500 14535 14561 W SignAiNet: session failed: null",
+      "         1793901948.532 14535 14535 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off",
+      "         1793901949.558 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901949.559 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901951.566 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901951.566 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901954.593 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+      "         1793901965.277 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. \"¿Tienes hambre?\"",
+      "         1793901965.324 14535 14535 I SignAiMetrics: frase #5: 48ms, 1 oraciones, 2 glosas (p50=48ms p95=1220ms max=1260ms n=5)",
+      "         1793901969.166 14535 14535 I SignAiMetrics: representado: 2 señas en 3841ms (p50=6270ms p95=6270ms max=6292ms n=3)"
+    ]
+  },
+  "mientras_habla": {
+    "mic_on": {
+      "ms": 751,
+      "indicador": "Grabando"
+    },
+    "panel_antes": {
+      "indicador": "Grabando",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "1:06 PM",
+        "100",
+        "Grabando",
+        "Repetir",
+        "Dictando...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png_antes": "/tmp/opencode/pruebas/shots/res01m_grabando.png",
+    "deteccion": {
+      "ms": 798,
+      "visto": [
+        "Desconectado"
+      ]
+    },
+    "panel_corte": {
+      "indicador": "Desconectado",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "1:06 PM",
+        "100",
+        "Desconectado",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png_corte": "/tmp/opencode/pruebas/shots/res01m_corte.png",
+    "estado_vuelta": {
+      "ms": 3074,
+      "visto": [
+        "Desconectado",
+        "Inactivo"
+      ]
+    },
+    "panel_vuelta": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "1:06 PM",
+        "100",
+        "Inactivo",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "mic_tras_volver": {
+      "ms": 751,
+      "visto": [
+        "Grabando"
+      ]
+    },
+    "panel_final": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "1:06 PM",
+        "100",
+        "Inactivo",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png_final": "/tmp/opencode/pruebas/shots/res01m_mic_vuelve.png",
+    "ms_mic_a_corte": 3024,
+    "eventos": [
+      "         1793901813.485 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+      "         1793901948.500 14535 14561 W SignAiNet: session failed: null",
+      "         1793901948.532 14535 14535 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off",
+      "         1793901948.536 14535 14535 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1167",
+      "         1793901949.558 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901949.559 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901951.566 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901951.566 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901954.593 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+      "         1793901971.888 14535 14535 I SignAiState: micrófono prendido en modo Dictation",
+      "         1793901974.839 14535 14561 W SignAiNet: session failed: null",
+      "         1793901974.846 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Dictation",
+      "         1793901975.918 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901975.921 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901977.934 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "         1793901977.938 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "         1793901980.970 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+      "         1793901983.451 14535 14535 I SignAiState: micrófono prendido en modo Dictation",
+      "         1793901986.416 14535 14535 I SignAiState: micrófono apagado (venía de Dictation)",
+      "         1793901986.477 14535 14535 I SignAiState: el dictado se apagó sin transcripción"
+    ]
+  }
+}

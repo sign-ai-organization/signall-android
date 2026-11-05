@@ -1,0 +1,42 @@
+## nombre
+"a_con_sena"
+
+## apertura_ms
+5354
+
+## envio
+{
+ "texto": "¿Tienes hambre?",
+ "t_envio_ms": 1793904333790,
+ "campo": "¿Tienes hambre?",
+ "t_fin_ms": 1793904348969
+}
+
+## segmentos
+[
+ "segment 0/1 turn=1 -> TU,HAMBRE"
+]
+
+## avisos
+[]
+
+## resumen
+[
+ "resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=75ms p95=75ms max=75ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a"
+]
+
+## representado
+[
+ "         1793904348.969 24095 24095 I SignAiMetrics: representado: 2 señas en 3789ms (p50=3789ms p95=3789ms max=3789ms n=1)"
+]
+
+## pantalla
+[
+ "1:45 PM",
+ "100",
+ "Inactivo",
+ "Repetir",
+ "Escribe una frase...",
+ "Traducir",
+ "TR"
+]

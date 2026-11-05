@@ -1,0 +1,5514 @@
+{
+  "umbral_0": {
+    "umbral": 0,
+    "health": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    },
+    "config": {
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "silence_timeout_ms": 1500,
+      "partial_interval_ms": 400,
+      "onset_window_ms": 300,
+      "word_timestamps": false,
+      "max_concurrent_inference": 1
+    },
+    "n_voz": 60,
+    "n_sin_voz": 8,
+    "wer_total_pct": 3.9,
+    "errores": 11,
+    "palabras": 282,
+    "wer_por_tipo": {
+      "Afirmación": {
+        "wer_pct": 4.17,
+        "errores": 3,
+        "palabras": 72
+      },
+      "Negación": {
+        "wer_pct": 0.0,
+        "errores": 0,
+        "palabras": 60
+      },
+      "Orden": {
+        "wer_pct": 5.0,
+        "errores": 3,
+        "palabras": 60
+      },
+      "Pregunta de contenido": {
+        "wer_pct": 5.0,
+        "errores": 3,
+        "palabras": 60
+      },
+      "Pregunta de sí o no": {
+        "wer_pct": 6.67,
+        "errores": 2,
+        "palabras": 30
+      }
+    },
+    "voz_sin_texto": [
+      "AU-01-014"
+    ],
+    "n_voz_sin_texto": 1,
+    "sin_voz_con_texto": [],
+    "n_sin_voz_con_texto": 0,
+    "timeouts": 0,
+    "ms_mediana_voz": 3828.8500000000004,
+    "ms_mediana_sin_voz": 21368.85,
+    "voz": [
+      {
+        "audio": "AU-01-001",
+        "duracion_ms": 4458,
+        "ms_total": 4700.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-002",
+        "duracion_ms": 3925,
+        "ms_total": 4145.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-003",
+        "duracion_ms": 4352,
+        "ms_total": 4588.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenos días, bienvenido.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenos días, bienvenido."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 50.0,
+        "errores": 2,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-004",
+        "duracion_ms": 3776,
+        "ms_total": 3979.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 25.0,
+        "errores": 1,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-005",
+        "duracion_ms": 5781,
+        "ms_total": 6018.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-006",
+        "duracion_ms": 3072,
+        "ms_total": 3320.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-007",
+        "duracion_ms": 5205,
+        "ms_total": 5480.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-008",
+        "duracion_ms": 4352,
+        "ms_total": 4633.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-009",
+        "duracion_ms": 4949,
+        "ms_total": 5328.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-010",
+        "duracion_ms": 3562,
+        "ms_total": 3814.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-011",
+        "duracion_ms": 5354,
+        "ms_total": 5611.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-012",
+        "duracion_ms": 3498,
+        "ms_total": 3753.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-013",
+        "duracion_ms": 2688,
+        "ms_total": 2914.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-014",
+        "duracion_ms": 2560,
+        "ms_total": 2770.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 100.0,
+        "errores": 2,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-015",
+        "duracion_ms": 3669,
+        "ms_total": 3907.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-016",
+        "duracion_ms": 2069,
+        "ms_total": 2273.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-017",
+        "duracion_ms": 2602,
+        "ms_total": 2853.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-018",
+        "duracion_ms": 2304,
+        "ms_total": 2517.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-019",
+        "duracion_ms": 3989,
+        "ms_total": 4204.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-020",
+        "duracion_ms": 3328,
+        "ms_total": 3545.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-021",
+        "duracion_ms": 4352,
+        "ms_total": 4593.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-022",
+        "duracion_ms": 2922,
+        "ms_total": 3338.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-023",
+        "duracion_ms": 3392,
+        "ms_total": 3638.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-024",
+        "duracion_ms": 2986,
+        "ms_total": 3219.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-025",
+        "duracion_ms": 4010,
+        "ms_total": 4270.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-026",
+        "duracion_ms": 3584,
+        "ms_total": 3874.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-027",
+        "duracion_ms": 4778,
+        "ms_total": 5048.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-028",
+        "duracion_ms": 3797,
+        "ms_total": 4043.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "como te llamas.",
+        "timeout": false,
+        "textos_finales": [
+          "como te llamas."
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 50.0,
+        "errores": 3,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-029",
+        "duracion_ms": 4458,
+        "ms_total": 4852.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-030",
+        "duracion_ms": 3498,
+        "ms_total": 3753.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-031",
+        "duracion_ms": 3605,
+        "ms_total": 3843.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-032",
+        "duracion_ms": 3157,
+        "ms_total": 3382.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-033",
+        "duracion_ms": 3413,
+        "ms_total": 3680.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-034",
+        "duracion_ms": 2602,
+        "ms_total": 2802.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-035",
+        "duracion_ms": 3349,
+        "ms_total": 3573.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-036",
+        "duracion_ms": 2389,
+        "ms_total": 2664.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-037",
+        "duracion_ms": 3648,
+        "ms_total": 3863.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-038",
+        "duracion_ms": 2474,
+        "ms_total": 2682.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-039",
+        "duracion_ms": 2986,
+        "ms_total": 3223.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-040",
+        "duracion_ms": 2261,
+        "ms_total": 2474.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-041",
+        "duracion_ms": 3797,
+        "ms_total": 4006.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-042",
+        "duracion_ms": 2560,
+        "ms_total": 2778.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-043",
+        "duracion_ms": 5120,
+        "ms_total": 5367.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-044",
+        "duracion_ms": 3498,
+        "ms_total": 3751.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-045",
+        "duracion_ms": 4608,
+        "ms_total": 4856.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-046",
+        "duracion_ms": 3349,
+        "ms_total": 3597.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-047",
+        "duracion_ms": 4736,
+        "ms_total": 4979.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-048",
+        "duracion_ms": 3157,
+        "ms_total": 3531.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-049",
+        "duracion_ms": 3648,
+        "ms_total": 3859.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-050",
+        "duracion_ms": 2901,
+        "ms_total": 3109.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-051",
+        "duracion_ms": 3669,
+        "ms_total": 3905.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, comí poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, comí poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 25.0,
+        "errores": 1,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-052",
+        "duracion_ms": 2901,
+        "ms_total": 3139.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-053",
+        "duracion_ms": 3392,
+        "ms_total": 3626.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-054",
+        "duracion_ms": 2560,
+        "ms_total": 2791.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Por favor, con más poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, con más poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 50.0,
+        "errores": 2,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-055",
+        "duracion_ms": 5056,
+        "ms_total": 5316.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Con permiso, déjame pasar, por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar, por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-056",
+        "duracion_ms": 3840,
+        "ms_total": 4097.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "con permiso, déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso, déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-057",
+        "duracion_ms": 4522,
+        "ms_total": 4785.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Con permiso, déjame pasar por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-058",
+        "duracion_ms": 3392,
+        "ms_total": 3855.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Con permiso, déjame pasar por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-059",
+        "duracion_ms": 4736,
+        "ms_total": 4967.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "con permiso déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-060",
+        "duracion_ms": 3498,
+        "ms_total": 3742.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "con permiso, déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso, déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "ruido"
+      }
+    ],
+    "sin_voz": [
+      {
+        "audio": "AU-03-001",
+        "duracion_ms": 22037,
+        "ms_total": 22021.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Silencio"
+      },
+      {
+        "audio": "AU-03-002",
+        "duracion_ms": 20544,
+        "ms_total": 20521.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Silencio"
+      },
+      {
+        "audio": "AU-03-003",
+        "duracion_ms": 20352,
+        "ms_total": 20606.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Ruido"
+      },
+      {
+        "audio": "AU-03-004",
+        "duracion_ms": 20373,
+        "ms_total": 20574.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Ruido"
+      },
+      {
+        "audio": "AU-03-005",
+        "duracion_ms": 21760,
+        "ms_total": 21980.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 1,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Tos"
+      },
+      {
+        "audio": "AU-03-006",
+        "duracion_ms": 21333,
+        "ms_total": 21669.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 1,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Tos"
+      },
+      {
+        "audio": "AU-03-007",
+        "duracion_ms": 21269,
+        "ms_total": 21241.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Golpes"
+      },
+      {
+        "audio": "AU-03-008",
+        "duracion_ms": 21312,
+        "ms_total": 21496.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Golpes"
+      }
+    ]
+  },
+  "umbral_1": {
+    "umbral": 1,
+    "health": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    },
+    "config": {
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "silence_timeout_ms": 1500,
+      "partial_interval_ms": 400,
+      "onset_window_ms": 300,
+      "word_timestamps": false,
+      "max_concurrent_inference": 1
+    },
+    "n_voz": 60,
+    "n_sin_voz": 8,
+    "wer_total_pct": 3.9,
+    "errores": 11,
+    "palabras": 282,
+    "wer_por_tipo": {
+      "Afirmación": {
+        "wer_pct": 4.17,
+        "errores": 3,
+        "palabras": 72
+      },
+      "Negación": {
+        "wer_pct": 0.0,
+        "errores": 0,
+        "palabras": 60
+      },
+      "Orden": {
+        "wer_pct": 5.0,
+        "errores": 3,
+        "palabras": 60
+      },
+      "Pregunta de contenido": {
+        "wer_pct": 5.0,
+        "errores": 3,
+        "palabras": 60
+      },
+      "Pregunta de sí o no": {
+        "wer_pct": 6.67,
+        "errores": 2,
+        "palabras": 30
+      }
+    },
+    "voz_sin_texto": [
+      "AU-01-014"
+    ],
+    "n_voz_sin_texto": 1,
+    "sin_voz_con_texto": [],
+    "n_sin_voz_con_texto": 0,
+    "timeouts": 0,
+    "ms_mediana_voz": 3848.7,
+    "ms_mediana_sin_voz": 21373.8,
+    "voz": [
+      {
+        "audio": "AU-01-001",
+        "duracion_ms": 4458,
+        "ms_total": 4685.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-002",
+        "duracion_ms": 3925,
+        "ms_total": 4145.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-003",
+        "duracion_ms": 4352,
+        "ms_total": 4591.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenos días, bienvenido.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenos días, bienvenido."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 50.0,
+        "errores": 2,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-004",
+        "duracion_ms": 3776,
+        "ms_total": 3978.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 25.0,
+        "errores": 1,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-005",
+        "duracion_ms": 5781,
+        "ms_total": 6044.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-006",
+        "duracion_ms": 3072,
+        "ms_total": 3339.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-007",
+        "duracion_ms": 5205,
+        "ms_total": 5467.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-008",
+        "duracion_ms": 4352,
+        "ms_total": 4631.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-009",
+        "duracion_ms": 4949,
+        "ms_total": 5252.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-010",
+        "duracion_ms": 3562,
+        "ms_total": 4025.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-011",
+        "duracion_ms": 5354,
+        "ms_total": 5642.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 7,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-012",
+        "duracion_ms": 3498,
+        "ms_total": 3751.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-013",
+        "duracion_ms": 2688,
+        "ms_total": 2937.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-014",
+        "duracion_ms": 2560,
+        "ms_total": 2770.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 100.0,
+        "errores": 2,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-015",
+        "duracion_ms": 3669,
+        "ms_total": 3897.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-016",
+        "duracion_ms": 2069,
+        "ms_total": 2275.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-017",
+        "duracion_ms": 2602,
+        "ms_total": 2822.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-018",
+        "duracion_ms": 2304,
+        "ms_total": 2516.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-019",
+        "duracion_ms": 3989,
+        "ms_total": 4205.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-020",
+        "duracion_ms": 3328,
+        "ms_total": 3542.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-021",
+        "duracion_ms": 4352,
+        "ms_total": 4605.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-022",
+        "duracion_ms": 2922,
+        "ms_total": 3335.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-023",
+        "duracion_ms": 3392,
+        "ms_total": 3632.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-024",
+        "duracion_ms": 2986,
+        "ms_total": 3215.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-025",
+        "duracion_ms": 4010,
+        "ms_total": 4263.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-026",
+        "duracion_ms": 3584,
+        "ms_total": 3844.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-027",
+        "duracion_ms": 4778,
+        "ms_total": 5042.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-028",
+        "duracion_ms": 3797,
+        "ms_total": 4040.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "como te llamas.",
+        "timeout": false,
+        "textos_finales": [
+          "como te llamas."
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 50.0,
+        "errores": 3,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-029",
+        "duracion_ms": 4458,
+        "ms_total": 4775.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-030",
+        "duracion_ms": 3498,
+        "ms_total": 3751.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-031",
+        "duracion_ms": 3605,
+        "ms_total": 3853.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-032",
+        "duracion_ms": 3157,
+        "ms_total": 3372.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-033",
+        "duracion_ms": 3413,
+        "ms_total": 3632.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-034",
+        "duracion_ms": 2602,
+        "ms_total": 2802.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-035",
+        "duracion_ms": 3349,
+        "ms_total": 3577.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-036",
+        "duracion_ms": 2389,
+        "ms_total": 2635.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-037",
+        "duracion_ms": 3648,
+        "ms_total": 3862.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-038",
+        "duracion_ms": 2474,
+        "ms_total": 2684.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-039",
+        "duracion_ms": 2986,
+        "ms_total": 3191.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-040",
+        "duracion_ms": 2261,
+        "ms_total": 2472.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-041",
+        "duracion_ms": 3797,
+        "ms_total": 4006.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-042",
+        "duracion_ms": 2560,
+        "ms_total": 2772.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-043",
+        "duracion_ms": 5120,
+        "ms_total": 5366.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-044",
+        "duracion_ms": 3498,
+        "ms_total": 3746.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-045",
+        "duracion_ms": 4608,
+        "ms_total": 4859.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-046",
+        "duracion_ms": 3349,
+        "ms_total": 3600.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-047",
+        "duracion_ms": 4736,
+        "ms_total": 4979.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-048",
+        "duracion_ms": 3157,
+        "ms_total": 3533.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-049",
+        "duracion_ms": 3648,
+        "ms_total": 3893.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-050",
+        "duracion_ms": 2901,
+        "ms_total": 3109.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-051",
+        "duracion_ms": 3669,
+        "ms_total": 3896.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, comí poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, comí poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 25.0,
+        "errores": 1,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-052",
+        "duracion_ms": 2901,
+        "ms_total": 3125.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-053",
+        "duracion_ms": 3392,
+        "ms_total": 3619.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-054",
+        "duracion_ms": 2560,
+        "ms_total": 2796.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Por favor, con más poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, con más poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 50.0,
+        "errores": 2,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-055",
+        "duracion_ms": 5056,
+        "ms_total": 5318.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Con permiso, déjame pasar, por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar, por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-056",
+        "duracion_ms": 3840,
+        "ms_total": 4081.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "con permiso, déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso, déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-057",
+        "duracion_ms": 4522,
+        "ms_total": 4782.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Con permiso, déjame pasar por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-058",
+        "duracion_ms": 3392,
+        "ms_total": 3858.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Con permiso, déjame pasar por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-059",
+        "duracion_ms": 4736,
+        "ms_total": 4966.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "con permiso déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-060",
+        "duracion_ms": 3498,
+        "ms_total": 3741.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "con permiso, déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso, déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "ruido"
+      }
+    ],
+    "sin_voz": [
+      {
+        "audio": "AU-03-001",
+        "duracion_ms": 22037,
+        "ms_total": 22021.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Silencio"
+      },
+      {
+        "audio": "AU-03-002",
+        "duracion_ms": 20544,
+        "ms_total": 20521.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Silencio"
+      },
+      {
+        "audio": "AU-03-003",
+        "duracion_ms": 20352,
+        "ms_total": 20543.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Ruido"
+      },
+      {
+        "audio": "AU-03-004",
+        "duracion_ms": 20373,
+        "ms_total": 20664.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Ruido"
+      },
+      {
+        "audio": "AU-03-005",
+        "duracion_ms": 21760,
+        "ms_total": 21977.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 1,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Tos"
+      },
+      {
+        "audio": "AU-03-006",
+        "duracion_ms": 21333,
+        "ms_total": 21649.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 1,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Tos"
+      },
+      {
+        "audio": "AU-03-007",
+        "duracion_ms": 21269,
+        "ms_total": 21241.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Golpes"
+      },
+      {
+        "audio": "AU-03-008",
+        "duracion_ms": 21312,
+        "ms_total": 21506.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Golpes"
+      }
+    ]
+  },
+  "umbral_2": {
+    "umbral": 2,
+    "health": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    },
+    "config": {
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "silence_timeout_ms": 1500,
+      "partial_interval_ms": 400,
+      "onset_window_ms": 300,
+      "word_timestamps": false,
+      "max_concurrent_inference": 1
+    },
+    "n_voz": 60,
+    "n_sin_voz": 8,
+    "wer_total_pct": 3.9,
+    "errores": 11,
+    "palabras": 282,
+    "wer_por_tipo": {
+      "Afirmación": {
+        "wer_pct": 4.17,
+        "errores": 3,
+        "palabras": 72
+      },
+      "Negación": {
+        "wer_pct": 0.0,
+        "errores": 0,
+        "palabras": 60
+      },
+      "Orden": {
+        "wer_pct": 5.0,
+        "errores": 3,
+        "palabras": 60
+      },
+      "Pregunta de contenido": {
+        "wer_pct": 5.0,
+        "errores": 3,
+        "palabras": 60
+      },
+      "Pregunta de sí o no": {
+        "wer_pct": 6.67,
+        "errores": 2,
+        "palabras": 30
+      }
+    },
+    "voz_sin_texto": [
+      "AU-01-014"
+    ],
+    "n_voz_sin_texto": 1,
+    "sin_voz_con_texto": [],
+    "n_sin_voz_con_texto": 0,
+    "timeouts": 0,
+    "ms_mediana_voz": 3847.0,
+    "ms_mediana_sin_voz": 21368.5,
+    "voz": [
+      {
+        "audio": "AU-01-001",
+        "duracion_ms": 4458,
+        "ms_total": 4681.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-002",
+        "duracion_ms": 3925,
+        "ms_total": 4150.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-003",
+        "duracion_ms": 4352,
+        "ms_total": 4587.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenos días, bienvenido.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenos días, bienvenido."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 50.0,
+        "errores": 2,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-004",
+        "duracion_ms": 3776,
+        "ms_total": 3980.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 25.0,
+        "errores": 1,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-005",
+        "duracion_ms": 5781,
+        "ms_total": 6071.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-006",
+        "duracion_ms": 3072,
+        "ms_total": 3332.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-007",
+        "duracion_ms": 5205,
+        "ms_total": 5471.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-008",
+        "duracion_ms": 4352,
+        "ms_total": 4625.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-009",
+        "duracion_ms": 4949,
+        "ms_total": 5229.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-010",
+        "duracion_ms": 3562,
+        "ms_total": 4029.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-011",
+        "duracion_ms": 5354,
+        "ms_total": 5618.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 7,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-012",
+        "duracion_ms": 3498,
+        "ms_total": 3761.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-013",
+        "duracion_ms": 2688,
+        "ms_total": 2918.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-014",
+        "duracion_ms": 2560,
+        "ms_total": 2771.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 100.0,
+        "errores": 2,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-015",
+        "duracion_ms": 3669,
+        "ms_total": 3907.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-016",
+        "duracion_ms": 2069,
+        "ms_total": 2276.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-017",
+        "duracion_ms": 2602,
+        "ms_total": 2822.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-018",
+        "duracion_ms": 2304,
+        "ms_total": 2515.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-019",
+        "duracion_ms": 3989,
+        "ms_total": 4205.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-020",
+        "duracion_ms": 3328,
+        "ms_total": 3542.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-021",
+        "duracion_ms": 4352,
+        "ms_total": 4593.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-022",
+        "duracion_ms": 2922,
+        "ms_total": 3356.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-023",
+        "duracion_ms": 3392,
+        "ms_total": 3633.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-024",
+        "duracion_ms": 2986,
+        "ms_total": 3219.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-025",
+        "duracion_ms": 4010,
+        "ms_total": 4260.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-026",
+        "duracion_ms": 3584,
+        "ms_total": 3840.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-027",
+        "duracion_ms": 4778,
+        "ms_total": 5039.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-028",
+        "duracion_ms": 3797,
+        "ms_total": 4042.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "como te llamas.",
+        "timeout": false,
+        "textos_finales": [
+          "como te llamas."
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 50.0,
+        "errores": 3,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-029",
+        "duracion_ms": 4458,
+        "ms_total": 4865.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-030",
+        "duracion_ms": 3498,
+        "ms_total": 3752.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-031",
+        "duracion_ms": 3605,
+        "ms_total": 3853.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-032",
+        "duracion_ms": 3157,
+        "ms_total": 3382.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-033",
+        "duracion_ms": 3413,
+        "ms_total": 3633.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-034",
+        "duracion_ms": 2602,
+        "ms_total": 2804.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-035",
+        "duracion_ms": 3349,
+        "ms_total": 3577.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-036",
+        "duracion_ms": 2389,
+        "ms_total": 2665.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-037",
+        "duracion_ms": 3648,
+        "ms_total": 3862.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-038",
+        "duracion_ms": 2474,
+        "ms_total": 2691.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-039",
+        "duracion_ms": 2986,
+        "ms_total": 3196.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-040",
+        "duracion_ms": 2261,
+        "ms_total": 2472.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-041",
+        "duracion_ms": 3797,
+        "ms_total": 4267.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-042",
+        "duracion_ms": 2560,
+        "ms_total": 2779.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-043",
+        "duracion_ms": 5120,
+        "ms_total": 5370.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-044",
+        "duracion_ms": 3498,
+        "ms_total": 3749.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-045",
+        "duracion_ms": 4608,
+        "ms_total": 4857.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-046",
+        "duracion_ms": 3349,
+        "ms_total": 3597.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-047",
+        "duracion_ms": 4736,
+        "ms_total": 4979.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-048",
+        "duracion_ms": 3157,
+        "ms_total": 3533.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-049",
+        "duracion_ms": 3648,
+        "ms_total": 3869.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-050",
+        "duracion_ms": 2901,
+        "ms_total": 3112.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-051",
+        "duracion_ms": 3669,
+        "ms_total": 3909.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, comí poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, comí poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 25.0,
+        "errores": 1,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-052",
+        "duracion_ms": 2901,
+        "ms_total": 3125.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-053",
+        "duracion_ms": 3392,
+        "ms_total": 3623.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-054",
+        "duracion_ms": 2560,
+        "ms_total": 2787.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Por favor, con más poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, con más poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 50.0,
+        "errores": 2,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-055",
+        "duracion_ms": 5056,
+        "ms_total": 5321.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Con permiso, déjame pasar, por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar, por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-056",
+        "duracion_ms": 3840,
+        "ms_total": 4086.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "con permiso, déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso, déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-057",
+        "duracion_ms": 4522,
+        "ms_total": 4766.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Con permiso, déjame pasar por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-058",
+        "duracion_ms": 3392,
+        "ms_total": 3859.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Con permiso, déjame pasar por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-059",
+        "duracion_ms": 4736,
+        "ms_total": 4966.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "con permiso déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-060",
+        "duracion_ms": 3498,
+        "ms_total": 3744.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "con permiso, déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso, déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "ruido"
+      }
+    ],
+    "sin_voz": [
+      {
+        "audio": "AU-03-001",
+        "duracion_ms": 22037,
+        "ms_total": 22021.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Silencio"
+      },
+      {
+        "audio": "AU-03-002",
+        "duracion_ms": 20544,
+        "ms_total": 20521.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Silencio"
+      },
+      {
+        "audio": "AU-03-003",
+        "duracion_ms": 20352,
+        "ms_total": 20569.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Ruido"
+      },
+      {
+        "audio": "AU-03-004",
+        "duracion_ms": 20373,
+        "ms_total": 20581.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 1,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Ruido"
+      },
+      {
+        "audio": "AU-03-005",
+        "duracion_ms": 21760,
+        "ms_total": 21977.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Tos"
+      },
+      {
+        "audio": "AU-03-006",
+        "duracion_ms": 21333,
+        "ms_total": 21641.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 1,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Tos"
+      },
+      {
+        "audio": "AU-03-007",
+        "duracion_ms": 21269,
+        "ms_total": 21241.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Golpes"
+      },
+      {
+        "audio": "AU-03-008",
+        "duracion_ms": 21312,
+        "ms_total": 21495.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Golpes"
+      }
+    ]
+  },
+  "umbral_3": {
+    "umbral": 3,
+    "health": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    },
+    "config": {
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "silence_timeout_ms": 1500,
+      "partial_interval_ms": 400,
+      "onset_window_ms": 300,
+      "word_timestamps": false,
+      "max_concurrent_inference": 1
+    },
+    "n_voz": 60,
+    "n_sin_voz": 8,
+    "wer_total_pct": 3.9,
+    "errores": 11,
+    "palabras": 282,
+    "wer_por_tipo": {
+      "Afirmación": {
+        "wer_pct": 4.17,
+        "errores": 3,
+        "palabras": 72
+      },
+      "Negación": {
+        "wer_pct": 0.0,
+        "errores": 0,
+        "palabras": 60
+      },
+      "Orden": {
+        "wer_pct": 5.0,
+        "errores": 3,
+        "palabras": 60
+      },
+      "Pregunta de contenido": {
+        "wer_pct": 5.0,
+        "errores": 3,
+        "palabras": 60
+      },
+      "Pregunta de sí o no": {
+        "wer_pct": 6.67,
+        "errores": 2,
+        "palabras": 30
+      }
+    },
+    "voz_sin_texto": [
+      "AU-01-014"
+    ],
+    "n_voz_sin_texto": 1,
+    "sin_voz_con_texto": [],
+    "n_sin_voz_con_texto": 0,
+    "timeouts": 0,
+    "ms_mediana_voz": 3832.8999999999996,
+    "ms_mediana_sin_voz": 21374.1,
+    "voz": [
+      {
+        "audio": "AU-01-001",
+        "duracion_ms": 4458,
+        "ms_total": 4701.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-002",
+        "duracion_ms": 3925,
+        "ms_total": 4144.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-003",
+        "duracion_ms": 4352,
+        "ms_total": 4587.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenos días, bienvenido.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenos días, bienvenido."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 50.0,
+        "errores": 2,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-004",
+        "duracion_ms": 3776,
+        "ms_total": 3981.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 25.0,
+        "errores": 1,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-005",
+        "duracion_ms": 5781,
+        "ms_total": 6042.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-006",
+        "duracion_ms": 3072,
+        "ms_total": 3340.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Hola, buenos días, bienvenidos.",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, buenos días, bienvenidos."
+        ],
+        "referencia": "Hola, buenos días, bienvenidos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-007",
+        "duracion_ms": 5205,
+        "ms_total": 5479.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Buenas tardes. Hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes. Hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-008",
+        "duracion_ms": 4352,
+        "ms_total": 4677.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-009",
+        "duracion_ms": 4949,
+        "ms_total": 5291.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-010",
+        "duracion_ms": 3562,
+        "ms_total": 3830.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-011",
+        "duracion_ms": 5354,
+        "ms_total": 5646.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-012",
+        "duracion_ms": 3498,
+        "ms_total": 3754.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Buenas tardes, hoy me siento más o menos.",
+        "timeout": false,
+        "textos_finales": [
+          "Buenas tardes, hoy me siento más o menos."
+        ],
+        "referencia": "Buenas tardes. Hoy me siento más o menos.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 8,
+        "tipo_texto": "Afirmación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-013",
+        "duracion_ms": 2688,
+        "ms_total": 2917.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-014",
+        "duracion_ms": 2560,
+        "ms_total": 2772.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 100.0,
+        "errores": 2,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-015",
+        "duracion_ms": 3669,
+        "ms_total": 3901.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-016",
+        "duracion_ms": 2069,
+        "ms_total": 2274.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-017",
+        "duracion_ms": 2602,
+        "ms_total": 2817.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-018",
+        "duracion_ms": 2304,
+        "ms_total": 2517.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Tienes hambre?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Tienes hambre?"
+        ],
+        "referencia": "¿Tienes hambre?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 2,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-019",
+        "duracion_ms": 3989,
+        "ms_total": 4209.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-020",
+        "duracion_ms": 3328,
+        "ms_total": 3543.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-021",
+        "duracion_ms": 4352,
+        "ms_total": 4611.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-022",
+        "duracion_ms": 2922,
+        "ms_total": 3343.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-023",
+        "duracion_ms": 3392,
+        "ms_total": 3635.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-024",
+        "duracion_ms": 2986,
+        "ms_total": 3214.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, ¿estás triste?",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, ¿estás triste?"
+        ],
+        "referencia": "Perdón. ¿Estás triste?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 3,
+        "tipo_texto": "Pregunta de sí o no",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-025",
+        "duracion_ms": 4010,
+        "ms_total": 4266.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-026",
+        "duracion_ms": 3584,
+        "ms_total": 3861.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-027",
+        "duracion_ms": 4778,
+        "ms_total": 5046.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-028",
+        "duracion_ms": 3797,
+        "ms_total": 4044.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "como te llamas.",
+        "timeout": false,
+        "textos_finales": [
+          "como te llamas."
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 50.0,
+        "errores": 3,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-029",
+        "duracion_ms": 4458,
+        "ms_total": 4806.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-030",
+        "duracion_ms": 3498,
+        "ms_total": 3750.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "timeout": false,
+        "textos_finales": [
+          "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        ],
+        "referencia": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-031",
+        "duracion_ms": 3605,
+        "ms_total": 3858.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-032",
+        "duracion_ms": 3157,
+        "ms_total": 3385.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-033",
+        "duracion_ms": 3413,
+        "ms_total": 3633.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-034",
+        "duracion_ms": 2602,
+        "ms_total": 2801.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-035",
+        "duracion_ms": 3349,
+        "ms_total": 3573.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "¿Dónde vive tu familia?",
+        "timeout": false,
+        "textos_finales": [
+          "¿Dónde vive tu familia?"
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-036",
+        "duracion_ms": 2389,
+        "ms_total": 2689.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "donde vive tu familia.",
+        "timeout": false,
+        "textos_finales": [
+          "donde vive tu familia."
+        ],
+        "referencia": "¿Dónde vive tu familia?",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Pregunta de contenido",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-037",
+        "duracion_ms": 3648,
+        "ms_total": 3864.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-038",
+        "duracion_ms": 2474,
+        "ms_total": 2684.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-039",
+        "duracion_ms": 2986,
+        "ms_total": 3196.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-040",
+        "duracion_ms": 2261,
+        "ms_total": 2475.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 1,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-041",
+        "duracion_ms": 3797,
+        "ms_total": 4181.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-042",
+        "duracion_ms": 2560,
+        "ms_total": 2771.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 0,
+        "texto": "Yo nunca como mucho.",
+        "timeout": false,
+        "textos_finales": [
+          "Yo nunca como mucho."
+        ],
+        "referencia": "Yo nunca como mucho.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-043",
+        "duracion_ms": 5120,
+        "ms_total": 5367.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 6,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-044",
+        "duracion_ms": 3498,
+        "ms_total": 3748.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-045",
+        "duracion_ms": 4608,
+        "ms_total": 4857.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-046",
+        "duracion_ms": 3349,
+        "ms_total": 3595.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-047",
+        "duracion_ms": 4736,
+        "ms_total": 4974.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-048",
+        "duracion_ms": 3157,
+        "ms_total": 3568.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Perdón, mi hermano nunca está contento.",
+        "timeout": false,
+        "textos_finales": [
+          "Perdón, mi hermano nunca está contento."
+        ],
+        "referencia": "Perdón. Mi hermano nunca está contento.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Negación",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-049",
+        "duracion_ms": 3648,
+        "ms_total": 3864.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-050",
+        "duracion_ms": 2901,
+        "ms_total": 3109.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-051",
+        "duracion_ms": 3669,
+        "ms_total": 3912.3,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, comí poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, comí poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 25.0,
+        "errores": 1,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-052",
+        "duracion_ms": 2901,
+        "ms_total": 3129.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-053",
+        "duracion_ms": 3392,
+        "ms_total": 3618.9,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Por favor, come poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, come poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-054",
+        "duracion_ms": 2560,
+        "ms_total": 2795.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Por favor, con más poco.",
+        "timeout": false,
+        "textos_finales": [
+          "Por favor, con más poco."
+        ],
+        "referencia": "Por favor, come poco.",
+        "wer": 50.0,
+        "errores": 2,
+        "palabras": 4,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-055",
+        "duracion_ms": 5056,
+        "ms_total": 5312.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "Con permiso, déjame pasar, por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar, por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-056",
+        "duracion_ms": 3840,
+        "ms_total": 4081.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "con permiso, déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso, déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H2",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-057",
+        "duracion_ms": 4522,
+        "ms_total": 4764.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 4,
+        "texto": "Con permiso, déjame pasar por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H3",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-058",
+        "duracion_ms": 3392,
+        "ms_total": 3835.6,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 2,
+        "texto": "Con permiso, déjame pasar por favor.",
+        "timeout": false,
+        "textos_finales": [
+          "Con permiso, déjame pasar por favor."
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "silencio"
+      },
+      {
+        "audio": "AU-01-059",
+        "duracion_ms": 4736,
+        "ms_total": 4965.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 5,
+        "texto": "con permiso déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H1",
+        "condicion": "ruido"
+      },
+      {
+        "audio": "AU-01-060",
+        "duracion_ms": 3498,
+        "ms_total": 3740.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 1,
+        "n_parciales": 3,
+        "texto": "con permiso, déjame pasar por favor",
+        "timeout": false,
+        "textos_finales": [
+          "con permiso, déjame pasar por favor"
+        ],
+        "referencia": "Con permiso. Déjame pasar, por favor.",
+        "wer": 0.0,
+        "errores": 0,
+        "palabras": 6,
+        "tipo_texto": "Orden",
+        "hablante": "H4",
+        "condicion": "ruido"
+      }
+    ],
+    "sin_voz": [
+      {
+        "audio": "AU-03-001",
+        "duracion_ms": 22037,
+        "ms_total": 22021.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Silencio"
+      },
+      {
+        "audio": "AU-03-002",
+        "duracion_ms": 20544,
+        "ms_total": 20521.1,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Silencio"
+      },
+      {
+        "audio": "AU-03-003",
+        "duracion_ms": 20352,
+        "ms_total": 20582.4,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Ruido"
+      },
+      {
+        "audio": "AU-03-004",
+        "duracion_ms": 20373,
+        "ms_total": 20609.8,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Ruido"
+      },
+      {
+        "audio": "AU-03-005",
+        "duracion_ms": 21760,
+        "ms_total": 21977.5,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 1,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Tos"
+      },
+      {
+        "audio": "AU-03-006",
+        "duracion_ms": 21333,
+        "ms_total": 21648.7,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 1,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Tos"
+      },
+      {
+        "audio": "AU-03-007",
+        "duracion_ms": 21269,
+        "ms_total": 21241.0,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Golpes"
+      },
+      {
+        "audio": "AU-03-008",
+        "duracion_ms": 21312,
+        "ms_total": 21507.2,
+        "n_finales": 1,
+        "n_finales_con_texto": 0,
+        "n_parciales": 0,
+        "texto": "",
+        "timeout": false,
+        "textos_finales": [
+          ""
+        ],
+        "tipo_audio": "Golpes"
+      }
+    ]
+  }
+}

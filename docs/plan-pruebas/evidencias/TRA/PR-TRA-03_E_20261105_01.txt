@@ -1,0 +1,20 @@
+Transcripción de `docker logs tra03-backend-1` leída mientras el contenedor estaba arriba
+(2026-11-05 05:37-05:41). El contenedor se borró con el `down -v` del final del colector, así
+que este archivo es la copia de lo que se vio en vivo y no una salida posterior.
+
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+2026-11-05 10:37:33,935 WARNING app.persistence.database: could not open the database pool failed (attempt 1 of 2); retrying in 0.5 s
+... asyncpg ... TimeoutError
+2026-11-05 10:37:39,442 ERROR app.persistence.database: The database is not reachable; starting without it
+2026-11-05 10:37:39,443 WARNING app.validation.catalog_repository: No database pool: the catalog stays empty
+2026-11-05 10:37:40-42 INFO httpx: (descarga del modelo paraphrase-multilingual-MiniLM-L12-v2 desde HuggingFace)
+Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7994.28it/s]
+<-- a partir de acá no hubo más líneas: ni "Application startup complete" ni el puerto 8080
+
+Estado del proceso a las 05:41: `docker stats` 0,00 % de CPU, 110,3 MiB, 42 hilos;
+`/proc/1/wchan` = wait_woken; `curl http://127.0.0.1:8080/health` = conexión rechazada
+(código 000 en 0,4 ms), o sea que uvicorn nunca llegó a escuchar.
+
+Al terminar el colector se restauró el entorno principal: /health {"status":"ok",
+"cache_loaded":true,"catalog_loaded":true,"catalog_glosses":50,"silence_timeout_ms":1500}.

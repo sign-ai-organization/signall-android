@@ -1,0 +1,3 @@
+PR-RES-04 · log del arranque del backend sin base
+
+sin log

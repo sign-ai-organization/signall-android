@@ -1,0 +1,32 @@
+{
+  "fin_s": 303.0,
+  "duracion_objetivo_s": 300.0,
+  "frases": 66,
+  "completadas": 66,
+  "errores": [],
+  "frames_tipos": {
+    "capability": 1,
+    "transcript": 333,
+    "sentence_trace": 94,
+    "segment": 94,
+    "trace": 66,
+    "done": 66
+  },
+  "por_minuto_envio": {
+    "0": 12,
+    "1": 14,
+    "2": 13,
+    "3": 13,
+    "4": 14
+  },
+  "por_minuto_done": {
+    "0": 11,
+    "1": 14,
+    "2": 13,
+    "3": 13,
+    "4": 14,
+    "5": 1
+  },
+  "latencia_p50": 314.6,
+  "latencia_p95": 1078.0
+}

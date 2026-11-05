@@ -1,0 +1,44 @@
+{
+  "config_backend": {
+    "llm_model": "gpt-4o-mini",
+    "llm_base_url": "",
+    "semantic_cache_preload": true,
+    "semantic_cache_threshold": 0.05,
+    "sentence_segmenter_enabled": true,
+    "stt_ws_url": "ws://***/ws/transcribe"
+  },
+  "app_proxy": {
+    "paquetes": 0,
+    "palabras": {
+      "cita": 0,
+      "tres": 0,
+      "noviembre": 0,
+      "diez": 0,
+      "media": 0
+    }
+  },
+  "llm": {
+    "paquetes": 0,
+    "palabras": {
+      "cita": 0,
+      "tres": 0,
+      "noviembre": 0,
+      "diez": 0,
+      "media": 0
+    }
+  },
+  "loopback": {
+    "paquetes": 0,
+    "palabras": {
+      "cita": 0,
+      "tres": 0,
+      "noviembre": 0,
+      "diez": 0,
+      "media": 0
+    }
+  },
+  "tls_ok": true,
+  "plano_rechazado": true,
+  "legible_8080": false,
+  "paquetes_totales": 0
+}

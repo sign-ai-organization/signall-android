@@ -1,0 +1,203 @@
+{
+  "AU-02-002": {
+    "audio": "AU-02-002.wav",
+    "audio_ms": 6058,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Hoy me siento muy bien.",
+        "audio_ms": 930,
+        "_t": 2281.0,
+        "_ms_audio_enviado": 2340.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Hoy me siento muy bien.",
+        "audio_ms": 1560,
+        "_t": 2910.8,
+        "_ms_audio_enviado": 2970.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "Hoy me siento muy bien.",
+        "audio_ms": 1470,
+        "_t": 4010.6,
+        "_ms_audio_enviado": 4050.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 6330.8,
+        "_ms_audio_enviado": 6058,
+        "_end_enviado": true
+      }
+    ],
+    "t_fin_audio_ms": 6030.1,
+    "t_end_ms": 6330.1,
+    "delta_reasons": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0
+    }
+  },
+  "AU-02-007": {
+    "audio": "AU-02-007.wav",
+    "audio_ms": 15829,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Mit...",
+        "audio_ms": 300,
+        "_t": 1350.8,
+        "_ms_audio_enviado": 1410.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mo...",
+        "audio_ms": 1050,
+        "_t": 1980.9,
+        "_ms_audio_enviado": 2040.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante...",
+        "audio_ms": 1710,
+        "_t": 2670.8,
+        "_ms_audio_enviado": 2730.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana.",
+        "audio_ms": 2370,
+        "_t": 3330.8,
+        "_ms_audio_enviado": 3390.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana.",
+        "audio_ms": 3210,
+        "_t": 4200.8,
+        "_ms_audio_enviado": 4260.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos...",
+        "audio_ms": 3900,
+        "_t": 4890.8,
+        "_ms_audio_enviado": 4950.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos descansa.",
+        "audio_ms": 4620,
+        "_t": 5641.4,
+        "_ms_audio_enviado": 5700.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos descansa con la familia.",
+        "audio_ms": 5370,
+        "_t": 6420.8,
+        "_ms_audio_enviado": 6480.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos descansa con la familia. Cosí.",
+        "audio_ms": 6120,
+        "_t": 7200.8,
+        "_ms_audio_enviado": 7260.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos descansa con la familia. Cocina para todos.",
+        "audio_ms": 6930,
+        "_t": 8040.8,
+        "_ms_audio_enviado": 8100.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos descansa con la familia.",
+        "audio_ms": 5640,
+        "_t": 9224.2,
+        "_ms_audio_enviado": 9270.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "cocina para todos y después nos cuenta y nos vemos en el próximo video.",
+        "audio_ms": 2400,
+        "_t": 9540.8,
+        "_ms_audio_enviado": 9600.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "cocina para todos y después nos cuenta historias de cuando era",
+        "audio_ms": 3600,
+        "_t": 10231.1,
+        "_ms_audio_enviado": 10290.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "cocina para todos y después nos cuenta historias de cuando era niño y",
+        "audio_ms": 4290,
+        "_t": 10920.8,
+        "_ms_audio_enviado": 10980.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Cocina para todos y después nos cuenta historias de cuando era niño y vivía lejos.",
+        "audio_ms": 5010,
+        "_t": 11700.8,
+        "_ms_audio_enviado": 11760.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "partial",
+        "text": "Cocina para todos y después nos cuenta historias de cuando era niño y vivía lejos de la ciudad.",
+        "audio_ms": 5790,
+        "_t": 12480.8,
+        "_ms_audio_enviado": 12540.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "Cocina para todos y después nos cuenta historias de cuando era niño y vivía lejos de la ciudad.",
+        "audio_ms": 6030,
+        "_t": 13912.2,
+        "_ms_audio_enviado": 13950.0,
+        "_end_enviado": false
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 16110.7,
+        "_ms_audio_enviado": 15829,
+        "_end_enviado": true
+      }
+    ],
+    "t_fin_audio_ms": 15810.1,
+    "t_end_ms": 16110.1,
+    "delta_reasons": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"buffer_max_pausa\"}": 1.0
+    }
+  }
+}

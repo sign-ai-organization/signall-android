@@ -1,0 +1,44 @@
+{
+  "niveles": [
+    {
+      "nivel": 1,
+      "duracion_s": 44.1,
+      "gauge_antes": 1.0,
+      "gauge_max": 2.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 242.5,
+      "lat_p95": 264.8,
+      "frases": 10,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 2,
+      "duracion_s": 44.5,
+      "gauge_antes": 1.0,
+      "gauge_max": 3.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 254.3,
+      "lat_p95": 421.7,
+      "frases": 20,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 3,
+      "duracion_s": 45.2,
+      "gauge_antes": 1.0,
+      "gauge_max": 4.0,
+      "gauge_despues": 1.0,
+      "lat_p50": 329.8,
+      "lat_p95": 471.9,
+      "frases": 30,
+      "errores": 0,
+      "ajenas": 0,
+      "wer_medio": 0.0
+    }
+  ],
+  "nota": "Cada nivel abre 1, 2 o 3 sesiones a la vez y cada sesión manda las 10 frases de FR-01-A con su audio de AU-01, rotadas para que dos sesiones no transcriban la misma frase en el mismo momento. La latencia es desde que termina el audio hasta el done. Los niveles 2 y 3 corren con la caché ya caliente (el nivel 1 guardó las 10 frases); el último nivel repite 1 sesión para comparar contra el primero."
+}

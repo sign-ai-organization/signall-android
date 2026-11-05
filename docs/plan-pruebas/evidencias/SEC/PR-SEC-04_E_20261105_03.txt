@@ -1,0 +1,60 @@
+PR-SEC-04 · listados antes y después
+
+ANTES backend /tmp:
+total 232
+drwxrwxrwt 1 root root   408 Nov  5 17:52 .
+drwxr-xr-x 1 root root    26 Nov  5 17:52 ..
+-rw-r--r-- 1 1000 1000  2293 Nov  5 13:13 cac02_calc.py
+-rw-r--r-- 1 1000 1000 12800 Nov  5 13:13 cac02_data.json
+-rw-r--r-- 1 1000 1000 75580 Nov  5 13:11 casos.json
+-rw-r--r-- 1 1000 1000   367 Nov  5 13:15 catalogo_glosas.py
+-rw-r--r-- 1 1000 1000   969 Nov  5 07:51 cost_lista.py
+-rw-r--r-- 1 1000 1000  1347 Nov  5 07:41 cost_tokens.py
+drwxr-xr-x 1 root root    80 Nov  5 13:26 data-gym-cache
+-rw-r--r-- 1 1000 1000   848 Nov  4 21:38 db.py
+-rw-r--r-- 1 1000 1000  2371 Nov  5 02:00 dbdump.py
+-rw-r--r-- 1 1000 1000  5118 Nov  5 13:11 en_container.py
+-rw-r--r-- 1 1000 1000 10382 Nov  5 17:34 llamadas.json
+-rw-r--r-- 1 1000 1000 82221 Nov  5 13:25 llm01.json
+-rw-r--r-- 1 root root    21 Nov  5 17:52 marca_sec04
+-rw-r--r-- 1 1000 1000  1916 Nov  5 07:36 parser_co04.py
+drwxr-xr-x 1 root root     0 Nov  5 10:49 torchinductor_root
+-rw-r--r-- 1 1000 1000  1084 Nov  5 00:57 watch_row.py
+
+
+ANTES STT /tmp:
+total 4
+drwxrwxrwt 1 root root 22 Nov  5 17:52 .
+drwxr-xr-x 1 root root 60 Nov  5 10:49 ..
+-rw-r--r-- 1 root root 21 Nov  5 17:52 marca_sec04
+
+
+ANTES teléfono:
+app_textures
+app_webview
+cache
+code_cache
+files
+no_backup
+shared_prefs
+
+
+DESPUÉS teléfono:
+app_textures
+app_webview
+cache
+code_cache
+files
+no_backup
+shared_prefs
+
+
+LOG BACKEND (muestra):
+
+
+LOG STT (muestra):
+INFO:     172.18.0.1:48932 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.18.0.1:48932 - "GET /v1/models HTTP/1.1" 404 Not Found
+[timing] parcial: audio=0.3s transcripcion=247ms espera_gpu=8ms atraso=0ms texto='Hola'
+[timing] parcial: audio=1.0s transcripcion=201ms espera_gpu=0ms atraso=660ms texto='Hola.'
+[timing] parcial: audio=1.6s transcripcion=230ms espera_gpu=0ms atraso=630ms texto='Hola, buenos días.'

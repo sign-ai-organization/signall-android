@@ -1,0 +1,77 @@
+{
+  "caido": {
+    "tmp": {
+      "segundos": 16.6,
+      "intentos": 1,
+      "salida": "temporal arriba: LLM_BASE_URL=http://host.docker.internal:9098/v1 LLM_API_KEY=x LLM_TIMEOUT_MS=5000 LLM_MAX_RETRIES=1",
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 1,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    "sesion": true,
+    "cache": {
+      "texto": "Hola, buenos días, bienvenidos.",
+      "campo": "Hola, buenos días, bienvenidos.",
+      "t_envio": 1793900651891,
+      "t_fin": 1793900666187,
+      "ms": 4336,
+      "ms_toque_aviso": 14296
+    },
+    "nueva": {
+      "texto": "¿Cuándo comen ellos?",
+      "campo": "¿Cuándo comen ellos?",
+      "t_envio": 1793900666321,
+      "t_fin": 1793900686583,
+      "ms": 10482,
+      "ms_toque_aviso": 20262
+    }
+  },
+  "colgado": {
+    "contenedor": 0,
+    "tmp": {
+      "segundos": 41.1,
+      "intentos": 2,
+      "salida": "temporal arriba: LLM_BASE_URL=http://signai-colgado:9099/v1 LLM_API_KEY=x LLM_TIMEOUT_MS=5000 LLM_MAX_RETRIES=1",
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 1,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    "sesion": true,
+    "nueva": {
+      "texto": "¿Cuándo comen ellos?",
+      "campo": "¿Cuándo comen ellos?",
+      "t_envio": 1793900743463,
+      "t_fin": 1793900763839,
+      "ms": 10534,
+      "ms_toque_aviso": 20376
+    }
+  },
+  "recuperacion": {
+    "tmp": {
+      "segundos": 15.9,
+      "salida": "backend original arriba",
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 1,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    "sesion": true,
+    "nueva": {
+      "texto": "¿Cuándo comen ellos?",
+      "campo": "¿Cuándo comen ellos?",
+      "t_envio": 1793900791975,
+      "t_fin": 1793900809196,
+      "ms": 7313,
+      "ms_toque_aviso": 17221
+    }
+  },
+  "cache_previa": 1
+}

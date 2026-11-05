@@ -1,0 +1,163 @@
+{
+  "aperturas": [
+    {
+      "apertura": 1,
+      "estado_am": "COLD",
+      "am_totaltime_ms": 1986,
+      "avatar": "pauline",
+      "ms_hasta_escena_lista": 4826,
+      "ms_interno_escena": 2019
+    },
+    {
+      "apertura": 2,
+      "estado_am": "COLD",
+      "am_totaltime_ms": 1875,
+      "avatar": "pauline",
+      "ms_hasta_escena_lista": 4668,
+      "ms_interno_escena": 2004
+    },
+    {
+      "apertura": 3,
+      "estado_am": "COLD",
+      "am_totaltime_ms": 1851,
+      "avatar": "pauline",
+      "ms_hasta_escena_lista": 4662,
+      "ms_interno_escena": 2002
+    },
+    {
+      "apertura": 4,
+      "estado_am": "COLD",
+      "am_totaltime_ms": 1878,
+      "avatar": "pauline",
+      "ms_hasta_escena_lista": 4646,
+      "ms_interno_escena": 2034
+    },
+    {
+      "apertura": 5,
+      "estado_am": "COLD",
+      "am_totaltime_ms": 1850,
+      "avatar": "pauline",
+      "ms_hasta_escena_lista": 4595,
+      "ms_interno_escena": 1999
+    }
+  ],
+  "frases": [
+    {
+      "n": 1,
+      "id": "FR-01-001",
+      "texto": "Hola, buenos días, bienvenidos.",
+      "fin": true,
+      "ms": 14204,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 2,
+      "id": "FR-01-007",
+      "texto": "¿Tienes hambre?",
+      "fin": true,
+      "ms": 13581,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 3,
+      "id": "FR-01-008",
+      "texto": "¿Estás bien?",
+      "fin": true,
+      "ms": 12433,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 4,
+      "id": "FR-01-009",
+      "texto": "¿Ustedes trabajan en familia?",
+      "fin": true,
+      "ms": 15183,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 5,
+      "id": "FR-01-012",
+      "texto": "¿Tu hermano está aburrido?",
+      "fin": true,
+      "ms": 14366,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 6,
+      "id": "FR-01-016",
+      "texto": "¿Por qué estás triste?",
+      "fin": true,
+      "ms": 15020,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 7,
+      "id": "FR-01-017",
+      "texto": "¿Cuándo comen ustedes?",
+      "fin": true,
+      "ms": 15346,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 8,
+      "id": "FR-01-025",
+      "texto": "Por favor, come poco.",
+      "fin": true,
+      "ms": 16029,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 9,
+      "id": "FR-01-027",
+      "texto": "Niños, trabajen todos.",
+      "fin": true,
+      "ms": 13929,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    },
+    {
+      "n": 10,
+      "id": "FR-01-029",
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "fin": true,
+      "ms": 18528,
+      "reposo": {
+        "media": 0.0,
+        "pixeles_pct": 0.0
+      }
+    }
+  ],
+  "aviso_webgl": [
+    "         1793889279.830  2643  2643 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562"
+  ],
+  "reposo_control": {
+    "media": 0.0,
+    "pixeles_pct": 0.0
+  }
+}

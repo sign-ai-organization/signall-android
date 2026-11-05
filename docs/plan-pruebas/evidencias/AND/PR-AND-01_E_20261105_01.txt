@@ -1,0 +1,80 @@
+===== aa_log_and01.txt =====
+--------- beginning of main
+--------- beginning of system
+         1793891143.552 22781 22781 I SignAiState: backend session starting
+         1793891143.575 22781 22808 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793891145.290 22781 22781 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793891145.290 22781 22781 I SignAiState: aviso visible: Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.
+         1793891146.651 22781 22781 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1162 ms @637
+         1793891146.652 22781 22781 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793891146.691 22781 22781 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793891147.393 22781 22781 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 1948 ms @690
+         1793891147.519 22781 22781 I SignAiState: silencio del STT: 1500 ms
+         1793891180.348 22781 22781 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793891180.348 22781 22781 I SignAiState: aviso visible: Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.
+         1793891209.104 22781 22781 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793891209.120 22781 22808 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS
+         1793891209.166 22781 22781 I SignAiMetrics: frase #1: 63ms, 1 oraciones, 2 glosas (p50=63ms p95=63ms max=63ms n=1)
+         1793891209.167 22781 22781 I SignAiState: resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=63ms p95=63ms max=63ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793891209.269 22781 22781 I SignAiState: signStart: oración→avatar 106 ms (seña 0, reloj JS 64174 ms)
+         1793891209.269 22781 22781 I SignAiMetrics: oración→avatar: 106 ms (p50=106ms p95=106ms max=106ms n=1)
+         1793891209.269 22781 22781 I SignAiMetrics: envío→primera seña: 165 ms (p50=165ms p95=165ms max=165ms n=1)
+         1793891210.621 22781 22781 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793891211.272 22781 22781 I SignAiState: signStart: oración→avatar 2110 ms (seña 1, reloj JS 66234 ms)
+         1793891213.424 22781 22781 I SignAiMetrics: representado: 2 señas en 4258ms (p50=4258ms p95=4258ms max=4258ms n=1)
+         1793891221.122 22781 22781 I SignAiState: micrófono prendido en modo Dictation
+         1793891221.316 22781 22781 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+
+===== aa_log_and01b.txt =====
+--------- beginning of system
+--------- beginning of main
+         1793891271.744 24162 24162 I SignAiState: backend session starting
+         1793891271.769 24162 24190 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793891273.401 24162 24162 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793891273.401 24162 24162 I SignAiState: aviso visible: Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.
+         1793891274.940 24162 24162 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1266 ms @637
+         1793891274.941 24162 24162 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793891274.979 24162 24162 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793891275.805 24162 24162 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2169 ms @690
+         1793891275.942 24162 24162 I SignAiState: silencio del STT: 1500 ms
+         1793891318.282 24162 24162 I SignAiState: micrófono prendido en modo Dictation
+         1793891318.379 24162 24162 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793891339.604 24162 24162 I SignAiMetrics: dictado #1: 19 palabras, 110 caracteres
+         1793891339.680 24162 24162 I SignAiNet: recording stopped
+         1793891339.680 24162 24162 I SignAiState: dictado detenido (el silencio ya lo había cerrado): esperando el final de la frase
+         1793891339.681 24162 24162 I SignAiState: aviso (no va al indicador): Texto listo. Toca Traducir para enviarlo.
+         1793891339.681 24162 24162 I SignAiState: dictado cerrado: 110 caracteres a la espera de confirmación
+         1793891350.960 24162 24162 I SignAiState: micrófono prendido en modo Dictation
+         1793891350.995 24162 24162 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793891354.092 24162 24162 I SignAiMetrics: dictado #1: 3 palabras, 26 caracteres
+         1793891354.147 24162 24162 I SignAiNet: recording stopped
+         1793891354.148 24162 24162 I SignAiState: dictado detenido (el silencio ya lo había cerrado): esperando el final de la frase
+         1793891354.149 24162 24162 I SignAiState: aviso (no va al indicador): Texto listo. Toca Traducir para enviarlo.
+         1793891354.149 24162 24162 I SignAiState: dictado cerrado: 26 caracteres a la espera de confirmación
+         1793891370.993 24162 24162 I SignAiState: micrófono prendido en modo Live
+         1793891371.023 24162 24162 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+         1793891389.898 25735 25735 I SignAiState: backend session starting
+         1793891389.923 25735 25762 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793891390.928 25735 25735 I SignAiState: aviso visible: Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.
+         1793891393.052 25735 25735 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1204 ms @637
+         1793891393.053 25735 25735 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793891393.089 25735 25735 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793891393.816 25735 25735 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2005 ms @690
+         1793891394.010 25735 25735 I SignAiState: silencio del STT: 1500 ms
+         1793891409.447 25735 25735 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793891409.447 25735 25735 I SignAiState: aviso visible: Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.
+
+===== aa_log_and01c.txt =====
+--------- beginning of main
+--------- beginning of system
+         1793891427.601 26281 26281 I SignAiState: backend session starting
+         1793891427.626 26281 26307 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793891431.071 26281 26281 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1460 ms @637
+         1793891431.072 26281 26281 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793891431.107 26281 26281 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793891432.113 26281 26281 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2551 ms @690
+         1793891432.246 26281 26281 I SignAiState: silencio del STT: 1500 ms
+         1793891448.080 26281 26281 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793891448.081 26281 26281 I SignAiState: aviso visible: Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.
+         1793891471.446 26281 26281 I SignAiState: aviso (no va al indicador): Sin permiso de micrófono la app no puede traducir voz.
+         1793891471.446 26281 26281 I SignAiState: aviso visible: Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.

@@ -1,0 +1,12 @@
+{
+  "catalogo_en_memoria": 50,
+  "reales_ok": 50,
+  "inexistentes_ok": 10,
+  "variantes_por_tipo": {
+    "Variante: con tilde": "3/3",
+    "Variante: en minúsculas": "3/3",
+    "Variante: con punto": "2/2",
+    "Variante: con un espacio de más": "2/2"
+  },
+  "variantes_que_fallan": []
+}

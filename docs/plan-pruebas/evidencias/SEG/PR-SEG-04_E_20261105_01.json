@@ -1,0 +1,240 @@
+{
+  "linea_base": {
+    "origen": "misma corrida con segmentador de PR-SEG-02",
+    "oraciones": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      2
+    ],
+    "cache": 43
+  },
+  "ablaciones": [
+    {
+      "regla": "POST_PROCESSING_ENABLED=false",
+      "variable": "SENTENCE_SEGMENTER__POST_PROCESSING_ENABLED=false",
+      "sonda": "Hola. ¿Tienes hambre?",
+      "env": [
+        "SENTENCE_SEGMENTER__POST_PROCESSING_ENABLED=false"
+      ],
+      "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "oraciones": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        2
+      ],
+      "sonda_oraciones": [
+        "Hola.",
+        "¿Tienes hambre?"
+      ]
+    },
+    {
+      "regla": "MIN_FRAGMENT_WORDS=2",
+      "variable": "SENTENCE_SEGMENTER__MIN_FRAGMENT_WORDS=2",
+      "sonda": "Hola. ¿Tienes hambre?",
+      "env": [
+        "SENTENCE_SEGMENTER__MIN_FRAGMENT_WORDS=2"
+      ],
+      "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "oraciones": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "sonda_oraciones": [
+        "Hola. ¿Tienes hambre?"
+      ]
+    },
+    {
+      "regla": "CUT_BEFORE_OPENING_MARK=false",
+      "variable": "SENTENCE_SEGMENTER__CUT_BEFORE_OPENING_MARK=false",
+      "sonda": "Hola, ¿cómo estás?",
+      "env": [
+        "SENTENCE_SEGMENTER__CUT_BEFORE_OPENING_MARK=false"
+      ],
+      "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "oraciones": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "sonda_oraciones": [
+        "Hola, ¿cómo estás?"
+      ]
+    },
+    {
+      "regla": "INFINITIVE_INTRODUCES_INDIRECT=false",
+      "variable": "SENTENCE_SEGMENTER__INFINITIVE_INTRODUCES_INDIRECT=false",
+      "sonda": "Quiero saber cómo estás.",
+      "env": [
+        "SENTENCE_SEGMENTER__INFINITIVE_INTRODUCES_INDIRECT=false"
+      ],
+      "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "oraciones": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        2
+      ],
+      "sonda_oraciones": [
+        "Quiero saber cómo estás."
+      ]
+    },
+    {
+      "regla": "FILLER_POLICY=discard",
+      "variable": "SENTENCE_SEGMENTER__FILLER_POLICY=discard",
+      "sonda": "Bueno, o sea, ¿tienes hambre?",
+      "env": [
+        "SENTENCE_SEGMENTER__FILLER_POLICY=discard"
+      ],
+      "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "oraciones": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        2
+      ],
+      "sonda_oraciones": [
+        "¿tienes hambre?"
+      ]
+    },
+    {
+      "regla": "MIN_WORDS_PER_SIDE=1",
+      "variable": "SENTENCE_SEGMENTER__MIN_WORDS_PER_SIDE=1",
+      "sonda": "Yo como. Tú trabajas.",
+      "env": [
+        "SENTENCE_SEGMENTER__MIN_WORDS_PER_SIDE=1"
+      ],
+      "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "oraciones": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        2
+      ],
+      "sonda_oraciones": [
+        "Yo como.",
+        "Tú trabajas."
+      ]
+    },
+    {
+      "regla": "CUT_MARKERS=[]",
+      "variable": "SENTENCE_SEGMENTER__CUT_MARKERS=[]",
+      "sonda": "Hola, o sea, ¿tienes hambre?",
+      "env": [
+        "SENTENCE_SEGMENTER__CUT_MARKERS=[]"
+      ],
+      "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "oraciones": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        2
+      ],
+      "sonda_oraciones": [
+        "Hola, o sea,",
+        "¿tienes hambre?"
+      ]
+    }
+  ]
+}

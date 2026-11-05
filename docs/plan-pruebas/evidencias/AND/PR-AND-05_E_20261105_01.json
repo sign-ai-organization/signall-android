@@ -1,0 +1,677 @@
+{
+  "and05": {
+    "original": {
+      "size": "Physical size: 1080x2400",
+      "density": "Physical density: 440",
+      "font": "1.0",
+      "dark": "true"
+    },
+    "configs": [
+      {
+        "nombre": "nativa",
+        "size": "1080x2400",
+        "density": 440,
+        "font_scale": "1.0",
+        "tema": "oscuro",
+        "abrio": true,
+        "ui": {
+          "wm_size": "Physical size: 1080x2400",
+          "wm_density": "Physical density: 440",
+          "ancho": 1080,
+          "alto": 2400,
+          "elementos": {
+            "estado": {
+              "x": 115,
+              "y": 135,
+              "width": 144,
+              "height": 46
+            },
+            "campo": {
+              "x": 50,
+              "y": 2019,
+              "width": 654,
+              "height": 138
+            },
+            "voz": {
+              "x": 729,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "historial": {
+              "x": 892,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "traducir": {
+              "x": 50,
+              "y": 2185,
+              "width": 477,
+              "height": 138
+            },
+            "vivo": {
+              "x": 552,
+              "y": 2185,
+              "width": 478,
+              "height": 138
+            }
+          },
+          "fuera_de_pantalla": []
+        },
+        "corta": {
+          "enviado": true,
+          "t": 1793890424331,
+          "fin": 1793890443427,
+          "ms": 19096,
+          "movimiento": {
+            "pixeles_pct": 12.61,
+            "bbox": [
+              30,
+              72,
+              931,
+              2108
+            ],
+            "ancho_pct": 83.4,
+            "alto_pct": 84.8
+          }
+        },
+        "larga": {
+          "enviado": true,
+          "t": 1793890444419,
+          "fin": 1793890465802,
+          "ms": 21383,
+          "movimiento": null
+        }
+      },
+      {
+        "nombre": "nativa_large",
+        "size": "1080x2400",
+        "density": 440,
+        "font_scale": "1.3",
+        "tema": "oscuro",
+        "abrio": true,
+        "ui": {
+          "wm_size": "Physical size: 1080x2400",
+          "wm_density": "Physical density: 440",
+          "ancho": 1080,
+          "alto": 2400,
+          "elementos": {
+            "estado": {
+              "x": 115,
+              "y": 135,
+              "width": 188,
+              "height": 60
+            },
+            "campo": {
+              "x": 50,
+              "y": 2019,
+              "width": 654,
+              "height": 138
+            },
+            "voz": {
+              "x": 729,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "historial": {
+              "x": 892,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "traducir": {
+              "x": 50,
+              "y": 2185,
+              "width": 477,
+              "height": 138
+            },
+            "vivo": {
+              "x": 552,
+              "y": 2185,
+              "width": 478,
+              "height": 138
+            }
+          },
+          "fuera_de_pantalla": []
+        },
+        "corta": {
+          "enviado": true,
+          "t": 1793890482290,
+          "fin": 1793890501418,
+          "ms": 19128,
+          "movimiento": null
+        },
+        "larga": null
+      },
+      {
+        "nombre": "nativa_claro",
+        "size": "1080x2400",
+        "density": 440,
+        "font_scale": "1.0",
+        "tema": "claro",
+        "abrio": true,
+        "ui": {
+          "wm_size": "Physical size: 1080x2400",
+          "wm_density": "Physical density: 440",
+          "ancho": 1080,
+          "alto": 2400,
+          "elementos": {
+            "estado": {
+              "x": 115,
+              "y": 135,
+              "width": 144,
+              "height": 46
+            },
+            "campo": {
+              "x": 50,
+              "y": 2019,
+              "width": 654,
+              "height": 138
+            },
+            "voz": {
+              "x": 729,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "historial": {
+              "x": 892,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "traducir": {
+              "x": 50,
+              "y": 2185,
+              "width": 477,
+              "height": 138
+            },
+            "vivo": {
+              "x": 552,
+              "y": 2185,
+              "width": 478,
+              "height": 138
+            }
+          },
+          "fuera_de_pantalla": []
+        },
+        "corta": {
+          "enviado": true,
+          "t": 1793890517930,
+          "fin": 1793890537213,
+          "ms": 19283,
+          "movimiento": null
+        },
+        "larga": null
+      },
+      {
+        "nombre": "chica",
+        "size": "720x1280",
+        "density": 320,
+        "font_scale": "1.0",
+        "tema": "oscuro",
+        "abrio": true,
+        "ui": {
+          "wm_size": "Physical size: 1080x2400\nOverride size: 720x1280",
+          "wm_density": "Physical density: 440\nOverride density: 320",
+          "ancho": 720,
+          "alto": 1280,
+          "elementos": {
+            "estado": {
+              "x": 84,
+              "y": 126,
+              "width": 105,
+              "height": 33
+            },
+            "campo": {
+              "x": 36,
+              "y": 1004,
+              "width": 412,
+              "height": 100
+            },
+            "voz": {
+              "x": 466,
+              "y": 1004,
+              "width": 100,
+              "height": 100
+            },
+            "historial": {
+              "x": 584,
+              "y": 1004,
+              "width": 100,
+              "height": 100
+            },
+            "traducir": {
+              "x": 36,
+              "y": 1124,
+              "width": 315,
+              "height": 100
+            },
+            "vivo": {
+              "x": 369,
+              "y": 1124,
+              "width": 315,
+              "height": 100
+            }
+          },
+          "fuera_de_pantalla": []
+        },
+        "corta": {
+          "enviado": true,
+          "t": 1793890554031,
+          "fin": 1793890573288,
+          "ms": 19257,
+          "movimiento": {
+            "pixeles_pct": 11.69,
+            "bbox": [
+              70,
+              174,
+              572,
+              1069
+            ],
+            "ancho_pct": 69.7,
+            "alto_pct": 69.9
+          }
+        },
+        "larga": {
+          "enviado": true,
+          "t": 1793890573855,
+          "fin": 1793890595054,
+          "ms": 21199,
+          "movimiento": null
+        }
+      },
+      {
+        "nombre": "chica_large",
+        "size": "720x1280",
+        "density": 320,
+        "font_scale": "1.3",
+        "tema": "oscuro",
+        "abrio": true,
+        "ui": {
+          "wm_size": "Physical size: 1080x2400\nOverride size: 720x1280",
+          "wm_density": "Physical density: 440\nOverride density: 320",
+          "ancho": 720,
+          "alto": 1280,
+          "elementos": {
+            "estado": {
+              "x": 84,
+              "y": 126,
+              "width": 141,
+              "height": 43
+            },
+            "campo": {
+              "x": 36,
+              "y": 1004,
+              "width": 412,
+              "height": 100
+            },
+            "voz": {
+              "x": 466,
+              "y": 1004,
+              "width": 100,
+              "height": 100
+            },
+            "historial": {
+              "x": 584,
+              "y": 1004,
+              "width": 100,
+              "height": 100
+            },
+            "traducir": {
+              "x": 36,
+              "y": 1124,
+              "width": 315,
+              "height": 100
+            },
+            "vivo": {
+              "x": 369,
+              "y": 1124,
+              "width": 315,
+              "height": 100
+            }
+          },
+          "fuera_de_pantalla": []
+        },
+        "corta": {
+          "enviado": true,
+          "t": 1793890610843,
+          "fin": 1793890630326,
+          "ms": 19483,
+          "movimiento": null
+        },
+        "larga": null
+      },
+      {
+        "nombre": "grande",
+        "size": "1440x3200",
+        "density": 440,
+        "font_scale": "1.0",
+        "tema": "oscuro",
+        "abrio": true,
+        "ui": {
+          "wm_size": "Physical size: 1080x2400\nOverride size: 1440x3200",
+          "wm_density": "Physical density: 440",
+          "ancho": 1440,
+          "alto": 3200,
+          "elementos": {
+            "estado": {
+              "x": 115,
+              "y": 135,
+              "width": 144,
+              "height": 46
+            },
+            "campo": {
+              "x": 50,
+              "y": 2819,
+              "width": 1014,
+              "height": 138
+            },
+            "voz": {
+              "x": 1089,
+              "y": 2819,
+              "width": 138,
+              "height": 138
+            },
+            "historial": {
+              "x": 1252,
+              "y": 2819,
+              "width": 138,
+              "height": 138
+            },
+            "traducir": {
+              "x": 50,
+              "y": 2985,
+              "width": 657,
+              "height": 138
+            },
+            "vivo": {
+              "x": 732,
+              "y": 2985,
+              "width": 658,
+              "height": 138
+            }
+          },
+          "fuera_de_pantalla": []
+        },
+        "corta": {
+          "enviado": true,
+          "t": 1793890647422,
+          "fin": 1793890667572,
+          "ms": 20150,
+          "movimiento": null
+        },
+        "larga": null
+      }
+    ],
+    "restaurado": {
+      "size": "Physical size: 1080x2400",
+      "density": "Physical density: 440",
+      "font": "1.0",
+      "dark": "true"
+    }
+  },
+  "giro": {
+    "original": {
+      "wm_size": "Physical size: 1080x2400",
+      "wm_density": "Physical density: 440",
+      "font_scale": "1.0",
+      "user_rotation": "0",
+      "accelerometer_rotation": "1"
+    },
+    "casos": [
+      {
+        "caso": "horizontal (user_rotation=1)",
+        "abrio": true,
+        "ui": {
+          "wm_size": "dumpsys cur=1080x2400",
+          "ancho": 1080,
+          "alto": 2400,
+          "elementos": {
+            "estado": {
+              "x": 115,
+              "y": 135,
+              "width": 144,
+              "height": 46
+            },
+            "campo": {
+              "x": 50,
+              "y": 2019,
+              "width": 654,
+              "height": 138
+            },
+            "voz": {
+              "x": 729,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "historial": {
+              "x": 892,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "traducir": {
+              "x": 50,
+              "y": 2185,
+              "width": 477,
+              "height": 138
+            },
+            "vivo": {
+              "x": 552,
+              "y": 2185,
+              "width": 478,
+              "height": 138
+            }
+          },
+          "fuera_de_pantalla": [],
+          "orientacion": "vertical"
+        },
+        "png": "/tmp/opencode/pruebas/shots/and05_rot_horizontal.png",
+        "frase_ms": 8825,
+        "png_fin": "/tmp/opencode/pruebas/shots/and05_rot_horizontal_fin.png"
+      },
+      {
+        "caso": "vuelta a vertical",
+        "abrio": true,
+        "ui": {
+          "wm_size": "dumpsys cur=1080x2400",
+          "ancho": 1080,
+          "alto": 2400,
+          "elementos": {
+            "estado": {
+              "x": 115,
+              "y": 135,
+              "width": 144,
+              "height": 46
+            },
+            "campo": {
+              "x": 50,
+              "y": 2019,
+              "width": 654,
+              "height": 138
+            },
+            "voz": {
+              "x": 729,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "historial": {
+              "x": 892,
+              "y": 2019,
+              "width": 138,
+              "height": 138
+            },
+            "traducir": {
+              "x": 50,
+              "y": 2185,
+              "width": 477,
+              "height": 138
+            },
+            "vivo": {
+              "x": 552,
+              "y": 2185,
+              "width": 478,
+              "height": 138
+            }
+          },
+          "fuera_de_pantalla": [],
+          "orientacion": "vertical"
+        }
+      }
+    ],
+    "restaurado": {
+      "wm_size": "Physical size: 1080x2400",
+      "wm_density": "Physical density: 440",
+      "font_scale": "1.0",
+      "user_rotation": "0",
+      "accelerometer_rotation": "0"
+    }
+  },
+  "filas": [
+    {
+      "configuracion": "nativa",
+      "wm_size": "1080x2400",
+      "wm_density": "440",
+      "font_scale": "1.0",
+      "tema": "oscuro",
+      "abrio": "si",
+      "elementos_fuera_de_pantalla": 0,
+      "corta_glosas": 4224,
+      "corta_ms": 2,
+      "larga_glosas": 6575,
+      "larga_ms": 3,
+      "luminancia_panel": 28.6,
+      "zona_que_se_mueve": {
+        "pixeles_pct": 12.61,
+        "bbox": [
+          30,
+          72,
+          931,
+          2108
+        ],
+        "ancho_pct": 83.4,
+        "alto_pct": 84.8
+      }
+    },
+    {
+      "configuracion": "nativa_large",
+      "wm_size": "1080x2400",
+      "wm_density": "440",
+      "font_scale": "1.3",
+      "tema": "oscuro",
+      "abrio": "si",
+      "elementos_fuera_de_pantalla": 0,
+      "corta_glosas": 4214,
+      "corta_ms": 2,
+      "larga_glosas": "",
+      "larga_ms": "",
+      "luminancia_panel": 29.6,
+      "zona_que_se_mueve": ""
+    },
+    {
+      "configuracion": "nativa_claro",
+      "wm_size": "1080x2400",
+      "wm_density": "440",
+      "font_scale": "1.0",
+      "tema": "claro",
+      "abrio": "si",
+      "elementos_fuera_de_pantalla": 0,
+      "corta_glosas": 4250,
+      "corta_ms": 2,
+      "larga_glosas": "",
+      "larga_ms": "",
+      "luminancia_panel": 227.0,
+      "zona_que_se_mueve": ""
+    },
+    {
+      "configuracion": "chica",
+      "wm_size": "720x1280",
+      "wm_density": "320",
+      "font_scale": "1.0",
+      "tema": "oscuro",
+      "abrio": "si",
+      "elementos_fuera_de_pantalla": 0,
+      "corta_glosas": 4228,
+      "corta_ms": 2,
+      "larga_glosas": 6500,
+      "larga_ms": 3,
+      "luminancia_panel": 35.9,
+      "zona_que_se_mueve": {
+        "pixeles_pct": 11.69,
+        "bbox": [
+          70,
+          174,
+          572,
+          1069
+        ],
+        "ancho_pct": 69.7,
+        "alto_pct": 69.9
+      }
+    },
+    {
+      "configuracion": "chica_large",
+      "wm_size": "720x1280",
+      "wm_density": "320",
+      "font_scale": "1.3",
+      "tema": "oscuro",
+      "abrio": "si",
+      "elementos_fuera_de_pantalla": 0,
+      "corta_glosas": 4239,
+      "corta_ms": 2,
+      "larga_glosas": "",
+      "larga_ms": "",
+      "luminancia_panel": 37.7,
+      "zona_que_se_mueve": ""
+    },
+    {
+      "configuracion": "grande",
+      "wm_size": "1440x3200",
+      "wm_density": "440",
+      "font_scale": "1.0",
+      "tema": "oscuro",
+      "abrio": "si",
+      "elementos_fuera_de_pantalla": 0,
+      "corta_glosas": 4251,
+      "corta_ms": 2,
+      "larga_glosas": "",
+      "larga_ms": "",
+      "luminancia_panel": 23.7,
+      "zona_que_se_mueve": ""
+    },
+    {
+      "configuracion": "horizontal (user_rotation=1) · no gira (portrait fijo)",
+      "wm_size": "1080x2400",
+      "wm_density": "-",
+      "font_scale": "1.0",
+      "tema": "oscuro",
+      "abrio": "si",
+      "elementos_fuera_de_pantalla": 0,
+      "corta_glosas": "-",
+      "corta_ms": 8825,
+      "larga_glosas": "-",
+      "larga_ms": "-",
+      "luminancia_panel": null,
+      "zona_que_se_mueve": ""
+    },
+    {
+      "configuracion": "vuelta a vertical · no gira (portrait fijo)",
+      "wm_size": "1080x2400",
+      "wm_density": "-",
+      "font_scale": "1.0",
+      "tema": "oscuro",
+      "abrio": "si",
+      "elementos_fuera_de_pantalla": 0,
+      "corta_glosas": "-",
+      "corta_ms": "",
+      "larga_glosas": "-",
+      "larga_ms": "-",
+      "luminancia_panel": null,
+      "zona_que_se_mueve": ""
+    }
+  ]
+}

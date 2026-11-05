@@ -1,0 +1,447 @@
+{
+  "delete_cache": "DELETE 5",
+  "restart": {
+    "segundos": 14.6,
+    "intentos": 1,
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 0,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "marca_backend": "2026-11-05T17:52:45Z",
+  "marca_stt": "2026-11-05T17:52:45Z",
+  "antes": {
+    "backend": {
+      "archivos_nuevos": [],
+      "n_archivos": 0,
+      "de_audio": []
+    },
+    "stt": {
+      "archivos_nuevos": [],
+      "n_archivos": 0,
+      "de_audio": []
+    },
+    "esquema": {
+      "tablas": [
+        "catalog",
+        "semantic_cache"
+      ],
+      "columnas_bytea": 2,
+      "columnas_de_audio": [
+        {
+          "table_name": "pg_opclass",
+          "column_name": "opcmethod",
+          "data_type": "oid"
+        }
+      ]
+    },
+    "cache": {
+      "filas": [],
+      "total": 0
+    },
+    "backend_tmp": "total 232\ndrwxrwxrwt 1 root root   408 Nov  5 17:52 .\ndrwxr-xr-x 1 root root    26 Nov  5 17:52 ..\n-rw-r--r-- 1 1000 1000  2293 Nov  5 13:13 cac02_calc.py\n-rw-r--r-- 1 1000 1000 12800 Nov  5 13:13 cac02_data.json\n-rw-r--r-- 1 1000 1000 75580 Nov  5 13:11 casos.json\n-rw-r--r-- 1 1000 1000   367 Nov  5 13:15 catalogo_glosas.py\n-rw-r--r-- 1 1000 1000   969 Nov  5 07:51 cost_lista.py\n-rw-r--r-- 1 1000 1000  1347 Nov  5 07:41 cost_tokens.py\ndrwxr-xr-x 1 root root    80 Nov  5 13:26 data-gym-cache\n-rw-r--r-- 1 1000 1000   848 Nov  4 21:38 db.py\n-rw-r--r-- 1 1000 1000  2371 Nov  5 02:00 dbdump.py\n-rw-r--r-- 1 1000 1000  5118 Nov  5 13:11 en_container.py\n-rw-r--r-- 1 1000 1000 10382 Nov  5 17:34 llamadas.json\n-rw-r--r-- 1 1000 1000 82221 Nov  5 13:25 llm01.json\n-rw-r--r-- 1 root root    21 Nov  5 17:52 marca_sec04\n-rw-r--r-- 1 1000 1000  1916 Nov  5 07:36 parser_co04.py\ndrwxr-xr-x 1 root root     0 Nov  5 10:49 torchinductor_root\n-rw-r--r-- 1 1000 1000  1084 Nov  5 00:57 watch_row.py\n",
+    "stt_tmp": "total 4\ndrwxrwxrwt 1 root root 22 Nov  5 17:52 .\ndrwxr-xr-x 1 root root 60 Nov  5 10:49 ..\n-rw-r--r-- 1 root root 21 Nov  5 17:52 marca_sec04\n",
+    "telefono": "app_textures\napp_webview\ncache\ncode_cache\nfiles\nno_backup\nshared_prefs\n"
+  },
+  "audios": [
+    {
+      "frase": "FR-01-001",
+      "audio": "AU-01-001",
+      "duracion_audio_s": 4.459,
+      "transcrito": "Hola, buenos días, bienvenidos.",
+      "texto_plan": "Hola, buenos días, bienvenidos.",
+      "segmentos": 1,
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "error": null,
+      "ms": 5630.7
+    },
+    {
+      "frase": "FR-01-005",
+      "audio": "AU-01-007",
+      "duracion_audio_s": 5.205,
+      "transcrito": "Buenas tardes. Hoy me siento más o menos.",
+      "texto_plan": "Buenas tardes. Hoy me siento más o menos.",
+      "segmentos": 2,
+      "glosas": [
+        "BUENAS TARDES",
+        "YO",
+        "SENTIR",
+        "MAS O MENOS"
+      ],
+      "error": null,
+      "ms": 6365.9
+    },
+    {
+      "frase": "FR-01-007",
+      "audio": "AU-01-013",
+      "duracion_audio_s": 2.688,
+      "transcrito": "¿Tienes hambre?",
+      "texto_plan": "¿Tienes hambre?",
+      "segmentos": 1,
+      "glosas": [
+        "TU",
+        "HAMBRE"
+      ],
+      "error": null,
+      "ms": 3548.3
+    },
+    {
+      "frase": "FR-01-011",
+      "audio": "AU-01-019",
+      "duracion_audio_s": 3.989,
+      "transcrito": "Perdón, ¿estás triste?",
+      "texto_plan": "Perdón. ¿Estás triste?",
+      "segmentos": 2,
+      "glosas": [
+        "PERDON",
+        "TRISTE"
+      ],
+      "error": null,
+      "ms": 4890.2
+    },
+    {
+      "frase": "FR-01-013",
+      "audio": "AU-01-025",
+      "duracion_audio_s": 4.011,
+      "transcrito": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "texto_plan": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "segmentos": 3,
+      "glosas": [
+        "HOLA",
+        "COMO ESTAS",
+        "COMO",
+        "TU"
+      ],
+      "error": null,
+      "ms": 5019.5
+    },
+    {
+      "frase": "FR-01-014",
+      "audio": "AU-01-031",
+      "duracion_audio_s": 3.605,
+      "transcrito": "¿Dónde vive tu familia?",
+      "texto_plan": "¿Dónde vive tu familia?",
+      "segmentos": 1,
+      "glosas": [
+        "DONDE",
+        "TU",
+        "FAMILIA",
+        "VIVIR"
+      ],
+      "error": null,
+      "ms": 4505.9
+    },
+    {
+      "frase": "FR-01-019",
+      "audio": "AU-01-037",
+      "duracion_audio_s": 3.648,
+      "transcrito": "Yo nunca como mucho.",
+      "texto_plan": "Yo nunca como mucho.",
+      "segmentos": 1,
+      "glosas": [
+        "YO",
+        "NUNCA",
+        "COMER",
+        "MUCHO"
+      ],
+      "error": null,
+      "ms": 4531.9
+    },
+    {
+      "frase": "FR-01-023",
+      "audio": "AU-01-043",
+      "duracion_audio_s": 5.12,
+      "transcrito": "Perdón, mi hermano nunca está contento.",
+      "texto_plan": "Perdón. Mi hermano nunca está contento.",
+      "segmentos": 1,
+      "glosas": [
+        "PERDON",
+        "HERMANO",
+        "NUNCA",
+        "CONTENTO"
+      ],
+      "error": null,
+      "ms": 6432.4
+    },
+    {
+      "frase": "FR-01-025",
+      "audio": "AU-01-049",
+      "duracion_audio_s": 3.648,
+      "transcrito": "Por favor, come poco.",
+      "texto_plan": "Por favor, come poco.",
+      "segmentos": 1,
+      "glosas": [
+        "POR FAVOR",
+        "COMER",
+        "POCO"
+      ],
+      "error": null,
+      "ms": 4592.1
+    },
+    {
+      "frase": "FR-01-026",
+      "audio": "AU-01-055",
+      "duracion_audio_s": 5.056,
+      "transcrito": "Con permiso, déjame pasar, por favor.",
+      "texto_plan": "Con permiso. Déjame pasar, por favor.",
+      "segmentos": 1,
+      "glosas": [
+        "POR FAVOR"
+      ],
+      "error": null,
+      "ms": 6279.7
+    }
+  ],
+  "despues": {
+    "backend": {
+      "archivos_nuevos": [],
+      "n_archivos": 0,
+      "de_audio": []
+    },
+    "stt": {
+      "archivos_nuevos": [],
+      "n_archivos": 0,
+      "de_audio": []
+    },
+    "esquema": {
+      "tablas": [
+        "catalog",
+        "semantic_cache"
+      ],
+      "columnas_bytea": 2,
+      "columnas_de_audio": [
+        {
+          "table_name": "pg_opclass",
+          "column_name": "opcmethod",
+          "data_type": "oid"
+        }
+      ]
+    },
+    "cache": {
+      "filas": [
+        {
+          "original_text": "Hola, buenos días, bienvenidos.",
+          "phrase_type": "AFFIRMATIVE",
+          "n": "2",
+          "emb": "4468"
+        },
+        {
+          "original_text": "Buenas tardes.",
+          "phrase_type": "AFFIRMATIVE",
+          "n": "1",
+          "emb": "4490"
+        },
+        {
+          "original_text": "Hoy me siento más o menos.",
+          "phrase_type": "AFFIRMATIVE",
+          "n": "3",
+          "emb": "4488"
+        },
+        {
+          "original_text": "¿Tienes hambre?",
+          "phrase_type": "YES_NO_QUESTION",
+          "n": "2",
+          "emb": "4421"
+        },
+        {
+          "original_text": "Perdón,",
+          "phrase_type": "AFFIRMATIVE",
+          "n": "1",
+          "emb": "4481"
+        },
+        {
+          "original_text": "¿estás triste?",
+          "phrase_type": "YES_NO_QUESTION",
+          "n": "1",
+          "emb": "4512"
+        },
+        {
+          "original_text": "¿cómo estás?",
+          "phrase_type": "CONTENT_QUESTION",
+          "n": "1",
+          "emb": "4522"
+        },
+        {
+          "original_text": "Hola,",
+          "phrase_type": "AFFIRMATIVE",
+          "n": "1",
+          "emb": "4466"
+        },
+        {
+          "original_text": "¿Cómo te llamas?",
+          "phrase_type": "CONTENT_QUESTION",
+          "n": "2",
+          "emb": "4471"
+        },
+        {
+          "original_text": "¿Dónde vive tu familia?",
+          "phrase_type": "CONTENT_QUESTION",
+          "n": "4",
+          "emb": "4457"
+        },
+        {
+          "original_text": "Yo nunca como mucho.",
+          "phrase_type": "NEGATIVE",
+          "n": "4",
+          "emb": "4480"
+        },
+        {
+          "original_text": "Perdón, mi hermano nunca está contento.",
+          "phrase_type": "NEGATIVE",
+          "n": "4",
+          "emb": "4496"
+        },
+        {
+          "original_text": "Por favor, come poco.",
+          "phrase_type": "AFFIRMATIVE",
+          "n": "3",
+          "emb": "4554"
+        },
+        {
+          "original_text": "Con permiso, déjame pasar, por favor.",
+          "phrase_type": "AFFIRMATIVE",
+          "n": "1",
+          "emb": "4537"
+        }
+      ],
+      "total": 14
+    },
+    "telefono": "app_textures\napp_webview\ncache\ncode_cache\nfiles\nno_backup\nshared_prefs\n"
+  },
+  "logs_backend": {
+    "lineas_totales": 0,
+    "lineas_con_audio": [],
+    "n_con_audio": 0,
+    "muestra": []
+  },
+  "logs_stt": {
+    "lineas_totales": 62,
+    "lineas_con_audio": [
+      "[timing] parcial: audio=0.3s transcripcion=247ms espera_gpu=8ms atraso=0ms texto='Hola'",
+      "[timing] parcial: audio=1.0s transcripcion=201ms espera_gpu=0ms atraso=660ms texto='Hola.'",
+      "[timing] parcial: audio=1.6s transcripcion=230ms espera_gpu=0ms atraso=630ms texto='Hola, buenos días.'",
+      "[timing] parcial: audio=2.2s transcripcion=249ms espera_gpu=1ms atraso=660ms texto='Hola, buenos días, bienvenido.'",
+      "[timing] parcial: audio=2.9s transcripcion=245ms espera_gpu=0ms atraso=660ms texto='Hola, buenos días, bienvenidos.'",
+      "[timing] final (flush): audio=2.8s transcripcion=257ms atraso=0ms fin_habla->final=1367ms texto='Hola, buenos días, bienvenidos.'",
+      "[timing] parcial: audio=0.3s transcripcion=243ms espera_gpu=0ms atraso=0ms texto='Buenas...'",
+      "[timing] parcial: audio=1.0s transcripcion=219ms espera_gpu=0ms atraso=660ms texto='Buenas tardes.'",
+      "[timing] parcial: audio=1.6s transcripcion=218ms espera_gpu=0ms atraso=630ms texto='Buenas tardes.'",
+      "[timing] parcial: audio=2.2s transcripcion=249ms espera_gpu=0ms atraso=630ms texto='Buenas tardes. Hoy me siento...'",
+      "[timing] parcial: audio=2.9s transcripcion=271ms espera_gpu=0ms atraso=660ms texto='Buenas tardes. Hoy me siento más o menos.'",
+      "[timing] parcial: audio=3.6s transcripcion=271ms espera_gpu=1ms atraso=690ms texto='Buenas tardes. Hoy me siento más o menos.'",
+      "[timing] final (flush): audio=3.2s transcripcion=286ms atraso=0ms fin_habla->final=1694ms texto='Buenas tardes. Hoy me siento más o menos.'",
+      "[timing] parcial: audio=0.3s transcripcion=223ms espera_gpu=0ms atraso=0ms texto=''",
+      "[timing] parcial: audio=0.9s transcripcion=234ms espera_gpu=0ms atraso=630ms texto='¿Tienes hambre?'",
+      "[timing] final (flush): audio=1.1s transcripcion=241ms atraso=0ms fin_habla->final=1321ms texto='¿Tienes hambre?'",
+      "[timing] parcial: audio=0.3s transcripcion=243ms espera_gpu=0ms atraso=0ms texto='Perdón.'",
+      "[timing] parcial: audio=1.0s transcripcion=219ms espera_gpu=0ms atraso=660ms texto='Perdón, esta...'",
+      "[timing] parcial: audio=1.6s transcripcion=240ms espera_gpu=0ms atraso=630ms texto='Perdón, ¿estás triste?'",
+      "[timing] parcial: audio=2.2s transcripcion=240ms espera_gpu=0ms atraso=660ms texto='Perdón, ¿estás triste?'",
+      "[timing] final (flush): audio=2.0s transcripcion=243ms atraso=0ms fin_habla->final=1353ms texto='Perdón, ¿estás triste?'",
+      "[timing] parcial: audio=0.3s transcripcion=195ms espera_gpu=0ms atraso=0ms texto='Hola'",
+      "[timing] parcial: audio=0.9s transcripcion=191ms espera_gpu=0ms atraso=600ms texto='Hola'",
+      "[timing] parcial: audio=1.5s transcripcion=227ms espera_gpu=0ms atraso=600ms texto='Hola, ¿cómo está?'",
+      "[timing] parcial: audio=2.1s transcripcion=241ms espera_gpu=0ms atraso=630ms texto='Hola, ¿cómo estás?'",
+      "[timing] parcial: audio=2.8s transcripcion=269ms espera_gpu=0ms atraso=660ms texto='Hola, ¿cómo estás? ¿Cómo te llamo?'",
+      "[timing] final (flush): audio=3.3s transcripcion=270ms atraso=0ms fin_habla->final=630ms texto='Hola, ¿cómo estás? ¿Cómo te llamas?'",
+      "[timing] parcial: audio=0.3s transcripcion=235ms espera_gpu=1ms atraso=0ms texto=''",
+      "[timing] parcial: audio=1.0s transcripcion=239ms espera_gpu=0ms atraso=660ms texto='¿Dónde vive tu fa...'",
+      "[timing] parcial: audio=1.6s transcripcion=240ms espera_gpu=0ms atraso=660ms texto='¿Dónde vive tu familia?'",
+      "[timing] final (flush): audio=1.8s transcripcion=251ms atraso=0ms fin_habla->final=1300ms texto='¿Dónde vive tu familia?'",
+      "[timing] parcial: audio=0.3s transcripcion=230ms espera_gpu=0ms atraso=0ms texto=''",
+      "[timing] parcial: audio=1.0s transcripcion=211ms espera_gpu=0ms atraso=660ms texto='Yo nunca como...'",
+      "[timing] parcial: audio=1.6s transcripcion=221ms espera_gpu=0ms atraso=630ms texto='Yo nunca como mucho.'",
+      "[timing] final (flush): audio=1.6s transcripcion=230ms atraso=0ms fin_habla->final=1490ms texto='Yo nunca como mucho.'",
+      "[timing] parcial: audio=0.3s transcripcion=241ms espera_gpu=0ms atraso=0ms texto='Perdón.'",
+      "[timing] parcial: audio=1.0s transcripcion=205ms espera_gpu=0ms atraso=660ms texto='Perdón.'",
+      "[timing] parcial: audio=1.6s transcripcion=227ms espera_gpu=0ms atraso=630ms texto='Perdón. Mi arm...'",
+      "[timing] parcial: audio=2.2s transcripcion=240ms espera_gpu=0ms atraso=630ms texto='Perdón. Mi hermano nunca...'",
+      "[timing] parcial: audio=2.9s transcripcion=265ms espera_gpu=0ms atraso=660ms texto='Perdón, mi hermano nunca está contento.'"
+    ],
+    "n_con_audio": 54,
+    "muestra": [
+      "INFO:     172.18.0.1:48932 - \"GET /health HTTP/1.1\" 200 OK",
+      "INFO:     172.18.0.1:48932 - \"GET /v1/models HTTP/1.1\" 404 Not Found",
+      "[timing] parcial: audio=0.3s transcripcion=247ms espera_gpu=8ms atraso=0ms texto='Hola'",
+      "[timing] parcial: audio=1.0s transcripcion=201ms espera_gpu=0ms atraso=660ms texto='Hola.'",
+      "[timing] parcial: audio=1.6s transcripcion=230ms espera_gpu=0ms atraso=630ms texto='Hola, buenos días.'"
+    ]
+  },
+  "en_cache": [
+    {
+      "frase": "FR-01-001",
+      "exacto": true,
+      "por_oracion": true,
+      "cubierto": true,
+      "filas": 1
+    },
+    {
+      "frase": "FR-01-005",
+      "exacto": false,
+      "por_oracion": true,
+      "cubierto": true,
+      "filas": 2
+    },
+    {
+      "frase": "FR-01-007",
+      "exacto": true,
+      "por_oracion": true,
+      "cubierto": true,
+      "filas": 1
+    },
+    {
+      "frase": "FR-01-011",
+      "exacto": false,
+      "por_oracion": false,
+      "cubierto": true,
+      "filas": 2
+    },
+    {
+      "frase": "FR-01-013",
+      "exacto": false,
+      "por_oracion": false,
+      "cubierto": true,
+      "filas": 3
+    },
+    {
+      "frase": "FR-01-014",
+      "exacto": true,
+      "por_oracion": true,
+      "cubierto": true,
+      "filas": 1
+    },
+    {
+      "frase": "FR-01-019",
+      "exacto": true,
+      "por_oracion": true,
+      "cubierto": true,
+      "filas": 1
+    },
+    {
+      "frase": "FR-01-023",
+      "exacto": true,
+      "por_oracion": true,
+      "cubierto": true,
+      "filas": 1
+    },
+    {
+      "frase": "FR-01-025",
+      "exacto": true,
+      "por_oracion": true,
+      "cubierto": true,
+      "filas": 1
+    },
+    {
+      "frase": "FR-01-026",
+      "exacto": true,
+      "por_oracion": true,
+      "cubierto": true,
+      "filas": 1
+    }
+  ]
+}

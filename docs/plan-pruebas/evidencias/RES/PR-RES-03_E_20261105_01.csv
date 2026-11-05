@@ -1,0 +1,7 @@
+﻿caso;indicador_antes;indicador_durante;indicador_despues;textos;se_cuelga
+STT apagado · micrófono de dictado;Inactivo;Inactivo;Inactivo;;no
+STT apagado · modo en vivo;Inactivo;Inactivo;Inactivo;;no
+STT apagado · frase escrita;;;;12:55 PM | 100 | Inactivo | Repetir | Sin servicio de voz: podés seguir traduciendo por texto. | Escribe una frase...;no
+STT se cae a mitad de una captura;Inactivo;Inactivo;Inactivo;12:55 PM | 100 | Inactivo | Repetir | Sin servicio de voz: podés seguir traduciendo por texto. | Escribe una frase...;no
+STT levantado · micrófono de dictado;Inactivo;Inactivo;Inactivo;;no
+STT levantado · modo en vivo;Inactivo;Inactivo;Inactivo;;no

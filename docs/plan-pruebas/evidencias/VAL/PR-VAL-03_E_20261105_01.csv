@@ -1,0 +1,7 @@
+﻿paso;glosa;disponible;glb_path;categoria;source;ms
+1) con la seña;TU;sí;signs/0039_0000_0000.glb;pronombre;llm;884.3
+1) con la seña;HAMBRE;sí;signs/0019_0000_0000.glb;sustantivo;llm;884.3
+2) fila retirada;TU;sí;signs/0039_0000_0000.glb;pronombre;cache;5.4
+2) fila retirada;HAMBRE;no;;;cache;5.4
+3) fila reinsertada;TU;sí;signs/0039_0000_0000.glb;pronombre;cache;4.3
+3) fila reinsertada;HAMBRE;sí;signs/0019_0000_0000.glb;sustantivo;cache;4.3

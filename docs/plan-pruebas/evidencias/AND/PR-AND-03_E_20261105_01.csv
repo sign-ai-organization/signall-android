@@ -1,0 +1,9 @@
+﻿paso;observado;dato
+historial al empezar;0 frases;se vació la preferencia con la app cerrada
+abrir con el historial vacío;panel: lista con 0;texto de vacío / lista
+enviar las 12 frases de FR-01-E;12 de 12 llegaron a «representado»;FR-01-001, FR-01-003, FR-01-007, FR-01-010, FR-01-013, FR-01-014, FR-01-019, FR-01-021, FR-01-024, FR-01-026, FR-01-028, FR-01-029
+lo guardado;12 frases en la preferencia;más nueva primero
+el panel;7 ítems visibles; '. '.join(items[:4])
+reutilizar;se tocó «Con permiso. Déjame pasar, por favor.»;"campo ''; hoja cerrada=True; ms=2558"
+reabrir la app;12 frases siguen;panel tras reabrir: 7 ítems
+límite de entradas;20 frases tras 9 envíos más;MAX_ITEMS = 20 en SignHistoryRepository

@@ -1,0 +1,71 @@
+﻿id;glosa;tipo;glosa_real;esperado;available;glb_path;categoria
+CO-03-001;ABUELO;Real;ABUELO;Reconocida;sí;signs/0016_0000_0000.glb;sustantivo
+CO-03-002;ABURRIDO;Real;ABURRIDO;Reconocida;sí;signs/0023_0000_0000.glb;adjetivo
+CO-03-003;ADIOS;Real;ADIOS;Reconocida;sí;signs/0031_0000_0000.glb;interjección
+CO-03-004;BIEN;Real;BIEN;Reconocida;sí;signs/0024_0000_0000.glb;adverbio
+CO-03-005;BIENVENIDO;Real;BIENVENIDO;Reconocida;sí;signs/0034_0000_0000.glb;interjección
+CO-03-006;BUENAS NOCHES;Real;BUENAS NOCHES;Reconocida;sí;signs/0003_0000_0000.glb;locución
+CO-03-007;BUENAS TARDES;Real;BUENAS TARDES;Reconocida;sí;signs/0002_0000_0000.glb;locución
+CO-03-008;BUENOS DIAS;Real;BUENOS DIAS;Reconocida;sí;signs/0001_0000_0000.glb;locución
+CO-03-009;COMER;Real;COMER;Reconocida;sí;signs/0007_0000_0000.glb;verbo
+CO-03-010;COMO;Real;COMO;Reconocida;sí;signs/0044_0000_0000.glb;interrogativo
+CO-03-011;COMO ESTAS;Real;COMO ESTAS;Reconocida;sí;signs/0026_0000_0000.glb;interjección
+CO-03-012;CON GUSTO;Real;CON GUSTO;Reconocida;sí;signs/0033_0000_0000.glb;locución
+CO-03-013;CONTENTO;Real;CONTENTO;Reconocida;sí;signs/0021_0000_0000.glb;adjetivo
+CO-03-014;CUANDO;Real;CUANDO;Reconocida;sí;signs/0042_0000_0000.glb;interrogativo
+CO-03-015;DIFERENTE;Real;DIFERENTE;Reconocida;sí;signs/0047_0000_0000.glb;adjetivo
+CO-03-016;DONDE;Real;DONDE;Reconocida;sí;signs/0043_0000_0000.glb;interrogativo
+CO-03-017;FAMILIA;Real;FAMILIA;Reconocida;sí;signs/0010_0000_0000.glb;sustantivo
+CO-03-018;FELIZ;Real;FELIZ;Reconocida;sí;signs/0020_0000_0000.glb;adjetivo
+CO-03-019;GRACIAS;Real;GRACIAS;Reconocida;sí;signs/0000_0000_0000.glb;sustantivo
+CO-03-020;HAMBRE;Real;HAMBRE;Reconocida;sí;signs/0019_0000_0000.glb;sustantivo
+CO-03-021;HERMANO;Real;HERMANO;Reconocida;sí;signs/0018_0000_0000.glb;sustantivo
+CO-03-022;HOLA;Real;HOLA;Reconocida;sí;signs/0030_0000_0000.glb;interjección
+CO-03-023;HOMBRE;Real;HOMBRE;Reconocida;sí;signs/0013_0000_0000.glb;sustantivo
+CO-03-024;JUCIOSO;Real;JUCIOSO;Reconocida;sí;signs/0029_0000_0000.glb;adjetivo
+CO-03-025;MAL;Real;MAL;Reconocida;sí;signs/0025_0000_0000.glb;adverbio
+CO-03-026;MAS O MENOS;Real;MAS O MENOS;Reconocida;sí;signs/0027_0000_0000.glb;locución
+CO-03-027;MUCHO;Real;MUCHO;Reconocida;sí;signs/0049_0000_0000.glb;cuantificador
+CO-03-028;MUJER;Real;MUJER;Reconocida;sí;signs/0012_0000_0000.glb;sustantivo
+CO-03-029;NIÑA;Real;NIÑA;Reconocida;sí;signs/0015_0000_0000.glb;sustantivo
+CO-03-030;NIÑO;Real;NIÑO;Reconocida;sí;signs/0014_0000_0000.glb;sustantivo
+CO-03-031;NOMBRE;Real;NOMBRE;Reconocida;sí;signs/0005_0000_0000.glb;sustantivo
+CO-03-032;NUNCA;Real;NUNCA;Reconocida;sí;signs/0037_0000_0000.glb;adverbio
+CO-03-033;PERDON;Real;PERDON;Reconocida;sí;signs/0035_0000_0000.glb;sustantivo
+CO-03-034;PERMISO;Real;PERMISO;Reconocida;sí;signs/0036_0000_0000.glb;sustantivo
+CO-03-035;PERSONAS;Real;PERSONAS;Reconocida;sí;signs/0011_0000_0000.glb;sustantivo
+CO-03-036;POCO;Real;POCO;Reconocida;sí;signs/0009_0000_0000.glb;cuantificador
+CO-03-037;POR FAVOR;Real;POR FAVOR;Reconocida;sí;signs/0032_0000_0000.glb;locución
+CO-03-038;POR QUE;Real;POR QUE;Reconocida;sí;signs/0045_0000_0000.glb;interrogativo
+CO-03-039;QUE;Real;QUE;Reconocida;sí;signs/0041_0000_0000.glb;interrogativo
+CO-03-040;QUIEN;Real;QUIEN;Reconocida;sí;signs/0046_0000_0000.glb;interrogativo
+CO-03-041;SENTIR;Real;SENTIR;Reconocida;sí;signs/0028_0000_0000.glb;verbo
+CO-03-042;SEÑA;Real;SEÑA;Reconocida;sí;signs/0004_0000_0000.glb;sustantivo
+CO-03-043;TIO;Real;TIO;Reconocida;sí;signs/0017_0000_0000.glb;sustantivo
+CO-03-044;TODOS;Real;TODOS;Reconocida;sí;signs/0048_0000_0000.glb;determinante
+CO-03-045;TRABAJAR;Real;TRABAJAR;Reconocida;sí;signs/0006_0000_0000.glb;verbo
+CO-03-046;TRISTE;Real;TRISTE;Reconocida;sí;signs/0022_0000_0000.glb;adjetivo
+CO-03-047;TU;Real;TU;Reconocida;sí;signs/0039_0000_0000.glb;pronombre
+CO-03-048;USTEDES;Real;USTEDES;Reconocida;sí;signs/0040_0000_0000.glb;pronombre
+CO-03-049;VIVIR;Real;VIVIR;Reconocida;sí;signs/0008_0000_0000.glb;verbo
+CO-03-050;YO;Real;YO;Reconocida;sí;signs/0038_0000_0000.glb;pronombre
+CO-03-051;CEDULA;Inexistente;—;No disponible;no;;
+CO-03-052;TELEFONO;Inexistente;—;No disponible;no;;
+CO-03-053;DIRECCION;Inexistente;—;No disponible;no;;
+CO-03-054;EDAD;Inexistente;—;No disponible;no;;
+CO-03-055;FIRMAR;Inexistente;—;No disponible;no;;
+CO-03-056;DOCUMENTO;Inexistente;—;No disponible;no;;
+CO-03-057;CASA;Inexistente;—;No disponible;no;;
+CO-03-058;AMIGO;Inexistente;—;No disponible;no;;
+CO-03-059;ABUELA;Inexistente;—;No disponible;no;;
+CO-03-060;ESCUELA;Inexistente;—;No disponible;no;;
+CO-03-061;BUENOS DÍAS;Variante: con tilde;BUENOS DIAS;Reconocida;sí;signs/0001_0000_0000.glb;locución
+CO-03-062;CÓMO;Variante: con tilde;COMO;Reconocida;sí;signs/0044_0000_0000.glb;interrogativo
+CO-03-063;PERDÓN;Variante: con tilde;PERDON;Reconocida;sí;signs/0035_0000_0000.glb;sustantivo
+CO-03-064;hola;Variante: en minúsculas;HOLA;Reconocida;sí;signs/0030_0000_0000.glb;interjección
+CO-03-065;gracias;Variante: en minúsculas;GRACIAS;Reconocida;sí;signs/0000_0000_0000.glb;sustantivo
+CO-03-066;por favor;Variante: en minúsculas;POR FAVOR;Reconocida;sí;signs/0032_0000_0000.glb;locución
+CO-03-067;FAMILIA.;Variante: con punto;FAMILIA;Reconocida;sí;signs/0010_0000_0000.glb;sustantivo
+CO-03-068;ADIOS.;Variante: con punto;ADIOS;Reconocida;sí;signs/0031_0000_0000.glb;interjección
+CO-03-069;BUENAS NOCHES;Variante: con un espacio de más;BUENAS NOCHES;Reconocida;sí;signs/0003_0000_0000.glb;locución
+CO-03-070;POR  FAVOR;Variante: con un espacio de más;POR FAVOR;Reconocida;sí;signs/0032_0000_0000.glb;locución

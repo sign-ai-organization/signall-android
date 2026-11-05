@@ -1,0 +1,122 @@
+{
+  "proxy_pid": 1849390,
+  "filas": [
+    {
+      "n": 1,
+      "id": "FR-01-001",
+      "texto": "Hola, buenos días, bienvenidos.",
+      "up": 72,
+      "down": 337,
+      "total": 409,
+      "ms": 9922,
+      "t": 1793893633946
+    },
+    {
+      "n": 2,
+      "id": "FR-01-005",
+      "texto": "Buenas tardes. Hoy me siento más o menos.",
+      "up": 98,
+      "down": 177,
+      "total": 275,
+      "ms": 14834,
+      "t": 1793893646343
+    },
+    {
+      "n": 3,
+      "id": "FR-01-007",
+      "texto": "¿Tienes hambre?",
+      "up": 72,
+      "down": 106,
+      "total": 178,
+      "ms": 9116,
+      "t": 1793893663601
+    },
+    {
+      "n": 4,
+      "id": "FR-01-011",
+      "texto": "Perdón. ¿Estás triste?",
+      "up": 65,
+      "down": 108,
+      "total": 173,
+      "ms": 10520,
+      "t": 1793893675259
+    },
+    {
+      "n": 5,
+      "id": "FR-01-013",
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "up": 96,
+      "down": 162,
+      "total": 258,
+      "ms": 14405,
+      "t": 1793893688346
+    },
+    {
+      "n": 6,
+      "id": "FR-01-014",
+      "texto": "¿Dónde vive tu familia?",
+      "up": 81,
+      "down": 116,
+      "total": 197,
+      "ms": 14278,
+      "t": 1793893705127
+    },
+    {
+      "n": 7,
+      "id": "FR-01-019",
+      "texto": "Yo nunca como mucho.",
+      "up": 76,
+      "down": 134,
+      "total": 210,
+      "ms": 14863,
+      "t": 1793893721833
+    },
+    {
+      "n": 8,
+      "id": "FR-01-023",
+      "texto": "Perdón. Mi hermano nunca está contento.",
+      "up": 97,
+      "down": 114,
+      "total": 211,
+      "ms": 14853,
+      "t": 1793893739195
+    },
+    {
+      "n": 9,
+      "id": "FR-01-025",
+      "texto": "Por favor, come poco.",
+      "up": 61,
+      "down": 94,
+      "total": 155,
+      "ms": 12232,
+      "t": 1793893756533
+    },
+    {
+      "n": 10,
+      "id": "FR-01-026",
+      "texto": "Con permiso. Déjame pasar, por favor.",
+      "up": 79,
+      "down": 113,
+      "total": 192,
+      "ms": 7148,
+      "t": 1793893771168
+    }
+  ],
+  "notas": [],
+  "reverse": "UsbFfs tcp:8080 tcp:8081",
+  "reposo_10s": {
+    "up": 16,
+    "down": 8,
+    "conexiones": 0
+  },
+  "reverse_final": "UsbFfs tcp:8080 tcp:8080",
+  "resumen": {
+    "up_medio": 79.7,
+    "down_medio": 146.1,
+    "total_medio": 225.8,
+    "up_min": 61,
+    "up_max": 98,
+    "down_min": 94,
+    "down_max": 337
+  }
+}

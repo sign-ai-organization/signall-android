@@ -1,0 +1,55 @@
+{
+  "id_sign": 19,
+  "glosa": "HAMBRE",
+  "fila_respaldo": {
+    "id_sign": "19",
+    "gloss": "HAMBRE",
+    "semantic_category": "sustantivo",
+    "glb_animation_path": "signs/0019_0000_0000.glb",
+    "fps": "24",
+    "total_frames": "51",
+    "asset_bytes": "154468",
+    "asset_sha256": "277671ef88e7d3347e7f2eb627be811b47c982261266878454d277d7a799efe8",
+    "modified_at": "2026-10-14 05:09:38.819915"
+  },
+  "health_final": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 23,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "filas_final": 50,
+  "pasos": {
+    "a_con_sena": {
+      "segmentos": [
+        "segment 0/1 turn=1 -> TU,HAMBRE"
+      ],
+      "avisos": [],
+      "resumen": [
+        "resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=75ms p95=75ms max=75ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a"
+      ]
+    },
+    "b_sin_sena": {
+      "segmentos": [
+        "segment 0/1 turn=1 -> TU,HAMBRE"
+      ],
+      "avisos": [
+        "glosas sin animación, avisadas: HAMBRE"
+      ],
+      "resumen": [
+        "resumen: frases=1 oraciones=1 glosas=2 sin_seña=1 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=62ms p95=62ms max=62ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a"
+      ]
+    },
+    "c_reinsertada": {
+      "segmentos": [
+        "segment 0/1 turn=1 -> TU,HAMBRE"
+      ],
+      "avisos": [],
+      "resumen": [
+        "resumen: frases=1 oraciones=1 glosas=2 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=50ms p95=50ms max=50ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a"
+      ]
+    }
+  }
+}

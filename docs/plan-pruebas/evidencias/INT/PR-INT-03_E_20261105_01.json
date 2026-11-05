@@ -1,0 +1,574 @@
+{
+  "fallback_original": "false",
+  "backend": [
+    {
+      "id": "FR-11-001",
+      "glosas": [
+        {
+          "texto": "YO",
+          "available": true,
+          "glb": "signs/0038_0000_0000.glb"
+        },
+        {
+          "texto": "CONTENTO",
+          "available": true,
+          "glb": "signs/0021_0000_0000.glb"
+        },
+        {
+          "texto": "HERMANO",
+          "available": true,
+          "glb": "signs/0018_0000_0000.glb"
+        }
+      ],
+      "ms": 915.3
+    },
+    {
+      "id": "FR-11-002",
+      "glosas": [
+        {
+          "texto": "BUENAS TARDES",
+          "available": true,
+          "glb": "signs/0002_0000_0000.glb"
+        },
+        {
+          "texto": "YO",
+          "available": true,
+          "glb": "signs/0038_0000_0000.glb"
+        },
+        {
+          "texto": "SENTIR",
+          "available": true,
+          "glb": "signs/0028_0000_0000.glb"
+        },
+        {
+          "texto": "MAS O MENOS",
+          "available": false,
+          "glb": ""
+        }
+      ],
+      "ms": 7.8
+    },
+    {
+      "id": "FR-11-003",
+      "glosas": [
+        {
+          "texto": "ABUELO",
+          "available": false,
+          "glb": ""
+        },
+        {
+          "texto": "TIO",
+          "available": false,
+          "glb": ""
+        },
+        {
+          "texto": "TRABAJAR",
+          "available": true,
+          "glb": "signs/0006_0000_0000.glb"
+        },
+        {
+          "texto": "FAMILIA",
+          "available": true,
+          "glb": "signs/0010_0000_0000.glb"
+        }
+      ],
+      "ms": 44.6
+    },
+    {
+      "id": "FR-11-004",
+      "glosas": [
+        {
+          "texto": "TODOS",
+          "available": true,
+          "glb": "signs/0048_0000_0000.glb"
+        },
+        {
+          "texto": "BUENAS NOCHES",
+          "available": false,
+          "glb": ""
+        }
+      ],
+      "ms": 2095.5
+    },
+    {
+      "id": "FR-11-005",
+      "glosas": [
+        {
+          "texto": "TU",
+          "available": false,
+          "glb": ""
+        },
+        {
+          "texto": "HAMBRE",
+          "available": false,
+          "glb": ""
+        }
+      ],
+      "ms": 6.2
+    },
+    {
+      "id": "FR-11-006",
+      "glosas": [
+        {
+          "texto": "ESTAR",
+          "available": false,
+          "glb": ""
+        },
+        {
+          "texto": "BIEN",
+          "available": false,
+          "glb": ""
+        }
+      ],
+      "ms": 787.8
+    }
+  ],
+  "fases": [
+    {
+      "fase": "reserva desactivada",
+      "fallback": false,
+      "filas": [
+        {
+          "id": "FR-11-001",
+          "caso": "Una glosa sin seña",
+          "sin_sena_esperadas": [
+            "FELIZ"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": null,
+          "ms": null,
+          "textos": [
+            "1:22 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-001.png",
+          "recibidas": [
+            "YO",
+            "CONTENTO",
+            "HERMANO"
+          ],
+          "senas_representadas": 3,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 6224
+        },
+        {
+          "id": "FR-11-002",
+          "caso": "Una glosa sin seña",
+          "sin_sena_esperadas": [
+            "MAS O MENOS"
+          ],
+          "indicador_durante": "Sefa no disponible",
+          "t_fin": 1793902941513,
+          "ms": 10611,
+          "textos": [
+            "1:23 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-002.png",
+          "recibidas": [
+            "BUENAS TARDES",
+            "YO",
+            "SENTIR",
+            "MAS O MENOS"
+          ],
+          "senas_representadas": 3,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 6231
+        },
+        {
+          "id": "FR-11-003",
+          "caso": "Varias glosas sin seña",
+          "sin_sena_esperadas": [
+            "ABUELO",
+            "TIO"
+          ],
+          "indicador_durante": "Sefa no disponible",
+          "t_fin": 1793902992090,
+          "ms": 8693,
+          "textos": [
+            "1:23 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-003.png",
+          "recibidas": [
+            "ABUELO",
+            "TIO",
+            "TRABAJAR",
+            "FAMILIA"
+          ],
+          "senas_representadas": 2,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 4198
+        },
+        {
+          "id": "FR-11-004",
+          "caso": "Varias glosas sin seña",
+          "sin_sena_esperadas": [
+            "ADIOS",
+            "BUENAS NOCHES"
+          ],
+          "indicador_durante": "Sefa no disponible",
+          "t_fin": 1793903005140,
+          "ms": 6673,
+          "textos": [
+            "1:23 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-004.png",
+          "recibidas": [
+            "TODOS",
+            "BUENAS NOCHES"
+          ],
+          "senas_representadas": 1,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 2206
+        },
+        {
+          "id": "FR-11-005",
+          "caso": "Todas las glosas sin seña",
+          "sin_sena_esperadas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "indicador_durante": "Sefa no disponible",
+          "t_fin": null,
+          "ms": null,
+          "textos": [
+            "1:25 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-005.png",
+          "recibidas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "senas_representadas": null,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": false,
+          "ms_reportado": null
+        },
+        {
+          "id": "FR-11-006",
+          "caso": "Todas las glosas sin seña",
+          "sin_sena_esperadas": [
+            "TU",
+            "BIEN"
+          ],
+          "indicador_durante": "Sefa no disponible",
+          "t_fin": null,
+          "ms": null,
+          "textos": [
+            "1:28 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_off_FR-11-006.png",
+          "recibidas": [
+            "ESTAR",
+            "BIEN"
+          ],
+          "senas_representadas": null,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": false,
+          "ms_reportado": null
+        }
+      ]
+    },
+    {
+      "fase": "reserva activada",
+      "fallback": true,
+      "filas": [
+        {
+          "id": "FR-11-001",
+          "caso": "Una glosa sin seña",
+          "sin_sena_esperadas": [
+            "FELIZ"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793903305213,
+          "ms": 11029,
+          "textos": [
+            "1:28 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-001.png",
+          "recibidas": [
+            "YO",
+            "CONTENTO",
+            "HERMANO"
+          ],
+          "senas_representadas": 3,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 6225
+        },
+        {
+          "id": "FR-11-002",
+          "caso": "Una glosa sin seña",
+          "sin_sena_esperadas": [
+            "MAS O MENOS"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793903324849,
+          "ms": 13090,
+          "textos": [
+            "1:28 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-002.png",
+          "recibidas": [
+            "BUENAS TARDES",
+            "YO",
+            "SENTIR",
+            "MAS O MENOS"
+          ],
+          "senas_representadas": 4,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 8615
+        },
+        {
+          "id": "FR-11-003",
+          "caso": "Varias glosas sin seña",
+          "sin_sena_esperadas": [
+            "ABUELO",
+            "TIO"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793903344903,
+          "ms": 13541,
+          "textos": [
+            "1:29 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-003.png",
+          "recibidas": [
+            "ABUELO",
+            "TIO",
+            "TRABAJAR",
+            "FAMILIA"
+          ],
+          "senas_representadas": 4,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 8963
+        },
+        {
+          "id": "FR-11-004",
+          "caso": "Varias glosas sin seña",
+          "sin_sena_esperadas": [
+            "ADIOS",
+            "BUENAS NOCHES"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793903360494,
+          "ms": 9099,
+          "textos": [
+            "1:29 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-004.png",
+          "recibidas": [
+            "TODOS",
+            "BUENAS NOCHES"
+          ],
+          "senas_representadas": 2,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 4565
+        },
+        {
+          "id": "FR-11-005",
+          "caso": "Todas las glosas sin seña",
+          "sin_sena_esperadas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793903376394,
+          "ms": 9480,
+          "textos": [
+            "1:29 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-005.png",
+          "recibidas": [
+            "TU",
+            "HAMBRE"
+          ],
+          "senas_representadas": 2,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 4895
+        },
+        {
+          "id": "FR-11-006",
+          "caso": "Todas las glosas sin seña",
+          "sin_sena_esperadas": [
+            "TU",
+            "BIEN"
+          ],
+          "indicador_durante": "Reproduciendo",
+          "t_fin": 1793903392212,
+          "ms": 9371,
+          "textos": [
+            "1:29 PM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ],
+          "png": "/tmp/opencode/pruebas/shots/int03_on_FR-11-006.png",
+          "recibidas": [
+            "ESTAR",
+            "BIEN"
+          ],
+          "senas_representadas": 2,
+          "avisos_sin_animacion": [
+            "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+            "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+            "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+            "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+            "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+          ],
+          "termino_en_el_log": true,
+          "ms_reportado": 4825
+        }
+      ]
+    }
+  ],
+  "turnos": 12,
+  "avisos": [
+    "         1793902935.283 19816 19816 I SignAiState: glosas sin animación, avisadas: MAS O MENOS",
+    "         1793902987.891 19816 19816 I SignAiState: glosas sin animación, avisadas: ABUELO, TIO",
+    "         1793903002.934 19816 19816 I SignAiState: glosas sin animación, avisadas: BUENAS NOCHES",
+    "         1793903017.109 19816 19816 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE",
+    "         1793903152.707 19816 19816 I SignAiState: glosas sin animación, avisadas: ESTAR, BIEN"
+  ]
+}

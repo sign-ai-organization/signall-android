@@ -1,0 +1,177 @@
+{
+  "filas": [
+    {
+      "id": "FR-06-001",
+      "tipo": "Muy larga",
+      "frase": "Buenos días, quiero contarles que mi abuelo vive con mi tío y con toda la familia en una casa grande cerca del centro, donde los niños juegan por las tardes mientras los mayores trabajan y cocinan, y aunque a veces están cansados, siempre se sienten contentos porque comparten la comida y se cuentan cómo les fue durante el día.",
+      "n_glosas": 19,
+      "glosas": "BUENOS DIAS YO TU ABUELO VIVIR TU TIO FAMILIA JUGAR TARDE MAYORES TRABAJAR ESTAN CANSADOS SIEMPRE SENTIR CONTENTO COMO USTEDES",
+      "fuera_catalogo": "JUGAR TARDE MAYORES ESTAN CANSADOS SIEMPRE",
+      "n_fuera": 6,
+      "error": "no",
+      "ms": 1317.7
+    },
+    {
+      "id": "FR-06-002",
+      "tipo": "Muy larga",
+      "frase": "Perdón que le moleste, pero necesito saber dónde puedo encontrar a la persona encargada de atender a las familias que llegan por primera vez, porque mi hermano y yo venimos desde muy lejos, estamos algo perdidos y no sabemos con quién hablar ni qué papeles tenemos que presentar para empezar.",
+      "n_glosas": 11,
+      "glosas": "PERDON DONDE HERMANO YO NOSOTROS ALGO PERDIDO NO SABER QUIEN QUE",
+      "fuera_catalogo": "NOSOTROS ALGO PERDIDO NO SABER",
+      "n_fuera": 5,
+      "error": "no",
+      "ms": 1911.1
+    },
+    {
+      "id": "FR-06-003",
+      "tipo": "Muy larga",
+      "frase": "Cuando yo era niño mi abuelo me decía que lo más importante era ser juicioso, trabajar con gusto, tratar bien a todas las personas sin importar lo diferentes que fueran y nunca olvidar saludar con respeto, y todavía hoy intento hacer lo mismo cada mañana antes de salir de mi casa.",
+      "n_glosas": 10,
+      "glosas": "CUANDO YO NIÑO ABUELO TRABAJAR BIEN PERSONAS DIFERENTE NUNCA YO",
+      "fuera_catalogo": "",
+      "n_fuera": 0,
+      "error": "no",
+      "ms": 1542.3
+    },
+    {
+      "id": "FR-06-004",
+      "tipo": "Muy larga",
+      "frase": "Hoy me siento más o menos porque ayer trabajé muchas horas, comí poco, dormí mal y además mi hermano estuvo triste toda la noche, así que le pedí a la familia que por favor no hiciera ruido y que nos dejaran descansar un rato antes de volver a empezar con las tareas pendientes.",
+      "n_glosas": 23,
+      "glosas": "YO SENTIR MAS O MENOS YO TRABAJAR COMER POCO MAL HERMANO TRISTE FAMILIA POR FAVOR NO HACER RUIDO NOS DEJAR DESCANSAR RATO VOLVER EMPEZAR TAREAS PENDIENTES",
+      "fuera_catalogo": "NO HACER RUIDO NOS DEJAR DESCANSAR RATO VOLVER EMPEZAR TAREAS PENDIENTES",
+      "n_fuera": 11,
+      "error": "no",
+      "ms": 964.2
+    },
+    {
+      "id": "FR-06-005",
+      "tipo": "Muy larga",
+      "frase": "Si usted tiene hambre, puede pasar a la cocina y servirse lo que quiera, pero le pido que primero salude a todos los que están en la mesa, que se presente con su nombre, que pregunte cómo se sienten los demás y que, cuando termine de comer, ayude a recoger los platos y a limpiar.",
+      "n_glosas": 10,
+      "glosas": "HAMBRE TODOS NOMBRE COMO SENTIR COMER AYUDAR RECOGER PLATOS LIMPIAR",
+      "fuera_catalogo": "AYUDAR RECOGER PLATOS LIMPIAR",
+      "n_fuera": 4,
+      "error": "no",
+      "ms": 1001.5
+    },
+    {
+      "id": "FR-06-006",
+      "tipo": "Con números",
+      "frase": "Mi número de cédula es 1020304050.",
+      "n_glosas": 3,
+      "glosas": "NUMERO CEDULA 1020304050",
+      "fuera_catalogo": "NUMERO CEDULA 1020304050",
+      "n_fuera": 3,
+      "error": "no",
+      "ms": 676.9
+    },
+    {
+      "id": "FR-06-007",
+      "tipo": "Con números",
+      "frase": "El documento de mi hermano es el 52.314.876.",
+      "n_glosas": 1,
+      "glosas": "HERMANO",
+      "fuera_catalogo": "",
+      "n_fuera": 0,
+      "error": "no",
+      "ms": 582.7
+    },
+    {
+      "id": "FR-06-008",
+      "tipo": "Con números",
+      "frase": "Mi tío viaja con el pasaporte AB123456.",
+      "n_glosas": 1,
+      "glosas": "TIO",
+      "fuera_catalogo": "",
+      "n_fuera": 0,
+      "error": "no",
+      "ms": 719.8
+    },
+    {
+      "id": "FR-06-009",
+      "tipo": "Con números",
+      "frase": "La tarjeta de identidad de la niña es 1098765432.",
+      "n_glosas": 1,
+      "glosas": "NIÑA",
+      "fuera_catalogo": "",
+      "n_fuera": 0,
+      "error": "no",
+      "ms": 1165.6
+    },
+    {
+      "id": "FR-06-010",
+      "tipo": "Con números",
+      "frase": "Mi teléfono es 300 123 4567.",
+      "n_glosas": 4,
+      "glosas": "TELEFONO 300 123 4567",
+      "fuera_catalogo": "TELEFONO 300 123 4567",
+      "n_fuera": 4,
+      "error": "no",
+      "ms": 715.8
+    },
+    {
+      "id": "FR-06-011",
+      "tipo": "Con números",
+      "frase": "Por favor, llámame al 3105558899.",
+      "n_glosas": 2,
+      "glosas": "POR FAVOR YO",
+      "fuera_catalogo": "",
+      "n_fuera": 0,
+      "error": "no",
+      "ms": 904.2
+    },
+    {
+      "id": "FR-06-012",
+      "tipo": "Con números",
+      "frase": "El teléfono fijo de la familia es 601 555 0123.",
+      "n_glosas": 1,
+      "glosas": "FAMILIA",
+      "fuera_catalogo": "",
+      "n_fuera": 0,
+      "error": "no",
+      "ms": 737.8
+    },
+    {
+      "id": "FR-06-013",
+      "tipo": "Con números",
+      "frase": "Nací el 15 de marzo de 2001.",
+      "n_glosas": 4,
+      "glosas": "NACER 15 MARZO 2001",
+      "fuera_catalogo": "NACER 15 MARZO 2001",
+      "n_fuera": 4,
+      "error": "no",
+      "ms": 713.1
+    },
+    {
+      "id": "FR-06-014",
+      "tipo": "Con números",
+      "frase": "La cita es el 03/11/2026 a las 10:30.",
+      "n_glosas": 3,
+      "glosas": "CITA 03/11/2026 30",
+      "fuera_catalogo": "CITA 03/11/2026 30",
+      "n_fuera": 3,
+      "error": "no",
+      "ms": 826.1
+    },
+    {
+      "id": "FR-06-015",
+      "tipo": "Con números",
+      "frase": "Mi abuelo llegó a esta ciudad en 1998.",
+      "n_glosas": 1,
+      "glosas": "ABUELO",
+      "fuera_catalogo": "",
+      "n_fuera": 0,
+      "error": "no",
+      "ms": 799.9
+    }
+  ],
+  "config": {
+    "llm_model": "gpt-4o-mini",
+    "llm_base_url": "",
+    "semantic_cache_preload": true,
+    "semantic_cache_threshold": 0.03,
+    "sentence_segmenter_enabled": true,
+    "stt_ws_url": "ws://***/ws/transcribe"
+  }
+}

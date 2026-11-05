@@ -1,0 +1,8 @@
+﻿revision;antes;despues;veredicto
+archivos nuevos en el backend (find -newer marca);0 archivos, 0 de audio;0 archivos, 0 de audio;ninguno
+archivos nuevos en el STT;0 archivos, 0 de audio;0 archivos, 0 de audio;ninguno
+tablas y columnas de la aplicación;"tablas catalog y semantic_cache; 0 columnas bytea; 0 de audio";"las mismas 2 tablas; 0 columnas bytea y 0 de audio en ellas (las 2 bytea y la 'opcmethod' que aparecen son del catálogo del sistema pg_opclass)";sin cambios
+filas de semantic_cache;0 filas (se vació al empezar);14 filas, todas de texto (original_text, glosses, embedding);solo texto
+líneas de log con audio (backend);-;0 de 0 líneas;ninguno
+líneas de log con audio (STT);-;54 de 62 líneas, todas [timing] con duración y texto;solo duración y texto
+texto transcrito en la caché;0 filas;7/10 frases con su texto exacto y 8/10 por oración;sí queda el texto

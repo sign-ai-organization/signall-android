@@ -1,0 +1,187 @@
+{
+  "metodo": "distancia coseno (1 - producto punto con vectores unitarios) al vecino más cercano del mismo phrase_type, calculada con el EmbeddingModel del backend dentro del contenedor; incluye el atajo exacto sobre el texto normalizado",
+  "modelo": "paraphrase-multilingual-MiniLM-L12-v2",
+  "tabla": [
+    {
+      "umbral": 0.02,
+      "parafrasis_correctas": 17,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 0,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.025,
+      "parafrasis_correctas": 17,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 0,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.03,
+      "parafrasis_correctas": 18,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 0,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.035,
+      "parafrasis_correctas": 19,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 1,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.04,
+      "parafrasis_correctas": 19,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 2,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.05,
+      "parafrasis_correctas": 21,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 2,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.08,
+      "parafrasis_correctas": 23,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 7,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.12,
+      "parafrasis_correctas": 24,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 12,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.2,
+      "parafrasis_correctas": 26,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 18,
+      "trampas_de": 30
+    },
+    {
+      "umbral": 0.3,
+      "parafrasis_correctas": 27,
+      "parafrasis_de": 30,
+      "parafrasis_con_glosas_ajenas": 0,
+      "trampas_falsas": 21,
+      "trampas_de": 30
+    }
+  ],
+  "umbral_actual": 0.03,
+  "pipeline": {
+    "cache_tras_fr01": 43,
+    "validacion": [
+      {
+        "id": "FR-03-001",
+        "original_id": "FR-01-001",
+        "variante": "HOLA, BUENOS DÍAS, BIENVENIDOS.",
+        "source": [
+          "cache"
+        ],
+        "oraciones": [
+          "HOLA, BUENOS DÍAS, BIENVENIDOS."
+        ],
+        "glosas": [
+          "HOLA",
+          "BUENOS DIAS"
+        ],
+        "cache_antes": 43,
+        "cache_despues": 43,
+        "ms": 4.3
+      },
+      {
+        "id": "FR-03-003",
+        "original_id": "FR-01-003",
+        "variante": "En familia trabajan mi abuelo y mi tío.",
+        "source": [
+          "cache"
+        ],
+        "oraciones": [
+          "En familia trabajan mi abuelo y mi tío."
+        ],
+        "glosas": [
+          "ABUELO",
+          "TIO",
+          "TRABAJAR",
+          "FAMILIA"
+        ],
+        "cache_antes": 43,
+        "cache_despues": 43,
+        "ms": 24.3
+      },
+      {
+        "id": "FR-03-011",
+        "original_id": "FR-01-011",
+        "variante": "Perdon. ¿Estas triste?",
+        "source": [
+          "cache",
+          "cache"
+        ],
+        "oraciones": [
+          "Perdon.",
+          "¿Estas triste?"
+        ],
+        "glosas": [
+          "PERDON",
+          "TRISTE"
+        ],
+        "cache_antes": 43,
+        "cache_despues": 43,
+        "ms": 4.5
+      },
+      {
+        "id": "FR-03-021",
+        "original_id": "FR-01-021",
+        "variante": "Nunca está aburrido mi tío.",
+        "source": [
+          "llm"
+        ],
+        "oraciones": [
+          "Nunca está aburrido mi tío."
+        ],
+        "glosas": [
+          "TIO",
+          "NUNCA",
+          "ABURRIDO"
+        ],
+        "cache_antes": 43,
+        "cache_despues": 44,
+        "ms": 722.1
+      },
+      {
+        "id": "FR-03-027",
+        "original_id": "FR-01-027",
+        "variante": "Chicos, trabajen todos.",
+        "source": [
+          "llm"
+        ],
+        "oraciones": [
+          "Chicos, trabajen todos."
+        ],
+        "glosas": [
+          "TRABAJAR",
+          "TODOS"
+        ],
+        "cache_antes": 44,
+        "cache_despues": 45,
+        "ms": 756.9
+      }
+    ]
+  }
+}

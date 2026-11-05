@@ -1,0 +1,3 @@
+﻿caso;red;escenario_no_uniforme;indicador;traducir;al_enviar_texto;campo_tras_enviar;al_tocar_mic;se_cuelga;ms_arranque
+sin servidor (sin adb reverse);"{""avion"": ""0"", ""wifi"": ""1"", ""reverse"": """", ""internet"": ""sí""}";media 83.4 / desvío 85.6;Desconectado;"{""enabled"": true, ""visible"": true, ""checked"": false}";"""Desconectado""";Hola, buenos días, bienvenidos.;"""Desconectado""";no;16051
+sin internet (modo avión);"{""avion"": ""1"", ""wifi"": ""3"", ""reverse"": ""UsbFfs tcp:8080 tcp:8080"", ""internet"": ""no""}";media 83.4 / desvío 85.6;Inactivo;"{""enabled"": true, ""visible"": true, ""checked"": false}";"""Inactivo""";;"""Grabando""";no;18007

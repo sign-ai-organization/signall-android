@@ -1,0 +1,58 @@
+{
+  "n": 50,
+  "glosas_distintas": 50,
+  "ids_distintos": 50,
+  "categorias_vacias": [],
+  "rutas_invalidas_formato": [],
+  "rutas_fuera_del_inventario": [],
+  "glosas_duplicadas": [],
+  "intento_mismo_id": {
+    "resultado": "RECHAZADO",
+    "error": "sr/local/lib/python3.12/site-packages/asyncpg/connection.py\", line 377, in execute\n    result = await self._protocol.query(query, timeout)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"asyncpg/protocol/protocol.pyx\", line 341, in query\nasyncpg.exceptions.UniqueViolationError: duplicate key value violates unique constraint \"catalog_pkey\"\nDETAIL:  Key (id_sign)=(19) already exists."
+  },
+  "intento_glosa_repetida": {
+    "resultado": "ACEPTADO"
+  },
+  "tras_limpieza": "50",
+  "metrics_tras_reinicio": {
+    "catalog_glosses": 50,
+    "health": {
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 97,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    }
+  },
+  "stats_catalog": {
+    "antes": {
+      "seq_scan": "433",
+      "idx_scan": "30",
+      "seq_tup_read": "18910",
+      "idx_tup_fetch": "92",
+      "n_tup_ins": "62",
+      "n_tup_upd": "0",
+      "n_tup_del": "7"
+    },
+    "despues": {
+      "seq_scan": "433",
+      "idx_scan": "30",
+      "seq_tup_read": "18910",
+      "idx_tup_fetch": "92",
+      "n_tup_ins": "62",
+      "n_tup_upd": "0",
+      "n_tup_del": "7"
+    },
+    "delta": {
+      "seq_scan": 0,
+      "idx_scan": 0,
+      "seq_tup_read": 0,
+      "idx_tup_fetch": 0,
+      "n_tup_ins": 0,
+      "n_tup_upd": 0,
+      "n_tup_del": 0
+    }
+  },
+  "traduccion_s": 0.2
+}

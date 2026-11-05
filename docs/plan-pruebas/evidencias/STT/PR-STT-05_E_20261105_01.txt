@@ -1,0 +1,27 @@
+=== umbral 0
+0
+medium
+cuda
+float16
+{"status":"ok","model":"medium","device":"cuda","requested_device":"cuda","language":"es","silence_timeout_ms":1500}
+
+=== umbral 1
+1
+medium
+cuda
+float16
+{"status":"ok","model":"medium","device":"cuda","requested_device":"cuda","language":"es","silence_timeout_ms":1500}
+
+=== umbral 2
+2
+medium
+cuda
+float16
+{"status":"ok","model":"medium","device":"cuda","requested_device":"cuda","language":"es","silence_timeout_ms":1500}
+
+=== umbral 3
+3
+medium
+cuda
+float16
+{"status":"ok","model":"medium","device":"cuda","requested_device":"cuda","language":"es","silence_timeout_ms":1500}

@@ -1,0 +1,5 @@
+﻿tramo;cifrado;se_lee_el_contenido;prueba
+app → proxy inverso (wss://127.0.0.1:8443 → 443);sí (TLS);no;"0 paquetes en 443 por loopback; apariciones de las palabras de la frase: {'cita': 0, 'tres': 0, 'noviembre': 0, 'diez': 0, 'media': 0}"
+backend → LLM (gpt-4o-mini en HTTPS del proveedor);sin tráfico capturado;no;"0 paquetes en 443 no loopback; apariciones: {'cita': 0, 'tres': 0, 'noviembre': 0, 'diez': 0, 'media': 0}"
+proxy → backend (127.0.0.1:8080, loopback);no;no;"0 paquetes en 8080; apariciones de las palabras: {'cita': 0, 'tres': 0, 'noviembre': 0, 'diez': 0, 'media': 0}; cliente sin compresión: no se leyó"
+app contra una dirección sin cifrar (8443 → 8080);no aplica;no aplica;la app NO acepta: 'Unable to parse TLS packet header' y queda en Desconectado

@@ -1,0 +1,8 @@
+﻿revision;antes;despues;veredicto
+archivos nuevos en el contenedor del backend (find -newer marca);0 archivos, 0 de audio;0 archivos, 0 de audio;ninguno
+archivos nuevos en el contenedor del STT;0 archivos, 0 de audio;0 archivos, 0 de audio;ninguno
+tablas y columnas de la base;"tablas ['catalog', 'semantic_cache']; columnas bytea 2; columnas de audio 1";"tablas ['catalog', 'semantic_cache']; columnas bytea 2; columnas de audio 1";sin cambios
+filas de semantic_cache;0 filas;14 filas (solo texto: original_text, glosses, embedding);solo texto
+líneas de log con audio (backend);-;0 de 0 líneas;ninguno
+líneas de log con audio (STT);-;54 de 62 líneas (todas de tipo [timing] con duración y texto);solo duración y texto
+texto transcrito en la caché;0 filas;8/10 frases con su texto en la caché;sí queda el texto

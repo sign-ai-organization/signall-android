@@ -1,0 +1,16 @@
+﻿id;tipo;frase;n_glosas;glosas;fuera_catalogo;n_fuera;error;ms
+FR-06-001;Muy larga;Buenos días, quiero contarles que mi abuelo vive con mi tío y con toda la familia en una casa grande cerca del centro, donde los niños juegan por las tardes mientras los mayores trabajan y cocinan, y aunque a veces están cansados, siempre se sienten contentos porque comparten la comida y se cuentan cómo les fue durante el día.;19;BUENOS DIAS YO TU ABUELO VIVIR TU TIO FAMILIA JUGAR TARDE MAYORES TRABAJAR ESTAN CANSADOS SIEMPRE SENTIR CONTENTO COMO USTEDES;JUGAR TARDE MAYORES ESTAN CANSADOS SIEMPRE;6;no;1317.7
+FR-06-002;Muy larga;Perdón que le moleste, pero necesito saber dónde puedo encontrar a la persona encargada de atender a las familias que llegan por primera vez, porque mi hermano y yo venimos desde muy lejos, estamos algo perdidos y no sabemos con quién hablar ni qué papeles tenemos que presentar para empezar.;11;PERDON DONDE HERMANO YO NOSOTROS ALGO PERDIDO NO SABER QUIEN QUE;NOSOTROS ALGO PERDIDO NO SABER;5;no;1911.1
+FR-06-003;Muy larga;Cuando yo era niño mi abuelo me decía que lo más importante era ser juicioso, trabajar con gusto, tratar bien a todas las personas sin importar lo diferentes que fueran y nunca olvidar saludar con respeto, y todavía hoy intento hacer lo mismo cada mañana antes de salir de mi casa.;10;CUANDO YO NIÑO ABUELO TRABAJAR BIEN PERSONAS DIFERENTE NUNCA YO;;0;no;1542.3
+FR-06-004;Muy larga;Hoy me siento más o menos porque ayer trabajé muchas horas, comí poco, dormí mal y además mi hermano estuvo triste toda la noche, así que le pedí a la familia que por favor no hiciera ruido y que nos dejaran descansar un rato antes de volver a empezar con las tareas pendientes.;23;YO SENTIR MAS O MENOS YO TRABAJAR COMER POCO MAL HERMANO TRISTE FAMILIA POR FAVOR NO HACER RUIDO NOS DEJAR DESCANSAR RATO VOLVER EMPEZAR TAREAS PENDIENTES;NO HACER RUIDO NOS DEJAR DESCANSAR RATO VOLVER EMPEZAR TAREAS PENDIENTES;11;no;964.2
+FR-06-005;Muy larga;Si usted tiene hambre, puede pasar a la cocina y servirse lo que quiera, pero le pido que primero salude a todos los que están en la mesa, que se presente con su nombre, que pregunte cómo se sienten los demás y que, cuando termine de comer, ayude a recoger los platos y a limpiar.;10;HAMBRE TODOS NOMBRE COMO SENTIR COMER AYUDAR RECOGER PLATOS LIMPIAR;AYUDAR RECOGER PLATOS LIMPIAR;4;no;1001.5
+FR-06-006;Con números;Mi número de cédula es 1020304050.;3;NUMERO CEDULA 1020304050;NUMERO CEDULA 1020304050;3;no;676.9
+FR-06-007;Con números;El documento de mi hermano es el 52.314.876.;1;HERMANO;;0;no;582.7
+FR-06-008;Con números;Mi tío viaja con el pasaporte AB123456.;1;TIO;;0;no;719.8
+FR-06-009;Con números;La tarjeta de identidad de la niña es 1098765432.;1;NIÑA;;0;no;1165.6
+FR-06-010;Con números;Mi teléfono es 300 123 4567.;4;TELEFONO 300 123 4567;TELEFONO 300 123 4567;4;no;715.8
+FR-06-011;Con números;Por favor, llámame al 3105558899.;2;POR FAVOR YO;;0;no;904.2
+FR-06-012;Con números;El teléfono fijo de la familia es 601 555 0123.;1;FAMILIA;;0;no;737.8
+FR-06-013;Con números;Nací el 15 de marzo de 2001.;4;NACER 15 MARZO 2001;NACER 15 MARZO 2001;4;no;713.1
+FR-06-014;Con números;La cita es el 03/11/2026 a las 10:30.;3;CITA 03/11/2026 30;CITA 03/11/2026 30;3;no;826.1
+FR-06-015;Con números;Mi abuelo llegó a esta ciudad en 1998.;1;ABUELO;;0;no;799.9

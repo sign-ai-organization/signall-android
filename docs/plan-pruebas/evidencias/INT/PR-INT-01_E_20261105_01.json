@@ -1,0 +1,385 @@
+{
+  "problemas": [],
+  "frames_por_caso": {
+    "texto-una-oracion": [
+      {
+        "type": "capability",
+        "audio": true,
+        "_t": 4.5
+      },
+      {
+        "type": "sentence_trace",
+        "index": 0,
+        "text": "Hola, buenos días, bienvenidos.",
+        "source": "cache",
+        "steps_ms": {
+          "fingerprint": 0.1,
+          "cache.exact": 0.0
+        },
+        "_t": 5.3
+      },
+      {
+        "type": "segment",
+        "index": 0,
+        "total": 1,
+        "segment": {
+          "type": "AFFIRMATIVE",
+          "glosses": [
+            {
+              "text": "HOLA",
+              "available": true,
+              "glb_path": "signs/0030_0000_0000.glb",
+              "semantic_category": "interjección"
+            },
+            {
+              "text": "BUENOS DIAS",
+              "available": true,
+              "glb_path": "signs/0001_0000_0000.glb",
+              "semantic_category": "locución"
+            }
+          ]
+        },
+        "turn": 1,
+        "_t": 8.5
+      },
+      {
+        "type": "trace",
+        "steps_ms": {
+          "segmentation": 0.1,
+          "validation": 0.0,
+          "total": 0.6
+        },
+        "_t": 8.5
+      },
+      {
+        "type": "done",
+        "turn": 1,
+        "_t": 8.5
+      }
+    ],
+    "texto-varias-oraciones": [
+      {
+        "type": "capability",
+        "audio": true,
+        "_t": 2.9
+      },
+      {
+        "type": "sentence_trace",
+        "index": 0,
+        "text": "Gracias a todos.",
+        "source": "cache",
+        "steps_ms": {
+          "fingerprint": 0.0,
+          "cache.exact": 0.0
+        },
+        "_t": 7.0
+      },
+      {
+        "type": "segment",
+        "index": 0,
+        "total": 2,
+        "segment": {
+          "type": "AFFIRMATIVE",
+          "glosses": [
+            {
+              "text": "GRACIAS",
+              "available": true,
+              "glb_path": "signs/0000_0000_0000.glb",
+              "semantic_category": "sustantivo"
+            },
+            {
+              "text": "TODOS",
+              "available": true,
+              "glb_path": "signs/0048_0000_0000.glb",
+              "semantic_category": "determinante"
+            }
+          ]
+        },
+        "turn": 2,
+        "_t": 7.1
+      },
+      {
+        "type": "sentence_trace",
+        "index": 1,
+        "text": "Los niños y las niñas comen con gusto.",
+        "source": "cache",
+        "steps_ms": {
+          "fingerprint": 0.0,
+          "cache.exact": 0.0
+        },
+        "_t": 7.1
+      },
+      {
+        "type": "segment",
+        "index": 1,
+        "total": 2,
+        "segment": {
+          "type": "AFFIRMATIVE",
+          "glosses": [
+            {
+              "text": "COMER",
+              "available": true,
+              "glb_path": "signs/0007_0000_0000.glb",
+              "semantic_category": "verbo"
+            }
+          ]
+        },
+        "turn": 2,
+        "_t": 7.1
+      },
+      {
+        "type": "trace",
+        "steps_ms": {
+          "segmentation": 3.0,
+          "validation": 0.1,
+          "total": 4.0
+        },
+        "_t": 7.2
+      },
+      {
+        "type": "done",
+        "turn": 2,
+        "_t": 7.2
+      }
+    ],
+    "audio": [
+      {
+        "type": "capability",
+        "audio": true,
+        "_t": 2670.3
+      },
+      {
+        "type": "transcript",
+        "text": "¿Tienes hambre?",
+        "final": false,
+        "_t": 2670.3
+      },
+      {
+        "type": "transcript",
+        "text": "¿Tienes hambre?",
+        "final": true,
+        "_t": 2918.0
+      },
+      {
+        "type": "_reenvio_texto",
+        "text": "¿Tienes hambre?",
+        "_t": 2918.0
+      },
+      {
+        "type": "sentence_trace",
+        "index": 0,
+        "text": "¿Tienes hambre?",
+        "source": "cache",
+        "steps_ms": {
+          "fingerprint": 0.0,
+          "cache.exact": 0.0
+        },
+        "_t": 2919.1
+      },
+      {
+        "type": "segment",
+        "index": 0,
+        "total": 1,
+        "segment": {
+          "type": "YES_NO_QUESTION",
+          "glosses": [
+            {
+              "text": "TU",
+              "available": true,
+              "glb_path": "signs/0039_0000_0000.glb",
+              "semantic_category": "pronombre"
+            },
+            {
+              "text": "HAMBRE",
+              "available": true,
+              "glb_path": "signs/0019_0000_0000.glb",
+              "semantic_category": "sustantivo"
+            }
+          ]
+        },
+        "_t": 2919.1
+      },
+      {
+        "type": "trace",
+        "steps_ms": {
+          "segmentation": 0.1,
+          "validation": 0.0,
+          "total": 0.6
+        },
+        "_t": 2919.2
+      },
+      {
+        "type": "done",
+        "_t": 2919.2
+      }
+    ],
+    "mensajes-ignorados": [
+      {
+        "enviado": null,
+        "recibido": {
+          "type": "capability",
+          "audio": true
+        }
+      },
+      {
+        "enviado": {
+          "type": "mode",
+          "mode": "dictado"
+        },
+        "recibido": null
+      },
+      {
+        "enviado": {
+          "type": "ping"
+        },
+        "recibido": null
+      },
+      {
+        "enviado": {
+          "type": "turn",
+          "turn": 9
+        },
+        "recibido": null
+      },
+      {
+        "enviado": {
+          "type": "text",
+          "turn": 3
+        },
+        "recibido": [
+          {
+            "type": "sentence_trace",
+            "index": 0,
+            "text": "Hola, buenos días, bienvenidos.",
+            "source": "cache",
+            "steps_ms": {
+              "fingerprint": 0.0,
+              "cache.exact": 0.0
+            }
+          },
+          {
+            "type": "segment",
+            "index": 0,
+            "total": 1,
+            "segment": {
+              "type": "AFFIRMATIVE",
+              "glosses": [
+                {
+                  "text": "HOLA",
+                  "available": true,
+                  "glb_path": "signs/0030_0000_0000.glb",
+                  "semantic_category": "interjección"
+                },
+                {
+                  "text": "BUENOS DIAS",
+                  "available": true,
+                  "glb_path": "signs/0001_0000_0000.glb",
+                  "semantic_category": "locución"
+                }
+              ]
+            },
+            "turn": 3
+          },
+          {
+            "type": "trace",
+            "steps_ms": {
+              "segmentation": 0.1,
+              "validation": 0.0,
+              "total": 0.5
+            }
+          },
+          {
+            "type": "done",
+            "turn": 3
+          }
+        ]
+      }
+    ]
+  },
+  "capability": {
+    "type": "capability",
+    "audio": true
+  },
+  "probes": [
+    {
+      "enviado": null,
+      "recibido": {
+        "type": "capability",
+        "audio": true
+      }
+    },
+    {
+      "enviado": {
+        "type": "mode",
+        "mode": "dictado"
+      },
+      "recibido": null
+    },
+    {
+      "enviado": {
+        "type": "ping"
+      },
+      "recibido": null
+    },
+    {
+      "enviado": {
+        "type": "turn",
+        "turn": 9
+      },
+      "recibido": null
+    },
+    {
+      "enviado": {
+        "type": "text",
+        "turn": 3
+      },
+      "recibido": [
+        {
+          "type": "sentence_trace",
+          "index": 0,
+          "text": "Hola, buenos días, bienvenidos.",
+          "source": "cache",
+          "steps_ms": {
+            "fingerprint": 0.0,
+            "cache.exact": 0.0
+          }
+        },
+        {
+          "type": "segment",
+          "index": 0,
+          "total": 1,
+          "segment": {
+            "type": "AFFIRMATIVE",
+            "glosses": [
+              {
+                "text": "HOLA",
+                "available": true,
+                "glb_path": "signs/0030_0000_0000.glb",
+                "semantic_category": "interjección"
+              },
+              {
+                "text": "BUENOS DIAS",
+                "available": true,
+                "glb_path": "signs/0001_0000_0000.glb",
+                "semantic_category": "locución"
+              }
+            ]
+          },
+          "turn": 3
+        },
+        {
+          "type": "trace",
+          "steps_ms": {
+            "segmentation": 0.1,
+            "validation": 0.0,
+            "total": 0.5
+          }
+        },
+        {
+          "type": "done",
+          "turn": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,730 @@
+{
+  "corrida_a": {
+    "permiso_inicial": "true",
+    "mic_prompted_original": "true",
+    "casos": [
+      {
+        "caso": "revocado al abrir",
+        "paso": "abrir la app",
+        "dialogo": [
+          "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes."
+        ],
+        "permiso": "false",
+        "png": "/tmp/opencode/pruebas/shots/and01_01_revocado_al_abrir.png"
+      },
+      {
+        "caso": "denegado en el diálogo",
+        "paso": "tocar NO PERMITIR",
+        "dialogo": [
+          "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes."
+        ],
+        "panel": {
+          "indicador": "Inactivo",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": null,
+            "Traducir": null,
+            "Modo en vivo": null
+          },
+          "textos": [
+            "10:06 AM",
+            "100",
+            "Inactivo",
+            "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "negado": false,
+        "permiso": "false",
+        "png": "/tmp/opencode/pruebas/shots/and01_02_denegado.png"
+      },
+      {
+        "caso": "tocar el micrófono sin permiso",
+        "paso": "tocar 🎤",
+        "dialogo": [
+          "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes."
+        ],
+        "panel": {
+          "indicador": "Inactivo",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": null,
+            "Traducir": null,
+            "Modo en vivo": null
+          },
+          "textos": [
+            "10:06 AM",
+            "100",
+            "Inactivo",
+            "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png": "/tmp/opencode/pruebas/shots/and01_03_mic_sin_permiso.png"
+      },
+      {
+        "caso": "usable sin permiso",
+        "paso": "enviar por texto 'Hola, buenos días, bienvenidos.'",
+        "panel": {
+          "indicador": "Inactivo",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": null,
+            "Traducir": null,
+            "Modo en vivo": null
+          },
+          "textos": [
+            "10:06 AM",
+            "100",
+            "Inactivo",
+            "Repetir",
+            "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "ms_hasta_representado": 8862,
+        "png": "/tmp/opencode/pruebas/shots/and01_04_texto_sin_permiso.png"
+      },
+      {
+        "caso": "revocado con la app abierta",
+        "paso": "pm revoke",
+        "pid_antes": "22781",
+        "pid_despues": "",
+        "panel": null,
+        "dialogo_al_tocar_mic": [],
+        "png_revoke": "/tmp/opencode/pruebas/shots/and01_08_revocado_app_abierta.png",
+        "png_mic": "/tmp/opencode/pruebas/shots/and01_09_revocado_mic.png"
+      }
+    ],
+    "estados": {
+      "manual": {
+        "t0": 1793891220830,
+        "secuencia": [
+          {
+            "t": 0.6,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_00.png"
+          },
+          {
+            "t": 1.53,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_01.png"
+          },
+          {
+            "t": 2.27,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_02.png"
+          },
+          {
+            "t": 3.04,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_03.png"
+          },
+          {
+            "t": 3.82,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_04.png"
+          },
+          {
+            "t": 4.63,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_05.png"
+          },
+          {
+            "t": 5.43,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_06.png"
+          },
+          {
+            "t": 6.2,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_07.png"
+          },
+          {
+            "t": 6.96,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_manual_08.png"
+          }
+        ],
+        "panel_final": {
+          "indicador": "Grabando",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": null,
+            "Traducir": null,
+            "Modo en vivo": null
+          },
+          "textos": [
+            "10:07 AM",
+            "100",
+            "Grabando",
+            "Repetir",
+            "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.",
+            "Dictando...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png": "/tmp/opencode/pruebas/shots/and01_05_manual_final.png"
+      },
+      "vivo": {
+        "secuencia": [
+          {
+            "t": 0.59,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_00.png"
+          },
+          {
+            "t": 1.47,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_01.png"
+          },
+          {
+            "t": 2.24,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_02.png"
+          },
+          {
+            "t": 3.01,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_03.png"
+          },
+          {
+            "t": 3.82,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_04.png"
+          },
+          {
+            "t": 4.59,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_05.png"
+          },
+          {
+            "t": 5.35,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_06.png"
+          },
+          {
+            "t": 6.12,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_07.png"
+          },
+          {
+            "t": 6.85,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_08.png"
+          },
+          {
+            "t": 7.63,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_09.png"
+          },
+          {
+            "t": 8.42,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_10.png"
+          }
+        ],
+        "panel_mientras": {
+          "indicador": "Grabando",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": null,
+            "Traducir": null,
+            "Modo en vivo": null
+          },
+          "textos": [
+            "10:07 AM",
+            "100",
+            "Grabando",
+            "Repetir",
+            "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.",
+            "Dictando...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png_mientras": "/tmp/opencode/pruebas/shots/and01_06_vivo_prendido.png",
+        "secuencia_al_apagar": [
+          {
+            "t": 0.6,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_off_00.png"
+          },
+          {
+            "t": 1.51,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_off_01.png"
+          },
+          {
+            "t": 2.3,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_off_02.png"
+          },
+          {
+            "t": 3.15,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_off_03.png"
+          },
+          {
+            "t": 3.91,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01_vivo_off_04.png"
+          }
+        ],
+        "panel_final": {
+          "indicador": "Grabando",
+          "campo": "",
+          "botones": {
+            "Entrada por voz": null,
+            "Traducir": null,
+            "Modo en vivo": null
+          },
+          "textos": [
+            "10:07 AM",
+            "100",
+            "Grabando",
+            "Repetir",
+            "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.",
+            "Dictando...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png_final": "/tmp/opencode/pruebas/shots/and01_07_vivo_apagado.png"
+      }
+    },
+    "incidentes": [],
+    "permiso_tras_grant": "true"
+  },
+  "corrida_b": {
+    "casos": [
+      {
+        "caso": "revocado al abrir",
+        "paso": "abrir la app",
+        "dialogo": [
+          "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes."
+        ],
+        "permiso": "false",
+        "flags": "        android.permission.RECORD_AUDIO: granted=false, flags=[ USER_SET|USER_FIXED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]\n",
+        "png": "/tmp/opencode/pruebas/shots/and01b_01_dialogo_al_abrir.png"
+      },
+      {
+        "caso": "denegado en el diálogo",
+        "paso": "tocar NO PERMITIR",
+        "dialogo": [
+          "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes."
+        ],
+        "panel": {
+          "indicador": "Inactivo",
+          "modo": null,
+          "campo": "",
+          "textos": [
+            "10:08 AM",
+            "100",
+            "Inactivo",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "permiso": "false",
+        "png": "/tmp/opencode/pruebas/shots/and01b_02_denegado.png"
+      },
+      {
+        "caso": "revocado con la app abierta",
+        "paso": "pm revoke",
+        "pid_antes": "24162",
+        "pid_despues": "",
+        "permiso": "false",
+        "png": "/tmp/opencode/pruebas/shots/and01b_06_revocado_con_app_abierta.png"
+      },
+      {
+        "caso": "revocado, reabrir y tocar el mic",
+        "paso": "abrir + 🎤",
+        "dialogo_al_abrir": [
+          "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes."
+        ],
+        "panel_al_abrir": {
+          "indicador": "Inactivo",
+          "modo": null,
+          "campo": "",
+          "textos": [
+            "10:10 AM",
+            "100",
+            "Inactivo",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "dialogo_al_tocar": [
+          "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes."
+        ],
+        "panel_al_tocar": {
+          "indicador": "Inactivo",
+          "modo": null,
+          "campo": "",
+          "textos": [
+            "10:10 AM",
+            "100",
+            "Inactivo",
+            "Escribe una frase...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png": "/tmp/opencode/pruebas/shots/and01b_07_reabrir_sin_permiso.png"
+      }
+    ],
+    "estados": {
+      "manual": {
+        "t0": 1793891317462,
+        "secuencia": [
+          {
+            "t": 0.6,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_00.png"
+          },
+          {
+            "t": 2.21,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_01.png"
+          },
+          {
+            "t": 2.98,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_02.png"
+          },
+          {
+            "t": 3.8,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_03.png"
+          },
+          {
+            "t": 4.63,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_04.png"
+          },
+          {
+            "t": 5.41,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_05.png"
+          },
+          {
+            "t": 6.2,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_06.png"
+          },
+          {
+            "t": 7.0,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_07.png"
+          },
+          {
+            "t": 7.79,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_08.png"
+          },
+          {
+            "t": 8.6,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_09.png"
+          },
+          {
+            "t": 9.41,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_10.png"
+          },
+          {
+            "t": 10.21,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_11.png"
+          },
+          {
+            "t": 10.99,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_12.png"
+          },
+          {
+            "t": 11.84,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_13.png"
+          },
+          {
+            "t": 12.64,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_14.png"
+          },
+          {
+            "t": 13.43,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_15.png"
+          },
+          {
+            "t": 14.23,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_16.png"
+          },
+          {
+            "t": 15.0,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_17.png"
+          },
+          {
+            "t": 15.84,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_18.png"
+          },
+          {
+            "t": 16.63,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_19.png"
+          },
+          {
+            "t": 17.44,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_20.png"
+          },
+          {
+            "t": 18.29,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_21.png"
+          },
+          {
+            "t": 19.12,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_22.png"
+          },
+          {
+            "t": 19.97,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_23.png"
+          },
+          {
+            "t": 20.77,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_24.png"
+          },
+          {
+            "t": 21.51,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_25.png"
+          },
+          {
+            "t": 22.28,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_26.png"
+          },
+          {
+            "t": 22.99,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_27.png"
+          },
+          {
+            "t": 23.81,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_28.png"
+          },
+          {
+            "t": 24.62,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_29.png"
+          },
+          {
+            "t": 25.41,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_30.png"
+          },
+          {
+            "t": 26.21,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_manual_31.png"
+          }
+        ],
+        "panel_final": {
+          "indicador": "Texto listo",
+          "modo": null,
+          "campo": "Hola, Andrea, ¿cómo estás? Como antes me pusieron allí para unas preguntillas varias y se me alargó el tiempo.",
+          "textos": [
+            "10:09 AM",
+            "100",
+            "Texto listo",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png": "/tmp/opencode/pruebas/shots/and01b_03_manual_final.png"
+      },
+      "vivo": {
+        "secuencia": [
+          {
+            "t": 0.6,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_00.png"
+          },
+          {
+            "t": 2.21,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_01.png"
+          },
+          {
+            "t": 3.03,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_02.png"
+          },
+          {
+            "t": 3.82,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_03.png"
+          },
+          {
+            "t": 4.6,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_04.png"
+          },
+          {
+            "t": 5.39,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_05.png"
+          },
+          {
+            "t": 6.21,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_06.png"
+          },
+          {
+            "t": 7.04,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_07.png"
+          },
+          {
+            "t": 7.8,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_08.png"
+          },
+          {
+            "t": 8.64,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_09.png"
+          },
+          {
+            "t": 9.38,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_10.png"
+          },
+          {
+            "t": 10.18,
+            "texto": "® Texto listo",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_11.png"
+          }
+        ],
+        "panel_mientras": {
+          "indicador": "Texto listo",
+          "modo": null,
+          "campo": "¿Puede compartir pantalla?",
+          "textos": [
+            "10:09 AM",
+            "100",
+            "Texto listo",
+            "¿Puede compartir pantalla?",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png_mientras": "/tmp/opencode/pruebas/shots/and01b_04_vivo_prendido.png",
+        "secuencia_al_apagar": [
+          {
+            "t": 0.59,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_off_00.png"
+          },
+          {
+            "t": 2.28,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_off_01.png"
+          },
+          {
+            "t": 3.15,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_off_02.png"
+          },
+          {
+            "t": 4.07,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_off_03.png"
+          },
+          {
+            "t": 5.0,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_off_04.png"
+          },
+          {
+            "t": 5.93,
+            "texto": "® Grabando",
+            "png": "/tmp/opencode/pruebas/shots/and01b_vivo_off_05.png"
+          }
+        ],
+        "panel_final": {
+          "indicador": "Grabando",
+          "modo": "Escuchando...",
+          "campo": "",
+          "textos": [
+            "10:09 AM",
+            "100",
+            "Grabando",
+            "Escuchando...",
+            "Traducir",
+            "TR"
+          ]
+        },
+        "png_final": "/tmp/opencode/pruebas/shots/and01b_05_vivo_apagado.png"
+      }
+    },
+    "incidentes": [],
+    "clear_flags": "Unknown command: clear-permission-flags\n"
+  },
+  "corrida_c": {
+    "antes": "true",
+    "reset": "",
+    "tras_reset": "false",
+    "dialogo_1": [
+      "¿Permitir que SignALL grabe audio?",
+      "MIENTRAS LA APP ESTÁ EN USO",
+      "SOLO ESTA VEZ",
+      "NO PERMITIR"
+    ],
+    "png_dialogo": "/tmp/opencode/pruebas/shots/and01c_01_dialogo_permiso.png",
+    "tras_denegar": "false",
+    "png_denegado": "/tmp/opencode/pruebas/shots/and01c_02_tras_denegar.png",
+    "panel_tras_denegar": {
+      "indicador": [
+        "Inactivo"
+      ],
+      "textos": [
+        "10:10 AM",
+        "100",
+        "Inactivo",
+        "Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "dialogo_2": [
+      "¿Permitir que SignALL grabe audio?",
+      "MIENTRAS LA APP ESTÁ EN USO",
+      "SOLO ESTA VEZ",
+      "NO PERMITIR"
+    ],
+    "png_dialogo_2": "/tmp/opencode/pruebas/shots/and01c_03_dialogo_segundo_toque.png",
+    "tras_segunda_negativa": "false",
+    "final": "true"
+  }
+}

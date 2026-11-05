@@ -1,0 +1,7 @@
+﻿caso;paso;permiso;aviso;dialogo;nota
+revocado antes de abrir;pm revoke + abre la app;false;Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.;¿Permitir que SignALL grabe audio?, MIENTRAS LA APP ESTÁ EN USO, SOLO ESTA VEZ, NO PERMITIR;el diálogo del sistema sale al abrir y se leyó del árbol de accesibilidad
+denegado en el diálogo;tocar NO PERMITIR;false;Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.;no;el panel queda en Inactivo y sigue usable por texto
+tocar el micrófono sin permiso;tocar 🎤;false;Sin permiso de micrófono la app no puede escuchar. Activalo en Ajustes.;¿Permitir que SignALL grabe audio?, MIENTRAS LA APP ESTÁ EN USO, SOLO ESTA VEZ, NO PERMITIR;"vuelve a pedirlo; tras dos negativas el sistema queda en USER_FIXED"
+revocado con la app abierta;pm revoke en primer plano;false;-;no;pid 24162 → sin proceso: Android mata el proceso
+modo manual, un toque;tocar 🎤 y esperar;true;-;no;"secuencia [(0.6, 'Grabando'), (2.21, 'Grabando'), (2.98, 'Grabando')]…; termina en «Texto listo» con 110 caracteres: el STT cerró por silencio (1500 ms) y el micrófono se apagó solo"
+modo en vivo;tocar el botón de vivo;true;-;no;"quedó en «Grabando» + «Escuchando...»: no se apaga solo; secuencia al volver a tocarlo [(0.59, 'Grabando'), (2.28, 'Grabando')]…"

@@ -1,0 +1,21 @@
+﻿configuracion;id;frase;oraciones;num_oraciones;source;oraciones_de_cache;glosas;glosas_referencia;igual_referencia;ms
+con segmentador;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;Hola, buenos días, bienvenidos. | ¿Tienes hambre?;2;cache | cache;2;HOLA BUENOS DIAS TU HAMBRE;HOLA BUENOS DIAS BIENVENIDO TU HAMBRE;no;3.9
+con segmentador;FR-05-002;Buenas tardes. ¿Cómo te llamas?;Buenas tardes. | ¿Cómo te llamas?;2;cache | cache;2;BUENAS TARDES COMO TU;BUENAS TARDES COMO TU NOMBRE;no;5.1
+con segmentador;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;Hoy me siento más o menos. | ¿Estás bien?;2;cache | cache;2;YO SENTIR MAS O MENOS BIEN;YO SENTIR MAS O MENOS TU BIEN;no;5.4
+con segmentador;FR-05-004;Tu hermano está triste. ¿Estás triste?;Tu hermano está triste. | ¿Estás triste?;2;cache | cache;2;HERMANO TRISTE TRISTE;TU HERMANO TRISTE TU TRISTE;no;4.9
+con segmentador;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;Las personas son diferentes. | Mi abuelo y mi tío trabajan en familia.;2;cache | cache;2;PERSONAS DIFERENTE ABUELO TIO TRABAJAR FAMILIA;PERSONAS DIFERENTE ABUELO TIO TRABAJAR FAMILIA;sí;8.3
+con segmentador;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;¿Quién es el hombre? | Mi abuelo nunca trabaja.;2;cache | cache;2;QUIEN HOMBRE ABUELO NUNCA TRABAJAR;QUIEN HOMBRE ABUELO NUNCA TRABAJAR;sí;5.2
+con segmentador;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;Se siente muy bien. | Estoy contento porque mi hermano está feliz.;2;cache | cache;2;SENTIR BIEN YO CONTENTO HERMANO FELIZ;SENTIR MUCHO BIEN YO CONTENTO HERMANO FELIZ;no;4.7
+con segmentador;FR-05-008;Adiós a todos. Déjame pasar, por favor.;Adiós a todos. | Déjame pasar, por favor.;2;cache | cache;2;ADIOS TODOS POR FAVOR;ADIOS TODOS POR FAVOR;sí;4.5
+con segmentador;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;Hola, | ¿cómo estás? | Los niños y las niñas comen con gusto.;3;cache | cache | cache;3;HOLA COMO ESTAS COMER;HOLA COMO ESTAS NIÑO NIÑA COMER CON GUSTO;no;7.6
+con segmentador;FR-05-010;Niños, trabajen todos. Por favor, come poco.;Niños, trabajen todos. | Por favor, come poco.;2;cache | cache;2;TRABAJAR TODOS POR FAVOR COMER POCO;NIÑO TODOS TRABAJAR POR FAVOR COMER POCO;no;5.1
+sin segmentador;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;Hola, buenos días, bienvenidos. ¿Tienes hambre?;1;llm;0;HOLA BUENOS DIAS HAMBRE;HOLA BUENOS DIAS BIENVENIDO TU HAMBRE;no;667.7
+sin segmentador;FR-05-002;Buenas tardes. ¿Cómo te llamas?;Buenas tardes. ¿Cómo te llamas?;1;llm;0;BUENAS TARDES COMO TU;BUENAS TARDES COMO TU NOMBRE;no;798.8
+sin segmentador;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;Hoy me siento más o menos. ¿Estás bien?;1;llm;0;YO SENTIR MAS O MENOS BIEN;YO SENTIR MAS O MENOS TU BIEN;no;685.1
+sin segmentador;FR-05-004;Tu hermano está triste. ¿Estás triste?;Tu hermano está triste. ¿Estás triste?;1;llm;0;HERMANO TRISTE COMO ESTAS TRISTE;TU HERMANO TRISTE TU TRISTE;no;645.4
+sin segmentador;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;1;llm;0;PERSONAS DIFERENTE ABUELO TIO TRABAJAR FAMILIA;PERSONAS DIFERENTE ABUELO TIO TRABAJAR FAMILIA;sí;690.7
+sin segmentador;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;¿Quién es el hombre? Mi abuelo nunca trabaja.;1;llm;0;QUIEN HOMBRE ABUELO NUNCA TRABAJAR;QUIEN HOMBRE ABUELO NUNCA TRABAJAR;sí;741.6
+sin segmentador;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;Se siente muy bien. Estoy contento porque mi hermano está feliz.;1;llm;0;SENTIR BIEN YO CONTENTO HERMANO FELIZ;SENTIR MUCHO BIEN YO CONTENTO HERMANO FELIZ;no;744.7
+sin segmentador;FR-05-008;Adiós a todos. Déjame pasar, por favor.;Adiós a todos. Déjame pasar, por favor.;1;llm;0;ADIOS TODOS POR FAVOR;ADIOS TODOS POR FAVOR;sí;905.5
+sin segmentador;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;1;llm;0;HOLA COMO ESTAS COMER CON GUSTO;HOLA COMO ESTAS NIÑO NIÑA COMER CON GUSTO;no;778.1
+sin segmentador;FR-05-010;Niños, trabajen todos. Por favor, come poco.;Niños, trabajen todos. Por favor, come poco.;1;llm;0;TRABAJAR TODOS POR FAVOR COMER POCO;NIÑO TODOS TRABAJAR POR FAVOR COMER POCO;no;791.4

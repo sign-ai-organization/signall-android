@@ -1,0 +1,6 @@
+﻿momento;aviso;avatar;texto_en_la_barra;traducir;reconexion_ms;intentos;frase_nueva;se_bloquea
+mientras habla (dictado en silencio, sin voz real);«Desconectado» en 798 ms;en reposo;campo: '';el micrófono se apaga con el corte y vuelve a abrir sesión al volver;3074;;751;no
+control: adb reverse --remove;;;;la app siguió traduciendo (17256 ms);;;;no
+antes de mandar;«Desconectado» en 787 ms;en reposo (no había representación);sí: '¿Estás bien?';se toca y no pasa nada (sin servidor);1964;ver log (session failed);16199;no
+mientras traduce/reproduce (el corte cayó con la escena sonando);«Desconectado» en 760 ms;se interrumpe y la cola se vacía;vuelve vacío: '' (ya se había mostrado una seña);el reenvío no aplica: la barra quedó vacía;3066;ver log (session failed);;no
+mientras reproduce;«Desconectado» en 816 ms (reproduciendo visto en 830 ms);se interrumpe y la cola se vacía;no aplica: la frase ya se había enviado;queda disponible;1907;ver log (session failed);13502;no

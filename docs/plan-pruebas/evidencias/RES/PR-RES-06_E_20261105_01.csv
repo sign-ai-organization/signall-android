@@ -1,0 +1,21 @@
+﻿turno;frase_esperada_au04;transcrito;wer;oraciones;t_transcript_ms;t_ultima_oracion_ms;t_done_ms;espera_texto_a_ultima_oracion_ms;espera_texto_a_done_ms
+1;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;1;5760.4;5790.3;5790.3;29.9;29.9
+2;¿Tienes hambre?;¿Tienes hambre?;0.0;1;9150.3;9180.3;9180.3;30.0;30.0
+3;Yo nunca como mucho.;Yo nunca como mucho.;0.0;1;13470.3;13500.3;13500.3;30.0;30.0
+4;Por favor, come poco.;Por favor, come poco.;0.0;1;17970.3;18000.3;18000.3;30.0;30.0
+5;Mi abuelo y mi tío trabajan en familia.;mi abuelo y mi tío trabajan en familia.;0.0;1;23340.2;25500.3;25500.3;2160.1;2160.1
+6;¿Por qué estás triste?;¿Por qué estás triste?;0.0;1;27390.3;28560.4;28560.4;1170.1;1170.1
+7;Mi abuelo nunca trabaja.;mi abuelo nunca trabaja.;0.0;1;31950.3;33000.3;33000.3;1050.0;1050.0
+8;Niños, trabajen todos.;Niños, trabajen todos.;0.0;1;36390.4;37320.3;37320.3;929.9;929.9
+9;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;1;40380.3;40410.5;40410.5;30.2;30.2
+10;¿Estás bien?;¿Estás bien?;0.0;1;43950.2;45120.3;45120.3;1170.1;1170.1
+11;Estoy contento porque mi hermano está feliz.;Estoy contento porque mi hermano está feliz.;0.0;1;49980.2;50700.3;50700.4;720.1;720.2
+12;Mi tío nunca está aburrido.;mi tío nunca está aburrido.;0.0;1;55020.2;55710.3;55710.3;690.1;690.1
+13;Hola, familia, siéntanse bienvenidos.;Hola, familia. Siéntanse bienvenidos.;0.0;2;60810.3;61861.1;61861.4;1050.8;1051.1
+14;¿Cuándo comen ustedes?;¿Cuándo comen ustedes?;0.0;1;65310.3;65940.3;65940.3;630.0;630.0
+15;Ustedes nunca se sienten mal.;Ustedes nunca se sienten mal.;0.0;1;70320.3;71190.4;71190.4;870.1;870.1
+16;¿Ustedes trabajan en familia?;¿Ustedes trabajan en familia?;0.0;1;74940.3;75690.4;75690.5;750.1;750.2
+17;¿Tu hermano está aburrido?;¿Tu hermano está aburrido?;0.0;1;79380.3;80100.4;80100.4;720.1;720.1
+18;Adiós a todos. Buenas noches.;Adiós a todos. Buenas noches.;0.0;2;84720.2;85620.4;85620.4;900.2;900.2
+19;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;2;89730.3;89760.3;89760.4;30.0;30.1
+20;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;1;95670.3;95700.3;95700.3;30.0;30.0

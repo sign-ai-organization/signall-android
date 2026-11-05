@@ -1,0 +1,76 @@
+{
+  "fila_original": {
+    "id_sign": "19",
+    "gloss": "HAMBRE",
+    "semantic_category": "sustantivo",
+    "glb_animation_path": "signs/0019_0000_0000.glb",
+    "fps": "24",
+    "total_frames": "51",
+    "asset_bytes": "154468",
+    "asset_sha256": "277671ef88e7d3347e7f2eb627be811b47c982261266878454d277d7a799efe8",
+    "modified_at": "2026-10-14 05:09:38.819915"
+  },
+  "fila_tras_delete": null,
+  "fila_reinsertada": {
+    "id_sign": "19",
+    "gloss": "HAMBRE",
+    "semantic_category": "sustantivo",
+    "glb_animation_path": "signs/0019_0000_0000.glb",
+    "fps": "24",
+    "total_frames": "51",
+    "asset_bytes": "154468",
+    "asset_sha256": "277671ef88e7d3347e7f2eb627be811b47c982261266878454d277d7a799efe8",
+    "modified_at": "2026-10-14 05:09:38.819915"
+  },
+  "delete": "DELETE 1",
+  "filas_catalogo_tras_delete": "49",
+  "filas_catalogo_final": "50",
+  "health_sin": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 1,
+    "catalog_loaded": true,
+    "catalog_glosses": 49,
+    "silence_timeout_ms": 1500
+  },
+  "health_reinsertada": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 1,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "reinicios": [
+    {
+      "segundos": 15.1,
+      "intentos": 1,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 0,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    {
+      "segundos": 40.6,
+      "intentos": 2,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 1,
+      "catalog_loaded": true,
+      "catalog_glosses": 49,
+      "silence_timeout_ms": 1500
+    },
+    {
+      "segundos": 16.9,
+      "intentos": 1,
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 1,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    }
+  ]
+}

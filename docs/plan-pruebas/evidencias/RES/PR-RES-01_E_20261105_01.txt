@@ -1,0 +1,670 @@
+PR-RES-01 · logcat crudo de los tres cortes
+
+--------- beginning of system
+--------- beginning of main
+         1793848516.595 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793848516.622 25185 25212 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA
+         1793848516.709 25185 25185 I SignAiState: signStart: oración→avatar 52 ms (seña 0, reloj JS 901146 ms)
+         1793848516.710 25185 25185 I SignAiMetrics: oración→avatar: 52 ms (p50=52ms p95=126ms max=143ms n=4)
+         1793848516.710 25185 25185 I SignAiMetrics: envío→primera seña: 114 ms (p50=114ms p95=185ms max=227ms n=4)
+         1793848516.753 25185 25212 D SignAiNet: segment 1/3 turn=2 -> USTEDES,TRABAJAR,FAMILIA
+         1793848516.764 25185 25212 D SignAiNet: segment 2/3 turn=2 -> ABUELO,TU,TIO,FAMILIA
+         1793848516.785 25185 25185 I SignAiMetrics: frase #6: 189ms, 3 oraciones, 9 glosas (p50=69ms p95=189ms max=9803ms n=6)
+         1793848516.786 25185 25185 I SignAiState: resumen: frases=6 oraciones=8 glosas=26 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=69ms p95=189ms max=9803ms n=6 duracion_representada=p50=4169ms p95=4169ms max=4209ms n=3 oracion_a_avatar=p50=52ms p95=126ms max=143ms n=4 envio_a_primera_sena=p50=114ms p95=185ms max=227ms n=4
+         1793848518.107 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793848518.617 25185 25212 W SignAiNet: session failed: null
+         1793848518.623 25185 25185 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793848518.629 25185 25185 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1157
+         1793848519.654 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848519.658 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848521.687 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848521.716 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848524.752 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848524.763 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848528.786 25185 25212 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793848612.775 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793848612.789 25185 25212 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA
+         1793848612.830 25185 25185 I SignAiMetrics: frase #7: 56ms, 1 oraciones, 2 glosas (p50=69ms p95=189ms max=9803ms n=7)
+         1793848612.830 25185 25185 I SignAiState: resumen: frases=7 oraciones=9 glosas=28 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=69ms p95=189ms max=9803ms n=7 duracion_representada=p50=4169ms p95=4169ms max=4209ms n=3 oracion_a_avatar=p50=52ms p95=126ms max=143ms n=4 envio_a_primera_sena=p50=114ms p95=185ms max=227ms n=4
+         1793848612.860 25185 25185 I SignAiState: signStart: oración→avatar 31 ms (seña 0, reloj JS 997313 ms)
+         1793848612.860 25185 25185 I SignAiMetrics: oración→avatar: 31 ms (p50=52ms p95=126ms max=143ms n=5)
+         1793848612.860 25185 25185 I SignAiMetrics: envío→primera seña: 85 ms (p50=114ms p95=185ms max=227ms n=5)
+         1793848614.297 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793848614.895 25185 25185 I SignAiState: signStart: oración→avatar 2067 ms (seña 1, reloj JS 999374 ms)
+         1793848617.039 25185 25185 I SignAiMetrics: representado: 2 señas en 4210ms (p50=4169ms p95=4209ms max=4210ms n=4)
+--------- beginning of system
+--------- beginning of main
+         1793848612.775 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793848612.789 25185 25212 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA
+         1793848612.830 25185 25185 I SignAiMetrics: frase #7: 56ms, 1 oraciones, 2 glosas (p50=69ms p95=189ms max=9803ms n=7)
+         1793848612.830 25185 25185 I SignAiState: resumen: frases=7 oraciones=9 glosas=28 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=69ms p95=189ms max=9803ms n=7 duracion_representada=p50=4169ms p95=4169ms max=4209ms n=3 oracion_a_avatar=p50=52ms p95=126ms max=143ms n=4 envio_a_primera_sena=p50=114ms p95=185ms max=227ms n=4
+         1793848612.860 25185 25185 I SignAiState: signStart: oración→avatar 31 ms (seña 0, reloj JS 997313 ms)
+         1793848612.860 25185 25185 I SignAiMetrics: oración→avatar: 31 ms (p50=52ms p95=126ms max=143ms n=5)
+         1793848612.860 25185 25185 I SignAiMetrics: envío→primera seña: 85 ms (p50=114ms p95=185ms max=227ms n=5)
+         1793848614.297 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793848614.895 25185 25185 I SignAiState: signStart: oración→avatar 2067 ms (seña 1, reloj JS 999374 ms)
+         1793848617.039 25185 25185 I SignAiMetrics: representado: 2 señas en 4210ms (p50=4169ms p95=4209ms max=4210ms n=4)
+         1793848624.710 25185 25212 W SignAiNet: session failed: null
+         1793848624.710 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848625.731 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848625.736 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848627.752 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848627.757 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848630.773 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848630.786 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848634.823 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848634.825 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848639.835 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848639.842 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848644.883 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848644.898 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848649.933 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848649.934 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848654.949 25185 25212 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793848667.433 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793848667.445 25185 25212 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA
+         1793848667.474 25185 25185 I SignAiMetrics: frase #8: 41ms, 1 oraciones, 2 glosas (p50=64ms p95=189ms max=9803ms n=8)
+         1793848667.474 25185 25185 I SignAiState: resumen: frases=8 oraciones=10 glosas=30 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=64ms p95=189ms max=9803ms n=8 duracion_representada=p50=4169ms p95=4209ms max=4210ms n=4 oracion_a_avatar=p50=52ms p95=126ms max=143ms n=5 envio_a_primera_sena=p50=114ms p95=185ms max=227ms n=5
+         1793848667.504 25185 25185 I SignAiState: signStart: oración→avatar 33 ms (seña 0, reloj JS 1051958 ms)
+         1793848667.504 25185 25185 I SignAiMetrics: oración→avatar: 33 ms (p50=36ms p95=126ms max=143ms n=6)
+         1793848667.505 25185 25185 I SignAiMetrics: envío→primera seña: 72 ms (p50=87ms p95=185ms max=227ms n=6)
+         1793848668.937 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793848669.522 25185 25185 I SignAiState: signStart: oración→avatar 2051 ms (seña 1, reloj JS 1053994 ms)
+         1793848671.687 25185 25185 I SignAiMetrics: representado: 2 señas en 4213ms (p50=4209ms p95=4210ms max=4213ms n=5)
+         1793848683.065 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793848683.119 25185 25212 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA
+         1793848683.120 25185 25212 D SignAiNet: segment 1/3 turn=2 -> USTEDES,TRABAJAR,FAMILIA
+         1793848683.140 25185 25212 D SignAiNet: segment 2/3 turn=2 -> ABUELO,TU,TIO,FAMILIA
+         1793848683.144 25185 25185 I SignAiState: signStart: oración→avatar 24 ms (seña 0, reloj JS 1067605 ms)
+         1793848683.144 25185 25185 I SignAiMetrics: oración→avatar: 24 ms (p50=36ms p95=126ms max=143ms n=7)
+         1793848683.144 25185 25185 I SignAiMetrics: envío→primera seña: 79 ms (p50=87ms p95=185ms max=227ms n=7)
+         1793848683.149 25185 25185 I SignAiMetrics: frase #9: 85ms, 3 oraciones, 9 glosas (p50=69ms p95=189ms max=9803ms n=9)
+         1793848683.149 25185 25185 I SignAiState: resumen: frases=9 oraciones=13 glosas=39 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=69ms p95=189ms max=9803ms n=9 duracion_representada=p50=4209ms p95=4210ms max=4213ms n=5 oracion_a_avatar=p50=36ms p95=126ms max=143ms n=7 envio_a_primera_sena=p50=87ms p95=185ms max=227ms n=7
+         1793848684.567 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793848685.217 25185 25185 I SignAiState: signStart: oración→avatar 2097 ms (seña 1, reloj JS 1069672 ms)
+--------- beginning of system
+--------- beginning of main
+         1793848683.065 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793848683.119 25185 25212 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA
+         1793848683.120 25185 25212 D SignAiNet: segment 1/3 turn=2 -> USTEDES,TRABAJAR,FAMILIA
+         1793848683.140 25185 25212 D SignAiNet: segment 2/3 turn=2 -> ABUELO,TU,TIO,FAMILIA
+         1793848683.144 25185 25185 I SignAiState: signStart: oración→avatar 24 ms (seña 0, reloj JS 1067605 ms)
+         1793848683.144 25185 25185 I SignAiMetrics: oración→avatar: 24 ms (p50=36ms p95=126ms max=143ms n=7)
+         1793848683.144 25185 25185 I SignAiMetrics: envío→primera seña: 79 ms (p50=87ms p95=185ms max=227ms n=7)
+         1793848683.149 25185 25185 I SignAiMetrics: frase #9: 85ms, 3 oraciones, 9 glosas (p50=69ms p95=189ms max=9803ms n=9)
+         1793848683.149 25185 25185 I SignAiState: resumen: frases=9 oraciones=13 glosas=39 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=69ms p95=189ms max=9803ms n=9 duracion_representada=p50=4209ms p95=4210ms max=4213ms n=5 oracion_a_avatar=p50=36ms p95=126ms max=143ms n=7 envio_a_primera_sena=p50=87ms p95=185ms max=227ms n=7
+         1793848684.567 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793848685.217 25185 25185 I SignAiState: signStart: oración→avatar 2097 ms (seña 1, reloj JS 1069672 ms)
+         1793848686.108 25185 25212 W SignAiNet: session failed: null
+         1793848686.109 25185 25185 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793848686.115 25185 25185 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1157
+         1793848687.125 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848687.127 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848689.152 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848689.153 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848692.174 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848692.184 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848696.206 25185 25212 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793848830.133 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, ¿cómo estás? ¿Cómo te llamas?"
+         1793848830.143 25185 25212 D SignAiNet: segment 0/3 turn=1 -> HOLA
+         1793848830.147 25185 25212 D SignAiNet: segment 1/3 turn=1 -> COMO ESTAS
+         1793848830.150 25185 25212 D SignAiNet: segment 2/3 turn=1 -> COMO,TU
+         1793848830.182 25185 25185 I SignAiMetrics: frase #10: 50ms, 3 oraciones, 4 glosas (p50=64ms p95=189ms max=9803ms n=10)
+         1793848830.182 25185 25185 I SignAiState: resumen: frases=10 oraciones=16 glosas=43 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=64ms p95=189ms max=9803ms n=10 duracion_representada=p50=4209ms p95=4210ms max=4213ms n=5 oracion_a_avatar=p50=36ms p95=126ms max=143ms n=7 envio_a_primera_sena=p50=87ms p95=185ms max=227ms n=7
+         1793848830.213 25185 25185 I SignAiState: signStart: oración→avatar 37 ms (seña 0, reloj JS 1214664 ms)
+         1793848830.213 25185 25185 I SignAiMetrics: oración→avatar: 37 ms (p50=36ms p95=126ms max=143ms n=8)
+         1793848830.214 25185 25185 I SignAiMetrics: envío→primera seña: 81 ms (p50=85ms p95=185ms max=227ms n=8)
+         1793848831.643 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+--------- beginning of system
+--------- beginning of main
+         1793848830.133 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, ¿cómo estás? ¿Cómo te llamas?"
+         1793848830.143 25185 25212 D SignAiNet: segment 0/3 turn=1 -> HOLA
+         1793848830.147 25185 25212 D SignAiNet: segment 1/3 turn=1 -> COMO ESTAS
+         1793848830.150 25185 25212 D SignAiNet: segment 2/3 turn=1 -> COMO,TU
+         1793848830.182 25185 25185 I SignAiMetrics: frase #10: 50ms, 3 oraciones, 4 glosas (p50=64ms p95=189ms max=9803ms n=10)
+         1793848830.182 25185 25185 I SignAiState: resumen: frases=10 oraciones=16 glosas=43 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=64ms p95=189ms max=9803ms n=10 duracion_representada=p50=4209ms p95=4210ms max=4213ms n=5 oracion_a_avatar=p50=36ms p95=126ms max=143ms n=7 envio_a_primera_sena=p50=87ms p95=185ms max=227ms n=7
+         1793848830.213 25185 25185 I SignAiState: signStart: oración→avatar 37 ms (seña 0, reloj JS 1214664 ms)
+         1793848830.213 25185 25185 I SignAiMetrics: oración→avatar: 37 ms (p50=36ms p95=126ms max=143ms n=8)
+         1793848830.214 25185 25185 I SignAiMetrics: envío→primera seña: 81 ms (p50=85ms p95=185ms max=227ms n=8)
+         1793848831.643 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793848831.981 25185 25212 W SignAiNet: session failed: null
+         1793848832.008 25185 25185 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793848832.011 25185 25185 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1157
+         1793848833.029 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848833.035 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848835.042 25185 25212 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793848835.046 25185 25185 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793848838.064 25185 25212 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793848850.793 25185 25185 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793848850.802 25185 25212 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+         1793848850.835 25185 25185 I SignAiMetrics: frase #11: 42ms, 1 oraciones, 2 glosas (p50=64ms p95=189ms max=9803ms n=11)
+         1793848850.835 25185 25185 I SignAiState: resumen: frases=11 oraciones=17 glosas=45 sin_seña=12 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=64ms p95=189ms max=9803ms n=11 duracion_representada=p50=4209ms p95=4210ms max=4213ms n=5 oracion_a_avatar=p50=36ms p95=126ms max=143ms n=8 envio_a_primera_sena=p50=85ms p95=185ms max=227ms n=8
+         1793848850.875 25185 25185 I SignAiState: signStart: oración→avatar 41 ms (seña 0, reloj JS 1235323 ms)
+         1793848850.875 25185 25185 I SignAiMetrics: oración→avatar: 41 ms (p50=37ms p95=126ms max=143ms n=9)
+         1793848850.875 25185 25185 I SignAiMetrics: envío→primera seña: 82 ms (p50=85ms p95=185ms max=227ms n=9)
+         1793848852.314 25185 25185 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793848852.427 25185 25185 I SignAiState: signStart: oración→avatar 1594 ms (seña 1, reloj JS 1236904 ms)
+         1793848854.624 25185 25185 I SignAiMetrics: representado: 2 señas en 3790ms (p50=4169ms p95=4210ms max=4213ms n=6)
+--------- beginning of system
+--------- beginning of main
+--------- beginning of system
+--------- beginning of main
+         1793900114.136  5204  7036 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 2 successful ping/pongs)
+         1793900114.136  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900115.159  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900115.159  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900117.175  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900117.175  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900120.192  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900120.198  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900124.209  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900124.210  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900129.221  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900129.225  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900134.240  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900134.241  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900139.256  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900139.257  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900144.269  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900144.270  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900149.284  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900149.286  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900154.309  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900154.310  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900159.329  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900159.333  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900164.346  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900164.347  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900169.367  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900169.369  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900174.388  5204  5247 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793900174.388  5204  5204 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900179.421  5204  5247 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900214.079  8614  8614 I SignAiState: backend session starting
+         1793900214.103  8614  8640 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900217.336  8614  8614 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1227 ms @637
+         1793900217.337  8614  8614 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793900217.373  8614  8614 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793900218.186  8614  8614 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2125 ms @690
+         1793900218.268  8614  8614 I SignAiState: silencio del STT: 1500 ms
+         1793900239.051  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793900240.012  8614  8640 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793900240.024  8614  8614 I SignAiMetrics: frase #1: 974ms, 1 oraciones, 3 glosas (p50=974ms p95=974ms max=974ms n=1)
+         1793900240.028  8614  8614 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=974ms p95=974ms max=974ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793900240.143  8614  8614 I SignAiState: signStart: oración→avatar 126 ms (seña 0, reloj JS 24385 ms)
+         1793900240.143  8614  8614 I SignAiMetrics: oración→avatar: 126 ms (p50=126ms p95=126ms max=126ms n=1)
+         1793900240.143  8614  8614 I SignAiMetrics: envío→primera seña: 1092 ms (p50=1092ms p95=1092ms max=1092ms n=1)
+         1793900240.570  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900242.128  8614  8614 I SignAiState: signStart: oración→avatar 2111 ms (seña 1, reloj JS 26433 ms)
+         1793900244.159  8614  8614 I SignAiState: signStart: oración→avatar 4142 ms (seña 2, reloj JS 28461 ms)
+         1793900246.323  8614  8614 I SignAiMetrics: representado: 3 señas en 6299ms (p50=6299ms p95=6299ms max=6299ms n=1)
+--------- beginning of system
+--------- beginning of main
+         1793900214.079  8614  8614 I SignAiState: backend session starting
+         1793900214.103  8614  8640 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900217.336  8614  8614 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1227 ms @637
+         1793900217.337  8614  8614 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793900217.373  8614  8614 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793900218.186  8614  8614 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 2125 ms @690
+         1793900218.268  8614  8614 I SignAiState: silencio del STT: 1500 ms
+         1793900239.051  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793900240.012  8614  8640 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793900240.024  8614  8614 I SignAiMetrics: frase #1: 974ms, 1 oraciones, 3 glosas (p50=974ms p95=974ms max=974ms n=1)
+         1793900240.028  8614  8614 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=974ms p95=974ms max=974ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793900240.143  8614  8614 I SignAiState: signStart: oración→avatar 126 ms (seña 0, reloj JS 24385 ms)
+         1793900240.143  8614  8614 I SignAiMetrics: oración→avatar: 126 ms (p50=126ms p95=126ms max=126ms n=1)
+         1793900240.143  8614  8614 I SignAiMetrics: envío→primera seña: 1092 ms (p50=1092ms p95=1092ms max=1092ms n=1)
+         1793900240.570  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900242.128  8614  8614 I SignAiState: signStart: oración→avatar 2111 ms (seña 1, reloj JS 26433 ms)
+         1793900244.159  8614  8614 I SignAiState: signStart: oración→avatar 4142 ms (seña 2, reloj JS 28461 ms)
+         1793900246.323  8614  8614 I SignAiMetrics: representado: 3 señas en 6299ms (p50=6299ms p95=6299ms max=6299ms n=1)
+         1793900272.219  8614  8640 W SignAiNet: session failed: null
+         1793900272.220  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900273.248  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900273.251  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900275.261  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900275.261  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900278.277  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900278.278  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900282.290  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900282.291  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900287.303  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900287.303  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900292.316  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900292.317  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900297.328  8614  8640 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900309.060  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793900309.072  8614  8640 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793900309.104  8614  8614 I SignAiMetrics: frase #2: 43ms, 1 oraciones, 3 glosas (p50=43ms p95=43ms max=974ms n=2)
+         1793900309.104  8614  8614 I SignAiState: resumen: frases=2 oraciones=2 glosas=6 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=43ms p95=43ms max=974ms n=2 duracion_representada=p50=6299ms p95=6299ms max=6299ms n=1 oracion_a_avatar=p50=126ms p95=126ms max=126ms n=1 envio_a_primera_sena=p50=1092ms p95=1092ms max=1092ms n=1
+         1793900309.146  8614  8614 I SignAiState: signStart: oración→avatar 45 ms (seña 0, reloj JS 93446 ms)
+         1793900309.147  8614  8614 I SignAiMetrics: oración→avatar: 45 ms (p50=45ms p95=45ms max=126ms n=2)
+         1793900309.147  8614  8614 I SignAiMetrics: envío→primera seña: 86 ms (p50=86ms p95=86ms max=1092ms n=2)
+         1793900310.581  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900311.182  8614  8614 I SignAiState: signStart: oración→avatar 2081 ms (seña 1, reloj JS 95481 ms)
+         1793900313.228  8614  8614 I SignAiState: signStart: oración→avatar 4127 ms (seña 2, reloj JS 97527 ms)
+         1793900315.369  8614  8614 I SignAiMetrics: representado: 3 señas en 6265ms (p50=6265ms p95=6265ms max=6299ms n=2)
+         1793900410.466  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793900410.480  8614  8640 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA,SENTIR
+         1793900410.548  8614  8614 I SignAiState: signStart: oración→avatar 45 ms (seña 0, reloj JS 194846 ms)
+         1793900410.548  8614  8614 I SignAiMetrics: oración→avatar: 45 ms (p50=45ms p95=45ms max=126ms n=3)
+         1793900410.548  8614  8614 I SignAiMetrics: envío→primera seña: 82 ms (p50=86ms p95=86ms max=1092ms n=3)
+         1793900411.731  8614  8640 D SignAiNet: segment 1/3 turn=2 -> TU,TRABAJAR,FAMILIA
+         1793900411.985  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900412.612  8614  8614 I SignAiState: signStart: oración→avatar 2109 ms (seña 1, reloj JS 196886 ms)
+--------- beginning of system
+--------- beginning of main
+         1793900239.051  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793900240.012  8614  8640 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793900240.024  8614  8614 I SignAiMetrics: frase #1: 974ms, 1 oraciones, 3 glosas (p50=974ms p95=974ms max=974ms n=1)
+         1793900240.028  8614  8614 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=974ms p95=974ms max=974ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793900240.143  8614  8614 I SignAiState: signStart: oración→avatar 126 ms (seña 0, reloj JS 24385 ms)
+         1793900240.143  8614  8614 I SignAiMetrics: oración→avatar: 126 ms (p50=126ms p95=126ms max=126ms n=1)
+         1793900240.143  8614  8614 I SignAiMetrics: envío→primera seña: 1092 ms (p50=1092ms p95=1092ms max=1092ms n=1)
+         1793900240.570  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900242.128  8614  8614 I SignAiState: signStart: oración→avatar 2111 ms (seña 1, reloj JS 26433 ms)
+         1793900244.159  8614  8614 I SignAiState: signStart: oración→avatar 4142 ms (seña 2, reloj JS 28461 ms)
+         1793900246.323  8614  8614 I SignAiMetrics: representado: 3 señas en 6299ms (p50=6299ms p95=6299ms max=6299ms n=1)
+         1793900272.219  8614  8640 W SignAiNet: session failed: null
+         1793900272.220  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900273.248  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900273.251  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900275.261  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900275.261  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900278.277  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900278.278  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900282.290  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900282.291  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900287.303  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900287.303  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900292.316  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900292.317  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900297.328  8614  8640 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900309.060  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793900309.072  8614  8640 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793900309.104  8614  8614 I SignAiMetrics: frase #2: 43ms, 1 oraciones, 3 glosas (p50=43ms p95=43ms max=974ms n=2)
+         1793900309.104  8614  8614 I SignAiState: resumen: frases=2 oraciones=2 glosas=6 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=43ms p95=43ms max=974ms n=2 duracion_representada=p50=6299ms p95=6299ms max=6299ms n=1 oracion_a_avatar=p50=126ms p95=126ms max=126ms n=1 envio_a_primera_sena=p50=1092ms p95=1092ms max=1092ms n=1
+         1793900309.146  8614  8614 I SignAiState: signStart: oración→avatar 45 ms (seña 0, reloj JS 93446 ms)
+         1793900309.147  8614  8614 I SignAiMetrics: oración→avatar: 45 ms (p50=45ms p95=45ms max=126ms n=2)
+         1793900309.147  8614  8614 I SignAiMetrics: envío→primera seña: 86 ms (p50=86ms p95=86ms max=1092ms n=2)
+         1793900310.581  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900311.182  8614  8614 I SignAiState: signStart: oración→avatar 2081 ms (seña 1, reloj JS 95481 ms)
+         1793900313.228  8614  8614 I SignAiState: signStart: oración→avatar 4127 ms (seña 2, reloj JS 97527 ms)
+         1793900315.369  8614  8614 I SignAiMetrics: representado: 3 señas en 6265ms (p50=6265ms p95=6265ms max=6299ms n=2)
+         1793900410.466  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793900410.480  8614  8640 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA,SENTIR
+         1793900410.548  8614  8614 I SignAiState: signStart: oración→avatar 45 ms (seña 0, reloj JS 194846 ms)
+         1793900410.548  8614  8614 I SignAiMetrics: oración→avatar: 45 ms (p50=45ms p95=45ms max=126ms n=3)
+         1793900410.548  8614  8614 I SignAiMetrics: envío→primera seña: 82 ms (p50=86ms p95=86ms max=1092ms n=3)
+         1793900411.731  8614  8640 D SignAiNet: segment 1/3 turn=2 -> TU,TRABAJAR,FAMILIA
+         1793900411.985  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900412.612  8614  8614 I SignAiState: signStart: oración→avatar 2109 ms (seña 1, reloj JS 196886 ms)
+         1793900413.167  8614  8640 W SignAiNet: session failed: null
+         1793900413.189  8614  8614 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793900413.195  8614  8614 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1167
+         1793900414.225  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900414.226  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900416.235  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900416.237  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900419.247  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900419.248  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900423.277  8614  8640 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900556.500  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, ¿cómo estás? ¿Cómo te llamas?"
+         1793900557.761  8614  8640 D SignAiNet: segment 0/3 turn=1 -> HOLA
+         1793900557.860  8614  8614 I SignAiState: signStart: oración→avatar 76 ms (seña 0, reloj JS 342131 ms)
+         1793900557.861  8614  8614 I SignAiMetrics: oración→avatar: 76 ms (p50=45ms p95=76ms max=126ms n=4)
+         1793900557.861  8614  8614 I SignAiMetrics: envío→primera seña: 1360 ms (p50=86ms p95=1092ms max=1360ms n=4)
+         1793900558.029  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900558.512  8614  8640 D SignAiNet: segment 1/3 turn=1 -> COMO ESTAS
+         1793900558.512  8614  8640 D SignAiNet: segment 2/3 turn=1 -> COMO,TU
+         1793900558.528  8614  8614 I SignAiMetrics: frase #3: 2028ms, 3 oraciones, 4 glosas (p50=974ms p95=974ms max=2028ms n=3)
+         1793900558.528  8614  8614 I SignAiState: resumen: frases=3 oraciones=5 glosas=10 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=974ms p95=974ms max=2028ms n=3 duracion_representada=p50=6265ms p95=6265ms max=6299ms n=2 oracion_a_avatar=p50=45ms p95=76ms max=126ms n=4 envio_a_primera_sena=p50=86ms p95=1092ms max=1360ms n=4
+--------- beginning of system
+--------- beginning of main
+         1793900282.290  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900282.291  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900287.303  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900287.303  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900292.316  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900292.317  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900297.328  8614  8640 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900309.060  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793900309.072  8614  8640 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793900309.104  8614  8614 I SignAiMetrics: frase #2: 43ms, 1 oraciones, 3 glosas (p50=43ms p95=43ms max=974ms n=2)
+         1793900309.104  8614  8614 I SignAiState: resumen: frases=2 oraciones=2 glosas=6 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=43ms p95=43ms max=974ms n=2 duracion_representada=p50=6299ms p95=6299ms max=6299ms n=1 oracion_a_avatar=p50=126ms p95=126ms max=126ms n=1 envio_a_primera_sena=p50=1092ms p95=1092ms max=1092ms n=1
+         1793900309.146  8614  8614 I SignAiState: signStart: oración→avatar 45 ms (seña 0, reloj JS 93446 ms)
+         1793900309.147  8614  8614 I SignAiMetrics: oración→avatar: 45 ms (p50=45ms p95=45ms max=126ms n=2)
+         1793900309.147  8614  8614 I SignAiMetrics: envío→primera seña: 86 ms (p50=86ms p95=86ms max=1092ms n=2)
+         1793900310.581  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900311.182  8614  8614 I SignAiState: signStart: oración→avatar 2081 ms (seña 1, reloj JS 95481 ms)
+         1793900313.228  8614  8614 I SignAiState: signStart: oración→avatar 4127 ms (seña 2, reloj JS 97527 ms)
+         1793900315.369  8614  8614 I SignAiMetrics: representado: 3 señas en 6265ms (p50=6265ms p95=6265ms max=6299ms n=2)
+         1793900410.466  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793900410.480  8614  8640 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA,SENTIR
+         1793900410.548  8614  8614 I SignAiState: signStart: oración→avatar 45 ms (seña 0, reloj JS 194846 ms)
+         1793900410.548  8614  8614 I SignAiMetrics: oración→avatar: 45 ms (p50=45ms p95=45ms max=126ms n=3)
+         1793900410.548  8614  8614 I SignAiMetrics: envío→primera seña: 82 ms (p50=86ms p95=86ms max=1092ms n=3)
+         1793900411.731  8614  8640 D SignAiNet: segment 1/3 turn=2 -> TU,TRABAJAR,FAMILIA
+         1793900411.985  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900412.612  8614  8614 I SignAiState: signStart: oración→avatar 2109 ms (seña 1, reloj JS 196886 ms)
+         1793900413.167  8614  8640 W SignAiNet: session failed: null
+         1793900413.189  8614  8614 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793900413.195  8614  8614 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1167
+         1793900414.225  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900414.226  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900416.235  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900416.237  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900419.247  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900419.248  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900423.277  8614  8640 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900556.500  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, ¿cómo estás? ¿Cómo te llamas?"
+         1793900557.761  8614  8640 D SignAiNet: segment 0/3 turn=1 -> HOLA
+         1793900557.860  8614  8614 I SignAiState: signStart: oración→avatar 76 ms (seña 0, reloj JS 342131 ms)
+         1793900557.861  8614  8614 I SignAiMetrics: oración→avatar: 76 ms (p50=45ms p95=76ms max=126ms n=4)
+         1793900557.861  8614  8614 I SignAiMetrics: envío→primera seña: 1360 ms (p50=86ms p95=1092ms max=1360ms n=4)
+         1793900558.029  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900558.512  8614  8640 D SignAiNet: segment 1/3 turn=1 -> COMO ESTAS
+         1793900558.512  8614  8640 D SignAiNet: segment 2/3 turn=1 -> COMO,TU
+         1793900558.528  8614  8614 I SignAiMetrics: frase #3: 2028ms, 3 oraciones, 4 glosas (p50=974ms p95=974ms max=2028ms n=3)
+         1793900558.528  8614  8614 I SignAiState: resumen: frases=3 oraciones=5 glosas=10 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=974ms p95=974ms max=2028ms n=3 duracion_representada=p50=6265ms p95=6265ms max=6299ms n=2 oracion_a_avatar=p50=45ms p95=76ms max=126ms n=4 envio_a_primera_sena=p50=86ms p95=1092ms max=1360ms n=4
+         1793900559.245  8614  8640 W SignAiNet: session failed: null
+         1793900559.265  8614  8614 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793900559.301  8614  8614 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1167
+         1793900560.274  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900560.275  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900562.284  8614  8640 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793900562.288  8614  8614 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793900565.309  8614  8640 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793900576.882  8614  8614 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793900577.665  8614  8640 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+         1793900577.670  8614  8614 I SignAiMetrics: frase #4: 788ms, 1 oraciones, 2 glosas (p50=788ms p95=974ms max=2028ms n=4)
+         1793900577.670  8614  8614 I SignAiState: resumen: frases=4 oraciones=6 glosas=12 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=788ms p95=974ms max=2028ms n=4 duracion_representada=p50=6265ms p95=6265ms max=6299ms n=2 oracion_a_avatar=p50=45ms p95=76ms max=126ms n=4 envio_a_primera_sena=p50=86ms p95=1092ms max=1360ms n=4
+         1793900577.708  8614  8614 I SignAiState: signStart: oración→avatar 41 ms (seña 0, reloj JS 362017 ms)
+         1793900577.708  8614  8614 I SignAiMetrics: oración→avatar: 41 ms (p50=45ms p95=76ms max=126ms n=5)
+         1793900577.708  8614  8614 I SignAiMetrics: envío→primera seña: 826 ms (p50=826ms p95=1092ms max=1360ms n=5)
+         1793900578.407  8614  8614 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793900579.333  8614  8614 I SignAiState: signStart: oración→avatar 1666 ms (seña 1, reloj JS 363630 ms)
+         1793900581.487  8614  8614 I SignAiMetrics: representado: 2 señas en 3818ms (p50=6265ms p95=6265ms max=6299ms n=3)
+         1793900583.584  8614  8614 I SignAiState: micrófono prendido en modo Dictation
+         1793900583.760  8614  8614 I SignAiNet: recording 16000Hz mono, chunks of 30ms
+--------- beginning of system
+--------- beginning of main
+         1793901546.383 13646 13646 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1793901547.355 13646 13673 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS,BIENVENIDOS
+         1793901547.362 13646 13646 I SignAiState: glosas sin animación, avisadas: HOLA, BUENOS DIAS, BIENVENIDOS
+         1793901547.363 13646 13646 I SignAiMetrics: frase #1: 981ms, 1 oraciones, 3 glosas (p50=981ms p95=981ms max=981ms n=1)
+         1793901547.364 13646 13646 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=3 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=981ms p95=981ms max=981ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793901547.364 13646 13646 I SignAiState: aviso (no va al indicador): Esa frase no produjo ninguna seña.
+         1793901547.886 13646 13646 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901669.254 13646 13673 W SignAiNet: session failed: null
+         1793901669.256 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901670.284 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901670.291 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901672.308 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901672.309 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901675.325 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901675.326 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901679.343 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901679.345 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901684.363 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901684.363 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901689.385 13646 13673 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901701.244 13646 13646 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793901701.257 13646 13673 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+         1793901701.292 13646 13646 I SignAiMetrics: frase #2: 49ms, 1 oraciones, 2 glosas (p50=49ms p95=49ms max=981ms n=2)
+         1793901701.292 13646 13646 I SignAiState: resumen: frases=2 oraciones=2 glosas=5 sin_seña=3 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=49ms p95=49ms max=981ms n=2 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793901701.372 13646 13646 I SignAiState: signStart: oración→avatar 81 ms (seña 0, reloj JS 174520 ms)
+         1793901701.372 13646 13646 I SignAiMetrics: oración→avatar: 81 ms (p50=81ms p95=81ms max=81ms n=1)
+         1793901701.372 13646 13646 I SignAiMetrics: envío→primera seña: 128 ms (p50=128ms p95=128ms max=128ms n=1)
+         1793901702.770 13646 13646 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901702.910 13646 13646 I SignAiState: signStart: oración→avatar 1620 ms (seña 1, reloj JS 176088 ms)
+         1793901705.058 13646 13646 I SignAiMetrics: representado: 2 señas en 3767ms (p50=3767ms p95=3767ms max=3767ms n=1)
+         1793901708.646 14535 14535 I SignAiState: backend session starting
+         1793901708.671 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901711.597 14535 14535 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1159 ms @637
+         1793901711.598 14535 14535 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793901711.638 14535 14535 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793901712.355 14535 14535 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 1951 ms @690
+         1793901712.430 14535 14535 I SignAiState: silencio del STT: 1500 ms
+         1793901732.116 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793901733.321 14535 14561 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793901733.336 14535 14535 I SignAiMetrics: frase #1: 1220ms, 1 oraciones, 3 glosas (p50=1220ms p95=1220ms max=1220ms n=1)
+         1793901733.336 14535 14535 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=1220ms p95=1220ms max=1220ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793901733.443 14535 14535 I SignAiState: signStart: oración→avatar 113 ms (seña 0, reloj JS 23333 ms)
+         1793901733.443 14535 14535 I SignAiMetrics: oración→avatar: 113 ms (p50=113ms p95=113ms max=113ms n=1)
+         1793901733.443 14535 14535 I SignAiMetrics: envío→primera seña: 1327 ms (p50=1327ms p95=1327ms max=1327ms n=1)
+         1793901733.634 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901735.445 14535 14535 I SignAiState: signStart: oración→avatar 2115 ms (seña 1, reloj JS 25388 ms)
+         1793901737.482 14535 14535 I SignAiState: signStart: oración→avatar 4153 ms (seña 2, reloj JS 27426 ms)
+         1793901739.627 14535 14535 I SignAiMetrics: representado: 3 señas en 6292ms (p50=6292ms p95=6292ms max=6292ms n=1)
+--------- beginning of system
+--------- beginning of main
+         1793901669.254 13646 13673 W SignAiNet: session failed: null
+         1793901669.256 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901670.284 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901670.291 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901672.308 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901672.309 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901675.325 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901675.326 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901679.343 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901679.345 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901684.363 13646 13673 W SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...
+         1793901684.363 13646 13646 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901689.385 13646 13673 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901701.244 13646 13646 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793901701.257 13646 13673 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+         1793901701.292 13646 13646 I SignAiMetrics: frase #2: 49ms, 1 oraciones, 2 glosas (p50=49ms p95=49ms max=981ms n=2)
+         1793901701.292 13646 13646 I SignAiState: resumen: frases=2 oraciones=2 glosas=5 sin_seña=3 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=49ms p95=49ms max=981ms n=2 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793901701.372 13646 13646 I SignAiState: signStart: oración→avatar 81 ms (seña 0, reloj JS 174520 ms)
+         1793901701.372 13646 13646 I SignAiMetrics: oración→avatar: 81 ms (p50=81ms p95=81ms max=81ms n=1)
+         1793901701.372 13646 13646 I SignAiMetrics: envío→primera seña: 128 ms (p50=128ms p95=128ms max=128ms n=1)
+         1793901702.770 13646 13646 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901702.910 13646 13646 I SignAiState: signStart: oración→avatar 1620 ms (seña 1, reloj JS 176088 ms)
+         1793901705.058 13646 13646 I SignAiMetrics: representado: 2 señas en 3767ms (p50=3767ms p95=3767ms max=3767ms n=1)
+         1793901708.646 14535 14535 I SignAiState: backend session starting
+         1793901708.671 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901711.597 14535 14535 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1159 ms @637
+         1793901711.598 14535 14535 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793901711.638 14535 14535 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793901712.355 14535 14535 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 1951 ms @690
+         1793901712.430 14535 14535 I SignAiState: silencio del STT: 1500 ms
+         1793901732.116 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793901733.321 14535 14561 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793901733.336 14535 14535 I SignAiMetrics: frase #1: 1220ms, 1 oraciones, 3 glosas (p50=1220ms p95=1220ms max=1220ms n=1)
+         1793901733.336 14535 14535 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=1220ms p95=1220ms max=1220ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793901733.443 14535 14535 I SignAiState: signStart: oración→avatar 113 ms (seña 0, reloj JS 23333 ms)
+         1793901733.443 14535 14535 I SignAiMetrics: oración→avatar: 113 ms (p50=113ms p95=113ms max=113ms n=1)
+         1793901733.443 14535 14535 I SignAiMetrics: envío→primera seña: 1327 ms (p50=1327ms p95=1327ms max=1327ms n=1)
+         1793901733.634 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901735.445 14535 14535 I SignAiState: signStart: oración→avatar 2115 ms (seña 1, reloj JS 25388 ms)
+         1793901737.482 14535 14535 I SignAiState: signStart: oración→avatar 4153 ms (seña 2, reloj JS 27426 ms)
+         1793901739.627 14535 14535 I SignAiMetrics: representado: 3 señas en 6292ms (p50=6292ms p95=6292ms max=6292ms n=1)
+         1793901746.886 14535 14561 W SignAiNet: session failed: null
+         1793901746.890 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901747.917 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901747.918 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901749.935 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901749.937 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901752.961 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901752.961 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901756.987 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901756.988 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901762.001 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901762.001 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901767.015 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901767.016 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901772.045 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901783.804 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793901783.813 14535 14561 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793901783.849 14535 14535 I SignAiMetrics: frase #2: 45ms, 1 oraciones, 3 glosas (p50=45ms p95=45ms max=1220ms n=2)
+         1793901783.849 14535 14535 I SignAiState: resumen: frases=2 oraciones=2 glosas=6 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=45ms p95=45ms max=1220ms n=2 duracion_representada=p50=6292ms p95=6292ms max=6292ms n=1 oracion_a_avatar=p50=113ms p95=113ms max=113ms n=1 envio_a_primera_sena=p50=1327ms p95=1327ms max=1327ms n=1
+         1793901783.903 14535 14535 I SignAiState: signStart: oración→avatar 56 ms (seña 0, reloj JS 73830 ms)
+         1793901783.903 14535 14535 I SignAiMetrics: oración→avatar: 56 ms (p50=56ms p95=56ms max=113ms n=2)
+         1793901783.903 14535 14535 I SignAiMetrics: envío→primera seña: 99 ms (p50=99ms p95=99ms max=1327ms n=2)
+         1793901785.340 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901785.931 14535 14535 I SignAiState: signStart: oración→avatar 2084 ms (seña 1, reloj JS 75872 ms)
+         1793901787.976 14535 14535 I SignAiState: signStart: oración→avatar 4130 ms (seña 2, reloj JS 77916 ms)
+         1793901790.119 14535 14535 I SignAiMetrics: representado: 3 señas en 6270ms (p50=6270ms p95=6270ms max=6292ms n=2)
+         1793901800.669 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793901800.680 14535 14561 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA,SENTIR
+         1793901800.743 14535 14535 I SignAiState: signStart: oración→avatar 38 ms (seña 0, reloj JS 90688 ms)
+         1793901800.743 14535 14535 I SignAiMetrics: oración→avatar: 38 ms (p50=56ms p95=56ms max=113ms n=3)
+         1793901800.743 14535 14535 I SignAiMetrics: envío→primera seña: 75 ms (p50=99ms p95=99ms max=1327ms n=3)
+         1793901801.706 14535 14561 D SignAiNet: segment 1/3 turn=2 -> TU,TRABAJAR,FAMILIA
+         1793901801.903 14535 14561 D SignAiNet: segment 2/3 turn=2 -> ABUELO,TIO,TRABAJAR,FAMILIA
+         1793901801.929 14535 14535 I SignAiMetrics: frase #3: 1260ms, 3 oraciones, 10 glosas (p50=1220ms p95=1220ms max=1260ms n=3)
+         1793901801.929 14535 14535 I SignAiState: resumen: frases=3 oraciones=5 glosas=16 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=1220ms p95=1220ms max=1260ms n=3 duracion_representada=p50=6270ms p95=6270ms max=6292ms n=2 oracion_a_avatar=p50=56ms p95=56ms max=113ms n=3 envio_a_primera_sena=p50=99ms p95=99ms max=1327ms n=3
+         1793901802.198 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901802.808 14535 14535 I SignAiState: signStart: oración→avatar 2102 ms (seña 1, reloj JS 92732 ms)
+--------- beginning of system
+--------- beginning of main
+         1793901711.597 14535 14535 D SignAIWeb: LOG: [SignAI] pauline parseado · nodos: 116 · 1159 ms @637
+         1793901711.598 14535 14535 D SignAIWeb: LOG: [SignAI] pauline: 200 clips indexados @657
+         1793901711.638 14535 14535 D SignAIWeb: WARNING: THREE.WebGLRenderer: KHR_parallel_shader_compile extension not supported. @1562
+         1793901712.355 14535 14535 D SignAIWeb: LOG: [SignAI] escena lista (pauline) · 1951 ms @690
+         1793901712.430 14535 14535 I SignAiState: silencio del STT: 1500 ms
+         1793901732.116 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793901733.321 14535 14561 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793901733.336 14535 14535 I SignAiMetrics: frase #1: 1220ms, 1 oraciones, 3 glosas (p50=1220ms p95=1220ms max=1220ms n=1)
+         1793901733.336 14535 14535 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=1220ms p95=1220ms max=1220ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793901733.443 14535 14535 I SignAiState: signStart: oración→avatar 113 ms (seña 0, reloj JS 23333 ms)
+         1793901733.443 14535 14535 I SignAiMetrics: oración→avatar: 113 ms (p50=113ms p95=113ms max=113ms n=1)
+         1793901733.443 14535 14535 I SignAiMetrics: envío→primera seña: 1327 ms (p50=1327ms p95=1327ms max=1327ms n=1)
+         1793901733.634 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901735.445 14535 14535 I SignAiState: signStart: oración→avatar 2115 ms (seña 1, reloj JS 25388 ms)
+         1793901737.482 14535 14535 I SignAiState: signStart: oración→avatar 4153 ms (seña 2, reloj JS 27426 ms)
+         1793901739.627 14535 14535 I SignAiMetrics: representado: 3 señas en 6292ms (p50=6292ms p95=6292ms max=6292ms n=1)
+         1793901746.886 14535 14561 W SignAiNet: session failed: null
+         1793901746.890 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901747.917 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901747.918 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901749.935 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901749.937 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901752.961 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901752.961 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901756.987 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901756.988 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901762.001 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901762.001 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901767.015 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901767.016 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901772.045 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901783.804 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793901783.813 14535 14561 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793901783.849 14535 14535 I SignAiMetrics: frase #2: 45ms, 1 oraciones, 3 glosas (p50=45ms p95=45ms max=1220ms n=2)
+         1793901783.849 14535 14535 I SignAiState: resumen: frases=2 oraciones=2 glosas=6 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=45ms p95=45ms max=1220ms n=2 duracion_representada=p50=6292ms p95=6292ms max=6292ms n=1 oracion_a_avatar=p50=113ms p95=113ms max=113ms n=1 envio_a_primera_sena=p50=1327ms p95=1327ms max=1327ms n=1
+         1793901783.903 14535 14535 I SignAiState: signStart: oración→avatar 56 ms (seña 0, reloj JS 73830 ms)
+         1793901783.903 14535 14535 I SignAiMetrics: oración→avatar: 56 ms (p50=56ms p95=56ms max=113ms n=2)
+         1793901783.903 14535 14535 I SignAiMetrics: envío→primera seña: 99 ms (p50=99ms p95=99ms max=1327ms n=2)
+         1793901785.340 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901785.931 14535 14535 I SignAiState: signStart: oración→avatar 2084 ms (seña 1, reloj JS 75872 ms)
+         1793901787.976 14535 14535 I SignAiState: signStart: oración→avatar 4130 ms (seña 2, reloj JS 77916 ms)
+         1793901790.119 14535 14535 I SignAiMetrics: representado: 3 señas en 6270ms (p50=6270ms p95=6270ms max=6292ms n=2)
+         1793901800.669 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793901800.680 14535 14561 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA,SENTIR
+         1793901800.743 14535 14535 I SignAiState: signStart: oración→avatar 38 ms (seña 0, reloj JS 90688 ms)
+         1793901800.743 14535 14535 I SignAiMetrics: oración→avatar: 38 ms (p50=56ms p95=56ms max=113ms n=3)
+         1793901800.743 14535 14535 I SignAiMetrics: envío→primera seña: 75 ms (p50=99ms p95=99ms max=1327ms n=3)
+         1793901801.706 14535 14561 D SignAiNet: segment 1/3 turn=2 -> TU,TRABAJAR,FAMILIA
+         1793901801.903 14535 14561 D SignAiNet: segment 2/3 turn=2 -> ABUELO,TIO,TRABAJAR,FAMILIA
+         1793901801.929 14535 14535 I SignAiMetrics: frase #3: 1260ms, 3 oraciones, 10 glosas (p50=1220ms p95=1220ms max=1260ms n=3)
+         1793901801.929 14535 14535 I SignAiState: resumen: frases=3 oraciones=5 glosas=16 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=1220ms p95=1220ms max=1260ms n=3 duracion_representada=p50=6270ms p95=6270ms max=6292ms n=2 oracion_a_avatar=p50=56ms p95=56ms max=113ms n=3 envio_a_primera_sena=p50=99ms p95=99ms max=1327ms n=3
+         1793901802.198 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901802.808 14535 14535 I SignAiState: signStart: oración→avatar 2102 ms (seña 1, reloj JS 92732 ms)
+         1793901803.387 14535 14561 W SignAiNet: session failed: null
+         1793901803.408 14535 14535 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793901803.412 14535 14535 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1167
+         1793901804.421 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901804.426 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901806.437 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901806.437 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901809.456 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901809.456 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901813.485 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901946.834 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, ¿cómo estás? ¿Cómo te llamas?"
+         1793901946.847 14535 14561 D SignAiNet: segment 0/3 turn=1 -> HOLA
+         1793901946.850 14535 14561 D SignAiNet: segment 1/3 turn=1 -> COMO ESTAS
+         1793901946.853 14535 14561 D SignAiNet: segment 2/3 turn=1 -> COMO,TU
+         1793901946.874 14535 14535 I SignAiMetrics: frase #4: 40ms, 3 oraciones, 4 glosas (p50=45ms p95=1220ms max=1260ms n=4)
+         1793901946.874 14535 14535 I SignAiState: resumen: frases=4 oraciones=8 glosas=20 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=45ms p95=1220ms max=1260ms n=4 duracion_representada=p50=6270ms p95=6270ms max=6292ms n=2 oracion_a_avatar=p50=56ms p95=56ms max=113ms n=3 envio_a_primera_sena=p50=99ms p95=99ms max=1327ms n=3
+         1793901946.913 14535 14535 I SignAiState: signStart: oración→avatar 43 ms (seña 0, reloj JS 236853 ms)
+         1793901946.913 14535 14535 I SignAiMetrics: oración→avatar: 43 ms (p50=43ms p95=56ms max=113ms n=4)
+         1793901946.913 14535 14535 I SignAiMetrics: envío→primera seña: 79 ms (p50=79ms p95=99ms max=1327ms n=4)
+--------- beginning of system
+--------- beginning of main
+         1793901746.886 14535 14561 W SignAiNet: session failed: null
+         1793901746.890 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901747.917 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901747.918 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901749.935 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901749.937 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901752.961 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901752.961 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901756.987 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901756.988 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901762.001 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901762.001 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901767.015 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901767.016 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901772.045 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901783.804 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos."
+         1793901783.813 14535 14561 D SignAiNet: segment 0/1 turn=1 -> HOLA,FAMILIA,SENTIR
+         1793901783.849 14535 14535 I SignAiMetrics: frase #2: 45ms, 1 oraciones, 3 glosas (p50=45ms p95=45ms max=1220ms n=2)
+         1793901783.849 14535 14535 I SignAiState: resumen: frases=2 oraciones=2 glosas=6 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=45ms p95=45ms max=1220ms n=2 duracion_representada=p50=6292ms p95=6292ms max=6292ms n=1 oracion_a_avatar=p50=113ms p95=113ms max=113ms n=1 envio_a_primera_sena=p50=1327ms p95=1327ms max=1327ms n=1
+         1793901783.903 14535 14535 I SignAiState: signStart: oración→avatar 56 ms (seña 0, reloj JS 73830 ms)
+         1793901783.903 14535 14535 I SignAiMetrics: oración→avatar: 56 ms (p50=56ms p95=56ms max=113ms n=2)
+         1793901783.903 14535 14535 I SignAiMetrics: envío→primera seña: 99 ms (p50=99ms p95=99ms max=1327ms n=2)
+         1793901785.340 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901785.931 14535 14535 I SignAiState: signStart: oración→avatar 2084 ms (seña 1, reloj JS 75872 ms)
+         1793901787.976 14535 14535 I SignAiState: signStart: oración→avatar 4130 ms (seña 2, reloj JS 77916 ms)
+         1793901790.119 14535 14535 I SignAiMetrics: representado: 3 señas en 6270ms (p50=6270ms p95=6270ms max=6292ms n=2)
+         1793901800.669 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, familia, siéntanse bienvenidos. ¿Tú trabajas en familia? Mi abuelo y mi tío trabajan con la familia."
+         1793901800.680 14535 14561 D SignAiNet: segment 0/3 turn=2 -> HOLA,FAMILIA,SENTIR
+         1793901800.743 14535 14535 I SignAiState: signStart: oración→avatar 38 ms (seña 0, reloj JS 90688 ms)
+         1793901800.743 14535 14535 I SignAiMetrics: oración→avatar: 38 ms (p50=56ms p95=56ms max=113ms n=3)
+         1793901800.743 14535 14535 I SignAiMetrics: envío→primera seña: 75 ms (p50=99ms p95=99ms max=1327ms n=3)
+         1793901801.706 14535 14561 D SignAiNet: segment 1/3 turn=2 -> TU,TRABAJAR,FAMILIA
+         1793901801.903 14535 14561 D SignAiNet: segment 2/3 turn=2 -> ABUELO,TIO,TRABAJAR,FAMILIA
+         1793901801.929 14535 14535 I SignAiMetrics: frase #3: 1260ms, 3 oraciones, 10 glosas (p50=1220ms p95=1220ms max=1260ms n=3)
+         1793901801.929 14535 14535 I SignAiState: resumen: frases=3 oraciones=5 glosas=16 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=1220ms p95=1220ms max=1260ms n=3 duracion_representada=p50=6270ms p95=6270ms max=6292ms n=2 oracion_a_avatar=p50=56ms p95=56ms max=113ms n=3 envio_a_primera_sena=p50=99ms p95=99ms max=1327ms n=3
+         1793901802.198 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901802.808 14535 14535 I SignAiState: signStart: oración→avatar 2102 ms (seña 1, reloj JS 92732 ms)
+         1793901803.387 14535 14561 W SignAiNet: session failed: null
+         1793901803.408 14535 14535 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793901803.412 14535 14535 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1167
+         1793901804.421 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901804.426 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901806.437 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901806.437 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901809.456 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901809.456 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901813.485 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901946.834 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, ¿cómo estás? ¿Cómo te llamas?"
+         1793901946.847 14535 14561 D SignAiNet: segment 0/3 turn=1 -> HOLA
+         1793901946.850 14535 14561 D SignAiNet: segment 1/3 turn=1 -> COMO ESTAS
+         1793901946.853 14535 14561 D SignAiNet: segment 2/3 turn=1 -> COMO,TU
+         1793901946.874 14535 14535 I SignAiMetrics: frase #4: 40ms, 3 oraciones, 4 glosas (p50=45ms p95=1220ms max=1260ms n=4)
+         1793901946.874 14535 14535 I SignAiState: resumen: frases=4 oraciones=8 glosas=20 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=45ms p95=1220ms max=1260ms n=4 duracion_representada=p50=6270ms p95=6270ms max=6292ms n=2 oracion_a_avatar=p50=56ms p95=56ms max=113ms n=3 envio_a_primera_sena=p50=99ms p95=99ms max=1327ms n=3
+         1793901946.913 14535 14535 I SignAiState: signStart: oración→avatar 43 ms (seña 0, reloj JS 236853 ms)
+         1793901946.913 14535 14535 I SignAiMetrics: oración→avatar: 43 ms (p50=43ms p95=56ms max=113ms n=4)
+         1793901946.913 14535 14535 I SignAiMetrics: envío→primera seña: 79 ms (p50=79ms p95=99ms max=1327ms n=4)
+         1793901948.369 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901948.500 14535 14561 W SignAiNet: session failed: null
+         1793901948.532 14535 14535 I SignAiState: sesión perdida: interrumpiendo=true cancelando=false micrófono=Off
+         1793901948.536 14535 14535 D SignAIWeb: LOG: stop(): cola cortada (sonando=true) @1167
+         1793901949.558 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901949.559 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901951.566 14535 14561 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080
+         1793901951.566 14535 14535 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793901954.593 14535 14561 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793901965.277 14535 14535 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "¿Tienes hambre?"
+         1793901965.289 14535 14561 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+         1793901965.324 14535 14535 I SignAiMetrics: frase #5: 48ms, 1 oraciones, 2 glosas (p50=48ms p95=1220ms max=1260ms n=5)
+         1793901965.325 14535 14535 I SignAiState: resumen: frases=5 oraciones=9 glosas=22 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=48ms p95=1220ms max=1260ms n=5 duracion_representada=p50=6270ms p95=6270ms max=6292ms n=2 oracion_a_avatar=p50=43ms p95=56ms max=113ms n=4 envio_a_primera_sena=p50=79ms p95=99ms max=1327ms n=4
+         1793901965.370 14535 14535 I SignAiState: signStart: oración→avatar 47 ms (seña 0, reloj JS 255306 ms)
+         1793901965.370 14535 14535 I SignAiMetrics: oración→avatar: 47 ms (p50=47ms p95=56ms max=113ms n=5)
+         1793901965.370 14535 14535 I SignAiMetrics: envío→primera seña: 93 ms (p50=93ms p95=99ms max=1327ms n=5)
+         1793901966.799 14535 14535 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793901966.975 14535 14535 I SignAiState: signStart: oración→avatar 1653 ms (seña 1, reloj JS 256946 ms)
+         1793901969.166 14535 14535 I SignAiMetrics: representado: 2 señas en 3841ms (p50=6270ms p95=6270ms max=6292ms n=3)

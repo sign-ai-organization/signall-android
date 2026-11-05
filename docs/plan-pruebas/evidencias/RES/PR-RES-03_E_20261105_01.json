@@ -1,0 +1,834 @@
+{
+  "inicial": {
+    "indicador": "Inactivo",
+    "campo": "",
+    "botones": {
+      "Entrada por voz": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Historial reciente": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Traducir": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Modo en vivo": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Abrir Conversación": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Abrir Ajustes": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      }
+    },
+    "textos": [
+      "12:54 PM",
+      "100",
+      "Inactivo",
+      "Escribe una frase...",
+      "Traducir",
+      "TR"
+    ]
+  },
+  "stt_apagado_health": "sin /health: URLError",
+  "panel_con_stt_caido": {
+    "indicador": null,
+    "campo": "",
+    "botones": {
+      "Entrada por voz": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Historial reciente": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Traducir": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Modo en vivo": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Abrir Conversación": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Abrir Ajustes": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      }
+    },
+    "textos": [
+      "12:54 PM",
+      "100",
+      "Sin servicio de voz: podés seguir traduciendo por texto.",
+      "Sin servicio de voz: podés seguir traduciendo por texto.",
+      "Escribe una frase...",
+      "Traducir",
+      "TR"
+    ]
+  },
+  "png_stt_caido": "/tmp/opencode/pruebas/shots/res03_stt_caido.png",
+  "dictado_sin_stt": {
+    "boton": "Entrada por voz",
+    "encontrado": true,
+    "ms": 18970,
+    "panel_antes": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:54 PM",
+        "100",
+        "Inactivo",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "indicador_durante": "® Inactivo",
+    "panel_durante": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:54 PM",
+        "100",
+        "Inactivo",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png": "/tmp/opencode/pruebas/shots/res03_dictado_durante.png",
+    "indicador_despues": "® Inactivo",
+    "panel_despues": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:54 PM",
+        "100",
+        "Inactivo",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    }
+  },
+  "vivo_sin_stt": {
+    "boton": "Modo en vivo",
+    "encontrado": true,
+    "ms": 18968,
+    "panel_antes": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:54 PM",
+        "100",
+        "Inactivo",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "indicador_durante": "® Inactivo",
+    "panel_durante": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:54 PM",
+        "100",
+        "Inactivo",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png": "/tmp/opencode/pruebas/shots/res03_vivo_durante.png",
+    "indicador_despues": "® Inactivo",
+    "panel_despues": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:55 PM",
+        "100",
+        "Inactivo",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    }
+  },
+  "texto_sin_stt": {
+    "texto": "Hola, buenos días, bienvenidos.",
+    "campo": "Hola, buenos días, bienvenidos.",
+    "ms": 13951,
+    "representado": true,
+    "png": "/tmp/opencode/pruebas/shots/res03_texto_sin_stt.png",
+    "panel": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:55 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    }
+  },
+  "mitad": {
+    "indicador_antes": "® Inactivo",
+    "indicador_al_caer": "® Inactivo",
+    "indicador_despues": "® Inactivo",
+    "png": "/tmp/opencode/pruebas/shots/res03_mitad_caido.png",
+    "panel_al_caer": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:55 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    }
+  },
+  "stt_levantado": {
+    "ms": 5468,
+    "health": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    }
+  },
+  "dictado_con_stt": {
+    "boton": "Entrada por voz",
+    "encontrado": true,
+    "ms": 18978,
+    "panel_antes": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:55 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "indicador_durante": "® Inactivo",
+    "panel_durante": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:55 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png": "/tmp/opencode/pruebas/shots/res03_dictado_ok_durante.png",
+    "indicador_despues": "® Inactivo",
+    "panel_despues": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:56 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    }
+  },
+  "vivo_con_stt": {
+    "boton": "Modo en vivo",
+    "encontrado": true,
+    "ms": 18968,
+    "panel_antes": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:56 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "indicador_durante": "® Inactivo",
+    "panel_durante": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:56 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png": "/tmp/opencode/pruebas/shots/res03_vivo_ok_durante.png",
+    "indicador_despues": "® Inactivo",
+    "panel_despues": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "12:56 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Sin servicio de voz: podés seguir traduciendo por texto.",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    }
+  },
+  "panel_final": {
+    "indicador": "Inactivo",
+    "campo": "",
+    "botones": {
+      "Entrada por voz": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Historial reciente": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Traducir": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Modo en vivo": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Abrir Conversación": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Abrir Ajustes": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      }
+    },
+    "textos": [
+      "12:56 PM",
+      "100",
+      "Inactivo",
+      "Repetir",
+      "Sin servicio de voz: podés seguir traduciendo por texto.",
+      "Escribe una frase...",
+      "Traducir",
+      "TR"
+    ]
+  },
+  "log": "--------- beginning of system\n--------- beginning of main\n         1793901254.368 10686 10714 W SignAiNet: session failed: null\n         1793901254.369 10686 10686 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off\n         1793901255.386 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)\n         1793901259.030 10686 10686 I SignAiState: aviso visible: Sin servicio de voz: podés seguir traduciendo por texto.\n         1793901312.773 10686 10686 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. \"Hola, buenos días, bienvenidos.\"\n         1793901312.782 10686 10714 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS\n         1793901312.805 10686 10686 I SignAiMetrics: frase #5: 33ms, 1 oraciones, 2 glosas (p50=45ms p95=933ms max=3018ms n=5)\n         1793901312.805 10686 10686 I SignAiState: resumen: frases=5 oraciones=5 glosas=10 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=45ms p95=933ms max=3018ms n=5 duracion_representada=p50=3805ms p95=4219ms max=4296ms n=5 oracion_a_avatar=p50=71ms p95=73ms max=130ms n=5 envio_a_primera_sena=p50=829ms p95=1002ms max=3144ms n=5\n         1793901312.828 10686 10686 I SignAiState: signStart: oración→avatar 25 ms (seña 0, reloj JS 529561 ms)\n         1793901312.829 10686 10686 I SignAiMetrics: oración→avatar: 25 ms (p50=53ms p95=73ms max=130ms n=6)\n         1793901312.829 10686 10686 I SignAiMetrics: envío→primera seña: 56 ms (p50=96ms p95=1002ms max=3144ms n=6)\n         1793901314.289 10686 10686 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles\n         1793901314.898 10686 10686 I SignAiState: signStart: oración→avatar 2095 ms (seña 1, reloj JS 531613 ms)\n         1793901317.042 10686 10686 I SignAiMetrics: representado: 2 señas en 4237ms (p50=3805ms p95=4237ms max=4296ms n=6)\n"
+}

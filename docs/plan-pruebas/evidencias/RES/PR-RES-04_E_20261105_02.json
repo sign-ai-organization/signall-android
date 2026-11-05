@@ -1,0 +1,252 @@
+{
+  "tmp_start": {
+    "segundos": 14.6,
+    "rc": 0,
+    "salida": "temporal arriba: DATABASE_URL=postgresql://nadie:nadie@127.0.0.1:9/nada?connect_timeout=2\n",
+    "status": "degraded",
+    "cache_loaded": false,
+    "cache_rows": 0,
+    "catalog_loaded": false,
+    "catalog_glosses": 0,
+    "silence_timeout_ms": 1500
+  },
+  "health_temporal": {
+    "status": "degraded",
+    "cache_loaded": false,
+    "cache_rows": 0,
+    "catalog_loaded": false,
+    "catalog_glosses": 0,
+    "silence_timeout_ms": 1500
+  },
+  "logs_arranque": "2026-11-05T17:58:43.396096006Z INFO:     172.18.0.1:53740 - \"GET /health HTTP/1.1\" 200 OK\n2026-11-05T17:58:43.398035866Z INFO:     172.18.0.1:53750 - \"GET /health HTTP/1.1\" 200 OK\n2026-11-05T17:58:43.398709580Z INFO:     172.18.0.1:53760 - \"GET /health HTTP/1.1\" 200 OK\n",
+  "app_relanzada_ms": 9991,
+  "panel_sin_base": {
+    "indicador": "Inactivo",
+    "campo": "",
+    "botones": {
+      "Entrada por voz": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Historial reciente": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Traducir": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Modo en vivo": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Abrir Conversación": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      },
+      "Abrir Ajustes": {
+        "enabled": true,
+        "visible": true,
+        "checked": false
+      }
+    },
+    "textos": [
+      "12:58 PM",
+      "100",
+      "Inactivo",
+      "Escribe una frase...",
+      "Traducir",
+      "TR"
+    ]
+  },
+  "png_sin_base": "/tmp/opencode/pruebas/shots/res04_sin_base.png",
+  "socket_sin_base": {
+    "glosas": [
+      {
+        "texto": "HOLA",
+        "available": false,
+        "glb": ""
+      },
+      {
+        "texto": "BUENOS DIAS",
+        "available": false,
+        "glb": ""
+      },
+      {
+        "texto": "BIENVENIDOS",
+        "available": false,
+        "glb": ""
+      }
+    ],
+    "ms": 732.9,
+    "tipos": [
+      "capability",
+      "sentence_trace",
+      "segment",
+      "trace",
+      "done"
+    ],
+    "errores": []
+  },
+  "app_sin_base": {
+    "texto": "Hola, buenos días, bienvenidos.",
+    "campo": "Hola, buenos días, bienvenidos.",
+    "ms": null,
+    "representado": false,
+    "indicador": "® Inactivo",
+    "panel": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "1:01 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png": "/tmp/opencode/pruebas/shots/res04_sin_base_frase.png",
+    "avisos": [
+      "1793901547.355 13646 13673 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS,BIENVENIDOS",
+      "1793901547.362 13646 13646 I SignAiState: glosas sin animación, avisadas: HOLA, BUENOS DIAS, BIENVENIDOS",
+      "1793901547.363 13646 13646 I SignAiMetrics: frase #1: 981ms, 1 oraciones, 3 glosas (p50=981ms p95=981ms max=981ms n=1)",
+      "1793901547.364 13646 13646 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=3 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=981ms p95=981ms max=981ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a",
+      "1793901547.886 13646 13646 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles"
+    ]
+  },
+  "tmp_stop": {
+    "segundos": 18.8,
+    "salida": "backend original arriba",
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 14,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "restore_s": 18.8,
+  "health_real": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 14,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  },
+  "reconexion_ms": 1567,
+  "app_recuperada": {
+    "texto": "¿Tienes hambre?",
+    "campo": "¿Tienes hambre?",
+    "ms": 13432,
+    "representado": true,
+    "panel": {
+      "indicador": "Inactivo",
+      "campo": "",
+      "botones": {
+        "Entrada por voz": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Historial reciente": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Traducir": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Modo en vivo": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Conversación": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        },
+        "Abrir Ajustes": {
+          "enabled": true,
+          "visible": true,
+          "checked": false
+        }
+      },
+      "textos": [
+        "1:01 PM",
+        "100",
+        "Inactivo",
+        "Repetir",
+        "Escribe una frase...",
+        "Traducir",
+        "TR"
+      ]
+    },
+    "png": "/tmp/opencode/pruebas/shots/res04_recuperado.png"
+  },
+  "socket_recuperado": {
+    "glosas": [
+      {
+        "texto": "TU",
+        "available": true,
+        "glb": "signs/0039_0000_0000.glb"
+      },
+      {
+        "texto": "HAMBRE",
+        "available": true,
+        "glb": "signs/0019_0000_0000.glb"
+      }
+    ],
+    "ms": 4.8,
+    "tipos": [
+      "capability",
+      "sentence_trace",
+      "segment",
+      "trace",
+      "done"
+    ],
+    "errores": []
+  },
+  "dormida": "no se pudo forzar: el keep-alive de 240 s y el uso del sistema mantienen la base despierta; no se apagó 6 minutos en esta corrida"
+}

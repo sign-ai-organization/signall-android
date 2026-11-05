@@ -1,0 +1,61 @@
+﻿tipo;id;original_id;cambio;texto;phrase_type;mismo_tipo_que_original;exacto;vecino;distancia;vecino_es_su_original;acierta_0.02;falso_0.02;acierta_0.025;falso_0.025;acierta_0.03;falso_0.03;acierta_0.035;falso_0.035;acierta_0.04;falso_0.04;acierta_0.05;falso_0.05;acierta_0.08;falso_0.08;acierta_0.12;falso_0.12;acierta_0.2;falso_0.2;acierta_0.3;falso_0.3
+paráfrasis;FR-03-001;FR-01-001;Formato;HOLA, BUENOS DÍAS, BIENVENIDOS.;AFFIRMATIVE;sí;sí;FR-01-001;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-002;FR-01-002;Formato;Adios a todos. Buenas noches.;AFFIRMATIVE;sí;sí;FR-01-002;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-003;FR-01-003;Orden;En familia trabajan mi abuelo y mi tío.;AFFIRMATIVE;sí;no;FR-01-003;0.01401;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-004;FR-01-004;Orden;Porque mi hermano está feliz, estoy contento.;AFFIRMATIVE;sí;no;FR-01-004;0.00684;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-005;FR-01-005;Sinónimos;Buenas tardes. Hoy me siento regular.;AFFIRMATIVE;sí;no;FR-01-005;0.08967;sí;no;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí;
+paráfrasis;FR-03-006;FR-01-006;Formato;¡Gracias a todos! Los niños y las niñas comen con gusto.;AFFIRMATIVE;sí;sí;FR-01-006;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-007;FR-01-007;Formato;Tienes hambre;AFFIRMATIVE;no;no;FR-01-006;0.44776;no;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;
+paráfrasis;FR-03-008;FR-01-008;Formato;¿Estas bien?;YES_NO_QUESTION;sí;sí;FR-01-008;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-009;FR-01-009;Orden;¿Trabajan ustedes en familia?;YES_NO_QUESTION;sí;no;FR-01-009;0.00553;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-010;FR-01-010;Orden;Está triste tu hermano. ¿Se siente mal?;YES_NO_QUESTION;sí;no;FR-01-010;0.00602;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-011;FR-01-011;Formato;Perdon. ¿Estas triste?;YES_NO_QUESTION;sí;sí;FR-01-011;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-012;FR-01-012;Orden;¿Está aburrido tu hermano?;YES_NO_QUESTION;sí;no;FR-01-012;0.03307;sí;no;;no;;no;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-013;FR-01-013;Formato;Hola ¿cómo estás? ¿Cómo te llamas?;CONTENT_QUESTION;sí;sí;FR-01-013;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-014;FR-01-014;Orden;¿Tu familia dónde vive?;CONTENT_QUESTION;sí;no;FR-01-014;0.0531;sí;no;;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-015;FR-01-015;Sinónimos;La mujer es prudente. ¿Quién es el señor?;CONTENT_QUESTION;sí;no;FR-01-015;0.12198;sí;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí;
+paráfrasis;FR-03-016;FR-01-016;Formato;¿POR QUÉ ESTÁS TRISTE?;CONTENT_QUESTION;sí;sí;FR-01-016;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-017;FR-01-017;Orden;¿Ustedes cuándo comen?;CONTENT_QUESTION;sí;no;FR-01-017;0.0156;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-018;FR-01-018;Orden;Las personas son diferentes. ¿Tú qué seña usas?;CONTENT_QUESTION;sí;no;FR-01-018;0.01063;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-019;FR-01-019;Sinónimos;Yo jamás como mucho.;NEGATIVE;sí;no;FR-01-024;0.60774;no;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;
+paráfrasis;FR-03-020;FR-01-020;Sinónimos;Mi abuelo jamás trabaja.;NEGATIVE;sí;no;FR-01-021;0.52257;no;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;
+paráfrasis;FR-03-021;FR-01-021;Orden;Nunca está aburrido mi tío.;NEGATIVE;sí;no;FR-01-021;0.04911;sí;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-022;FR-01-022;Orden;Nunca se sienten mal ustedes.;NEGATIVE;sí;no;FR-01-022;0.02502;sí;no;;no;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-023;FR-01-023;Sinónimos;Disculpe. Mi hermano nunca está contento.;NEGATIVE;sí;no;FR-01-023;0.04832;sí;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-024;FR-01-024;Sinónimos;Se siente excelente. La niña nunca está triste.;NEGATIVE;sí;no;FR-01-024;0.01879;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-025;FR-01-025;Sinónimos;Por favor, come un poquito.;AFFIRMATIVE;sí;no;FR-01-025;0.28075;sí;no;;no;;no;;no;;no;;no;;no;;no;;no;;sí;
+paráfrasis;FR-03-026;FR-01-026;Formato;con permiso. déjame pasar, por favor.;AFFIRMATIVE;sí;sí;FR-01-026;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-027;FR-01-027;Sinónimos;Chicos, trabajen todos.;AFFIRMATIVE;sí;no;FR-01-027;0.17593;sí;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí;
+paráfrasis;FR-03-028;FR-01-028;Sinónimos;Hermano, reside con el abuelo. Trabaja con el tío.;AFFIRMATIVE;sí;no;FR-01-028;0.00214;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-029;FR-01-029;Formato;Hola familia siéntanse bienvenidos;AFFIRMATIVE;sí;sí;FR-01-029;0.0;sí;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;;sí;
+paráfrasis;FR-03-030;FR-01-030;Sinónimos;Tío, come bastante. Hermano, come un poquito.;AFFIRMATIVE;sí;no;FR-01-030;0.06045;sí;no;;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí;
+trampa;FR-04-001;FR-01-001;Palabra distinta;Hola, buenas noches, bienvenidos.;AFFIRMATIVE;sí;no;FR-01-002;0.06928;no;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí
+trampa;FR-04-002;FR-01-002;Palabra distinta;Adiós a todos. Buenos días.;AFFIRMATIVE;sí;no;FR-01-001;0.11008;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí
+trampa;FR-04-003;FR-01-003;Negación;Mi abuelo y mi tío nunca trabajan en familia.;NEGATIVE;no;no;FR-01-020;0.12693;no;;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí
+trampa;FR-04-004;FR-01-004;Otra persona;Estoy contento porque mi tío está feliz.;AFFIRMATIVE;sí;no;FR-01-004;0.11745;sí;;no;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí
+trampa;FR-04-005;FR-01-005;Otra persona;Buenas tardes. Hoy se siente más o menos.;AFFIRMATIVE;sí;no;FR-01-005;0.0314;sí;;no;;no;;no;;sí;;sí;;sí;;sí;;sí;;sí;;sí
+trampa;FR-04-006;FR-01-006;Otra persona;Gracias a todos. Los niños y los abuelos comen con gusto.;AFFIRMATIVE;sí;no;FR-01-006;0.10085;sí;;no;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí
+trampa;FR-04-007;FR-01-007;Palabra distinta;¿Tienes sed?;YES_NO_QUESTION;sí;no;FR-01-007;0.29353;sí;;no;;no;;no;;no;;no;;no;;no;;no;;no;;sí
+trampa;FR-04-008;FR-01-008;Negación;¿Nunca estás bien?;YES_NO_QUESTION;sí;no;FR-01-011;0.50963;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-009;FR-01-009;Otra persona;¿Ellos trabajan en familia?;YES_NO_QUESTION;sí;no;FR-01-009;0.14031;sí;;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí
+trampa;FR-04-010;FR-01-010;Otra persona;Tu tío está triste. ¿Se siente mal?;YES_NO_QUESTION;sí;no;FR-01-010;0.11947;sí;;no;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí
+trampa;FR-04-011;FR-01-011;Palabra distinta;Perdón. ¿Estás contento?;YES_NO_QUESTION;sí;no;FR-01-011;0.07662;sí;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí
+trampa;FR-04-012;FR-01-012;Otra persona;¿Tu tío está aburrido?;YES_NO_QUESTION;sí;no;FR-01-012;0.10737;sí;;no;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí
+trampa;FR-04-013;FR-01-013;Palabra distinta;Hola, ¿dónde estás? ¿Cómo te llamas?;CONTENT_QUESTION;sí;no;FR-01-013;0.03506;sí;;no;;no;;no;;no;;sí;;sí;;sí;;sí;;sí;;sí
+trampa;FR-04-014;FR-01-014;Otra persona;¿Dónde vive mi familia?;CONTENT_QUESTION;sí;no;FR-01-014;0.07066;sí;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí
+trampa;FR-04-015;FR-01-015;Palabra distinta;La mujer es juiciosa. ¿Quién es el niño?;CONTENT_QUESTION;sí;no;FR-01-015;0.33056;sí;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-016;FR-01-016;Negación;¿Por qué nunca estás triste?;CONTENT_QUESTION;sí;no;FR-01-016;0.07873;sí;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí
+trampa;FR-04-017;FR-01-017;Otra persona;¿Cuándo comen ellos?;CONTENT_QUESTION;sí;no;FR-01-017;0.12177;sí;;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí
+trampa;FR-04-018;FR-01-018;Palabra distinta;Las personas son iguales. ¿Qué seña usas tú?;CONTENT_QUESTION;sí;no;FR-01-018;0.34799;sí;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-019;FR-01-019;Negación;Yo como mucho.;AFFIRMATIVE;no;no;FR-01-030;0.46619;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-020;FR-01-020;Negación;Mi abuelo trabaja.;AFFIRMATIVE;no;no;FR-01-003;0.18629;no;;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí
+trampa;FR-04-021;FR-01-021;Negación;Mi tío está aburrido.;AFFIRMATIVE;no;no;FR-01-028;0.4843;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-022;FR-01-022;Negación;Ustedes se sienten mal.;AFFIRMATIVE;no;no;FR-01-005;0.49857;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-023;FR-01-023;Negación;Perdón. Mi hermano está contento.;AFFIRMATIVE;no;no;FR-01-004;0.26258;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;;sí
+trampa;FR-04-024;FR-01-024;Negación;Se siente muy bien. La niña está triste.;AFFIRMATIVE;no;no;FR-01-006;0.53331;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-025;FR-01-025;Negación;Por favor, nunca comas poco.;NEGATIVE;no;no;FR-01-019;0.43812;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-026;FR-01-026;Palabra distinta;Con permiso. Déjame hablar, por favor.;AFFIRMATIVE;sí;no;FR-01-026;0.1259;sí;;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí
+trampa;FR-04-027;FR-01-027;Palabra distinta;Niños, coman todos.;AFFIRMATIVE;sí;no;FR-01-006;0.32241;no;;no;;no;;no;;no;;no;;no;;no;;no;;no;;no
+trampa;FR-04-028;FR-01-028;Palabra distinta;Hermano, vive con el abuelo. Come con el tío.;AFFIRMATIVE;sí;no;FR-01-028;0.07021;sí;;no;;no;;no;;no;;no;;no;;sí;;sí;;sí;;sí
+trampa;FR-04-029;FR-01-029;Otra persona;Hola, niños, siéntanse bienvenidos.;AFFIRMATIVE;sí;no;FR-01-029;0.22752;sí;;no;;no;;no;;no;;no;;no;;no;;no;;no;;sí
+trampa;FR-04-030;FR-01-030;Otra persona;Abuelo, come mucho. Hermano, come poco.;AFFIRMATIVE;sí;no;FR-01-030;0.14438;sí;;no;;no;;no;;no;;no;;no;;no;;no;;sí;;sí

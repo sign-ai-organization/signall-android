@@ -1,0 +1,10 @@
+1793900958.401 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+1793900998.404 10686 10715 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 0 successful ping/pongs)
+1793900998.410 10686 10686 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+1793900999.429 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+1793901030.662 10686 10686 I SignAiMetrics: representado: 2 señas en 3805ms (p50=4219ms p95=4219ms max=4296ms n=3)
+1793901046.343 10686 10686 I SignAiMetrics: representado: 1 señas en 2171ms (p50=3805ms p95=4219ms max=4296ms n=4)
+1793901079.438 10686 11202 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 2 successful ping/pongs)
+1793901079.438 10686 10686 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+1793901080.463 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+1793901099.663 10686 10686 I SignAiMetrics: representado: 2 señas en 3800ms (p50=3805ms p95=4219ms max=4296ms n=5)

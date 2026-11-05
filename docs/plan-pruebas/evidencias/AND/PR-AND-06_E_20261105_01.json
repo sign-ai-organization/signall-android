@@ -1,0 +1,607 @@
+{
+  "filas": [
+    {
+      "tema": "oscuro",
+      "opcion": "bold",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 1.278,
+      "texto_traducir": "173x49",
+      "estado": "160x46",
+      "solapes": 0,
+      "frase_ms": 11032
+    },
+    {
+      "tema": "oscuro",
+      "opcion": "contrast",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 1.394,
+      "texto_traducir": "173x49",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 10962
+    },
+    {
+      "tema": "oscuro",
+      "opcion": "large",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 1.494,
+      "texto_traducir": "199x57",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 11031
+    },
+    {
+      "tema": "oscuro",
+      "opcion": "reduce_motion",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.993,
+      "texto_traducir": "173x49",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 11222
+    },
+    {
+      "tema": "claro",
+      "opcion": "bold",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.504,
+      "texto_traducir": "173x49",
+      "estado": "160x46",
+      "solapes": 0,
+      "frase_ms": 11049
+    },
+    {
+      "tema": "claro",
+      "opcion": "contrast",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.514,
+      "texto_traducir": "173x49",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 11007
+    },
+    {
+      "tema": "claro",
+      "opcion": "large",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.785,
+      "texto_traducir": "199x57",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 11069
+    },
+    {
+      "tema": "claro",
+      "opcion": "reduce_motion",
+      "pref_quedo_en": "true",
+      "diferencia_vs_base_pct": 0.024,
+      "texto_traducir": "173x49",
+      "estado": "144x46",
+      "solapes": 0,
+      "frase_ms": 11207
+    }
+  ],
+  "contraste_borde": {
+    "oscuro": {
+      "off": [
+        [
+          51,
+          54,
+          61
+        ],
+        [
+          18,
+          19,
+          22
+        ]
+      ],
+      "on": [
+        [
+          119,
+          119,
+          119
+        ],
+        [
+          18,
+          19,
+          22
+        ]
+      ]
+    },
+    "claro": {
+      "off": [
+        [
+          222,
+          222,
+          217
+        ],
+        [
+          244,
+          244,
+          242
+        ]
+      ],
+      "on": [
+        [
+          119,
+          119,
+          119
+        ],
+        [
+          244,
+          244,
+          242
+        ]
+      ]
+    }
+  },
+  "ratios": {
+    "oscuro": {
+      "off": 1.54,
+      "on": 4.15
+    },
+    "claro": {
+      "off": 1.23,
+      "on": 4.07
+    }
+  },
+  "crudo": {
+    "original": {
+      "freecam": "false",
+      "large": "false",
+      "bg": "false",
+      "reduce_motion": "false",
+      "grid_default_off": "true",
+      "bold": "false",
+      "speed": "50",
+      "dark_theme": "true",
+      "demo_sign_fallback": "false",
+      "grid": "false",
+      "contrast": "false",
+      "interface_size": "50",
+      "mic_prompted": "true"
+    },
+    "combos": [
+      {
+        "tema": "oscuro",
+        "opcion": "bold",
+        "pref": "true",
+        "ui": {
+          "estado": {
+            "x": 115,
+            "y": 135,
+            "width": 160,
+            "height": 46
+          },
+          "campo": {
+            "x": 50,
+            "y": 2019,
+            "width": 654,
+            "height": 138
+          },
+          "traducir_texto": {
+            "x": 240,
+            "y": 2230,
+            "width": 173,
+            "height": 49
+          },
+          "solapes": []
+        },
+        "frase": {
+          "t": 1793889832728,
+          "fin": 1793889843760,
+          "ms": 11032
+        }
+      },
+      {
+        "tema": "oscuro",
+        "opcion": "contrast",
+        "pref": "true",
+        "ui": {
+          "estado": {
+            "x": 115,
+            "y": 135,
+            "width": 144,
+            "height": 46
+          },
+          "campo": {
+            "x": 50,
+            "y": 2019,
+            "width": 654,
+            "height": 138
+          },
+          "traducir_texto": {
+            "x": 240,
+            "y": 2230,
+            "width": 173,
+            "height": 49
+          },
+          "solapes": []
+        },
+        "frase": {
+          "t": 1793889882511,
+          "fin": 1793889893473,
+          "ms": 10962
+        }
+      },
+      {
+        "tema": "oscuro",
+        "opcion": "large",
+        "pref": "true",
+        "ui": {
+          "estado": {
+            "x": 115,
+            "y": 135,
+            "width": 144,
+            "height": 46
+          },
+          "campo": {
+            "x": 50,
+            "y": 2019,
+            "width": 654,
+            "height": 138
+          },
+          "traducir_texto": {
+            "x": 227,
+            "y": 2226,
+            "width": 199,
+            "height": 57
+          },
+          "solapes": []
+        },
+        "frase": {
+          "t": 1793889932183,
+          "fin": 1793889943214,
+          "ms": 11031
+        }
+      },
+      {
+        "tema": "oscuro",
+        "opcion": "reduce_motion",
+        "pref": "true",
+        "ui": {
+          "estado": {
+            "x": 115,
+            "y": 135,
+            "width": 144,
+            "height": 46
+          },
+          "campo": {
+            "x": 50,
+            "y": 2019,
+            "width": 654,
+            "height": 138
+          },
+          "traducir_texto": {
+            "x": 240,
+            "y": 2230,
+            "width": 173,
+            "height": 49
+          },
+          "solapes": []
+        },
+        "frase": {
+          "t": 1793889982432,
+          "fin": 1793889993654,
+          "ms": 11222
+        }
+      },
+      {
+        "tema": "claro",
+        "opcion": "bold",
+        "pref": "true",
+        "ui": {
+          "estado": {
+            "x": 115,
+            "y": 135,
+            "width": 160,
+            "height": 46
+          },
+          "campo": {
+            "x": 50,
+            "y": 2019,
+            "width": 654,
+            "height": 138
+          },
+          "traducir_texto": {
+            "x": 240,
+            "y": 2230,
+            "width": 173,
+            "height": 49
+          },
+          "solapes": []
+        },
+        "frase": {
+          "t": 1793890066782,
+          "fin": 1793890077831,
+          "ms": 11049
+        }
+      },
+      {
+        "tema": "claro",
+        "opcion": "contrast",
+        "pref": "true",
+        "ui": {
+          "estado": {
+            "x": 115,
+            "y": 135,
+            "width": 144,
+            "height": 46
+          },
+          "campo": {
+            "x": 50,
+            "y": 2019,
+            "width": 654,
+            "height": 138
+          },
+          "traducir_texto": {
+            "x": 240,
+            "y": 2230,
+            "width": 173,
+            "height": 49
+          },
+          "solapes": []
+        },
+        "frase": {
+          "t": 1793890116418,
+          "fin": 1793890127425,
+          "ms": 11007
+        }
+      },
+      {
+        "tema": "claro",
+        "opcion": "large",
+        "pref": "true",
+        "ui": {
+          "estado": {
+            "x": 115,
+            "y": 135,
+            "width": 144,
+            "height": 46
+          },
+          "campo": {
+            "x": 50,
+            "y": 2019,
+            "width": 654,
+            "height": 138
+          },
+          "traducir_texto": {
+            "x": 227,
+            "y": 2226,
+            "width": 199,
+            "height": 57
+          },
+          "solapes": []
+        },
+        "frase": {
+          "t": 1793890166690,
+          "fin": 1793890177759,
+          "ms": 11069
+        }
+      },
+      {
+        "tema": "claro",
+        "opcion": "reduce_motion",
+        "pref": "true",
+        "ui": {
+          "estado": {
+            "x": 115,
+            "y": 135,
+            "width": 144,
+            "height": 46
+          },
+          "campo": {
+            "x": 50,
+            "y": 2019,
+            "width": 654,
+            "height": 138
+          },
+          "traducir_texto": {
+            "x": 240,
+            "y": 2230,
+            "width": 173,
+            "height": 49
+          },
+          "solapes": []
+        },
+        "frase": {
+          "t": 1793890216804,
+          "fin": 1793890228011,
+          "ms": 11207
+        }
+      }
+    ],
+    "base_ui_oscuro": {
+      "estado": {
+        "x": 115,
+        "y": 135,
+        "width": 144,
+        "height": 46
+      },
+      "campo": {
+        "x": 50,
+        "y": 2019,
+        "width": 654,
+        "height": 138
+      },
+      "traducir_texto": {
+        "x": 240,
+        "y": 2230,
+        "width": 173,
+        "height": 49
+      },
+      "solapes": []
+    },
+    "base_frase_oscuro": {
+      "t": 1793889798019,
+      "fin": 1793889810461,
+      "ms": 12442
+    },
+    "base_ui_claro": {
+      "estado": {
+        "x": 115,
+        "y": 135,
+        "width": 144,
+        "height": 46
+      },
+      "campo": {
+        "x": 50,
+        "y": 2019,
+        "width": 654,
+        "height": 138
+      },
+      "traducir_texto": {
+        "x": 240,
+        "y": 2230,
+        "width": 173,
+        "height": 49
+      },
+      "solapes": []
+    },
+    "base_frase_claro": {
+      "t": 1793890033258,
+      "fin": 1793890044534,
+      "ms": 11276
+    },
+    "on_antes_de_reabrir": {
+      "bold": "true",
+      "contrast": "true",
+      "large": "true",
+      "reduce_motion": "true"
+    },
+    "on_tras_reabrir": {
+      "bold": "true",
+      "contrast": "true",
+      "large": "true",
+      "reduce_motion": "true"
+    },
+    "ui_tras_reabrir": {
+      "estado": {
+        "x": 115,
+        "y": 135,
+        "width": 160,
+        "height": 46
+      },
+      "campo": {
+        "x": 50,
+        "y": 2019,
+        "width": 654,
+        "height": 138
+      },
+      "traducir_texto": {
+        "x": 227,
+        "y": 2226,
+        "width": 199,
+        "height": 57
+      },
+      "solapes": []
+    },
+    "restaurado": {
+      "freecam": "false",
+      "large": "false",
+      "bg": "false",
+      "reduce_motion": "false",
+      "grid_default_off": "true",
+      "bold": "false",
+      "speed": "50",
+      "dark_theme": "true",
+      "demo_sign_fallback": "false",
+      "grid": "false",
+      "contrast": "false",
+      "interface_size": "50",
+      "mic_prompted": "true"
+    },
+    "turnos": [
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6586,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6570,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6560,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6567,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6792,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6602,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6577,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6512,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6595,
+        "fin": true
+      },
+      {
+        "glosas": [
+          "GRACIAS",
+          "TODOS",
+          "COMER"
+        ],
+        "ms": 6740,
+        "fin": true
+      }
+    ]
+  }
+}

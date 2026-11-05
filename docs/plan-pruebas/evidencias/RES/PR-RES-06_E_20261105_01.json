@@ -1,0 +1,298 @@
+{
+  "audio_ms": 96085,
+  "t_fin_audio_ms": 96060.1,
+  "fin_ms": 126063.7,
+  "frames_tipos": {
+    "capability": 1,
+    "transcript": 84,
+    "sentence_trace": 23,
+    "segment": 23,
+    "trace": 20,
+    "done": 20
+  },
+  "errores": [],
+  "transcripts": [
+    {
+      "n": 1,
+      "texto": "Hola, buenos días, bienvenidos.",
+      "_t": 5760.4
+    },
+    {
+      "n": 2,
+      "texto": "¿Tienes hambre?",
+      "_t": 9150.3
+    },
+    {
+      "n": 3,
+      "texto": "Yo nunca como mucho.",
+      "_t": 13470.3
+    },
+    {
+      "n": 4,
+      "texto": "Por favor, come poco.",
+      "_t": 17970.3
+    },
+    {
+      "n": 5,
+      "texto": "mi abuelo y mi tío trabajan en familia.",
+      "_t": 23340.2
+    },
+    {
+      "n": 6,
+      "texto": "¿Por qué estás triste?",
+      "_t": 27390.3
+    },
+    {
+      "n": 7,
+      "texto": "mi abuelo nunca trabaja.",
+      "_t": 31950.3
+    },
+    {
+      "n": 8,
+      "texto": "Niños, trabajen todos.",
+      "_t": 36390.4
+    },
+    {
+      "n": 9,
+      "texto": "¿Dónde vive tu familia?",
+      "_t": 40380.3
+    },
+    {
+      "n": 10,
+      "texto": "¿Estás bien?",
+      "_t": 43950.2
+    },
+    {
+      "n": 11,
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "_t": 49980.2
+    },
+    {
+      "n": 12,
+      "texto": "mi tío nunca está aburrido.",
+      "_t": 55020.2
+    },
+    {
+      "n": 13,
+      "texto": "Hola, familia. Siéntanse bienvenidos.",
+      "_t": 60810.3
+    },
+    {
+      "n": 14,
+      "texto": "¿Cuándo comen ustedes?",
+      "_t": 65310.3
+    },
+    {
+      "n": 15,
+      "texto": "Ustedes nunca se sienten mal.",
+      "_t": 70320.3
+    },
+    {
+      "n": 16,
+      "texto": "¿Ustedes trabajan en familia?",
+      "_t": 74940.3
+    },
+    {
+      "n": 17,
+      "texto": "¿Tu hermano está aburrido?",
+      "_t": 79380.3
+    },
+    {
+      "n": 18,
+      "texto": "Adiós a todos. Buenas noches.",
+      "_t": 84720.2
+    },
+    {
+      "n": 19,
+      "texto": "Perdón, ¿estás triste?",
+      "_t": 89730.3
+    },
+    {
+      "n": 20,
+      "texto": "Con permiso, déjame pasar, por favor.",
+      "_t": 95670.3
+    }
+  ],
+  "espera_por_frase": [
+    {
+      "turn": 1,
+      "espera_ms": 29.9,
+      "texto": "Hola, buenos días, bienvenidos.",
+      "t_enviado": 5760.4,
+      "t_ultima_oracion": 5790.3,
+      "oraciones": 1,
+      "done": 5790.3
+    },
+    {
+      "turn": 2,
+      "espera_ms": 30.0,
+      "texto": "¿Tienes hambre?",
+      "t_enviado": 9150.3,
+      "t_ultima_oracion": 9180.3,
+      "oraciones": 1,
+      "done": 9180.3
+    },
+    {
+      "turn": 3,
+      "espera_ms": 30.0,
+      "texto": "Yo nunca como mucho.",
+      "t_enviado": 13470.3,
+      "t_ultima_oracion": 13500.3,
+      "oraciones": 1,
+      "done": 13500.3
+    },
+    {
+      "turn": 4,
+      "espera_ms": 30.0,
+      "texto": "Por favor, come poco.",
+      "t_enviado": 17970.3,
+      "t_ultima_oracion": 18000.3,
+      "oraciones": 1,
+      "done": 18000.3
+    },
+    {
+      "turn": 5,
+      "espera_ms": 2160.1,
+      "texto": "mi abuelo y mi tío trabajan en familia.",
+      "t_enviado": 23340.2,
+      "t_ultima_oracion": 25500.3,
+      "oraciones": 1,
+      "done": 25500.3
+    },
+    {
+      "turn": 6,
+      "espera_ms": 1170.1,
+      "texto": "¿Por qué estás triste?",
+      "t_enviado": 27390.3,
+      "t_ultima_oracion": 28560.4,
+      "oraciones": 1,
+      "done": 28560.4
+    },
+    {
+      "turn": 7,
+      "espera_ms": 1050.0,
+      "texto": "mi abuelo nunca trabaja.",
+      "t_enviado": 31950.3,
+      "t_ultima_oracion": 33000.3,
+      "oraciones": 1,
+      "done": 33000.3
+    },
+    {
+      "turn": 8,
+      "espera_ms": 929.9,
+      "texto": "Niños, trabajen todos.",
+      "t_enviado": 36390.4,
+      "t_ultima_oracion": 37320.3,
+      "oraciones": 1,
+      "done": 37320.3
+    },
+    {
+      "turn": 9,
+      "espera_ms": 30.2,
+      "texto": "¿Dónde vive tu familia?",
+      "t_enviado": 40380.3,
+      "t_ultima_oracion": 40410.5,
+      "oraciones": 1,
+      "done": 40410.5
+    },
+    {
+      "turn": 10,
+      "espera_ms": 1170.1,
+      "texto": "¿Estás bien?",
+      "t_enviado": 43950.2,
+      "t_ultima_oracion": 45120.3,
+      "oraciones": 1,
+      "done": 45120.3
+    },
+    {
+      "turn": 11,
+      "espera_ms": 720.1,
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "t_enviado": 49980.2,
+      "t_ultima_oracion": 50700.3,
+      "oraciones": 1,
+      "done": 50700.4
+    },
+    {
+      "turn": 12,
+      "espera_ms": 690.1,
+      "texto": "mi tío nunca está aburrido.",
+      "t_enviado": 55020.2,
+      "t_ultima_oracion": 55710.3,
+      "oraciones": 1,
+      "done": 55710.3
+    },
+    {
+      "turn": 13,
+      "espera_ms": 1050.8,
+      "texto": "Hola, familia. Siéntanse bienvenidos.",
+      "t_enviado": 60810.3,
+      "t_ultima_oracion": 61861.1,
+      "oraciones": 2,
+      "done": 61861.4
+    },
+    {
+      "turn": 14,
+      "espera_ms": 630.0,
+      "texto": "¿Cuándo comen ustedes?",
+      "t_enviado": 65310.3,
+      "t_ultima_oracion": 65940.3,
+      "oraciones": 1,
+      "done": 65940.3
+    },
+    {
+      "turn": 15,
+      "espera_ms": 870.1,
+      "texto": "Ustedes nunca se sienten mal.",
+      "t_enviado": 70320.3,
+      "t_ultima_oracion": 71190.4,
+      "oraciones": 1,
+      "done": 71190.4
+    },
+    {
+      "turn": 16,
+      "espera_ms": 750.1,
+      "texto": "¿Ustedes trabajan en familia?",
+      "t_enviado": 74940.3,
+      "t_ultima_oracion": 75690.4,
+      "oraciones": 1,
+      "done": 75690.5
+    },
+    {
+      "turn": 17,
+      "espera_ms": 720.1,
+      "texto": "¿Tu hermano está aburrido?",
+      "t_enviado": 79380.3,
+      "t_ultima_oracion": 80100.4,
+      "oraciones": 1,
+      "done": 80100.4
+    },
+    {
+      "turn": 18,
+      "espera_ms": 900.2,
+      "texto": "Adiós a todos. Buenas noches.",
+      "t_enviado": 84720.2,
+      "t_ultima_oracion": 85620.4,
+      "oraciones": 2,
+      "done": 85620.4
+    },
+    {
+      "turn": 19,
+      "espera_ms": 30.0,
+      "texto": "Perdón, ¿estás triste?",
+      "t_enviado": 89730.3,
+      "t_ultima_oracion": 89760.3,
+      "oraciones": 2,
+      "done": 89760.4
+    },
+    {
+      "turn": 20,
+      "espera_ms": 30.0,
+      "texto": "Con permiso, déjame pasar, por favor.",
+      "t_enviado": 95670.3,
+      "t_ultima_oracion": 95700.3,
+      "oraciones": 1,
+      "done": 95700.3
+    }
+  ]
+}

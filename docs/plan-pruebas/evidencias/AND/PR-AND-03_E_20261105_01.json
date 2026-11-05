@@ -1,0 +1,450 @@
+{
+  "frases_plan": [
+    "FR-01-001",
+    "FR-01-003",
+    "FR-01-007",
+    "FR-01-010",
+    "FR-01-013",
+    "FR-01-014",
+    "FR-01-019",
+    "FR-01-021",
+    "FR-01-024",
+    "FR-01-026",
+    "FR-01-028",
+    "FR-01-029"
+  ],
+  "envios": [
+    {
+      "n": 1,
+      "id": "FR-01-001",
+      "texto": "Hola, buenos días, bienvenidos.",
+      "t": 1793890765864,
+      "t_fin": 1793890774708,
+      "ms": 8844
+    },
+    {
+      "n": 2,
+      "id": "FR-01-003",
+      "texto": "Mi abuelo y mi tío trabajan en familia.",
+      "t": 1793890775745,
+      "t_fin": 1793890788553,
+      "ms": 12808
+    },
+    {
+      "n": 3,
+      "id": "FR-01-007",
+      "texto": "¿Tienes hambre?",
+      "t": 1793890789559,
+      "t_fin": 1793890797966,
+      "ms": 8407
+    },
+    {
+      "n": 4,
+      "id": "FR-01-010",
+      "texto": "Tu hermano está triste. ¿Se siente mal?",
+      "t": 1793890798893,
+      "t_fin": 1793890814561,
+      "ms": 15668
+    },
+    {
+      "n": 5,
+      "id": "FR-01-013",
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "t": 1793890815557,
+      "t_fin": 1793890828051,
+      "ms": 12494
+    },
+    {
+      "n": 6,
+      "id": "FR-01-014",
+      "texto": "¿Dónde vive tu familia?",
+      "t": 1793890829058,
+      "t_fin": 1793890841429,
+      "ms": 12371
+    },
+    {
+      "n": 7,
+      "id": "FR-01-019",
+      "texto": "Yo nunca como mucho.",
+      "t": 1793890842332,
+      "t_fin": 1793890855169,
+      "ms": 12837
+    },
+    {
+      "n": 8,
+      "id": "FR-01-021",
+      "texto": "Mi tío nunca está aburrido.",
+      "t": 1793890856211,
+      "t_fin": 1793890867276,
+      "ms": 11065
+    },
+    {
+      "n": 9,
+      "id": "FR-01-024",
+      "texto": "Se siente muy bien. La niña nunca está triste.",
+      "t": 1793890868272,
+      "t_fin": 1793890885402,
+      "ms": 17130
+    },
+    {
+      "n": 10,
+      "id": "FR-01-026",
+      "texto": "Con permiso. Déjame pasar, por favor.",
+      "t": 1793890886376,
+      "t_fin": 1793890894000,
+      "ms": 7624
+    },
+    {
+      "n": 11,
+      "id": "FR-01-028",
+      "texto": "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "t": 1793890894941,
+      "t_fin": 1793890910732,
+      "ms": 15791
+    },
+    {
+      "n": 12,
+      "id": "FR-01-029",
+      "texto": "Hola, familia, siéntanse bienvenidos.",
+      "t": 1793890911653,
+      "t_fin": 1793890922548,
+      "ms": 10895
+    }
+  ],
+  "pasos": {
+    "panel_vacio": {
+      "items": [],
+      "rects": [],
+      "vacio": [
+        "Aún no hay frases recientes."
+      ],
+      "cabecera": [
+        "TUS FRASES",
+        "Historial reciente"
+      ],
+      "png": "/tmp/opencode/pruebas/shots/and03_historial.png"
+    },
+    "panel_lleno": {
+      "items": [
+        "Hola, familia, siéntanse bienvenidos.",
+        "Hermano, vive con el abuelo. Trabaja con el tío.",
+        "Con permiso. Déjame pasar, por favor.",
+        "Se siente muy bien. La niña nunca está triste.",
+        "Mi tío nunca está aburrido.",
+        "Yo nunca como mucho.",
+        "¿Dónde vive tu familia?"
+      ],
+      "rects": [
+        {
+          "x": 58,
+          "y": 1245,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1418,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1591,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1764,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1937,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 2110,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 2283,
+          "width": 964,
+          "height": 7
+        }
+      ],
+      "vacio": [],
+      "cabecera": [
+        "TUS FRASES",
+        "Historial reciente"
+      ],
+      "png": "/tmp/opencode/pruebas/shots/and03_historial.png"
+    },
+    "panel_lleno_prefs": [
+      "Hola, familia, siéntanse bienvenidos.",
+      "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "Con permiso. Déjame pasar, por favor.",
+      "Se siente muy bien. La niña nunca está triste.",
+      "Mi tío nunca está aburrido.",
+      "Yo nunca como mucho.",
+      "¿Dónde vive tu familia?",
+      "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "Tu hermano está triste. ¿Se siente mal?",
+      "¿Tienes hambre?",
+      "Mi abuelo y mi tío trabajan en familia.",
+      "Hola, buenos días, bienvenidos."
+    ],
+    "elegida": "Con permiso. Déjame pasar, por favor.",
+    "tras_reutilizar": {
+      "elegida": "Con permiso. Déjame pasar, por favor.",
+      "t": 1793890948173,
+      "t_fin": 1793890950731,
+      "ms": 2558,
+      "campo": "",
+      "hoja_cerrada": true,
+      "png": "/tmp/opencode/pruebas/shots/and03_tras_reutilizar.png"
+    },
+    "historial_antes_de_reabrir": [
+      "Hola, familia, siéntanse bienvenidos.",
+      "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "Con permiso. Déjame pasar, por favor.",
+      "Se siente muy bien. La niña nunca está triste.",
+      "Mi tío nunca está aburrido.",
+      "Yo nunca como mucho.",
+      "¿Dónde vive tu familia?",
+      "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "Tu hermano está triste. ¿Se siente mal?",
+      "¿Tienes hambre?",
+      "Mi abuelo y mi tío trabajan en familia.",
+      "Hola, buenos días, bienvenidos."
+    ],
+    "historial_tras_reabrir": [
+      "Hola, familia, siéntanse bienvenidos.",
+      "Hermano, vive con el abuelo. Trabaja con el tío.",
+      "Con permiso. Déjame pasar, por favor.",
+      "Se siente muy bien. La niña nunca está triste.",
+      "Mi tío nunca está aburrido.",
+      "Yo nunca como mucho.",
+      "¿Dónde vive tu familia?",
+      "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "Tu hermano está triste. ¿Se siente mal?",
+      "¿Tienes hambre?",
+      "Mi abuelo y mi tío trabajan en familia.",
+      "Hola, buenos días, bienvenidos."
+    ],
+    "panel_tras_reabrir": {
+      "items": [
+        "Hola, familia, siéntanse bienvenidos.",
+        "Hermano, vive con el abuelo. Trabaja con el tío.",
+        "Con permiso. Déjame pasar, por favor.",
+        "Se siente muy bien. La niña nunca está triste.",
+        "Mi tío nunca está aburrido.",
+        "Yo nunca como mucho.",
+        "¿Dónde vive tu familia?"
+      ],
+      "rects": [
+        {
+          "x": 58,
+          "y": 1245,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1418,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1591,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1764,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1937,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 2110,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 2283,
+          "width": 964,
+          "height": 7
+        }
+      ],
+      "vacio": [],
+      "cabecera": [
+        "TUS FRASES",
+        "Historial reciente"
+      ],
+      "png": "/tmp/opencode/pruebas/shots/and03_historial.png"
+    },
+    "panel_tras_extra": {
+      "items": [
+        "La mujer es juiciosa. ¿Quién es el hombre?",
+        "¿Tu hermano está aburrido?",
+        "Perdón. ¿Estás triste?",
+        "¿Ustedes trabajan en familia?",
+        "¿Estás bien?",
+        "Gracias a todos. Los niños y las niñas comen con gusto.",
+        "Buenas tardes. Hoy me siento más o menos."
+      ],
+      "rects": [
+        {
+          "x": 58,
+          "y": 1245,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1418,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1591,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1764,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 1937,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 2110,
+          "width": 964,
+          "height": 151
+        },
+        {
+          "x": 58,
+          "y": 2283,
+          "width": 964,
+          "height": 7
+        }
+      ],
+      "vacio": [],
+      "cabecera": [
+        "TUS FRASES",
+        "Historial reciente"
+      ],
+      "png": "/tmp/opencode/pruebas/shots/and03_historial.png"
+    }
+  },
+  "historial_al_empezar": [],
+  "abrio": true,
+  "historial_tras_abrir": [],
+  "historial_tras_enviar": [
+    "Hola, familia, siéntanse bienvenidos.",
+    "Hermano, vive con el abuelo. Trabaja con el tío.",
+    "Con permiso. Déjame pasar, por favor.",
+    "Se siente muy bien. La niña nunca está triste.",
+    "Mi tío nunca está aburrido.",
+    "Yo nunca como mucho.",
+    "¿Dónde vive tu familia?",
+    "Hola, ¿cómo estás? ¿Cómo te llamas?",
+    "Tu hermano está triste. ¿Se siente mal?",
+    "¿Tienes hambre?",
+    "Mi abuelo y mi tío trabajan en familia.",
+    "Hola, buenos días, bienvenidos."
+  ],
+  "abrio_al_reabrir": true,
+  "extra": [
+    {
+      "id": "FR-01-002",
+      "texto": "Adiós a todos. Buenas noches.",
+      "fin": true
+    },
+    {
+      "id": "FR-01-004",
+      "texto": "Estoy contento porque mi hermano está feliz.",
+      "fin": true
+    },
+    {
+      "id": "FR-01-005",
+      "texto": "Buenas tardes. Hoy me siento más o menos.",
+      "fin": true
+    },
+    {
+      "id": "FR-01-006",
+      "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "fin": true
+    },
+    {
+      "id": "FR-01-008",
+      "texto": "¿Estás bien?",
+      "fin": true
+    },
+    {
+      "id": "FR-01-009",
+      "texto": "¿Ustedes trabajan en familia?",
+      "fin": true
+    },
+    {
+      "id": "FR-01-011",
+      "texto": "Perdón. ¿Estás triste?",
+      "fin": true
+    },
+    {
+      "id": "FR-01-012",
+      "texto": "¿Tu hermano está aburrido?",
+      "fin": true
+    },
+    {
+      "id": "FR-01-015",
+      "texto": "La mujer es juiciosa. ¿Quién es el hombre?",
+      "fin": true
+    }
+  ],
+  "historial_tras_extra": [
+    "La mujer es juiciosa. ¿Quién es el hombre?",
+    "¿Tu hermano está aburrido?",
+    "Perdón. ¿Estás triste?",
+    "¿Ustedes trabajan en familia?",
+    "¿Estás bien?",
+    "Gracias a todos. Los niños y las niñas comen con gusto.",
+    "Buenas tardes. Hoy me siento más o menos.",
+    "Estoy contento porque mi hermano está feliz.",
+    "Adiós a todos. Buenas noches.",
+    "Hola, familia, siéntanse bienvenidos.",
+    "Hermano, vive con el abuelo. Trabaja con el tío.",
+    "Con permiso. Déjame pasar, por favor.",
+    "Se siente muy bien. La niña nunca está triste.",
+    "Mi tío nunca está aburrido.",
+    "Yo nunca como mucho.",
+    "¿Dónde vive tu familia?",
+    "Hola, ¿cómo estás? ¿Cómo te llamas?",
+    "Tu hermano está triste. ¿Se siente mal?",
+    "¿Tienes hambre?",
+    "Mi abuelo y mi tío trabajan en familia."
+  ]
+}

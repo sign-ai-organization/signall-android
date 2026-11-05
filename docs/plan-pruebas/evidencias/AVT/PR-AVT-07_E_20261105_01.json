@@ -1,0 +1,62 @@
+{
+  "crudo": {
+    "juan": {
+      "t_envio": 1793891519387,
+      "fin": 1793891528274,
+      "personaje_en_ajustes": null
+    },
+    "opciones": [
+      "Juan",
+      "Pauline"
+    ],
+    "pauline": {
+      "t_envio": 1793891548441,
+      "fin": 1793891557202
+    },
+    "pick_actual": [
+      "Juan",
+      "Pauline"
+    ],
+    "tras_reabrir": [
+      "Juan",
+      "Pauline"
+    ]
+  },
+  "metricas_pixeles": {
+    "juan_vs_pauline_reposo": [
+      83.15,
+      33.97
+    ],
+    "reabierta_vs_pauline": [
+      0.0,
+      0.0
+    ],
+    "reabierta_vs_juan": [
+      83.15,
+      33.97
+    ]
+  },
+  "cambios": [
+    [
+      "pauline",
+      "juan"
+    ],
+    [
+      "juan",
+      "pauline"
+    ]
+  ],
+  "listos": [
+    [
+      "juan",
+      "2574"
+    ],
+    [
+      "pauline",
+      "2072"
+    ]
+  ],
+  "escenas": [
+    "pauline"
+  ]
+}

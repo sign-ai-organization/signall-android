@@ -1,0 +1,69 @@
+﻿umbral;conjunto;audio;tipo_texto;referencia;texto;wer_pct;errores;palabras;n_finales;n_finales_con_texto;n_parciales;duracion_ms;ms_total;timeout
+2;AU-01 (voz);AU-01-001;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;1;1;5;4458;4681.9;False
+2;AU-01 (voz);AU-01-002;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;1;1;4;3925;4150.6;False
+2;AU-01 (voz);AU-01-003;Afirmación;Hola, buenos días, bienvenidos.;Buenos días, bienvenido.;50.0;2;4;1;1;4;4352;4587.8;False
+2;AU-01 (voz);AU-01-004;Afirmación;Hola, buenos días, bienvenidos.;Buenos días, bienvenidos.;25.0;1;4;1;1;3;3776;3980.5;False
+2;AU-01 (voz);AU-01-005;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;1;1;6;5781;6071.9;False
+2;AU-01 (voz);AU-01-006;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;1;1;2;3072;3332.8;False
+2;AU-01 (voz);AU-01-007;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;0;8;1;1;5;5205;5471.3;False
+2;AU-01 (voz);AU-01-008;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;1;1;4;4352;4625.2;False
+2;AU-01 (voz);AU-01-009;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;0;8;1;1;5;4949;5229.9;False
+2;AU-01 (voz);AU-01-010;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;0;8;1;1;3;3562;4029.9;False
+2;AU-01 (voz);AU-01-011;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;1;1;7;5354;5618.2;False
+2;AU-01 (voz);AU-01-012;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;1;1;4;3498;3761.1;False
+2;AU-01 (voz);AU-01-013;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;1;1;1;2688;2918.0;False
+2;AU-01 (voz);AU-01-014;Pregunta de sí o no;¿Tienes hambre?;;100.0;2;2;1;0;0;2560;2771.0;False
+2;AU-01 (voz);AU-01-015;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;1;1;1;3669;3907.5;False
+2;AU-01 (voz);AU-01-016;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;1;1;0;2069;2276.6;False
+2;AU-01 (voz);AU-01-017;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;1;1;1;2602;2822.9;False
+2;AU-01 (voz);AU-01-018;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;1;1;1;2304;2515.2;False
+2;AU-01 (voz);AU-01-019;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;1;1;4;3989;4205.5;False
+2;AU-01 (voz);AU-01-020;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;1;1;2;3328;3542.4;False
+2;AU-01 (voz);AU-01-021;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;1;1;4;4352;4593.6;False
+2;AU-01 (voz);AU-01-022;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;1;1;2;2922;3356.5;False
+2;AU-01 (voz);AU-01-023;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;1;1;3;3392;3633.7;False
+2;AU-01 (voz);AU-01-024;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;1;1;2;2986;3219.3;False
+2;AU-01 (voz);AU-01-025;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;1;1;5;4010;4260.6;False
+2;AU-01 (voz);AU-01-026;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;1;1;3;3584;3840.4;False
+2;AU-01 (voz);AU-01-027;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;1;1;5;4778;5039.7;False
+2;AU-01 (voz);AU-01-028;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;como te llamas.;50.0;3;6;1;1;0;3797;4042.1;False
+2;AU-01 (voz);AU-01-029;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;1;1;5;4458;4865.7;False
+2;AU-01 (voz);AU-01-030;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;1;1;3;3498;3752.6;False
+2;AU-01 (voz);AU-01-031;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;1;1;2;3605;3853.6;False
+2;AU-01 (voz);AU-01-032;Pregunta de contenido;¿Dónde vive tu familia?;donde vive tu familia.;0.0;0;4;1;1;3;3157;3382.4;False
+2;AU-01 (voz);AU-01-033;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;1;1;2;3413;3633.5;False
+2;AU-01 (voz);AU-01-034;Pregunta de contenido;¿Dónde vive tu familia?;donde vive tu familia.;0.0;0;4;1;1;1;2602;2804.1;False
+2;AU-01 (voz);AU-01-035;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;1;1;3;3349;3577.9;False
+2;AU-01 (voz);AU-01-036;Pregunta de contenido;¿Dónde vive tu familia?;donde vive tu familia.;0.0;0;4;1;1;0;2389;2665.8;False
+2;AU-01 (voz);AU-01-037;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;1;1;2;3648;3862.5;False
+2;AU-01 (voz);AU-01-038;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;1;1;2;2474;2691.7;False
+2;AU-01 (voz);AU-01-039;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;1;1;1;2986;3196.0;False
+2;AU-01 (voz);AU-01-040;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;1;1;1;2261;2472.1;False
+2;AU-01 (voz);AU-01-041;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;1;1;0;3797;4267.0;False
+2;AU-01 (voz);AU-01-042;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;1;1;0;2560;2779.7;False
+2;AU-01 (voz);AU-01-043;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;1;1;6;5120;5370.5;False
+2;AU-01 (voz);AU-01-044;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;1;1;4;3498;3749.5;False
+2;AU-01 (voz);AU-01-045;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;1;1;5;4608;4857.9;False
+2;AU-01 (voz);AU-01-046;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;1;1;3;3349;3597.1;False
+2;AU-01 (voz);AU-01-047;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;1;1;5;4736;4979.4;False
+2;AU-01 (voz);AU-01-048;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;1;1;2;3157;3533.7;False
+2;AU-01 (voz);AU-01-049;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;1;1;3;3648;3869.9;False
+2;AU-01 (voz);AU-01-050;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;1;1;2;2901;3112.1;False
+2;AU-01 (voz);AU-01-051;Orden;Por favor, come poco.;Por favor, comí poco.;25.0;1;4;1;1;2;3669;3909.6;False
+2;AU-01 (voz);AU-01-052;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;1;1;2;2901;3125.9;False
+2;AU-01 (voz);AU-01-053;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;1;1;4;3392;3623.7;False
+2;AU-01 (voz);AU-01-054;Orden;Por favor, come poco.;Por favor, con más poco.;50.0;2;4;1;1;1;2560;2787.4;False
+2;AU-01 (voz);AU-01-055;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;0;6;1;1;5;5056;5321.0;False
+2;AU-01 (voz);AU-01-056;Orden;Con permiso. Déjame pasar, por favor.;con permiso, déjame pasar por favor;0.0;0;6;1;1;3;3840;4086.9;False
+2;AU-01 (voz);AU-01-057;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;1;1;4;4522;4766.2;False
+2;AU-01 (voz);AU-01-058;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;1;1;2;3392;3859.0;False
+2;AU-01 (voz);AU-01-059;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0.0;0;6;1;1;5;4736;4966.7;False
+2;AU-01 (voz);AU-01-060;Orden;Con permiso. Déjame pasar, por favor.;con permiso, déjame pasar por favor;0.0;0;6;1;1;3;3498;3744.8;False
+2;AU-03 (sin voz);AU-03-001;Silencio;;;;;;1;0;0;22037;22021.2;False
+2;AU-03 (sin voz);AU-03-002;Silencio;;;;;;1;0;0;20544;20521.1;False
+2;AU-03 (sin voz);AU-03-003;Ruido;;;;;;1;0;0;20352;20569.4;False
+2;AU-03 (sin voz);AU-03-004;Ruido;;;;;;1;0;1;20373;20581.7;False
+2;AU-03 (sin voz);AU-03-005;Tos;;;;;;1;0;0;21760;21977.8;False
+2;AU-03 (sin voz);AU-03-006;Tos;;;;;;1;0;1;21333;21641.4;False
+2;AU-03 (sin voz);AU-03-007;Golpes;;;;;;1;0;0;21269;21241.4;False
+2;AU-03 (sin voz);AU-03-008;Golpes;;;;;;1;0;0;21312;21495.6;False

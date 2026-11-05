@@ -1,0 +1,599 @@
+{
+  "equipo": {
+    "lscpu_modelo": "Arquitectura:                             x86_64\nmodo(s) de operación de las CPUs:         32-bit, 64-bit\nTamaños de las direcciones:               48 bits physical, 48 bits virtual\nOrden de los bytes:                       Little Endian\nCPU(s):                                   12\nLista de la(s) CPU(s) en línea:           0-11\nID de fabricante:                         AuthenticAMD\nNombre del modelo:                        AMD Ryzen 5 7535HS with Radeon Graphics\nFamilia de CPU:                           25\nModelo:                                   68\nHilo(s) de procesamiento por núcleo:      2\nNúcleo(s) por «socket»:                   6\n«Socket(s)»:                              1\nRevisión:                                 1\nMicrocode version:                        0xa40410a\nAumento de frecuencia:                    desactivada\nCPU(s) factor de escala MHz:              92%\nCPU MHz máx.:                             3301,0000\nCPU MHz mín.:                             416,0930\nBogoMIPS:                                 6587,56\nIndicadores:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk clzero irperf xsaveerptr rdpru wbnoinvd cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip pku ospke vaes vpclmulqdq rdpid overflow_recov succor smca fsrm debug_swap\nVirtualización:                           AMD-V\nCaché L1d:                                192 KiB (6 instancias)\nCaché L1i:                                192 KiB (6 instancias)\nCaché L2:                                 3 MiB (6 instancias)\nCaché L3:                                 16 MiB (1 instancia)\nModo(s) NUMA:                             1\nCPU(s) del nodo NUMA 0:                   0-11\nVulnerabilidad Gather data sampling:      Not affected\nVulnerabilidad Ghostwrite:                Not affected\nVulnerabilidad Indirect target selection: Not affected\nVulnerabilidad Itlb multihit:             Not affected\nVulnerabilidad L1tf:                      Not affected\nVulnerabilidad Mds:                       Not affected\nVulnerabilidad Meltdown:                  Not affected\nVulnerabilidad Mmio stale data:           Not affected\nVulnerabilidad Old microcode:             Not affected\nVulnerabilidad Reg file data sampling:    Not affected\nVulnerabilidad Retbleed:                  Not affected\nVulnerabilidad Spec rstack overflow:      Mitigation; Safe RET\nVulnerabilidad Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerabilidad Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerabilidad Spectre v2:                Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\nVulnerabilidad Srbds:                     Not affected\nVulnerabilidad Tsa:                       Mitigation; Clear CPU buffers\nVulnerabilidad Tsx async abort:           Not affected\nVulnerabilidad Vmscape:                   Mitigation; IBPB before exit to userspace\n",
+    "free_g": "               total       usado       libre  compartido   búf/caché  disponible\nMem:              14           7           1           0           6           7\nInter:            14           3          11\n",
+    "nvidia_smi_gpu": "name, memory.total [MiB], memory.used [MiB], utilization.gpu [%], driver_version\nNVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB, 2011 MiB, 0 %, 615.78.08\n",
+    "nproc": "12\n",
+    "uname": "Linux diegocachy 7.3.1-1-cachyos #1 SMP PREEMPT_DYNAMIC Sat, 31 Oct 2026 15:33:05 +0000 x86_64 GNU/Linux\n",
+    "docker_version": "Docker version 29.9.2, build a82e528901\n"
+  },
+  "health": {
+    "gpu": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    },
+    "backend": {
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 2,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    "config_stt": {
+      "model": "medium",
+      "device": "cuda",
+      "requested_device": "cuda",
+      "silence_timeout_ms": 1500,
+      "partial_interval_ms": 400,
+      "onset_window_ms": 300,
+      "word_timestamps": false,
+      "max_concurrent_inference": 1
+    },
+    "cpu": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cpu",
+      "requested_device": "cpu",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    },
+    "config_stt_cpu": {
+      "model": "medium",
+      "device": "cpu",
+      "requested_device": "cpu",
+      "silence_timeout_ms": 1500,
+      "partial_interval_ms": 400,
+      "onset_window_ms": 300,
+      "word_timestamps": false,
+      "max_concurrent_inference": 1
+    }
+  },
+  "texto": {
+    "n": 30,
+    "ms_total": 27780.8,
+    "ms_p50": 714.4,
+    "ms_min": 4.7,
+    "ms_max": 4274.2,
+    "errores": 0,
+    "detalle": [
+      {
+        "id": "FR-01-001",
+        "tipo": "Afirmación",
+        "ms": 4.7,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-002",
+        "tipo": "Afirmación",
+        "ms": 1067.9,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-003",
+        "tipo": "Afirmación",
+        "ms": 1210.7,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-004",
+        "tipo": "Afirmación",
+        "ms": 895.7,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-005",
+        "tipo": "Afirmación",
+        "ms": 688.4,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-006",
+        "tipo": "Afirmación",
+        "ms": 740.5,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-007",
+        "tipo": "Pregunta de sí o no",
+        "ms": 6.8,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-008",
+        "tipo": "Pregunta de sí o no",
+        "ms": 703.9,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-009",
+        "tipo": "Pregunta de sí o no",
+        "ms": 640.1,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-010",
+        "tipo": "Pregunta de sí o no",
+        "ms": 628.8,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-011",
+        "tipo": "Pregunta de sí o no",
+        "ms": 4274.2,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-012",
+        "tipo": "Pregunta de sí o no",
+        "ms": 697.8,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-013",
+        "tipo": "Pregunta de contenido",
+        "ms": 704.8,
+        "frames": 9,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-014",
+        "tipo": "Pregunta de contenido",
+        "ms": 635.5,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-015",
+        "tipo": "Pregunta de contenido",
+        "ms": 1016.0,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-016",
+        "tipo": "Pregunta de contenido",
+        "ms": 556.5,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-017",
+        "tipo": "Pregunta de contenido",
+        "ms": 610.4,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-018",
+        "tipo": "Pregunta de contenido",
+        "ms": 720.8,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-019",
+        "tipo": "Negación",
+        "ms": 672.7,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-020",
+        "tipo": "Negación",
+        "ms": 708.0,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-021",
+        "tipo": "Negación",
+        "ms": 811.8,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-022",
+        "tipo": "Negación",
+        "ms": 592.8,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-023",
+        "tipo": "Negación",
+        "ms": 721.6,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-024",
+        "tipo": "Negación",
+        "ms": 847.7,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-025",
+        "tipo": "Orden",
+        "ms": 859.1,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-026",
+        "tipo": "Orden",
+        "ms": 736.6,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-027",
+        "tipo": "Orden",
+        "ms": 730.7,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-028",
+        "tipo": "Orden",
+        "ms": 3868.9,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-029",
+        "tipo": "Orden",
+        "ms": 687.5,
+        "frames": 5,
+        "error": false,
+        "timeout": false
+      },
+      {
+        "id": "FR-01-030",
+        "tipo": "Orden",
+        "ms": 739.9,
+        "frames": 7,
+        "error": false,
+        "timeout": false
+      }
+    ]
+  },
+  "audio": {
+    "n": 10,
+    "ms_total": 45925.3,
+    "ms_p50": 4241.25,
+    "ms_min": 2939.1,
+    "ms_max": 6399.6,
+    "errores": 0,
+    "detalle": [
+      {
+        "frase": "FR-01-001",
+        "audio": "AU-01-001",
+        "duracion_ms": 4458,
+        "ms": 4685.4,
+        "transcrito": "Hola, buenos días, bienvenidos.",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 12
+      },
+      {
+        "frase": "FR-01-005",
+        "audio": "AU-01-007",
+        "duracion_ms": 5205,
+        "ms": 5473.2,
+        "transcrito": "Buenas tardes. Hoy me siento más o menos.",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 14
+      },
+      {
+        "frase": "FR-01-007",
+        "audio": "AU-01-013",
+        "duracion_ms": 2688,
+        "ms": 2939.1,
+        "transcrito": "¿Tienes hambre?",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 8
+      },
+      {
+        "frase": "FR-01-011",
+        "audio": "AU-01-019",
+        "duracion_ms": 3989,
+        "ms": 4207.4,
+        "transcrito": "Perdón, ¿estás triste?",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 13
+      },
+      {
+        "frase": "FR-01-013",
+        "audio": "AU-01-025",
+        "duracion_ms": 4010,
+        "ms": 4275.1,
+        "transcrito": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 16
+      },
+      {
+        "frase": "FR-01-014",
+        "audio": "AU-01-031",
+        "duracion_ms": 3605,
+        "ms": 3844.9,
+        "transcrito": "¿Dónde vive tu familia?",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 9
+      },
+      {
+        "frase": "FR-01-019",
+        "audio": "AU-01-037",
+        "duracion_ms": 3648,
+        "ms": 3860.3,
+        "transcrito": "Yo nunca como mucho.",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 9
+      },
+      {
+        "frase": "FR-01-023",
+        "audio": "AU-01-043",
+        "duracion_ms": 5120,
+        "ms": 6380.2,
+        "transcrito": "Perdón, mi hermano nunca está contento.",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 13
+      },
+      {
+        "frase": "FR-01-025",
+        "audio": "AU-01-049",
+        "duracion_ms": 3648,
+        "ms": 3860.1,
+        "transcrito": "Por favor, come poco.",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 10
+      },
+      {
+        "frase": "FR-01-026",
+        "audio": "AU-01-055",
+        "duracion_ms": 5056,
+        "ms": 6399.6,
+        "transcrito": "Con permiso, déjame pasar, por favor.",
+        "cancelado": false,
+        "error": false,
+        "timeout": false,
+        "frames": 12
+      }
+    ]
+  },
+  "post_gpu_5_audios": [
+    {
+      "audio": "AU-01-001.wav",
+      "ms_pared": 280.3,
+      "elapsed_ms": 277,
+      "text": "Hola, buenos días, bienvenidos.",
+      "drop_reason": null,
+      "audio_ms": 4459
+    },
+    {
+      "audio": "AU-01-002.wav",
+      "ms_pared": 253.1,
+      "elapsed_ms": 245,
+      "text": "Hola, buenos días, bienvenidos.",
+      "drop_reason": null,
+      "audio_ms": 3925
+    },
+    {
+      "audio": "AU-01-003.wav",
+      "ms_pared": 257.8,
+      "elapsed_ms": 248,
+      "text": "Hola, buenos días, bienvenido.",
+      "drop_reason": null,
+      "audio_ms": 4352
+    },
+    {
+      "audio": "AU-01-004.wav",
+      "ms_pared": 252.6,
+      "elapsed_ms": 243,
+      "text": "Hola, buenos días, bienvenidos.",
+      "drop_reason": null,
+      "audio_ms": 3776
+    },
+    {
+      "audio": "AU-01-005.wav",
+      "ms_pared": 254.7,
+      "elapsed_ms": 245,
+      "text": "Hola, buenos días, bienvenidos.",
+      "drop_reason": null,
+      "audio_ms": 5781
+    }
+  ],
+  "post_cpu_5_audios": [
+    {
+      "audio": "AU-01-001.wav",
+      "ms_pared": 4066.1,
+      "elapsed_ms": 4043,
+      "text": "Hola, buenos días, bienvenidos.",
+      "drop_reason": null,
+      "audio_ms": 4459
+    },
+    {
+      "audio": "AU-01-002.wav",
+      "ms_pared": 3822.9,
+      "elapsed_ms": 3813,
+      "text": "Hola, buenos días, bienvenidos.",
+      "drop_reason": null,
+      "audio_ms": 3925
+    },
+    {
+      "audio": "AU-01-003.wav",
+      "ms_pared": 3835.1,
+      "elapsed_ms": 3829,
+      "text": "Hola, buenos días, bienvenido.",
+      "drop_reason": null,
+      "audio_ms": 4352
+    },
+    {
+      "audio": "AU-01-004.wav",
+      "ms_pared": 3849.1,
+      "elapsed_ms": 3839,
+      "text": "Hola, buenos días, bienvenidos.",
+      "drop_reason": null,
+      "audio_ms": 3776
+    },
+    {
+      "audio": "AU-01-005.wav",
+      "ms_pared": 3860.2,
+      "elapsed_ms": 3850,
+      "text": "Hola, buenos días, bienvenidos.",
+      "drop_reason": null,
+      "audio_ms": 5781
+    }
+  ],
+  "cpu_int8_arranque": "Cargando modelo medium (cpu, int8)...\nModelo cargado en cpu.\nModelo precalentado en 4263 ms.\nINFO:     172.17.0.1:50298 - \"GET /health HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:50302 - \"GET /health HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:50312 - \"GET /health HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:50320 - \"GET /metrics.json HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:48258 - \"GET /health HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:48258 - \"GET /v1/models HTTP/1.1\" 404 Not Found\nINFO:     172.17.0.1:48274 - \"POST /transcribe HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:32896 - \"POST /transcribe HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:32898 - \"POST /transcribe HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:41430 - \"POST /transcribe HTTP/1.1\" 200 OK\nINFO:     172.17.0.1:41442 - \"POST /transcribe HTTP/1.1\" 200 OK\n",
+  "cpu_stt_muestras": {
+    "health_antes": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cpu",
+      "requested_device": "cpu",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    },
+    "posts": [
+      {
+        "audio": "AU-01-001.wav",
+        "ms_pared": 4046.4,
+        "elapsed_ms": 3992,
+        "text": "Hola, buenos días, bienvenidos."
+      },
+      {
+        "audio": "AU-01-002.wav",
+        "ms_pared": 3790.3,
+        "elapsed_ms": 3788,
+        "text": "Hola, buenos días, bienvenidos."
+      },
+      {
+        "audio": "AU-01-003.wav",
+        "ms_pared": 3811.1,
+        "elapsed_ms": 3809,
+        "text": "Hola, buenos días, bienvenido."
+      }
+    ],
+    "health_despues": {
+      "status": "ok",
+      "model": "medium",
+      "device": "cpu",
+      "requested_device": "cpu",
+      "language": "es",
+      "silence_timeout_ms": 1500
+    },
+    "muestras": [
+      {
+        "t": 1793898678.96,
+        "cpu_pct": 0.18,
+        "mem_mib": 1188.9
+      },
+      {
+        "t": 1793898680.98,
+        "cpu_pct": 0.08,
+        "mem_mib": 1188.9
+      },
+      {
+        "t": 1793898683.01,
+        "cpu_pct": 404.15,
+        "mem_mib": 1189.9
+      },
+      {
+        "t": 1793898685.06,
+        "cpu_pct": 432.49,
+        "mem_mib": 1171.5
+      },
+      {
+        "t": 1793898687.09,
+        "cpu_pct": 405.44,
+        "mem_mib": 1171.5
+      },
+      {
+        "t": 1793898689.12,
+        "cpu_pct": 460.87,
+        "mem_mib": 1172.5
+      },
+      {
+        "t": 1793898691.16,
+        "cpu_pct": 405.04,
+        "mem_mib": 1172.5
+      },
+      {
+        "t": 1793898693.19,
+        "cpu_pct": 165.35,
+        "mem_mib": 1171.5
+      }
+    ],
+    "resumen": {
+      "n_muestras": 8,
+      "cpu_medio": 284.2,
+      "cpu_max": 460.87,
+      "mem_media_mib": 1178.4,
+      "mem_max_mib": 1189.9,
+      "ms_p50": 3811.1
+    }
+  }
+}

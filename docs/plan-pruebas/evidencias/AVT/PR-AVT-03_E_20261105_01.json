@@ -1,0 +1,81 @@
+{
+  "filas": [
+    {
+      "orden": 1,
+      "turn": 1,
+      "frase": "FR-01-006",
+      "glosas": "GRACIAS TODOS COMER",
+      "senas_que_arrancaron": 3,
+      "senas_que_terminaron": 3,
+      "llego_a_representado": "si",
+      "ms_representado": 6542,
+      "primer_signStart_ms": 1793891608148,
+      "ultimo_evento_ms": 1793891614554
+    },
+    {
+      "orden": 2,
+      "turn": 2,
+      "frase": "FR-01-013",
+      "glosas": "HOLA COMO ESTAS COMO TU",
+      "senas_que_arrancaron": 4,
+      "senas_que_terminaron": 3,
+      "llego_a_representado": "no",
+      "ms_representado": "",
+      "primer_signStart_ms": 1793891614740,
+      "ultimo_evento_ms": 1793891620875
+    },
+    {
+      "orden": 3,
+      "turn": 3,
+      "frase": "FR-01-024",
+      "glosas": "SENTIR BIEN NIÑA NUNCA TRISTE",
+      "senas_que_arrancaron": 2,
+      "senas_que_terminaron": 1,
+      "llego_a_representado": "no",
+      "ms_representado": "",
+      "primer_signStart_ms": 1793891622505,
+      "ultimo_evento_ms": 1793891624540
+    },
+    {
+      "orden": 4,
+      "turn": 4,
+      "frase": "Repetir de FR-01-024",
+      "glosas": "SENTIR BIEN NIÑA NUNCA TRISTE",
+      "senas_que_arrancaron": 4,
+      "senas_que_terminaron": 4,
+      "llego_a_representado": "si",
+      "ms_representado": 10913,
+      "primer_signStart_ms": 1793891626883,
+      "ultimo_evento_ms": 1793891637367
+    }
+  ],
+  "envios": {
+    "envios": [
+      {
+        "id": "FR-01-006",
+        "texto": "Gracias a todos. Los niños y las niñas comen con gusto.",
+        "toque_ms": 1793891607659,
+        "rel": 4530
+      },
+      {
+        "id": "FR-01-013",
+        "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+        "toque_ms": 1793891614301,
+        "rel": 11172
+      },
+      {
+        "id": "FR-01-024",
+        "texto": "Se siente muy bien. La niña nunca está triste.",
+        "toque_ms": 1793891621022,
+        "rel": 17893
+      }
+    ],
+    "t0": 1793891603129,
+    "velocidad": [
+      50,
+      40
+    ]
+  },
+  "solapes": 0,
+  "cortes": []
+}

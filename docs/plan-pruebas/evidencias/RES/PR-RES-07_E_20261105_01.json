@@ -1,0 +1,311 @@
+{
+  "casos": [
+    {
+      "caso": "reinicio en reposo",
+      "panel_antes": {
+        "indicador": "Inactivo",
+        "campo": "",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "12:49 PM",
+          "100",
+          "Inactivo",
+          "Escribe una frase...",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "indicadores_vistos": [
+        "® Inactivo",
+        "® Desconectado",
+        "® Inactivo"
+      ],
+      "panel_desconectado": {
+        "indicador": "Inactivo",
+        "campo": "",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "12:50 PM",
+          "100",
+          "Inactivo",
+          "Escribe una frase...",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png": "/tmp/opencode/pruebas/shots/res07_1_desconectado.png",
+      "backend": {
+        "ms": 31.5,
+        "health": {
+          "status": "ok",
+          "cache_loaded": true,
+          "cache_rows": 2,
+          "catalog_loaded": true,
+          "catalog_glosses": 50,
+          "silence_timeout_ms": 1500
+        },
+        "desde_el_restart_s": 54.6
+      },
+      "reconexion": {
+        "ms": 0,
+        "lineas": [
+          "1793900999.429 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)"
+        ]
+      },
+      "panel_al_volver": {
+        "indicador": "Inactivo",
+        "campo": "",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "12:50 PM",
+          "100",
+          "Inactivo",
+          "Escribe una frase...",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "frase_nueva": {
+        "texto": "¿Tienes hambre?",
+        "campo": "¿Tienes hambre?",
+        "ms": 14252,
+        "representado": true
+      },
+      "log": [
+        "1793900998.410 10686 10686 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+        "1793900999.429 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)"
+      ]
+    },
+    {
+      "caso": "en medio de una traducción",
+      "texto": "Perdón. ¿Estás triste?",
+      "campo_antes": "Perdón. ¿Estás triste?",
+      "panel_tras_corte": {
+        "indicador": "Inactivo",
+        "campo": "",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "12:50 PM",
+          "100",
+          "Inactivo",
+          "Repetir",
+          "Escribe una frase...",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png": "/tmp/opencode/pruebas/shots/res07_2_corte_traduciendo.png",
+      "estado": "® Inactivo",
+      "campo_tras_corte": "",
+      "backend": {
+        "ms": 6316.3,
+        "health": {
+          "status": "ok",
+          "cache_loaded": true,
+          "cache_rows": 4,
+          "catalog_loaded": true,
+          "catalog_glosses": 50,
+          "silence_timeout_ms": 1500
+        },
+        "desde_el_restart_s": 16.1
+      },
+      "reconexion": {
+        "ms": 20011,
+        "lineas": [
+          "1793901080.463 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)"
+        ]
+      },
+      "panel_al_volver": {
+        "indicador": "Inactivo",
+        "campo": "",
+        "botones": {
+          "Entrada por voz": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Historial reciente": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Traducir": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Modo en vivo": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Conversación": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          },
+          "Abrir Ajustes": {
+            "enabled": true,
+            "visible": true,
+            "checked": false
+          }
+        },
+        "textos": [
+          "12:51 PM",
+          "100",
+          "Inactivo",
+          "Escribe una frase...",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "campo_al_volver": "",
+      "frase_nueva": {
+        "texto": "¿Tienes hambre?",
+        "campo": "¿Tienes hambre?",
+        "ms": 13547,
+        "representado": true
+      },
+      "log": [
+        "1793901079.438 10686 10686 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+        "1793901080.463 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)"
+      ]
+    }
+  ],
+  "log_completo": [
+    "1793900958.401 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+    "1793900998.404 10686 10715 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 0 successful ping/pongs)",
+    "1793900998.410 10686 10686 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+    "1793900999.429 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+    "1793901030.662 10686 10686 I SignAiMetrics: representado: 2 señas en 3805ms (p50=4219ms p95=4219ms max=4296ms n=3)",
+    "1793901046.343 10686 10686 I SignAiMetrics: representado: 1 señas en 2171ms (p50=3805ms p95=4219ms max=4296ms n=4)",
+    "1793901079.438 10686 11202 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 2 successful ping/pongs)",
+    "1793901079.438 10686 10686 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+    "1793901080.463 10686 10714 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+    "1793901099.663 10686 10686 I SignAiMetrics: representado: 2 señas en 3800ms (p50=3805ms p95=4219ms max=4296ms n=5)"
+  ]
+}

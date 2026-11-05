@@ -1,0 +1,288 @@
+{
+  "pasos": [
+    {
+      "paso": "escribir la frase",
+      "panel": {
+        "indicador": "Inactivo",
+        "modo": null,
+        "campo": "Hola, buenos días, bienvenidos.",
+        "placeholder": false,
+        "textos": [
+          "9:26 AM",
+          "100",
+          "Inactivo",
+          "Sin servicio de voz: podés seguir traduciendo por texto.",
+          "Hola, buenos días, bienvenidos.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png": "/tmp/opencode/pruebas/shots/and02_01_escrito.png"
+    },
+    {
+      "paso": "agregar « fin» al final",
+      "panel": {
+        "indicador": "Inactivo",
+        "modo": null,
+        "campo": "Hola, buenos día fins, bienvenidos.",
+        "placeholder": false,
+        "textos": [
+          "9:26 AM",
+          "100",
+          "Inactivo",
+          "Sin servicio de voz: podés seguir traduciendo por texto.",
+          "Hola, buenos día fins, bienvenidos.",
+          "Traducir",
+          "TR"
+        ]
+      }
+    },
+    {
+      "paso": "borrar 4 caracteres con DEL",
+      "panel": {
+        "indicador": "Inactivo",
+        "modo": null,
+        "campo": "Hola, buenos días, bienvenidos.",
+        "placeholder": false,
+        "textos": [
+          "9:26 AM",
+          "100",
+          "Inactivo",
+          "Sin servicio de voz: podés seguir traduciendo por texto.",
+          "Hola, buenos días, bienvenidos.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png": "/tmp/opencode/pruebas/shots/and02_02_editado.png"
+    }
+  ],
+  "estados": {
+    "envio_texto": {
+      "t0": 1793888806243,
+      "secuencia": [
+        {
+          "t": 0.61,
+          "texto": "Reproduciendo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_00.png"
+        },
+        {
+          "t": 1.49,
+          "texto": "Reproduciendo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_01.png"
+        },
+        {
+          "t": 2.25,
+          "texto": "Reproduciendo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_02.png"
+        },
+        {
+          "t": 3.1,
+          "texto": "Reproduciendo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_03.png"
+        },
+        {
+          "t": 3.91,
+          "texto": "Reproduciendo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_04.png"
+        },
+        {
+          "t": 4.68,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_05.png"
+        },
+        {
+          "t": 5.48,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_06.png"
+        },
+        {
+          "t": 6.29,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_07.png"
+        },
+        {
+          "t": 7.07,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_08.png"
+        },
+        {
+          "t": 7.82,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_09.png"
+        },
+        {
+          "t": 8.58,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_10.png"
+        },
+        {
+          "t": 9.32,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_envio_11.png"
+        }
+      ],
+      "panel_final": {
+        "indicador": "Inactivo",
+        "modo": null,
+        "campo": "",
+        "placeholder": true,
+        "textos": [
+          "9:27 AM",
+          "100",
+          "Inactivo",
+          "Repetir",
+          "Sin servicio de voz: podés seguir traduciendo por texto.",
+          "Escribe una frase...",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png": "/tmp/opencode/pruebas/shots/and02_03_despues_de_mandar.png"
+    },
+    "dictado_con_texto": {
+      "campo_antes": "Frase vieja que no se manda.",
+      "t0": 1793888832254,
+      "secuencia": [
+        {
+          "t": 0.61,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_00.png"
+        },
+        {
+          "t": 1.8,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_01.png"
+        },
+        {
+          "t": 2.57,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_02.png"
+        },
+        {
+          "t": 3.29,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_03.png"
+        },
+        {
+          "t": 4.02,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_04.png"
+        },
+        {
+          "t": 4.75,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_05.png"
+        },
+        {
+          "t": 5.51,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_06.png"
+        },
+        {
+          "t": 6.23,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_07.png"
+        },
+        {
+          "t": 7.0,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_08.png"
+        },
+        {
+          "t": 7.74,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_09.png"
+        },
+        {
+          "t": 8.53,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_10.png"
+        },
+        {
+          "t": 9.28,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_11.png"
+        },
+        {
+          "t": 10.02,
+          "texto": "® Inactivo",
+          "png": "/tmp/opencode/pruebas/shots/and02_dictado_12.png"
+        }
+      ],
+      "panel_durante": {
+        "indicador": "Inactivo",
+        "modo": null,
+        "campo": "Frase vieja que no se manda.",
+        "placeholder": false,
+        "textos": [
+          "9:27 AM",
+          "100",
+          "Inactivo",
+          "Repetir",
+          "Sin servicio de voz: podés seguir traduciendo por texto.",
+          "Frase vieja que no se manda.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "panel_despues": {
+        "indicador": "Inactivo",
+        "modo": null,
+        "campo": "Frase vieja que no se manda.",
+        "placeholder": false,
+        "textos": [
+          "9:27 AM",
+          "100",
+          "Inactivo",
+          "Repetir",
+          "Sin servicio de voz: podés seguir traduciendo por texto.",
+          "Frase vieja que no se manda.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png_durante": "/tmp/opencode/pruebas/shots/and02_04_dictando.png",
+      "png_despues": "/tmp/opencode/pruebas/shots/and02_05_dictado_apagado.png"
+    },
+    "segundo_dictado": {
+      "campo_antes": "Frase vieja que no se manda.",
+      "panel_durante": {
+        "indicador": "Inactivo",
+        "modo": null,
+        "campo": "Frase vieja que no se manda.",
+        "placeholder": false,
+        "textos": [
+          "9:27 AM",
+          "100",
+          "Inactivo",
+          "Repetir",
+          "Sin servicio de voz: podés seguir traduciendo por texto.",
+          "Frase vieja que no se manda.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "panel_despues": {
+        "indicador": "Inactivo",
+        "modo": null,
+        "campo": "Frase vieja que no se manda.",
+        "placeholder": false,
+        "textos": [
+          "9:27 AM",
+          "100",
+          "Inactivo",
+          "Repetir",
+          "Sin servicio de voz: podés seguir traduciendo por texto.",
+          "Frase vieja que no se manda.",
+          "Traducir",
+          "TR"
+        ]
+      },
+      "png": "/tmp/opencode/pruebas/shots/and02_06_segundo_dictado.png"
+    }
+  },
+  "inicial": {
+    "indicador": "Inactivo"
+  }
+}

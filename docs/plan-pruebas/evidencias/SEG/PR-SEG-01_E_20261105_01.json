@@ -1,0 +1,557 @@
+{
+  "totales": {
+    "casos": 210,
+    "exactos": 166,
+    "co01": "160/200",
+    "fixtures": "156/191",
+    "borde": "18/29",
+    "no_borde": "142/171",
+    "au05": "6/10"
+  },
+  "por_grupo": {
+    "01_puntuados_basicos.txt": "19/20 (95.0 %)",
+    "02_sin_puntuacion.txt": "11/20 (55.0 %)",
+    "03_registro_datos.txt": "22/28 (78.6 %)",
+    "04_coloquial_colombiano.txt": "18/23 (78.3 %)",
+    "05_muletillas.txt": "18/20 (90.0 %)",
+    "06_negativas_imperativas.txt": "17/21 (81.0 %)",
+    "07_no_dividir.txt": "22/22 (100.0 %)",
+    "08_numeros_dictados.txt": "15/17 (88.2 %)",
+    "09_trampas.txt": "14/20 (70.0 %)",
+    "limite-ficha": "4/9 (44.4 %)"
+  },
+  "cortes": {
+    "obtenidos": 342,
+    "esperados": 352,
+    "correctos": 320,
+    "precision": 0.936,
+    "cobertura": 0.909
+  },
+  "errores": {
+    "CO-01-001": {
+      "texto": "Hola, ¿cómo estás? Esta es la segunda prueba de una oración un poco más larga. Vamos a ver cómo funciona.",
+      "obtenido": [
+        "Hola,",
+        "¿cómo estás?",
+        "Esta es la segunda prueba de una oración un poco más larga.",
+        "Vamos a ver cómo funciona."
+      ],
+      "esperado": [
+        "Hola, ¿cómo estás?",
+        "Esta es la segunda prueba de una oración un poco más larga.",
+        "Vamos a ver cómo funciona."
+      ]
+    },
+    "CO-01-021": {
+      "texto": "hola como estas esta es la segunda prueba de una oracion un poco mas larga vamos a ver como funciona",
+      "obtenido": [
+        "hola como estas esta es la segunda prueba de una oracion un poco mas larga vamos a ver como funciona"
+      ],
+      "esperado": [
+        "hola como estas",
+        "esta es la segunda prueba de una oracion un poco mas larga",
+        "vamos a ver como funciona"
+      ]
+    },
+    "CO-01-023": {
+      "texto": "cuál es su nombre completo por favor dígalo despacio",
+      "obtenido": [
+        "cuál es su nombre completo por favor dígalo despacio"
+      ],
+      "esperado": [
+        "cuál es su nombre completo",
+        "por favor dígalo despacio"
+      ]
+    },
+    "CO-01-025": {
+      "texto": "cuántos años tiene dónde vive",
+      "obtenido": [
+        "cuántos años tiene dónde vive"
+      ],
+      "esperado": [
+        "cuántos años tiene",
+        "dónde vive"
+      ]
+    },
+    "CO-01-026": {
+      "texto": "vivo en bogota trabajo en una panaderia",
+      "obtenido": [
+        "vivo en bogota trabajo en una panaderia"
+      ],
+      "esperado": [
+        "vivo en bogota",
+        "trabajo en una panaderia"
+      ]
+    },
+    "CO-01-029": {
+      "texto": "tiene su cédula muéstremela por favor",
+      "obtenido": [
+        "tiene su cédula muéstremela por favor"
+      ],
+      "esperado": [
+        "tiene su cédula",
+        "muéstremela por favor"
+      ]
+    },
+    "CO-01-031": {
+      "texto": "qué bien ya quedó registrado",
+      "obtenido": [
+        "qué bien ya quedó registrado"
+      ],
+      "esperado": [
+        "qué bien",
+        "ya quedó registrado"
+      ]
+    },
+    "CO-01-035": {
+      "texto": "perdón no le entendí puede repetir",
+      "obtenido": [
+        "perdón",
+        "no le entendí puede repetir"
+      ],
+      "esperado": [
+        "perdón no le entendí",
+        "puede repetir"
+      ]
+    },
+    "CO-01-038": {
+      "texto": "como se escribe su apellido con be o con uve",
+      "obtenido": [
+        "como se escribe su apellido con be o con uve"
+      ],
+      "esperado": [
+        "como se escribe su apellido",
+        "con be o con uve"
+      ]
+    },
+    "CO-01-040": {
+      "texto": "listo gracias que tenga un buen día",
+      "obtenido": [
+        "listo",
+        "gracias",
+        "que tenga un buen día"
+      ],
+      "esperado": [
+        "listo gracias",
+        "que tenga un buen día"
+      ]
+    },
+    "CO-01-044": {
+      "texto": "cual es su numero de documento escribalo aqui por favor",
+      "obtenido": [
+        "cual es su numero de documento escribalo aqui por favor"
+      ],
+      "esperado": [
+        "cual es su numero de documento",
+        "escribalo aqui por favor"
+      ]
+    },
+    "CO-01-046": {
+      "texto": "qué tipo de documento tiene cédula o tarjeta de identidad",
+      "obtenido": [
+        "qué tipo de documento tiene cédula o tarjeta de identidad"
+      ],
+      "esperado": [
+        "qué tipo de documento tiene",
+        "cédula o tarjeta de identidad"
+      ]
+    },
+    "CO-01-051": {
+      "texto": "donde vive digame la direccion completa con el barrio",
+      "obtenido": [
+        "donde vive digame la direccion completa con el barrio"
+      ],
+      "esperado": [
+        "donde vive",
+        "digame la direccion completa con el barrio"
+      ]
+    },
+    "CO-01-060": {
+      "texto": "vivo en la calle 45 con carrera 10 y mi teléfono es 3104567890",
+      "obtenido": [
+        "vivo en la calle 45 con carrera 10",
+        "y mi teléfono es 3104567890"
+      ],
+      "esperado": [
+        "vivo en la calle 45 con carrera 10 y mi teléfono es 3104567890"
+      ]
+    },
+    "CO-01-064": {
+      "texto": "si tengo correo es carlos punto gomez arroba gmail punto com",
+      "obtenido": [
+        "si tengo correo es carlos punto gomez arroba gmail punto com"
+      ],
+      "esperado": [
+        "si tengo correo",
+        "es carlos punto gomez arroba gmail punto com"
+      ]
+    },
+    "CO-01-068": {
+      "texto": "soy soltero no tengo hijos",
+      "obtenido": [
+        "soy soltero no tengo hijos"
+      ],
+      "esperado": [
+        "soy soltero",
+        "no tengo hijos"
+      ]
+    },
+    "CO-01-070": {
+      "texto": "listo de una qué más necesita",
+      "obtenido": [
+        "listo",
+        "de una",
+        "qué más necesita"
+      ],
+      "esperado": [
+        "listo de una",
+        "qué más necesita"
+      ]
+    },
+    "CO-01-071": {
+      "texto": "Qué pena con usted, ¿me repite el número?",
+      "obtenido": [
+        "Qué pena con usted,",
+        "¿me repite el número?"
+      ],
+      "esperado": [
+        "Qué pena con usted, ¿me repite el número?"
+      ]
+    },
+    "CO-01-072": {
+      "texto": "que pena con usted me repite el numero",
+      "obtenido": [
+        "que pena con usted",
+        "me repite el numero"
+      ],
+      "esperado": [
+        "que pena con usted me repite el numero"
+      ]
+    },
+    "CO-01-080": {
+      "texto": "hágale pues siga siéntese ahí",
+      "obtenido": [
+        "hágale pues siga siéntese ahí"
+      ],
+      "esperado": [
+        "hágale pues siga",
+        "siéntese ahí"
+      ]
+    },
+    "CO-01-090": {
+      "texto": "Bien o qué, ¿todo bien? Siga, siga.",
+      "obtenido": [
+        "Bien o qué,",
+        "¿todo bien?",
+        "Siga, siga."
+      ],
+      "esperado": [
+        "Bien o qué, ¿todo bien?",
+        "Siga, siga."
+      ]
+    },
+    "CO-01-094": {
+      "texto": "bueno mi nombre es pedro y este tengo cuarenta años",
+      "obtenido": [
+        "bueno mi nombre es pedro y este tengo cuarenta años"
+      ],
+      "esperado": [
+        "bueno mi nombre es pedro",
+        "y este tengo cuarenta años"
+      ]
+    },
+    "CO-01-105": {
+      "texto": "no tengo cédula entonces le doy el pasaporte",
+      "obtenido": [
+        "no tengo cédula",
+        "entonces le doy el pasaporte"
+      ],
+      "esperado": [
+        "no tengo cédula entonces le doy el pasaporte"
+      ]
+    },
+    "CO-01-119": {
+      "texto": "no no vivo en bogotá vivo en soacha",
+      "obtenido": [
+        "no no vivo en bogotá vivo en soacha"
+      ],
+      "esperado": [
+        "no no vivo en bogotá",
+        "vivo en soacha"
+      ]
+    },
+    "CO-01-123": {
+      "texto": "nunca he tenido pasaporte es obligatorio",
+      "obtenido": [
+        "nunca he tenido pasaporte es obligatorio"
+      ],
+      "esperado": [
+        "nunca he tenido pasaporte",
+        "es obligatorio"
+      ]
+    },
+    "CO-01-125": {
+      "texto": "espere aquí no se vaya que ya lo llamo",
+      "obtenido": [
+        "espere aquí no se vaya que ya lo llamo"
+      ],
+      "esperado": [
+        "espere aquí",
+        "no se vaya que ya lo llamo"
+      ]
+    },
+    "CO-01-129": {
+      "texto": "traiga la fotocopia de la cédula sin eso no podemos seguir",
+      "obtenido": [
+        "traiga la fotocopia de la cédula sin eso no podemos seguir"
+      ],
+      "esperado": [
+        "traiga la fotocopia de la cédula",
+        "sin eso no podemos seguir"
+      ]
+    },
+    "CO-01-167": {
+      "texto": "el código postal es 110111 y el barrio es la candelaria",
+      "obtenido": [
+        "el código postal es 110111",
+        "y el barrio es la candelaria"
+      ],
+      "esperado": [
+        "el código postal es 110111 y el barrio es la candelaria"
+      ]
+    },
+    "CO-01-170": {
+      "texto": "es el 3 1 0 4 5 6 7 8 9 0 no perdón 3 2 0",
+      "obtenido": [
+        "es el 3 1 0 4 5 6 7 8 9 0 no perdón 3 2 0"
+      ],
+      "esperado": [
+        "es el 3 1 0 4 5 6 7 8 9 0",
+        "no perdón 3 2 0"
+      ]
+    },
+    "CO-01-176": {
+      "texto": "ya tengo su nombre y ahora dígame la edad",
+      "obtenido": [
+        "ya tengo su nombre y ahora dígame la edad"
+      ],
+      "esperado": [
+        "ya tengo su nombre",
+        "y ahora dígame la edad"
+      ]
+    },
+    "CO-01-179": {
+      "texto": "no entendí así que me repite por favor",
+      "obtenido": [
+        "no entendí así que me repite por favor"
+      ],
+      "esperado": [
+        "no entendí",
+        "así que me repite por favor"
+      ]
+    },
+    "CO-01-183": {
+      "texto": "mi nombre es mi nombre completo es ana lucía torres",
+      "obtenido": [
+        "mi nombre es mi nombre completo",
+        "es ana lucía torres"
+      ],
+      "esperado": [
+        "mi nombre es mi nombre completo es ana lucía torres"
+      ]
+    },
+    "CO-01-184": {
+      "texto": "Mi nombre es. Laura Gómez.",
+      "obtenido": [
+        "Mi nombre es.",
+        "Laura Gómez."
+      ],
+      "esperado": [
+        "Mi nombre es. Laura Gómez."
+      ]
+    },
+    "CO-01-187": {
+      "texto": "buenas tardes cómo se llama usted cuántos años tiene y dónde vive",
+      "obtenido": [
+        "buenas tardes",
+        "cómo se llama usted",
+        "cuántos años tiene",
+        "y dónde vive"
+      ],
+      "esperado": [
+        "buenas tardes cómo se llama usted",
+        "cuántos años tiene",
+        "y dónde vive"
+      ]
+    },
+    "CO-01-189": {
+      "texto": "si tengo la cédula aquí está",
+      "obtenido": [
+        "si tengo la cédula aquí está"
+      ],
+      "esperado": [
+        "si tengo la cédula",
+        "aquí está"
+      ]
+    },
+    "CO-01-196": {
+      "texto": "Hola, ¿cómo estás? Esta es la segunda prueba de una oración un poco más larga. Vamos a ver cómo funciona. Buenos días. Bienvenido a la oficina de registro. ¿Cuál es su nombre completo? Por favor, dígalo despacio. Me llamo Andrea Martínez. Tengo veinticinco años. ¿Cuántos años tiene? ¿Dónde vive? Vivo en Bogotá. Trabajo en una panadería. Gracias. Ya terminamos el registro. Siéntese, por favor. Ya lo atiendo.",
+      "obtenido": [
+        "Hola,",
+        "¿cómo estás?",
+        "Esta es la segunda prueba de una oración un poco más larga.",
+        "Vamos a ver cómo funciona.",
+        "Buenos días.",
+        "Bienvenido a la oficina de registro.",
+        "¿Cuál es su nombre completo?",
+        "Por favor, dígalo despacio.",
+        "Me llamo Andrea Martínez.",
+        "Tengo veinticinco años.",
+        "¿Cuántos años tiene?",
+        "¿Dónde vive?",
+        "Vivo en Bogotá.",
+        "Trabajo en una panadería.",
+        "Gracias.",
+        "Ya terminamos el registro.",
+        "Siéntese, por favor.",
+        "Ya lo atiendo."
+      ],
+      "esperado": [
+        "Hola,",
+        "¿cómo estás?",
+        "Esta es la segunda prueba de una oración un poco más larga.",
+        "Vamos a ver cómo funciona.",
+        "Buenos días.",
+        "Bienvenido a la oficina de registro.",
+        "¿Cuál es su nombre completo?",
+        "Por favor,",
+        "dígalo despacio.",
+        "Me llamo Andrea Martínez.",
+        "Tengo veinticinco años.",
+        "¿Cuántos años tiene?",
+        "¿Dónde vive?",
+        "Vivo en Bogotá.",
+        "Trabajo en una panadería.",
+        "Gracias.",
+        "Ya terminamos el registro.",
+        "Siéntese,",
+        "por favor.",
+        "Ya lo atiendo."
+      ]
+    },
+    "CO-01-197": {
+      "texto": "tiene su cédula muéstremela por favor no tengo telefono fijo solo tengo celular qué bien ya quedó registrado espere un momento voy a revisar el sistema me repite su apellido mi hija se llama laura ella tiene diez años es usted el titular necesito su firma aquí perdón no le entendí puede repetir el formulario está listo revíselo antes de firmar",
+      "obtenido": [
+        "tiene su cédula muéstremela por favor",
+        "no tengo telefono fijo",
+        "solo tengo celular qué bien",
+        "ya quedó registrado",
+        "espere un momento",
+        "voy a revisar el sistema",
+        "me repite su apellido",
+        "mi hija se llama laura",
+        "ella tiene diez años",
+        "es usted el titular",
+        "necesito su firma aquí perdón",
+        "no le entendí",
+        "puede repetir el formulario",
+        "está listo revíselo antes de firmar"
+      ],
+      "esperado": [
+        "tiene su cédula",
+        "muéstremela",
+        "por favor",
+        "no tengo telefono fijo",
+        "solo tengo celular",
+        "qué bien",
+        "ya quedó registrado",
+        "espere un momento",
+        "voy a revisar el sistema",
+        "me repite su apellido",
+        "mi hija se llama laura",
+        "ella tiene diez años",
+        "es usted el titular",
+        "necesito su firma aquí",
+        "perdón",
+        "no le entendí",
+        "puede repetir",
+        "el formulario está listo",
+        "revíselo antes de firmar"
+      ]
+    },
+    "CO-01-198": {
+      "texto": "Buenos días, quiero contarles que mi abuelo vive con mi tío y con toda la familia en una casa grande cerca del centro, donde los niños juegan por las tardes mientras los mayores trabajan y cocinan, y aunque a veces están cansados, siempre se sienten contentos porque comparten la comida y se cuentan cómo les fue durante el día.",
+      "obtenido": [
+        "Buenos días,",
+        "quiero contarles que mi abuelo vive con mi tío y con toda la familia en una casa grande cerca del centro, donde los niños",
+        "juegan por las tardes mientras los mayores",
+        "trabajan y cocinan, y aunque a veces",
+        "están cansados, siempre",
+        "se sienten contentos porque comparten la comida y se cuentan",
+        "cómo les fue durante el día."
+      ],
+      "esperado": [
+        "Buenos días, quiero contarles que mi abuelo vive con mi tío y con toda la familia en una casa grande cerca del centro, donde los niños juegan por las tardes mientras los mayores trabajan y cocinan, y aunque a veces están cansados, siempre se sienten contentos porque comparten la comida y se cuentan cómo les fue durante el día."
+      ]
+    },
+    "CO-01-199": {
+      "texto": "bueno pues o sea",
+      "obtenido": [
+        "bueno pues o sea"
+      ],
+      "esperado": []
+    },
+    "CO-01-200": {
+      "texto": "este eh y bueno",
+      "obtenido": [
+        "este eh y bueno"
+      ],
+      "esperado": []
+    },
+    "AU-05-004": {
+      "texto": "Perdón, ¿estás triste?",
+      "obtenido": [
+        "Perdón,",
+        "¿estás triste?"
+      ],
+      "esperado": [
+        "Perdón.",
+        "¿Estás triste?"
+      ]
+    },
+    "AU-05-005": {
+      "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "obtenido": [
+        "Hola,",
+        "¿cómo estás?",
+        "¿Cómo te llamas?"
+      ],
+      "esperado": [
+        "Hola, ¿cómo estás?",
+        "¿Cómo te llamas?"
+      ]
+    },
+    "AU-05-008": {
+      "texto": "Perdón, mi hermano nunca está contento.",
+      "obtenido": [
+        "Perdón, mi hermano nunca está contento."
+      ],
+      "esperado": [
+        "Perdón.",
+        "Mi hermano nunca está contento."
+      ]
+    },
+    "AU-05-010": {
+      "texto": "Con permiso, déjame pasar, por favor.",
+      "obtenido": [
+        "Con permiso, déjame pasar, por favor."
+      ],
+      "esperado": [
+        "Con permiso.",
+        "Déjame pasar, por favor."
+      ]
+    }
+  },
+  "arranque_ms": 766.3,
+  "latencia_p50_ms": 1.672
+}

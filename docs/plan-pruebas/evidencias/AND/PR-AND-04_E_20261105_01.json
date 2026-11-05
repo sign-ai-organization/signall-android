@@ -1,0 +1,216 @@
+{
+  "inventario": [
+    "9:37 AM",
+    "100",
+    "AVATAR",
+    "Personaje",
+    "Pauline",
+    "Velocidad de señas",
+    "ACCESIBILIDAD",
+    "Tamaño de interfaz",
+    "Texto en negrita",
+    "Contraste aumentado",
+    "Texto más grande",
+    "Reducir animaciones",
+    "APARIENCIA",
+    "Modo oscuro",
+    "Acerca de"
+  ],
+  "pasos": {
+    "tema_oscuro_lum": 26.8,
+    "tema_oscuro_frase": {
+      "t": 1793889483029,
+      "fin": 1793889491701,
+      "ms": 8672
+    },
+    "tema_oscuro_turno": {
+      "turn": 11,
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "segmentos": [
+        "0/1"
+      ],
+      "senas": [
+        {
+          "i": 0,
+          "js": 209291,
+          "t_wall": 1793889487502,
+          "dur_ms": 2079,
+          "glosa": "HOLA"
+        },
+        {
+          "i": 1,
+          "js": 211361,
+          "t_wall": 1793889489581,
+          "dur_ms": 2120,
+          "glosa": "BUENOS DIAS"
+        }
+      ],
+      "fin_ms": 1793889491701,
+      "senas_reportadas": 2,
+      "ms_reportado": 4247
+    },
+    "tema_claro_pref": "false",
+    "tema_claro_lum": 220.6,
+    "tema_claro_frase": {
+      "t": 1793889508786,
+      "fin": 1793889517524,
+      "ms": 8738
+    },
+    "tema_claro_turno": {
+      "turn": 12,
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "segmentos": [
+        "0/1"
+      ],
+      "senas": [
+        {
+          "i": 0,
+          "js": 235099,
+          "t_wall": 1793889513336,
+          "dur_ms": 2028,
+          "glosa": "HOLA"
+        },
+        {
+          "i": 1,
+          "js": 237156,
+          "t_wall": 1793889515364,
+          "dur_ms": 2160,
+          "glosa": "BUENOS DIAS"
+        }
+      ],
+      "fin_ms": 1793889517524,
+      "senas_reportadas": 2,
+      "ms_reportado": 4257
+    },
+    "tema_claro_tras_reabrir": "false",
+    "tema_claro_tras_reabrir_lum": 220.6,
+    "speed_10": 10,
+    "speed10_frase": {
+      "t": 1793889546857,
+      "fin": 1793889572365,
+      "ms": 25508
+    },
+    "speed10_turno": {
+      "turn": 1,
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "segmentos": [
+        "0/1"
+      ],
+      "senas": [
+        {
+          "i": 0,
+          "js": 29615,
+          "t_wall": 1793889551485,
+          "dur_ms": 10239,
+          "glosa": "HOLA"
+        },
+        {
+          "i": 1,
+          "js": 39898,
+          "t_wall": 1793889561724,
+          "dur_ms": 10641,
+          "glosa": "BUENOS DIAS"
+        }
+      ],
+      "fin_ms": 1793889572365,
+      "senas_reportadas": 2,
+      "ms_reportado": 20998
+    },
+    "speed_100": 100,
+    "speed_mitad": "90",
+    "speed100_mitad_fin": 1793889604770,
+    "speed100_mitad_turno": {
+      "turn": 2,
+      "glosas": [
+        "HOLA",
+        "BUENOS DIAS"
+      ],
+      "segmentos": [
+        "0/1"
+      ],
+      "senas": [
+        {
+          "i": 0,
+          "js": 80805,
+          "t_wall": 1793889602632,
+          "dur_ms": 1042,
+          "glosa": "HOLA"
+        },
+        {
+          "i": 1,
+          "js": 81850,
+          "t_wall": 1793889603674,
+          "dur_ms": 1096,
+          "glosa": "BUENOS DIAS"
+        }
+      ],
+      "fin_ms": 1793889604770,
+      "senas_reportadas": 2,
+      "ms_reportado": 2183
+    },
+    "speed_final": 50,
+    "tema_final": "true",
+    "interface_size": "60",
+    "traducir_antes": null,
+    "traducir_despues": null,
+    "interface_size_final": "50",
+    "accesibilidad_on": {
+      "bold": "true",
+      "contrast": "true",
+      "large": "true",
+      "reduce_motion": "true"
+    },
+    "accesibilidad_tras_reabrir": {
+      "bold": "true",
+      "contrast": "true",
+      "large": "true",
+      "reduce_motion": "true"
+    },
+    "accesibilidad_off": {
+      "bold": "false",
+      "contrast": "false",
+      "large": "false",
+      "reduce_motion": "false"
+    },
+    "speed_tras_reabrir": "30",
+    "speed_restaurada": 50
+  },
+  "prefs_inicial": {
+    "freecam": "false",
+    "large": "false",
+    "bg": "false",
+    "reduce_motion": "false",
+    "bold": "false",
+    "speed": "50",
+    "dark_theme": "true",
+    "demo_sign_fallback": "false",
+    "grid": "false",
+    "contrast": "false",
+    "interface_size": "50",
+    "mic_prompted": "true"
+  },
+  "prefs_final": {
+    "freecam": "false",
+    "large": "false",
+    "bg": "false",
+    "reduce_motion": "false",
+    "grid_default_off": "true",
+    "bold": "false",
+    "speed": "50",
+    "dark_theme": "true",
+    "demo_sign_fallback": "false",
+    "grid": "false",
+    "contrast": "false",
+    "interface_size": "50",
+    "mic_prompted": "true"
+  }
+}

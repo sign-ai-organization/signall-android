@@ -1,0 +1,14 @@
+﻿id;tipo;bytes;respuesta_del_backend;cierre;valida_despues;glosas_de_la_valida;ms
+CO-05-001;audio en otro formato;142756;"capability; error (El audio recibido no es válido.)";no cerró;sí;HOLA BUENOS DIAS;7.7
+CO-05-002;audio float32;64000;"capability; error (El audio recibido no es válido.)";no cerró;sí;HOLA BUENOS DIAS;3.7
+CO-05-003;bytes que no son audio (aleatorio);4096;capability;no cerró;sí;HOLA BUENOS DIAS;6004.4
+CO-05-004;bytes que no son audio (texto);4096;capability;no cerró;sí;HOLA BUENOS DIAS;6004.0
+CO-05-005;JSON mal formado;28;capability;no cerró;sí;HOLA BUENOS DIAS;6003.8
+CO-05-006;no es JSON;15;capability;no cerró;sí;HOLA BUENOS DIAS;6004.2
+CO-05-007;tipo desconocido;30;capability;no cerró;sí;HOLA BUENOS DIAS;6004.3
+CO-05-008;texto vacío;25;capability;no cerró;sí;HOLA BUENOS DIAS;6003.7
+CO-05-009;muy largo (50.000 caracteres);50028;"capability; sentence_trace; segment; trace; done";no cerró;sí;HOLA BUENOS DIAS;3065.5
+CO-05-010;audio de 2 MB;2097152;"capability; error (El audio recibido no es válido.)";no cerró;sí;HOLA BUENOS DIAS;8.1
+CO-05-011;audio de 20 MB;20971520;capability;1009 (servidor): frame exceeds limit of 16777216 bytes;sí;HOLA BUENOS DIAS;50.2
+CO-05-012;audio de 321 bytes (impar);321;"capability; error (El audio recibido no es válido.)";no cerró;sí;HOLA BUENOS DIAS;3.7
+CO-05-013;audio de 1 byte;1;"capability; error (El audio recibido no es válido.)";no cerró;sí;HOLA BUENOS DIAS;3.9

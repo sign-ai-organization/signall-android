@@ -1,0 +1,82 @@
+{
+  "pasos": [
+    {
+      "cmd": "git clone git@github.com:sign-ai-organization/sign-ai-backend.git /tmp/tra03-clon/sign-ai-backend",
+      "rc": 0,
+      "s": 2.6,
+      "out": "",
+      "err": "Clonando en '/tmp/tra03-clon/sign-ai-backend'...\n",
+      "paso": "clone sign-ai-backend"
+    },
+    {
+      "cmd": "git clone git@github.com:sign-ai-organization/sign-ai-stt.git /tmp/tra03-clon/sign-ai-stt",
+      "rc": 0,
+      "s": 1.8,
+      "out": "",
+      "err": "Clonando en '/tmp/tra03-clon/sign-ai-stt'...\n",
+      "paso": "clone sign-ai-stt"
+    },
+    {
+      "cmd": "git clone git@github.com:sign-ai-organization/sign-ai-android.git /tmp/tra03-clon/sign-ai-android",
+      "rc": 0,
+      "s": 29.8,
+      "out": "",
+      "err": "Clonando en '/tmp/tra03-clon/sign-ai-android'...\n",
+      "paso": "clone sign-ai-android"
+    },
+    {
+      "cmd": "docker compose -p tra03 -f docker-compose.yml up -d --build",
+      "rc": 0,
+      "s": 379.5,
+      "out": "gs/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n#16 DONE 244.3s\n\n#22 [backend 5/7] COPY pyproject.toml requirements-dev.txt ./\n#22 DONE 0.5s\n\n#23 [backend 6/7] COPY app ./app\n#23 DONE 0.3s\n\n#24 [backend 7/7] COPY scripts ./scripts\n#24 DONE 0.2s\n\n#25 [backend] exporting to image\n#25 exporting layers\n#25 exporting layers 79.3s done\n#25 exporting manifest sha256:5e0da2f9d3ec6de2481cd892968b7463b564a895e873b820045c64db6de692f6 0.0s done\n#25 exporting config sha256:22cc590bcf7277c869004271e41f36925d86929b1eb5b9717275bfa476f9ab38 0.0s done\n#25 exporting attestation manifest sha256:656fca82cfa3abca952ce66ffb1b18ecab4c58c7b6337a120ef0d6f9d113313a\n#25 exporting attestation manifest sha256:656fca82cfa3abca952ce66ffb1b18ecab4c58c7b6337a120ef0d6f9d113313a 0.0s done\n#25 exporting manifest list sha256:2712adea2fecab5f3713b25bf2bd1bfa5adcfe8ca5f775ebe730439f959c46e2 0.0s done\n#25 naming to docker.io/library/tra03-backend:latest done\n#25 unpacking to docker.io/library/tra03-backend:latest\n#25 unpacking to docker.io/library/tra03-backend:latest 43.6s done\n#25 DONE 123.1s\n\n#26 [backend] resolving provenance for metadata file\n#26 DONE 0.0s\n",
+      "err": " Image tra03-stt Building \n Image tra03-backend Building \n Image tra03-backend Built \n Image tra03-stt Built \n Network tra03_default Creating \n Network tra03_default Creating \n Volume tra03_stt-hf-cache Creating \n Volume tra03_stt-hf-cache Creating \n Volume tra03_stt-hf-cache Created \n Volume tra03_stt-hf-cache Created \n Network tra03_default Created \n Network tra03_default Created \n Container tra03-stt-1 Creating \n Container tra03-backend-1 Creating \n Container tra03-stt-1 Created \n Container tra03-backend-1 Created \n Container tra03-stt-1 Starting \n Container tra03-backend-1 Starting \n Container tra03-stt-1 Started \n Container tra03-backend-1 Started \n",
+      "paso": "compose up --build"
+    },
+    {
+      "cmd": "./gradlew assembleDebug",
+      "rc": 0,
+      "s": 31.7,
+      "out": "> Task :app:processDebugMainManifest\n> Task :app:processDebugManifest\n> Task :app:javaPreCompileDebug\n> Task :app:mergeDebugShaders\n> Task :app:compileDebugShaders NO-SOURCE\n> Task :app:generateDebugAssets UP-TO-DATE\n> Task :app:mergeDebugAssets\n> Task :app:desugarDebugFileDependencies\n> Task :app:mergeDebugJniLibFolders\n> Task :app:mergeDebugNativeLibs\n> Task :app:validateSigningDebug\n> Task :app:checkDebugDuplicateClasses\n> Task :app:writeDebugAppMetadata\n> Task :app:mergeLibDexDebug\n\n> Task :app:stripDebugDebugSymbols\nUnable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so.\n\n> Task :app:writeDebugSigningConfigVersions\n> Task :app:processDebugManifestForPackage\n> Task :app:processDebugResources\n> Task :app:compressDebugAssets\n> Task :app:mergeExtDexDebug\n> Task :app:compileDebugKotlin\n> Task :app:compileDebugJavaWithJavac\n> Task :app:dexBuilderDebug\n> Task :app:mergeDebugGlobalSynthetics\n> Task :app:processDebugJavaRes\n> Task :app:mergeProjectDexDebug\n> Task :app:mergeDebugJavaResource\n> Task :app:packageDebug\n> Task :app:createDebugApkListingFileRedirect\n> Task :app:assembleDebug\n\nBUILD SUCCESSFUL in 31s\n37 actionable tasks: 37 executed\n",
+      "err": "",
+      "paso": "gradlew assembleDebug"
+    }
+  ],
+  "clones": {
+    "sign-ai-backend": {
+      "url": "git@github.com:sign-ai-organization/sign-ai-backend.git",
+      "s": 2.6,
+      "rc": 0
+    },
+    "sign-ai-stt": {
+      "url": "git@github.com:sign-ai-organization/sign-ai-stt.git",
+      "s": 1.8,
+      "rc": 0
+    },
+    "sign-ai-android": {
+      "url": "git@github.com:sign-ai-organization/sign-ai-android.git",
+      "s": 29.8,
+      "rc": 0
+    }
+  },
+  "manuales": [],
+  "parches": [
+    ".env copiado del repo real (DATABASE_URL y LLM_API_KEY no están versionados)",
+    "local.properties con sdk.dir (no está versionado)"
+  ],
+  "health": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 23,
+    "catalog_loaded": true,
+    "catalog_glosses": 50
+  },
+  "s_hasta_health": 449.5,
+  "health_final": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 23,
+    "catalog_loaded": true,
+    "catalog_glosses": 50,
+    "silence_timeout_ms": 1500
+  }
+}

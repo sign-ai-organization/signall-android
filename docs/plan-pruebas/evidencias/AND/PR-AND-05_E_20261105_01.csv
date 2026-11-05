@@ -1,0 +1,9 @@
+﻿configuracion;wm_size;wm_density;font_scale;tema;abrio;elementos_fuera_de_pantalla;corta_glosas;corta_ms;larga_glosas;larga_ms;luminancia_panel;zona_que_se_mueve
+nativa;1080x2400;440;1.0;oscuro;si;0;4224;2;6575;3;28.6;{'pixeles_pct': 12.61, 'bbox': [30, 72, 931, 2108], 'ancho_pct': 83.4, 'alto_pct': 84.8}
+nativa_large;1080x2400;440;1.3;oscuro;si;0;4214;2;;;29.6;
+nativa_claro;1080x2400;440;1.0;claro;si;0;4250;2;;;227.0;
+chica;720x1280;320;1.0;oscuro;si;0;4228;2;6500;3;35.9;{'pixeles_pct': 11.69, 'bbox': [70, 174, 572, 1069], 'ancho_pct': 69.7, 'alto_pct': 69.9}
+chica_large;720x1280;320;1.3;oscuro;si;0;4239;2;;;37.7;
+grande;1440x3200;440;1.0;oscuro;si;0;4251;2;;;23.7;
+horizontal (user_rotation=1) · no gira (portrait fijo);1080x2400;-;1.0;oscuro;si;0;-;8825;-;-;;
+vuelta a vertical · no gira (portrait fijo);1080x2400;-;1.0;oscuro;si;0;-;;-;-;;

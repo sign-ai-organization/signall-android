@@ -1,0 +1,5 @@
+﻿paso;observado;dato
+selector de Personaje;opciones ['Juan', 'Pauline'];fila Personaje de Ajustes
+elegir Juan;"cambio ('pauline', 'juan'); avatar listo ('juan', '2574')";frase FR-01-029 con Juan
+elegir Pauline;"cambio ('juan', 'pauline'); avatar listo ('pauline', '2072')";frase FR-01-029 con Pauline
+reabrir la app;escena lista (pauline);diferencia con Pauline en reposo (0.0, 0.0), con Juan (83.15, 33.97)

@@ -1,0 +1,181 @@
+﻿tamano;audio;hablante;condicion;tipo_texto;referencia;hipotesis;wer_pct;errores;palabras;ms_pared;elapsed_ms;audio_ms
+small;AU-01-001;H1;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;119.9;107;4459
+small;AU-01-002;H2;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;113.0;110;3925
+small;AU-01-003;H3;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenido.;25.0;1;4;108.8;106;4352
+small;AU-01-004;H4;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;114.7;112;3776
+small;AU-01-005;H1;ruido;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;101.5;99;5781
+small;AU-01-006;H4;ruido;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;104.0;94;3072
+small;AU-01-007;H1;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;115.7;112;5205
+small;AU-01-008;H2;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;129.4;119;4352
+small;AU-01-009;H3;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;120.6;111;4949
+small;AU-01-010;H4;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;145.1;136;3563
+small;AU-01-011;H1;ruido;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;118.2;108;5355
+small;AU-01-012;H4;ruido;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;122.5;113;3499
+small;AU-01-013;H1;silencio;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;107.9;98;2688
+small;AU-01-014;H2;silencio;Pregunta de sí o no;¿Tienes hambre?;Tiene sombra.;100.0;2;2;103.2;101;2560
+small;AU-01-015;H3;silencio;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;114.4;111;3669
+small;AU-01-016;H4;silencio;Pregunta de sí o no;¿Tienes hambre?;¿Tenés hambre?;50.0;1;2;104.5;95;2069
+small;AU-01-017;H1;ruido;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;98.8;96;2603
+small;AU-01-018;H4;ruido;Pregunta de sí o no;¿Tienes hambre?;Tienes hambre?;0.0;0;2;100.9;98;2304
+small;AU-01-019;H1;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;105.5;102;3989
+small;AU-01-020;H2;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;105.0;95;3328
+small;AU-01-021;H3;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;99.1;96;4352
+small;AU-01-022;H4;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, estás triste?;0.0;0;3;104.0;101;2923
+small;AU-01-023;H1;ruido;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;106.8;97;3392
+small;AU-01-024;H4;ruido;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;100.9;98;2987
+small;AU-01-025;H1;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;115.5;112;4011
+small;AU-01-026;H2;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;120.9;111;3584
+small;AU-01-027;H3;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;118.2;108;4779
+small;AU-01-028;H4;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;123.0;113;3797
+small;AU-01-029;H1;ruido;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;119.0;109;4459
+small;AU-01-030;H4;ruido;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;137.0;126;3499
+small;AU-01-031;H1;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;115.7;105;3605
+small;AU-01-032;H2;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¡Dónde hay tu familia!;25.0;1;4;180.2;171;3157
+small;AU-01-033;H3;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;106.3;97;3413
+small;AU-01-034;H4;silencio;Pregunta de contenido;¿Dónde vive tu familia?;donde vive tu familia;0.0;0;4;88.3;86;2603
+small;AU-01-035;H1;ruido;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;112.4;110;3349
+small;AU-01-036;H4;ruido;Pregunta de contenido;¿Dónde vive tu familia?;Donde vive tu familia.;0.0;0;4;109.4;100;2389
+small;AU-01-037;H1;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;103.6;94;3648
+small;AU-01-038;H2;silencio;Negación;Yo nunca como mucho.;Yo nunca como a mucho.;25.0;1;4;94.0;91;2475
+small;AU-01-039;H3;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;93.0;90;2987
+small;AU-01-040;H4;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;96.1;93;2261
+small;AU-01-041;H1;ruido;Negación;Yo nunca como mucho.;Yo nunca como mucho;0.0;0;4;99.6;97;3797
+small;AU-01-042;H4;ruido;Negación;Yo nunca como mucho.;Yo nunca como mucho;0.0;0;4;93.2;90;2560
+small;AU-01-043;H1;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;112.7;109;5120
+small;AU-01-044;H2;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;114.1;104;3499
+small;AU-01-045;H3;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;127.2;117;4608
+small;AU-01-046;H4;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;120.5;110;3349
+small;AU-01-047;H1;ruido;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;138.4;128;4736
+small;AU-01-048;H4;ruido;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;115.2;106;3157
+small;AU-01-049;H1;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;101.6;92;3648
+small;AU-01-050;H2;silencio;Orden;Por favor, come poco.;Por favor, comen poco.;25.0;1;4;108.6;106;2901
+small;AU-01-051;H3;silencio;Orden;Por favor, come poco.;por favor, comi poco;25.0;1;4;103.2;94;3669
+small;AU-01-052;H4;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;100.3;97;2901
+small;AU-01-053;H1;ruido;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;108.0;90;3392
+small;AU-01-054;H4;ruido;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;94.6;92;2560
+small;AU-01-055;H1;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;0;6;116.1;113;5056
+small;AU-01-056;H2;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;119.5;110;3840
+small;AU-01-057;H3;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;115.0;105;4523
+small;AU-01-058;H4;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;116.2;107;3392
+small;AU-01-059;H1;ruido;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;0;6;117.3;108;4736
+small;AU-01-060;H4;ruido;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;119.4;110;3499
+medium;AU-01-001;H1;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;281.2;270;4459
+medium;AU-01-002;H2;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;249.2;246;3925
+medium;AU-01-003;H3;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenido.;25.0;1;4;265.1;255;4352
+medium;AU-01-004;H4;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;247.0;245;3776
+medium;AU-01-005;H1;ruido;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;256.3;246;5781
+medium;AU-01-006;H4;ruido;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;249.6;247;3072
+medium;AU-01-007;H1;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;0;8;285.3;276;5205
+medium;AU-01-008;H2;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;272.1;270;4352
+medium;AU-01-009;H3;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;0;8;273.8;271;4949
+medium;AU-01-010;H4;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;270.9;269;3563
+medium;AU-01-011;H1;ruido;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;274.9;273;5355
+medium;AU-01-012;H4;ruido;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;273.0;271;3499
+medium;AU-01-013;H1;silencio;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;241.2;239;2688
+medium;AU-01-014;H2;silencio;Pregunta de sí o no;¿Tienes hambre?;;100.0;2;2;241.0;239;2560
+medium;AU-01-015;H3;silencio;Pregunta de sí o no;¿Tienes hambre?;Tienes hambre?;0.0;0;2;229.8;228;3669
+medium;AU-01-016;H4;silencio;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;235.8;234;2069
+medium;AU-01-017;H1;ruido;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;238.2;236;2603
+medium;AU-01-018;H4;ruido;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;242.2;240;2304
+medium;AU-01-019;H1;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;246.0;244;3989
+medium;AU-01-020;H2;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿es Astrice?;66.67;2;3;246.6;244;3328
+medium;AU-01-021;H3;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;245.7;244;4352
+medium;AU-01-022;H4;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;245.6;243;2923
+medium;AU-01-023;H1;ruido;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;247.7;246;3392
+medium;AU-01-024;H4;ruido;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;252.9;251;2987
+medium;AU-01-025;H1;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;274.9;273;4011
+medium;AU-01-026;H2;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;277.1;275;3584
+medium;AU-01-027;H3;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿cómo te llamas?;0.0;0;6;275.4;273;4779
+medium;AU-01-028;H4;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;276.1;274;3797
+medium;AU-01-029;H1;ruido;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;273.9;272;4459
+medium;AU-01-030;H4;ruido;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;276.0;274;3499
+medium;AU-01-031;H1;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;246.5;244;3605
+medium;AU-01-032;H2;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;244.9;243;3157
+medium;AU-01-033;H3;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;248.9;247;3413
+medium;AU-01-034;H4;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;246.0;244;2603
+medium;AU-01-035;H1;ruido;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;249.6;247;3349
+medium;AU-01-036;H4;ruido;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;246.5;245;2389
+medium;AU-01-037;H1;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;295.3;248;3648
+medium;AU-01-038;H2;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;231.0;229;2475
+medium;AU-01-039;H3;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;225.6;224;2987
+medium;AU-01-040;H4;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;229.3;227;2261
+medium;AU-01-041;H1;ruido;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;226.7;225;3797
+medium;AU-01-042;H4;ruido;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;229.9;228;2560
+medium;AU-01-043;H1;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;275.1;265;5120
+medium;AU-01-044;H2;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;266.5;264;3499
+medium;AU-01-045;H3;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;266.6;264;4608
+medium;AU-01-046;H4;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;271.4;269;3349
+medium;AU-01-047;H1;ruido;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;267.5;265;4736
+medium;AU-01-048;H4;ruido;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;275.5;273;3157
+medium;AU-01-049;H1;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;231.4;229;3648
+medium;AU-01-050;H2;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;239.4;237;2901
+medium;AU-01-051;H3;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;232.7;231;3669
+medium;AU-01-052;H4;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;233.8;232;2901
+medium;AU-01-053;H1;ruido;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;236.5;234;3392
+medium;AU-01-054;H4;ruido;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;234.8;233;2560
+medium;AU-01-055;H1;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;0;6;276.1;273;5056
+medium;AU-01-056;H2;silencio;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0.0;0;6;252.8;250;3840
+medium;AU-01-057;H3;silencio;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0.0;0;6;257.6;255;4523
+medium;AU-01-058;H4;silencio;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0.0;0;6;254.5;252;3392
+medium;AU-01-059;H1;ruido;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0.0;0;6;253.2;251;4736
+medium;AU-01-060;H4;ruido;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0.0;0;6;259.5;257;3499
+large-v3;AU-01-001;H1;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;457.6;447;4459
+large-v3;AU-01-002;H2;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;444.1;434;3925
+large-v3;AU-01-003;H3;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenido.;25.0;1;4;455.9;446;4352
+large-v3;AU-01-004;H4;silencio;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;435.0;432;3776
+large-v3;AU-01-005;H1;ruido;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;444.9;435;5781
+large-v3;AU-01-006;H4;ruido;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;0;4;436.0;434;3072
+large-v3;AU-01-007;H1;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0.0;0;8;498.9;489;5205
+large-v3;AU-01-008;H2;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;494.5;485;4352
+large-v3;AU-01-009;H3;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;498.7;489;4949
+large-v3;AU-01-010;H4;silencio;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;485.5;483;3563
+large-v3;AU-01-011;H1;ruido;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;494.8;485;5355
+large-v3;AU-01-012;H4;ruido;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0.0;0;8;486.1;484;3499
+large-v3;AU-01-013;H1;silencio;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;443.5;434;2688
+large-v3;AU-01-014;H2;silencio;Pregunta de sí o no;¿Tienes hambre?;Tienes hambre.;0.0;0;2;441.5;430;2560
+large-v3;AU-01-015;H3;silencio;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;429.1;420;3669
+large-v3;AU-01-016;H4;silencio;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;421.7;420;2069
+large-v3;AU-01-017;H1;ruido;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;433.3;424;2603
+large-v3;AU-01-018;H4;ruido;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0.0;0;2;423.9;422;2304
+large-v3;AU-01-019;H1;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;529.1;519;3989
+large-v3;AU-01-020;H2;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;440.7;431;3328
+large-v3;AU-01-021;H3;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;442.3;433;4352
+large-v3;AU-01-022;H4;silencio;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;439.8;438;2923
+large-v3;AU-01-023;H1;ruido;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;443.0;434;3392
+large-v3;AU-01-024;H4;ruido;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;0;3;444.1;435;2987
+large-v3;AU-01-025;H1;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;494.6;485;4011
+large-v3;AU-01-026;H2;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;486.8;485;3584
+large-v3;AU-01-027;H3;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;492.5;483;4779
+large-v3;AU-01-028;H4;silencio;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;490.3;481;3797
+large-v3;AU-01-029;H1;ruido;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;491.1;481;4459
+large-v3;AU-01-030;H4;ruido;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0.0;0;6;490.6;481;3499
+large-v3;AU-01-031;H1;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;440.2;430;3605
+large-v3;AU-01-032;H2;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;432.0;429;3157
+large-v3;AU-01-033;H3;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;435.9;433;3413
+large-v3;AU-01-034;H4;silencio;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;433.3;431;2603
+large-v3;AU-01-035;H1;ruido;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;440.5;431;3349
+large-v3;AU-01-036;H4;ruido;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;0;4;438.6;429;2389
+large-v3;AU-01-037;H1;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;394.5;392;3648
+large-v3;AU-01-038;H2;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;400.4;391;2475
+large-v3;AU-01-039;H3;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;400.6;391;2987
+large-v3;AU-01-040;H4;silencio;Negación;Yo nunca como mucho.;Yo nunca como mucho;0.0;0;4;383.1;381;2261
+large-v3;AU-01-041;H1;ruido;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0.0;0;4;396.3;394;3797
+large-v3;AU-01-042;H4;ruido;Negación;Yo nunca como mucho.;Yo nunca como mucho;0.0;0;4;379.5;377;2560
+large-v3;AU-01-043;H1;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;481.4;472;5120
+large-v3;AU-01-044;H2;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;477.5;468;3499
+large-v3;AU-01-045;H3;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;478.0;468;4608
+large-v3;AU-01-046;H4;silencio;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;474.9;465;3349
+large-v3;AU-01-047;H1;ruido;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;475.8;466;4736
+large-v3;AU-01-048;H4;ruido;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0.0;0;6;473.7;472;3157
+large-v3;AU-01-049;H1;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;415.9;406;3648
+large-v3;AU-01-050;H2;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;419.3;410;2901
+large-v3;AU-01-051;H3;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;415.4;404;3669
+large-v3;AU-01-052;H4;silencio;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;409.0;407;2901
+large-v3;AU-01-053;H1;ruido;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;420.6;409;3392
+large-v3;AU-01-054;H4;ruido;Orden;Por favor, come poco.;Por favor, come poco.;0.0;0;4;414.2;402;2560
+large-v3;AU-01-055;H1;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;0;6;502.7;481;5056
+large-v3;AU-01-056;H2;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;480.5;475;3840
+large-v3;AU-01-057;H3;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;484.5;475;4523
+large-v3;AU-01-058;H4;silencio;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;486.1;477;3392
+large-v3;AU-01-059;H1;ruido;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;0;6;496.9;487;4736
+large-v3;AU-01-060;H4;ruido;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar por favor.;0.0;0;6;484.6;475;3499

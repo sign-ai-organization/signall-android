@@ -1,0 +1,4 @@
+﻿caso;id;texto;ms;segmentos;indices;total;transcripts;final;done;glosas;glosas_fuera;segmentos_antes_del_texto;final_antes_del_reenvio
+texto-una-oracion;FR-01-001;Hola, buenos días, bienvenidos.;8.9;1;0;1;0;0;1;HOLA BUENOS DIAS;;;
+texto-varias-oraciones;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;7.6;2;0 1;2;0;0;1;GRACIAS TODOS COMER;;;
+audio;AU-01-013;¿Tienes hambre?;2919.5;1;0;1;2;1;1;TU HAMBRE;;0;1

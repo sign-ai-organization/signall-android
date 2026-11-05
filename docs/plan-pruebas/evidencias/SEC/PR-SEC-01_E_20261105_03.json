@@ -1,0 +1,44 @@
+{
+  "config_backend": {
+    "llm_model": "gpt-4o-mini",
+    "llm_base_url": "",
+    "semantic_cache_preload": true,
+    "semantic_cache_threshold": 0.03,
+    "sentence_segmenter_enabled": true,
+    "stt_ws_url": "ws://***/ws/transcribe"
+  },
+  "paquetes": {
+    "app_proxy": 1033,
+    "llm": 100,
+    "loopback_8080": 528,
+    "puerto_8443": 0
+  },
+  "palabras": {
+    "app_proxy": {
+      "hermano": 0,
+      "aburrido": 0,
+      "reunión": 0,
+      "oficina": 0
+    },
+    "llm": {
+      "hermano": 0,
+      "aburrido": 0,
+      "reunión": 0,
+      "oficina": 0
+    },
+    "loopback": {
+      "hermano": 2,
+      "aburrido": 2,
+      "reunión": 0,
+      "oficina": 0
+    }
+  },
+  "destinos_llm": {
+    "172.18.0.3": 54,
+    "172.66.0.243": 46
+  },
+  "tls_ok": true,
+  "plano_rechazado": true,
+  "legible_8080": true,
+  "ws_sin_compresion": "{'type': 'done'}"
+}

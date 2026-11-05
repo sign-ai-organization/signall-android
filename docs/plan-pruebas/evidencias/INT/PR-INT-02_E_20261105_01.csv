@@ -1,0 +1,31 @@
+﻿n;id;texto;oraciones;glosas_esperadas;glosas_recibidas;segmentos;senas_representadas;todas_mostradas;glosas_iguales_a_FR01;ms_envio_a_fin
+1;FR-01-001;Hola, buenos días, bienvenidos.;1;HOLA, BUENOS DIAS, BIENVENIDO;HOLA, BUENOS DIAS;0/1;2;sí;no;14936
+2;FR-01-002;Adiós a todos. Buenas noches.;2;ADIOS, TODOS, BUENAS NOCHES;ADIOS, TODOS, BUENAS NOCHES;0/2 1/2;3;sí;sí;17392
+3;FR-01-003;Mi abuelo y mi tío trabajan en familia.;1;ABUELO, TIO, TRABAJAR, FAMILIA;ABUELO, TIO, TRABAJAR, FAMILIA;0/1;4;sí;sí;20139
+4;FR-01-004;Estoy contento porque mi hermano está feliz.;1;YO, CONTENTO, HERMANO, FELIZ;YO, CONTENTO, HERMANO, FELIZ;0/1;4;sí;sí;20320
+5;FR-01-005;Buenas tardes. Hoy me siento más o menos.;2;BUENAS TARDES, YO, SENTIR, MAS O MENOS;BUENAS TARDES, YO, SENTIR, MAS O MENOS;0/2 1/2;4;sí;sí;20108
+6;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;2;GRACIAS, TODOS, NIÑO, NIÑA, COMER, CON GUSTO;GRACIAS, TODOS, COMER;0/2 1/2;3;sí;no;17832
+7;FR-01-007;¿Tienes hambre?;1;TU, HAMBRE;TU, HAMBRE;0/1;2;sí;sí;14478
+8;FR-01-008;¿Estás bien?;1;TU, BIEN;BIEN;0/1;1;sí;no;13031
+9;FR-01-009;¿Ustedes trabajan en familia?;1;USTEDES, TRABAJAR, FAMILIA;USTEDES, TRABAJAR, FAMILIA;0/1;3;sí;sí;16693
+10;FR-01-010;Tu hermano está triste. ¿Se siente mal?;2;TU, HERMANO, TRISTE, SENTIR, MAL;HERMANO, TRISTE, SENTIR, MAL;0/2 1/2;4;sí;no;21180
+11;FR-01-011;Perdón. ¿Estás triste?;2;PERDON, TU, TRISTE;PERDON, TRISTE;0/2 1/2;2;sí;no;15718
+12;FR-01-012;¿Tu hermano está aburrido?;1;TU, HERMANO, ABURRIDO;HERMANO, ABURRIDO;0/1;2;sí;no;15182
+13;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;2;HOLA, COMO ESTAS, COMO, TU, NOMBRE;HOLA, COMO ESTAS, COMO, TU;0/3 1/3 2/3;4;sí;no;19546
+14;FR-01-014;¿Dónde vive tu familia?;1;DONDE, TU, FAMILIA, VIVIR;DONDE, TU, FAMILIA, VIVIR;0/1;4;sí;sí;19456
+15;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;2;MUJER, JUCIOSO, QUIEN, HOMBRE;MUJER, QUIEN, HOMBRE;0/2 1/2;3;sí;no;17621
+16;FR-01-016;¿Por qué estás triste?;1;POR QUE, TU, TRISTE;POR QUE, TRISTE;0/1;2;sí;no;16242
+17;FR-01-017;¿Cuándo comen ustedes?;1;CUANDO, USTEDES, COMER;CUANDO, USTEDES, COMER;0/1;3;sí;sí;16681
+18;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;2;PERSONAS, DIFERENTE, QUE, SEÑA, TU;PERSONAS, DIFERENTE, QUE, SEÑA, TU;0/2 1/2;5;sí;sí;22059
+19;FR-01-019;Yo nunca como mucho.;1;YO, NUNCA, COMER, MUCHO;YO, NUNCA, COMER, MUCHO;0/1;4;sí;sí;20093
+20;FR-01-020;Mi abuelo nunca trabaja.;1;ABUELO, NUNCA, TRABAJAR;ABUELO, NUNCA, TRABAJAR;0/1;3;sí;sí;17532
+21;FR-01-021;Mi tío nunca está aburrido.;1;TIO, NUNCA, ABURRIDO;TIO, NUNCA, ABURRIDO;0/1;3;sí;sí;17709
+22;FR-01-022;Ustedes nunca se sienten mal.;1;USTEDES, NUNCA, SENTIR, MAL;USTEDES, NUNCA, SENTIR, MAL;0/1;4;sí;sí;19468
+23;FR-01-023;Perdón. Mi hermano nunca está contento.;2;PERDON, HERMANO, NUNCA, CONTENTO;PERDON, HERMANO, NUNCA, CONTENTO;0/2 1/2;4;sí;sí;19947
+24;FR-01-024;Se siente muy bien. La niña nunca está triste.;2;NIÑA, SENTIR, MUCHO, BIEN, NUNCA, TRISTE;SENTIR, BIEN, NIÑA, NUNCA, TRISTE;0/2 1/2;5;sí;no;23908
+25;FR-01-025;Por favor, come poco.;1;POR FAVOR, COMER, POCO;POR FAVOR, COMER, POCO;0/1;3;sí;sí;17624
+26;FR-01-026;Con permiso. Déjame pasar, por favor.;2;PERMISO, POR FAVOR;CON PERMISO, POR FAVOR;0/2 1/2;1;no;no;12276
+27;FR-01-027;Niños, trabajen todos.;1;NIÑO, TODOS, TRABAJAR;TRABAJAR, TODOS;0/1;2;sí;no;14976
+28;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;2;HERMANO, VIVIR, ABUELO, TRABAJAR, TIO;HERMANO, VIVIR, ABUELO, TRABAJAR, TIO;0/2 1/2;5;sí;sí;22600
+29;FR-01-029;Hola, familia, siéntanse bienvenidos.;1;HOLA, FAMILIA, BIENVENIDO;HOLA, FAMILIA, SENTIR;0/1;3;sí;no;17717
+30;FR-01-030;Tío, come mucho. Hermano, come poco.;2;TIO, COMER, MUCHO, HERMANO, COMER, POCO;TIO, COMER, MUCHO, HERMANO, COMER, POCO;0/2 1/2;6;sí;sí;25018

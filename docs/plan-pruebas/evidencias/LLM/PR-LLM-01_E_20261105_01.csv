@@ -1,0 +1,91 @@
+﻿modelo;id;frase;glosas_producidas;glosas_referencia;mismo_conjunto;mismo_orden_relativo;secuencia_exacta;glosas_fuera_del_catalogo;ms;error
+gpt-4o-mini;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS;HOLA BUENOS DIAS BIENVENIDO;no;sí;no;;1025.0;no
+gpt-4o-mini;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;ADIOS TODOS BUENAS NOCHES;sí;sí;sí;;1459.9;no
+gpt-4o-mini;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TIO TRABAJAR FAMILIA;ABUELO TIO TRABAJAR FAMILIA;sí;sí;sí;;932.0;no
+gpt-4o-mini;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;YO CONTENTO HERMANO FELIZ;sí;sí;sí;;769.2;no
+gpt-4o-mini;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;BUENAS TARDES YO SENTIR MAS O MENOS;sí;sí;sí;;807.7;no
+gpt-4o-mini;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS COMER;GRACIAS TODOS NIÑO NIÑA COMER CON GUSTO;no;sí;no;;840.4;no
+gpt-4o-mini;FR-01-007;¿Tienes hambre?;TU HAMBRE;TU HAMBRE;sí;sí;sí;;565.8;no
+gpt-4o-mini;FR-01-008;¿Estás bien?;BIEN;TU BIEN;no;sí;no;;916.6;no
+gpt-4o-mini;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;USTEDES TRABAJAR FAMILIA;sí;sí;sí;;1171.7;no
+gpt-4o-mini;FR-01-010;Tu hermano está triste. ¿Se siente mal?;HERMANO TRISTE SENTIR MAL;TU HERMANO TRISTE SENTIR MAL;no;sí;no;;833.5;no
+gpt-4o-mini;FR-01-011;Perdón. ¿Estás triste?;PERDON TRISTE;PERDON TU TRISTE;no;sí;no;;747.9;no
+gpt-4o-mini;FR-01-012;¿Tu hermano está aburrido?;HERMANO ABURRIDO;TU HERMANO ABURRIDO;no;sí;no;;668.1;no
+gpt-4o-mini;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;HOLA COMO ESTAS COMO TU NOMBRE;no;sí;no;;1434.9;no
+gpt-4o-mini;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;DONDE TU FAMILIA VIVIR;sí;sí;sí;;694.9;no
+gpt-4o-mini;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER QUIEN HOMBRE;MUJER JUCIOSO QUIEN HOMBRE;no;sí;no;;901.8;no
+gpt-4o-mini;FR-01-016;¿Por qué estás triste?;POR QUE TRISTE;POR QUE TU TRISTE;no;sí;no;;766.6;no
+gpt-4o-mini;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;CUANDO USTEDES COMER;sí;sí;sí;;584.6;no
+gpt-4o-mini;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;PERSONAS DIFERENTE QUE SEÑA TU;PERSONAS DIFERENTE QUE SEÑA TU;sí;sí;sí;;982.6;no
+gpt-4o-mini;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;YO NUNCA COMER MUCHO;sí;sí;sí;;782.1;no
+gpt-4o-mini;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;ABUELO NUNCA TRABAJAR;sí;sí;sí;;717.3;no
+gpt-4o-mini;FR-01-021;Mi tío nunca está aburrido.;TIO NUNCA ABURRIDO;TIO NUNCA ABURRIDO;sí;sí;sí;;572.2;no
+gpt-4o-mini;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;USTEDES NUNCA SENTIR MAL;sí;sí;sí;;762.6;no
+gpt-4o-mini;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON HERMANO NUNCA CONTENTO;PERDON HERMANO NUNCA CONTENTO;sí;sí;sí;;950.9;no
+gpt-4o-mini;FR-01-024;Se siente muy bien. La niña nunca está triste.;SENTIR BIEN NIÑA NUNCA TRISTE;NIÑA SENTIR MUCHO BIEN NUNCA TRISTE;no;no;no;;669.1;no
+gpt-4o-mini;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;POR FAVOR COMER POCO;sí;sí;sí;;732.5;no
+gpt-4o-mini;FR-01-026;Con permiso. Déjame pasar, por favor.;CON PERMISO POR FAVOR;PERMISO POR FAVOR;no;sí;no;CON PERMISO;3177.0;no
+gpt-4o-mini;FR-01-027;Niños, trabajen todos.;TRABAJAR TODOS;NIÑO TODOS TRABAJAR;no;no;no;;679.6;no
+gpt-4o-mini;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;HERMANO VIVIR ABUELO TRABAJAR TIO;sí;sí;sí;;590.3;no
+gpt-4o-mini;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA SENTIR;HOLA FAMILIA BIENVENIDO;no;sí;no;;882.7;no
+gpt-4o-mini;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;TIO COMER MUCHO HERMANO COMER POCO;sí;sí;sí;;1624.9;no
+gpt-4o;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS;HOLA BUENOS DIAS BIENVENIDO;no;sí;no;;1101.9;no
+gpt-4o;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;ADIOS TODOS BUENAS NOCHES;sí;sí;sí;;977.6;no
+gpt-4o;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TIO TRABAJAR FAMILIA;ABUELO TIO TRABAJAR FAMILIA;sí;sí;sí;;785.1;no
+gpt-4o;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;YO CONTENTO HERMANO FELIZ;sí;sí;sí;;653.4;no
+gpt-4o;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;BUENAS TARDES YO SENTIR MAS O MENOS;sí;sí;sí;;775.9;no
+gpt-4o;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS COMER CON GUSTO;GRACIAS TODOS NIÑO NIÑA COMER CON GUSTO;no;sí;no;;826.9;no
+gpt-4o;FR-01-007;¿Tienes hambre?;TU HAMBRE;TU HAMBRE;sí;sí;sí;;831.6;no
+gpt-4o;FR-01-008;¿Estás bien?;TU BIEN;TU BIEN;sí;sí;sí;;761.6;no
+gpt-4o;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;USTEDES TRABAJAR FAMILIA;sí;sí;sí;;959.3;no
+gpt-4o;FR-01-010;Tu hermano está triste. ¿Se siente mal?;TU HERMANO TRISTE SENTIR MAL;TU HERMANO TRISTE SENTIR MAL;sí;sí;sí;;804.6;no
+gpt-4o;FR-01-011;Perdón. ¿Estás triste?;PERDON TU TRISTE;PERDON TU TRISTE;sí;sí;sí;;1451.5;no
+gpt-4o;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;TU HERMANO ABURRIDO;sí;sí;sí;;728.5;no
+gpt-4o;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS TU;HOLA COMO ESTAS COMO TU NOMBRE;no;sí;no;;858.9;no
+gpt-4o;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;DONDE TU FAMILIA VIVIR;sí;sí;sí;;831.4;no
+gpt-4o;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER QUIEN HOMBRE;MUJER JUCIOSO QUIEN HOMBRE;no;sí;no;;780.5;no
+gpt-4o;FR-01-016;¿Por qué estás triste?;TU TRISTE;POR QUE TU TRISTE;no;sí;no;;789.3;no
+gpt-4o;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;CUANDO USTEDES COMER;sí;sí;sí;;1334.9;no
+gpt-4o;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;PERSONAS DIFERENTE TU SEÑA;PERSONAS DIFERENTE QUE SEÑA TU;no;no;no;;1128.6;no
+gpt-4o;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;YO NUNCA COMER MUCHO;sí;sí;sí;;817.1;no
+gpt-4o;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;ABUELO NUNCA TRABAJAR;sí;sí;sí;;631.0;no
+gpt-4o;FR-01-021;Mi tío nunca está aburrido.;TIO NUNCA ABURRIDO;TIO NUNCA ABURRIDO;sí;sí;sí;;685.6;no
+gpt-4o;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;USTEDES NUNCA SENTIR MAL;sí;sí;sí;;806.7;no
+gpt-4o;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON HERMANO NUNCA CONTENTO;PERDON HERMANO NUNCA CONTENTO;sí;sí;sí;;911.7;no
+gpt-4o;FR-01-024;Se siente muy bien. La niña nunca está triste.;SENTIR BIEN NIÑA NUNCA TRISTE;NIÑA SENTIR MUCHO BIEN NUNCA TRISTE;no;no;no;;2434.7;no
+gpt-4o;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;POR FAVOR COMER POCO;sí;sí;sí;;1179.8;no
+gpt-4o;FR-01-026;Con permiso. Déjame pasar, por favor.;CON PERMISO POR FAVOR;PERMISO POR FAVOR;no;sí;no;CON PERMISO;720.2;no
+gpt-4o;FR-01-027;Niños, trabajen todos.;TRABAJAR TODOS;NIÑO TODOS TRABAJAR;no;no;no;;851.8;no
+gpt-4o;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;HERMANO VIVIR ABUELO TRABAJAR TIO;sí;sí;sí;;1041.5;no
+gpt-4o;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA;HOLA FAMILIA BIENVENIDO;no;sí;no;;701.5;no
+gpt-4o;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;TIO COMER MUCHO HERMANO COMER POCO;sí;sí;sí;;690.5;no
+qwen3:4b-instruct;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS;HOLA BUENOS DIAS BIENVENIDO;no;sí;no;;5884.1;no
+qwen3:4b-instruct;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;ADIOS TODOS BUENAS NOCHES;sí;sí;sí;;511.3;no
+qwen3:4b-instruct;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TU FAMILIA;ABUELO TIO TRABAJAR FAMILIA;no;sí;no;;608.2;no
+qwen3:4b-instruct;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;YO CONTENTO HERMANO FELIZ;sí;sí;sí;;512.4;no
+qwen3:4b-instruct;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;BUENAS TARDES YO SENTIR MAS O MENOS;sí;sí;sí;;663.5;no
+qwen3:4b-instruct;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER CON GUSTO;GRACIAS TODOS NIÑO NIÑA COMER CON GUSTO;sí;sí;sí;;798.3;no
+qwen3:4b-instruct;FR-01-007;¿Tienes hambre?;HAMBRE;TU HAMBRE;no;sí;no;;278.7;no
+qwen3:4b-instruct;FR-01-008;¿Estás bien?;BIEN;TU BIEN;no;sí;no;;249.4;no
+qwen3:4b-instruct;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;USTEDES TRABAJAR FAMILIA;sí;sí;sí;;428.1;no
+qwen3:4b-instruct;FR-01-010;Tu hermano está triste. ¿Se siente mal?;TU HERMANO TRISTE MAL;TU HERMANO TRISTE SENTIR MAL;no;sí;no;;694.9;no
+qwen3:4b-instruct;FR-01-011;Perdón. ¿Estás triste?;PERDON TU TRISTE;PERDON TU TRISTE;sí;sí;sí;;433.2;no
+qwen3:4b-instruct;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;TU HERMANO ABURRIDO;sí;sí;sí;;490.7;no
+qwen3:4b-instruct;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;HOLA COMO ESTAS COMO TU NOMBRE;no;sí;no;;732.3;no
+qwen3:4b-instruct;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;DONDE TU FAMILIA VIVIR;sí;sí;sí;;399.6;no
+qwen3:4b-instruct;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER QUIEN HOMBRE;MUJER JUCIOSO QUIEN HOMBRE;no;sí;no;;552.5;no
+qwen3:4b-instruct;FR-01-016;¿Por qué estás triste?;POR QUE TU TRISTE;POR QUE TU TRISTE;sí;sí;sí;;335.8;no
+qwen3:4b-instruct;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;CUANDO USTEDES COMER;sí;sí;sí;;384.3;no
+qwen3:4b-instruct;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;DIFERENTE TU;PERSONAS DIFERENTE QUE SEÑA TU;no;sí;no;;520.1;no
+qwen3:4b-instruct;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;YO NUNCA COMER MUCHO;sí;sí;sí;;388.1;no
+qwen3:4b-instruct;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;ABUELO NUNCA TRABAJAR;sí;sí;sí;;430.9;no
+qwen3:4b-instruct;FR-01-021;Mi tío nunca está aburrido.;TU NUNCA ABURRIDO;TIO NUNCA ABURRIDO;no;sí;no;;541.3;no
+qwen3:4b-instruct;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;USTEDES NUNCA SENTIR MAL;sí;sí;sí;;419.8;no
+qwen3:4b-instruct;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON HERMANO NUNCA CONTENTO;PERDON HERMANO NUNCA CONTENTO;sí;sí;sí;;599.5;no
+qwen3:4b-instruct;FR-01-024;Se siente muy bien. La niña nunca está triste.;BIEN NIÑA NUNCA TRISTE;NIÑA SENTIR MUCHO BIEN NUNCA TRISTE;no;no;no;;816.5;no
+qwen3:4b-instruct;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;POR FAVOR COMER POCO;sí;sí;sí;;353.9;no
+qwen3:4b-instruct;FR-01-026;Con permiso. Déjame pasar, por favor.;PERMISO POR FAVOR;PERMISO POR FAVOR;sí;sí;sí;;567.1;no
+qwen3:4b-instruct;FR-01-027;Niños, trabajen todos.;TODOS TRABAJAR;NIÑO TODOS TRABAJAR;no;sí;no;;442.9;no
+qwen3:4b-instruct;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO ABUELO TU TRABAJAR;HERMANO VIVIR ABUELO TRABAJAR TIO;no;sí;no;;774.2;no
+qwen3:4b-instruct;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA;HOLA FAMILIA BIENVENIDO;no;sí;no;;567.7;no
+qwen3:4b-instruct;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;TIO COMER MUCHO HERMANO COMER POCO;sí;sí;sí;;674.3;no

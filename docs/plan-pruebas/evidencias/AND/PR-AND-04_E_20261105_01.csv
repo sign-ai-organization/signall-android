@@ -1,0 +1,9 @@
+﻿ajuste;tipo;observado;persiste
+Personaje;selector;"2 opciones (Juan y Pauline); se prueba en PR-AVT-07";si (PR-AVT-07)
+Velocidad de señas;paso 5;"10 → 20998 ms para la misma frase ([10239, 10641] ms por seña); 100 → 2183 ms ([1042, 1096]); cambio 100→90 con la seña en curso: el turno terminó";si (quedó en 30 tras reabrir)
+Tamaño de interfaz;paso 5;"50→60 al momento: campo 654x138 (50) → 650x140 (60); botón «Traducir» 477x138 → 477x140";la preferencia se guarda (se restauró a 50)
+Modo oscuro;interruptor;"luminancia del panel 26.8 → 220.6 al instante; la frase se reprodujo en los dos temas (4247 y 4257 ms)";si (false, luminancia 220.6 tras reabrir)
+Texto en negrita;interruptor;prefs bold=true al prender, false al apagar (detalle en PR-AND-06);si (true tras reabrir)
+Contraste aumentado;interruptor;se prende y se apaga al momento (prefs contrast);si (PR-AND-06)
+Texto más grande;interruptor;se prende y se apaga al momento (prefs large);si (PR-AND-06)
+Reducir animaciones;interruptor;se prende y se apaga al momento (prefs reduce_motion);si (PR-AND-06)

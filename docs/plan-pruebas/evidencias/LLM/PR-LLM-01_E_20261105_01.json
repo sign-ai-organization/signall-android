@@ -1,0 +1,183 @@
+{
+  "resumen": {
+    "gpt-4o-mini": {
+      "n": 30,
+      "conjunto": 17,
+      "orden_relativo": 28,
+      "secuencia": 17,
+      "producidas": 99,
+      "en_catalogo": 98,
+      "errores": 0,
+      "ms_mediana": 794.9,
+      "ms_media": 941.5,
+      "ms_min": 565.8,
+      "ms_max": 3177.0,
+      "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "costo": {
+        "frases": 30,
+        "tokens_entrada": 14431,
+        "tokens_salida": 316,
+        "costo_usd_estimado": 0.002354,
+        "precio_1m_entrada": 0.15,
+        "precio_1m_salida": 0.6
+      }
+    },
+    "gpt-4o": {
+      "n": 30,
+      "conjunto": 20,
+      "orden_relativo": 27,
+      "secuencia": 20,
+      "producidas": 101,
+      "en_catalogo": 100,
+      "errores": 0,
+      "ms_mediana": 822.0,
+      "ms_media": 928.5,
+      "ms_min": 631.0,
+      "ms_max": 2434.7,
+      "config": {
+        "llm_model": "gpt-4o",
+        "llm_base_url": "",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "costo": {
+        "frases": 30,
+        "tokens_entrada": 14431,
+        "tokens_salida": 321,
+        "costo_usd_estimado": 0.039287,
+        "precio_1m_entrada": 2.5,
+        "precio_1m_salida": 10.0
+      }
+    },
+    "qwen3:4b-instruct": {
+      "n": 30,
+      "conjunto": 17,
+      "orden_relativo": 29,
+      "secuencia": 17,
+      "producidas": 97,
+      "en_catalogo": 97,
+      "errores": 0,
+      "ms_mediana": 516.2,
+      "ms_media": 701.8,
+      "ms_min": 249.4,
+      "ms_max": 5884.1,
+      "config": {
+        "llm_model": "qwen3:4b-instruct",
+        "llm_base_url": "http://***/v1",
+        "semantic_cache_preload": true,
+        "semantic_cache_threshold": 0.03,
+        "sentence_segmenter_enabled": true,
+        "stt_ws_url": "ws://***/ws/transcribe"
+      },
+      "costo": {
+        "frases": 30,
+        "tokens_entrada": 14431,
+        "tokens_salida": 304,
+        "costo_usd_estimado": 0.0,
+        "precio_1m_entrada": 0.0,
+        "precio_1m_salida": 0.0
+      }
+    }
+  },
+  "catalogo": [
+    "GRACIAS",
+    "BUENOS DIAS",
+    "BUENAS TARDES",
+    "BUENAS NOCHES",
+    "SEÑA",
+    "NOMBRE",
+    "TRABAJAR",
+    "COMER",
+    "VIVIR",
+    "POCO",
+    "FAMILIA",
+    "PERSONAS",
+    "MUJER",
+    "HOMBRE",
+    "NIÑO",
+    "NIÑA",
+    "ABUELO",
+    "TIO",
+    "HERMANO",
+    "HAMBRE",
+    "FELIZ",
+    "CONTENTO",
+    "TRISTE",
+    "ABURRIDO",
+    "BIEN",
+    "MAL",
+    "COMO ESTAS",
+    "MAS O MENOS",
+    "SENTIR",
+    "JUCIOSO",
+    "HOLA",
+    "ADIOS",
+    "POR FAVOR",
+    "CON GUSTO",
+    "BIENVENIDO",
+    "PERDON",
+    "PERMISO",
+    "NUNCA",
+    "YO",
+    "TU",
+    "USTEDES",
+    "QUE",
+    "CUANDO",
+    "DONDE",
+    "COMO",
+    "POR QUE",
+    "QUIEN",
+    "DIFERENTE",
+    "TODOS",
+    "MUCHO"
+  ],
+  "tokens": {
+    "tokens_sistema": 464,
+    "modelos": {
+      "gpt-4o-mini": {
+        "frases": 30,
+        "tokens_entrada": 14431,
+        "tokens_salida": 316,
+        "costo_usd_estimado": 0.002354,
+        "precio_1m_entrada": 0.15,
+        "precio_1m_salida": 0.6
+      },
+      "gpt-4o": {
+        "frases": 30,
+        "tokens_entrada": 14431,
+        "tokens_salida": 321,
+        "costo_usd_estimado": 0.039287,
+        "precio_1m_entrada": 2.5,
+        "precio_1m_salida": 10.0
+      },
+      "qwen3:4b-instruct": {
+        "frases": 30,
+        "tokens_entrada": 14431,
+        "tokens_salida": 304,
+        "costo_usd_estimado": 0.0,
+        "precio_1m_entrada": 0.0,
+        "precio_1m_salida": 0.0
+      }
+    }
+  },
+  "precios_usd_1m": {
+    "gpt-4o-mini": [
+      0.15,
+      0.6
+    ],
+    "gpt-4o": [
+      2.5,
+      10.0
+    ],
+    "fuente": "developers.openai.com/api/docs/pricing, consultado 2026-11-05"
+  }
+}
