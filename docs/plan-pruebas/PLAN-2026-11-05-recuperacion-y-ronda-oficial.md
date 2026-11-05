@@ -15,6 +15,12 @@ subagentes sin que se pisen ni se queden en loop.
   arreglar después; correr la ronda completa con subagentes; actualizar el libro de
   diagnóstico y entregar dos Excel.
 
+**Objetivo de la sesión ejecutora (sirve como `goal`):** terminar las tres fases de este
+plan —recuperar con `gpt-4o-mini` las 24 pruebas contaminadas y actualizar el libro
+diagnóstico, aplicar y verificar los arreglos P0 con la cirugía de `PR-INT-03`, y correr la
+ronda de evaluación de 74 pruebas con subagentes— dejando `resultados-consolidados.xlsx` y
+los MD de las dos rondas.
+
 ---
 
 ## 1. Punto de partida
@@ -517,6 +523,15 @@ REGLAS DE OPERACIÓN (no negociables)
 
 10. Cada prueba termina con su JSON de resultado y su línea de evidencia. Sin eso,
     la prueba no existe.
+
+11. Todo trabajo en background deja un log o un archivo de progreso que crece. Si en
+    5 minutos no hay salida nueva ni archivo de cierre, el comando está colgado: se
+    mata, se anota la causa y se sigue. Para saber si terminó se mira el archivo de
+    cierre, no se sondea con un bucle.
+
+12. No se queda mirando con `tail -f` ni con `watch`: eso también es un bucle. Se lee
+    el archivo cuando el proceso avisa, o al final. Cada tanda imprime un avance
+    (`[3/10] PR-LLM-02`) para que se vea que está viva.
 ```
 
 ### 6.4. Presupuesto de tiempo
