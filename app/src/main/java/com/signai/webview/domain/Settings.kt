@@ -8,7 +8,11 @@ data class Settings(
     // Advanced / dev-only (spec `SET-8`). `debug` ya no vive acá: es una
     // condición de compilación (`BuildConfig.DEV_TOOLS`), no una preferencia.
     val freeCam: Boolean = false,
-    val grid: Boolean = true,
+    // La grilla es del bloque AVANZADO y arranca apagada (owner, 2026-11-05):
+    // antes venía encendida, así que cualquier instalación mostraba el suelo
+    // sin que nadie lo pidiera. Con `DEV_TOOLS` apagado no hay interruptor, y
+    // [SettingsRepository] ni siquiera lee el valor guardado.
+    val grid: Boolean = false,
     val bg: Boolean = false,
     // Avatar (spec `SET-3`/`SET-4`, `PER-4`).
     val character: Character = Character.Juan,

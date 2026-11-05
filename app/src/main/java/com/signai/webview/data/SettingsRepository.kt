@@ -1,6 +1,7 @@
 package com.signai.webview.data
 
 import android.content.Context
+import com.signai.webview.BuildConfig
 import com.signai.webview.domain.Character
 import com.signai.webview.domain.Settings
 
@@ -25,7 +26,17 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
         // abrir la puerta que este cambio cierra. `save()` lo borra.
         return Settings(
             freeCam = prefs.getBoolean(KEY_FREECAM, defaults.freeCam),
-            grid = prefs.getBoolean(KEY_GRID, defaults.grid),
+            // El suelo (grilla) es del bloque AVANZADO y solo existe con
+            // `DEV_TOOLS`. Se **ignora** el valor guardado cuando el flag está
+            // apagado: producción no puede dibujar la grilla aunque la
+            // preferencia siga en el archivo. La primera lectura de una
+            // instalación vieja tampoco lo lee (`KEY_GRID_DEFAULT_OFF` todavía no
+            // está): antes el default era `true` y cualquier cambio de ajustes lo
+            // persistía, así que ese `true` no es una elección de nadie. Desde esa
+            // marca, la decisión del owner se respeta.
+            grid = BuildConfig.DEV_TOOLS &&
+                prefs.getBoolean(KEY_GRID_DEFAULT_OFF, false) &&
+                prefs.getBoolean(KEY_GRID, defaults.grid),
             bg = prefs.getBoolean(KEY_BG, defaults.bg),
             character =
                 prefs.getString(KEY_CHARACTER, null)
@@ -49,6 +60,9 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
             .remove(KEY_DEBUG)
             .putBoolean(KEY_FREECAM, settings.freeCam)
             .putBoolean(KEY_GRID, settings.grid)
+            // Marca que la grilla ya pasó por el default apagado: desde acá el
+            // valor guardado es una elección y se lee normal.
+            .putBoolean(KEY_GRID_DEFAULT_OFF, true)
             .putBoolean(KEY_BG, settings.bg)
             .putString(KEY_CHARACTER, settings.character.name)
             .putInt(KEY_SPEED, settings.speed)
@@ -69,6 +83,9 @@ class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
         const val KEY_DEBUG = "debug"
         const val KEY_FREECAM = "freecam"
         const val KEY_GRID = "grid"
+
+        /** Marca de la migración que apagó el default viejo de la grilla. */
+        const val KEY_GRID_DEFAULT_OFF = "grid_default_off"
         const val KEY_BG = "bg"
         const val KEY_CHARACTER = "character"
         const val KEY_SPEED = "speed"

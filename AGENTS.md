@@ -184,7 +184,9 @@ Trampas que hacen perder tiempo:
   interruptor en Ajustes: existen solo si la compilación los pide, con
   `./gradlew installDebug -Psignai.devTools=true` o `SIGNAI_DEV_TOOLS=1 ./gradlew installDebug`.
   Están **apagados por defecto, incluso en `debug`**, y `release`/`demo` los ignoran siempre.
-  Si no aparecen, no es un bug: es el build.
+  Si no aparecen, no es un bug: es el build. **La grilla del suelo también arranca
+  apagada** (`Settings.grid = false`, 2026-11-05) y sin `DEV_TOOLS` no se dibuja aunque
+  una instalación vieja tenga la preferencia en `true`.
 - **`RECORD_AUDIO` es permiso de runtime y no está pre-otorgado.** Tocar el mic sin él dice
   "No se pudo abrir el micrófono", que se lee como un fallo del STT y no lo es:
   `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO`.
