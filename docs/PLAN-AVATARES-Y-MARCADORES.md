@@ -11,12 +11,13 @@
 **Estado:** **implementado el 2026-10-26** el selector funcional con los dos avatares y el
 empaquetado de los GLB; **regenerados el 2026-10-27** con la versión de los avatares que
 tiene la cadera centrada. El 2026-11-04 el owner fijó el enfoque **A** (tabla tipo
-gramatical → variante), descartó la clasificación emocional (**B**), se midieron las cinco
-variantes y **se activaron las tres filas medidas**: afirmación → base, pregunta sí/no →
-`_pregunta`, negación → `_negacion`. Pregunta de contenido y orden siguen en el base hasta
-la validación LSC. Ver «Medición y propuesta de marcadores (2026-11-04)».
+gramatical → variante), descartó la clasificación emocional (**B**) y se activaron las filas
+medidas. **El 2026-11-05** se reemplazaron los GLB por la versión de Samuel con **cuatro
+marcas gramaticales** (`_afirmativo`, `_pregunta`, `_negacion`, `_orden`) y sin clip base:
+las cinco categorías del backend ya tienen cara, y pregunta sí/no y pregunta de contenido
+comparten `_pregunta`. Ver «Registro de cambios», fila 2026-11-05.
 **Fecha:** 2026-10-24 (investigación y plan) · 2026-10-26 (implementación) · 2026-11-04
-(medición de variantes e implementación del mapeo)
+(medición de variantes e implementación del mapeo) · 2026-11-05 (GLB con cuatro caras)
 **Alcance pedido:** usar Juan y Pauline desde el selector existente. Desde el 2026-11-04 se
 representan también los marcadores faciales de los tipos validados por medición.
 
@@ -226,6 +227,13 @@ del owner, y por eso esta tabla **no se escribió** en
 `../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`: se propone acá para
 que el owner la apruebe y la pegue en PR-AVT-05 antes de correr la prueba.
 
+> **Superado el 2026-11-05.** La tabla que sigue fue la propuesta sobre los GLB del
+> 2026-10-26 (clip base + cinco caras emocionales). El export del 2026-11-04 trae otras
+> cuatro caras —`_afirmativo`, `_pregunta`, `_negacion`, `_orden`— y ningún clip base, así
+> que la correspondencia vigente es: `AFFIRMATIVE` → `_afirmativo`; `YES_NO_QUESTION` y
+> `CONTENT_QUESTION` → `_pregunta`; `NEGATIVE` → `_negacion`; `IMPERATIVE` → `_orden`.
+> Se conserva la tabla como historia de la medición, no como estado actual.
+
 | Tipo (backend) | Qué espera PR-AVT-05 hoy | Variante propuesta | Lo que la variante mide | Tipo de dato |
 |---|---|---|---|---|
 | `AFFIRMATIVE` | Cara neutra, sin cambios en las cejas | **base** (ninguna variante) | El base tiene peso facial 0 salvo parpadeo | Medido: el base ya es neutro |
@@ -350,6 +358,7 @@ Agregar una fila por cada trabajo posterior relacionado con esta iniciativa. No 
 | 2026-10-27 | Reempaquetado con los GLB del repo hermano `../signai-avatar` (rama `dev`, commit `cf014ef`), que corrigen la cadera. | `tools/pack_avatars.py`; `models/juan.glb`, `models/pauline.glb`, `models/avatars.json`, `manifest.json`; `AGENTS.md`, `docs/SISTEMA.md`, `openspec/config.yaml`, `specs/pipeline/spec.md`, `specs/avatar/spec.md`, `tools/README.md`. | DOC-8 actualizado a 63,74 MB. Sin cambios en nombres ni duraciones de clip; `spine` pasa de 8,89/8,92 cm de desvío a 0,00 cm. | Probar en el dispositivo que la representación ya no se va de costado. Los pies pueden deslizarse un poco en alguna seña (efecto secundario anotado en el hermano). |
 | 2026-11-04 | Orden 8 de `docs/PLAN-SEMANA-13.md`: medición real de las cinco variantes faciales, recorrido del tipo gramatical y propuesta de tabla y de cambios. El owner fijó el enfoque A y descartó B. | `tools/measure_face_markers.py` (nuevo); `docs/mediciones/marcadores-2026-11-04.md` y `.json` (nuevos); este plan; `openspec/sessions/2026-11-04-marcadores-faciales-medicion.md`. Backend leído en `c8aa516`; app leída en `3cf2be2`. | DOC-5 y DOC-6 actualizados; DOC-9 agregado con la limitación de los assets. Se corrigió el nombre del inventario: es `models/avatars.json`, no `avatares.json`. | Validación LSC de las filas de pregunta de contenido y orden; escribir la tabla aprobada en PR-AVT-05. `AGENTS.md` y otros documentos todavía dicen `avatares.json`. |
 | 2026-11-04 | **Activación de los marcadores faciales** por pedido del owner: se implementó el mapeo tipo → variante de la propuesta medida, para tener la base funcional. | `app/src/main/assets/web/app.js`: `FACE_MARKER_SUFFIXES`, `FACE_VARIANT_BY_TYPE`, `embeddedClipsFor` (tomas vs. variantes), `faceMarkerSuffix`, `pickVariant` con tipo, `loadQueueItem` y `state.currentVariant` en el overlay. `tools/mock_backend.py`: `--type` y sin eco de `text` como `transcript`. `openspec/specs/avatar/spec.md` y este plan. | Verificado en el Redmi Note 9S con el mock: `YES_NO_QUESTION` → `0038_pregunta` y `NEGATIVE` → `0038_negacion`, con `tipo: NEGATIVE  cara: negacion` en el overlay. Las tres filas medidas quedan activas; pregunta de contenido y orden siguen en base. | Validación LSC de las dos filas abiertas. La cabeza de la negación sigue sin existir. |
+| 2026-11-05 | **Regeneración con los GLB de Samuel** (`../signai-avatar`, `fc6f372`, 2026-11-04): 50 señas × 4 marcas faciales (`_afirmativo`, `_pregunta`, `_negacion`, `_orden`), 200 clips, sin clip base; los huesos son idénticos entre variantes y solo cambian los pesos. | `tools/pack_avatars.py` (SUFFIXES, referencia de pose `0029_afirmativo`, manifiesto con 4 variantes), `tools/split_signs.py` (indentación del `*/` generado), `app/src/main/assets/web/models/juan.glb` (30,32 MB) y `pauline.glb` (27,85 MB), `models/avatars.json`, `manifest.json`, `SignsCatalog.kt`, `app.js` (`FACE_MARKER_SUFFIXES`, `FACE_VARIANT_BY_TYPE`, `DEFAULT_FACE_VARIANT`, `embeddedClipsFor`, `pickVariant`), specs `avatar`/`pipeline`/`ui`, `openspec/config.yaml`, `AGENTS.md`, `docs/SISTEMA.md`, `tools/README.md`, `tools/measure_face_markers.py` (guarda). | `AFFIRMATIVE` → `_afirmativo`, `YES_NO_QUESTION` y `CONTENT_QUESTION` → `_pregunta`, `NEGATIVE` → `_negacion`, `IMPERATIVE` → `_orden`. Verificado en el Redmi Note 9S con el backend real: `Yo como.` → `0038_afirmativo`, `0007_afirmativo`; `No quiero ir.` → `0038_negacion`, `0037_negacion`; `Tu comes?` → `0039_pregunta`, `0007_pregunta`; `Como estas?` → `0026_pregunta`; `Firme el documento.` → `0038_orden`. | `measure_face_markers.py` sigue midiendo el layout viejo: adaptarlo si se quiere medir las cuatro caras nuevas. Validación LSC de las cuatro caras y de la decisión de compartir `_pregunta` entre los dos tipos de pregunta. |
 
 ### Qué significa «el backend decide cuándo» en el estado actual
 
@@ -434,7 +443,7 @@ base en las demás).
 
 - Resueltos: dos GLB completos; rostro completo; selector bloqueado hasta el reposo absoluto; Juan como predeterminado.
 - **Resuelto el 2026-11-04:** se trabaja la **opción A** (tabla tipo gramatical → variante). La **B** queda descartada porque la clasificación emocional se intentó y no se logró, y el backend no manda ninguna señal emocional. Los marcadores son gramaticales, no emocionales.
-- **Implementado el 2026-11-04:** la tabla medida en este documento (afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`; contenido y orden en base) ya está en `FACE_VARIANT_BY_TYPE` de `app.js` y se verificó en el Redmi Note 9S. Queda **abierta la validación LSC** de pregunta de contenido y orden: cuando se defina, se cambia una fila de esa tabla y no hay que recomprimir nada.
+- **Actualizado el 2026-11-05:** los GLB de Samuel (`../signai-avatar`, `fc6f372`) traen las cuatro marcas gramaticales y ningún clip base. `FACE_VARIANT_BY_TYPE` quedó: afirmación → `_afirmativo`, pregunta sí/no y pregunta de contenido → `_pregunta`, negación → `_negacion`, orden → `_orden`. Verificado en el Redmi Note 9S con el backend real para los cinco tipos. Queda la **validación LSC** de las cuatro caras y de compartir `_pregunta` entre los dos tipos de pregunta.
 - `../sign-ai-docs` se actualizó mediante `git pull --ff-only` el 2026-10-24. `main` ya estaba al día, sin cambios nuevos: commit `dc8d49c79285489815164adaf8a1fa7ef6e83b24`.
 
 ## Fuentes técnicas y procedencia

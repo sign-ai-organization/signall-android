@@ -9,9 +9,9 @@
 //
 // Dónde viene cada cosa, desde el 2026-10-26:
 //   models/<avatar>.glb → el muñeco con su esqueleto (102 huesos, HG_*) **y las
-//                        50 señas como clips** `0000`..`0049`, cada una con sus
-//                        variantes faciales `_alegria`, `_tristeza`, … (300
-//                        clips por archivo; hoy se usan solo las base)
+//                        50 señas como clips** `0000_afirmativo`..`0049_orden`,
+//                        una por marca facial (200 clips por archivo; desde el
+//                        2026-11-04 no hay clip base ni caras emocionales)
 //   signs/*.glb         → el layout viejo: solo animación, un clip por variante,
 //                        mismo esqueleto. Se sigue soportando como descarga, pero
 //                        con las señas adentro del avatar no se pide ninguno.
@@ -61,8 +61,8 @@ const state = {
   // principio o seguir después de la última seña que sonó.
   queueStarted: false,
   currentType: "",
-  // Variante facial que se está representando (`base`, `pregunta`, …). La elige
-  // `pickVariant` con la tabla por tipo; solo se lee en el diagnóstico.
+  // Variante facial que se está representando (`afirmativo`, `pregunta`, …).
+  // La elige `pickVariant` con la tabla por tipo; solo se lee en el diagnóstico.
   currentVariant: "",
   // Velocidad pedida por el usuario (setSpeed) y velocidad aplicada.
   baseSpeed: 1,
@@ -369,29 +369,30 @@ const signCache = new Map();
 const embeddedClips = new Map();
 
 /**
- * Variantes faciales que trae cada avatar, por sufijo de clip. El clip base
- * (`0000`) es la seña sin marcador; los demás son la misma seña con una cara
- * estampada que solo mueve los morph targets (los huesos son idénticos).
+ * Variantes faciales que trae cada avatar, por sufijo de clip. Ya no hay clip
+ * base: las cuatro son la misma seña con una marca facial distinta, y solo
+ * mueven los morph targets (los canales de hueso son idénticos).
  */
 const FACE_MARKER_SUFFIXES = new Set([
-  "alegria", "tristeza", "sorpresa", "pregunta", "negacion",
+  "afirmativo", "pregunta", "negacion", "orden",
 ]);
 
+/** La cara que se usa cuando el tipo no viene o no está en la tabla. */
+const DEFAULT_FACE_VARIANT = "afirmativo";
+
 /**
- * Tipo de oración del backend → variante facial. Es la tabla propuesta el
- * 2026-11-04 y **está sujeta a la validación LSC**: las tres filas marcadas
- * como medidas salen de los morph targets; pregunta de contenido y orden
- * quedan en el clip base porque no hay una cara validada todavía.
- *
- * Cambiar una fila acá no toca los assets ni el backend: el tipo ya viaja en
- * cada `segment` y `app.js` lo recibe en `item.type`.
+ * Tipo de oración del backend → variante facial. El export del 2026-11-04 trae
+ * exactamente las cuatro marcas gramaticales, así que ya no hay filas abiertas:
+ * pregunta sí/no y pregunta de contenido comparten `pregunta`, y la orden usa
+ * `orden`. Cambiar una fila acá no toca los assets ni el backend: el tipo ya
+ * viaja en cada `segment` y `app.js` lo recibe en `item.type`.
  */
 const FACE_VARIANT_BY_TYPE = Object.freeze({
-  AFFIRMATIVE: "base",        // medido: el base ya es reposo + parpadeo
-  YES_NO_QUESTION: "pregunta", // medido: es la que más sube las cejas
-  NEGATIVE: "negacion",       // medido: ceño y boca; no aporta la cabeza
-  CONTENT_QUESTION: "base",   // abierto a validación LSC
-  IMPERATIVE: "base",         // abierto a validación LSC
+  AFFIRMATIVE: "afirmativo",
+  YES_NO_QUESTION: "pregunta",
+  CONTENT_QUESTION: "pregunta",
+  NEGATIVE: "negacion",
+  IMPERATIVE: "orden",
 });
 
 /**
@@ -403,10 +404,12 @@ const FACE_VARIANT_BY_TYPE = Object.freeze({
  *
  *   - `clips`: las tomas de la seña (`0000`, `0000.001`, …), que son la misma
  *     animación exportada varias veces. `pickVariant` elige una al azar, como
- *     siempre.
- *   - `variants`: un `Map` sufijo → clip con los marcadores faciales
- *     (`0000_alegria`, `0000_tristeza`, `0000_sorpresa`, `0000_pregunta`,
- *     `0000_negacion`). Se eligen por tipo de oración, no al azar.
+ *     siempre. En el export del 2026-11-04 no hay tomas ni clip base: si no
+ *     aparece ninguna, `clips` queda con la variante por defecto para que la
+ *     seña se pueda representar igual.
+ *   - `variants`: un `Map` sufijo → clip con la marca facial
+ *     (`0000_afirmativo`, `0000_pregunta`, `0000_negacion`, `0000_orden`). Se
+ *     eligen por tipo de oración, no al azar.
  *
  * No mezclarlas es lo que evita que `pickVariant` devuelva una cara al azar:
  * los dos grupos se parecen en el nombre pero no en el significado.
@@ -426,12 +429,18 @@ function embeddedClipsFor(url) {
     const suffix = faceMarkerSuffix(name, id);
     if (suffix) variants.set(suffix, clip);
   }
+  if (!clips.length) {
+    // Sin clip base ni tomas: la seña igual tiene que sonar con alguna cara.
+    const fallback = variants.get(DEFAULT_FACE_VARIANT) ??
+      variants.values().next().value;
+    if (fallback) clips.push(fallback);
+  }
   if (!clips.length) return null;
   clips.sort((a, b) => a.name.localeCompare(b.name));
   return { clips, variants };
 }
 
-/** Sufijo facial de `name` (`0000_alegria` → `alegria`), o `null`. */
+/** Sufijo facial de `name` (`0000_afirmativo` → `afirmativo`), o `null`. */
 function faceMarkerSuffix(name, id) {
   const prefix = id + "_";
   if (!name.startsWith(prefix)) return null;
@@ -842,19 +851,20 @@ function preloadNext() {
 }
 
 /**
- * Elige el clip de la seña: la variante facial del tipo de oración si existe,
- * o una toma al azar del clip base.
+ * Elige el clip de la seña: la variante facial del tipo de oración.
  *
- * Las variantes faciales no entran al azar: son cinco caras distintas de la
- * misma seña y elegirlas sorteadas mostraría una negación en una afirmación.
- * Solo se sortea dentro de las tomas, que son la misma animación repetida.
+ * Las cuatro variantes no entran al azar: son caras distintas de la misma seña
+ * y elegirlas sorteadas mostraría una negación en una afirmación. Si el tipo no
+ * viene o no está en la tabla se usa la variante por defecto. Solo se sortea
+ * dentro de las tomas, que son la misma animación repetida.
  * Deja en `state.currentVariant` lo que se eligió, para el diagnóstico.
  */
 function pickVariant(clips, variants, type) {
-  const wanted = FACE_VARIANT_BY_TYPE[type] || "base";
-  const variant = wanted !== "base" ? variants?.get(wanted) : null;
-  state.currentVariant = variant ? wanted : "base";
-  if (variant) return variant;
+  const wanted = FACE_VARIANT_BY_TYPE[type] || DEFAULT_FACE_VARIANT;
+  const chosen = variants?.has(wanted) ? wanted
+    : variants?.has(DEFAULT_FACE_VARIANT) ? DEFAULT_FACE_VARIANT : null;
+  state.currentVariant = chosen || "base";
+  if (chosen) return variants.get(chosen);
   return clips.length > 1 ? clips[(Math.random() * clips.length) | 0] : clips[0];
 }
 

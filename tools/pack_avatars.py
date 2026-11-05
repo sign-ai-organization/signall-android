@@ -2,25 +2,31 @@
 """Empaqueta los dos avatares completos (Juan y Pauline) para la app.
 
 Los exports finales de Cascadeur viven versionados en el repo hermano
-`../signai-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev` desde el
-commit `cf014ef`, 2026-10-26). Cada archivo trae el personaje, su esqueleto de
-102 articulaciones y **300 clips**: las 50 señas de LSC50 (`0000`..`0049`) por
-seis variantes —la base, `_alegria`, `_tristeza`, `_sorpresa`, `_pregunta` y
-`_negacion`—. Los originales no se editan: son la entrada inmutable.
+`../signai-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev`, commit
+`fc6f372`, 2026-11-04). Cada archivo trae el personaje, su esqueleto de 102
+articulaciones y **200 clips**: las 50 señas de LSC50 (`0000`..`0049`) por
+cuatro marcas faciales —`_afirmativo`, `_pregunta`, `_negacion` y `_orden`—.
+No hay clip base: las cuatro variantes comparten los mismos canales de hueso y
+solo cambian los pesos de la cara. Los originales no se editan: son la entrada
+inmutable.
 
 `../material-3d/Avatares/` conserva la versión anterior (`Juan_final.glb` y
 `Pauline_final.glb`, 2026-10-24). Sigue sirviendo para comparar, pero **ya no es
 la fuente**: la versión del 2026-10-26 corrigió la cadera (el avatar se iba de
-costado al representar) y volvió a aplicar la corrección de cabeza.
+costado al representar) y volvió a aplicar la corrección de cabeza; la del
+2026-11-04 reemplazó las cinco caras emocionales por las cuatro marcas
+gramaticales.
 
 Este script hace el empaquetado que la app necesita, sin cambiar ninguna
 animación:
 
   1. **Verifica** que cada archivo sea el que esperamos: un skin, 102
-     articulaciones y exactamente los 300 nombres de clip esperados.
+     articulaciones y exactamente los 200 nombres de clip esperados.
   2. **Hornea la pose de descanso** con la misma regla de `rest_pose.py` (los 46
-     huesos de la cadena de brazos, desde el primer keyframe de `0029`). Los dos
-     archivos nuevos vienen con la pose de maniquí del export: sin esto, al
+     huesos de la cadena de brazos, desde el primer keyframe de `0029`). Como ya
+     no hay clip base, se usa la variante `0029_afirmativo`: las cuatro
+     variantes comparten los huesos, así que la pose de brazos es la misma. Los
+     dos archivos nuevos vienen con la pose de maniquí del export: sin esto, al
      terminar una frase los brazos saltarían a esa pose en vez de volver al
      reposo que la app ya tiene.
   3. **Poda los morph targets que nadie anima** y compacta el buffer, reusando
@@ -30,9 +36,8 @@ animación:
   4. **Escribe** `models/juan.glb`, `models/pauline.glb`, el inventario
      `models/avatars.json` y `manifest.json`.
 
-El archivo de salida conserva las 300 animaciones. La app usa hoy solo los
-clips base: el resolutor de `app.js` no reconoce los sufijos faciales a
-propósito mientras los marcadores estén fuera de alcance.
+El archivo de salida conserva las 200 animaciones. La app elige una de las
+cuatro por tipo de oración desde el 2026-11-04; no existe una toma neutra.
 
 Uso:
 
@@ -74,8 +79,10 @@ AVATARS = (
 )
 
 SIGN_IDS = [f"{i:04d}" for i in range(50)]
-SUFFIXES = ("alegria", "tristeza", "sorpresa", "pregunta", "negacion")
-EXPECTED_CLIP_COUNT = len(SIGN_IDS) * (1 + len(SUFFIXES))
+# Las cuatro marcas faciales del export del 2026-11-04. No hay clip base.
+SUFFIXES = ("afirmativo", "pregunta", "negacion", "orden")
+DEFAULT_SUFFIX = "afirmativo"
+EXPECTED_CLIP_COUNT = len(SIGN_IDS) * len(SUFFIXES)
 EXPECTED_JOINTS = 102
 FPS = 24
 
@@ -103,18 +110,17 @@ def check_source(js, name):
         raise SystemExit(f"{name}: clips con nombre repetido: {dup}")
     if len(names) != EXPECTED_CLIP_COUNT:
         raise SystemExit(f"{name}: hay {len(names)} clips, se esperaban "
-                         f"{EXPECTED_CLIP_COUNT} (50 señas × 6 variantes)")
+                         f"{EXPECTED_CLIP_COUNT} (50 señas × 4 variantes)")
 
     expected = set()
     for sign in SIGN_IDS:
-        expected.add(sign)
         for suffix in SUFFIXES:
             expected.add(f"{sign}_{suffix}")
     missing = sorted(expected - set(names))
     extra = sorted(set(names) - expected)
     if missing or extra:
         raise SystemExit(
-            f"{name}: los clips no son las 50 señas × 6 variantes:\n"
+            f"{name}: los clips no son las 50 señas × 4 variantes:\n"
             f"  faltan: {missing[:20]}{'…' if len(missing) > 20 else ''}\n"
             f"  sobran: {extra[:20]}{'…' if len(extra) > 20 else ''}")
 
@@ -128,10 +134,16 @@ def check_source(js, name):
 
 
 def bake_rest_pose(js, binary):
-    """Hornea la pose de descanso desde el clip base `0029` del propio archivo."""
+    """Hornea la pose de descanso desde `0029_afirmativo` del propio archivo.
+
+    Ya no hay clip `0029` sin sufijo. Las cuatro variantes de una seña tienen
+    los mismos canales de hueso (solo cambian los pesos de la cara), así que
+    tomar la variante `afirmativo` da exactamente la misma pose de brazos.
+    """
     names = rest_pose.check_chain(rest_pose.arm_chain(js))
+    reference = f"{rest_pose.REFERENCE_ID}_{DEFAULT_SUFFIX}"
     index = next(i for i, a in enumerate(js["animations"])
-                 if a["name"] == rest_pose.REFERENCE_ID)
+                 if a["name"] == reference)
     t = gp.first_keyframe_time(js, index)
     pose = gp.sample_clip(js, binary, index, t)
     before = rest_pose.hand_positions(js)
@@ -159,10 +171,14 @@ def bind_report(js, binary, name):
         return str(exc)
 
 
-def base_clips(js):
-    """Los 50 clips base, en orden de id, con sus cinco variantes."""
+def sign_clips(js):
+    """Las 50 señas, en orden de id, con la variante por defecto y las cuatro.
+
+    No hay clip base: la variante `afirmativo` es la representante para los
+    datos que se toman una sola vez por seña (duración, frames, tracks).
+    """
     by_name = {a.get("name"): a for a in js["animations"]}
-    return [(sign, by_name[sign],
+    return [(sign, by_name[f"{sign}_{DEFAULT_SUFFIX}"],
              [by_name[f"{sign}_{suffix}"] for suffix in SUFFIXES])
             for sign in SIGN_IDS]
 
@@ -175,22 +191,23 @@ def build_manifest(path, js, avatar_sha):
     los dos archivos está en `avatars.json`.
     """
     entries = []
-    for sign, base, variants in base_clips(js):
-        tracks = {channel["target"]["path"] for channel in base["channels"]}
+    for sign, representative, variants in sign_clips(js):
+        tracks = {channel["target"]["path"]
+                  for channel in representative["channels"]}
         entries.append({
             "sign_id": sign,
             "gloss": None,
             "path": f"signs/{sign}_0000_0000.glb",
-            "clip": sign,
+            "clip": f"{sign}_{DEFAULT_SUFFIX}",
             "bundled": "avatars",
-            "variants": 1 + len(variants),
-            "variant_names": [sign, *(f"{sign}_{s}" for s in SUFFIXES)],
+            "variants": len(variants),
+            "variant_names": [f"{sign}_{s}" for s in SUFFIXES],
             "fps": FPS,
             "frames": max(js["accessors"][s["input"]]["count"]
-                          for s in base["samplers"]),
+                          for s in representative["samplers"]),
             "duration_s": round(
-                gp.clip_duration(js, js["animations"].index(base)), 3),
-            "tracks": len(base["channels"]),
+                gp.clip_duration(js, js["animations"].index(representative)), 3),
+            "tracks": len(representative["channels"]),
             "faces": "weights" in tracks,
             "bytes": path.stat().st_size,
             "sha256": avatar_sha,
@@ -230,7 +247,8 @@ def main():
         warning = bind_report(js, binary, label)
         report = bake_rest_pose(js, binary)
         for line in rest_pose.report_lines(
-            report, indent="  ", reference="el clip 0029 del mismo archivo",
+            report, indent="  ",
+            reference=f"el clip 0029_{DEFAULT_SUFFIX} del mismo archivo",
         ):
             print(line)
 
@@ -267,10 +285,12 @@ def main():
                 "source_sha256": source_sha,
                 "clips": len(js["animations"]),
                 "signs": len(SIGN_IDS),
-                "variants": ["base", *SUFFIXES],
+                "variants": list(SUFFIXES),
+                "default_variant": DEFAULT_SUFFIX,
                 "joints": len(js["skins"][0]["joints"]),
                 "rest_pose": {
-                    "reference": f"{rest_pose.REFERENCE_ID} (keyframe 0)",
+                    "reference": (f"{rest_pose.REFERENCE_ID}_{DEFAULT_SUFFIX} "
+                                  "(keyframe 0)"),
                     "bones": report["bones"],
                     "delta": report["delta"],
                 },

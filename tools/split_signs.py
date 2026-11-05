@@ -296,7 +296,7 @@ object SignsCatalog {{
      * or null when that path is not one of ours.
      *
 {local_doc}
-    */
+     */
     fun localAssetOrNull(path: String): String? {{
         val clean = path.trim()
         if (!clean.startsWith("signs/") || clean.contains("..") || clean.contains("//")) return null

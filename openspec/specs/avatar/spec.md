@@ -9,7 +9,7 @@ horneada por hueso y la escena solo la reproduce.
 | | |
 |---|---|
 | Personaje | `models/juan.glb` (34,28 MB) **o** `models/pauline.glb` (29,46 MB), 102 articulaciones de skin cada uno; el que se carga lo elige el ajuste «Personaje» |
-| Señas | **300 clips adentro de cada archivo**: las 50 señas (`0000`..`0049`) por seis variantes (base, `_alegria`, `_tristeza`, `_sorpresa`, `_pregunta`, `_negacion`) |
+| Señas | **200 clips adentro de cada archivo**: las 50 señas (`0000`..`0049`) por cuatro marcas faciales (`_afirmativo`, `_pregunta`, `_negacion`, `_orden`); no hay clip base |
 | Escena | `app.js` + `index.html`, three r169 por CDN |
 | Catálogo | `domain/SignsCatalog.kt`, generado |
 
@@ -22,6 +22,12 @@ contra sus clips (`embeddedClipsFor` en `app.js`).
 **Cambio del 2026-10-27**: se regeneraron con la versión del 2026-10-26 de esos GLB, que
 trae la **cadera centrada** en las 50 señas. Mismos 300 clips, mismos nombres y mismas
 duraciones; solo cambian `spine` (traslación y giro) y `neck`/`head`.
+
+**Cambio del 2026-11-04**: Samuel reemplazó los GLB por una versión con **cuatro marcas
+faciales gramaticales** —`_afirmativo`, `_pregunta`, `_negacion`, `_orden`— y sin clip
+base. Cada archivo pasa a tener **200 clips** (50 señas × 4), los mismos 102 huesos y los
+mismos canales de hueso entre variantes; solo cambian los pesos de la cara. `app.js` ya
+reproduce las cuatro por tipo de oración.
 
 **Cambio del 2026-10-22**: el asset pasó de `models/avatar.glb` + `signs/<id>.glb` a
 **un solo archivo** con las 50 señas adentro. `tools/pack_signall.py` lo armaba desde
@@ -42,18 +48,18 @@ avatares es un archivo cerrado. El primer pipeline (`tools/split_signs.py`,
 2026-10-13) separaba eso en `models/avatar.glb` + `signs/<id>.glb` para no
 versionar 32 copias del muñeco. Desde el 2026-10-22 el archivo único trae **el
 personaje + las 50 animaciones**, y desde el 2026-10-26 son **dos** archivos con
-**300 clips cada uno**: el mixer resuelve los tracks por nombre de nodo contra el
+**200 clips cada uno**: el mixer resuelve los tracks por nombre de nodo contra el
 root, y cargar el clip desde el mismo `gltf.animations` que el avatar es lo mismo
 que cargarlo desde un `.glb` aparte, sin pedido de red.
 
-Las **variantes faciales** existen en los dos archivos y desde el **2026-11-04 se
+Las **cuatro variantes faciales** existen en los dos archivos y desde el **2026-11-04 se
 reproducen por tipo de oración** (`FACE_VARIANT_BY_TYPE` en `app.js`): afirmación usa
-el base, pregunta sí/no usa `_pregunta` y negación usa `_negacion`; pregunta de
-contenido y orden siguen en el base hasta que se validen con LSC. Las variantes
-faciales se devuelven **separadas** de las tomas en `embeddedClipsFor` (`clips` vs.
-`variants`), así que el sorteo de tomas nunca elige una cara. Los morph targets que
-alguna de las 300 variantes anima se conservan en el archivo: 65 bloques de target en
-Juan y 64 en Pauline, contados el 2026-10-26.
+`_afirmativo`, pregunta sí/no y pregunta de contenido usan `_pregunta`, negación usa
+`_negacion` y orden usa `_orden`. No hay clip base: todas las frases llevan una de las
+cuatro caras. Las variantes se devuelven **separadas** de las tomas en `embeddedClipsFor`
+(`clips` vs. `variants`), así que el sorteo de tomas nunca elige una cara. Los morph
+targets que alguna de las 200 variantes anima se conservan en el archivo (59 bloques en
+Juan y 58 en Pauline después del empaquetado del 2026-11-05).
 
 Cambiar de avatar **no requiere regenerar nada**: los dos archivos están en el APK
 y la escena cambia de uno al otro en caliente. Regenerarlos sí: los escribe
@@ -197,13 +203,14 @@ mouth_upper_up_*, mouth_lt_rt_funnel, mouth_roll_lower, mouth_shrug_roll_upper
 
 Desde el **2026-11-04** la app también elige una **variante facial** según el tipo de
 oración que manda el backend (`FACE_VARIANT_BY_TYPE` y `pickVariant(clips, variants,
-type)`): afirmación → base, pregunta sí/no → `_pregunta`, negación → `_negacion`.
-Pregunta de contenido y orden quedan en el base porque no hay una cara validada por LSC
-todavía. La medición de las cinco variantes está en
-`docs/mediciones/marcadores-2026-11-04.md`: cada variante es la misma cara en las 50
-señas, es una pose fija y mueve solo los morph targets (los huesos son idénticos al
-base). Los dos archivos vigentes conservan los morph targets que alguna de las 300
-variantes anima —65 bloques en Juan, 64 en Pauline, contados el 2026-10-26—.
+type)`): afirmación → `_afirmativo`, pregunta sí/no y pregunta de contenido → `_pregunta`,
+negación → `_negacion`, orden → `_orden`. El export del 2026-11-04 trae exactamente esas
+cuatro marcas, así que no quedan filas abiertas. La medición de las variantes viejas
+(`_alegria`, `_tristeza`, `_sorpresa`) está en `docs/mediciones/marcadores-2026-11-04.md`
+como historia: esas caras ya no existen en el asset. En las cuatro actuales los huesos son
+idénticos entre sí y solo cambian los morph targets. Los dos archivos vigentes conservan
+los morph targets que alguna de las 200 variantes anima —59 bloques en Juan, 58 en
+Pauline, contados el 2026-11-05—.
 
 Las mediciones de «cara quieta» que siguen son del archivo único anterior, tomadas
 sobre sus 50 clips (`avatar.glb`, borrado el 2026-10-26): el mayor rango de un
@@ -287,7 +294,7 @@ escalar después de un cambio en `app.js`, es esto.
 - Hay una sola cara por tipo de oración, no una por seña: la variante elegida es la
   misma en las 50 señas (medido el 2026-11-04). No hay emociones: el backend no
   manda esa señal y no se clasifican.
-- No hay movimiento de cabeza en las variantes: los huesos son idénticos al base.
+- No hay movimiento de cabeza en las variantes: los huesos son idénticos entre las cuatro.
   La negación solo cambia la cara.
 - La escena **sí maneja los morph targets** desde el 2026-11-04, pero solo a través
   del clip de la variante elegida: no los escribe a mano ni los mezcla entre
