@@ -25,6 +25,14 @@
   y que la frase repetida salga del caché semántico). Necesita el backend
   levantado y `DATABASE_URL` en `.envJulian`. Sale con código 1 si algo falla:
   `python3 tools/verificar-fases1-3.py`.
+- **`medir-glosado.py`** — cuántas frases de referencia glosa bien el sistema, de punta a
+  punta. Lee las frases y sus glosas de `../sign-ai-docs/borradores/plan-pruebas/02-datos/`
+  (no hay una segunda copia) y las manda por el WebSocket: `fr01` son las 30 de PR-INT-02 y
+  `fr02` las 90 opciones, que sirven de conjunto de validación porque no están en el prompt.
+  Cada línea dice si la frase salió de caché o del modelo, y el resumen avisa si la caché
+  estaba sucia. **Hay que vaciarla antes de medir**: `psql "$DATABASE_URL" -c "DELETE FROM
+  semantic_cache;"` y reiniciar el backend. Ojo con FR-02: sus tres variantes por frase se
+  confunden entre sí en el caché semántico (5 aciertos falsos de 90, medido el 2026-11-06).
 - **`TIEMPO-REAL.md`** — la guía de pruebas del modo en vivo: qué se midió y
   cómo repetirlo, qué frases decir, cuáles de las 50 señas tienen animación,
   qué significa cada métrica, los problemas ya pisados y **qué no se verificó y
