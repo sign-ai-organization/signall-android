@@ -27,7 +27,7 @@ Los 5 voluntarios son 3 nativos + 2 no nativos de LSC. Todos certificados por in
 | 0009 | POCO        | 0026 | ¿CÓMO ESTÁS?| 0043 | ¿DÓNDE?    |
 | 0010 | FAMILIA     | 0027 | MÁS O MENOS | 0044 | ¿CÓMO?    |
 | 0011 | PERSONAS    | 0028 | SENTIR      | 0045 | ¿POR QUÉ?  |
-| 0012 | MUJER       | 0029 | JUCIOSO     | 0046 | ¿QUIÉN?    |
+| 0012 | MUJER       | 0029 | JUICIOSO     | 0046 | ¿QUIÉN?    |
 | 0013 | HOMBRE      | 0030 | HOLA        | 0047 | DIFERENTE  |
 | 0014 | NIÑO        | 0031 | ADIÓS       | 0048 | TODOS      |
 | 0015 | NIÑA        | 0032 | POR FAVOR   | 0049 | MUCHO      |
