@@ -68,7 +68,7 @@ LSC50 = [
     (26, "¿CÓMO ESTÁS?", "interjección"),
     (27, "MÁS O MENOS", "locución"),
     (28, "SENTIR", "verbo"),
-    (29, "JUCIOSO", "adjetivo"),
+    (29, "JUICIOSO", "adjetivo"),
     (30, "HOLA", "interjección"),
     (31, "ADIÓS", "interjección"),
     (32, "POR FAVOR", "locución"),
