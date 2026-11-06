@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Genera `resultados-consolidados.xlsx`: las 74 pruebas en las dos rondas.
 
-Fuente de la ronda diagnóstica: `plantilla-resultados.xlsx` (ya lleno: las 24
-recuperadas con `gpt-4o-mini` y las otras 50 con su medición original).
+Fuente de la ronda diagnóstica: el libro que se pasa con `--diagnostico`, con una
+fila por prueba. Hoy es `resultados-consolidados.xlsx` mismo, que quedó con la
+ronda del 05/11 renombrada como diagnóstica; antes era `plantilla-resultados.xlsx`
+(la ronda del 04/11, con las 24 recuperadas con `gpt-4o-mini`).
 Fuente de la ronda de evaluación: un directorio de resultados `PR-*.json` con la
 misma forma que usa `rellenar-libro.py` (estado, obtenido, evidencias, fecha,
 ejecutor, ronda).
@@ -14,7 +16,7 @@ ronda» cuenta las dos.
 
 Uso:
     ~/.venv/bin/python generar-consolidado.py \
-        --diagnostico plantilla-resultados.xlsx \
+        --diagnostico resultados-consolidados.xlsx \
         --evaluacion /tmp/opencode/pruebas/resultados-evaluacion \
         --salida resultados-consolidados.xlsx
 """
@@ -24,6 +26,7 @@ import json
 import os
 import sys
 from copy import copy
+from datetime import date
 from pathlib import Path
 
 import openpyxl
@@ -156,8 +159,9 @@ def main() -> int:
         ws["C6"] = "Plan de Pruebas, versión 39 (vive en ../sign-ai-docs/latex/plan-pruebas; Overleaf se retiró el 2026-11-04)"
         ws["C7"] = "74 pruebas en 14 bloques, en dos rondas (148 filas)"
         ws["C8"] = "una fila por prueba y por ronda; la columna Ronda dice cuál es cuál"
-        ws["C9"] = "Ronda diagnóstica (04/11/2026) y ronda de evaluación (05/11/2026)"
-        ws["C11"] = "05/11/2026"
+        ws["C9"] = ("Ronda diagnóstica (el libro que se pasa con --diagnostico) y ronda de "
+                    "evaluación (esta corrida)")
+        ws["C11"] = date.today().strftime("%d/%m/%Y")
 
     wb.save(args.salida)
     print(f"filas escritas: {escritas} (esperado 148)")

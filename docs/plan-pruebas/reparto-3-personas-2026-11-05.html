@@ -211,7 +211,8 @@
     </ul>
     <p class="herometa">Fecha: 5 de noviembre de 2026. Fuente de las fichas:
       <code>../sign-ai-docs/latex/plan-pruebas/main.tex</code> (sección 9, 74 fichas).
-      Estado de cada prueba: <code>resultados-consolidados.xlsx</code>, ronda de evaluación del 5/11.
+      Estado de cada prueba: <code>resultados-consolidados.xlsx</code>, la ronda del 5/11, que ahora es la
+      diagnóstica.
       Bitácoras y arneses: <code>docs/plan-pruebas/</code> de este repositorio.</p>
   </div>
 </header>
@@ -294,7 +295,7 @@
           <p>Las 9 pruebas de rendimiento y las comparaciones de alternativas (STT-04/05, CAC-01/02,
             LLM-01/03) publican cifras que solo existen en la máquina donde se midieron. La ficha dice
             «se reporta», pero no dice dónde. Tres computadores distintos son tres sistemas distintos.</p>
-          <p class="ev"><b>Evidencia:</b> bloque REN completo, y la ronda diagnóstica del 4/11, que midió con
+          <p class="ev"><b>Evidencia:</b> bloque REN completo, y la ronda del 4/11, que midió con
             <code>qwen3:4b-instruct</code> por un <code>.env.local</code> que nadie revisó: hubo que repetir
             24 pruebas (<code>PLAN-2026-11-05-recuperacion-y-ronda-oficial.md</code>, §2).</p>
           <p class="prop"><b>Se propone:</b> un servidor canónico para todo lo que produce números, un
@@ -482,7 +483,7 @@
     <p class="sub">Ordenadas por carril y después por bloque. «Perfil» es el mínimo que pide la ficha:
       <b>Local</b> = sin servidor; <b>Solo STT</b> = el servicio de transcripción y la GPU; <b>Canónico</b> =
       el backend de pruebas; <b>Canónico + móvil</b> = además el teléfono; <b>Personas</b> = formularios.
-      «Estado 5/11» es la última ronda ejecutada, no una predicción.</p>
+      «Estado 5/11» es la ronda diagnóstica: los resultados medidos el 5/11, no una predicción.</p>
 
     <div class="tools">
       <div class="search">
@@ -1541,7 +1542,7 @@ inicio / fin      __:__ / __:__   ejecutor: ______</div>
       usa <b>SignAI</b>, que es el nombre del repositorio y de las herramientas. Son el mismo sistema y
       cada nombre es correcto en su lugar.</p>
     <p><b>De dónde salen los datos.</b> Fichas, tipos, entornos y conjuntos: plan de pruebas, sección 9 y
-      sección 8. Estados: <code>resultados-consolidados.xlsx</code> (ronda de evaluación del 5/11). Reglas de
+      sección 8. Estados: <code>resultados-consolidados.xlsx</code> (ronda del 5/11, hoy diagnóstica). Reglas de
       operación y diseño de carriles: <code>PLAN-2026-11-05-recuperacion-y-ronda-oficial.md</code> §6 y
       <code>PRUEBAS-2026-11-05.md</code> §2. Herramientas: <code>tools/HERRAMIENTAS.md</code>,
       <code>tools/README.md</code> y <code>opencode.json</code>. La advertencia sobre el modelo local:
