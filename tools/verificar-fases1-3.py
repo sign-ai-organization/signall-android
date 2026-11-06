@@ -11,8 +11,10 @@ cambio, y ninguna se puede mirar en un solo lado:
     5. Una pregunta de contenido **sin** signo de interrogación se clasifica
        como `CONTENT_QUESTION`, y una declaración que empieza con relativo
        (`cuando`, `donde`, `que`) **no** (PR-HUE-03).
-    6. La caché semántica se sirve de la base nueva: la segunda vez que se
-       manda la misma frase no vuelve a llamar al LLM.
+    6. La caché semántica se sirve de la base nueva: una frase nueva se le
+       pide al LLM (`rt_cache_total{source="miss"}`) y la misma frase repetida
+       sale del caché (`exact` o `semantic`). Se mira el contador, no el reloj:
+       una frase ya cacheada tarda lo mismo las dos veces.
 
 La base se consulta con `psql` y `DATABASE_URL` de `.envJulian`, así que el
 script corre desde la raíz del repo Android con el backend y el STT levantados.
@@ -147,7 +149,7 @@ def verificar_backend(base: str) -> None:
 
 
 async def una_frase(uri: str, texto: str) -> tuple[str, list[str], float]:
-    """Manda una frase y devuelve (tipo, glosas, ms hasta el primer segmento)."""
+    """Manda una frase y devuelve (tipo, glosas, ms hasta el cierre del turno)."""
     arranque = time.perf_counter()
     tipo = ""
     glosas: list[str] = []
@@ -172,7 +174,52 @@ async def una_frase(uri: str, texto: str) -> tuple[str, list[str], float]:
     return tipo, glosas, (time.perf_counter() - arranque) * 1000
 
 
-def verificar_websocket(uri: str) -> None:
+def contadores(base: str) -> dict[str, float]:
+    return http_json(f"{base}/metrics.json").get("counters", {})
+
+
+def origen(contadores: dict[str, float], etiqueta: str) -> float:
+    return contadores.get(f'rt_cache_total{{source="{etiqueta}"}}', 0.0)
+
+
+def verificar_cache(base: str, uri: str) -> None:
+    """Una frase nueva se pide al LLM; la misma frase repetida sale del caché.
+
+    Se mide con el contador `rt_cache_total{source}` del backend y no con el
+    reloj: si la frase ya estaba en la caché de una corrida anterior, los dos
+    envíos tardan lo mismo y la comparación de tiempos no dice nada.
+    """
+    frases = [
+        "El certificado se entrega el mismo día del trámite.",
+        "Necesito actualizar mis datos personales en el registro.",
+        "El horario de atención es de ocho a cuatro.",
+    ]
+    for frase in frases:
+        antes = contadores(base)
+        primera = asyncio.run(una_frase(uri, frase))
+        despues = contadores(base)
+        if origen(despues, "miss") - origen(antes, "miss") != 1:
+            continue  # ya estaba cacheada: no sirve para medir en frío
+        segunda = asyncio.run(una_frase(uri, frase))
+        final = contadores(base)
+        aciertos = (origen(final, "exact") - origen(despues, "exact")) + (
+            origen(final, "semantic") - origen(despues, "semantic")
+        )
+        revisar(
+            segunda[0] == primera[0] and segunda[1] == primera[1],
+            "la frase repetida devuelve lo mismo",
+            f"{segunda[0]}: {', '.join(segunda[1]) or '(ninguna)'}",
+        )
+        revisar(
+            aciertos == 1,
+            "la frase repetida sale del caché",
+            f"{primera[2]:.0f} ms (LLM) contra {segunda[2]:.0f} ms (caché)",
+        )
+        return
+    revisar(False, "la frase repetida sale del caché", "las tres frases de prueba ya estaban cacheadas")
+
+
+def verificar_websocket(uri: str, base: str) -> None:
     print(f"\nWebSocket {uri}")
 
     for texto, tipo_esperado, glosa_esperada in FRASES:
@@ -186,22 +233,8 @@ def verificar_websocket(uri: str) -> None:
             ok = ok and glosa_esperada in glosas
         revisar(ok, f"{texto!r} -> {tipo_esperado}", f"{tipo}: {', '.join(glosas) or '(ninguna)'}")
 
-    # La caché es de proceso: se manda la misma frase dos veces. La primera
-    # paga el LLM; la segunda tiene que salir del caché semántico.
-    frase = "El trámite se hace con el documento de identidad."
-    primera = asyncio.run(una_frase(uri, frase))
-    segunda = asyncio.run(una_frase(uri, frase))
-    print(f"       (primera {primera[2]:.0f} ms, repetida {segunda[2]:.0f} ms)")
-    revisar(
-        segunda[0] == primera[0] and segunda[1] == primera[1],
-        "la frase repetida devuelve lo mismo",
-        f"{segunda[0]}: {', '.join(segunda[1]) or '(ninguna)'}",
-    )
-    revisar(
-        segunda[2] < primera[2] / 2,
-        "la frase repetida sale del caché",
-        f"{segunda[2]:.0f} ms contra {primera[2]:.0f} ms",
-    )
+    print("\nCaché semántica")
+    verificar_cache(base, uri)
 
 
 def main() -> int:
@@ -226,7 +259,7 @@ def main() -> int:
             verificar_base(url)
 
     verificar_backend(base)
-    verificar_websocket(argumentos.uri)
+    verificar_websocket(argumentos.uri, base)
 
     fallas = [nombre for ok, nombre, _ in resultados if not ok]
     print(f"\n{len(resultados) - len(fallas)}/{len(resultados)} comprobaciones pasaron")
