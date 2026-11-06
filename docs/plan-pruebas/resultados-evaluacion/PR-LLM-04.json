@@ -1,0 +1,11 @@
+{
+ "estado": "Pasa",
+ "obtenido": "0 respuestas vacías. Las 5 oraciones largas: 0 glosas fuera del catálogo. Las 10 con números: 14 glosas fuera del catálogo (dígitos), que es lo esperado; el sistema siguió y representó la frase. Tiempo mediano 743.3 ms.",
+ "evidencias": [
+  "PR-LLM-04_E_20261106_01.csv",
+  "PR-LLM-04_E_20261106_01.json"
+ ],
+ "fecha": "06/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-06)",
+ "ronda": "Ronda de evaluación"
+}

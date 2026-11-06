@@ -1,0 +1,11 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "66 frases en 302.9 s = 13.1 frases/min (11–14 por minuto en los cinco minutos completos; el minuto parcial suma 1), 66 completadas, 0 errores. Latencia texto → última oración: p50 1.4 ms, p95 747.5 ms (las frases repetidas aciertan en caché; el p95 es la primera vez de cada una).",
+ "evidencias": [
+  "PR-REN-09_E_20261106_01.csv",
+  "PR-REN-09_E_20261106_01.json"
+ ],
+ "fecha": "06/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-06)",
+ "ronda": "Ronda de evaluación"
+}

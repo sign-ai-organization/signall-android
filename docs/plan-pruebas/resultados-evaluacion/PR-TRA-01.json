@@ -1,0 +1,11 @@
+{
+ "estado": "Falla",
+ "obtenido": "6 aristas entre los cuatro componentes: 4 pasan por interfaz (OrchestratorService, SttServiceClient, NLPService, ValidatorService) y 2 se saltan la interfaz: normalize_gloss, importado desde validation por llm_client.py y por gloss_lexicon.py. La sesión ya no importa el Orchestrator concreto (se corrigió), pero el salto de normalize_gloss sigue y ahora está en dos archivos.",
+ "evidencias": [
+  "PR-TRA-01_E_20261106_01.csv",
+  "PR-TRA-01_E_20261106_01.json"
+ ],
+ "fecha": "06/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-06)",
+ "ronda": "Ronda de evaluación"
+}
