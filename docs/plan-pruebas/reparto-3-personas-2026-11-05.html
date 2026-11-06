@@ -1,0 +1,1604 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reparto de las 74 pruebas entre tres personas · SignAI</title>
+<style>
+  :root{
+    --bg:#F4F4F2; --surface:#FEFEFC; --soft:#E8E8E3; --border:#DEDED9;
+    --text:#171717; --muted:#6E6E69; --blue:#1C4CFC; --amber:#F2B84B;
+    --graphite:#121316; --ok:#1D6B45; --ok-bg:#E4F2EA;
+    --mal:#A31B1B; --mal-bg:#FBE6E4;
+    --rep:#8A5A0B; --rep-bg:#FBF0DC;
+    --blq:#4A4A46; --blq-bg:#EDEDE8;
+    --mono:ui-monospace,"Liberation Mono","SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font:16px/1.55 "Liberation Sans",Arial,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px 72px}
+
+  /* ── portada ─────────────────────────────────────────── */
+  .hero{background:var(--graphite);color:#F5F4F0;padding:56px 0 44px;margin-bottom:40px}
+  .hero .wrap{padding-bottom:0}
+  .kicker{margin:0 0 14px;font-size:13px;letter-spacing:.10em;text-transform:uppercase;color:#B9BBC2}
+  h1{margin:0 0 14px;font-size:clamp(30px,4vw,46px);line-height:1.1;letter-spacing:-.02em;max-width:22ch}
+  .lede{margin:0;max-width:74ch;font-size:18px;color:#D9DADE}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0;padding:0;list-style:none}
+  .chips li{border:1px solid #33363D;border-radius:999px;padding:6px 14px;font-size:13.5px;color:#D9DADE}
+  .chips b{color:#FFF;font-weight:700}
+  .herometa{margin:22px 0 0;font-size:13px;color:#A5A7AE;max-width:90ch}
+
+  /* ── estructura ──────────────────────────────────────── */
+  section{margin:0 0 56px}
+  h2{font-size:24px;line-height:1.25;margin:0 0 6px;letter-spacing:-.01em}
+  h2 .num{color:var(--muted);font-weight:400;margin-right:.5em}
+  .sub{margin:0 0 22px;color:var(--muted);max-width:86ch}
+  h3{font-size:17px;margin:0 0 8px}
+  p{margin:0 0 12px}
+  code{font-family:var(--mono);font-size:.88em;background:var(--soft);padding:1px 5px;border-radius:4px}
+  .hero code{background:#26272C;color:#E9EAED}
+  a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(28,76,252,.28)}
+  a:hover{border-bottom-color:var(--blue)}
+  .note{color:var(--muted);font-size:14px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 40px;padding:0;list-style:none}
+  .toc a{display:inline-block;padding:7px 13px;background:var(--surface);border:1px solid var(--border);
+    border-radius:8px;font-size:14px;color:var(--text)}
+  .toc a:hover{border-color:var(--text)}
+
+  /* ── tarjetas ────────────────────────────────────────── */
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .card.quiet{background:transparent;border-style:dashed}
+
+  .carril{position:relative;overflow:hidden}
+  .carril::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--muted)}
+  .carril.p1::before{background:var(--blue)}
+  .carril.p2::before{background:var(--amber)}
+  .carril.p3::before{background:var(--graphite)}
+  .carril h3{font-size:20px;margin:0 0 2px}
+  .carril .who{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 14px}
+  .big{font-size:38px;font-weight:700;line-height:1;letter-spacing:-.02em}
+  .big small{font-size:15px;font-weight:400;color:var(--muted);letter-spacing:0}
+  .kv{margin:14px 0 0;padding:0;list-style:none;font-size:14.5px}
+  .kv li{padding:9px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:7.6rem 1fr;gap:10px}
+  .kv li:first-child{border-top:0;padding-top:0}
+  .kv dt,.kv .k{color:var(--muted)}
+  .kv b{font-weight:700}
+
+  /* ── hallazgos ───────────────────────────────────────── */
+  .hall{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:grid;
+    grid-template-columns:44px 1fr;gap:4px 14px}
+  .hall .h{grid-column:1;grid-row:1;font:700 15px/44px var(--mono);color:var(--muted)}
+  .hall h3{grid-column:2;margin:0 0 4px}
+  .hall .body{grid-column:2}
+  .hall .body p{font-size:15px;margin:0 0 10px}
+  .hall .ev,.hall .prop{font-size:14px;color:var(--muted);margin:0 0 6px}
+  .hall .ev b,.hall .prop b{color:var(--text);font-weight:700}
+  .sev{display:inline-block;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;border-radius:5px;
+    padding:2px 8px;margin-left:8px;vertical-align:2px}
+  .sev.a{background:var(--mal-bg);color:var(--mal)}
+  .sev.m{background:var(--rep-bg);color:var(--rep)}
+  .sev.b{background:var(--ok-bg);color:var(--ok)}
+
+  .bien{background:transparent;border:1px dashed var(--border);border-radius:12px;padding:18px 20px;margin-top:16px}
+  .bien h3{margin:0 0 8px}
+  .bien ul{margin:0;padding-left:20px;font-size:15px}
+  .bien li{margin:0 0 5px}
+
+  /* ── tabla ───────────────────────────────────────────── */
+  .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+  .search{flex:1 1 280px;min-width:220px;position:relative}
+  .search input{width:100%;padding:10px 12px 10px 34px;border:1px solid var(--border);border-radius:9px;
+    background:var(--surface);font:inherit;font-size:15px;color:var(--text)}
+  .search input:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+  .search svg{position:absolute;left:11px;top:11px;width:16px;height:16px;fill:none;stroke:var(--muted);stroke-width:2}
+  .seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--surface)}
+  .seg button{border:0;background:transparent;padding:9px 13px;font:inherit;font-size:14px;color:var(--text);cursor:pointer;
+    border-right:1px solid var(--border)}
+  .seg button:last-child{border-right:0}
+  .seg button:hover{background:var(--soft)}
+  .seg button[aria-pressed="true"]{background:var(--graphite);color:#fff}
+  .count{font-size:14px;color:var(--muted);margin-left:auto}
+  .tabla-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:auto;max-height:78vh}
+  table{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
+  thead th{position:sticky;top:0;z-index:2;background:var(--surface);text-align:left;font-size:12px;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;
+    padding:12px 12px;border-bottom:1px solid var(--border);white-space:nowrap}
+  tbody td{padding:12px;border-bottom:1px solid var(--soft);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover td{background:#F7F7F4}
+  td.id{font-family:var(--mono);font-size:12.5px;white-space:nowrap;color:var(--text);font-weight:700}
+  .nombre{display:block;font-weight:600;line-height:1.35}
+  .tipo{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .pill{display:inline-block;min-width:2.1rem;text-align:center;border-radius:5px;padding:2px 6px;
+    font:700 12px/1.5 var(--mono);color:#fff}
+  .pill-p1{background:var(--blue)} .pill-p2{background:#9A6A0C} .pill-p3{background:var(--graphite)}
+  .perfil{display:inline-block;font-size:12px;font-weight:700;border-radius:5px;padding:2px 7px;white-space:nowrap}
+  .perfil-local{background:var(--soft);color:#3B3B38}
+  .perfil-stt{background:#E7E9FB;color:#26307A}
+  .perfil-canonico{background:#EDEFF2;color:#2B2F36}
+  .perfil-movil{background:#E4F2EA;color:var(--ok)}
+  .perfil-personas{background:var(--rep-bg);color:var(--rep)}
+  .need{display:block;color:var(--muted);font-size:12.5px;margin-top:5px;line-height:1.4}
+  .need .nota{display:block;margin-top:3px;color:#57574F}
+  .dep{font-family:var(--mono);font-size:12px;white-space:nowrap;color:var(--muted)}
+  .estado{display:inline-block;font-size:12px;font-weight:700;border-radius:5px;padding:2px 8px;white-space:nowrap}
+  .estado-ok{background:var(--ok-bg);color:var(--ok)}
+  .estado-mal{background:var(--mal-bg);color:var(--mal)}
+  .estado-rep{background:var(--rep-bg);color:var(--rep)}
+  .estado-blq{background:var(--blq-bg);color:var(--blq)}
+  td.datos{color:#3A3A36;font-size:13px;max-width:22rem}
+  tr.hide{display:none}
+
+  /* ── tablitas ────────────────────────────────────────── */
+  table.mini{font-size:14px}
+  table.mini th,table.mini td{padding:8px 10px;border-bottom:1px solid var(--soft)}
+  table.mini th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:transparent}
+  table.mini td.num{text-align:center;font-family:var(--mono);font-size:13px;width:4.5rem}
+  table.mini tr.total td{font-weight:700;border-top:2px solid var(--border);border-bottom:0}
+  table.mini tr:nth-child(even) td{background:#FAFAF7}
+
+  /* ── reglas y código ─────────────────────────────────── */
+  ol.reglas{counter-reset:r;margin:0;padding:0;list-style:none}
+  ol.reglas li{counter-increment:r;position:relative;padding:13px 0 13px 46px;border-top:1px solid var(--border);font-size:15px}
+  ol.reglas li:first-child{border-top:0}
+  ol.reglas li::before{content:counter(r,decimal-leading-zero);position:absolute;left:0;top:13px;
+    font:700 13px var(--mono);color:var(--blue)}
+  ol.reglas b{font-weight:700}
+  .pre{position:relative;background:var(--graphite);color:#E9EAED;border-radius:12px;padding:46px 20px 20px;
+    font:13px/1.6 var(--mono);overflow:auto;white-space:pre}
+  .pre .copy{position:absolute;top:10px;right:10px;background:#26272C;color:#E9EAED;border:1px solid #3A3C43;
+    border-radius:7px;padding:6px 11px;font:600 12px/1 inherit;cursor:pointer}
+  .pre .copy:hover{background:#33353C}
+  .pre .c{color:#8E939E}
+  .pre .k{color:#F2B84B}
+  .doscol{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;align-items:start}
+
+  /* ── decisiones ─────────────────────────────────────── */
+  .dec{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .dec h3{margin:0 0 10px;font-size:17px}
+  .dec .op{font-size:14.5px;margin:0 0 10px;padding-left:0}
+  .dec .op b{display:inline-block}
+  .dec .gain{color:var(--ok)} .dec .loss{color:var(--mal)}
+  .dec .rec{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)}
+  .dec .rec b{color:var(--text)}
+
+  footer{border-top:1px solid var(--border);padding:26px 0 0;color:var(--muted);font-size:13.5px}
+  footer p{max-width:95ch}
+
+  @media (max-width:1000px){
+    .g3{grid-template-columns:1fr}
+    .g2,.doscol{grid-template-columns:1fr}
+    .tabla-wrap{max-height:none}
+  }
+  @media print{
+    body{background:#fff}
+    .hero{background:#fff;color:#000;border-bottom:2px solid #000}
+    .hero .lede,.herometa,.chips li,.kicker{color:#000}
+    .chips li{border-color:#999}
+    .tools,.toc{display:none}
+    .tabla-wrap{max-height:none;overflow:visible;border:0}
+    tr.hide{display:table-row}
+    thead th{position:static}
+    section{page-break-inside:auto}
+    .card,.hall,.dec{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">SignAI · Plan de pruebas · documento de trabajo</p>
+    <h1>Reparto de las 74 pruebas entre tres personas</h1>
+    <p class="lede">Revisión del plan de pruebas y propuesta para que tres personas avancen en paralelo
+      sin que el resultado dependa del computador de cada una, usando el mismo stack de herramientas
+      para que la IA corra las pruebas.</p>
+    <ul class="chips">
+      <li><b>74</b> pruebas</li>
+      <li><b>14</b> bloques</li>
+      <li><b>3</b> carriles</li>
+      <li><b>2</b> servidores: canónico y laboratorio</li>
+      <li><b>6</b> pruebas de personas</li>
+    </ul>
+    <p class="herometa">Fecha: 5 de noviembre de 2026. Fuente de las fichas:
+      <code>../sign-ai-docs/latex/plan-pruebas/main.tex</code> (sección 9, 74 fichas).
+      Estado de cada prueba: <code>resultados-consolidados.xlsx</code>, ronda de evaluación del 5/11.
+      Bitácoras y arneses: <code>docs/plan-pruebas/</code> de este repositorio.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <ul class="toc">
+    <li><a href="#revision">1 · Revisión</a></li>
+    <li><a href="#reparto">2 · Reparto</a></li>
+    <li><a href="#tabla">3 · Las 74 pruebas</a></li>
+    <li><a href="#reglas">4 · Cómo se corre</a></li>
+    <li><a href="#ambiente">5 · El ambiente</a></li>
+    <li><a href="#stack">6 · El stack</a></li>
+    <li><a href="#decisiones">7 · Decisiones</a></li>
+  </ul>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <section id="resumen">
+    <h2>En una página</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Lo que se encontró al revisar el plan</h3>
+        <p style="font-size:15px">El plan está completo y es coherente: 74 fichas, 74 filas en el libro,
+          86 requerimientos con prueba o inspección, cuatro estados definidos y 24 conjuntos de datos
+          con código. Lo que no dice es <b>quién corre cada prueba</b> ni <b>en qué máquina</b>, y las
+          precondiciones que más pesan son de estado (caché vacía, seña de reserva apagada, modelo
+          elegido), no de hardware. Esas son las tres cosas que resuelve este documento.</p>
+      </div>
+      <div class="card">
+        <h3>Lo que se propone</h3>
+        <p style="font-size:15px">Tres carriles de <b>23</b>, <b>27</b> y <b>24</b> pruebas,
+          cada uno con un recurso exclusivo para que nadie se pise, y una regla que quita la dependencia
+          del equipo: <b>los números solo se publican desde el servidor canónico</b> y los cortes se hacen en
+          otro servidor; lo que no produce números se puede correr en cualquier PC y se etiqueta. 11 pruebas corren sin servidor
+          y 6 no dependen de ninguna máquina.</p>
+      </div>
+      <div class="card">
+        <h3>El riesgo más grande no es técnico</h3>
+        <p style="font-size:15px">Después de dos rondas, las <b>6 pruebas de personas</b> siguen sin un solo
+          dato: están bloqueadas desde el primer día por el supuesto S-05 (conseguir intérpretes y usuarios).
+          El objetivo específico OE5 depende de ellas, así que el carril de personas tiene que empezar
+          primero y no al final.</p>
+      </div>
+      <div class="card">
+        <h3>Cómo se evita que cada equipo mida otra cosa</h3>
+        <p style="font-size:15px">Un solo artefacto de código (los tres commits y el hash del APK), un solo
+          juego de datos, un solo libro de resultados y un <b>sello del ambiente</b> pegado en cada corrida.
+          Ya pasó lo que pasa sin eso: la ronda del 4/11 midió 24 pruebas con un modelo local sin saberlo y
+          hubo que repetirlas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <section id="revision">
+    <h2><span class="num">1</span>Lo que dice la revisión</h2>
+    <p class="sub">Siete hallazgos, cada uno con la evidencia y con lo que se propone. Los tres primeros son
+      los que impiden repartir el trabajo tal como está el plan hoy.</p>
+
+    <div class="grid" style="gap:14px">
+      <div class="hall">
+        <span class="h">H1</span>
+        <h3>La ficha no tiene responsable ni ambiente<span class="sev a">bloquea el reparto</span></h3>
+        <div class="body">
+          <p>El plan define 12 campos por prueba (ID, nombre, bloque, tipo, objetivo, trazabilidad, entorno,
+            datos, procedimiento, métrica, criterio y evidencia) y ninguno dice quién la corre ni en qué
+            máquina. El libro de resultados tiene 17 columnas y la única que habla de personas es
+            «Ejecutor», que se llena después, no antes.</p>
+          <p class="ev"><b>Evidencia:</b> <code>main.tex</code> tabla <code>tab:ficha</code> (12 campos) y
+            <code>docs/plan-pruebas/plantilla-resultados.xlsx</code> (17 columnas).</p>
+          <p class="prop"><b>Se propone:</b> este anexo como reparto vigente y, si el owner lo aprueba, una
+            columna «Responsable» y otra «Perfil de entorno» en la plantilla.</p>
+        </div>
+      </div>
+
+      <div class="hall">
+        <span class="h">H2</span>
+        <h3>Los números no están atados a un ambiente<span class="sev a">bloquea el reparto</span></h3>
+        <div class="body">
+          <p>Las 9 pruebas de rendimiento y las comparaciones de alternativas (STT-04/05, CAC-01/02,
+            LLM-01/03) publican cifras que solo existen en la máquina donde se midieron. La ficha dice
+            «se reporta», pero no dice dónde. Tres computadores distintos son tres sistemas distintos.</p>
+          <p class="ev"><b>Evidencia:</b> bloque REN completo, y la ronda diagnóstica del 4/11, que midió con
+            <code>qwen3:4b-instruct</code> por un <code>.env.local</code> que nadie revisó: hubo que repetir
+            24 pruebas (<code>PLAN-2026-11-05-recuperacion-y-ronda-oficial.md</code>, §2).</p>
+          <p class="prop"><b>Se propone:</b> un servidor canónico para todo lo que produce números, un
+            laboratorio aparte para los cortes y un sello obligatorio por corrida (§5).</p>
+        </div>
+      </div>
+
+      <div class="hall">
+        <span class="h">H3</span>
+        <h3>Las precondiciones críticas son de estado y no se comprueban<span class="sev a">bloquea el reparto</span></h3>
+        <div class="body">
+          <p>«Caché vacía al empezar» aparece en 7 fichas, «seña de reserva desactivada» en 12 y «modelo
+            elegido en…» en 8. Ninguna dice cómo se verifica, y son justamente las que cambian de una
+            máquina a otra y de una corrida a la siguiente.</p>
+          <p class="ev"><b>Evidencia:</b> campos «Entorno y precondiciones» de SEG-02, CAC-03/04/05/06,
+            VAL-03, INT-06, PER-01, SEC-04; y el preflight, que se guardó una sola vez —el 5/11—
+            en <code>evidencias/PREFLIGHT/</code>.</p>
+          <p class="prop"><b>Se propone:</b> un preflight de once datos como condición de entrada de cada
+            turno, con su salida guardada como evidencia (§5).</p>
+        </div>
+      </div>
+
+      <div class="hall">
+        <span class="h">H4</span>
+        <h3>Las pruebas de personas siguen sin datos<span class="sev a">riesgo de la tesis</span></h3>
+        <div class="body">
+          <p>Las 6 pruebas de PER están bloqueadas por el supuesto S-05 («hay intérpretes disponibles»).
+            Son las únicas que sostienen el objetivo OE5 y la comprensión de las señas (RNF-DES-08). Llevan
+            dos rondas sin ejecutarse y no dependen de ninguna máquina: dependen de calendario y de personas.</p>
+          <p class="ev"><b>Evidencia:</b> <code>ANALISIS-2026-11-05.md</code> (15 bloqueadas de 74) y §4.3
+            del plan (supuestos).</p>
+          <p class="prop"><b>Se propone:</b> que el carril de personas arranque en la semana 1 y que los
+            materiales (videos de CT-02 y salida de INT-02) se generen antes de convocar.</p>
+        </div>
+      </div>
+
+      <div class="hall">
+        <span class="h">H5</span>
+        <h3>Hay cadenas que no se pueden partir entre personas<span class="sev m">limita el reparto</span></h3>
+        <div class="body">
+          <p>Cinco pruebas eligen algo que las siguientes usan: SEG-03 antes de SEG-04, HUE-01 antes de
+            HUE-02, CAC-01 y CAC-02 antes de CAC-03/04, LLM-01 antes de LLM-02 a LLM-05, y STT-04 antes de
+            STT-05. Las fichas lo dicen con la fórmula «el modelo elegido en…».</p>
+          <p class="ev"><b>Evidencia:</b> campo «Entorno y precondiciones» de esas 14 fichas.</p>
+          <p class="prop"><b>Se propone:</b> el bloque es la unidad mínima de reparto; las cadenas quedan
+            dentro de un solo carril y en orden.</p>
+        </div>
+      </div>
+
+      <div class="hall">
+        <span class="h">H6</span>
+        <h3>Los datos de prueba no están fijados por hash<span class="sev m">se puede contaminar</span></h3>
+        <div class="body">
+          <p>Los 24 conjuntos están descritos en el anexo C, pero solo los audios viven en una carpeta con
+            manifiesto. Si alguien vuelve a grabar AU-01 o reescribe FR-01, los WER y las exactitudes dejan
+            de ser comparables con las rondas anteriores y nada lo advierte.</p>
+          <p class="ev"><b>Evidencia:</b> §8 y anexo C del plan; <code>../data/audios/MANIFIESTO.md</code>;
+            <code>docs/AUDIOS-QUE-GRABAN-ELLOS.md</code> (cuatro hablantes y al menos tres formas de grabar).</p>
+          <p class="prop"><b>Se propone:</b> hash de cada conjunto en el sello de la corrida.</p>
+        </div>
+      </div>
+
+      <div class="hall">
+        <span class="h">H7</span>
+        <h3>La versión del sistema se registra en la bitácora, no en el libro<span class="sev m">se puede contaminar</span></h3>
+        <div class="body">
+          <p>El plan exige dos veces que cada resultado registre la versión usada (§4 y §6.2), pero el libro
+            no tiene columna de versión: el commit quedó en los `.md` de la ronda. Eso hace que una fila
+            copiada de otra ronda no se pueda distinguir de una de esta.</p>
+          <p class="ev"><b>Evidencia:</b> <code>plantilla-resultados.xlsx</code>, columnas 1 a 17.</p>
+          <p class="prop"><b>Se propone:</b> el sello como bloque de texto en «Resultado obtenido» o una
+            columna nueva; en este documento se adopta el sello (§5).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bien">
+      <h3>Lo que está bien y no hay que tocar</h3>
+      <ul>
+        <li><b>Los conteos cuadran:</b> 74 fichas en el plan, 74 filas en el libro, 14 bloques, 9 de
+          rendimiento, 6 de personas. Nada está anunciado y sin ficha.</li>
+        <li><b>La trazabilidad está cerrada:</b> 86 requerimientos, 75 verificados por prueba y 11 por
+          inspección, todos con al menos una prueba asociada.</li>
+        <li><b>Los estados no se confunden:</b> «Bloqueada» (no se pudo ejecutar) es distinta de «Falla»,
+          y las pruebas de caracterización usan «Se reporta» sin juicio.</li>
+        <li><b>El reparto sin solape ya se probó:</b> la ronda del 5/11 corrió cinco carriles (dispositivo,
+          texto, audio, estado compartido y estático) sin que se pisaran. Este documento conserva esa
+          lógica y la baja a tres personas.</li>
+        <li><b>La evidencia tiene convención:</b> <code>PR-BLOQUE-NN_R_AAAAMMDD_nn</code>, una carpeta por
+          bloque, sin sobrescribir. Se reutiliza tal cual.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <section id="reparto">
+    <h2><span class="num">2</span>El reparto en tres carriles</h2>
+    <p class="sub">Cada carril tiene un recurso que se pide por turno: el canónico lo comparten P1 y P2, el
+      laboratorio es de P2 y el teléfono es de P3. Nadie toca el recurso de otro sin turno, y esa es la regla que
+      evita que dos personas se pisen. Las cadenas de la H5 quedan dentro de un carril.</p>
+
+    <div class="grid g3">
+      <div class="card carril p1">
+        <p class="who">Carril 1</p>
+        <h3>Texto y estático</h3>
+        <p class="big">23 <small>pruebas</small></p>
+        <ul class="kv">
+          <li><span class="k">Recurso</span><span>El servidor canónico, sin reiniciarlo.</span></li>
+          <li><span class="k">Dónde corre</span><span>9 de sus pruebas corren sin servidor; 12 piden el canónico y 2 el teléfono.</span></li>
+          <li><span class="k">Bloques</span><span>LLM, CAC, HUE, SEG, VAL, TRA, e INT-01, REN-08/09, AVT-06.</span></li>
+          <li><span class="k">Entrega</span><span>El modelo y el umbral elegidos, que usan los otros dos carriles.</span></li>
+          <li><span class="k">No hace</span><span>No reinicia contenedores, no vacía la caché, no cambia el modelo del STT.</span></li>
+        </ul>
+      </div>
+
+      <div class="card carril p2">
+        <p class="who">Carril 2 · cortes y audio</p>
+        <h3>Audio y estado compartido</h3>
+        <p class="big">27 <small>pruebas</small></p>
+        <ul class="kv">
+          <li><span class="k">Recurso</span><span>El laboratorio: reinicios, TLS, clon y base. Y el STT del canónico cuando mide audio.</span></li>
+          <li><span class="k">Dónde corre</span><span>2 sin servidor; 6 solo con el STT del canónico; 13 con el backend y 6 con el teléfono.</span></li>
+          <li><span class="k">Bloques</span><span>STT, RES y SEC completos, y las ablaciones de SEG y CAC, REN-01 a 06, TRA-03.</span></li>
+          <li><span class="k">Entrega</span><span>El WER, los tiempos del STT y las rupturas controladas.</span></li>
+          <li><span class="k">No hace</span><span>No corta el servidor canónico: los cortes van en el laboratorio.</span></li>
+        </ul>
+      </div>
+
+      <div class="card carril p3">
+        <p class="who">Carril 3</p>
+        <h3>Dispositivo y personas</h3>
+        <p class="big">24 <small>pruebas</small></p>
+        <ul class="kv">
+          <li><span class="k">Recurso</span><span>El teléfono de referencia y los formularios. No hospeda nada.</span></li>
+          <li><span class="k">Dónde corre</span><span>18 con el canónico y el teléfono; 6 con personas. Nada se mide en su PC.</span></li>
+          <li><span class="k">Bloques</span><span>AND y PER completos, AVT, INT-02 a 06, REN-07.</span></li>
+          <li><span class="k">Entrega</span><span>Los videos de las 50 señas y la evidencia de uso real.</span></li>
+          <li><span class="k">No hace</span><span>No levanta backend ni STT, no usa emulador y no mide números del servidor.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>Conteo por bloque y por carril</h3>
+      <p class="note" style="margin-bottom:10px">Suma 74. Ninguna prueba queda sin dueño y ninguna tiene dos.</p>
+      <table class="mini">
+        <thead><tr><th>Bloque</th><th style="text-align:center">Total</th><th style="text-align:center">P1</th><th style="text-align:center">P2</th><th style="text-align:center">P3</th></tr></thead>
+        <tbody>
+          <tr><td><code>STT</code> Transcripción</td><td class='num'>5</td><td class='num'>—</td><td class='num'>5</td><td class='num'>—</td></tr>
+<tr><td><code>SEG</code> Segmentador</td><td class='num'>4</td><td class='num'>2</td><td class='num'>2</td><td class='num'>—</td></tr>
+<tr><td><code>HUE</code> Huella gramatical</td><td class='num'>3</td><td class='num'>3</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td><code>CAC</code> Caché semántica</td><td class='num'>6</td><td class='num'>4</td><td class='num'>2</td><td class='num'>—</td></tr>
+<tr><td><code>LLM</code> Cliente del LLM</td><td class='num'>5</td><td class='num'>5</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td><code>VAL</code> Validador y catálogo</td><td class='num'>3</td><td class='num'>3</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td><code>INT</code> Integración y extremo a extremo</td><td class='num'>6</td><td class='num'>1</td><td class='num'>—</td><td class='num'>5</td></tr>
+<tr><td><code>AND</code> Aplicación Android</td><td class='num'>6</td><td class='num'>—</td><td class='num'>—</td><td class='num'>6</td></tr>
+<tr><td><code>AVT</code> Avatar</td><td class='num'>7</td><td class='num'>1</td><td class='num'>—</td><td class='num'>6</td></tr>
+<tr><td><code>REN</code> Rendimiento y tiempos</td><td class='num'>9</td><td class='num'>2</td><td class='num'>6</td><td class='num'>1</td></tr>
+<tr><td><code>RES</code> Resiliencia</td><td class='num'>7</td><td class='num'>—</td><td class='num'>7</td><td class='num'>—</td></tr>
+<tr><td><code>SEC</code> Seguridad</td><td class='num'>4</td><td class='num'>—</td><td class='num'>4</td><td class='num'>—</td></tr>
+<tr><td><code>TRA</code> Transversales</td><td class='num'>3</td><td class='num'>2</td><td class='num'>1</td><td class='num'>—</td></tr>
+<tr><td><code>PER</code> Evaluación con personas</td><td class='num'>6</td><td class='num'>—</td><td class='num'>—</td><td class='num'>6</td></tr>
+<tr class='total'><td>Total</td><td class='num'>74</td><td class='num'>23</td><td class='num'>27</td><td class='num'>24</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card quiet" style="margin-top:16px">
+      <h3>El orden de las oleadas</h3>
+      <ol class="reglas" style="margin-top:6px">
+        <li><b>Oleada 1, en paralelo:</b> los tres arrancan juntos. P1 mide en el canónico, P3 trabaja con el
+          teléfono y P2 corre sus cortes en el laboratorio. Ya no hay que esperar a que el otro termine.</li>
+        <li><b>Oleada 2, el turno del canónico:</b> P2 mide su parte de audio (STT-04/05 y REN-03/04/06/09)
+          en el canónico y P1 para mientras dura. Es el único turno que se comparte, y tiene hora de inicio y
+          de fin.</li>
+        <li><b>Oleada 3, cierre:</b> SEC-01 con el build <code>demo</code>, y al terminar se reinstala
+          <code>debug</code>. Es el único momento en que se reemplaza la aplicación instalada.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <section id="tabla">
+    <h2><span class="num">3</span>Las 74 pruebas</h2>
+    <p class="sub">Ordenadas por carril y después por bloque. «Perfil» es el mínimo que pide la ficha:
+      <b>Local</b> = sin servidor; <b>Solo STT</b> = el servicio de transcripción y la GPU; <b>Canónico</b> =
+      el backend de pruebas; <b>Canónico + móvil</b> = además el teléfono; <b>Personas</b> = formularios.
+      «Estado 5/11» es la última ronda ejecutada, no una predicción.</p>
+
+    <div class="tools">
+      <div class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Buscar por ID, nombre, dato o requisito…" aria-label="Buscar pruebas">
+      </div>
+      <div class="seg" role="group" aria-label="Filtrar por carril">
+        <button data-carril="todos" aria-pressed="true">Todos</button>
+        <button data-carril="P1" aria-pressed="false">P1</button>
+        <button data-carril="P2" aria-pressed="false">P2</button>
+        <button data-carril="P3" aria-pressed="false">P3</button>
+      </div>
+      <div class="count" id="count">74 de 74</div>
+    </div>
+
+    <div class="tabla-wrap">
+      <table id="tabla-pruebas">
+        <colgroup>
+          <col style="width:7.6rem"><col style="width:19rem"><col style="width:4.2rem">
+          <col style="width:13.5rem"><col style="width:6rem"><col style="width:18rem"><col style="width:5.8rem">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Prueba</th>
+            <th scope="col">Carril</th>
+            <th scope="col">Perfil y qué necesita</th>
+            <th scope="col">Depende de</th>
+            <th scope="col">Datos de entrada</th>
+            <th scope="col">Estado 5/11</th>
+          </tr>
+        </thead>
+        <tbody>
+<tr data-carril="P1" data-perfil="local" data-estado="Se reporta">
+      <td class="id">PR-SEG-01</td>
+      <td><span class="nombre">Exactitud del Segmentador</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas.</span></td>
+      <td class="dep">—</td>
+      <td>Los 200 casos de CO-01 (191 de uso corriente y 9 límite) y las transcripciones de los 10 textos de AU-01, con su división de AU-05.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="local" data-estado="Bloqueada">
+      <td class="id">PR-SEG-03</td>
+      <td><span class="nombre">Alternativas de Segmentación</span><span class="tipo">Comparación de alternativas</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas.</span></td>
+      <td class="dep">—</td>
+      <td>Los 191 casos de uso corriente de CO-01.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="local" data-estado="Bloqueada">
+      <td class="id">PR-HUE-01</td>
+      <td><span class="nombre">Alternativas para el Tipo de Frase</span><span class="tipo">Comparación de alternativas</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas.</span></td>
+      <td class="dep">—</td>
+      <td>Las 100 oraciones de CO-02, con y sin puntuación (200 entradas).</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="local" data-estado="Bloqueada">
+      <td class="id">PR-HUE-02</td>
+      <td><span class="nombre">Reglas de la Huella</span><span class="tipo">Ablación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas.</span></td>
+      <td class="dep">PR-HUE-01</td>
+      <td>Las 100 oraciones de CO-02, con y sin puntuación (200 entradas).</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="local" data-estado="Se reporta">
+      <td class="id">PR-HUE-03</td>
+      <td><span class="nombre">Exactitud del Tipo de Frase</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas.</span></td>
+      <td class="dep">—</td>
+      <td>Las 100 oraciones de CO-02, con puntuación y sin ella (200 entradas).</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Bloqueada">
+      <td class="id">PR-CAC-01</td>
+      <td><span class="nombre">Alternativas de Embeddings</span><span class="tipo">Comparación de alternativas</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Las 30 variantes de paráfrasis de FR-03, que deben acertar, y las 30 variantes trampa de FR-04, que no deben acertar.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-CAC-02</td>
+      <td><span class="nombre">Calibración del Umbral</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">PR-CAC-01</td>
+      <td>Las 30 variantes de FR-03 y las 30 de FR-04, con las 30 frases de FR-01 cargadas en la caché.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-CAC-03</td>
+      <td><span class="nombre">Aciertos de la Caché</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">PR-CAC-02</td>
+      <td>Las 30 frases de FR-01 y las 30 variantes de FR-03: 10 de formato, 10 de sinónimos y 10 de orden.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-CAC-04</td>
+      <td><span class="nombre">Falsos Aciertos</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">PR-CAC-02</td>
+      <td>Las 30 frases de FR-01 y las 30 variantes de FR-04: 10 con negación, 10 con una palabra distinta y 10 con otra persona.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-LLM-01</td>
+      <td><span class="nombre">Alternativas de LLM</span><span class="tipo">Comparación de alternativas</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Las 30 frases de FR-01.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Falla">
+      <td class="id">PR-LLM-02</td>
+      <td><span class="nombre">Formato de Salida</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">PR-LLM-01</td>
+      <td>Las 30 frases de FR-01 y las 10 respuestas fabricadas de CO-04.</td>
+      <td><span class="estado estado-mal">Falla</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-LLM-03</td>
+      <td><span class="nombre">Consistencia</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">PR-LLM-01</td>
+      <td>Las 30 frases de FR-01, cinco veces cada una.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-LLM-04</td>
+      <td><span class="nombre">Entradas Problemáticas</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">PR-LLM-01</td>
+      <td>Las 15 frases de FR-06: 5 muy largas y 10 con números.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-LLM-05</td>
+      <td><span class="nombre">Inyección de Instrucciones</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">PR-LLM-01</td>
+      <td>Las 18 frases con instrucciones de FR-07.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="local" data-estado="Pasa">
+      <td class="id">PR-VAL-01</td>
+      <td><span class="nombre">Validación de Glosas Contra el Catálogo</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas.</span></td>
+      <td class="dep">—</td>
+      <td>Las 70 glosas de CO-03: 50 reales, 10 inexistentes y 10 variantes.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Falla">
+      <td class="id">PR-VAL-02</td>
+      <td><span class="nombre">Catálogo Cargado y Completo</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>El catálogo de 50 señas y las 30 frases de FR-01.</td>
+      <td><span class="estado estado-mal">Falla</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-VAL-03</td>
+      <td><span class="nombre">Agregar Una Seña sin Tocar Código</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Se quita y se devuelve HAMBRE; después se reinicia el backend.</span></span></td>
+      <td class="dep">—</td>
+      <td>La seña de CT-01 (HAMBRE), con su fila del catálogo y su animación, y la frase FR-01-007 que la usa.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-INT-01</td>
+      <td><span class="nombre">Contrato Entre Componentes</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de una oración de FR-01-C, una de varias oraciones de FR-01-D y un audio de AU-01.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="local" data-estado="Se reporta">
+      <td class="id">PR-AVT-06</td>
+      <td><span class="nombre">Peso de las Animaciones</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas. <span class="nota">Solo el APK y las animaciones. No hace falta el teléfono.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 50 animaciones y el instalador de la aplicación.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="movil" data-estado="Se reporta">
+      <td class="id">PR-REN-08</td>
+      <td><span class="nombre">Datos Móviles</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A, por voz (con su audio de AU-01) y por texto.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-REN-09</td>
+      <td><span class="nombre">Tasa de Procesamiento</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A con sus audios de AU-01, repetidas en orden durante 5 minutos.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="local" data-estado="Falla">
+      <td class="id">PR-TRA-01</td>
+      <td><span class="nombre">Separación de Componentes</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas.</span></td>
+      <td class="dep">—</td>
+      <td>El código del backend.</td>
+      <td><span class="estado estado-mal">Falla</span></td>
+    </tr>
+<tr data-carril="P1" data-perfil="local" data-estado="Pasa">
+      <td class="id">PR-TRA-02</td>
+      <td><span class="nombre">Análisis Estático</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas.</span></td>
+      <td class="dep">—</td>
+      <td>El código del backend y el de la aplicación.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="stt" data-estado="Se reporta">
+      <td class="id">PR-STT-01</td>
+      <td><span class="nombre">Precisión de la Transcripción</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-stt">Solo STT</span><span class="need">El STT arriba y la GPU libre.</span></td>
+      <td class="dep">—</td>
+      <td>Los 60 audios de AU-01: 40 en silencio y 20 con ruido moderado.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="stt" data-estado="Pasa">
+      <td class="id">PR-STT-02</td>
+      <td><span class="nombre">Cierre de Frase y Transcripciones Parciales</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-stt">Solo STT</span><span class="need">El STT arriba y la GPU libre.</span></td>
+      <td class="dep">—</td>
+      <td>Los 10 audios de AU-02: 3 frases cortas con pausa, 3 de más de 8 segundos sin pausas, 2 de más de 8 segundos con pausas y 2 con mensaje de fin.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="stt" data-estado="Falla">
+      <td class="id">PR-STT-03</td>
+      <td><span class="nombre">Filtros de No Voz</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-stt">Solo STT</span><span class="need">El STT arriba y la GPU libre.</span></td>
+      <td class="dep">—</td>
+      <td>Los 8 audios sin voz de AU-03, de 20 segundos.</td>
+      <td><span class="estado estado-mal">Falla</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="stt" data-estado="Se reporta">
+      <td class="id">PR-STT-04</td>
+      <td><span class="nombre">Alternativas de Whisper</span><span class="tipo">Comparación de alternativas</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-stt">Solo STT</span><span class="need">El STT arriba y la GPU libre. <span class="nota">Cambia el tamaño de Whisper: nadie más puede usar la GPU.</span></span></td>
+      <td class="dep">—</td>
+      <td>Los 60 audios de AU-01.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="stt" data-estado="Se reporta">
+      <td class="id">PR-STT-05</td>
+      <td><span class="nombre">Alternativas del Umbral de Ruido</span><span class="tipo">Comparación de alternativas</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-stt">Solo STT</span><span class="need">El STT arriba y la GPU libre. <span class="nota">Cambia el umbral de ruido, con el modelo elegido en la 04.</span></span></td>
+      <td class="dep">PR-STT-04</td>
+      <td>Los 60 audios de AU-01 (voz) y los 8 audios sin voz de AU-03.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-SEG-02</td>
+      <td><span class="nombre">Con y sin Segmentador</span><span class="tipo">Ablación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Las 30 frases de FR-01 y las 10 frases de FR-05, que recombinan sus oraciones.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-SEG-04</td>
+      <td><span class="nombre">Reglas del Segmentador</span><span class="tipo">Ablación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">PR-SEG-03</td>
+      <td>Las 30 frases de FR-01 y las 10 frases de FR-05, que recombinan sus oraciones.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Falla">
+      <td class="id">PR-CAC-05</td>
+      <td><span class="nombre">Qué Guarda la Caché</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo. <span class="nota">Necesita una falla provocada del LLM.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-10 (13 envíos, 3 de ellas repetidas) y una falla provocada del LLM.</td>
+      <td><span class="estado estado-mal">Falla</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-CAC-06</td>
+      <td><span class="nombre">Aporte de la Caché</span><span class="tipo">Ablación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>El lote de sesión FR-09, de 60 frases.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="stt" data-estado="Se reporta">
+      <td class="id">PR-REN-01</td>
+      <td><span class="nombre">Latencia de la Transcripción</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-stt">Solo STT</span><span class="need">El STT arriba y la GPU libre.</span></td>
+      <td class="dep">—</td>
+      <td>Los audios de AU-01 de las 10 frases de FR-01-A, cada uno 5 veces.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-REN-02</td>
+      <td><span class="nombre">Latencia del Procesamiento</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-B, con oraciones cortas, medias y largas, cada una 5 veces por situación.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="movil" data-estado="Se reporta">
+      <td class="id">PR-REN-03</td>
+      <td><span class="nombre">Latencia de Extremo a Extremo</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A, en texto y con su audio de AU-01, cada una 5 veces por situación.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="movil" data-estado="Se reporta">
+      <td class="id">PR-REN-04</td>
+      <td><span class="nombre">Arranque en Frío</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">El sistema apagado al empezar.</span></span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C por situación, repetida 3 veces.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-REN-05</td>
+      <td><span class="nombre">Recursos de Una Sesión</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo. <span class="nota">Mide GPU y CPU en el servidor.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 30 frases de FR-01 y los audios de AU-01 de las 10 frases de FR-01-A.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+      <td class="id">PR-REN-06</td>
+      <td><span class="nombre">Sesiones Simultáneas</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo. <span class="nota">Dos o tres sesiones al mismo tiempo.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A por sesión, con su audio de AU-01.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-RES-01</td>
+      <td><span class="nombre">Pérdida de Conexión del Cliente</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C por cada momento del corte.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-RES-02</td>
+      <td><span class="nombre">Falla del LLM</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Dos frases de FR-01-C: una guardada en la caché y una nueva.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="movil" data-estado="Falla">
+      <td class="id">PR-RES-03</td>
+      <td><span class="nombre">Falla de la Transcripción</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-A, hablada con su audio de AU-01 y escrita (la misma frase en los dos formatos).</td>
+      <td><span class="estado estado-mal">Falla</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-RES-04</td>
+      <td><span class="nombre">Falla de la Base de Datos</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C por situación.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Bloqueada">
+      <td class="id">PR-RES-05</td>
+      <td><span class="nombre">Error Interno de Procesamiento</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de una oración de FR-01-C y una de varias oraciones de FR-01-D.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-RES-06</td>
+      <td><span class="nombre">Ráfaga de Frases en Una Sesión</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo. <span class="nota">Un audio de 73 segundos con 20 frases.</span></span></td>
+      <td class="dep">—</td>
+      <td>El audio de AU-04: un audio largo de 73 segundos aproximados con 20 frases cortas.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-RES-07</td>
+      <td><span class="nombre">Reinicio del Backend con Clientes Conectados</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Se reinicia el backend con clientes conectados.</span></span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-SEC-01</td>
+      <td><span class="nombre">Cifrado del Canal</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Build <code>demo</code> y proxy TLS. Al terminar se reinstala <code>debug</code>.</span></span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C, hablada y escrita.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-SEC-02</td>
+      <td><span class="nombre">Mensajes Inválidos</span><span class="tipo">Robustez</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo.</span></td>
+      <td class="dep">—</td>
+      <td>Los 13 mensajes inválidos de CO-05.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="local" data-estado="Bloqueada">
+      <td class="id">PR-SEC-03</td>
+      <td><span class="nombre">Secretos y Consultas a la Base</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas. <span class="nota">Base de datos de prueba, no la real.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases con caracteres peligrosos de FR-08.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+      <td class="id">PR-SEC-04</td>
+      <td><span class="nombre">La Voz No Se Guarda</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-canonico">Canónico</span><span class="need">El backend canónico arriba, sin reiniciarlo. <span class="nota">Base de prueba y caché vacía. El audio puede ir por el socket.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A, habladas.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P2" data-perfil="local" data-estado="Pasa">
+      <td class="id">PR-TRA-03</td>
+      <td><span class="nombre">Levantar el Entorno Desde Cero</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p2">P2</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas. <span class="nota">Máquina limpia: sin el proyecto ni sus dependencias. Lo ideal es correrlo en las tres.</span></span></td>
+      <td class="dep">—</td>
+      <td>El repositorio y sus instrucciones.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Falla">
+      <td class="id">PR-INT-02</td>
+      <td><span class="nombre">Recorrido Completo por Texto</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Las 30 frases de FR-01.</td>
+      <td><span class="estado estado-mal">Falla</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-INT-03</td>
+      <td><span class="nombre">Glosas No Disponibles</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Las 6 frases de FR-11: dos por cada caso.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Bloqueada">
+      <td class="id">PR-INT-04</td>
+      <td><span class="nombre">Recorrido Completo por Voz</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-INT-05</td>
+      <td><span class="nombre">Sin Conexión a Internet</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Teléfono en modo avión.</span></span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C, escrita y hablada.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Se reporta">
+      <td class="id">PR-INT-06</td>
+      <td><span class="nombre">Sesión Larga</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">60 frases cada 30 segundos: unos 30 minutos.</span></span></td>
+      <td class="dep">—</td>
+      <td>El lote de sesión FR-09, de 60 frases.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-AND-01</td>
+      <td><span class="nombre">Captura y Permisos</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C, hablada en cada modo.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-AND-02</td>
+      <td><span class="nombre">Transcripción, Texto y Estados</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C, hablada y escrita.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-AND-03</td>
+      <td><span class="nombre">Historial</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Las 12 frases de FR-01-E.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-AND-04</td>
+      <td><span class="nombre">Ajustes</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C para ver el efecto de cada ajuste.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Se reporta">
+      <td class="id">PR-AND-05</td>
+      <td><span class="nombre">Pantalla y Dispositivos</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Un aparato por resolución; se anota el modelo. Nunca un emulador.</span></span></td>
+      <td class="dep">—</td>
+      <td>Una frase corta de FR-01-C y una larga, FR-01-006.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-AND-06</td>
+      <td><span class="nombre">Opciones de Accesibilidad</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>FR-01-006, que tiene 6 señas, para ver el avatar con la reducción de animaciones.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-AVT-01</td>
+      <td><span class="nombre">Carga y Reposo</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Cinco aperturas de la aplicación y las 10 frases de FR-01-C.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-AVT-02</td>
+      <td><span class="nombre">Las 50 Animaciones</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Las 50 señas; de acá salen los videos de CT-02. Nunca un emulador.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 50 señas del corpus.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Falla">
+      <td class="id">PR-AVT-03</td>
+      <td><span class="nombre">Cola de Reproducción</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Las 3 frases de FR-01-D.</td>
+      <td><span class="estado estado-mal">Falla</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Bloqueada">
+      <td class="id">PR-AVT-04</td>
+      <td><span class="nombre">Continuidad Entre Señas</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Se mide con el teléfono de referencia.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 30 frases de FR-01.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Bloqueada">
+      <td class="id">PR-AVT-05</td>
+      <td><span class="nombre">Marcadores No Manuales</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A, dos por cada tipo de frase, y la tabla de lo esperado de esta ficha.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+      <td class="id">PR-AVT-07</td>
+      <td><span class="nombre">Elección del Avatar</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-estado="Se reporta">
+      <td class="id">PR-REN-07</td>
+      <td><span class="nombre">Rendimiento en el Móvil</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Build de uso real (release) y el teléfono de referencia, nunca un emulador.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 30 frases de FR-01, una tras otra.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+      <td class="id">PR-PER-01</td>
+      <td><span class="nombre">Validación de Glosas por Intérprete</span><span class="tipo">Validación con personas</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-personas">Personas</span><span class="need">Formularios y convocatoria. No depende de la máquina.</span></td>
+      <td class="dep">PR-INT-02</td>
+      <td>Las 30 frases de FR-01.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+      <td class="id">PR-PER-02</td>
+      <td><span class="nombre">Validación de las 50 Animaciones</span><span class="tipo">Validación con personas</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-personas">Personas</span><span class="need">Formularios y convocatoria. No depende de la máquina. <span class="nota">100 videos: 50 de LSC50 y 50 grabados desde la app.</span></span></td>
+      <td class="dep">PR-AVT-02</td>
+      <td>Los 100 videos de CT-02: 50 de referencia y 50 de las animaciones.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+      <td class="id">PR-PER-03</td>
+      <td><span class="nombre">Reconocimiento de Señas Aisladas</span><span class="tipo">Validación con personas</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-personas">Personas</span><span class="need">Formularios y convocatoria. No depende de la máquina. <span class="nota">Se graba desde la app, sin texto ni glosa visibles.</span></span></td>
+      <td class="dep">PR-AVT-02</td>
+      <td>Los 50 videos de las animaciones de CT-02 y las 150 opciones incorrectas de CT-03.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+      <td class="id">PR-PER-04</td>
+      <td><span class="nombre">Comprensión y Naturalidad de Frases Completas</span><span class="tipo">Validación con personas</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-personas">Personas</span><span class="need">Formularios y convocatoria. No depende de la máquina.</span></td>
+      <td class="dep">PR-INT-02</td>
+      <td>Las 30 frases de FR-01 y sus 90 opciones incorrectas de FR-02 (3 por frase).</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+      <td class="id">PR-PER-05</td>
+      <td><span class="nombre">Usabilidad para el Usuario Oyente</span><span class="tipo">Validación con personas</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-personas">Personas</span><span class="need">Formularios y convocatoria. No depende de la máquina. <span class="nota">La sesión se guía con el usuario en el teléfono de referencia.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 4 frases de FR-01-F.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+      <td class="id">PR-PER-06</td>
+      <td><span class="nombre">Flujo Completo por Voz</span><span class="tipo">Validación con personas</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-personas">Personas</span><span class="need">Formularios y convocatoria. No depende de la máquina. <span class="nota">Flujo por voz con el usuario en el teléfono de referencia.</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A y sus 30 opciones incorrectas de FR-02.</td>
+      <td><span class="estado estado-blq">Bloqueada</span></td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:12px">Datos de entrada citados como en el plan (§8): <code>FR</code>
+      frases, <code>AU</code> audios, <code>CO</code> conjuntos por componente, <code>CT</code> material
+      visual. Los estados de la última ronda: 27 Pasa, 8 Falla, 24 Se reporta
+      y 15 Bloqueada.</p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <section id="reglas">
+    <h2><span class="num">4</span>Cómo se corre</h2>
+    <p class="sub">Las diez reglas son las que ya se usaron en la ronda del 5/11 con cinco carriles y
+      funcionaron: están escritas porque cada una evitó un problema real.</p>
+
+    <div class="doscol">
+      <div>
+        <ol class="reglas">
+          <li><b>Un recurso, un dueño.</b> El teléfono lo usa solo P3; los cortes los hace solo P2, en el
+            laboratorio; el servidor canónico no lo reinicia nadie desde su carril. Si una prueba no es del
+            carril, no se corre.</li>
+          <li><b>En paralelo, solo lo que no comparte estado.</b> P1 mide en el canónico, P3 usa el teléfono y
+            P2 corta en el laboratorio: los tres pueden avanzar a la vez porque los cortes ya no tocan la máquina
+            que mide. Lo único que se turna es el canónico entre P1 y P2.</li>
+          <li><b>Un número, un ambiente.</b> Lo que se publica como cifra sale del canónico, con su sello.
+            Lo medido en un PC local se etiqueta «entorno local» y no se mezcla.</li>
+          <li><b>Lo largo va en segundo plano.</b> Todo comando de más de 30 s se lanza con
+            <code>timeout</code> (máximo 45 min; INT-06 es el que más se acerca).</li>
+          <li><b>Nada de <code>sleep</code> como espera de operario.</b> Los únicos <code>sleep</code>
+            válidos son los del procedimiento: la retención entre frases y los 30 s de INT-06.</li>
+          <li><b>Un solo colector por prueba.</b> Si ya hay uno corriendo, se lee su salida o se espera su
+            archivo de cierre; no se lanza otro.</li>
+          <li><b>Ningún proceso queda vivo al terminar el turno:</b> <code>docker ps</code>,
+            <code>adb shell ps</code> y <code>ps -ef | grep "[e]l_script"</code>. El corchete evita que el
+            <code>grep</code> se encuentre a sí mismo.</li>
+          <li><b>La evidencia no se sobrescribe:</b> <code>PR-BLOQUE-NN_R_AAAAMMDD_nn</code>, una carpeta
+            por bloque, el consecutivo sube.</li>
+          <li><b>Una prueba que falla es un resultado.</b> Se repite una vez con la causa escrita; si falla
+            dos veces con el mismo síntoma, se para el carril y se reporta.</li>
+          <li><b>Si el sistema queda raro, no se arregla a mano.</b> Se reporta y decide quien coordina la
+            ronda.</li>
+        </ol>
+      </div>
+
+      <div>
+        <h3>El encargo que se le pega a la IA</h3>
+        <p class="note">Es el mismo texto para las tres personas y para cualquier herramienta: cambia solo
+          el carril y la lista de pruebas. Si la IA responde distinto en dos equipos, es porque no se le
+          dio esto.</p>
+        <div class="pre" id="encargo"><button class="copy" data-copy="encargo" type="button">Copiar</button><span class="k">Carril:</span> P_ · <span class="k">Responsable:</span> ____ · <span class="k">Ronda:</span> ______ · <span class="k">Fecha:</span> ____-__-__
+
+<span class="k">Pruebas:</span> &lt;IDs de la tabla&gt;
+
+<span class="k">Reglas:</span>
+- Corre solo pruebas de este carril. Si no está en la lista, no la corras.
+- Antes de empezar, pega el sello del ambiente y compáralo con el del turno.
+- Un comando largo va en segundo plano con timeout; no esperes a ojo.
+- No sobrescribas evidencia. Usa la convención del plan.
+- Si una prueba falla, repítela una vez y escribe la causa.
+  Si vuelve a fallar con el mismo síntoma, para y reporta.
+- Al terminar: estado, resultado, evidencia, fecha y ejecutor
+  de cada prueba, y ningún proceso vivo.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <section id="ambiente">
+    <h2><span class="num">5</span>El ambiente: qué quita la dependencia del equipo</h2>
+    <p class="sub">La independencia no se consigue igualando los computadores, porque no se pueden igualar.
+      Se consigue separando lo que produce números de lo que no, y fijando lo que sí tiene que ser idéntico.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Se puede correr en cualquier PC</h3>
+        <p style="font-size:15px">Las 11 pruebas de perfil <b>Local</b> y las 6 de
+          <b>Personas</b>: no tocan el servidor de pruebas. Las locales se corren con el código y el entorno
+          de Python del repositorio (los <code>scripts/verify_*.py</code> del backend y las mediciones del
+          APK). Las de personas dependen de formularios y calendario, no de una máquina.</p>
+        <p class="note">En las locales también se puede usar una copia propia del backend con Docker, pero
+          si la prueba publica una cifra, esa cifra no se cita: se rehace en el canónico.</p>
+      </div>
+      <div class="card">
+        <h3>Tiene que ser idéntico en los tres</h3>
+        <ul style="margin:0;padding-left:20px;font-size:15px">
+          <li>El <b>código</b>: los commits de backend, STT y app, y el hash del APK.</li>
+          <li>Los <b>datos</b>: los 24 conjuntos, con su hash; nadie re-graba entre rondas.</li>
+          <li>La <b>base</b>: el proyecto de Neon de la tesis, o una rama de prueba creada para la corrida.</li>
+          <li>El <b>libro</b>: un solo archivo por ronda, con las columnas 12 a 17 iguales para todos.</li>
+          <li>Las <b>herramientas</b>: la lista de §6, con la versión que fija el repositorio.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>Dos servidores: uno mide y el otro se rompe</h3>
+      <p style="font-size:15px">Con dos máquinas con tarjeta gráfica ya no hay que elegir entre medir y cortar.
+        El canónico publica los números y no se toca; el laboratorio es donde se apagan contenedores, se vacía
+        la caché y se cambia el modelo del STT.</p>
+      <table class="mini" style="margin-top:6px">
+        <thead>
+          <tr><th style="width:7rem">Servidor</th><th style="width:11rem">Máquina</th><th>Qué corre</th><th style="width:20rem">Qué no se hace</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Canónico</b></td>
+            <td>La de 8 GB (3050)</td>
+            <td>Todo lo que publica cifras: REN-01 a 09, STT-04/05, INT-06, las comparaciones de CAC y LLM y el
+              extremo a extremo.</td>
+            <td>No se reinicia, no se vacía la caché, no se cambia el modelo del STT y no corre otro carril adentro.</td>
+          </tr>
+          <tr>
+            <td><b>Laboratorio</b></td>
+            <td>La de 6 GB (4050)</td>
+            <td>Los cortes: RES completo, SEC-01/02/04, TRA-03 y las pruebas que cambian el modelo del STT.</td>
+            <td>No se citan sus cifras: si una prueba publica un número, se repite en el canónico.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin:12px 0 0">Por qué la de 8 GB es la canónica: el 5/11 <code>large-v3</code>
+        ocupó 4 123 MiB y en la de 6 GB entró justo. Con 8 GB hay margen para el STT y el resto del sistema.
+        Si la de 8 GB no está disponible, la de 6 GB puede hacer de canónica —ya midió <code>large-v3</code>—,
+        pero entonces los cortes esperan a que termine.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>Si un equipo no tiene tarjeta gráfica</h3>
+      <p style="font-size:15px">Es el caso del carril 3, y por eso ese carril está armado para que <b>su PC no
+        intervenga</b>: ninguna de sus 24 pruebas se mide en su computador. El render y el cómputo del avatar
+        ocurren en el teléfono, el backend responde desde el servidor canónico y su PC solo ejecuta
+        <code>adb</code> y abre los formularios. La GPU es una propiedad del <b>ambiente</b>, no del computador
+        de la persona.</p>
+      <ul style="margin:0 0 12px;padding-left:20px;font-size:15px">
+        <li><b>Lo que sí puede hacer:</b> compilar e instalar la app, correr los 23 <code>verify_*.py</code> y los
+          análisis estáticos, editar los flows de Maestro, manejar el teléfono por <code>adb</code> y leer
+          <code>/metrics</code>.</li>
+        <li><b>Lo que no puede hacer:</b> hospedar el STT con números válidos. Con gráfica integrada el servicio
+          funciona en CPU, pero el propio plan dice que eso «aumenta los tiempos de ejecución y puede afectar las
+          mediciones» (§7.1). Medir ahí es medir otro sistema.</li>
+        <li><b>Lo que puede hacer con reservas:</b> levantar una copia local del backend <i>sin</i> STT para los
+          cortes que no publican cifras (RES-02/04/05, SEC-02/03, TRA-03). Con el STT en CPU se puede comprobar
+          que responde, pero no se cronometra.</li>
+        <li><b>Lo que nunca:</b> usar un emulador. El plan pide un celular de gama media porque el avatar se
+          dibuja en el teléfono; un emulador sobre integrada puede caer en render por software y el resultado no
+          dice nada. Si no hay teléfono de referencia, la prueba pasa a quien lo tenga: no se sustituye por el
+          emulador.</li>
+      </ul>
+      <p class="note" style="margin:0">Consecuencia para el reparto: el carril 2 le toca a quien tenga el turno del
+        laboratorio, no a quien tenga la GPU. El carril 3 no cambia de dueño por el hardware; cambia solo si no hay
+        teléfono de referencia.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>El aparato también es ambiente</h3>
+      <p style="font-size:15px;margin:0">El teléfono pesa tanto como el servidor, porque el avatar se dibuja ahí.
+        Para lo que se mide —REN-07, AVT-04 y AND-05— se usa el <b>teléfono de referencia</b>, el mismo de las dos
+        rondas anteriores. Para lo funcional, cada uno puede usar el suyo anotando modelo y versión de Android;
+        ese dato va en el sello y no se compara con el del aparato de referencia.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>El sello que se pega en cada corrida</h3>
+      <p style="font-size:15px">Va en «Resultado obtenido» o en la bitácora del turno, y sin él la fila no
+        cuenta. Es lo que faltó el 4/11: nadie supo que el modelo efectivo era otro hasta que se revisaron
+        las latencias.</p>
+      <div class="pre" id="sello"><button class="copy" data-copy="sello" type="button">Copiar</button><span class="c"># Sello del ambiente — se pega tal cual en la evidencia</span>
+servidor          canónico (8 GB) | laboratorio (6 GB)   <span class="c">nunca los dos para una cifra</span>
+commit backend    ______   <span class="c">git -C ../sign-ai-backend rev-parse --short HEAD</span>
+commit STT        ______   <span class="c">git -C ../sign-ai-stt rev-parse --short HEAD</span>
+commit app        ______   APK sha256 ______   variante: debug | demo | release
+LLM efectivo      ______   base_url: ______   <span class="c">python3 scripts/verify_official_config.py</span>
+umbral de caché   ______   filas en caché: ______   glosas: ______   <span class="c">GET :8080/health</span>
+Whisper           ______   device: ______   <span class="c">GET :8000/health</span>
+base              proyecto ______   rama ______   <span class="c">Neon, org-orange-surf-39007829</span>
+datos             AU-01 sha256 ______   FR-01 sha256 ______
+teléfono          ______   Android ______   id adb ______
+caché vacía       sí | no        seña de reserva   apagada | encendida
+inicio / fin      __:__ / __:__   ejecutor: ______</div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <section id="stack">
+    <h2><span class="num">6</span>El stack: las mismas herramientas para los tres</h2>
+    <p class="sub">Lo que sigue está en el repositorio y es lo que la IA usa para ejecutar y medir. Si una
+      persona cambia de herramienta, el resultado deja de ser comparable aunque la prueba sea la misma.</p>
+
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="mini" style="font-size:14px">
+        <thead>
+          <tr><th style="width:15rem">Herramienta</th><th>Qué es</th><th style="width:14rem">Para qué pruebas</th><th style="width:19rem">Cómo se comprueba que todos la tienen</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>opencode</b> + <code>opencode.json</code></td>
+            <td>El arnés donde corre la IA, con los MCP declarados y versionados en el repo.</td>
+            <td>Todas.</td>
+            <td><code>git diff --exit-code opencode.json</code> en los tres equipos.</td>
+          </tr>
+          <tr>
+            <td><b>mobile-mcp</b><br><span class="note">mobile-next, sobre <code>mobilecli</code></span></td>
+            <td>Árbol de accesibilidad, toques, texto, capturas, instalar y lanzar. Un solo daemon por equipo.</td>
+            <td>AND, INT, AVT (instalación), RES-01/07, PER-05/06.</td>
+            <td><code>tools/dev.sh devices</code> ve el aparato y <code>mobile_list_elements_on_screen</code> devuelve el árbol.</td>
+          </tr>
+          <tr>
+            <td><b>Maestro 2.11.0</b><br><span class="note"><code>tools/maestro/*.yaml</code></span></td>
+            <td>Guiones repetibles de interfaz, por texto o <code>contentDescription</code>.</td>
+            <td>AND-02/03/04, INT-02/04, PER-06.</td>
+            <td><code>maestro --version</code> y <code>maestro test tools/maestro/smoke-avatar.yaml</code>.</td>
+          </tr>
+          <tr>
+            <td><b>adb + logcat</b><br><span class="note"><code>SignAiMetrics</code>, <code>SignAiNet</code>, <code>SignAIWeb</code></span></td>
+            <td>La lectura del dispositivo: métricas, oraciones y consola de la escena.</td>
+            <td>REN, INT, AVT, RES.</td>
+            <td><code>adb devices</code> y <code>adb logcat -s SignAiMetrics</code> con una frase de humo.</td>
+          </tr>
+          <tr>
+            <td><b>tools/rendimiento</b><br><span class="note">gfxinfo.py, sf-medir.sh, frames.py, perfetto.sh</span></td>
+            <td>Reparto por fotograma (<code>dumpsys gfxinfo</code>) y latencia de toque; el resto para atribuir.</td>
+            <td>REN-07, AVT-04, AND-05.</td>
+            <td><code>tools/rendimiento/gfxinfo.py --help</code> y una corrida corta.</td>
+          </tr>
+          <tr>
+            <td><b>Métricas del servidor</b><br><span class="note">:8080 y :8000, <code>/metrics</code> y <code>/metrics.json</code></span></td>
+            <td>El mismo número con el mismo nombre en los dos lados, con mediana y p95 de las últimas 512 muestras.</td>
+            <td>REN-01 a 09, INT-06, RES, SEC-02.</td>
+            <td><code>curl -s :8080/metrics.json</code> y <code>curl -s :8000/metrics.json</code> responden con los <code>rt_*</code>.</td>
+          </tr>
+          <tr>
+            <td><b><code>scripts/verify_*.py</code></b><br><span class="note">23 verificaciones en el backend</span></td>
+            <td>Comprobaciones en proceso, con las fixtures del repositorio y sin servidor.</td>
+            <td>SEG, HUE, CAC, LLM, VAL, INT-01, RES-04/05, SEC-02, TRA-02.</td>
+            <td><code>cd ../sign-ai-backend &amp;&amp; python3 scripts/verify_sentence_segmenter.py</code>.</td>
+          </tr>
+          <tr>
+            <td><b>neon MCP</b></td>
+            <td>Leer el catálogo y la caché, y preparar una base de prueba. <code>org_id</code> obligatorio.</td>
+            <td>VAL-02/03, CAC-05, SEC-03/04, INT-03.</td>
+            <td>Una consulta a <code>catalog</code> devuelve 50 filas en las tres cuentas.</td>
+          </tr>
+          <tr>
+            <td><b>pty</b><br><span class="note">opencode-pty-v2</span></td>
+            <td>Sesión de terminal para lo largo: <code>docker compose</code>, logcat en vivo, tcpdump.</td>
+            <td>P2 sobre todo; el resto para lo que pase de 30 s.</td>
+            <td>Se levanta el compose desde una sesión pty y se ve la salida.</td>
+          </tr>
+          <tr>
+            <td><b>Docker Compose</b><br><span class="note">backend + STT</span></td>
+            <td>Los dos ambientes, fijados por commit y con el STT en GPU (<code>medium</code>, <code>cuda</code>).</td>
+            <td>Las canónicas y los cortes.</td>
+            <td><code>docker compose config --hash</code> da lo mismo y <code>docker compose ps</code> muestra los dos servicios.</td>
+          </tr>
+          <tr>
+            <td><b>Playwright</b></td>
+            <td>Navegador automatizado para los formularios y para pasar las respuestas a PDF o CSV.</td>
+            <td>PER-01 a 06.</td>
+            <td>Misma versión y el mismo formulario abierto desde el repo.</td>
+          </tr>
+          <tr>
+            <td><b>openssl + tcpdump</b></td>
+            <td>Comprobación del canal cifrado y captura del lazo local.</td>
+            <td>SEC-01.</td>
+            <td><code>openssl s_client -connect 127.0.0.1:8443</code> negocia el certificado de laboratorio.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card quiet" style="margin-top:16px">
+      <h3>Lo que no se usa, y por qué</h3>
+      <ul style="margin:0;padding-left:20px;font-size:15px">
+        <li><b>dart-mcp y marionette:</b> hablan del árbol de widgets de Flutter. Esta app es Android nativo
+          con Compose; no hay ese árbol.</li>
+        <li><b>agent-device:</b> se probó y su comando <code>snapshot</code> falla siempre
+          («<code>UiAutomationService already registered</code>»). Por eso tampoco se usa el framework e2e que
+          depende de él.</li>
+        <li><b>mobile-mcp o uiautomator para el avatar:</b> el <code>WebView</code> aparece sin hijos, porque
+          el canvas de Three.js no publica nada. Para la escena se lee <code>SignAIWeb</code> o el overlay
+          del build con <code>DEV_TOOLS</code>.</li>
+        <li><b><code>input tap</code> para pellizcos:</b> es de un solo puntero. El pinch solo existe en
+          <code>tools/pinch.sh</code> y solo donde el nodo de entrada sea escribible.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────── -->
+  <section id="decisiones">
+    <h2><span class="num">7</span>Decisiones que quedan del owner</h2>
+    <p class="sub">Este documento no las toma. Cada una cambia el trabajo de las tres personas, así que se
+      presentan con lo que se gana y lo que se pierde.</p>
+
+    <div class="grid g2">
+      <div class="dec">
+        <h3>D1 · ¿Qué máquina mide y cuál se rompe?</h3>
+        <p class="op"><b>a)</b> La 3050 de 8 GB hace de canónica y la 4050 de 6 GB de laboratorio.
+          <span class="gain">Gana:</span> margen para <code>large-v3</code> y los cortes no paran las mediciones.
+          <span class="loss">Pierde:</span> el canónico queda en el PC de un integrante y depende de que esté
+          encendido en el turno.</p>
+        <p class="op"><b>b)</b> La 4050 de 6 GB de canónica y la 3050 de laboratorio.
+          <span class="gain">Gana:</span> se conserva la máquina que ya midió el 4 y el 5/11.
+          <span class="loss">Pierde:</span> <code>large-v3</code> entraba justo y los cortes compiten por la
+          máquina que mide.</p>
+        <p class="op"><b>c)</b> Una sola máquina para todo. <span class="loss">Pierde:</span> vuelve la espera
+          del 5/11, cuando los cortes obligaban a parar los otros carriles.</p>
+        <p class="rec"><b>Recomendación:</b> (a) para la próxima ronda; (b) si por alguna razón la 3050 no está
+          disponible el día de la corrida.</p>
+      </div>
+
+      <div class="dec">
+        <h3>D2 · ¿El plan formal gana «Responsable» y «Sello»?</h3>
+        <p class="op"><b>a)</b> Sí: la ficha pasa de 12 a 14 campos y el libro de 17 a 19 columnas.
+          <span class="gain">Gana:</span> el reparto y la trazabilidad quedan en el instrumento, no en un
+          documento aparte. <span class="loss">Pierde:</span> hay que recompilar el plan y regenerar la
+          plantilla.</p>
+        <p class="op"><b>b)</b> No: el reparto vive en este anexo y en la bitácora de cada ronda.
+          <span class="gain">Gana:</span> no se toca lo que ya está cerrado. <span class="loss">Pierde:</span>
+          el que lea el libro en un año no sabe quién corrió qué ni con qué versión.</p>
+        <p class="rec"><b>Recomendación:</b> (a) para «Responsable» y «Sello de entorno»; es un cambio de dos
+          columnas y cierra la H1 y la H7.</p>
+      </div>
+
+      <div class="dec">
+        <h3>D3 · ¿Los cortes sin GPU también van en la copia de cualquier PC?</h3>
+        <p class="op"><b>a)</b> Sí, etiquetados. <span class="gain">Gana:</span> se reparten y no dependen del
+          laboratorio. <span class="loss">Pierde:</span> hay que sostener dos instalaciones y confiar en la
+          etiqueta.</p>
+        <p class="op"><b>b)</b> No, todos en el laboratorio. <span class="gain">Gana:</span> una sola verdad y un
+          solo sitio donde mirar. <span class="loss">Pierde:</span> P2 concentra los cortes, aunque ya no
+          bloquean a los demás.</p>
+        <p class="rec"><b>Recomendación:</b> (a) para las que no publican cifras —RES-02, RES-04, RES-05,
+          SEC-02, SEC-03 y TRA-03—; si se elige, esas seis pasan a «Local» en la tabla. TRA-03 conviene correrla
+          en las tres máquinas.</p>
+      </div>
+
+      <div class="dec">
+        <h3>D4 · ¿Las 6 pruebas de personas arrancan ya?</h3>
+        <p class="op"><b>a)</b> Sí, en la semana 1, con los materiales generados en paralelo.
+          <span class="gain">Gana:</span> el objetivo OE5 deja de estar en cero y hay margen si un
+          participante falla. <span class="loss">Pierde:</span> hay que convocar antes de que el glosado esté
+          perfecto, y conviene fijar qué versión se evalúa.</p>
+        <p class="op"><b>b)</b> No, primero se cierra lo técnico. <span class="gain">Gana:</span> se evalúa la
+          mejor versión. <span class="loss">Pierde:</span> si el calendario se corre, no hay ningún dato de
+          personas para la entrega.</p>
+        <p class="rec"><b>Recomendación:</b> (a), con la salvedad de que la versión se congela el día de la
+          convocatoria y se anota en el sello.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Qué es este documento.</b> Un anexo de trabajo que no sustituye al plan ni al libro: las fichas
+      mandan y el libro es la fuente de los resultados. Si cambia una ficha en
+      <code>../sign-ai-docs/latex/plan-pruebas/main.tex</code>, este reparto se vuelve a revisar; los IDs y
+      los nombres de las 74 pruebas se copiaron de ahí el 5/11/2026.</p>
+    <p><b>Sobre el nombre.</b> En los documentos formales el sistema se llama <b>SignAll</b>; acá se
+      usa <b>SignAI</b>, que es el nombre del repositorio y de las herramientas. Son el mismo sistema y
+      cada nombre es correcto en su lugar.</p>
+    <p><b>De dónde salen los datos.</b> Fichas, tipos, entornos y conjuntos: plan de pruebas, sección 9 y
+      sección 8. Estados: <code>resultados-consolidados.xlsx</code> (ronda de evaluación del 5/11). Reglas de
+      operación y diseño de carriles: <code>PLAN-2026-11-05-recuperacion-y-ronda-oficial.md</code> §6 y
+      <code>PRUEBAS-2026-11-05.md</code> §2. Herramientas: <code>tools/HERRAMIENTAS.md</code>,
+      <code>tools/README.md</code> y <code>opencode.json</code>. La advertencia sobre el modelo local:
+      <code>PLAN-2026-11-05…</code> §2.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#tabla-pruebas tbody tr'));
+  var q = document.getElementById('q');
+  var count = document.getElementById('count');
+  var carril = 'todos';
+  var buttons = document.querySelectorAll('.seg button');
+
+  function apply(){
+    var term = (q.value || '').trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function(tr){
+      var okCarril = carril === 'todos' || tr.getAttribute('data-carril') === carril;
+      var okTerm = !term || (tr.textContent || '').toLowerCase().indexOf(term) !== -1;
+      var show = okCarril && okTerm;
+      tr.classList.toggle('hide', !show);
+      if (show) shown++;
+    });
+    count.textContent = shown + ' de ' + rows.length;
+  }
+
+  q.addEventListener('input', apply);
+  buttons.forEach(function(b){
+    b.addEventListener('click', function(){
+      carril = b.getAttribute('data-carril');
+      buttons.forEach(function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+      apply();
+    });
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var el = document.getElementById(b.getAttribute('data-copy'));
+      var text = el.innerText.replace(/^Copiar\n?/, '');
+      var done = function(){ b.textContent = 'Copiado'; setTimeout(function(){ b.textContent = 'Copiar'; }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function(){});
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch(e){}
+        document.body.removeChild(ta);
+      }
+    });
+  });
+
+  apply();
+})();
+</script>
+
+</body>
+</html>
