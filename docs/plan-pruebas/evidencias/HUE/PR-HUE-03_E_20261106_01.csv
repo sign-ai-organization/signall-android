@@ -1,0 +1,201 @@
+﻿id;esperado;texto;puntuacion;obtenido;correcto;secundarias;colision;borde
+CO-02-001;Afirmación;Su información fue registrada.;con;AFFIRMATIVE;True;[];False;No
+CO-02-001;Afirmación;su información fue registrada;sin;AFFIRMATIVE;True;[];False;No
+CO-02-002;Afirmación;Gracias por su tiempo.;con;AFFIRMATIVE;True;[];False;No
+CO-02-002;Afirmación;gracias por su tiempo;sin;AFFIRMATIVE;True;[];False;No
+CO-02-003;Afirmación;La dirección coincide con la que tenemos registrada.;con;AFFIRMATIVE;True;[];False;No
+CO-02-003;Afirmación;la dirección coincide con la que tenemos registrada;sin;AFFIRMATIVE;True;[];False;No
+CO-02-004;Afirmación;El sistema guardó los cambios correctamente.;con;AFFIRMATIVE;True;[];False;No
+CO-02-004;Afirmación;el sistema guardó los cambios correctamente;sin;AFFIRMATIVE;True;[];False;No
+CO-02-005;Afirmación;Vivo en Bogotá desde hace diez años.;con;AFFIRMATIVE;True;[];False;No
+CO-02-005;Afirmación;vivo en bogotá desde hace diez años;sin;AFFIRMATIVE;True;[];False;No
+CO-02-006;Afirmación;Tengo treinta y dos años.;con;AFFIRMATIVE;True;[];False;No
+CO-02-006;Afirmación;tengo treinta y dos años;sin;AFFIRMATIVE;True;[];False;No
+CO-02-007;Afirmación;Mi nombre completo aparece en el documento.;con;AFFIRMATIVE;True;[];False;No
+CO-02-007;Afirmación;mi nombre completo aparece en el documento;sin;AFFIRMATIVE;True;[];False;No
+CO-02-008;Afirmación;Estamos listos para continuar con el proceso.;con;AFFIRMATIVE;True;[];False;No
+CO-02-008;Afirmación;estamos listos para continuar con el proceso;sin;AFFIRMATIVE;True;[];False;No
+CO-02-009;Afirmación;El pago quedó registrado esta mañana.;con;AFFIRMATIVE;True;[];False;No
+CO-02-009;Afirmación;el pago quedó registrado esta mañana;sin;AFFIRMATIVE;True;[];False;No
+CO-02-010;Afirmación;Nohora es la encargada de esta ventanilla.;con;AFFIRMATIVE;True;[];False;No
+CO-02-010;Afirmación;nohora es la encargada de esta ventanilla;sin;AFFIRMATIVE;True;[];False;No
+CO-02-011;Afirmación;Pase de abordar entregado en la ventanilla dos.;con;IMPERATIVE;False;[];False;Sí
+CO-02-011;Afirmación;pase de abordar entregado en la ventanilla dos;sin;IMPERATIVE;False;[];False;Sí
+CO-02-012;Afirmación;Cuando termine el trámite le avisaremos por correo.;con;AFFIRMATIVE;True;[];False;No
+CO-02-012;Afirmación;cuando termine el trámite le avisaremos por correo;sin;AFFIRMATIVE;True;[];False;No
+CO-02-013;Afirmación;Quien firmó el documento aparece en el registro.;con;AFFIRMATIVE;True;[];False;No
+CO-02-013;Afirmación;quien firmó el documento aparece en el registro;sin;AFFIRMATIVE;True;[];False;No
+CO-02-014;Afirmación;El avatar 3D mostró la seña correctamente.;con;AFFIRMATIVE;True;[];False;No
+CO-02-014;Afirmación;el avatar 3d mostró la seña correctamente;sin;AFFIRMATIVE;True;[];False;No
+CO-02-015;Afirmación;El corpus del proyecto tiene cincuenta señas.;con;AFFIRMATIVE;True;[];False;No
+CO-02-015;Afirmación;el corpus del proyecto tiene cincuenta señas;sin;AFFIRMATIVE;True;[];False;No
+CO-02-016;Afirmación;El caché semántico todavía no está implementado.;con;NEGATIVE;False;[];False;Sí
+CO-02-016;Afirmación;el caché semántico todavía no está implementado;sin;NEGATIVE;False;[];False;Sí
+CO-02-017;Afirmación;El embedding de la frase se calculará después.;con;AFFIRMATIVE;True;[];False;No
+CO-02-017;Afirmación;el embedding de la frase se calculará después;sin;AFFIRMATIVE;True;[];False;No
+CO-02-018;Afirmación;El fingerprint de la oración fue afirmativa.;con;AFFIRMATIVE;True;[];False;No
+CO-02-018;Afirmación;el fingerprint de la oración fue afirmativa;sin;AFFIRMATIVE;True;[];False;No
+CO-02-019;Afirmación;El documento de identidad quedó verificado.;con;AFFIRMATIVE;True;[];False;No
+CO-02-019;Afirmación;el documento de identidad quedó verificado;sin;AFFIRMATIVE;True;[];False;No
+CO-02-020;Afirmación;No obstante, el trámite se completó a tiempo.;con;NEGATIVE;False;[];False;Sí
+CO-02-020;Afirmación;no obstante el trámite se completó a tiempo;sin;NEGATIVE;False;[];False;Sí
+CO-02-021;Pregunta de sí o no;¿Tiene alguna pregunta?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-021;Pregunta de sí o no;tiene alguna pregunta;sin;AFFIRMATIVE;False;[];False;No
+CO-02-022;Pregunta de sí o no;¿Ya diligenció el formulario?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-022;Pregunta de sí o no;ya diligenció el formulario;sin;AFFIRMATIVE;False;[];False;No
+CO-02-023;Pregunta de sí o no;¿Tiene su documento a la mano?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-023;Pregunta de sí o no;tiene su documento a la mano;sin;AFFIRMATIVE;False;[];False;No
+CO-02-024;Pregunta de sí o no;¿Ya realizó el pago correspondiente?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-024;Pregunta de sí o no;ya realizó el pago correspondiente;sin;AFFIRMATIVE;False;[];False;No
+CO-02-025;Pregunta de sí o no;¿Desea continuar con el registro?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-025;Pregunta de sí o no;desea continuar con el registro;sin;AFFIRMATIVE;False;[];False;No
+CO-02-026;Pregunta de sí o no;¿Ya recibió la confirmación por correo?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-026;Pregunta de sí o no;ya recibió la confirmación por correo;sin;AFFIRMATIVE;False;[];False;No
+CO-02-027;Pregunta de sí o no;¿Tiene el código de la cita?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-027;Pregunta de sí o no;tiene el código de la cita;sin;AFFIRMATIVE;False;[];False;No
+CO-02-028;Pregunta de sí o no;¿Está todo en orden?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-028;Pregunta de sí o no;está todo en orden;sin;AFFIRMATIVE;False;[];False;No
+CO-02-029;Pregunta de sí o no;¿Le parece bien que continuemos?;con;CONTENT_QUESTION;False;[];False;Sí
+CO-02-029;Pregunta de sí o no;le parece bien que continuemos;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-030;Pregunta de sí o no;¿Seguro que no le falta ningún documento?;con;CONTENT_QUESTION;False;"[""NEGATIVE""]";True;Sí
+CO-02-030;Pregunta de sí o no;seguro que no le falta ningún documento;sin;NEGATIVE;False;[];False;Sí
+CO-02-031;Pregunta de sí o no;¿Todo bien?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-031;Pregunta de sí o no;todo bien;sin;AFFIRMATIVE;False;[];False;No
+CO-02-032;Pregunta de sí o no;¿Es correcto o no?;con;YES_NO_QUESTION;True;"[""NEGATIVE""]";True;No
+CO-02-032;Pregunta de sí o no;es correcto o no;sin;NEGATIVE;False;[];False;No
+CO-02-033;Pregunta de sí o no;¿No trajo el formulario firmado?;con;YES_NO_QUESTION;True;"[""NEGATIVE""]";True;Sí
+CO-02-033;Pregunta de sí o no;no trajo el formulario firmado;sin;NEGATIVE;False;[];False;Sí
+CO-02-034;Pregunta de sí o no;¿No es este su número de documento?;con;YES_NO_QUESTION;True;"[""NEGATIVE""]";True;Sí
+CO-02-034;Pregunta de sí o no;no es este su número de documento;sin;NEGATIVE;False;[];False;Sí
+CO-02-035;Pregunta de sí o no;¿Se encuentra bien?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-035;Pregunta de sí o no;se encuentra bien;sin;AFFIRMATIVE;False;[];False;No
+CO-02-036;Pregunta de sí o no;¿Confirma que la información es correcta?;con;CONTENT_QUESTION;False;[];False;Sí
+CO-02-036;Pregunta de sí o no;confirma que la información es correcta;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-037;Pregunta de sí o no;¿Recuerda si trajo el documento?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-037;Pregunta de sí o no;recuerda si trajo el documento;sin;AFFIRMATIVE;False;[];False;No
+CO-02-038;Pregunta de sí o no;¿Le molesta si tomamos su firma digital?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-038;Pregunta de sí o no;le molesta si tomamos su firma digital;sin;AFFIRMATIVE;False;[];False;No
+CO-02-039;Pregunta de sí o no;¿Está el intérprete disponible ahora?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-039;Pregunta de sí o no;está el intérprete disponible ahora;sin;AFFIRMATIVE;False;[];False;No
+CO-02-040;Pregunta de sí o no;¿Cerramos el caso entonces?;con;YES_NO_QUESTION;True;[];False;No
+CO-02-040;Pregunta de sí o no;cerramos el caso entonces;sin;AFFIRMATIVE;False;[];False;No
+CO-02-041;Pregunta de contenido;¿Cuál es su número de documento?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-041;Pregunta de contenido;cuál es su número de documento;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-042;Pregunta de contenido;¿Dónde vive?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-042;Pregunta de contenido;dónde vive;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-043;Pregunta de contenido;¿Cuál es su teléfono?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-043;Pregunta de contenido;cuál es su teléfono;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-044;Pregunta de contenido;¿Cuál es su estado civil?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-044;Pregunta de contenido;cuál es su estado civil;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-045;Pregunta de contenido;¿Cuándo fue su última visita?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-045;Pregunta de contenido;cuándo fue su última visita;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-046;Pregunta de contenido;¿Por qué necesita este trámite?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-046;Pregunta de contenido;por qué necesita este trámite;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-047;Pregunta de contenido;¿Cuál es el motivo de su visita?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-047;Pregunta de contenido;cuál es el motivo de su visita;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-048;Pregunta de contenido;¿Cuál de estas opciones prefiere?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-048;Pregunta de contenido;cuál de estas opciones prefiere;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-049;Pregunta de contenido;¿Qué documento trajo?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-049;Pregunta de contenido;qué documento trajo;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-050;Pregunta de contenido;¿Cuáles documentos le faltan?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-050;Pregunta de contenido;cuáles documentos le faltan;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-051;Pregunta de contenido;¿Cuántas veces ha venido a esta oficina?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-051;Pregunta de contenido;cuántas veces ha venido a esta oficina;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-052;Pregunta de contenido;¿Cómo quiere que le expliquemos el proceso?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-052;Pregunta de contenido;cómo quiere que le expliquemos el proceso;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-053;Pregunta de contenido;¿Dónde firmo, aquí o en la siguiente página?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-053;Pregunta de contenido;dónde firmo aquí o en la siguiente página;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-054;Pregunta de contenido;¿Para qué necesita el certificado?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-054;Pregunta de contenido;para qué necesita el certificado;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-055;Pregunta de contenido;¿Qué seña corresponde a este dato?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-055;Pregunta de contenido;qué seña corresponde a este dato;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-056;Pregunta de contenido;¿Qué categoría le asignó el analizador?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-056;Pregunta de contenido;qué categoría le asignó el analizador;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-057;Pregunta de contenido;¿Qué pasa si no hay coincidencia en el caché?;con;CONTENT_QUESTION;True;"[""NEGATIVE""]";True;No
+CO-02-057;Pregunta de contenido;qué pasa si no hay coincidencia en el caché;sin;CONTENT_QUESTION;True;"[""NEGATIVE""]";True;No
+CO-02-058;Pregunta de contenido;¿Quién valida la lista de verbos imperativos?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-058;Pregunta de contenido;quién valida la lista de verbos imperativos;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-059;Pregunta de contenido;¿Dónde se guarda la traducción en producción?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-059;Pregunta de contenido;dónde se guarda la traducción en producción;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-060;Pregunta de contenido;¿Cuál intérprete revisará la categoría imperativa?;con;CONTENT_QUESTION;True;[];False;No
+CO-02-060;Pregunta de contenido;cuál intérprete revisará la categoría imperativa;sin;CONTENT_QUESTION;True;[];False;No
+CO-02-061;Negación;No vivo en esta ciudad.;con;NEGATIVE;True;[];False;No
+CO-02-061;Negación;no vivo en esta ciudad;sin;NEGATIVE;True;[];False;No
+CO-02-062;Negación;No es necesario traer copias adicionales.;con;NEGATIVE;True;[];False;No
+CO-02-062;Negación;no es necesario traer copias adicionales;sin;NEGATIVE;True;[];False;No
+CO-02-063;Negación;Nunca he tramitado este documento antes.;con;NEGATIVE;True;[];False;No
+CO-02-063;Negación;nunca he tramitado este documento antes;sin;NEGATIVE;True;[];False;No
+CO-02-064;Negación;No hay citas disponibles esta semana.;con;NEGATIVE;True;[];False;No
+CO-02-064;Negación;no hay citas disponibles esta semana;sin;NEGATIVE;True;[];False;No
+CO-02-065;Negación;No es el mismo documento que entregó antes.;con;NEGATIVE;True;[];False;No
+CO-02-065;Negación;no es el mismo documento que entregó antes;sin;NEGATIVE;True;[];False;No
+CO-02-066;Negación;No podemos procesar la solicitud sin la firma.;con;NEGATIVE;True;[];False;No
+CO-02-066;Negación;no podemos procesar la solicitud sin la firma;sin;NEGATIVE;True;[];False;No
+CO-02-067;Negación;No hay ningún problema con su información.;con;NEGATIVE;True;[];False;No
+CO-02-067;Negación;no hay ningún problema con su información;sin;NEGATIVE;True;[];False;No
+CO-02-068;Negación;Ni siquiera trajo una copia del recibo.;con;NEGATIVE;True;[];False;No
+CO-02-068;Negación;ni siquiera trajo una copia del recibo;sin;NEGATIVE;True;[];False;No
+CO-02-069;Negación;No creo que el sistema esté funcionando bien.;con;NEGATIVE;True;[];False;No
+CO-02-069;Negación;no creo que el sistema esté funcionando bien;sin;NEGATIVE;True;[];False;No
+CO-02-070;Negación;No hay forma de confirmar esto sin el intérprete.;con;NEGATIVE;True;[];False;No
+CO-02-070;Negación;no hay forma de confirmar esto sin el intérprete;sin;NEGATIVE;True;[];False;No
+CO-02-071;Negación;No hubo coincidencia en la búsqueda semántica.;con;NEGATIVE;True;[];False;No
+CO-02-071;Negación;no hubo coincidencia en la búsqueda semántica;sin;NEGATIVE;True;[];False;No
+CO-02-072;Negación;No firme nada todavía.;con;NEGATIVE;True;[];False;Sí
+CO-02-072;Negación;no firme nada todavía;sin;NEGATIVE;True;[];False;Sí
+CO-02-073;Negación;No confirme los datos sin revisarlos antes.;con;NEGATIVE;True;[];False;Sí
+CO-02-073;Negación;no confirme los datos sin revisarlos antes;sin;NEGATIVE;True;[];False;Sí
+CO-02-074;Negación;Nohora nunca trabajó en esta área.;con;NEGATIVE;True;[];False;No
+CO-02-074;Negación;nohora nunca trabajó en esta área;sin;NEGATIVE;True;[];False;No
+CO-02-075;Negación;Ni modo, tendremos que esperar la próxima cita.;con;NEGATIVE;True;[];False;No
+CO-02-075;Negación;ni modo tendremos que esperar la próxima cita;sin;NEGATIVE;True;[];False;No
+CO-02-076;Negación;Todavía no hemos recibido respuesta del área legal.;con;NEGATIVE;True;[];False;No
+CO-02-076;Negación;todavía no hemos recibido respuesta del área legal;sin;NEGATIVE;True;[];False;No
+CO-02-077;Negación;El sistema todavía no reconoce esa seña.;con;NEGATIVE;True;[];False;No
+CO-02-077;Negación;el sistema todavía no reconoce esa seña;sin;NEGATIVE;True;[];False;No
+CO-02-078;Negación;Nada de esto quedó registrado correctamente.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-078;Negación;nada de esto quedó registrado correctamente;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-079;Negación;No hace falta repetir el proceso completo.;con;NEGATIVE;True;[];False;No
+CO-02-079;Negación;no hace falta repetir el proceso completo;sin;NEGATIVE;True;[];False;No
+CO-02-080;Negación;Donde vive usted no afecta el proceso de registro.;con;NEGATIVE;True;[];False;Sí
+CO-02-080;Negación;donde vive usted no afecta el proceso de registro;sin;NEGATIVE;True;[];False;Sí
+CO-02-081;Orden;Espere un momento, por favor.;con;IMPERATIVE;True;[];False;No
+CO-02-081;Orden;espere un momento por favor;sin;IMPERATIVE;True;[];False;No
+CO-02-082;Orden;Tome asiento, por favor.;con;IMPERATIVE;True;[];False;No
+CO-02-082;Orden;tome asiento por favor;sin;IMPERATIVE;True;[];False;No
+CO-02-083;Orden;Confirme sus datos antes de continuar.;con;IMPERATIVE;True;[];False;No
+CO-02-083;Orden;confirme sus datos antes de continuar;sin;IMPERATIVE;True;[];False;No
+CO-02-084;Orden;Muestre su documento de identidad.;con;IMPERATIVE;True;[];False;No
+CO-02-084;Orden;muestre su documento de identidad;sin;IMPERATIVE;True;[];False;No
+CO-02-085;Orden;Llene todos los campos obligatorios.;con;IMPERATIVE;True;[];False;No
+CO-02-085;Orden;llene todos los campos obligatorios;sin;IMPERATIVE;True;[];False;No
+CO-02-086;Orden;Presente su documento en la entrada.;con;IMPERATIVE;True;[];False;No
+CO-02-086;Orden;presente su documento en la entrada;sin;IMPERATIVE;True;[];False;No
+CO-02-087;Orden;Pase a la siguiente sala.;con;IMPERATIVE;True;[];False;No
+CO-02-087;Orden;pase a la siguiente sala;sin;IMPERATIVE;True;[];False;No
+CO-02-088;Orden;Espere aquí hasta que lo llamen.;con;IMPERATIVE;True;[];False;No
+CO-02-088;Orden;espere aquí hasta que lo llamen;sin;IMPERATIVE;True;[];False;No
+CO-02-089;Orden;Escriba en letra clara, por favor.;con;IMPERATIVE;True;[];False;No
+CO-02-089;Orden;escriba en letra clara por favor;sin;IMPERATIVE;True;[];False;No
+CO-02-090;Orden;Complete los datos faltantes.;con;IMPERATIVE;True;[];False;No
+CO-02-090;Orden;complete los datos faltantes;sin;IMPERATIVE;True;[];False;No
+CO-02-091;Orden;Por-favor complete el formulario completo.;con;IMPERATIVE;True;[];False;No
+CO-02-091;Orden;por-favor complete el formulario completo;sin;IMPERATIVE;True;[];False;No
+CO-02-092;Orden;Antes de continuar, firme el consentimiento.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-092;Orden;antes de continuar firme el consentimiento;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-093;Orden;Entonces confirme sus datos personales.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-093;Orden;entonces confirme sus datos personales;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-094;Orden;Deme su documento de identidad.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-094;Orden;deme su documento de identidad;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-095;Orden;Anote su número de contacto.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-095;Orden;anote su número de contacto;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-096;Orden;Adjunte una copia de su documento.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-096;Orden;adjunte una copia de su documento;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-097;Orden;Acompáñeme a la siguiente sala.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-097;Orden;acompáñeme a la siguiente sala;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-098;Orden;Vuelva en veinte minutos.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-098;Orden;vuelva en veinte minutos;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-099;Orden;Explique el motivo de su visita.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-099;Orden;explique el motivo de su visita;sin;AFFIRMATIVE;False;[];False;Sí
+CO-02-100;Orden;Actualice sus datos de contacto.;con;AFFIRMATIVE;False;[];False;Sí
+CO-02-100;Orden;actualice sus datos de contacto;sin;AFFIRMATIVE;False;[];False;Sí

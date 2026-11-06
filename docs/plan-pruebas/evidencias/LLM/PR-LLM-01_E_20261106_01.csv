@@ -1,0 +1,91 @@
+﻿modelo;id;frase;esperado;crudo;obtenido;exacto;conjunto
+gpt-4o-mini;FR-01-001;Hola, buenos días, bienvenidos.;"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";HOLA,BUENOS DIAS,BIENVENIDOS;"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";True;True
+gpt-4o-mini;FR-01-002;Adiós a todos. Buenas noches.;"[""ADIOS"", ""TODOS"", ""BUENAS NOCHES""]";ADIOS,TODOS,BUENAS NOCHES;"[""ADIOS"", ""TODOS"", ""BUENAS NOCHES""]";True;True
+gpt-4o-mini;FR-01-003;Mi abuelo y mi tío trabajan en familia.;"[""ABUELO"", ""TIO"", ""TRABAJAR"", ""FAMILIA""]";ABUELO,TIO,TRABAJAR,FAMILIA;"[""ABUELO"", ""TIO"", ""TRABAJAR"", ""FAMILIA""]";True;True
+gpt-4o-mini;FR-01-004;Estoy contento porque mi hermano está feliz.;"[""YO"", ""CONTENTO"", ""HERMANO"", ""FELIZ""]";YO,CONTENTO,HERMANO,FELIZ;"[""YO"", ""CONTENTO"", ""HERMANO"", ""FELIZ""]";True;True
+gpt-4o-mini;FR-01-005;Buenas tardes. Hoy me siento más o menos.;"[""BUENAS TARDES"", ""YO"", ""SENTIR"", ""MAS O MENOS""]";BUENAS TARDES,HOY,YO,SENTIR,MAS O MENOS;"[""BUENAS TARDES"", ""YO"", ""SENTIR"", ""MAS O MENOS""]";True;True
+gpt-4o-mini;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;"[""GRACIAS"", ""TODOS"", ""NIÑO"", ""NIÑA"", ""COMER"", ""CON GUSTO""]";GRACIAS,TODOS,NINOS,NINAS,COMER,GUSTO;"[""GRACIAS"", ""TODOS"", ""NIÑO"", ""NIÑA"", ""COMER""]";False;False
+gpt-4o-mini;FR-01-007;¿Tienes hambre?;"[""TU"", ""HAMBRE""]";TU,TENER,HAMBRE;"[""TU"", ""HAMBRE""]";True;True
+gpt-4o-mini;FR-01-008;¿Estás bien?;"[""TU"", ""BIEN""]";ESTAR,BIEN;"[""TU"", ""BIEN""]";True;True
+gpt-4o-mini;FR-01-009;¿Ustedes trabajan en familia?;"[""USTEDES"", ""TRABAJAR"", ""FAMILIA""]";USTEDES,TRABAJAR,FAMILIA;"[""USTEDES"", ""TRABAJAR"", ""FAMILIA""]";True;True
+gpt-4o-mini;FR-01-010;Tu hermano está triste. ¿Se siente mal?;"[""TU"", ""HERMANO"", ""TRISTE"", ""SENTIR"", ""MAL""]";HERMANO,TRISTE;"[""TU"", ""HERMANO"", ""TRISTE""]";False;False
+gpt-4o-mini;FR-01-011;Perdón. ¿Estás triste?;"[""PERDON"", ""TU"", ""TRISTE""]";PERDON,ESTAR,TRISTE;"[""TU"", ""PERDON"", ""TRISTE""]";False;True
+gpt-4o-mini;FR-01-012;¿Tu hermano está aburrido?;"[""TU"", ""HERMANO"", ""ABURRIDO""]";HERMANO,ABURRIDO;"[""TU"", ""HERMANO"", ""ABURRIDO""]";True;True
+gpt-4o-mini;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;"[""HOLA"", ""COMO ESTAS"", ""COMO"", ""TU"", ""NOMBRE""]";HOLA,COMO ESTAS,COMO,TU,LLAMAR;"[""HOLA"", ""COMO ESTAS"", ""COMO"", ""TU""]";False;False
+gpt-4o-mini;FR-01-014;¿Dónde vive tu familia?;"[""DONDE"", ""TU"", ""FAMILIA"", ""VIVIR""]";DONDE,TU,FAMILIA,VIVIR;"[""DONDE"", ""TU"", ""FAMILIA"", ""VIVIR""]";True;True
+gpt-4o-mini;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;"[""MUJER"", ""JUICIOSO"", ""QUIEN"", ""HOMBRE""]";MUJER,JUICIOSA,HOMBRE;"[""MUJER"", ""JUICIOSO"", ""HOMBRE""]";False;False
+gpt-4o-mini;FR-01-016;¿Por qué estás triste?;"[""POR QUE"", ""TU"", ""TRISTE""]";POR QUE,ESTAS,TRISTE;"[""POR QUE"", ""TU"", ""TRISTE""]";True;True
+gpt-4o-mini;FR-01-017;¿Cuándo comen ustedes?;"[""CUANDO"", ""USTEDES"", ""COMER""]";CUANDO,USTEDES,COMER;"[""CUANDO"", ""USTEDES"", ""COMER""]";True;True
+gpt-4o-mini;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;"[""PERSONAS"", ""DIFERENTE"", ""QUE"", ""SEÑA"", ""TU""]";PERSONAS,DIFERENTE,SEÑA,USAR,TU;"[""PERSONAS"", ""DIFERENTE"", ""SEÑA"", ""TU""]";False;False
+gpt-4o-mini;FR-01-019;Yo nunca como mucho.;"[""YO"", ""NUNCA"", ""COMER"", ""MUCHO""]";YO,NUNCA,COMER,MUCHO;"[""YO"", ""NUNCA"", ""COMER"", ""MUCHO""]";True;True
+gpt-4o-mini;FR-01-020;Mi abuelo nunca trabaja.;"[""ABUELO"", ""NUNCA"", ""TRABAJAR""]";ABUELO,NUNCA,TRABAJAR;"[""ABUELO"", ""NUNCA"", ""TRABAJAR""]";True;True
+gpt-4o-mini;FR-01-021;Mi tío nunca está aburrido.;"[""TIO"", ""NUNCA"", ""ABURRIDO""]";TIO,NUNCA,ABURRIDO;"[""TIO"", ""NUNCA"", ""ABURRIDO""]";True;True
+gpt-4o-mini;FR-01-022;Ustedes nunca se sienten mal.;"[""USTEDES"", ""NUNCA"", ""SENTIR"", ""MAL""]";USTEDES,NUNCA,SENTIR,MAL;"[""USTEDES"", ""NUNCA"", ""SENTIR"", ""MAL""]";True;True
+gpt-4o-mini;FR-01-023;Perdón. Mi hermano nunca está contento.;"[""PERDON"", ""HERMANO"", ""NUNCA"", ""CONTENTO""]";HERMANO,NUNCA,CONTENTO;"[""HERMANO"", ""NUNCA"", ""CONTENTO""]";False;False
+gpt-4o-mini;FR-01-024;Se siente muy bien. La niña nunca está triste.;"[""NIÑA"", ""SENTIR"", ""MUCHO"", ""BIEN"", ""NUNCA"", ""TRISTE""]";SENTIR,BIEN,NIÑA,NUNCA,TRISTE;"[""TU"", ""SENTIR"", ""BIEN"", ""NIÑA"", ""NUNCA"", ""TRISTE""]";False;False
+gpt-4o-mini;FR-01-025;Por favor, come poco.;"[""POR FAVOR"", ""COMER"", ""POCO""]";POR FAVOR,COMER,POCO;"[""POR FAVOR"", ""COMER"", ""POCO""]";True;True
+gpt-4o-mini;FR-01-026;Con permiso. Déjame pasar, por favor.;"[""PERMISO"", ""POR FAVOR""]";CON PERMISO,DAME PASAR,POR FAVOR;"[""PERMISO"", ""PERMISO"", ""POR FAVOR""]";False;True
+gpt-4o-mini;FR-01-027;Niños, trabajen todos.;"[""NIÑO"", ""TODOS"", ""TRABAJAR""]";NINOS,TRABAJAR,TODOS;"[""NIÑO"", ""TODOS"", ""TRABAJAR""]";True;True
+gpt-4o-mini;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;"[""HERMANO"", ""VIVIR"", ""ABUELO"", ""TRABAJAR"", ""TIO""]";HERMANO,VIVIR,ABUELO,TRABAJAR,TIO;"[""HERMANO"", ""VIVIR"", ""ABUELO"", ""TRABAJAR"", ""TIO""]";True;True
+gpt-4o-mini;FR-01-029;Hola, familia, siéntanse bienvenidos.;"[""HOLA"", ""FAMILIA"", ""BIENVENIDO""]";HOLA,FAMILIA,SENTIR,BIENVENIDOS;"[""HOLA"", ""FAMILIA"", ""SENTIR"", ""BIENVENIDO""]";False;False
+gpt-4o-mini;FR-01-030;Tío, come mucho. Hermano, come poco.;"[""TIO"", ""COMER"", ""MUCHO"", ""HERMANO"", ""COMER"", ""POCO""]";TIO,COMER,MUCHO,HERMANO,COMER,POCO;"[""TIO"", ""COMER"", ""MUCHO"", ""HERMANO"", ""COMER"", ""POCO""]";True;True
+gpt-4o;FR-01-001;Hola, buenos días, bienvenidos.;"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";HOLA,BUENOS DIAS,BIENVENIDOS;"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";True;True
+gpt-4o;FR-01-002;Adiós a todos. Buenas noches.;"[""ADIOS"", ""TODOS"", ""BUENAS NOCHES""]";ADIOS,TODOS,BUENAS NOCHES;"[""ADIOS"", ""TODOS"", ""BUENAS NOCHES""]";True;True
+gpt-4o;FR-01-003;Mi abuelo y mi tío trabajan en familia.;"[""ABUELO"", ""TIO"", ""TRABAJAR"", ""FAMILIA""]";ABUELO,TIO,TRABAJAR,FAMILIA;"[""ABUELO"", ""TIO"", ""TRABAJAR"", ""FAMILIA""]";True;True
+gpt-4o;FR-01-004;Estoy contento porque mi hermano está feliz.;"[""YO"", ""CONTENTO"", ""HERMANO"", ""FELIZ""]";YO,CONTENTO,HERMANO,FELIZ;"[""YO"", ""CONTENTO"", ""HERMANO"", ""FELIZ""]";True;True
+gpt-4o;FR-01-005;Buenas tardes. Hoy me siento más o menos.;"[""BUENAS TARDES"", ""YO"", ""SENTIR"", ""MAS O MENOS""]";BUENAS TARDES,YO,SENTIR,MAS O MENOS;"[""BUENAS TARDES"", ""YO"", ""SENTIR"", ""MAS O MENOS""]";True;True
+gpt-4o;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;"[""GRACIAS"", ""TODOS"", ""NIÑO"", ""NIÑA"", ""COMER"", ""CON GUSTO""]";GRACIAS,TODOS,NIÑOS,NIÑAS,COMER,CON GUSTO;"[""GRACIAS"", ""TODOS"", ""NIÑO"", ""NIÑA"", ""COMER"", ""CON GUSTO""]";True;True
+gpt-4o;FR-01-007;¿Tienes hambre?;"[""TU"", ""HAMBRE""]";TU,HAMBRE,TENER;"[""TU"", ""HAMBRE""]";True;True
+gpt-4o;FR-01-008;¿Estás bien?;"[""TU"", ""BIEN""]";TU,BIEN;"[""TU"", ""BIEN""]";True;True
+gpt-4o;FR-01-009;¿Ustedes trabajan en familia?;"[""USTEDES"", ""TRABAJAR"", ""FAMILIA""]";USTEDES,TRABAJAR,FAMILIA;"[""USTEDES"", ""TRABAJAR"", ""FAMILIA""]";True;True
+gpt-4o;FR-01-010;Tu hermano está triste. ¿Se siente mal?;"[""TU"", ""HERMANO"", ""TRISTE"", ""SENTIR"", ""MAL""]";TU,HERMANO,TRISTE,SENTIR,MAL;"[""TU"", ""HERMANO"", ""TRISTE"", ""SENTIR"", ""MAL""]";True;True
+gpt-4o;FR-01-011;Perdón. ¿Estás triste?;"[""PERDON"", ""TU"", ""TRISTE""]";PERDON,TRISTE;"[""TU"", ""PERDON"", ""TRISTE""]";False;True
+gpt-4o;FR-01-012;¿Tu hermano está aburrido?;"[""TU"", ""HERMANO"", ""ABURRIDO""]";TU,HERMANO,ABURRIDO;"[""TU"", ""HERMANO"", ""ABURRIDO""]";True;True
+gpt-4o;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;"[""HOLA"", ""COMO ESTAS"", ""COMO"", ""TU"", ""NOMBRE""]";HOLA,COMO ESTAS,COMO,LLAMAR;"[""HOLA"", ""COMO ESTAS"", ""COMO""]";False;False
+gpt-4o;FR-01-014;¿Dónde vive tu familia?;"[""DONDE"", ""TU"", ""FAMILIA"", ""VIVIR""]";DONDE,TU,FAMILIA,VIVIR;"[""DONDE"", ""TU"", ""FAMILIA"", ""VIVIR""]";True;True
+gpt-4o;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;"[""MUJER"", ""JUICIOSO"", ""QUIEN"", ""HOMBRE""]";MUJER,JUICIOSA,HOMBRE;"[""MUJER"", ""JUICIOSO"", ""HOMBRE""]";False;False
+gpt-4o;FR-01-016;¿Por qué estás triste?;"[""POR QUE"", ""TU"", ""TRISTE""]";POR QUE,TRISTE;"[""POR QUE"", ""TU"", ""TRISTE""]";True;True
+gpt-4o;FR-01-017;¿Cuándo comen ustedes?;"[""CUANDO"", ""USTEDES"", ""COMER""]";CUANDO,USTEDES,COMER;"[""CUANDO"", ""USTEDES"", ""COMER""]";True;True
+gpt-4o;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;"[""PERSONAS"", ""DIFERENTE"", ""QUE"", ""SEÑA"", ""TU""]";PERSONAS,DIFERENTE,SEÑA,TU,USAR;"[""PERSONAS"", ""DIFERENTE"", ""SEÑA"", ""TU""]";False;False
+gpt-4o;FR-01-019;Yo nunca como mucho.;"[""YO"", ""NUNCA"", ""COMER"", ""MUCHO""]";YO,NUNCA,COMER,MUCHO;"[""YO"", ""NUNCA"", ""COMER"", ""MUCHO""]";True;True
+gpt-4o;FR-01-020;Mi abuelo nunca trabaja.;"[""ABUELO"", ""NUNCA"", ""TRABAJAR""]";ABUELO,NUNCA,TRABAJAR;"[""ABUELO"", ""NUNCA"", ""TRABAJAR""]";True;True
+gpt-4o;FR-01-021;Mi tío nunca está aburrido.;"[""TIO"", ""NUNCA"", ""ABURRIDO""]";TIO,NUNCA,ABURRIDO;"[""TIO"", ""NUNCA"", ""ABURRIDO""]";True;True
+gpt-4o;FR-01-022;Ustedes nunca se sienten mal.;"[""USTEDES"", ""NUNCA"", ""SENTIR"", ""MAL""]";USTEDES,NUNCA,SENTIR,MAL;"[""USTEDES"", ""NUNCA"", ""SENTIR"", ""MAL""]";True;True
+gpt-4o;FR-01-023;Perdón. Mi hermano nunca está contento.;"[""PERDON"", ""HERMANO"", ""NUNCA"", ""CONTENTO""]";PERDON,HERMANO,NUNCA,CONTENTO;"[""PERDON"", ""HERMANO"", ""NUNCA"", ""CONTENTO""]";True;True
+gpt-4o;FR-01-024;Se siente muy bien. La niña nunca está triste.;"[""NIÑA"", ""SENTIR"", ""MUCHO"", ""BIEN"", ""NUNCA"", ""TRISTE""]";SENTIR,BIEN,NIÑA,NUNCA,TRISTE;"[""TU"", ""SENTIR"", ""BIEN"", ""NIÑA"", ""NUNCA"", ""TRISTE""]";False;False
+gpt-4o;FR-01-025;Por favor, come poco.;"[""POR FAVOR"", ""COMER"", ""POCO""]";POR FAVOR,COMER,POCO;"[""POR FAVOR"", ""COMER"", ""POCO""]";True;True
+gpt-4o;FR-01-026;Con permiso. Déjame pasar, por favor.;"[""PERMISO"", ""POR FAVOR""]";CON PERMISO,DEJARME,PASAR,POR FAVOR;"[""PERMISO"", ""POR FAVOR""]";True;True
+gpt-4o;FR-01-027;Niños, trabajen todos.;"[""NIÑO"", ""TODOS"", ""TRABAJAR""]";NIÑOS,TRABAJAR,TODOS;"[""NIÑO"", ""TODOS"", ""TRABAJAR""]";True;True
+gpt-4o;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;"[""HERMANO"", ""VIVIR"", ""ABUELO"", ""TRABAJAR"", ""TIO""]";HERMANO,VIVIR,ABUELO,TRABAJAR,TIO;"[""HERMANO"", ""VIVIR"", ""ABUELO"", ""TRABAJAR"", ""TIO""]";True;True
+gpt-4o;FR-01-029;Hola, familia, siéntanse bienvenidos.;"[""HOLA"", ""FAMILIA"", ""BIENVENIDO""]";HOLA,FAMILIA,BIENVENIDOS;"[""HOLA"", ""FAMILIA"", ""BIENVENIDO""]";True;True
+gpt-4o;FR-01-030;Tío, come mucho. Hermano, come poco.;"[""TIO"", ""COMER"", ""MUCHO"", ""HERMANO"", ""COMER"", ""POCO""]";TIO,COMER,MUCHO,HERMANO,COMER,POCO;"[""TIO"", ""COMER"", ""MUCHO"", ""HERMANO"", ""COMER"", ""POCO""]";True;True
+qwen3:4b-instruct;FR-01-001;Hola, buenos días, bienvenidos.;"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";HOLA,BUENOS DIAS,BIENVENIDOS;"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";True;True
+qwen3:4b-instruct;FR-01-002;Adiós a todos. Buenas noches.;"[""ADIOS"", ""TODOS"", ""BUENAS NOCHES""]";ADIOS,TODOS,BUENAS NOCHES;"[""ADIOS"", ""TODOS"", ""BUENAS NOCHES""]";True;True
+qwen3:4b-instruct;FR-01-003;Mi abuelo y mi tío trabajan en familia.;"[""ABUELO"", ""TIO"", ""TRABAJAR"", ""FAMILIA""]";ABUELO,TU,OJO,TRABAJAN,FAMILIA;"[""ABUELO"", ""TU"", ""FAMILIA""]";False;False
+qwen3:4b-instruct;FR-01-004;Estoy contento porque mi hermano está feliz.;"[""YO"", ""CONTENTO"", ""HERMANO"", ""FELIZ""]";YO,CONTENTO,PORQUE,HERMANO,FELIZ;"[""YO"", ""CONTENTO"", ""HERMANO"", ""FELIZ""]";True;True
+qwen3:4b-instruct;FR-01-005;Buenas tardes. Hoy me siento más o menos.;"[""BUENAS TARDES"", ""YO"", ""SENTIR"", ""MAS O MENOS""]";BUENAS TARDES,YO,SENTIR,MAS O MENOS;"[""BUENAS TARDES"", ""YO"", ""SENTIR"", ""MAS O MENOS""]";True;True
+qwen3:4b-instruct;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;"[""GRACIAS"", ""TODOS"", ""NIÑO"", ""NIÑA"", ""COMER"", ""CON GUSTO""]";GRACIAS,TODOS,NIÑO,NIÑA,COMER,CON,GUSTO;"[""GRACIAS"", ""TODOS"", ""NIÑO"", ""NIÑA"", ""COMER"", ""CON GUSTO""]";True;True
+qwen3:4b-instruct;FR-01-007;¿Tienes hambre?;"[""TU"", ""HAMBRE""]";TENES,HAMBRE;"[""TU"", ""HAMBRE""]";True;True
+qwen3:4b-instruct;FR-01-008;¿Estás bien?;"[""TU"", ""BIEN""]";ESTAS,BIEN;"[""TU"", ""BIEN""]";True;True
+qwen3:4b-instruct;FR-01-009;¿Ustedes trabajan en familia?;"[""USTEDES"", ""TRABAJAR"", ""FAMILIA""]";USTEDES,TRABAJAR,FAMILIA;"[""USTEDES"", ""TRABAJAR"", ""FAMILIA""]";True;True
+qwen3:4b-instruct;FR-01-010;Tu hermano está triste. ¿Se siente mal?;"[""TU"", ""HERMANO"", ""TRISTE"", ""SENTIR"", ""MAL""]";TU,HERMANO,ESTAR,TRISTE,SE,SIENTIR,MAL;"[""TU"", ""HERMANO"", ""TRISTE"", ""MAL""]";False;False
+qwen3:4b-instruct;FR-01-011;Perdón. ¿Estás triste?;"[""PERDON"", ""TU"", ""TRISTE""]";PERDON,ESTAS,TRISTE;"[""TU"", ""PERDON"", ""TRISTE""]";False;True
+qwen3:4b-instruct;FR-01-012;¿Tu hermano está aburrido?;"[""TU"", ""HERMANO"", ""ABURRIDO""]";TU,HERMANO,ESTAR,ABURRIDO;"[""TU"", ""HERMANO"", ""ABURRIDO""]";True;True
+qwen3:4b-instruct;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;"[""HOLA"", ""COMO ESTAS"", ""COMO"", ""TU"", ""NOMBRE""]";HOLA,COMO ESTAS,COMO TE LLAMAS;"[""HOLA"", ""COMO ESTAS""]";False;False
+qwen3:4b-instruct;FR-01-014;¿Dónde vive tu familia?;"[""DONDE"", ""TU"", ""FAMILIA"", ""VIVIR""]";DONDE,TU,FAMILIA,VIVIR;"[""DONDE"", ""TU"", ""FAMILIA"", ""VIVIR""]";True;True
+qwen3:4b-instruct;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;"[""MUJER"", ""JUICIOSO"", ""QUIEN"", ""HOMBRE""]";Mujer,JUICIOSA,HOMBRE;"[""MUJER"", ""JUICIOSO"", ""HOMBRE""]";False;False
+qwen3:4b-instruct;FR-01-016;¿Por qué estás triste?;"[""POR QUE"", ""TU"", ""TRISTE""]";POR QUE,TU,TRISTE;"[""POR QUE"", ""TU"", ""TRISTE""]";True;True
+qwen3:4b-instruct;FR-01-017;¿Cuándo comen ustedes?;"[""CUANDO"", ""USTEDES"", ""COMER""]";CUANDO,USTEDES,COMER;"[""CUANDO"", ""USTEDES"", ""COMER""]";True;True
+qwen3:4b-instruct;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;"[""PERSONAS"", ""DIFERENTE"", ""QUE"", ""SEÑA"", ""TU""]";PERSONA,DIFERENTE,QUE SEÑA,TU;"[""DIFERENTE"", ""QUE"", ""SEÑA"", ""TU""]";False;False
+qwen3:4b-instruct;FR-01-019;Yo nunca como mucho.;"[""YO"", ""NUNCA"", ""COMER"", ""MUCHO""]";YO,NUNCA,COMER,MUCHO;"[""YO"", ""NUNCA"", ""COMER"", ""MUCHO""]";True;True
+qwen3:4b-instruct;FR-01-020;Mi abuelo nunca trabaja.;"[""ABUELO"", ""NUNCA"", ""TRABAJAR""]";ABUELO,NUNCA,TRABAJAR;"[""ABUELO"", ""NUNCA"", ""TRABAJAR""]";True;True
+qwen3:4b-instruct;FR-01-021;Mi tío nunca está aburrido.;"[""TIO"", ""NUNCA"", ""ABURRIDO""]";TU,NERVE,NUNCA,ESTAR,ABURRIDO;"[""TU"", ""NUNCA"", ""ABURRIDO""]";False;False
+qwen3:4b-instruct;FR-01-022;Ustedes nunca se sienten mal.;"[""USTEDES"", ""NUNCA"", ""SENTIR"", ""MAL""]";USTEDES,NUNCA,SENTIR,MAL;"[""USTEDES"", ""NUNCA"", ""SENTIR"", ""MAL""]";True;True
+qwen3:4b-instruct;FR-01-023;Perdón. Mi hermano nunca está contento.;"[""PERDON"", ""HERMANO"", ""NUNCA"", ""CONTENTO""]";PERDON,HERMANO,NUNCA,CONTENTO;"[""PERDON"", ""HERMANO"", ""NUNCA"", ""CONTENTO""]";True;True
+qwen3:4b-instruct;FR-01-024;Se siente muy bien. La niña nunca está triste.;"[""NIÑA"", ""SENTIR"", ""MUCHO"", ""BIEN"", ""NUNCA"", ""TRISTE""]";SE,SIENTE,VERO,NIÑA,NUNCA,ESTAR,TRIPE;"[""TU"", ""NIÑA"", ""NUNCA""]";False;False
+qwen3:4b-instruct;FR-01-025;Por favor, come poco.;"[""POR FAVOR"", ""COMER"", ""POCO""]";POR FAVOR,COMER,POCO;"[""POR FAVOR"", ""COMER"", ""POCO""]";True;True
+qwen3:4b-instruct;FR-01-026;Con permiso. Déjame pasar, por favor.;"[""PERMISO"", ""POR FAVOR""]";PERMISO,DEJAME,PASAR,POR FAVOR;"[""PERMISO"", ""POR FAVOR""]";True;True
+qwen3:4b-instruct;FR-01-027;Niños, trabajen todos.;"[""NIÑO"", ""TODOS"", ""TRABAJAR""]";NIÑOS,TODOS,TRABAJAR;"[""NIÑO"", ""TODOS"", ""TRABAJAR""]";True;True
+qwen3:4b-instruct;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;"[""HERMANO"", ""VIVIR"", ""ABUELO"", ""TRABAJAR"", ""TIO""]";HERMANO,VIVE,ABUELO,TRABAJA,TIO;"[""HERMANO"", ""ABUELO"", ""TIO""]";False;False
+qwen3:4b-instruct;FR-01-029;Hola, familia, siéntanse bienvenidos.;"[""HOLA"", ""FAMILIA"", ""BIENVENIDO""]";HOLA,FAMILIA,SIENTANSE,BIENVENIDOS;"[""HOLA"", ""FAMILIA"", ""BIENVENIDO""]";True;True
+qwen3:4b-instruct;FR-01-030;Tío, come mucho. Hermano, come poco.;"[""TIO"", ""COMER"", ""MUCHO"", ""HERMANO"", ""COMER"", ""POCO""]";TIO,COMER,MUCHO,HERMANO,COMER,POCO;"[""TIO"", ""COMER"", ""MUCHO"", ""HERMANO"", ""COMER"", ""POCO""]";True;True

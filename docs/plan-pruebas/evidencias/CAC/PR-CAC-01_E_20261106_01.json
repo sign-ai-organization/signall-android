@@ -1,0 +1,300 @@
+{
+ "modelos": [
+  {
+   "modelo": "paraphrase-multilingual-MiniLM-L12-v2",
+   "etiqueta": "el del sistema",
+   "disponible": true,
+   "mejor_umbral": {
+    "umbral": 0.03,
+    "parafrasis_correctas": 19,
+    "parafrasis_de": 30,
+    "parafrasis_con_glosas_ajenas": 0,
+    "trampas_falsas": 0,
+    "trampas_de": 30
+   },
+   "ms_mediana_embed": 14.49,
+   "rss_max_mb": 1223.3,
+   "curva": [
+    {
+     "umbral": 0.01,
+     "parafrasis_correctas": 14,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.015,
+     "parafrasis_correctas": 16,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.02,
+     "parafrasis_correctas": 18,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.025,
+     "parafrasis_correctas": 18,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.03,
+     "parafrasis_correctas": 19,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.035,
+     "parafrasis_correctas": 20,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 1,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.04,
+     "parafrasis_correctas": 20,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 2,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.05,
+     "parafrasis_correctas": 22,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 2,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.06,
+     "parafrasis_correctas": 23,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 2,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.08,
+     "parafrasis_correctas": 24,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 7,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.1,
+     "parafrasis_correctas": 25,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 7,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.12,
+     "parafrasis_correctas": 25,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 12,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.15,
+     "parafrasis_correctas": 26,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 17,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.2,
+     "parafrasis_correctas": 27,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 18,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.25,
+     "parafrasis_correctas": 27,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 19,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.3,
+     "parafrasis_correctas": 28,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 21,
+     "trampas_de": 30
+    }
+   ]
+  },
+  {
+   "modelo": "paraphrase-multilingual-mpnet-base-v2",
+   "etiqueta": "más grande",
+   "disponible": true,
+   "mejor_umbral": {
+    "umbral": 0.04,
+    "parafrasis_correctas": 23,
+    "parafrasis_de": 30,
+    "parafrasis_con_glosas_ajenas": 0,
+    "trampas_falsas": 0,
+    "trampas_de": 30
+   },
+   "ms_mediana_embed": 36.64,
+   "rss_max_mb": 1844.3,
+   "curva": [
+    {
+     "umbral": 0.01,
+     "parafrasis_correctas": 13,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.015,
+     "parafrasis_correctas": 15,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.02,
+     "parafrasis_correctas": 16,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.025,
+     "parafrasis_correctas": 20,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.03,
+     "parafrasis_correctas": 22,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.035,
+     "parafrasis_correctas": 22,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.04,
+     "parafrasis_correctas": 23,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 0,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.05,
+     "parafrasis_correctas": 24,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 1,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.06,
+     "parafrasis_correctas": 25,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 3,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.08,
+     "parafrasis_correctas": 25,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 5,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.1,
+     "parafrasis_correctas": 25,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 7,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.12,
+     "parafrasis_correctas": 25,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 11,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.15,
+     "parafrasis_correctas": 27,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 14,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.2,
+     "parafrasis_correctas": 28,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 16,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.25,
+     "parafrasis_correctas": 28,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 19,
+     "trampas_de": 30
+    },
+    {
+     "umbral": 0.3,
+     "parafrasis_correctas": 28,
+     "parafrasis_de": 30,
+     "parafrasis_con_glosas_ajenas": 0,
+     "trampas_falsas": 21,
+     "trampas_de": 30
+    }
+   ]
+  },
+  {
+   "modelo": "multilingual-e5-small",
+   "etiqueta": "otra familia",
+   "disponible": false,
+   "error": "RepositoryNotFoundError: 401 Client Error. (Request ID: Root=1-6aedafcb-46fee50571ec453201238c00;35709fa7-06ff-4fb4-89f9-4e2b697e4e76)\n\nRepository Not Found for url: https://huggingface.co/sentence-transformers/multilingual-e"
+  }
+ ]
+}

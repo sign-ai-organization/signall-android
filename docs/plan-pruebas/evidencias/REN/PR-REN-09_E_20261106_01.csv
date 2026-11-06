@@ -1,0 +1,67 @@
+﻿i;fr;audio;texto;t_envio;t_done;t_texto;latencia_ms;oraciones
+0;FR-01-001;AU-01-001;Hola, buenos días, bienvenidos.;0.02;5.61;4.81;801.4;1
+1;FR-01-005;AU-01-007;Buenas tardes. Hoy me siento más o menos.;5.61;12.04;11.23;812.2;2
+2;FR-01-007;AU-01-013;¿Tienes hambre?;12.04;15.71;15.0;714.4;1
+3;FR-01-011;AU-01-019;Perdón, ¿estás triste?;15.71;20.65;20.01;645.8;2
+4;FR-01-013;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;20.65;25.81;25.06;747.5;3
+5;FR-01-014;AU-01-031;¿Dónde vive tu familia?;25.81;30.41;29.79;620.3;1
+6;FR-01-019;AU-01-037;Yo nunca como mucho.;30.41;34.98;34.36;620.0;1
+7;FR-01-023;AU-01-043;Perdón, mi hermano nunca está contento.;34.98;41.12;40.51;608.7;1
+8;FR-01-025;AU-01-049;Por favor, come poco.;41.12;45.73;45.08;651.0;1
+9;FR-01-026;AU-01-055;Con permiso, déjame pasar, por favor.;45.73;52.05;51.17;887.2;1
+10;FR-01-001;AU-01-001;Hola, buenos días, bienvenidos.;52.05;56.85;56.85;1.2;1
+11;FR-01-005;AU-01-007;Buenas tardes. Hoy me siento más o menos.;56.85;62.49;62.48;1.7;2
+12;FR-01-007;AU-01-013;¿Tienes hambre?;62.49;65.45;65.45;1.1;1
+13;FR-01-011;AU-01-019;Perdón, ¿estás triste?;65.45;69.75;69.75;1.8;2
+14;FR-01-013;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;69.75;74.19;74.19;1.8;3
+15;FR-01-014;AU-01-031;¿Dónde vive tu familia?;74.19;78.17;78.17;1.3;1
+16;FR-01-019;AU-01-037;Yo nunca como mucho.;78.17;82.12;82.12;1.2;1
+17;FR-01-023;AU-01-043;Perdón, mi hermano nunca está contento.;82.12;87.65;87.64;1.2;1
+18;FR-01-025;AU-01-049;Por favor, come poco.;87.65;91.61;91.6;1.4;1
+19;FR-01-026;AU-01-055;Con permiso, déjame pasar, por favor.;91.61;97.03;97.02;1.3;1
+20;FR-01-001;AU-01-001;Hola, buenos días, bienvenidos.;97.03;101.81;101.81;1.2;1
+21;FR-01-005;AU-01-007;Buenas tardes. Hoy me siento más o menos.;101.81;107.45;107.45;1.7;2
+22;FR-01-007;AU-01-013;¿Tienes hambre?;107.45;110.42;110.42;1.3;1
+23;FR-01-011;AU-01-019;Perdón, ¿estás triste?;110.42;114.71;114.71;1.4;2
+24;FR-01-013;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;114.71;119.14;119.14;1.8;3
+25;FR-01-014;AU-01-031;¿Dónde vive tu familia?;119.14;123.12;123.12;1.2;1
+26;FR-01-019;AU-01-037;Yo nunca como mucho.;123.12;127.07;127.07;1.2;1
+27;FR-01-023;AU-01-043;Perdón, mi hermano nunca está contento.;127.07;132.59;132.59;1.3;1
+28;FR-01-025;AU-01-049;Por favor, come poco.;132.6;136.56;136.55;1.2;1
+29;FR-01-026;AU-01-055;Con permiso, déjame pasar, por favor.;136.56;141.97;141.97;1.2;1
+30;FR-01-001;AU-01-001;Hola, buenos días, bienvenidos.;141.97;146.76;146.76;1.2;1
+31;FR-01-005;AU-01-007;Buenas tardes. Hoy me siento más o menos.;146.76;152.38;152.38;1.6;2
+32;FR-01-007;AU-01-013;¿Tienes hambre?;152.38;155.34;155.34;1.1;1
+33;FR-01-011;AU-01-019;Perdón, ¿estás triste?;155.34;159.63;159.63;1.5;2
+34;FR-01-013;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;159.63;164.04;164.03;1.7;3
+35;FR-01-014;AU-01-031;¿Dónde vive tu familia?;164.04;168.02;168.02;1.3;1
+36;FR-01-019;AU-01-037;Yo nunca como mucho.;168.02;171.99;171.98;1.3;1
+37;FR-01-023;AU-01-043;Perdón, mi hermano nunca está contento.;171.99;177.51;177.5;2.0;1
+38;FR-01-025;AU-01-049;Por favor, come poco.;177.51;181.47;181.47;1.3;1
+39;FR-01-026;AU-01-055;Con permiso, déjame pasar, por favor.;181.47;186.89;186.89;1.4;1
+40;FR-01-001;AU-01-001;Hola, buenos días, bienvenidos.;186.89;191.68;191.68;1.3;1
+41;FR-01-005;AU-01-007;Buenas tardes. Hoy me siento más o menos.;191.68;197.31;197.31;1.9;2
+42;FR-01-007;AU-01-013;¿Tienes hambre?;197.31;200.27;200.27;1.3;1
+43;FR-01-011;AU-01-019;Perdón, ¿estás triste?;200.27;204.55;204.55;1.4;2
+44;FR-01-013;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;204.55;208.96;208.96;1.5;3
+45;FR-01-014;AU-01-031;¿Dónde vive tu familia?;208.96;212.95;212.95;1.9;1
+46;FR-01-019;AU-01-037;Yo nunca como mucho.;212.95;216.9;216.9;1.1;1
+47;FR-01-023;AU-01-043;Perdón, mi hermano nunca está contento.;216.9;222.43;222.43;1.2;1
+48;FR-01-025;AU-01-049;Por favor, come poco.;222.43;226.4;226.4;1.4;1
+49;FR-01-026;AU-01-055;Con permiso, déjame pasar, por favor.;226.4;231.81;231.81;1.3;1
+50;FR-01-001;AU-01-001;Hola, buenos días, bienvenidos.;231.81;236.61;236.61;1.1;1
+51;FR-01-005;AU-01-007;Buenas tardes. Hoy me siento más o menos.;236.61;242.25;242.24;1.5;2
+52;FR-01-007;AU-01-013;¿Tienes hambre?;242.25;245.21;245.21;1.5;1
+53;FR-01-011;AU-01-019;Perdón, ¿estás triste?;245.21;249.49;249.49;1.4;2
+54;FR-01-013;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;249.49;253.9;253.9;1.8;3
+55;FR-01-014;AU-01-031;¿Dónde vive tu familia?;253.9;257.87;257.87;1.3;1
+56;FR-01-019;AU-01-037;Yo nunca como mucho.;257.87;261.83;261.82;1.2;1
+57;FR-01-023;AU-01-043;Perdón, mi hermano nunca está contento.;261.83;267.38;267.38;1.3;1
+58;FR-01-025;AU-01-049;Por favor, come poco.;267.38;271.34;271.34;1.1;1
+59;FR-01-026;AU-01-055;Con permiso, déjame pasar, por favor.;271.35;276.78;276.78;1.1;1
+60;FR-01-001;AU-01-001;Hola, buenos días, bienvenidos.;276.78;281.57;281.57;1.2;1
+61;FR-01-005;AU-01-007;Buenas tardes. Hoy me siento más o menos.;281.57;287.2;287.2;1.5;2
+62;FR-01-007;AU-01-013;¿Tienes hambre?;287.2;290.17;290.17;1.2;1
+63;FR-01-011;AU-01-019;Perdón, ¿estás triste?;290.17;294.46;294.46;1.4;2
+64;FR-01-013;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;294.46;298.89;298.88;1.9;3
+65;FR-01-014;AU-01-031;¿Dónde vive tu familia?;298.89;302.86;302.86;1.2;1

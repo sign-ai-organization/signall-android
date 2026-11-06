@@ -1,0 +1,71 @@
+﻿id;glosa;tipo;esperado;reconocida;glb;ok
+CO-03-001;ABUELO;Real;Reconocida;True;signs/0016_0000_0000.glb;True
+CO-03-002;ABURRIDO;Real;Reconocida;True;signs/0023_0000_0000.glb;True
+CO-03-003;ADIOS;Real;Reconocida;True;signs/0031_0000_0000.glb;True
+CO-03-004;BIEN;Real;Reconocida;True;signs/0024_0000_0000.glb;True
+CO-03-005;BIENVENIDO;Real;Reconocida;True;signs/0034_0000_0000.glb;True
+CO-03-006;BUENAS NOCHES;Real;Reconocida;True;signs/0003_0000_0000.glb;True
+CO-03-007;BUENAS TARDES;Real;Reconocida;True;signs/0002_0000_0000.glb;True
+CO-03-008;BUENOS DIAS;Real;Reconocida;True;signs/0001_0000_0000.glb;True
+CO-03-009;COMER;Real;Reconocida;True;signs/0007_0000_0000.glb;True
+CO-03-010;COMO;Real;Reconocida;True;signs/0044_0000_0000.glb;True
+CO-03-011;COMO ESTAS;Real;Reconocida;True;signs/0026_0000_0000.glb;True
+CO-03-012;CON GUSTO;Real;Reconocida;True;signs/0033_0000_0000.glb;True
+CO-03-013;CONTENTO;Real;Reconocida;True;signs/0021_0000_0000.glb;True
+CO-03-014;CUANDO;Real;Reconocida;True;signs/0042_0000_0000.glb;True
+CO-03-015;DIFERENTE;Real;Reconocida;True;signs/0047_0000_0000.glb;True
+CO-03-016;DONDE;Real;Reconocida;True;signs/0043_0000_0000.glb;True
+CO-03-017;FAMILIA;Real;Reconocida;True;signs/0010_0000_0000.glb;True
+CO-03-018;FELIZ;Real;Reconocida;True;signs/0020_0000_0000.glb;True
+CO-03-019;GRACIAS;Real;Reconocida;True;signs/0000_0000_0000.glb;True
+CO-03-020;HAMBRE;Real;Reconocida;True;signs/0019_0000_0000.glb;True
+CO-03-021;HERMANO;Real;Reconocida;True;signs/0018_0000_0000.glb;True
+CO-03-022;HOLA;Real;Reconocida;True;signs/0030_0000_0000.glb;True
+CO-03-023;HOMBRE;Real;Reconocida;True;signs/0013_0000_0000.glb;True
+CO-03-024;JUICIOSO;Real;Reconocida;True;signs/0029_0000_0000.glb;True
+CO-03-025;MAL;Real;Reconocida;True;signs/0025_0000_0000.glb;True
+CO-03-026;MAS O MENOS;Real;Reconocida;True;signs/0027_0000_0000.glb;True
+CO-03-027;MUCHO;Real;Reconocida;True;signs/0049_0000_0000.glb;True
+CO-03-028;MUJER;Real;Reconocida;True;signs/0012_0000_0000.glb;True
+CO-03-029;NIÑA;Real;Reconocida;True;signs/0015_0000_0000.glb;True
+CO-03-030;NIÑO;Real;Reconocida;True;signs/0014_0000_0000.glb;True
+CO-03-031;NOMBRE;Real;Reconocida;True;signs/0005_0000_0000.glb;True
+CO-03-032;NUNCA;Real;Reconocida;True;signs/0037_0000_0000.glb;True
+CO-03-033;PERDON;Real;Reconocida;True;signs/0035_0000_0000.glb;True
+CO-03-034;PERMISO;Real;Reconocida;True;signs/0036_0000_0000.glb;True
+CO-03-035;PERSONAS;Real;Reconocida;True;signs/0011_0000_0000.glb;True
+CO-03-036;POCO;Real;Reconocida;True;signs/0009_0000_0000.glb;True
+CO-03-037;POR FAVOR;Real;Reconocida;True;signs/0032_0000_0000.glb;True
+CO-03-038;POR QUE;Real;Reconocida;True;signs/0045_0000_0000.glb;True
+CO-03-039;QUE;Real;Reconocida;True;signs/0041_0000_0000.glb;True
+CO-03-040;QUIEN;Real;Reconocida;True;signs/0046_0000_0000.glb;True
+CO-03-041;SENTIR;Real;Reconocida;True;signs/0028_0000_0000.glb;True
+CO-03-042;SEÑA;Real;Reconocida;True;signs/0004_0000_0000.glb;True
+CO-03-043;TIO;Real;Reconocida;True;signs/0017_0000_0000.glb;True
+CO-03-044;TODOS;Real;Reconocida;True;signs/0048_0000_0000.glb;True
+CO-03-045;TRABAJAR;Real;Reconocida;True;signs/0006_0000_0000.glb;True
+CO-03-046;TRISTE;Real;Reconocida;True;signs/0022_0000_0000.glb;True
+CO-03-047;TU;Real;Reconocida;True;signs/0039_0000_0000.glb;True
+CO-03-048;USTEDES;Real;Reconocida;True;signs/0040_0000_0000.glb;True
+CO-03-049;VIVIR;Real;Reconocida;True;signs/0008_0000_0000.glb;True
+CO-03-050;YO;Real;Reconocida;True;signs/0038_0000_0000.glb;True
+CO-03-051;CEDULA;Inexistente;No disponible;False;;True
+CO-03-052;TELEFONO;Inexistente;No disponible;False;;True
+CO-03-053;DIRECCION;Inexistente;No disponible;False;;True
+CO-03-054;EDAD;Inexistente;No disponible;False;;True
+CO-03-055;FIRMAR;Inexistente;No disponible;False;;True
+CO-03-056;DOCUMENTO;Inexistente;No disponible;False;;True
+CO-03-057;CASA;Inexistente;No disponible;False;;True
+CO-03-058;AMIGO;Inexistente;No disponible;False;;True
+CO-03-059;ABUELA;Inexistente;No disponible;False;;True
+CO-03-060;ESCUELA;Inexistente;No disponible;False;;True
+CO-03-061;BUENOS DÍAS;Variante: con tilde;Reconocida;True;signs/0001_0000_0000.glb;True
+CO-03-062;CÓMO;Variante: con tilde;Reconocida;True;signs/0044_0000_0000.glb;True
+CO-03-063;PERDÓN;Variante: con tilde;Reconocida;True;signs/0035_0000_0000.glb;True
+CO-03-064;hola;Variante: en minúsculas;Reconocida;True;signs/0030_0000_0000.glb;True
+CO-03-065;gracias;Variante: en minúsculas;Reconocida;True;signs/0000_0000_0000.glb;True
+CO-03-066;por favor;Variante: en minúsculas;Reconocida;True;signs/0032_0000_0000.glb;True
+CO-03-067;FAMILIA.;Variante: con punto;Reconocida;True;signs/0010_0000_0000.glb;True
+CO-03-068;ADIOS.;Variante: con punto;Reconocida;True;signs/0031_0000_0000.glb;True
+CO-03-069;BUENAS NOCHES;Variante: con un espacio de más;Reconocida;True;signs/0003_0000_0000.glb;True
+CO-03-070;POR  FAVOR;Variante: con un espacio de más;Reconocida;True;signs/0032_0000_0000.glb;True

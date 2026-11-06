@@ -1,0 +1,162 @@
+{
+ "reales_con_problemas": [],
+ "fabricadas": [
+  {
+   "id": "CO-04-001",
+   "tipo": "En minúsculas",
+   "crudo": "hola, buenos dias, bienvenido",
+   "esperado": [
+    "HOLA",
+    "BUENOS DIAS",
+    "BIENVENIDO"
+   ],
+   "leido": [
+    "HOLA",
+    "BUENOS DIAS",
+    "BIENVENIDO"
+   ],
+   "bien": true,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-002",
+   "tipo": "En minúsculas",
+   "crudo": "yo, nunca, comer, mucho",
+   "esperado": [
+    "YO",
+    "NUNCA",
+    "COMER",
+    "MUCHO"
+   ],
+   "leido": [
+    "YO",
+    "NUNCA",
+    "COMER",
+    "MUCHO"
+   ],
+   "bien": true,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-003",
+   "tipo": "Con tildes",
+   "crudo": "HOLA, CÓMO ESTÁS",
+   "esperado": [
+    "HOLA",
+    "COMO ESTAS"
+   ],
+   "leido": [
+    "HOLA",
+    "COMO ESTAS"
+   ],
+   "bien": true,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-004",
+   "tipo": "Con tildes",
+   "crudo": "PERDÓN, TÚ, TRISTE",
+   "esperado": [
+    "PERDON",
+    "TU",
+    "TRISTE"
+   ],
+   "leido": [
+    "PERDON",
+    "TU",
+    "TRISTE"
+   ],
+   "bien": true,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-005",
+   "tipo": "Con puntos",
+   "crudo": "HOLA. BUENOS DIAS. BIENVENIDO.",
+   "esperado": [
+    "HOLA",
+    "BUENOS DIAS",
+    "BIENVENIDO"
+   ],
+   "leido": [
+    "HOLA",
+    "BUENOS DIAS",
+    "BIENVENIDO"
+   ],
+   "bien": true,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-006",
+   "tipo": "Con puntos",
+   "crudo": "ABUELO, NUNCA, TRABAJAR.",
+   "esperado": [
+    "ABUELO",
+    "NUNCA",
+    "TRABAJAR"
+   ],
+   "leido": [
+    "ABUELO",
+    "NUNCA",
+    "TRABAJAR"
+   ],
+   "bien": true,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-007",
+   "tipo": "Con texto extra",
+   "crudo": "Claro, aquí tienes la traducción: TU, HAMBRE",
+   "esperado": [
+    "TU",
+    "HAMBRE"
+   ],
+   "leido": [
+    "TU",
+    "HAMBRE"
+   ],
+   "bien": true,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-008",
+   "tipo": "Con texto extra",
+   "crudo": "TIO, TRABAJAR. Espero que te sirva.",
+   "esperado": [
+    "TIO",
+    "TRABAJAR"
+   ],
+   "leido": [
+    "TIO"
+   ],
+   "bien": false,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-009",
+   "tipo": "Con espacios dentro de una glosa",
+   "crudo": "POR   FAVOR, COMER",
+   "esperado": [
+    "POR FAVOR",
+    "COMER"
+   ],
+   "leido": [
+    "POR FAVOR",
+    "COMER"
+   ],
+   "bien": true,
+   "rompio": false
+  },
+  {
+   "id": "CO-04-010",
+   "tipo": "Vacía",
+   "crudo": "(vacía: sin ningún carácter)",
+   "esperado": [],
+   "leido": [],
+   "bien": true,
+   "rompio": false
+  }
+ ],
+ "fabricadas_bien": 9,
+ "fabricadas_de": 10
+}

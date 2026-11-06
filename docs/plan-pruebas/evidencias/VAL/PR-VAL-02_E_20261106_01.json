@@ -1,0 +1,75 @@
+{
+ "n": 50,
+ "glosas_distintas": 50,
+ "ids_distintos": 50,
+ "categorias_vacias": [],
+ "rutas_invalidas_formato": [],
+ "rutas_fuera_del_inventario": [],
+ "glosas_duplicadas": [],
+ "restricciones": [
+  {
+   "conname": "catalog_glb_animation_path_not_null",
+   "contype": "n"
+  },
+  {
+   "conname": "catalog_gloss_not_null",
+   "contype": "n"
+  },
+  {
+   "conname": "catalog_id_sign_not_null",
+   "contype": "n"
+  },
+  {
+   "conname": "catalog_modified_at_not_null",
+   "contype": "n"
+  },
+  {
+   "conname": "catalog_pkey",
+   "contype": "p"
+  },
+  {
+   "conname": "catalog_semantic_category_not_null",
+   "contype": "n"
+  },
+  {
+   "conname": "uq_catalog_gloss",
+   "contype": "u"
+  }
+ ],
+ "intentos": {
+  "glosa_repetida_id_nuevo": "RECHAZADO: UniqueViolationError: duplicate key value violates unique constraint \"uq_catalog_gloss\"\nDETAIL:  Key (gloss)=(GRACIAS) already exists.",
+  "id_repetido": "RECHAZADO: UniqueViolationError: duplicate key value violates unique constraint \"catalog_pkey\"\nDETAIL:  Key (id_sign)=(0) already exists."
+ },
+ "memoria": {
+  "llaves_vocabulario": 63,
+  "glosas_canonicas": 50,
+  "sinonimos": 13
+ },
+ "stats_antes": {
+  "seq_scan": 721,
+  "idx_scan": 57,
+  "seq_tup_read": 32726,
+  "idx_tup_fetch": 101,
+  "n_tup_ins": 142,
+  "n_tup_upd": 0,
+  "n_tup_del": 77
+ },
+ "stats_despues": {
+  "seq_scan": 721,
+  "idx_scan": 57,
+  "seq_tup_read": 32726,
+  "idx_tup_fetch": 101,
+  "n_tup_ins": 142,
+  "n_tup_upd": 0,
+  "n_tup_del": 77
+ },
+ "delta_durante_30_frases": {
+  "seq_scan": 0,
+  "idx_scan": 0,
+  "seq_tup_read": 0,
+  "idx_tup_fetch": 0,
+  "n_tup_ins": 0,
+  "n_tup_upd": 0,
+  "n_tup_del": 0
+ }
+}

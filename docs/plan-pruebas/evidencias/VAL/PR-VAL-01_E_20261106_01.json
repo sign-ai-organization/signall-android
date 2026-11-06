@@ -1,0 +1,33 @@
+{
+ "reales": {
+  "n": 50,
+  "ok": 50
+ },
+ "inexistentes": {
+  "n": 10,
+  "ok": 10
+ },
+ "variantes": {
+  "n": 10,
+  "ok": 10
+ },
+ "variantes_por_tipo": {
+  "Variante: con punto": {
+   "n": 2,
+   "ok": 2
+  },
+  "Variante: con tilde": {
+   "n": 3,
+   "ok": 3
+  },
+  "Variante: con un espacio de más": {
+   "n": 2,
+   "ok": 2
+  },
+  "Variante: en minúsculas": {
+   "n": 3,
+   "ok": 3
+  }
+ },
+ "fallos": []
+}

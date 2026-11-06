@@ -1,0 +1,78 @@
+{
+ "fila": {
+  "id_sign": 19,
+  "gloss": "HAMBRE",
+  "semantic_category": "sustantivo",
+  "glb_animation_path": "signs/0019_0000_0000.glb"
+ },
+ "con_fila": {
+  "frase": "¿Tienes hambre?",
+  "glosas": [
+   {
+    "text": "TU",
+    "available": true,
+    "glb_path": "signs/0039_0000_0000.glb",
+    "semantic_category": "pronombre"
+   },
+   {
+    "text": "HAMBRE",
+    "available": true,
+    "glb_path": "signs/0019_0000_0000.glb",
+    "semantic_category": "sustantivo"
+   }
+  ],
+  "hambre_disponible": true,
+  "segmentos": 1
+ },
+ "sin_fila": {
+  "frase": "¿Tienes hambre?",
+  "glosas": [
+   {
+    "text": "TU",
+    "available": true,
+    "glb_path": "signs/0039_0000_0000.glb",
+    "semantic_category": "pronombre"
+   }
+  ],
+  "hambre_disponible": null,
+  "segmentos": 1
+ },
+ "restaurado": {
+  "frase": "¿Tienes hambre?",
+  "glosas": [
+   {
+    "text": "TU",
+    "available": true,
+    "glb_path": "signs/0039_0000_0000.glb",
+    "semantic_category": "pronombre"
+   },
+   {
+    "text": "HAMBRE",
+    "available": true,
+    "glb_path": "signs/0019_0000_0000.glb",
+    "semantic_category": "sustantivo"
+   }
+  ],
+  "hambre_disponible": true,
+  "segmentos": 1
+ },
+ "remove": {
+  "borradas": 1,
+  "quedan": 49
+ },
+ "restore": {
+  "restaurada": {
+   "id_sign": 19,
+   "gloss": "HAMBRE",
+   "semantic_category": "sustantivo",
+   "glb_animation_path": "signs/0019_0000_0000.glb"
+  },
+  "total": 50
+ },
+ "app": {
+  "antes": "segment TU,HAMBRE; 2 señas representadas en 3.809 ms",
+  "sin_fila": "segment TU; 1 seña representada en 1.772 ms; HAMBRE se descarta antes de la validación, sin aviso de «no disponible»",
+  "restaurado": "segment TU,HAMBRE; 2 señas representadas en 3.782 ms"
+ },
+ "codigo_backend_tocado": 0
+}

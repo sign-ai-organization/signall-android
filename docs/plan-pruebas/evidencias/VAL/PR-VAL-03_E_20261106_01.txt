@@ -1,0 +1,13 @@
+PR-VAL-03 · Agregar una seña sin tocar código (HAMBRE, FR-01-007)
+
+1. Fila guardada: id_sign=19, HAMBRE, sustantivo, signs/0019_0000_0000.glb.
+2. Con la fila: el WebSocket devuelve TU y HAMBRE, las dos disponibles. La app
+   representa 2 señas en 3.809 ms (captura 01).
+3. Se borra la fila (queda el catálogo en 49) y se reinicia el backend. El
+   WebSocket devuelve solo TU; HAMBRE se descarta antes de la validación. La app
+   representa 1 seña en 1.772 ms (captura 02). No muestra el aviso de «no
+   disponible»: la glosa simplemente deja de aparecer.
+4. Se restaura la fila (catálogo 50) y se reinicia el backend. El WebSocket
+   devuelve TU y HAMBRE otra vez. La app representa 2 señas en 3.782 ms (captura 03).
+5. Archivos de código del backend tocados: 0. No se cambió código ni asset de la
+   app; el APK recompilado es idéntico (sha256 52958cfc…).

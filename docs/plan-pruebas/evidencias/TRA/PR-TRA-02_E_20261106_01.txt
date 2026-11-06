@@ -1,0 +1,7 @@
+### ruff ruff 0.17.1
+All checks passed!
+exit=0
+
+### mypy mypy 2.4.0 (compiled: yes)
+Success: no issues found in 42 source files
+exit=0

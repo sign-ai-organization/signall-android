@@ -1,0 +1,24 @@
+﻿caso;frame;type;audio;_t;index;text;source;steps_ms;total;segment;final
+texto-una-oracion;0;capability;True;1.6;;;;;;;
+texto-una-oracion;1;sentence_trace;;2.3;0;Hola, buenos días, bienvenidos.;cache;"{""fingerprint"": 0.1, ""cache.exact"": 0.0}";;;
+texto-una-oracion;2;segment;;2.4;0;;;;1;"{""type"": ""AFFIRMATIVE"", ""glosses"": [{""text"": ""HOLA"", ""available"": true, ""glb_path"": ""signs/0030_0000_0000.glb"", ""semantic_category"": ""interjección""}, {""text"": ""BUENOS DIAS"", ""available"": true, ""glb_path"": ""signs/0001_0000_0000.glb"", ""semantic_category"": ""locución""}, {""text"": ""BIENVENIDO"", ""available"": true, ""glb_path"": ""signs/0034_0000_0000.glb"", ""semantic_category"": ""interjección""}]}";
+texto-una-oracion;3;trace;;2.5;;;;"{""segmentation"": 0.1, ""validation"": 0.0, ""total"": 0.7}";;;
+texto-una-oracion;4;done;;2.5;;;;;;;
+texto-varias-oraciones;0;capability;True;1.5;;;;;;;
+texto-varias-oraciones;1;sentence_trace;;5.1;0;Gracias a todos.;cache;"{""fingerprint"": 0.0, ""cache.exact"": 0.0}";;;
+texto-varias-oraciones;2;segment;;5.2;0;;;;2;"{""type"": ""AFFIRMATIVE"", ""glosses"": [{""text"": ""GRACIAS"", ""available"": true, ""glb_path"": ""signs/0000_0000_0000.glb"", ""semantic_category"": ""sustantivo""}, {""text"": ""TODOS"", ""available"": true, ""glb_path"": ""signs/0048_0000_0000.glb"", ""semantic_category"": ""determinante""}]}";
+texto-varias-oraciones;3;sentence_trace;;5.3;1;Los niños y las niñas comen con gusto.;cache;"{""fingerprint"": 0.0, ""cache.exact"": 0.0}";;;
+texto-varias-oraciones;4;segment;;5.3;1;;;;2;"{""type"": ""AFFIRMATIVE"", ""glosses"": [{""text"": ""NIÑO"", ""available"": true, ""glb_path"": ""signs/0014_0000_0000.glb"", ""semantic_category"": ""sustantivo""}, {""text"": ""NIÑA"", ""available"": true, ""glb_path"": ""signs/0015_0000_0000.glb"", ""semantic_category"": ""sustantivo""}, {""text"": ""COMER"", ""available"": true, ""glb_path"": ""signs/0007_0000_0000.glb"", ""semantic_category"": ""verbo""}]}";
+texto-varias-oraciones;5;trace;;5.5;;;;"{""segmentation"": 2.7, ""validation"": 0.0, ""total"": 3.7}";;;
+texto-varias-oraciones;6;done;;5.5;;;;;;;
+audio;0;capability;True;0.0;;;;;;;
+audio;1;transcript;;0.1;;Hola;;;;;False
+audio;2;transcript;;0.1;;Hola.;;;;;False
+audio;3;transcript;;0.1;;Hola, buenos días.;;;;;False
+audio;4;transcript;;0.1;;Hola, buenos días, bienvenido.;;;;;False
+audio;5;transcript;;0.1;;Hola, buenos días, bienvenidos.;;;;;False
+audio;6;transcript;;249.7;;Hola, buenos días, bienvenidos.;;;;;True
+audio;7;sentence_trace;;1.1;0;Hola, buenos días, bienvenidos.;cache;"{""fingerprint"": 0.0, ""cache.exact"": 0.0}";;;
+audio;8;segment;;1.2;0;;;;1;"{""type"": ""AFFIRMATIVE"", ""glosses"": [{""text"": ""HOLA"", ""available"": true, ""glb_path"": ""signs/0030_0000_0000.glb"", ""semantic_category"": ""interjección""}, {""text"": ""BUENOS DIAS"", ""available"": true, ""glb_path"": ""signs/0001_0000_0000.glb"", ""semantic_category"": ""locución""}, {""text"": ""BIENVENIDO"", ""available"": true, ""glb_path"": ""signs/0034_0000_0000.glb"", ""semantic_category"": ""interjección""}]}";
+audio;9;trace;;1.3;;;;"{""segmentation"": 0.1, ""validation"": 0.1, ""total"": 0.8}";;;
+audio;10;done;;1.3;;;;;;;

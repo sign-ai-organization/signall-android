@@ -1,0 +1,142 @@
+{
+ "modelo": "paraphrase-multilingual-MiniLM-L12-v2",
+ "curva": [
+  {
+   "umbral": 0.01,
+   "parafrasis_correctas": 14,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 0,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.015,
+   "parafrasis_correctas": 16,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 0,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.02,
+   "parafrasis_correctas": 18,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 0,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.025,
+   "parafrasis_correctas": 18,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 0,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.03,
+   "parafrasis_correctas": 19,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 0,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.035,
+   "parafrasis_correctas": 20,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 1,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.04,
+   "parafrasis_correctas": 20,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 2,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.05,
+   "parafrasis_correctas": 22,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 2,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.06,
+   "parafrasis_correctas": 23,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 2,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.08,
+   "parafrasis_correctas": 24,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 7,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.1,
+   "parafrasis_correctas": 25,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 7,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.12,
+   "parafrasis_correctas": 25,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 12,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.15,
+   "parafrasis_correctas": 26,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 17,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.2,
+   "parafrasis_correctas": 27,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 18,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.25,
+   "parafrasis_correctas": 27,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 19,
+   "trampas_de": 30
+  },
+  {
+   "umbral": 0.3,
+   "parafrasis_correctas": 28,
+   "parafrasis_de": 30,
+   "parafrasis_con_glosas_ajenas": 0,
+   "trampas_falsas": 21,
+   "trampas_de": 30
+  }
+ ],
+ "mejor_umbral": {
+  "umbral": 0.03,
+  "parafrasis_correctas": 19,
+  "parafrasis_de": 30,
+  "parafrasis_con_glosas_ajenas": 0,
+  "trampas_falsas": 0,
+  "trampas_de": 30
+ },
+ "metodo": "distancia coseno (1 - producto punto) al vecino más cercano del mismo phrase_type, con atajo exacto sobre el texto normalizado"
+}

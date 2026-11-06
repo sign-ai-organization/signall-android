@@ -1,0 +1,24 @@
+{
+ "fin_s": 302.9,
+ "duracion_objetivo_s": 300,
+ "frases": 66,
+ "completadas": 66,
+ "errores": [],
+ "por_minuto_envio": {
+  "0": 12,
+  "1": 14,
+  "2": 13,
+  "3": 13,
+  "4": 14
+ },
+ "por_minuto_done": {
+  "0": 11,
+  "1": 14,
+  "2": 13,
+  "3": 13,
+  "4": 14,
+  "5": 1
+ },
+ "latencia_p50": 1.4,
+ "latencia_p95": 747.5
+}

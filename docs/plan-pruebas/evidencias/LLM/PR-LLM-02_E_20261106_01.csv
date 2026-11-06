@@ -1,0 +1,11 @@
+﻿parte;id;tipo;crudo;esperado;leido;bien;rompio
+fabricada;CO-04-001;En minúsculas;hola, buenos dias, bienvenido;"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";True;False
+fabricada;CO-04-002;En minúsculas;yo, nunca, comer, mucho;"[""YO"", ""NUNCA"", ""COMER"", ""MUCHO""]";"[""YO"", ""NUNCA"", ""COMER"", ""MUCHO""]";True;False
+fabricada;CO-04-003;Con tildes;HOLA, CÓMO ESTÁS;"[""HOLA"", ""COMO ESTAS""]";"[""HOLA"", ""COMO ESTAS""]";True;False
+fabricada;CO-04-004;Con tildes;PERDÓN, TÚ, TRISTE;"[""PERDON"", ""TU"", ""TRISTE""]";"[""PERDON"", ""TU"", ""TRISTE""]";True;False
+fabricada;CO-04-005;Con puntos;HOLA. BUENOS DIAS. BIENVENIDO.;"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";"[""HOLA"", ""BUENOS DIAS"", ""BIENVENIDO""]";True;False
+fabricada;CO-04-006;Con puntos;ABUELO, NUNCA, TRABAJAR.;"[""ABUELO"", ""NUNCA"", ""TRABAJAR""]";"[""ABUELO"", ""NUNCA"", ""TRABAJAR""]";True;False
+fabricada;CO-04-007;Con texto extra;Claro, aquí tienes la traducción: TU, HAMBRE;"[""TU"", ""HAMBRE""]";"[""TU"", ""HAMBRE""]";True;False
+fabricada;CO-04-008;Con texto extra;TIO, TRABAJAR. Espero que te sirva.;"[""TIO"", ""TRABAJAR""]";"[""TIO""]";False;False
+fabricada;CO-04-009;Con espacios dentro de una glosa;POR   FAVOR, COMER;"[""POR FAVOR"", ""COMER""]";"[""POR FAVOR"", ""COMER""]";True;False
+fabricada;CO-04-010;Vacía;(vacía: sin ningún carácter);[];[];True;False

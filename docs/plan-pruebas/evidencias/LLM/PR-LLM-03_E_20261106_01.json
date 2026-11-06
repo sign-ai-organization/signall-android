@@ -1,0 +1,110 @@
+{
+ "frases": 30,
+ "cinco_iguales": 27,
+ "porcentaje": 90.0,
+ "variables": {
+  "FR-01-010": [
+   [
+    "HERMANO",
+    "TRISTE",
+    "YO",
+    "SENTIR",
+    "MAL"
+   ],
+   [
+    "TU",
+    "HERMANO",
+    "TRISTE",
+    "SENTIR",
+    "MAL"
+   ],
+   [
+    "HERMANO",
+    "TRISTE",
+    "YO",
+    "SENTIR",
+    "MAL"
+   ],
+   [
+    "HERMANO",
+    "TRISTE",
+    "YO",
+    "SENTIR",
+    "MAL"
+   ],
+   [
+    "TU",
+    "HERMANO",
+    "TRISTE",
+    "SENTIR",
+    "MAL"
+   ]
+  ],
+  "FR-01-026": [
+   [
+    "PERMISO",
+    "POR FAVOR"
+   ],
+   [
+    "PERMISO",
+    "POR FAVOR"
+   ],
+   [
+    "PERMISO",
+    "PERMISO",
+    "POR FAVOR"
+   ],
+   [
+    "PERMISO",
+    "PERMISO",
+    "POR FAVOR"
+   ],
+   [
+    "PERMISO",
+    "PERMISO",
+    "POR FAVOR"
+   ]
+  ],
+  "FR-01-030": [
+   [
+    "TIO",
+    "COMER",
+    "MUCHO",
+    "HERMANO",
+    "COMER",
+    "POCO"
+   ],
+   [
+    "TIO",
+    "COMER",
+    "MUCHO",
+    "COMER",
+    "POCO"
+   ],
+   [
+    "TIO",
+    "COMER",
+    "MUCHO",
+    "HERMANO",
+    "COMER",
+    "POCO"
+   ],
+   [
+    "TIO",
+    "COMER",
+    "MUCHO",
+    "HERMANO",
+    "COMER",
+    "POCO"
+   ],
+   [
+    "TIO",
+    "COMER",
+    "MUCHO",
+    "HERMANO",
+    "COMER",
+    "POCO"
+   ]
+  ]
+ }
+}

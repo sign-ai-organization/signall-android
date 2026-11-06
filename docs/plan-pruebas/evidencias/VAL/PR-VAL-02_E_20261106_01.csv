@@ -1,0 +1,51 @@
+﻿id_sign;gloss;semantic_category;glb_animation_path
+0;GRACIAS;sustantivo;signs/0000_0000_0000.glb
+1;BUENOS DIAS;locución;signs/0001_0000_0000.glb
+2;BUENAS TARDES;locución;signs/0002_0000_0000.glb
+3;BUENAS NOCHES;locución;signs/0003_0000_0000.glb
+4;SEÑA;sustantivo;signs/0004_0000_0000.glb
+5;NOMBRE;sustantivo;signs/0005_0000_0000.glb
+6;TRABAJAR;verbo;signs/0006_0000_0000.glb
+7;COMER;verbo;signs/0007_0000_0000.glb
+8;VIVIR;verbo;signs/0008_0000_0000.glb
+9;POCO;cuantificador;signs/0009_0000_0000.glb
+10;FAMILIA;sustantivo;signs/0010_0000_0000.glb
+11;PERSONAS;sustantivo;signs/0011_0000_0000.glb
+12;MUJER;sustantivo;signs/0012_0000_0000.glb
+13;HOMBRE;sustantivo;signs/0013_0000_0000.glb
+14;NIÑO;sustantivo;signs/0014_0000_0000.glb
+15;NIÑA;sustantivo;signs/0015_0000_0000.glb
+16;ABUELO;sustantivo;signs/0016_0000_0000.glb
+17;TIO;sustantivo;signs/0017_0000_0000.glb
+18;HERMANO;sustantivo;signs/0018_0000_0000.glb
+19;HAMBRE;sustantivo;signs/0019_0000_0000.glb
+20;FELIZ;adjetivo;signs/0020_0000_0000.glb
+21;CONTENTO;adjetivo;signs/0021_0000_0000.glb
+22;TRISTE;adjetivo;signs/0022_0000_0000.glb
+23;ABURRIDO;adjetivo;signs/0023_0000_0000.glb
+24;BIEN;adverbio;signs/0024_0000_0000.glb
+25;MAL;adverbio;signs/0025_0000_0000.glb
+26;COMO ESTAS;interjección;signs/0026_0000_0000.glb
+27;MAS O MENOS;locución;signs/0027_0000_0000.glb
+28;SENTIR;verbo;signs/0028_0000_0000.glb
+29;JUICIOSO;adjetivo;signs/0029_0000_0000.glb
+30;HOLA;interjección;signs/0030_0000_0000.glb
+31;ADIOS;interjección;signs/0031_0000_0000.glb
+32;POR FAVOR;locución;signs/0032_0000_0000.glb
+33;CON GUSTO;locución;signs/0033_0000_0000.glb
+34;BIENVENIDO;interjección;signs/0034_0000_0000.glb
+35;PERDON;sustantivo;signs/0035_0000_0000.glb
+36;PERMISO;sustantivo;signs/0036_0000_0000.glb
+37;NUNCA;adverbio;signs/0037_0000_0000.glb
+38;YO;pronombre;signs/0038_0000_0000.glb
+39;TU;pronombre;signs/0039_0000_0000.glb
+40;USTEDES;pronombre;signs/0040_0000_0000.glb
+41;QUE;interrogativo;signs/0041_0000_0000.glb
+42;CUANDO;interrogativo;signs/0042_0000_0000.glb
+43;DONDE;interrogativo;signs/0043_0000_0000.glb
+44;COMO;interrogativo;signs/0044_0000_0000.glb
+45;POR QUE;interrogativo;signs/0045_0000_0000.glb
+46;QUIEN;interrogativo;signs/0046_0000_0000.glb
+47;DIFERENTE;adjetivo;signs/0047_0000_0000.glb
+48;TODOS;determinante;signs/0048_0000_0000.glb
+49;MUCHO;cuantificador;signs/0049_0000_0000.glb

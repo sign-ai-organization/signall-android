@@ -1,0 +1,11 @@
+{
+ "estado": "Pasa",
+ "obtenido": "50 filas, 50 glosas distintas, 50 id, 0 sin categoría, 0 ruta inválida, 0 duplicadas. La base rechaza la misma glosa con id nuevo (uq_catalog_gloss) y el mismo id (clave primaria). En memoria: 50 glosas canónicas + 13 sinónimos = 63 llaves; /health informa 63 porque cuenta los sinónimos. Durante las 30 frases de FR-01 no hubo ninguna consulta a catalog (seq_scan e idx_scan sin cambio).",
+ "evidencias": [
+  "PR-VAL-02_E_20261106_01.csv",
+  "PR-VAL-02_E_20261106_01.json"
+ ],
+ "fecha": "06/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-06)",
+ "ronda": "Ronda de evaluación"
+}

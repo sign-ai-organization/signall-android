@@ -1,0 +1,27 @@
+{
+ "n": 15,
+ "conjunto": 0,
+ "orden_relativo": 0,
+ "secuencia": 0,
+ "producidas": 68,
+ "en_catalogo": 54,
+ "errores": 0,
+ "ms_mediana": 743.3,
+ "ms_media": 1031.3,
+ "ms_min": 565.8,
+ "ms_max": 1917.1,
+ "tokens_entrada": 7581,
+ "tokens_salida": 566,
+ "por_tipo": {
+  "Muy larga": {
+   "n": 5,
+   "vacias": 0,
+   "fuera_catalogo": 0
+  },
+  "Con números": {
+   "n": 10,
+   "vacias": 0,
+   "fuera_catalogo": 14
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "17/30 aciertos: formato 9/10, orden 7/10, sinónimos 1/10. Las 13 fallas son misses de caché (la oración cambiada fue al LLM), no falsos aciertos. La tabla de sinónimos tiene 13 filas y no cubre las variantes de FR-03: solo acierta 1/10.",
+ "evidencias": [
+  "PR-CAC-03_E_20261106_01.csv",
+  "PR-CAC-03_E_20261106_01.json"
+ ],
+ "fecha": "06/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-06)",
+ "ronda": "Ronda de evaluación"
+}

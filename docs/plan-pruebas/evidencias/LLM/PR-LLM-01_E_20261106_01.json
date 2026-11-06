@@ -1,0 +1,50 @@
+{
+ "gpt-4o-mini": {
+  "n": 30,
+  "conjunto": 22,
+  "orden_relativo": 27,
+  "secuencia": 20,
+  "producidas": 107,
+  "en_catalogo": 107,
+  "errores": 0,
+  "ms_mediana": 654.0,
+  "ms_media": 732.8,
+  "ms_min": 552.5,
+  "ms_max": 1149.8,
+  "tokens_entrada": 14521,
+  "tokens_salida": 341,
+  "costo_usd_estimado": 0.002383
+ },
+ "gpt-4o": {
+  "n": 30,
+  "conjunto": 26,
+  "orden_relativo": 28,
+  "secuencia": 25,
+  "producidas": 108,
+  "en_catalogo": 108,
+  "errores": 0,
+  "ms_mediana": 721.9,
+  "ms_media": 703.5,
+  "ms_min": 547.5,
+  "ms_max": 866.3,
+  "tokens_entrada": 14521,
+  "tokens_salida": 344,
+  "costo_usd_estimado": 0.039743
+ },
+ "qwen3:4b-instruct": {
+  "n": 30,
+  "conjunto": 22,
+  "orden_relativo": 29,
+  "secuencia": 21,
+  "producidas": 100,
+  "en_catalogo": 100,
+  "errores": 0,
+  "ms_mediana": 462.5,
+  "ms_media": 692.3,
+  "ms_min": 217.3,
+  "ms_max": 7611.3,
+  "tokens_entrada": 15203,
+  "tokens_salida": 414,
+  "costo_usd_estimado": 0.0
+ }
+}

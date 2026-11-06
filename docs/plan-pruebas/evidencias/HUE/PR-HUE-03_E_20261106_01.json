@@ -1,0 +1,30 @@
+{
+ "entradas": 200,
+ "exactas": 151,
+ "porcentaje": 75.5,
+ "por_tipo": {
+  "Afirmación": "34/40",
+  "Pregunta de sí o no": "17/40",
+  "Pregunta de contenido": "40/40",
+  "Negación": "38/40",
+  "Orden": "22/40"
+ },
+ "con_puntuacion": "84/100",
+ "sin_puntuacion": "67/100",
+ "borde": "8/42",
+ "colisiones": 6,
+ "matriz": {
+  "AFFIRMATIVE->AFFIRMATIVE": 34,
+  "AFFIRMATIVE->IMPERATIVE": 2,
+  "AFFIRMATIVE->NEGATIVE": 4,
+  "CONTENT_QUESTION->CONTENT_QUESTION": 40,
+  "IMPERATIVE->AFFIRMATIVE": 18,
+  "IMPERATIVE->IMPERATIVE": 22,
+  "NEGATIVE->AFFIRMATIVE": 2,
+  "NEGATIVE->NEGATIVE": 38,
+  "YES_NO_QUESTION->AFFIRMATIVE": 16,
+  "YES_NO_QUESTION->CONTENT_QUESTION": 3,
+  "YES_NO_QUESTION->NEGATIVE": 4,
+  "YES_NO_QUESTION->YES_NO_QUESTION": 17
+ }
+}
