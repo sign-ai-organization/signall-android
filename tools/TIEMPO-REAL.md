@@ -371,7 +371,7 @@ Y las últimas ocho:
 | glosa | id | duración | glosa | id | duración |
 |---|---|---|---|---|---|
 | SENTIR | 0028 | 2.08 s | ADIÓS | 0031 | 2.08 s |
-| JUCIOSO | 0029 | 2.17 s | HOLA | 0030 | 2.12 s |
+| JUICIOSO | 0029 | 2.17 s | HOLA | 0030 | 2.12 s |
 | POR FAVOR | 0032 | ⚠️ sin exportar | NUNCA | 0037 | ⚠️ sin exportar |
 | CON GUSTO | 0033 | ⚠️ sin exportar | YO | 0038 | ⚠️ sin exportar |
 | BIENVENIDO | 0034 | ⚠️ sin exportar | TU | 0039 | ⚠️ sin exportar |
