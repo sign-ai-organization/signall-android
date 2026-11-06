@@ -1588,7 +1588,13 @@ class MainScreenState(
         // que puede todavía estar bajando una seña que ya no importa. **Con valor**,
         // o sea ya completada: la primera tanda tiene que poder pasar de una.
         queueDeliveryGate = CompletableDeferred(Unit)
-        turnQueueItems.clear()
+        // Con la escena todavía representando, esa lista es la **suya**: la escena
+        // numera las señas de forma acumulada cuando una frase se encola detrás de
+        // otra, y `onSignStart` resuelve la glosa en curso contra ella. Vaciarla
+        // acá dejaba el rótulo del avatar en blanco (o con otra glosa) durante lo
+        // que quedaba de la frase que suena. Se vacía cuando la escena termina o
+        // cuando una cola nueva la reemplaza ([appendQueue]).
+        if (!queuePlaying) turnQueueItems.clear()
         conversationTurnIndex = -1
         turnSentAt = 0L
         // El rótulo sobre el avatar pertenece a la cola que se acaba de soltar:
@@ -1756,7 +1762,10 @@ class MainScreenState(
             val first = !queueStarted
 
             if (first) {
-                turnQueueItems.clear()
+                // Solo se vacía si esta cola **reemplaza** a la de la escena. Si se
+                // encola detrás (D3), los índices de la escena siguen a los de la
+                // frase que suena y la lista tiene que seguirla.
+                if (!(queuePlaying && queuedPhrases < MaxQueuedPhrases)) turnQueueItems.clear()
                 // A replay is not a new turn: the phrase is already in the history
                 // and already has a conversation entry, so recording it again would
                 // duplicate both (`CNV-5`).
