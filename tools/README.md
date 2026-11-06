@@ -17,6 +17,14 @@
   Falla si la primera seña del pipeline se pasa del presupuesto de 1200 ms p95.
   Bloques: `contrato`, `fixtures`, `flujo`, `latencia`, `metricas`,
   `dispositivo`, `todo`.
+- **`verificar-fases1-3.py`** — el escenario de las fases 1 y 3 del plan de
+  implementación 2, en 18 comprobaciones y un comando. Consulta Neon con `psql`
+  (unicidad de la glosa, glosa 29 `JUICIOSO`, 50 filas, canónico), el backend
+  (`/health`, `/metrics.json` con el modelo de embeddings) y el WebSocket de
+  punta a punta (preguntas de contenido sin `?`, relativos que no son preguntas,
+  y que la frase repetida salga del caché semántico). Necesita el backend
+  levantado y `DATABASE_URL` en `.envJulian`. Sale con código 1 si algo falla:
+  `python3 tools/verificar-fases1-3.py`.
 - **`TIEMPO-REAL.md`** — la guía de pruebas del modo en vivo: qué se midió y
   cómo repetirlo, qué frases decir, cuáles de las 50 señas tienen animación,
   qué significa cada métrica, los problemas ya pisados y **qué no se verificó y
