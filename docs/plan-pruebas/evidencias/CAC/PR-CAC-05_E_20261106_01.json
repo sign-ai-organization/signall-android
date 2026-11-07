@@ -1,0 +1,86 @@
+{
+  "antes": {
+    "filas": 0
+  },
+  "filas_tras_13_envios": 10,
+  "duplicados": "0",
+  "glosas_vacias": "0",
+  "contenido_cache": [
+    "1 Hola, buenos días, bienvenidos. => HOLA,TU",
+    "2 ¿Tienes hambre? => HOLA,TU",
+    "3 ¿Estás bien? => HOLA,TU",
+    "4 ¿Ustedes trabajan en familia? => HOLA,TU",
+    "5 ¿Tu hermano está aburrido? => HOLA,TU",
+    "6 ¿Por qué estás triste? => HOLA,TU",
+    "7 ¿Cuándo comen ustedes? => HOLA,TU",
+    "8 Por favor, come poco. => HOLA,TU",
+    "9 Niños, trabajen todos. => HOLA,TU",
+    "10 Hola, familia, siéntanse bienvenidos. => HOLA,TU"
+  ],
+  "llm_falla_o_vacio": [
+    {
+      "modo_llm": "empty",
+      "texto": "Mi tío vive aquí.",
+      "fin": "done",
+      "respuesta_ms": 41.6,
+      "glosas": "",
+      "error": null,
+      "filas_antes": 10,
+      "filas_despues": 10
+    },
+    {
+      "modo_llm": "error500",
+      "texto": "Mi abuelo trabaja mucho.",
+      "fin": "error",
+      "respuesta_ms": 434.7,
+      "glosas": "",
+      "error": "No se pudo traducir el texto.",
+      "filas_antes": 10,
+      "filas_despues": 10
+    },
+    {
+      "modo_llm": "down",
+      "texto": "Los niños comen poco.",
+      "fin": "error",
+      "respuesta_ms": 10472.7,
+      "glosas": "",
+      "error": "No se pudo traducir el texto.",
+      "filas_antes": 10,
+      "filas_despues": 10
+    }
+  ],
+  "mantenimiento_sql": [
+    {
+      "paso": "tras DELETE por SQL, sin recargar",
+      "fuente": "exact",
+      "llamadas_llm": 0,
+      "respuesta_ms": 3.7,
+      "filas": 9
+    },
+    {
+      "paso": "tras UPDATE por SQL, sin recargar",
+      "fuente": "exact",
+      "glosas": "HOLA TU"
+    },
+    {
+      "paso": "POST /admin/cache/reload",
+      "resultado": {
+        "status": "ok",
+        "rows": 9,
+        "cache_rows": 9
+      }
+    },
+    {
+      "paso": "tras DELETE por SQL y reload",
+      "fuente": "miss",
+      "llamadas_llm": 1,
+      "respuesta_ms": 751.9,
+      "filas": 9
+    },
+    {
+      "paso": "UPDATE por SQL ya recargado",
+      "fuente": "exact",
+      "glosas": "CAMBIADO"
+    }
+  ]
+}

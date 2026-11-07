@@ -1,0 +1,81 @@
+﻿config;set;id;texto;glosas;n_oraciones;oraciones;de_cache
+completa;FR-01;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS BIENVENIDO;1;Hola, buenos días, bienvenidos.;False
+completa;FR-01;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;2;Adiós a todos. | Buenas noches.;False | False
+completa;FR-01;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TIO TRABAJAR FAMILIA;1;Mi abuelo y mi tío trabajan en familia.;False
+completa;FR-01;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;1;Estoy contento porque mi hermano está feliz.;False
+completa;FR-01;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;2;Buenas tardes. | Hoy me siento más o menos.;False | False
+completa;FR-01;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER;2;Gracias a todos. | Los niños y las niñas comen con gusto.;False | False
+completa;FR-01;FR-01-007;¿Tienes hambre?;TU HAMBRE;1;¿Tienes hambre?;False
+completa;FR-01;FR-01-008;¿Estás bien?;TU BIEN;1;¿Estás bien?;False
+completa;FR-01;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;1;¿Ustedes trabajan en familia?;False
+completa;FR-01;FR-01-010;Tu hermano está triste. ¿Se siente mal?;TU HERMANO TRISTE TU SENTIR MAL;2;Tu hermano está triste. | ¿Se siente mal?;False | False
+completa;FR-01;FR-01-011;Perdón. ¿Estás triste?;PERDON TU TRISTE;2;Perdón. | ¿Estás triste?;False | False
+completa;FR-01;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;1;¿Tu hermano está aburrido?;False
+completa;FR-01;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;3;Hola, | ¿cómo estás? | ¿Cómo te llamas?;False | False | False
+completa;FR-01;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;1;¿Dónde vive tu familia?;False
+completa;FR-01;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER JUICIOSO QUIEN HOMBRE;2;La mujer es juiciosa. | ¿Quién es el hombre?;False | False
+completa;FR-01;FR-01-016;¿Por qué estás triste?;POR QUE TU TRISTE;1;¿Por qué estás triste?;False
+completa;FR-01;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;1;¿Cuándo comen ustedes?;False
+completa;FR-01;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;PERSONAS DIFERENTE QUE SEÑA TU;2;Las personas son diferentes. | ¿Qué seña usas tú?;False | False
+completa;FR-01;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;1;Yo nunca como mucho.;False
+completa;FR-01;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;1;Mi abuelo nunca trabaja.;False
+completa;FR-01;FR-01-021;Mi tío nunca está aburrido.;TIO NUNCA ABURRIDO;1;Mi tío nunca está aburrido.;False
+completa;FR-01;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;1;Ustedes nunca se sienten mal.;False
+completa;FR-01;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON HERMANO NUNCA CONTENTO;2;Perdón. | Mi hermano nunca está contento.;True | False
+completa;FR-01;FR-01-024;Se siente muy bien. La niña nunca está triste.;TU SENTIR MUCHO BIEN NIÑA NUNCA TRISTE;2;Se siente muy bien. | La niña nunca está triste.;False | False
+completa;FR-01;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;1;Por favor, come poco.;False
+completa;FR-01;FR-01-026;Con permiso. Déjame pasar, por favor.;PERMISO POR FAVOR;2;Con permiso. | Déjame pasar, por favor.;False | False
+completa;FR-01;FR-01-027;Niños, trabajen todos.;NIÑO TODOS TRABAJAR;1;Niños, trabajen todos.;False
+completa;FR-01;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;2;Hermano, vive con el abuelo. | Trabaja con el tío.;False | False
+completa;FR-01;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA SENTIR BIENVENIDO;1;Hola, familia, siéntanse bienvenidos.;False
+completa;FR-01;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;2;Tío, come mucho. | Hermano, come poco.;False | False
+completa;FR-05;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;HOLA BUENOS DIAS BIENVENIDO TU HAMBRE;2;Hola, buenos días, bienvenidos. | ¿Tienes hambre?;True | True
+completa;FR-05;FR-05-002;Buenas tardes. ¿Cómo te llamas?;BUENAS TARDES COMO TU;2;Buenas tardes. | ¿Cómo te llamas?;True | True
+completa;FR-05;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;YO SENTIR MAS O MENOS TU BIEN;2;Hoy me siento más o menos. | ¿Estás bien?;True | True
+completa;FR-05;FR-05-004;Tu hermano está triste. ¿Estás triste?;TU HERMANO TRISTE TU TRISTE;2;Tu hermano está triste. | ¿Estás triste?;True | True
+completa;FR-05;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;PERSONAS DIFERENTE ABUELO TIO TRABAJAR FAMILIA;2;Las personas son diferentes. | Mi abuelo y mi tío trabajan en familia.;True | True
+completa;FR-05;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;QUIEN HOMBRE ABUELO NUNCA TRABAJAR;2;¿Quién es el hombre? | Mi abuelo nunca trabaja.;True | True
+completa;FR-05;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;TU SENTIR MUCHO BIEN YO CONTENTO HERMANO FELIZ;2;Se siente muy bien. | Estoy contento porque mi hermano está feliz.;True | True
+completa;FR-05;FR-05-008;Adiós a todos. Déjame pasar, por favor.;ADIOS TODOS POR FAVOR;2;Adiós a todos. | Déjame pasar, por favor.;True | True
+completa;FR-05;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;HOLA COMO ESTAS NIÑO NIÑA COMER;3;Hola, | ¿cómo estás? | Los niños y las niñas comen con gusto.;True | True | True
+completa;FR-05;FR-05-010;Niños, trabajen todos. Por favor, come poco.;NIÑO TODOS TRABAJAR POR FAVOR COMER POCO;2;Niños, trabajen todos. | Por favor, come poco.;True | True
+sin_segmentador;FR-01;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS BIENVENIDO;1;Hola, buenos días, bienvenidos.;False
+sin_segmentador;FR-01;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;1;Adiós a todos. Buenas noches.;False
+sin_segmentador;FR-01;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TIO TRABAJAR FAMILIA;1;Mi abuelo y mi tío trabajan en familia.;False
+sin_segmentador;FR-01;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;1;Estoy contento porque mi hermano está feliz.;False
+sin_segmentador;FR-01;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;1;Buenas tardes. Hoy me siento más o menos.;False
+sin_segmentador;FR-01;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER;1;Gracias a todos. Los niños y las niñas comen con gusto.;False
+sin_segmentador;FR-01;FR-01-007;¿Tienes hambre?;TU HAMBRE;1;¿Tienes hambre?;False
+sin_segmentador;FR-01;FR-01-008;¿Estás bien?;TU BIEN;1;¿Estás bien?;False
+sin_segmentador;FR-01;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;1;¿Ustedes trabajan en familia?;False
+sin_segmentador;FR-01;FR-01-010;Tu hermano está triste. ¿Se siente mal?;HERMANO TRISTE YO SENTIR MAL;1;Tu hermano está triste. ¿Se siente mal?;False
+sin_segmentador;FR-01;FR-01-011;Perdón. ¿Estás triste?;TU PERDON TRISTE;1;Perdón. ¿Estás triste?;False
+sin_segmentador;FR-01;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;1;¿Tu hermano está aburrido?;False
+sin_segmentador;FR-01;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;1;Hola, ¿cómo estás? ¿Cómo te llamas?;False
+sin_segmentador;FR-01;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;1;¿Dónde vive tu familia?;False
+sin_segmentador;FR-01;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER JUICIOSO HOMBRE;1;La mujer es juiciosa. ¿Quién es el hombre?;False
+sin_segmentador;FR-01;FR-01-016;¿Por qué estás triste?;POR QUE TU TRISTE;1;¿Por qué estás triste?;False
+sin_segmentador;FR-01;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;1;¿Cuándo comen ustedes?;False
+sin_segmentador;FR-01;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;PERSONAS DIFERENTE SEÑA TU;1;Las personas son diferentes. ¿Qué seña usas tú?;False
+sin_segmentador;FR-01;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;1;Yo nunca como mucho.;False
+sin_segmentador;FR-01;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;1;Mi abuelo nunca trabaja.;False
+sin_segmentador;FR-01;FR-01-021;Mi tío nunca está aburrido.;TIO NUNCA ABURRIDO;1;Mi tío nunca está aburrido.;False
+sin_segmentador;FR-01;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;1;Ustedes nunca se sienten mal.;False
+sin_segmentador;FR-01;FR-01-023;Perdón. Mi hermano nunca está contento.;HERMANO NUNCA CONTENTO;1;Perdón. Mi hermano nunca está contento.;False
+sin_segmentador;FR-01;FR-01-024;Se siente muy bien. La niña nunca está triste.;TU SENTIR MUCHO BIEN NIÑA NUNCA TRISTE;1;Se siente muy bien. La niña nunca está triste.;False
+sin_segmentador;FR-01;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;1;Por favor, come poco.;False
+sin_segmentador;FR-01;FR-01-026;Con permiso. Déjame pasar, por favor.;PERMISO PERMISO POR FAVOR;1;Con permiso. Déjame pasar, por favor.;False
+sin_segmentador;FR-01;FR-01-027;Niños, trabajen todos.;NIÑO TODOS TRABAJAR;1;Niños, trabajen todos.;False
+sin_segmentador;FR-01;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;1;Hermano, vive con el abuelo. Trabaja con el tío.;False
+sin_segmentador;FR-01;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA SENTIR BIENVENIDO;1;Hola, familia, siéntanse bienvenidos.;False
+sin_segmentador;FR-01;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;1;Tío, come mucho. Hermano, come poco.;False
+sin_segmentador;FR-05;FR-05-001;Hola, buenos días, bienvenidos. ¿Tienes hambre?;TU HOLA BUENOS DIAS BIENVENIDO HAMBRE;1;Hola, buenos días, bienvenidos. ¿Tienes hambre?;False
+sin_segmentador;FR-05;FR-05-002;Buenas tardes. ¿Cómo te llamas?;BUENAS TARDES COMO TU;1;Buenas tardes. ¿Cómo te llamas?;False
+sin_segmentador;FR-05;FR-05-003;Hoy me siento más o menos. ¿Estás bien?;YO SENTIR MAS O MENOS COMO ESTAS BIEN;1;Hoy me siento más o menos. ¿Estás bien?;False
+sin_segmentador;FR-05;FR-05-004;Tu hermano está triste. ¿Estás triste?;HERMANO TRISTE YO SENTIR MAL;1;Tu hermano está triste. ¿Estás triste?;True
+sin_segmentador;FR-05;FR-05-005;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;PERSONAS DIFERENTE ABUELO TIO TRABAJAR FAMILIA;1;Las personas son diferentes. Mi abuelo y mi tío trabajan en familia.;False
+sin_segmentador;FR-05;FR-05-006;¿Quién es el hombre? Mi abuelo nunca trabaja.;QUIEN HOMBRE ABUELO NUNCA TRABAJAR;1;¿Quién es el hombre? Mi abuelo nunca trabaja.;False
+sin_segmentador;FR-05;FR-05-007;Se siente muy bien. Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;1;Se siente muy bien. Estoy contento porque mi hermano está feliz.;True
+sin_segmentador;FR-05;FR-05-008;Adiós a todos. Déjame pasar, por favor.;ADIOS TODOS POR FAVOR;1;Adiós a todos. Déjame pasar, por favor.;False
+sin_segmentador;FR-05;FR-05-009;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;HOLA COMO ESTAS NIÑO NIÑA COMER;1;Hola, ¿cómo estás? Los niños y las niñas comen con gusto.;False
+sin_segmentador;FR-05;FR-05-010;Niños, trabajen todos. Por favor, come poco.;NIÑO TODOS TRABAJAR POR FAVOR COMER POCO;1;Niños, trabajen todos. Por favor, come poco.;False

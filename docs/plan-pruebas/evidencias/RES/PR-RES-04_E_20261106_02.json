@@ -1,0 +1,35 @@
+{
+  "alcance": "LABORATORIO: base pausada con docker pause 6 s (emula una base que no responde; no es Neon dormida), backend recien reiniciado con la base sana",
+  "listo_s": 15.03,
+  "health": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 10,
+    "catalog_loaded": true,
+    "catalog_glosses": 50
+  },
+  "base_pausada_emulada": {
+    "frase_con_la_base_pausada": {
+      "fin": "done",
+      "ms": 788.7,
+      "glosas": "HOLA TU",
+      "disponibles": 2,
+      "error": null
+    },
+    "health_durante_pausa": {
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 10,
+      "catalog_loaded": true,
+      "catalog_glosses": 50
+    },
+    "s_hasta_guardada_tras_despausar": 0.6,
+    "repetida_despues": {
+      "fin": "done",
+      "ms": 10.0,
+      "glosas": "HOLA TU",
+      "disponibles": 2,
+      "error": null
+    }
+  }
+}

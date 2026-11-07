@@ -1,0 +1,14 @@
+﻿envio;frase;tipo;texto;respuesta_ms;fin;glosas;fuente;llamadas_llm;filas_despues;ms_hasta_guardada
+1;FR-01-001;Primera vez;Hola, buenos días, bienvenidos.;766.9;done;HOLA TU;miss;1;1;218
+2;FR-01-007;Primera vez;¿Tienes hambre?;750.0;done;HOLA TU;miss;1;2;202
+3;FR-01-008;Primera vez;¿Estás bien?;744.1;done;HOLA TU;miss;1;3;214
+4;FR-01-009;Primera vez;¿Ustedes trabajan en familia?;748.4;done;HOLA TU;miss;1;4;209
+5;FR-01-012;Primera vez;¿Tu hermano está aburrido?;775.3;done;HOLA TU;miss;1;5;247
+6;FR-01-016;Primera vez;¿Por qué estás triste?;765.3;done;HOLA TU;miss;1;6;390
+7;FR-01-017;Primera vez;¿Cuándo comen ustedes?;749.3;done;HOLA TU;miss;1;7;218
+8;FR-01-025;Primera vez;Por favor, come poco.;750.5;done;HOLA TU;miss;1;8;205
+9;FR-01-027;Primera vez;Niños, trabajen todos.;761.8;done;HOLA TU;miss;1;9;223
+10;FR-01-029;Primera vez;Hola, familia, siéntanse bienvenidos.;754.4;done;HOLA TU;miss;1;10;212
+11;FR-01-001;Repetida;Hola, buenos días, bienvenidos.;4.1;done;HOLA TU;exact;0;10;
+12;FR-01-007;Repetida;¿Tienes hambre?;3.7;done;HOLA TU;exact;0;10;
+13;FR-01-008;Repetida;¿Estás bien?;3.8;done;HOLA TU;exact;0;10;

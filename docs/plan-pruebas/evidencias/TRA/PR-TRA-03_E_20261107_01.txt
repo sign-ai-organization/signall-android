@@ -1,0 +1,58 @@
+PR-TRA-03 · Levantar el entorno desde cero · APROXIMACIÓN en esta máquina · 2026-11-07
+====================================================================================
+
+Qué es: una aproximación autorizada por el owner. NO es una máquina limpia. Se borraron los
+contenedores y las imágenes del proyecto y se reconstruyó con los archivos que ya estaban en la
+carpeta (no se clonó). Horas en UTC (la máquina está en UTC-5).
+
+Estado inicial (antes de borrar):
+  contenedores: sign-ai-backend-backend-1, sign-ai-backend-stt-1, sign-ai-backend-caddy-1 (apagados),
+                p3lab-backend, p3lab-stt (laboratorio del agente, bloqueaban las imágenes)
+  imágenes:     sign-ai-backend-backend:latest (10 GB), sign-ai-backend-stt:latest (4,56 GB)
+  repos:        sign-ai-backend 9c74e76, sign-ai-stt 9787e49, sign-ai-android 4ded3a8
+  red del contenedor canónico: sign-ai-backend_default (bridge de compose)
+
+Pasos:
+  17:24:33  docker rm -f (3 contenedores del proyecto + 2 de laboratorio)
+  17:24:42  docker rmi sign-ai-backend-backend:latest sign-ai-backend-stt:latest        (9 s en total)
+  17:24:56  docker compose build --no-cache  (backend y ../sign-ai-stt)
+  17:40:16  construcción terminada, salida 0, sin errores                                (15 min 20 s)
+  17:40:41  docker compose up -d
+            STT      /health ok a los 14 s   {"status":"ok","model":"medium","device":"cuda","requested_device":"cuda",
+                                              "language":"es","silence_timeout_ms":1500}
+  17:41:58  BACKEND  /health ok a los 77 s   {"status":"ok","cache_loaded":true,"cache_rows":84,"catalog_loaded":true,
+                                              "catalog_glosses":63,"silence_timeout_ms":1500}
+  17:42:13  ./gradlew clean build   (145 tareas, 144 ejecutadas)
+  17:45:09  BUILD SUCCESSFUL                                                             (2 min 55 s)
+  17:45:23  ./gradlew installDebug  (22 s); la app abrió sesión con ws://127.0.0.1:8080/ws/translate
+
+Tiempos acumulados: del inicio de la construcción hasta que el backend responde /health = 17 min 02 s
+(17:24:56 a 17:41:58). Hasta tener también la app compilada = 20 min 13 s (a 17:45:09).
+
+Métricas que pide la ficha:
+  - Pasos manuales no documentados:
+      1. El archivo .env es obligatorio (docker-compose.yml usa env_file: .env) y docs/android-integration.md
+         no dice cómo crearlo. Aquí se usó el .env que ya existía; NO se probó crear uno desde cero.
+         .env.example tiene 7 variables que el .env real no tiene (ADMIN_TOKEN, AUDIO_MAX_CHUNK_BYTES,
+         DB_ACQUIRE_TIMEOUT_SECONDS, DB_CONNECT_TIMEOUT_SECONDS, DB_POOL_MAX_SIZE, DB_POOL_MIN_SIZE,
+         EMBEDDING_MODEL_NAME).
+      2. La guía documenta `docker compose up --build`; aquí se usó `docker compose build --no-cache` y
+         luego `up -d` para ignorar la caché de capas.
+  - Tiempo hasta que el backend responde: 77 s tras `up -d` (la mayor parte, la descarga del modelo de
+    embeddings de huggingface.co, que se repite en cada arranque; ver punto 28 del informe). Esa causa se
+    observó en el laboratorio (≈54 s de descarga en un arranque); en este arranque no se midió por separado.
+  - Conflictos de versiones: ninguno en esta construcción.
+  - Parches locales no versionados que hicieron falta: ninguno. Único cambio sin commit en los repos
+    de código: sign-ai-backend/docker-compose.host.yml (modificado; no lo tocó el agente ni lo lee
+    `docker compose up` sin -f).
+  - ¿El contenedor necesitó la red del equipo anfitrión? No: NetworkMode = sign-ai-backend_default.
+
+Lo que hace que NO sea «desde cero» (declarado):
+  - El volumen sign-ai-backend_stt-hf-cache (pesos de Whisper) se conservó: el STT arrancó en 14 s; sin él
+    habría que descargar el modelo.
+  - Las dependencias de Gradle y el SDK de Android ya estaban en la máquina (la compilación fue en
+    2 min 55 s con `clean build`, no con un directorio de dependencias vacío).
+  - Las imágenes base de Docker no aparecían en `docker images` antes ni después de borrar, así que la
+    construcción las descargó; NO se verificó si la caché interna de BuildKit conservaba capas
+    (--no-cache la ignora para esta construcción, pero no la vacía).
+  - Python, JDK y Docker ya estaban instalados; el .env ya existía; no se clonó el repositorio.

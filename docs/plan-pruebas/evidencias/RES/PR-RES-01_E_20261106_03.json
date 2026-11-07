@@ -1,0 +1,45 @@
+{
+  "alcance": "Corte de la conexion del telefono con adb reverse --remove tcp:8080 (no toca contenedores); tiempos del telefono desde SignAiNet/SignAiState (logcat, reloj del telefono) ; el backend no se mide aqui",
+  "momentos": [
+    {
+      "momento": "hablando",
+      "t_corte": 1793994404.157,
+      "lineas_dump_logcat": [
+        "1793994406.566 26691 26716 W SignAiNet: session failed: null",
+        "1793994406.600 26691 27014 I SignAiState: micrófono apagado (venía de Dictation)",
+        "1793994406.622 26691 26691 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Dictation",
+        "1793994406.675 26691 27014 I SignAiNet: recording stopped",
+        "1793994406.676 26691 27014 I SignAiState: dictado detenido: esperando el final de la frase",
+        "1793994406.676 26691 27014 I SignAiState: el dictado se apagó sin transcripción",
+        "1793994406.676 26691 27014 I SignAiState: aviso (no va al indicador): No se escuchó nada.",
+        "1793994406.676 26691 27014 I SignAiState: fallo: Se cortó la conexión mientras escuchaba.",
+        "1793994406.677 26691 26691 I SignAiNet: stop() sin grabación activa",
+        "1793994406.677 26691 27014 I SignAiNet: stop() sin grabación activa",
+        "1793994406.677 26691 27014 I SignAiState: aviso (no va al indicador): Se cortó la conexión mientras escuchaba.",
+        "1793994407.745 26691 26716 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+        "1793994407.791 26691 26691 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+        "1793994409.867 26691 26716 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+        "1793994409.887 26691 26691 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+        "1793994412.962 26691 26716 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+        "1793994412.992 26691 26691 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+        "1793994417.047 26691 26716 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+        "1793994417.110 26691 26691 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off"
+      ],
+      "ms_hasta_detectar_corte": 2409,
+      "linea_deteccion": "1793994406.566 26691 26716 W SignAiNet: session failed: null",
+      "ms_hasta_reconectar": 4388,
+      "linea_reconexion": "1793994427.279 26691 26716 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+      "intentos_de_conexion_tras_restaurar": 1,
+      "lineas_log_ventana": [
+        "1793994412.962 26691 26716 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+        "1793994412.992 26691 26691 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+        "1793994417.047 26691 26716 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+        "1793994417.110 26691 26691 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+        "1793994422.175 26691 26716 W SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+        "1793994422.205 26691 26691 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+        "1793994427.279 26691 26716 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)"
+      ],
+      "frase_nueva_representada": true
+    }
+  ]
+}

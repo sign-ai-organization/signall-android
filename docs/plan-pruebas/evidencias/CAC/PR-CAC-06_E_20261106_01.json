@@ -1,0 +1,148 @@
+{
+  "precio_supuesto_usd_por_millon": {
+    "entrada": 0.15,
+    "salida": 0.6
+  },
+  "resumen": {
+    "con_cache": {
+      "segundos": 42.5,
+      "ms_medio_por_frase": 672.0,
+      "ms_mediana": 634.0,
+      "llamadas_llm": 56,
+      "tokens_entrada": 26936,
+      "tokens_salida": 456,
+      "costo_usd_supuesto": 0.00431,
+      "oraciones": 88,
+      "oraciones_de_cache": 32,
+      "pct_oraciones_cache": 36.4,
+      "frases": 60,
+      "frases_sin_llm": 19
+    },
+    "sin_cache_a": {
+      "segundos": 57.6,
+      "ms_medio_por_frase": 960.4,
+      "ms_mediana": 869.9,
+      "llamadas_llm": 88,
+      "tokens_entrada": 42339,
+      "tokens_salida": 700,
+      "costo_usd_supuesto": 0.00677,
+      "oraciones": 88
+    },
+    "sin_cache_b": {
+      "segundos": 59.4,
+      "ms_medio_por_frase": 989.2,
+      "ms_mediana": 803.5,
+      "llamadas_llm": 88,
+      "tokens_entrada": 42339,
+      "tokens_salida": 698,
+      "costo_usd_supuesto": 0.00677,
+      "oraciones": 88
+    }
+  },
+  "mismas_glosas_con_vs_sin_a": 55,
+  "mismas_glosas_sin_a_vs_sin_b": 60,
+  "mismas_glosas_con_vs_sin_b": 55,
+  "diferencias_con_vs_sin_a": [
+    {
+      "id": "FR-03-003",
+      "texto": "En familia trabajan mi abuelo y mi tío.",
+      "con": [
+        "ABUELO",
+        "TIO",
+        "TRABAJAR",
+        "FAMILIA"
+      ],
+      "sin": [
+        "FAMILIA",
+        "TRABAJAR",
+        "ABUELO",
+        "TIO"
+      ],
+      "hits": [
+        true
+      ]
+    },
+    {
+      "id": "FR-03-004",
+      "texto": "Porque mi hermano está feliz, estoy contento.",
+      "con": [
+        "YO",
+        "CONTENTO",
+        "HERMANO",
+        "FELIZ"
+      ],
+      "sin": [
+        "HERMANO",
+        "FELIZ",
+        "YO",
+        "CONTENTO"
+      ],
+      "hits": [
+        true
+      ]
+    },
+    {
+      "id": "FR-03-017",
+      "texto": "¿Ustedes cuándo comen?",
+      "con": [
+        "CUANDO",
+        "USTEDES",
+        "COMER"
+      ],
+      "sin": [
+        "USTEDES",
+        "COMER"
+      ],
+      "hits": [
+        true
+      ]
+    },
+    {
+      "id": "FR-03-018",
+      "texto": "Las personas son diferentes. ¿Tú qué seña usas?",
+      "con": [
+        "PERSONAS",
+        "DIFERENTE",
+        "QUE",
+        "SEÑA",
+        "TU"
+      ],
+      "sin": [
+        "PERSONAS",
+        "DIFERENTE",
+        "TU",
+        "QUE",
+        "SEÑA"
+      ],
+      "hits": [
+        true,
+        true
+      ]
+    },
+    {
+      "id": "FR-03-028",
+      "texto": "Hermano, reside con el abuelo. Trabaja con el tío.",
+      "con": [
+        "HERMANO",
+        "VIVIR",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "sin": [
+        "HERMANO",
+        "ABUELO",
+        "TRABAJAR",
+        "TIO"
+      ],
+      "hits": [
+        true,
+        true
+      ]
+    }
+  ],
+  "_meta": {
+    "entorno": "laboratorio en proceso: se ejecuta dentro del contenedor del backend (docker exec, proceso aparte) con el pipeline real (SentenceSegmenter, GlossAnalyzer, SemanticCache en memoria con pool=None, EmbeddingModel MiniLM, LLMClient gpt-4o-mini con el catalogo de la base leido en modo lectura). No toca semantic_cache de Neon ni la configuracion del backend canonico.",
+    "fecha": "2026-11-06"
+  }
+}

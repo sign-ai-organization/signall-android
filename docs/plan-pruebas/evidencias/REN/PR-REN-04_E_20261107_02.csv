@@ -1,0 +1,7 @@
+app_avatar_visible_s,app_sesion_abierta_s,arranque,backend_ok_s,cache_rows,glosas,primera_frase,primera_fuente,primera_ms,primera_ok,segunda_frase,segunda_fuente,segunda_ms,segunda_ok,situacion
+4.9,5.0,1,26.7,83,63,FR-01-008,cache,87.7,True,FR-01-009,cache,15.3,True,dormida
+8.7,2.2,2,21.0,83,63,FR-01-012,cache,15.8,True,FR-01-016,cache,10.9,True,despierta
+9.0,2.6,3,21.7,83,63,FR-01-017,cache,21.8,True,FR-01-025,cache,10.5,True,dormida
+7.6,2.1,4,20.1,83,63,FR-01-007,cache,14.5,True,FR-01-027,llm,1381.5,True,despierta
+9.1,2.5,5,19.3,84,63,FR-01-001,cache,12.9,True,FR-01-029,cache,13.0,True,dormida
+8.7,2.2,6,17.7,84,63,FR-01-008,cache,18.7,True,FR-01-012,cache,12.9,True,despierta

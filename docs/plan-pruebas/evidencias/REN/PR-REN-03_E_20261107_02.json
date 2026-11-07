@@ -1,0 +1,52 @@
+{
+ "sin_1a_rep": {
+  "n": 40,
+  "completas": 40,
+  "con_llamada_llm": 40,
+  "primera_sena_ms": {
+   "p50": 873.0,
+   "p95": 1072,
+   "max": 1149
+  },
+  "ultima_sena_ms": {
+   "p50": 8406.0,
+   "p95": 9671,
+   "max": 9726
+  },
+  "representacion_ms": {
+   "p50": 7549.0,
+   "p95": 8808,
+   "max": 8819
+  },
+  "respuesta_backend_ms": {
+   "p50": 839.5,
+   "p95": 1058,
+   "max": 1099
+  }
+ },
+ "todas": {
+  "n": 50,
+  "completas": 50,
+  "con_llamada_llm": 50,
+  "primera_sena_ms": {
+   "p50": 880.5,
+   "p95": 1072,
+   "max": 1149
+  },
+  "ultima_sena_ms": {
+   "p50": 8406.0,
+   "p95": 9707,
+   "max": 9726
+  },
+  "representacion_ms": {
+   "p50": 7545.5,
+   "p95": 8813,
+   "max": 8819
+  },
+  "respuesta_backend_ms": {
+   "p50": 827.0,
+   "p95": 1058,
+   "max": 1099
+  }
+ }
+}

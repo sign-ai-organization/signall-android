@@ -1,0 +1,11 @@
+frase,rep,enviado,texto_en_app,fuentes,llm_llamadas,primera_sena_ms,ultima_sena_ms,representacion_ms,respuesta_backend_ms,senas,error
+FR-01-001,1,"Hola, buenos dias, bienvenidos.","Hola, Buenos días, bienvenidos.","rt_cache_total{source=""miss""}+1",1,1246,7930,6774,1158,3,
+FR-01-005,1,Buenas tardes. Hoy me siento mas o menos.,Buenas tardes. Hoy me siento mas o menos.,"rt_cache_total{source=""miss""}+2",2,1117,9757,8725,1038,4,
+FR-01-007,1,Tienes hambre?,Tienes hambre?,"rt_cache_total{source=""miss""}+1",1,1004,4836,3974,864,2,
+FR-01-011,1,Perdon. Estas triste?,Perdon. Estas triste?,"rt_cache_total{source=""miss""}+2",2,1057,7811,6828,991,3,
+FR-01-013,1,"Hola, como estas? Como te llamas?","Hola, como estas? Como te llamas?","rt_cache_total{source=""miss""}+2",2,838,9180,8408,778,4,
+FR-01-014,1,Donde vive tu familia?,Donde vive tu familia?,"rt_cache_total{source=""miss""}+1",1,1061,9284,8364,922,4,
+FR-01-019,1,Yo nunca como mucho.,Yo nunca como mucho.,"rt_cache_total{source=""miss""}+1",1,1044,9604,8810,795,4,
+FR-01-023,1,Perdon. Mi hermano nunca esta contento.,Perdon. Mi hermano nunca esta contento.,"rt_cache_total{source=""miss""}+2",2,856,9609,8844,963,4,
+FR-01-025,1,"Por favor, come poco.","Por favor, come poco.","rt_cache_total{source=""miss""}+1",1,798,7333,6610,725,3,
+FR-01-026,1,"Con permiso. Dejame pasar, por favor.","Con permiso. Dejame pasar, por favor.","rt_cache_total{source=""miss""}+2",2,969,3055,2197,860,1,

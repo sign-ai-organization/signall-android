@@ -1,0 +1,4 @@
+﻿momento;sesiones_backend_antes;sesiones_stt_antes;sesiones_backend_abierta;sesiones_stt_abierta;ms_hasta_liberar_sesion;sesiones_backend_despues;sesiones_stt_despues;health_backend;health_stt;siguiente_frase;glosas_siguiente;ms_siguiente
+hablando;1.0;1.0;2.0;2.0;87.2;1.0;1.0;ok;ok;done;HOLA BUENOS DIAS;83.4
+traduciendo;1.0;1.0;2.0;2.0;92.0;1.0;1.0;ok;ok;done;HOLA BUENOS DIAS;65.6
+representando;1.0;1.0;2.0;2.0;88.5;1.0;1.0;ok;ok;done;HOLA BUENOS DIAS;76.6

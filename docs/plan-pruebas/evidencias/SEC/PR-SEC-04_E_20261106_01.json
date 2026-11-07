@@ -1,0 +1,212 @@
+{
+  "inicio_utc": "2026-11-06T17:56:51Z",
+  "frases": [
+    {
+      "frase": "FR-01-001",
+      "audio": "AU-01-001",
+      "transcrito": "Hola, buenos días, bienvenidos.",
+      "glosas": "HOLA BUENOS DIAS",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-005",
+      "audio": "AU-01-007",
+      "transcrito": "Buenas tardes. Hoy me siento más o menos.",
+      "glosas": "BUENAS TARDES YO SENTIR MAS O MENOS",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-007",
+      "audio": "AU-01-013",
+      "transcrito": "¿Tienes hambre?",
+      "glosas": "TU HAMBRE",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-011",
+      "audio": "AU-01-019",
+      "transcrito": "Perdón, ¿estás triste?",
+      "glosas": "PERDON TU TRISTE",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-013",
+      "audio": "AU-01-025",
+      "transcrito": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "glosas": "HOLA COMO ESTAS COMO TU",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-014",
+      "audio": "AU-01-031",
+      "transcrito": "¿Dónde vive tu familia?",
+      "glosas": "DONDE TU FAMILIA VIVIR",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-019",
+      "audio": "AU-01-037",
+      "transcrito": "Yo nunca como mucho.",
+      "glosas": "YO NUNCA COMER MUCHO",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-023",
+      "audio": "AU-01-043",
+      "transcrito": "Perdón, mi hermano nunca está contento.",
+      "glosas": "PERDON HERMANO NUNCA CONTENTO",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-025",
+      "audio": "AU-01-049",
+      "transcrito": "Por favor, come poco.",
+      "glosas": "POR FAVOR COMER POCO",
+      "errores": 0
+    },
+    {
+      "frase": "FR-01-026",
+      "audio": "AU-01-055",
+      "transcrito": "Con permiso, déjame pasar, por favor.",
+      "glosas": "PERMISO POR FAVOR",
+      "errores": 0
+    }
+  ],
+  "archivos_audio_nuevos": {
+    "backend": [],
+    "stt": []
+  },
+  "archivos_audio_antes": {
+    "backend": [],
+    "stt": []
+  },
+  "archivos_audio_despues": {
+    "backend": [],
+    "stt": []
+  },
+  "tmp_antes": {
+    "backend": "24\n",
+    "stt": "25\n"
+  },
+  "tmp_despues": {
+    "backend": "24\n",
+    "stt": "25\n"
+  },
+  "lineas_log_nuevas": {
+    "backend": 91,
+    "stt": 77
+  },
+  "lineas_log_con_audio": {
+    "backend": 0,
+    "stt": 0
+  },
+  "ejemplos_log_con_audio": {
+    "backend": [],
+    "stt": []
+  },
+  "bd_antes": [
+    [
+      {
+        "n": 41
+      }
+    ],
+    [],
+    [
+      {
+        "relname": "catalog",
+        "bytes": 114688
+      },
+      {
+        "relname": "catalog_synonym",
+        "bytes": 65536
+      },
+      {
+        "relname": "semantic_cache",
+        "bytes": 278528
+      }
+    ],
+    [
+      {
+        "maxlen": 49999,
+        "largos": 1
+      }
+    ]
+  ],
+  "bd_despues": [
+    [
+      {
+        "n": 41
+      }
+    ],
+    [],
+    [
+      {
+        "relname": "catalog",
+        "bytes": 114688
+      },
+      {
+        "relname": "catalog_synonym",
+        "bytes": 65536
+      },
+      {
+        "relname": "semantic_cache",
+        "bytes": 278528
+      }
+    ],
+    [
+      {
+        "maxlen": 49999,
+        "largos": 1
+      }
+    ]
+  ],
+  "oraciones_de_las_10_frases": [
+    "Hola, buenos días, bienvenidos.",
+    "Buenas tardes.",
+    "Hoy me siento más o menos.",
+    "¿Tienes hambre?",
+    "Perdón.",
+    "¿Estás triste?",
+    "Hola, ¿cómo estás?",
+    "¿Cómo te llamas?",
+    "¿Dónde vive tu familia?",
+    "Yo nunca como mucho.",
+    "Perdón.",
+    "Mi hermano nunca está contento.",
+    "Por favor, come poco.",
+    "Con permiso.",
+    "Déjame pasar, por favor."
+  ],
+  "oraciones_en_cache_hoy_ultimas_3h": {
+    "Hola, buenos días, bienvenidos.": false,
+    "Buenas tardes.": true,
+    "Hoy me siento más o menos.": true,
+    "¿Tienes hambre?": true,
+    "Perdón.": true,
+    "¿Estás triste?": true,
+    "Hola, ¿cómo estás?": false,
+    "¿Cómo te llamas?": true,
+    "¿Dónde vive tu familia?": true,
+    "Yo nunca como mucho.": true,
+    "Mi hermano nunca está contento.": true,
+    "Por favor, come poco.": true,
+    "Con permiso.": true,
+    "Déjame pasar, por favor.": true
+  },
+  "oraciones_en_cache_cualquier_fecha": {
+    "Hola, buenos días, bienvenidos.": false,
+    "Buenas tardes.": true,
+    "Hoy me siento más o menos.": true,
+    "¿Tienes hambre?": true,
+    "Perdón.": true,
+    "¿Estás triste?": true,
+    "Hola, ¿cómo estás?": false,
+    "¿Cómo te llamas?": true,
+    "¿Dónde vive tu familia?": true,
+    "Yo nunca como mucho.": true,
+    "Mi hermano nunca está contento.": true,
+    "Por favor, come poco.": true,
+    "Con permiso.": true,
+    "Déjame pasar, por favor.": true
+  }
+}

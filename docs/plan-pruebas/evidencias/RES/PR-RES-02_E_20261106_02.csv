@@ -1,0 +1,7 @@
+﻿situacion;modo_llm;texto;fin;ms;glosas;disponibles;error
+LLM sano: frase nueva (control);slow;Mi abuelo cocina para toda la familia.;done;813.1;HOLA TU;2;
+LLM caído (no responde): frase YA guardada en la caché;down;Hola, buenos días, bienvenidos.;done;3.7;HOLA TU;2;
+LLM caído: frase nueva;down;Los niños corren en el patio grande.;error;10562.0;;0;No se pudo traducir el texto.
+LLM responde 500: frase ya guardada;error500;Hola, buenos días, bienvenidos.;done;4.0;HOLA TU;2;
+LLM responde 500: frase nueva;error500;Los niños juegan en la plaza.;error;550.9;;0;No se pudo traducir el texto.
+LLM vuelve (sin reiniciar): frase nueva;slow;Mi hermano estudia en la biblioteca.;done;756.1;HOLA TU;2;

@@ -1,0 +1,46 @@
+{
+  "coinciden_texto_log": "50/50",
+  "razones": {
+    "silencio": 50
+  },
+  "sin_primera_repeticion": {
+    "ms_transcripcion_final_log": {
+      "n": 40,
+      "p50": 503.0,
+      "p95": 801.6,
+      "max": 956.0
+    },
+    "ms_fin_habla_a_final_log": {
+      "n": 40,
+      "p50": 2005.5,
+      "p95": 2308.2,
+      "max": 2488.0
+    },
+    "ms_atraso_log": {
+      "n": 40,
+      "p50": 1035.0,
+      "p95": 1471.5,
+      "max": 1620.0
+    }
+  },
+  "todas": {
+    "ms_transcripcion_final_log": {
+      "n": 50,
+      "p50": 503.0,
+      "p95": 777.0,
+      "max": 956.0
+    },
+    "ms_fin_habla_a_final_log": {
+      "n": 50,
+      "p50": 2012.0,
+      "p95": 2378.0,
+      "max": 2488.0
+    },
+    "ms_atraso_log": {
+      "n": 50,
+      "p50": 990.0,
+      "p95": 1470.0,
+      "max": 1620.0
+    }
+  }
+}

@@ -1,0 +1,181 @@
+config,orden,frase,ok,oraciones,fuentes,llm_llamadas,glosas,ms
+con_cache,1,"Hola, buenos días, bienvenidos.",True,1,llm,1,HOLA BUENOS DIAS BIENVENIDO,1359.9
+con_cache,2,Adiós a todos. Buenas noches.,True,2,llm/llm,2,ADIOS TODOS BUENAS NOCHES,1023.2
+con_cache,3,Mi abuelo y mi tío trabajan en familia.,True,1,llm,1,ABUELO TIO TRABAJAR FAMILIA,859.3
+con_cache,4,Estoy contento porque mi hermano está feliz.,True,1,llm,1,YO CONTENTO HERMANO FELIZ,969.9
+con_cache,5,Buenas tardes. Hoy me siento más o menos.,True,2,llm/llm,2,BUENAS TARDES YO SENTIR MAS O MENOS,1164.9
+con_cache,6,Gracias a todos. Los niños y las niñas comen con gusto.,True,2,llm/llm,2,GRACIAS TODOS NIÑO NIÑA COMER,1027.4
+con_cache,7,¿Tienes hambre?,True,1,llm,1,TU HAMBRE,613.0
+con_cache,8,¿Estás bien?,True,1,llm,1,TU BIEN,566.7
+con_cache,9,¿Ustedes trabajan en familia?,True,1,llm,1,USTEDES TRABAJAR FAMILIA,802.6
+con_cache,10,Tu hermano está triste. ¿Se siente mal?,True,2,llm/llm,2,TU HERMANO TRISTE TU SENTIR MAL,836.2
+con_cache,11,Perdón. ¿Estás triste?,True,2,llm/llm,2,PERDON COMO ESTAS TRISTE,945.3
+con_cache,12,¿Tu hermano está aburrido?,True,1,llm,1,TU HERMANO ABURRIDO,602.2
+con_cache,13,"Hola, ¿cómo estás? ¿Cómo te llamas?",True,3,llm/llm/llm,3,HOLA COMO ESTAS COMO TU,929.3
+con_cache,14,¿Dónde vive tu familia?,True,1,llm,1,DONDE TU FAMILIA VIVIR,706.9
+con_cache,15,La mujer es juiciosa. ¿Quién es el hombre?,True,2,llm/llm,2,MUJER JUICIOSO QUIEN HOMBRE,695.9
+con_cache,16,¿Por qué estás triste?,True,1,llm,1,POR QUE TU TRISTE,812.2
+con_cache,17,¿Cuándo comen ustedes?,True,1,llm,1,CUANDO USTEDES COMER,1069.7
+con_cache,18,Las personas son diferentes. ¿Qué seña usas tú?,True,2,llm/llm,2,PERSONAS DIFERENTE QUE SEÑA TU,792.5
+con_cache,19,Yo nunca como mucho.,True,1,llm,1,YO NUNCA COMER MUCHO,765.7
+con_cache,20,Mi abuelo nunca trabaja.,True,1,llm,1,ABUELO NUNCA TRABAJAR,771.7
+con_cache,21,Mi tío nunca está aburrido.,True,1,llm,1,TIO NUNCA ABURRIDO,778.7
+con_cache,22,Ustedes nunca se sienten mal.,True,1,llm,1,USTEDES NUNCA SENTIR MAL,815.8
+con_cache,23,Perdón. Mi hermano nunca está contento.,True,2,cache/llm,1,PERDON HERMANO NUNCA CONTENTO,711.0
+con_cache,24,Se siente muy bien. La niña nunca está triste.,True,2,llm/llm,2,TU SENTIR BIEN NIÑA NUNCA TRISTE,880.5
+con_cache,25,"Por favor, come poco.",True,1,llm,1,POR FAVOR COMER POCO,912.1
+con_cache,26,"Con permiso. Déjame pasar, por favor.",True,2,llm/llm,2,CON PERMISO POR FAVOR,900.0
+con_cache,27,"Niños, trabajen todos.",True,1,llm,1,NIÑO TODOS TRABAJAR,723.9
+con_cache,28,"Hermano, vive con el abuelo. Trabaja con el tío.",True,2,llm/llm,2,HERMANO VIVIR ABUELO TRABAJAR TIO,713.3
+con_cache,29,"Hola, familia, siéntanse bienvenidos.",True,1,llm,1,HOLA FAMILIA SENTIR BIENVENIDO,714.7
+con_cache,30,"Tío, come mucho. Hermano, come poco.",True,2,llm/llm,2,TIO COMER MUCHO HERMANO COMER POCO,887.4
+con_cache,31,"HOLA, BUENOS DÍAS, BIENVENIDOS.",True,1,cache,0,HOLA BUENOS DIAS BIENVENIDO,14.0
+con_cache,32,Adios a todos. Buenas noches.,True,2,cache/cache,0,ADIOS TODOS BUENAS NOCHES,16.0
+con_cache,33,En familia trabajan mi abuelo y mi tío.,True,1,cache,0,ABUELO TIO TRABAJAR FAMILIA,79.8
+con_cache,34,"Porque mi hermano está feliz, estoy contento.",True,1,cache,0,YO CONTENTO HERMANO FELIZ,66.1
+con_cache,35,Buenas tardes. Hoy me siento regular.,True,2,cache/llm,1,BUENAS TARDES YO SENTIR,713.9
+con_cache,36,¡Gracias a todos! Los niños y las niñas comen con gusto.,True,2,cache/cache,0,GRACIAS TODOS NIÑO NIÑA COMER,20.1
+con_cache,37,Tienes hambre,True,1,llm,1,TU HAMBRE,565.0
+con_cache,38,¿Estas bien?,True,1,cache,0,TU BIEN,13.3
+con_cache,39,¿Trabajan ustedes en familia?,True,1,cache,0,USTEDES TRABAJAR FAMILIA,78.8
+con_cache,40,Está triste tu hermano. ¿Se siente mal?,True,2,cache/cache,0,TU HERMANO TRISTE TU SENTIR MAL,63.6
+con_cache,41,Perdon. ¿Estas triste?,True,2,cache/cache,0,PERDON COMO ESTAS TRISTE,11.6
+con_cache,42,¿Está aburrido tu hermano?,True,1,cache,0,TU HERMANO ABURRIDO,63.9
+con_cache,43,Hola ¿cómo estás? ¿Cómo te llamas?,True,3,cache/cache/cache,0,HOLA COMO ESTAS COMO TU,46.6
+con_cache,44,¿Tu familia dónde vive?,True,1,llm,1,TU FAMILIA DONDE VIVIR,658.4
+con_cache,45,La mujer es prudente. ¿Quién es el señor?,True,2,llm/llm,2,MUJER QUIEN,678.1
+con_cache,46,¿POR QUÉ ESTÁS TRISTE?,True,1,cache,0,POR QUE TU TRISTE,18.5
+con_cache,47,¿Ustedes cuándo comen?,True,1,cache,0,CUANDO USTEDES COMER,104.7
+con_cache,48,Las personas son diferentes. ¿Tú qué seña usas?,True,2,cache/cache,0,PERSONAS DIFERENTE QUE SEÑA TU,71.7
+con_cache,49,Yo jamás como mucho.,True,1,llm,1,YO COMER MUCHO,689.7
+con_cache,50,Mi abuelo jamás trabaja.,True,1,llm,1,ABUELO TRABAJAR,702.0
+con_cache,51,Nunca está aburrido mi tío.,True,1,cache,0,TIO NUNCA ABURRIDO,87.7
+con_cache,52,Nunca se sienten mal ustedes.,True,1,cache,0,USTEDES NUNCA SENTIR MAL,63.1
+con_cache,53,Disculpe. Mi hermano nunca está contento.,True,2,llm/cache,1,DISCULPE HERMANO NUNCA CONTENTO,618.9
+con_cache,54,Se siente excelente. La niña nunca está triste.,True,2,llm/cache,1,TU SENTIR NIÑA NUNCA TRISTE,817.5
+con_cache,55,"Por favor, come un poquito.",True,1,llm,1,POR FAVOR COMER,657.6
+con_cache,56,"con permiso. déjame pasar, por favor.",True,2,cache/cache,0,CON PERMISO POR FAVOR,15.8
+con_cache,57,"Chicos, trabajen todos.",True,1,llm,1,TRABAJAR TODOS,764.2
+con_cache,58,"Hermano, reside con el abuelo. Trabaja con el tío.",True,2,cache/cache,0,HERMANO VIVIR ABUELO TRABAJAR TIO,87.6
+con_cache,59,Hola familia siéntanse bienvenidos,True,1,cache,0,HOLA FAMILIA SENTIR BIENVENIDO,13.8
+con_cache,60,"Tío, come bastante. Hermano, come un poquito.",True,2,llm/llm,2,TIO COMER HERMANO COMER,755.0
+sin_cache_A,1,"Hola, buenos días, bienvenidos.",True,1,llm,1,HOLA BUENOS DIAS BIENVENIDO,662.1
+sin_cache_A,2,Adiós a todos. Buenas noches.,True,2,llm/llm,2,ADIOS TODOS BUENAS NOCHES,806.9
+sin_cache_A,3,Mi abuelo y mi tío trabajan en familia.,True,1,llm,1,ABUELO TIO TRABAJAR FAMILIA,711.1
+sin_cache_A,4,Estoy contento porque mi hermano está feliz.,True,1,llm,1,YO CONTENTO HERMANO FELIZ,683.6
+sin_cache_A,5,Buenas tardes. Hoy me siento más o menos.,True,2,llm/llm,2,BUENAS TARDES YO SENTIR MAS O MENOS,721.1
+sin_cache_A,6,Gracias a todos. Los niños y las niñas comen con gusto.,True,2,llm/llm,2,GRACIAS TODOS NIÑO NIÑA COMER,1660.6
+sin_cache_A,7,¿Tienes hambre?,True,1,llm,1,TU HAMBRE,609.1
+sin_cache_A,8,¿Estás bien?,True,1,llm,1,TU BIEN,646.3
+sin_cache_A,9,¿Ustedes trabajan en familia?,True,1,llm,1,USTEDES TRABAJAR FAMILIA,743.8
+sin_cache_A,10,Tu hermano está triste. ¿Se siente mal?,True,2,llm/llm,2,TU HERMANO TRISTE TU SENTIR MAL,645.5
+sin_cache_A,11,Perdón. ¿Estás triste?,True,2,llm/llm,2,PERDON COMO ESTAS TRISTE,601.7
+sin_cache_A,12,¿Tu hermano está aburrido?,True,1,llm,1,TU HERMANO ABURRIDO,618.1
+sin_cache_A,13,"Hola, ¿cómo estás? ¿Cómo te llamas?",True,3,llm/llm/llm,3,HOLA COMO ESTAS COMO TU,718.1
+sin_cache_A,14,¿Dónde vive tu familia?,True,1,llm,1,DONDE TU FAMILIA VIVIR,852.0
+sin_cache_A,15,La mujer es juiciosa. ¿Quién es el hombre?,True,2,llm/llm,2,MUJER JUICIOSO QUIEN HOMBRE,807.8
+sin_cache_A,16,¿Por qué estás triste?,True,1,llm,1,POR QUE TU TRISTE,587.9
+sin_cache_A,17,¿Cuándo comen ustedes?,True,1,llm,1,CUANDO USTEDES COMER,643.4
+sin_cache_A,18,Las personas son diferentes. ¿Qué seña usas tú?,True,2,llm/llm,2,PERSONAS DIFERENTE QUE SEÑA TU,682.7
+sin_cache_A,19,Yo nunca como mucho.,True,1,llm,1,YO NUNCA COMER MUCHO,619.0
+sin_cache_A,20,Mi abuelo nunca trabaja.,True,1,llm,1,ABUELO NUNCA TRABAJAR,806.8
+sin_cache_A,21,Mi tío nunca está aburrido.,True,1,llm,1,TIO NUNCA ABURRIDO,656.9
+sin_cache_A,22,Ustedes nunca se sienten mal.,True,1,llm,1,USTEDES NUNCA SENTIR MAL,688.6
+sin_cache_A,23,Perdón. Mi hermano nunca está contento.,True,2,llm/llm,2,PERDON HERMANO NUNCA CONTENTO,702.5
+sin_cache_A,24,Se siente muy bien. La niña nunca está triste.,True,2,llm/llm,2,TU SENTIR BIEN NIÑA NUNCA TRISTE,869.0
+sin_cache_A,25,"Por favor, come poco.",True,1,llm,1,POR FAVOR COMER POCO,710.9
+sin_cache_A,26,"Con permiso. Déjame pasar, por favor.",True,2,llm/llm,2,CON PERMISO POR FAVOR,693.2
+sin_cache_A,27,"Niños, trabajen todos.",True,1,llm,1,NIÑO TODOS TRABAJAR,805.4
+sin_cache_A,28,"Hermano, vive con el abuelo. Trabaja con el tío.",True,2,llm/llm,2,HERMANO VIVIR ABUELO TRABAJAR TIO,662.2
+sin_cache_A,29,"Hola, familia, siéntanse bienvenidos.",True,1,llm,1,HOLA FAMILIA SENTIR BIENVENIDO,732.3
+sin_cache_A,30,"Tío, come mucho. Hermano, come poco.",True,2,llm/llm,2,TIO COMER MUCHO HERMANO COMER POCO,826.4
+sin_cache_A,31,"HOLA, BUENOS DÍAS, BIENVENIDOS.",True,1,llm,1,HOLA BUENOS DIAS BIENVENIDO,698.8
+sin_cache_A,32,Adios a todos. Buenas noches.,True,2,llm/llm,2,ADIOS TODOS BUENAS NOCHES,638.0
+sin_cache_A,33,En familia trabajan mi abuelo y mi tío.,True,1,llm,1,FAMILIA TRABAJAR ABUELO TIO,797.1
+sin_cache_A,34,"Porque mi hermano está feliz, estoy contento.",True,1,llm,1,HERMANO FELIZ YO CONTENTO,657.3
+sin_cache_A,35,Buenas tardes. Hoy me siento regular.,True,2,llm/llm,2,BUENAS TARDES YO SENTIR,788.3
+sin_cache_A,36,¡Gracias a todos! Los niños y las niñas comen con gusto.,True,2,llm/llm,2,GRACIAS TODOS NIÑO NIÑA COMER,817.6
+sin_cache_A,37,Tienes hambre,True,1,llm,1,TU HAMBRE,625.1
+sin_cache_A,38,¿Estas bien?,True,1,llm,1,TU BIEN,593.0
+sin_cache_A,39,¿Trabajan ustedes en familia?,True,1,llm,1,USTEDES TRABAJAR FAMILIA,672.2
+sin_cache_A,40,Está triste tu hermano. ¿Se siente mal?,True,2,llm/llm,2,TU HERMANO TRISTE TU SENTIR MAL,748.7
+sin_cache_A,41,Perdon. ¿Estas triste?,True,2,llm/llm,2,PERDON TU TRISTE,658.8
+sin_cache_A,42,¿Está aburrido tu hermano?,True,1,llm,1,TU HERMANO ABURRIDO,668.5
+sin_cache_A,43,Hola ¿cómo estás? ¿Cómo te llamas?,True,3,llm/llm/llm,3,HOLA COMO ESTAS COMO YO,805.5
+sin_cache_A,44,¿Tu familia dónde vive?,True,1,llm,1,TU FAMILIA DONDE VIVIR,677.0
+sin_cache_A,45,La mujer es prudente. ¿Quién es el señor?,True,2,llm/llm,2,MUJER QUIEN,643.3
+sin_cache_A,46,¿POR QUÉ ESTÁS TRISTE?,True,1,llm,1,POR QUE TU TRISTE,726.3
+sin_cache_A,47,¿Ustedes cuándo comen?,True,1,llm,1,USTEDES COMER,648.4
+sin_cache_A,48,Las personas son diferentes. ¿Tú qué seña usas?,True,2,llm/llm,2,PERSONAS DIFERENTE TU QUE SEÑA,750.9
+sin_cache_A,49,Yo jamás como mucho.,True,1,llm,1,YO COMER MUCHO,1211.5
+sin_cache_A,50,Mi abuelo jamás trabaja.,True,1,llm,1,ABUELO TRABAJAR,664.2
+sin_cache_A,51,Nunca está aburrido mi tío.,True,1,llm,1,TIO NUNCA ABURRIDO,678.7
+sin_cache_A,52,Nunca se sienten mal ustedes.,True,1,llm,1,USTEDES NUNCA SENTIR MAL,894.6
+sin_cache_A,53,Disculpe. Mi hermano nunca está contento.,True,2,llm/llm,2,DISCULPE HERMANO NUNCA CONTENTO,960.0
+sin_cache_A,54,Se siente excelente. La niña nunca está triste.,True,2,llm/llm,2,TU SENTIR NIÑA NUNCA TRISTE,671.3
+sin_cache_A,55,"Por favor, come un poquito.",True,1,llm,1,POR FAVOR COMER,788.7
+sin_cache_A,56,"con permiso. déjame pasar, por favor.",True,2,llm/llm,2,CON PERMISO POR FAVOR,644.0
+sin_cache_A,57,"Chicos, trabajen todos.",True,1,llm,1,TRABAJAR TODOS,748.3
+sin_cache_A,58,"Hermano, reside con el abuelo. Trabaja con el tío.",True,2,llm/llm,2,HERMANO ABUELO TRABAJAR TIO,780.7
+sin_cache_A,59,Hola familia siéntanse bienvenidos,True,1,llm,1,HOLA FAMILIA SENTIR BIENVENIDO,829.9
+sin_cache_A,60,"Tío, come bastante. Hermano, come un poquito.",True,2,llm/llm,2,TIO COMER HERMANO COMER,837.8
+sin_cache_B,1,"Hola, buenos días, bienvenidos.",True,1,llm,1,HOLA BUENOS DIAS BIENVENIDO,820.1
+sin_cache_B,2,Adiós a todos. Buenas noches.,True,2,llm/llm,2,ADIOS TODOS BUENAS NOCHES,677.6
+sin_cache_B,3,Mi abuelo y mi tío trabajan en familia.,True,1,llm,1,ABUELO TIO TRABAJAR FAMILIA,695.6
+sin_cache_B,4,Estoy contento porque mi hermano está feliz.,True,1,llm,1,YO CONTENTO HERMANO FELIZ,605.9
+sin_cache_B,5,Buenas tardes. Hoy me siento más o menos.,True,2,llm/llm,2,BUENAS TARDES YO SENTIR MAS O MENOS,734.3
+sin_cache_B,6,Gracias a todos. Los niños y las niñas comen con gusto.,True,2,llm/llm,2,GRACIAS TODOS NIÑO NIÑA COMER,745.4
+sin_cache_B,7,¿Tienes hambre?,True,1,llm,1,TU HAMBRE,1152.1
+sin_cache_B,8,¿Estás bien?,True,1,llm,1,TU BIEN,580.8
+sin_cache_B,9,¿Ustedes trabajan en familia?,True,1,llm,1,USTEDES TRABAJAR FAMILIA,714.8
+sin_cache_B,10,Tu hermano está triste. ¿Se siente mal?,True,2,llm/llm,2,TU HERMANO TRISTE TU SENTIR MAL,763.7
+sin_cache_B,11,Perdón. ¿Estás triste?,True,2,llm/llm,2,PERDON TU TRISTE,629.4
+sin_cache_B,12,¿Tu hermano está aburrido?,True,1,llm,1,TU HERMANO ABURRIDO,624.4
+sin_cache_B,13,"Hola, ¿cómo estás? ¿Cómo te llamas?",True,3,llm/llm/llm,3,HOLA COMO ESTAS COMO TU,880.2
+sin_cache_B,14,¿Dónde vive tu familia?,True,1,llm,1,DONDE TU FAMILIA VIVIR,634.8
+sin_cache_B,15,La mujer es juiciosa. ¿Quién es el hombre?,True,2,llm/llm,2,MUJER JUICIOSO QUIEN HOMBRE,748.4
+sin_cache_B,16,¿Por qué estás triste?,True,1,llm,1,POR QUE TU TRISTE,606.3
+sin_cache_B,17,¿Cuándo comen ustedes?,True,1,llm,1,CUANDO USTEDES COMER,731.6
+sin_cache_B,18,Las personas son diferentes. ¿Qué seña usas tú?,True,2,llm/llm,2,PERSONAS DIFERENTE QUE SEÑA TU,739.7
+sin_cache_B,19,Yo nunca como mucho.,True,1,llm,1,YO NUNCA COMER MUCHO,683.5
+sin_cache_B,20,Mi abuelo nunca trabaja.,True,1,llm,1,ABUELO NUNCA TRABAJAR,665.6
+sin_cache_B,21,Mi tío nunca está aburrido.,True,1,llm,1,TIO NUNCA ABURRIDO,697.8
+sin_cache_B,22,Ustedes nunca se sienten mal.,True,1,llm,1,USTEDES NUNCA SENTIR MAL,721.9
+sin_cache_B,23,Perdón. Mi hermano nunca está contento.,True,2,llm/llm,2,PERDON HERMANO NUNCA CONTENTO,713.3
+sin_cache_B,24,Se siente muy bien. La niña nunca está triste.,True,2,llm/llm,2,TU SENTIR BIEN NIÑA NUNCA TRISTE,815.6
+sin_cache_B,25,"Por favor, come poco.",True,1,llm,1,POR FAVOR COMER POCO,590.2
+sin_cache_B,26,"Con permiso. Déjame pasar, por favor.",True,2,llm/llm,2,CON PERMISO POR FAVOR,657.8
+sin_cache_B,27,"Niños, trabajen todos.",True,1,llm,1,NIÑO TODOS TRABAJAR,695.7
+sin_cache_B,28,"Hermano, vive con el abuelo. Trabaja con el tío.",True,2,llm/llm,2,HERMANO VIVIR ABUELO TRABAJAR TIO,1013.4
+sin_cache_B,29,"Hola, familia, siéntanse bienvenidos.",True,1,llm,1,HOLA FAMILIA SENTIR BIENVENIDO,717.9
+sin_cache_B,30,"Tío, come mucho. Hermano, come poco.",True,2,llm/llm,2,TIO COMER MUCHO HERMANO COMER POCO,956.9
+sin_cache_B,31,"HOLA, BUENOS DÍAS, BIENVENIDOS.",True,1,llm,1,HOLA BUENOS DIAS BIENVENIDO,654.0
+sin_cache_B,32,Adios a todos. Buenas noches.,True,2,llm/llm,2,ADIOS TODOS BUENAS NOCHES,624.8
+sin_cache_B,33,En familia trabajan mi abuelo y mi tío.,True,1,llm,1,FAMILIA TRABAJAR ABUELO TIO,679.7
+sin_cache_B,34,"Porque mi hermano está feliz, estoy contento.",True,1,llm,1,HERMANO FELIZ YO CONTENTO,617.0
+sin_cache_B,35,Buenas tardes. Hoy me siento regular.,True,2,llm/llm,2,BUENAS TARDES YO SENTIR,680.4
+sin_cache_B,36,¡Gracias a todos! Los niños y las niñas comen con gusto.,True,2,llm/llm,2,GRACIAS TODOS NIÑO NIÑA COMER,838.0
+sin_cache_B,37,Tienes hambre,True,1,llm,1,TU HAMBRE,591.1
+sin_cache_B,38,¿Estas bien?,True,1,llm,1,TU BIEN,543.8
+sin_cache_B,39,¿Trabajan ustedes en familia?,True,1,llm,1,USTEDES TRABAJAR FAMILIA,776.0
+sin_cache_B,40,Está triste tu hermano. ¿Se siente mal?,True,2,llm/llm,2,TU HERMANO TRISTE TU SENTIR MAL,723.3
+sin_cache_B,41,Perdon. ¿Estas triste?,True,2,llm/llm,2,PERDON TU TRISTE,722.7
+sin_cache_B,42,¿Está aburrido tu hermano?,True,1,llm,1,TU HERMANO ABURRIDO,617.8
+sin_cache_B,43,Hola ¿cómo estás? ¿Cómo te llamas?,True,3,llm/llm/llm,3,HOLA COMO ESTAS COMO TU,963.1
+sin_cache_B,44,¿Tu familia dónde vive?,True,1,llm,1,TU FAMILIA DONDE VIVIR,718.0
+sin_cache_B,45,La mujer es prudente. ¿Quién es el señor?,True,2,llm/llm,2,MUJER QUIEN,820.8
+sin_cache_B,46,¿POR QUÉ ESTÁS TRISTE?,True,1,llm,1,POR QUE TU TRISTE,574.8
+sin_cache_B,47,¿Ustedes cuándo comen?,True,1,llm,1,USTEDES COMER,705.1
+sin_cache_B,48,Las personas son diferentes. ¿Tú qué seña usas?,True,2,llm/llm,2,PERSONAS DIFERENTE TU QUE SEÑA,684.1
+sin_cache_B,49,Yo jamás como mucho.,True,1,llm,1,YO COMER MUCHO,697.1
+sin_cache_B,50,Mi abuelo jamás trabaja.,True,1,llm,1,ABUELO TRABAJAR,785.8
+sin_cache_B,51,Nunca está aburrido mi tío.,True,1,llm,1,TIO NUNCA ABURRIDO,733.1
+sin_cache_B,52,Nunca se sienten mal ustedes.,True,1,llm,1,USTEDES NUNCA SENTIR MAL,632.7
+sin_cache_B,53,Disculpe. Mi hermano nunca está contento.,True,2,llm/llm,2,DISCULPAR HERMANO NUNCA CONTENTO,663.9
+sin_cache_B,54,Se siente excelente. La niña nunca está triste.,True,2,llm/llm,2,TU SENTIR NIÑA NUNCA TRISTE,657.3
+sin_cache_B,55,"Por favor, come un poquito.",True,1,llm,1,POR FAVOR COMER,709.2
+sin_cache_B,56,"con permiso. déjame pasar, por favor.",True,2,llm/llm,2,CON PERMISO POR FAVOR,757.4
+sin_cache_B,57,"Chicos, trabajen todos.",True,1,llm,1,TRABAJAR TODOS,656.4
+sin_cache_B,58,"Hermano, reside con el abuelo. Trabaja con el tío.",True,2,llm/llm,2,HERMANO ABUELO TRABAJAR TIO,856.3
+sin_cache_B,59,Hola familia siéntanse bienvenidos,True,1,llm,1,HOLA FAMILIA SENTIR BIENVENIDO,686.1
+sin_cache_B,60,"Tío, come bastante. Hermano, come un poquito.",True,2,llm/llm,2,TIO COMER HERMANO COMER,852.8

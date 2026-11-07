@@ -1,0 +1,61 @@
+{
+  "niveles": [
+    {
+      "nivel": 1,
+      "duracion_s": 47.3,
+      "gauge_antes": 1.0,
+      "gauge_max": 2.0,
+      "gauge_despues": 1.0,
+      "frases": 10,
+      "errores": 0,
+      "ajenas": 0,
+      "lat_p50": 506.6,
+      "lat_p95": 936.0,
+      "lat_max": 936.0,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 2,
+      "duracion_s": 49.2,
+      "gauge_antes": 1.0,
+      "gauge_max": 3.0,
+      "gauge_despues": 1.0,
+      "frases": 20,
+      "errores": 0,
+      "ajenas": 0,
+      "lat_p50": 688.0,
+      "lat_p95": 1015.3,
+      "lat_max": 1158.6,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 3,
+      "duracion_s": 51.0,
+      "gauge_antes": 1.0,
+      "gauge_max": 4.0,
+      "gauge_despues": 1.0,
+      "frases": 30,
+      "errores": 0,
+      "ajenas": 0,
+      "lat_p50": 781.5,
+      "lat_p95": 1565.0,
+      "lat_max": 1932.6,
+      "wer_medio": 0.0
+    },
+    {
+      "nivel": 1,
+      "duracion_s": 47.7,
+      "gauge_antes": 1.0,
+      "gauge_max": 2.0,
+      "gauge_despues": 1.0,
+      "frases": 10,
+      "errores": 0,
+      "ajenas": 0,
+      "lat_p50": 595.4,
+      "lat_p95": 1304.0,
+      "lat_max": 1304.0,
+      "wer_medio": 0.0
+    }
+  ],
+  "nota": "Cada nivel abre 1, 2 o 3 sesiones WebSocket a la vez; cada sesion manda las 10 frases de FR-01-A con su audio AU-01 (hablante H1 en silencio), rotadas para que las sesiones no transcriban la misma frase a la vez; audio a ritmo real y {\"type\":\"end\"} al final; la app (aqui el script) reenvia el texto final como text. Latencia = fin del audio hasta done. El ultimo nivel repite 1 sesion."
+}

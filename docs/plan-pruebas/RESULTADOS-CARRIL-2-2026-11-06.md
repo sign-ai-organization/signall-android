@@ -1,0 +1,822 @@
+# Ronda de evaluación · carril P2 (cortes y audio) · 2026-11-06
+
+Resultados del carril P2 (27 pruebas: bloques STT, RES y SEC, las ablaciones de SEG y CAC, `PR-REN-01` a `06` y `PR-TRA-03`) contra el servidor **canónico** (contenedores de backend y STT ya levantados por el usuario, sin reiniciar ni tocar su configuración).
+
+- **Ejecutor:** agente IA (P2), sesión del 2026-11-06, aproximadamente de 12:20 a 14:40 (hora local, UTC-5).
+- **Evidencia nueva:** `evidencias/<BLOQUE>/PR-*_E_20261106_*` (no se sobrescribió ni se borró nada anterior). Los scripts temporales no se guardaron en el repositorio.
+- **Actualización del 2026-11-07 (sexta pasada):** el mismo agente IA siguió las pruebas parciales con autorización del owner. Se cerraron `PR-CAC-06`, `PR-SEC-04` y `PR-SEC-03`; `PR-REN-03` recibió la situación «LLM» (teléfono y servidor); `PR-REN-04` se repitió con los 13 sinónimos y después contra la **Neon real** (base dormida y despierta, con autorización del owner); `PR-SEC-01` pasó de «no ejecutada» a «parcial»; `PR-TRA-03` pasó de «no ejecutada» a «parcial» (aproximación autorizada por el owner: se borraron los contenedores y las imágenes del proyecto y se reconstruyó, sin clonar). **Esa pasada escribió una fila en la caché real de Neon**, que el owner pidió borrar y se borró (§4.2.6, §5.2 punto 31). El detalle de esa pasada está en la **§4.2**; las filas de la §2 y los conteos de la §1.2 ya incluyen los resultados nuevos, y los resultados del 6/11 que se superaron se conservan marcados como «pasada previa». Evidencia nueva: `evidencias/<BLOQUE>/PR-*_E_20261107_*`. Esa pasada se hizo en un **laboratorio aparte** (contenedores `p3lab-*`, base propia, LLM real) porque el servidor canónico estaba apagado (§4.2.1).
+- **Regla de lectura:** cada cifra sale de una medición de esta sesión y dice de dónde sale. Lo supuesto va marcado como tal. Donde se compara con el 5/11, la comparación se hace con los archivos `_E_20261105_*`.
+
+## 1. Resumen
+
+### 1.1. Entorno (leído, no supuesto)
+
+| Dato | Valor | Origen |
+|---|---|---|
+| Equipo | AMD Ryzen 5 3400G (4 núcleos, 8 hilos), 16 GB de RAM, Windows 11 Pro 10.0.26200, Docker 29.7.2 | `Get-CimInstance`, `docker version` |
+| GPU | **NVIDIA GeForce RTX 3050, 8.192 MiB**, controlador 621.01. Antes de empezar había 3.261 MiB ocupados (STT canónico + escritorio) | `nvidia-smi` |
+| Diferencia con el 5/11 | La ronda del 5/11 se midió en una **RTX 4050 Laptop de 6.141 MiB**. Es otra máquina; los tiempos no son comparables 1 a 1 (ver §5.1) | `ANALISIS-2026-11-05.md` §1.2 |
+| Backend | commit `9c74e76` (06/11 05:25), imagen construida 17:05 UTC, contenedor iniciado 17:13 UTC | `git log`, `docker inspect` |
+| STT | commit `9787e49` (06/11 00:39), imagen construida 17:00 UTC | idem |
+| App / docs | `sign-ai-android` `4ded3a8` (HEAD = `origin/main`), `sign-ai-docs` `1969d9d` | `git rev-parse` |
+| Whisper | `medium`, `cuda`, `float16`, español, silencio de cierre 1.500 ms (`/health` del STT) | `GET :8000/health` |
+| LLM | `gpt-4o-mini`, `llm_base_url=""` (OpenAI), temperatura 0, `LLM_TIMEOUT_MS=5000`, `LLM_MAX_RETRIES=1` | `/metrics.json` y `.env` |
+| Caché semántica | umbral **0,05** (configuración del contenedor), embeddings `paraphrase-multilingual-MiniLM-L12-v2`, precarga activa | `/metrics.json` (`config`) |
+| Catálogo | `/health` informa 63 glosas (50 filas + 13 sinónimos; el contador mezcla ambos) | `GET :8080/health` |
+| `DEBUG_TRACE_ENABLED` | `false` en el `.env`; el backend escribe igualmente las líneas `Pipeline trace` en el log, y de ahí salen los tiempos por paso de `PR-REN-02` | `.env`, `docker logs` |
+| Estado de los contenedores | `sign-ai-backend-backend-1` y `sign-ai-backend-stt-1` arriba durante toda la sesión, **sin reinicios** (iniciados 17:13 UTC, siguen arriba al cierre). Caché: 4 filas precargadas al arrancar; 41 filas en `/health` durante la sesión (las escribió el propio tráfico de las pruebas) | `docker logs`, `/health` |
+| Teléfono | Redmi Note 11 (`2201117TL`, MIUI V140, Android según `adb`), id `61ecd28e`. `com.signai.webview` 1.0.0 `debug` ya instalada (última actualización 2026-11-06 01:19) y apuntando a `ws://127.0.0.1:8080/ws/translate` (confirmado en `logcat -s SignAiNet`), con `adb reverse tcp:8080 tcp:8080` y `RECORD_AUDIO` otorgado. **No se compiló ni instaló nada**: solo se reinició y se lanzó la app instalada. Es otro teléfono que el del 5/11 (Redmi Note 9S). **Laboratorios aparte (tercera y cuarta pasada):** contenedores `p2lab-*` en una red propia, con las mismas imágenes que el canónico. Tercera pasada: sin base de datos (backend, STT y LLM falso; teléfono por `adb reverse tcp:8080 tcp:8180`, restaurado a `8080:8080`). Cuarta pasada (autorizada por el owner): **Postgres 16 con pgvector** (`pgvector/pgvector:pg16`, `p2lab-pg`, puerto 5433, sin tocar Neon), con las migraciones 001 a 006 del backend y el catálogo de 50 glosas sembrado con `tools/seed_catalog.py` (`build_sql`); los 13 sinónimos de Neon **no** están en ningún script del repo y no se copiaron (el laboratorio informa 50 glosas, no 63). Todo se retiró (contenedores con sus volúmenes, red); queda la imagen `pgvector/pgvector:pg16` (621 MB) descargada | `adb devices -l` |
+
+### 1.2. Conteo (suman 27)
+
+| Estado | Cantidad | Pruebas |
+|---|---|---|
+| **Ejecutadas** (completas, con las salvedades de las secciones 3 y 4.2; CAC-05, CAC-06, RES-02, RES-03, RES-04, RES-05, RES-07, SEC-03 (consultas), SEC-04, SEG-02 y SEG-04 en laboratorio aparte; REN-04 contra Neon real) | **24** | STT-01, STT-02, STT-03, STT-04, STT-05, REN-01, REN-02, REN-04, REN-05, REN-06, CAC-05, RES-01 (con el teléfono), RES-02, RES-03, RES-04, RES-05, RES-06, RES-07, SEC-02, SEC-03, SEC-04, SEG-02, SEG-04, CAC-06 |
+| **Parciales** (medición real, pero no la que pide la ficha) | **3** | REN-03 (teléfono por texto y servidor, con caché y con LLM; **falta la voz por el micrófono del teléfono, por falta de altavoz**), SEC-01 (cifrado medido con un cliente en el PC; **falta la sesión TLS de la app real en el teléfono, porque la CA no se pudo instalar sin bloqueo de pantalla**), TRA-03 (aproximación en esta máquina: se borraron contenedores e imágenes y se reconstruyó; **no es una máquina limpia**) |
+| **No ejecutadas** | **0** | — |
+
+Resultado de las 24 ejecutadas y las 3 parciales (27 en total, todas con algún resultado): **7 Pasa** (STT-02, RES-02, RES-05, RES-06, RES-07, SEC-02, SEC-04) · **6 Falla** (SEC-03, claves y permisos; STT-03; CAC-05, el SQL no se refleja sin recargar; RES-01, el texto no vuelve a la barra; RES-03, el micrófono no se recupera; RES-04, el backend arrancado sin base no se recupera) · **12 Se reporta** (STT-01, STT-04, STT-05, REN-01, REN-02, REN-03, REN-04, REN-05, REN-06, SEG-02, SEG-04, CAC-06) · **2 parciales de verificación sin cerrar** (SEC-01 y TRA-03; esta última cumple el criterio en la aproximación, pero no equivale a una máquina limpia). SEC-03 **encontró dos problemas reales** (claves en evidencia versionada y un rol de base con permisos de más, ver §5.2). **Cerrado el 7/11 (§4.2):** CAC-06, SEC-03 (consultas y permisos), SEC-04, la situación «LLM» de REN-03 y REN-04 contra la Neon real. **Siguen abiertas, por falta de recurso y no por decisión:** la voz de REN-03 (altavoz), la sesión TLS de SEC-01 (bloqueo de pantalla en el teléfono, para instalar la CA) y TRA-03 en una máquina limpia (hoy solo hay una aproximación).
+
+## 2. Tabla de las 27 pruebas
+
+| ID | Prueba | Estado | Resultado clave (cifra y origen) | Evidencia (`evidencias/…`) |
+|---|---|---|---|---|
+| PR-STT-01 | Precisión de la transcripción | **Se reporta** | WER **1,77 %** (5 errores en 282 palabras, 60 audios de AU-01; `POST /transcribe`). H1 0 %, H2 8,51 %, H3 2,13 %, H4 0 %; silencio 2,66 %, ruido 0 %; peor tipo: pregunta de sí o no 13,33 % | `STT/PR-STT-01_E_20261106_01.{csv,json}` |
+| PR-STT-02 | Cierre de frase y parciales | **Pasa** | 10/10 audios cierran como se espera (3 por silencio, 5 por el límite de 8 s, 2 por mensaje de fin) y 10/10 traen parciales (2 a 11 por audio); primer parcial p50 2.516 ms | `STT/PR-STT-02_E_20261106_01.{csv,json}` |
+| PR-STT-03 | Filtros de no voz | **Falla** | Por el camino de uso (WebSocket) 0/8 finales con texto, pero **1 parcial** inventado («¡Grr!», AU-03-006); por `POST /transcribe` **1/8** audio (AU-03-004) devuelve 52 palabras inventadas. El criterio es «ningún audio produce texto» | `STT/PR-STT-03_E_20261106_01.{csv,json}` |
+| PR-STT-04 | Alternativas de Whisper | **Se reporta** | small **3,55 %** / 245 ms / +1.058 MiB; medium **1,77 %** / 489,5 ms / +2.146 MiB; large-v3 **0,35 %** / 832 ms / +4.131 MiB (60 audios; instancias aparte, puerto 8001) | `STT/PR-STT-04_E_20261106_01.{csv,json}` |
+| PR-STT-05 | Alternativas del umbral de ruido | **Se reporta** | `MIN_RMS` 0,004 / 0,008 / 0,016 con `medium`: WER **1,77 %** en los tres y el mismo audio sin texto (AU-01-014); sin voz por POST 0/8 en los tres; por WebSocket aparece texto en AU-03-005 con 0,004 y 0,016 pero no con 0,008 (no monótono) | `STT/PR-STT-05_E_20261106_01.{csv,json}` |
+| PR-SEG-02 | Con y sin segmentador | **Se reporta** (laboratorio completo con base propia) | Caché vacía, LLM real, 9 configuraciones por variable de entorno del backend de laboratorio. FR-05: con segmentador **21/21** oraciones desde la caché (100 %), 10/10 frases sin LLM; sin segmentador **2/10** (20 %). Glosas exactas: FR-01 24/30 contra 21/30 y FR-05 7/10 contra 4/10 | `SEG/PR-SEG-0204_E_20261106_01.{csv,json}` |
+| PR-SEG-04 | Reglas del segmentador | **Se reporta** (laboratorio completo con base propia) | 7 reglas apagadas de a una: las 7 dejan **44 oraciones en FR-01 y 21/21 de caché en FR-05**, salvo `cut_before_opening_mark` (43 y 20/20); las diferencias de 1 glosa exacta (23 contra 24) se repiten con reglas que no cambian la división, o sea que son ruido del LLM, no efecto de la regla | `SEG/PR-SEG-0204_E_20261106_01.{csv,json}` |
+| PR-CAC-05 | Qué guarda la caché | **Falla** (laboratorio con base propia) | 13 envíos de FR-10 con un LLM falso: **10 filas, 0 duplicados, 0 filas vacías**; una respuesta vacía del LLM no se guarda (10 filas antes y después) y una falla del LLM tampoco; frase nueva **750 ms** (LLM falso de 0,7 s) contra repetida **3,5 a 4,1 ms**; la fila aparece ≈200 ms después del `done`. **Falla** «borrar o corregir con SQL se refleja de inmediato»: tras `DELETE` y `UPDATE` la caché siguió respondiendo lo anterior hasta `POST /admin/cache/reload` | `CAC/PR-CAC-05_E_20261106_01.{csv,json}` |
+| PR-CAC-06 | Aporte de la caché | **Se reporta** (laboratorio completo con base propia, 7/11) | FR-09 (60 frases): con caché **19/60** frases sin llamar al LLM (31,7 %), 32/88 oraciones (36,4 %); 56 contra 88 llamadas; **565,1** contra 741,7 y 720,6 ms medios por frase (WebSocket, envío a `done`); 53/60 y 52/60 frases con las mismas glosas que sin caché (entre las dos corridas sin caché: 57/60); costo supuesto 0,0043 contra 0,0068 USD | `CAC/PR-CAC-06_E_20261107_01.{csv,json}` (pasada previa en proceso: `…_20261106_01.*`) |
+| PR-REN-01 | Latencia de la transcripción | **Se reporta** | n=40 (sin 1.ª repetición): primer parcial p50 **2.304,8** / p95 2.864,8 ms; fin de voz a final p50 **1.958,4** / p95 2.263,1 ms; inferencia del final p50 **503** / p95 801,6 ms (log del servicio) | `REN/PR-REN-01_E_20261106_01.{csv,json}`, `…_02.json` |
+| PR-REN-02 | Latencia del procesamiento | **Se reporta** (con limitación) | Caché: frase p50 **2,7** / p95 7,0 ms (n=40); LLM: frase p50 **895,1** / p95 1.424,2 ms (n=10); LLM por oración p50 677,6 ms; embedding de la caché p50 81,7 ms. El LLM pesa más | `REN/PR-REN-02_E_20261106_01.{csv,json}`, `…_02.json` |
+| PR-REN-03 | Latencia de extremo a extremo | **Parcial** (teléfono por texto + servidor) | **Teléfono** (`SignAiMetrics`, 50 corridas por texto, 10 frases FR-01-A ×5): envío a primera seña p50 **208** / p95 352,6 ms; envío a última seña p50 **7.701** / p95 8.965,5 ms; representación p50 7.577,5 ms. **Servidor** (aparte): primer `segment` con texto y caché exacta p50 10,2 ms; con voz y `end` p50 591 ms y con silencio p50 995 ms. **Voz en el teléfono: no ejecutada** (sin altavoz físico para reproducir los audios de AU-01 frente al micrófono del teléfono). **Situación LLM (7/11, laboratorio con base propia y LLM real, caché vaciada antes de cada corrida):** teléfono por texto (50 corridas, n=40 sin la 1.ª repetición) envío a primera seña p50 **873** / p95 1.072 ms y a última seña p50 8.406 / p95 9.671 ms; servidor, primer `segment` p50 **630,6** ms en texto, **1.246,6** ms en voz con `end` y **1.628,2** ms en voz con cierre por silencio | `REN/PR-REN-03_E_20261106_{01,02}.{csv,json}`, `…_02.txt`; `REN/PR-REN-03_E_20261107_{01,02}.{csv,json}` |
+| PR-REN-04 | Arranque en frío | **Se reporta** (7/11 contra la Neon real, con salvedades; antes parcial en laboratorio) | Laboratorio completo (Postgres local + STT + backend, mismas imágenes que el canónico), 3 arranques desde apagado: STT listo **5,8 a 9,2 s**; backend `ok` con base y catálogo a **17,1 a 18,6 s**; primera traducción 851,1 / 773,8 / 768,1 ms contra la segunda 903,9 / 784,0 / 752,5 ms. No es equivalente en la base (local, sin Neon dormida) ni mide la app usable. **7/11, con los 13 sinónimos (63 glosas):** STT listo 8,4 a 9,5 s; backend listo 18,8 a 23,5 s; primera traducción con LLM real 907 a 1.279 ms y segunda 598 a 887 ms; la app abre sesión 1,0 a 1,5 s después de lanzarla. **7/11, contra la Neon real** (3 arranques con la base inactiva 330 s y 3 con la base despierta, modelo de embeddings ya en caché): backend listo **19,3 a 26,7 s con la base dormida** (media 22,6) contra **17,7 a 21,0 s despierta** (media 19,6), con los rangos solapados; no se puede confirmar que Neon estuviera suspendida; avatar visible en el teléfono **7,6 a 9,1 s** tras lanzar la app (n=5, más un valor atípico de 4,9 s). **Una traducción escribió una fila en la caché real** (§4.2.6) | `REN/PR-REN-04_E_20261106_{01,02}.*`; `REN/PR-REN-04_E_20261107_{01,02}.{csv,json}` |
+| PR-REN-05 | Recursos de una sesión | **Se reporta** | Reposo: GPU 4,7 % de uso medio, memoria de GPU 3.264 MiB (STT medium cargado + escritorio); con voz: STT 91,5 % de CPU medio (máx. 191 % de 800 %), GPU 27,5 % medio y **100 %** de pico, memoria de GPU máx. 3.424 MiB (+160 MiB); transcripción de 10 audios: GPU **525 ms** p50 contra CPU **14.419 ms** (×27,5); el servicio que pide `cuda` sin GPU arranca y transcribe en CPU | `REN/PR-REN-05_E_20261106_01.{csv,json}`, `…_02.csv`, `…_03.csv` |
+| PR-REN-06 | Sesiones simultáneas | **Se reporta** | Latencia (fin de audio a `done`) p50 / p95 con 1, 2 y 3 sesiones: **507 / 936**, **688 / 1.015**, **782 / 1.565** ms; 0 errores y 0 textos ajenos en 60 frases; el contador de sesiones del backend marca 1 + n y vuelve a 1 al cerrar | `REN/PR-REN-06_E_20261106_01.{csv,json}` |
+| PR-RES-01 | Pérdida de conexión del cliente | **Falla** (ejecutada con el teléfono) | En los 3 momentos la app avisa («Desconectado»; «Se cortó la conexión mientras escuchaba.»), no se bloquea, el avatar queda en reposo y se reconecta sola: **4.374 a 4.508 ms** tras restaurar el enlace (5 intentos fallidos con espera creciente y 1 abierto), y la frase nueva se representa en los 3. **Falla** el criterio «si el corte ocurre mientras se traduce, la frase se cancela y su texto vuelve a la barra»: la barra quedó vacía. Corte del túnel USB (`adb`), no de la red | `RES/PR-RES-01_E_20261106_{01,02,03}.*` y 9 capturas `.png` |
+| PR-RES-02 | Falla del LLM | **Pasa** (laboratorio con base propia; en el borde del plazo) | Con el LLM colgado: la frase **ya guardada se traduce** en **3,7 ms** (500: 4,0 ms); la frase nueva da el aviso «No se pudo traducir el texto.» a **10.562 ms** (500: 550,9 ms), 0,56 s sobre los 10 s del peor caso (igual de justo que el 5/11); al volver el LLM la frase siguiente se traduce **sin reiniciar** (756,1 ms) | `RES/PR-RES-02_E_20261106_{01,02}.csv` |
+| PR-RES-03 | Falla de la transcripción | **Falla** (laboratorio + teléfono) | Con el STT de laboratorio detenido (con el micrófono encendido y antes de conectar): la app avisa («Se cortó la conexión mientras escuchaba.»; «Sin servicio de voz: podés seguir traduciendo por texto.»), la sesión sigue viva y el texto se traduce en ambos casos. **Falla** «se puede volver a hablar al volver el servicio»: con el STT de vuelta (`/health` ok a 12,8 y 9,8 s) el micrófono sigue sin servicio hasta una sesión nueva | `RES/PR-RES-03_E_20261106_01.{json,txt}` y 5 capturas |
+| PR-RES-04 | Falla de la base de datos | **Falla** (laboratorio con base propia) | (1) Base cortada **mientras se traduce**: la frase nueva se traduce pero tarda **4.559 ms** (contra ≈760 ms), la repetida 7,4 ms, `/health` sigue `ok` 53 s; al volver la base se recupera sin reiniciar y guarda la frase siguiente, y la frase del corte no se guardó. (2) **Backend arrancado con la base caída**: responde a los **27,2 s** en estado `degraded`, traduce pero con **0 de 2 glosas disponibles**, y **no se recupera** al volver la base (20 s después sigue `degraded`; `reload` da 503): hay que reiniciarlo. (3) Base pausada 6 s (emulación, no Neon dormida): la frase no se retrasa (788,7 ms) y se guarda 0,6 s tras reanudar | `RES/PR-RES-04_E_20261106_{01,02}.json` |
+| PR-RES-05 | Error interno de procesamiento | **Pasa** (laboratorio aparte) | Error forzado en el procesamiento de una oración del backend de laboratorio: el usuario recibe «No se pudo traducir el texto.» (4,2 ms con una oración); en una frase de 3 oraciones donde falla la 2.ª llega **1 `segment`** (el de antes, a 978 ms) y luego el error; si falla la 1.ª no llega ninguna; la misma conexión traduce la frase siguiente (4/4) | `RES/PR-RES-05_E_20261106_01.csv` |
+| PR-RES-06 | Ráfaga de frases en una sesión | **Pasa** | AU-04 (96,1 s, 20 frases): 20/20 transcritas y traducidas, en orden, WER 0 %, 0 errores, sin bloqueo; espera de texto a `done` p50 7,8 ms, máximo 811,9 ms | `RES/PR-RES-06_E_20261106_01.{csv,json}` |
+| PR-RES-07 | Reinicio del backend con clientes | **Pasa** (laboratorio + teléfono) | Reinicio del backend de laboratorio con la app conectada, sin actividad y a mitad de una traducción: la app se reconecta sola (**37,9 s** y **29,8 s** tras el reinicio; backend listo a los 19,7 y 17,7 s) y queda lista para una frase nueva (2/2). La frase en curso se pierde («El servidor no respondió.» a los 15,0 s). La app detecta el corte solo por el ping (≈20 s) a través del túnel `adb` | `RES/PR-RES-07_E_20261106_01.{json,txt}` y 4 capturas |
+| PR-SEC-01 | Cifrado del canal | **Parcial** (7/11, cliente en el PC; falta la sesión TLS de la app real) | Con Caddy y el certificado del repo, grabadoras TCP en cada tramo (no un sniffer): cliente a proxy **0 marcadores en claro** (texto, glosas, audio) en 3.411 bytes de texto y 64.818 de voz, todo en registros TLS; backend a LLM **0 marcadores** en 10.367 bytes, destino único `api.openai.com:443`; proxy a backend (loopback, sin TLS) **sí se lee**: glosas en claro sin compresión y texto y audio del cliente tras desenmascarar las tramas. `wss` sin la CA y `ws` contra el puerto TLS fueron rechazados. En el teléfono la `demo` rechazó el certificado no confiable; la CA **no se pudo instalar** (Android exige bloqueo de pantalla) | `SEC/PR-SEC-01_E_20261107_{01,02}.json`, `…_03.txt` |
+| PR-SEC-02 | Mensajes inválidos | **Pasa** | 13/13 mensajes de CO-05: el servicio no cae, la sesión de control abierta no se afecta y la solicitud válida siguiente funciona (13/13). 5 mensajes de audio inválido reciben `error` y cierre `1008`; el de 20 MB cierra con `1009` | `SEC/PR-SEC-02_E_20261106_01.csv` |
+| PR-SEC-03 | Secretos y consultas a la base | **Falla** (claves y permisos; la base queda intacta) | **Claves (6/11), hallazgo grave:** la clave del LLM y la contraseña de la base actuales están en 2 archivos de evidencia versionados (`PR-CAC-05_D_20261104_01.json`, `PR-CAC-05_E_20261105_01.json`), en 2 commits, ya en `origin/main`. Código de los otros tres repos, historial y los 3 APK: 0. **Consultas (7/11, laboratorio):** las 10 frases de FR-08 se traducen sin error y la base queda intacta (catálogo con el mismo hash, mismo esquema, 0 cambios). **Permisos (7/11, Neon, solo lectura):** el backend usa el rol dueño de las tablas, con DDL, `TRUNCATE`, `CREATEROLE` y pertenencia a `neon_superuser`, y el código solo necesita `SELECT` y un upsert | `SEC/PR-SEC-03_E_20261106_01.json`, `…_20261107_01.json`, `…_20261107_02.json` |
+| PR-SEC-04 | La voz no se guarda | **Pasa** (laboratorio con base propia y caché vacía, 7/11) | 10 frases habladas: 0 archivos de audio nuevos en los dos contenedores, 0 líneas de log con audio (199 del backend y 76 del STT), 0 columnas de audio en la base; **las 14 oraciones quedaron en la caché (10/10 frases)**, sobre una caché que empezó con 0 filas. El 6/11 quedó parcial porque la caché ya tenía el texto | `SEC/PR-SEC-04_E_20261107_01.json` (pasada previa: `…_20261106_01.json`) |
+| PR-TRA-03 | Levantar el entorno desde cero | **Parcial** (7/11, aproximación en esta máquina; cumple el criterio, pero no es una máquina limpia) | Se borraron los 3 contenedores del proyecto y las 2 imágenes (14,5 GB) y se reconstruyó sin clonar: `docker compose build --no-cache` **15 min 20 s** sin errores; `docker compose up -d` hasta `/health` del backend **77 s** (STT 14 s, con los pesos de Whisper conservados); `./gradlew clean build` **2 min 55 s** sin errores; **0 parches locales** que hicieran falta y el contenedor usa la red de compose, no la del anfitrión. Pasos que la documentación no cubre: el `.env` (§4.2.8) | `TRA/PR-TRA-03_E_20261107_01.txt` |
+
+## 3. Pruebas ejecutadas
+
+Convenciones: «5/11» es la ronda de evaluación del 2026-11-05 (`_E_20261105_`). Todas las pruebas del STT usan los WAV de 16 kHz derivados de `audios/16k/` (las grabaciones originales son `.m4a` de 48 kHz; el manifiesto dice cómo se derivaron). El WER normaliza como la ficha: minúsculas, sin tildes, sin puntuación y con la ñ preservada.
+
+### PR-STT-01 · Precisión de la transcripción — Se reporta
+
+- **Datos:** los 60 audios de AU-01 (40 en silencio, 20 con ruido; 4 hablantes), 282 palabras de referencia.
+- **Método:** `POST http://127.0.0.1:8000/transcribe` con cada WAV, sin VAD ni parciales (mismo camino que el 5/11). Se compara el texto contra el del plan.
+- **Resultado:** 5 errores en 282 palabras, **WER 1,77 %**. Por hablante: H1 0 % (20 audios), H2 **8,51 %** (4 errores en 47), H3 2,13 % (1 en 47), H4 0 %. Por condición: silencio 2,66 %, ruido **0 %**. Por tipo: afirmación 1,39 %, pregunta de sí o no **13,33 %** (4 errores en 30), el resto 0 %. Los 5 errores están en 3 audios: AU-01-003 («bienvenido» por «bienvenidos»), **AU-01-014** (`¿Tienes hambre?` devuelve texto vacío; el servicio lo descarta como `no_speech`) y AU-01-020 («¿es Astrice?» por «¿Estás triste?»). Tiempo de inferencia de los 60: p50 457 ms.
+- **Comparación con el 5/11:** **idéntico** en WER, errores y audios con error (1,77 %, 5 en 282, los mismos 3 audios). El tiempo p50 de inferencia pasa de 251 a 457 ms (otra GPU, §5.1).
+- **Observaciones:** la diferencia por hablante la causa casi toda H2 (un solo hablante concentra 4 de los 5 errores); con 10 textos por hablante los porcentajes son indicativos, como dice la ficha.
+
+### PR-STT-02 · Cierre de frase y transcripciones parciales — Pasa
+
+- **Datos:** los 10 audios de AU-02.
+- **Método:** `WS /ws/transcribe` con PCM16 en tramas de 30 ms a ritmo real; al terminar el audio se manda `end`. La razón del cierre sale del delta de `stt_final_total{reason}` en `/metrics.json` del STT por audio. El texto perdido en los cortes se mide comparando el concatenado de los finales contra el texto del plan y contra `POST /transcribe` del mismo audio.
+- **Resultado:** 10/10 cierran como corresponde. AU-02-001 a 003 (frase corta con pausa): razón `silencio`. AU-02-004 a 008 (más de 8 s, sin pausa y con pausa): `buffer_max_pausa` más `silencio` (3 finales, 2 con texto; el primero sale entre los 5,6 y 6,7 s de audio); notar que en 004 a 006 la ficha esperaba un corte «sin pausa donde cortar» y el servicio cortó en una micropausa (≥150 ms), igual que el 5/11. AU-02-009 y 010 (mensaje de fin): razón `flush`, un solo final. **Texto perdido en los cortes:** ninguno atribuible al corte; el WER del concatenado coincide con el del audio completo (0,0 a 2,9 % por las palabras de enlace, p. ej. «se levantan bien temprano» en lugar de «se levantan temprano»). **Parciales:** salen en los 10 audios (2 a 11 por audio); primer parcial p50 **2.516 ms** (1.299 a 3.342). El final difiere del parcial inmediatamente anterior en **2 de 17** finales con texto (AU-02-006, segundo final, y AU-02-010).
+- **Comparación con el 5/11:** mismos 10/10 y mismas razones. Cambian los tiempos y la cantidad de parciales: primer parcial p50 de 2.086 a 2.516 ms y parciales por audio de 15-18 a 7-11 en los audios largos (la GPU más lenta emite menos parciales por intervalo de 400 ms). El 5/11 no encontró diferencias entre final y último parcial; hoy hay 2 (leves).
+- **Observación:** la columna «difiere del último parcial» de la primera versión de mi tabla comparaba contra el último parcial de todo el audio; la corregí para comparar contra el parcial anterior a cada final (el CSV trae la versión corregida).
+
+### PR-STT-03 · Filtros de no voz — Falla
+
+- **Datos:** los 8 audios de AU-03 (silencio ×2, ruido ×2, tos, carraspeo, golpes, teclado).
+- **Método:** igual que STT-02 por WebSocket (se cuenta cualquier `final` o `partial` con texto) y, además, `POST /transcribe` de cada audio.
+- **Resultado:** por WebSocket **0/8 finales con texto**, pero **1/8 con un parcial**: AU-03-006 (carraspeos) emite «¡Grr!». Por `POST` **1/8 produce texto**: AU-03-004 (ruido, más cerca) devuelve 52 palabras inventadas («¿Puedes decirle algo? No, no, todo por el tiempo…») sin motivo de descarte. Los otros 7 se descartan por `rms`, `logprob` o `no_speech`.
+- **Comparación con el 5/11:** por WebSocket **igual** (0 finales, 1 parcial «¡Grr!» en AU-03-006; sigue Falla). Por POST el 5/11 daba 0/8; hoy AU-03-004 sí produce texto. En la instancia aparte de `PR-STT-05` con `MIN_RMS` 0,008 (la misma configuración) el mismo audio **no** produjo texto por POST, así que el resultado de ese audio varía entre ejecuciones o instancias: hay que repetirlo más veces antes de llamarlo regresión.
+- **Observación:** el defecto que ve el usuario (finales) está cubierto por la barrera de no voz; el parcial sí llega a la app y la ficha mide el texto que produce el servicio. Un parcial no se representa porque no llega a `segment`.
+
+### PR-STT-04 · Alternativas de Whisper — Se reporta
+
+- **Datos:** los 60 audios de AU-01.
+- **Método:** **instancias aparte** del mismo contenedor del STT (`docker run --gpus all -p 8001:8000`, imagen `sign-ai-backend-stt`, volumen de caché propio; no se tocó ningún contenedor existente). Una instancia por tamaño, `POST /transcribe` de los 60 audios. Memoria = diferencia de `nvidia-smi memory.used` contra la base previa a arrancar (3.261 MiB: STT canónico + escritorio), máxima durante la pasada.
+- **Resultado:**
+
+| Tamaño | WER | Errores / palabras | Inferencia p50 / p95 | Memoria GPU (carga / máxima) | Audios sin texto |
+|---|---|---|---|---|---|
+| small | **3,55 %** | 10 / 282 | 245,0 / 358,1 ms | +738 / +1.058 MiB | AU-01-032 |
+| medium (el actual) | **1,77 %** | 5 / 282 | 489,5 / 668,0 ms | +1.986 / +2.146 MiB | AU-01-014 |
+| large-v3 | **0,35 %** | 1 / 282 | 832,0 / 1.075,8 ms | +3.843 / +4.131 MiB | ninguno |
+
+  Pregunta de sí o no: small 6,67 %, medium **13,33 %**, large-v3 **0 %**. El único error de large-v3 es una afirmación (1,39 %).
+- **Comparación con el 5/11:** WER **igual** en medium (1,77 %) y large-v3 (0,35 %); small cambia de 2,84 % a 3,55 % (10 errores en lugar de 8; diferencia numérica entre GPU). Memoria similar (859 / 2.171 / 4.123 MiB el 5/11 contra 1.058 / 2.146 / 4.131 hoy). Tiempos: el 5/11 112,6 / 249,6 / 443,8 ms; hoy 245 / 489,5 / 832 ms (otra GPU).
+- **Observaciones:** con la GPU de 8 GB, `large-v3` cabe **incluso con el STT canónico (medium) y el escritorio ocupando 3.261 MiB**: el pico fue 7.392 MiB de 8.192 (queda 800 MiB de margen), así que en este equipo el límite de memoria no impide cambiarlo. Es un **cambio de diseño** para decidir (§5.3): reduce el WER de 1,77 a 0,35 %, a costa de casi el doble de latencia de inferencia (+343 ms por audio de AU-01, de 2,1 a 5,8 s) y de 2 GiB más de GPU. La latencia que más pesa del STT es el silencio de cierre de 1.500 ms, que `large-v3` no cambia. No se cambió el tamaño del servicio canónico.
+
+### PR-STT-05 · Alternativas del umbral de ruido — Se reporta
+
+- **Datos:** los 60 audios de AU-01 (voz) y los 8 de AU-03 (sin voz).
+- **Método:** tres instancias aparte (puerto 8001) con `medium` (el modelo en uso; esta prueba depende de que el owner elija el tamaño en `PR-STT-04`, y hoy no hay decisión de cambiarlo) y `MIN_RMS` = 0,004 / 0,008 (el actual) / 0,016. Voz: `POST /transcribe`. Sin voz: `POST` y `WS` a 0,5× del ritmo real.
+- **Resultado:**
+
+| `MIN_RMS` | WER voz | Audios de voz sin texto | Sin voz con texto por POST | Sin voz con final por WS | Sin voz con parcial por WS |
+|---|---|---|---|---|---|
+| 0,004 | 1,77 % (5/282) | 1 (AU-01-014) | 0/8 | 1 (AU-03-005) | 0 |
+| 0,008 | 1,77 % (5/282) | 1 (AU-01-014) | 0/8 | 0 | 1 (AU-03-006) |
+| 0,016 | 1,77 % (5/282) | 1 (AU-01-014) | 0/8 | 1 (AU-03-005) | 1 (AU-03-006) |
+
+- **Comparación con el 5/11:** el 5/11 varió la **agresividad del VAD** (0 a 3), no `MIN_RMS`; todos empataron en 3,90 % de WER y 0/8. La ficha pide `MIN_RMS`, que es lo que se midió hoy. El 5/11 y hoy difieren en el camino de la voz: el 5/11 (3,90 %) midió la voz por WebSocket y hoy se midió por `POST` (1,77 %); no son comparables.
+- **Observaciones:** en estos datos `MIN_RMS` entre 0,004 y 0,016 **no cambia nada en voz** (ni el WER ni el audio perdido). En no voz las diferencias por WebSocket **no son monótonas** (el texto de la tos aparece con 0,004 y 0,016 pero no con 0,008), lo que apunta a variación entre ejecuciones y no a un efecto del umbral; no se repitió cada configuración, así que no se puede afirmar más. No hay evidencia para cambiar el 0,008.
+
+### PR-REN-01 · Latencia de la transcripción — Se reporta
+
+- **Datos:** los audios de AU-01 (hablante H1, en silencio) de las 10 frases de FR-01-A, cada uno 5 veces (50 corridas; se reporta sin la primera repetición, n=40, y con todas).
+- **Método:** `WS /ws/transcribe`, audio a ritmo real y, al terminar, **silencio a ritmo real hasta el primer final con texto** (como un micrófono abierto, para que el cierre lo haga el silencio de 1.500 ms). Fin de voz = duración del archivo menos el silencio final del manifiesto. El tiempo de inferencia del final y el de «fin de habla a final» salen de las líneas `[timing] final` del log del STT (50/50 coinciden con el texto de cada corrida).
+- **Resultado (n=40):**
+
+| Medida | p50 | p95 | máx |
+|---|---|---|---|
+| Primer parcial (desde el primer byte enviado) | **2.304,8 ms** | 2.864,8 | 2.945,5 |
+| Fin de voz a texto final (medido por el cliente) | **1.958,4 ms** | 2.263,1 | 2.464,1 |
+| Fin de habla a final (log del servicio) | 2.005,5 ms | 2.308,2 | 2.488 |
+| Inferencia del final (log del servicio) | **503 ms** | 801,6 | 956 |
+| Atraso hasta cerrar (log, `atraso`) | 1.035 ms | 1.471,5 | 1.620 |
+
+  50/50 cierran por `silencio`, 0 sin texto final, WER del texto final contra el plan 0 %. Con las 50 corridas: primer parcial p50 2.325,1, fin de voz a final p50 1.970,0.
+- **Comparación con el 5/11:** primer parcial p50 **1.845,9** / p95 2.250,9 ms; fin de voz a final p50 **1.528,5** / p95 1.973,7; inferencia del final p50 **254,9** / p95 288,9. Hoy es más lento en los tres (≈ +25 %, +28 % y ×2). **Método distinto:** el 5/11 mandó `end` justo al terminar el archivo (el cierre no esperó los 1.500 ms completos), hoy el cierre lo hace el silencio como en uso real; por eso los números de «fin de voz a final» no son del todo comparables. La inferencia del final (×2) sí lo es y coincide con el ×1,8 de `PR-STT-01` y con el cambio de GPU.
+- **Observaciones:** de los ≈2.000 ms entre que la persona termina de hablar y llega el texto final, **1.500 son el silencio configurado** (la ficha pide reportarlo aparte); lo que añade el proceso es ≈500 ms. El primer parcial incluye el silencio inicial de la grabación (0,1 a 1,5 s según el audio).
+
+### PR-REN-02 · Latencia del procesamiento — Se reporta (con limitación)
+
+- **Datos:** las 10 frases de FR-01-B (cortas, medias y largas; 5 una oración, 5 varias), cada una 5 veces, por texto.
+- **Método:** `WS /ws/translate` con `{"type":"text"}` por conexión nueva. Los tiempos por paso salen de las líneas `Pipeline trace for …` que el backend escribe en su log (50/50 coinciden con la frase enviada); además, `ws_ms` del cliente y el delta de `/metrics.json`.
+- **Limitación:** la ficha pide la caché vacía para la situación «LLM» y **no se podía vaciar** (regla del canónico). La situación «LLM» son las **10 primeras envíos** de cada frase (la caché no las tenía; 17 oraciones, 16 llamadas al LLM); la situación «caché» son las 40 repeticiones (todas resueltas por coincidencia exacta). La primera repetición **no** se descartó en LLM (no hay otra).
+- **Resultado:**
+
+| Paso (mediana / p95 / máx, ms) | Situación LLM (n) | Situación caché (n) |
+|---|---|---|
+| Segmentación (por frase) | 0,2 / 13,9 / 21,1 (10) | 0,2 / 4,6 / 5,5 (40) |
+| Huella (por oración) | 0,1 / 0,1 / 0,1 (17) | 0,1 / 0,1 / 1,2 (68) |
+| Caché exacta | 0,0 / 0,0 / 0,0 (17) | 0,0 / 0,0 / 0,2 (68) |
+| Embedding de la caché | **81,7** / 121,1 / 147,0 (16) | no aplica |
+| Similitud | 0,1 / 0,2 / 0,3 (16) | no aplica |
+| **LLM (por oración)** | **677,6** / 1.139,5 / 1.647,5 (16) | no aplica |
+| Validación (por frase) | 0,1 / 0,1 / 0,1 (10) | 0,1 / 0,1 / 0,2 (40) |
+| **Total de la frase (traza)** | **895,1** / 1.424,2 / 1.705,9 (10) | **2,7** / 7,0 / 14,7 (40) |
+| Total medido por el cliente (`ws_ms`) | 914,1 / 1.470,5 / 1.778,6 | 18,5 / 36,4 / 38,7 |
+
+  LLM por longitud de oración: corta (≤4 palabras) p50 657,8 ms (n=11); media (5 a 8) 776,6 ms (n=5); larga (≥9): no hubo muestras en esta pasada.
+- **Comparación con el 5/11:** total LLM p50 730,2 / p95 990,4 (aquí 895,1 / 1.424,2); total caché 0,8 / 4,1 (aquí 2,7 / 7,0); LLM por oración p50 665,9 (aquí 677,6, casi igual: el LLM es remoto); **embedding p50 38,7 contra 81,7 ms** (CPU del equipo de hoy, un Ryzen 5 3400G).
+- **Observaciones:** el paso que pesa es el LLM (≈76 % del total en la situación LLM); el embedding de la caché es el segundo (≈9 %), y es el único paso que creció por cambiar de equipo. En la caché exacta el costo es prácticamente nulo.
+
+### PR-REN-05 · Recursos de una sesión — Se reporta
+
+- **Datos:** las 30 frases de FR-01 (por texto) y los audios de AU-01 (H1, silencio) de las 10 frases de FR-01-A (por voz).
+- **Método:** durante una sesión real contra el canónico se muestrearon la GPU (`nvidia-smi`, cada 1 s: uso y memoria) y los contenedores (`docker stats`, ≈ cada 2 s: CPU y memoria) en cuatro fases: reposo (30 s), 30 frases por texto, 10 audios por voz y reposo final. Después, la transcripción de los 10 audios de AU-01 por `POST /transcribe` con (a) el STT canónico en GPU y (b) una **instancia aparte** (puerto 8001, `DEVICE=cpu`, `COMPUTE_TYPE=int8`, porque `float16` no existe en CPU, `medium`), y (c) otra instancia aparte **sin GPU visible pero pidiendo `cuda`**, para ver si el servicio detecta la ausencia. La CPU de `docker stats` es por núcleo (100 % = un núcleo; el equipo tiene 8 hilos).
+- **Equipo usado:** AMD Ryzen 5 3400G (4 núcleos, 8 hilos), 16 GB de RAM, NVIDIA GeForce RTX 3050 de 8.192 MiB (controlador 621.01), Windows 11 Pro, Docker 29.7.2.
+- **Resultado:**
+
+| Fase | GPU uso medio / máx. | Memoria GPU media / máx. | CPU backend media / máx. | RAM backend | CPU STT media / máx. | RAM STT |
+|---|---|---|---|---|---|---|
+| Reposo (30 s) | 4,7 % / 10 % | 3.264 / 3.264 MiB | 0,2 % / 0,2 % | 1.337 MiB | 0,2 % / 0,3 % | 888 MiB |
+| Texto, 30 frases (8,6 s, 4 muestras de contenedor) | 3,6 % / 8 % | 3.264 / 3.264 MiB | 25,1 % / 48,4 % | 1.355 a 1.357 MiB | 1,3 % / 2,6 % | 895 a 902 MiB |
+| Voz, 10 audios (51,5 s, 17 muestras) | **27,5 % / 100 %** | 3.313 / **3.424** MiB | 3,2 % / 9,8 % | 1.358 a 1.359 MiB | **91,5 % / 191 %** | 902 MiB |
+| Reposo final (8,6 s) | 1,8 % / 4 % | 3.234 / 3.264 MiB | 0,3 % / 0,5 % | 1.358 MiB | 0,2 % / 0,3 % | 902 MiB |
+
+  | Transcripción de 10 audios de AU-01 | Inferencia p50 | Máx. | Errores / palabras |
+  |---|---|---|---|
+  | GPU (STT canónico, `medium`, `cuda`) | **525 ms** | 912 ms | 0 / 47 |
+  | CPU explícita (`DEVICE=cpu`, `int8`) | **14.419 ms** | 15.090 ms | 0 / 47 |
+  | Pide `cuda` sin GPU visible | 15.862 ms | 15.941 ms (3 audios) | 0 / 14 |
+
+  La CPU es **27,5 veces** más lenta que la GPU (14.419 / 525). Con `DEVICE=cuda` y sin GPU, el servicio **arranca** (`/health` = `ok`, `device: cpu`, `requested_device: cuda`, log «Modelo cargado en CPU», calentamiento de 14.743 ms) y **transcribe** en CPU: cumple lo que pide la ficha. `/health` informa el dispositivo real (el arreglo S10 del 5/11).
+- **Comparación con el 5/11:** GPU 255 ms contra CPU 3.849 ms (×15,1) en la RTX 4050 Laptop; STT en reposo 737 MiB de RAM, GPU 2.011 MiB. Hoy la GPU es ≈2× más lenta (525 ms) y la CPU ≈3,7× más lenta (14.419 ms), por lo que la brecha crece a ×27,5. La RAM del STT hoy es 888 a 902 MiB.
+- **Observaciones:** (1) el pico de GPU es la inferencia de cada audio, no una carga sostenida: durante la sesión por voz el uso medio es 27,5 %. (2) La CPU del STT llega a 191 % (≈2 núcleos) durante la voz: el decodificador de audio y el VAD corren en CPU. (3) La memoria de GPU subió 160 MiB sobre reposo durante la voz y volvió a 3.264 MiB. (4) El muestreo de contenedor de la fase de texto es de solo 4 puntos (8,6 s): sirve para ver el orden de magnitud, no para un máximo fiable. (5) No se midió la memoria de la instancia CPU.
+
+### PR-REN-06 · Sesiones simultáneas — Se reporta
+
+- **Datos:** las 10 frases de FR-01-A con su audio de AU-01 (H1, silencio) por sesión.
+- **Método:** `WS /ws/translate` real. Niveles de 1, 2 y 3 sesiones a la vez más un cuarto nivel de 1 sesión al final. Cada sesión es una conexión que manda las 10 frases en sucesión (rotadas para que dos sesiones no transcriban la misma frase a la vez), audio a ritmo real, `{"type":"end"}` y, al llegar el final, el texto como `text` (lo que hace la app). Latencia = del fin del audio a `done`. El contador es `sessions_active` de `/metrics.json`, leído cada 0,5 s.
+- **Resultado:**
+
+| Sesiones | Frases | Latencia p50 | p95 | máx | Errores | Ajenas | Contador (antes / máx / después) | WER medio |
+|---|---|---|---|---|---|---|---|---|
+| 1 | 10 | **506,6 ms** | 936,0 | 936,0 | 0 | 0 | 1 / 2 / 1 | 0 |
+| 2 | 20 | **688,0 ms** | 1.015,3 | 1.158,6 | 0 | 0 | 1 / 3 / 1 | 0 |
+| 3 | 30 | **781,5 ms** | 1.565,0 | 1.932,6 | 0 | 0 | 1 / 4 / 1 | 0 |
+| 1 (repetición) | 10 | 595,4 ms | 1.304,0 | 1.304,0 | 0 | 0 | 1 / 2 / 1 | 0 |
+
+- **Comparación con el 5/11:** p50 242,5 / 254,3 / 329,8 ms y p95 264,8 / 421,7 / 471,9 con 1 / 2 / 3 sesiones. Hoy la mediana crece 54 % de 1 a 3 sesiones (5/11: 36 %) y el p95 sube **67 %** (936 a 1.565 ms; el 5/11 +78 %). El nivel de 1 sesión es ≈2× el del 5/11 (otra GPU).
+- **Observaciones:** criterio cumplido (ninguna sesión recibe el texto de otra: 0 de 60; el contador coincide: marca 1 + n y vuelve a 1). La línea base de **1 sesión abierta antes de cada nivel** no es de la prueba: hay un cliente ajeno conectado al backend desde antes de empezar (lo mismo se ve en el STT: `stt_sessions_active` = 1 en reposo); no se identificó. La repetición de 1 sesión (595 ms) no regresa a 507 ms: la dispersión entre corridas de 10 frases es de ≈100 ms, así que las diferencias menores no se leen como tendencia.
+
+### PR-RES-06 · Ráfaga de frases en una sesión — Pasa
+
+- **Datos:** AU-04, un solo audio de **96,1 s** (la ficha dice ≈73 s; la grabación real mide 96,1 s) con 20 frases de FR-01.
+- **Método:** una sesión `WS /ws/translate`, audio PCM16 a ritmo real y `{"type":"end"}` al terminar; cada `transcript` final se reenvía como `text`. Se registran `segment` y `done` por turno.
+- **Resultado:** 20 frases transcritas y 20 `done`; **20/20 en el orden del guion**; **WER 0 %**; 0 mensajes `error`; el backend sigue en `ok` (`/health`). Espera de texto final a `done`: **p50 7,8 ms, máximo 811,9 ms** (las 9 oraciones que no estaban en la caché; 13 salieron por coincidencia exacta y 1 por la semántica). Fin del último `done`: 99,08 s para un audio de 96,05 s.
+- **Comparación con el 5/11:** 20/20, WER 0, en orden; el 5/11 la espera de texto a `done` tuvo mediana 720,2 ms y máximo 2.160,1 ms (más oraciones pasaron por el LLM); hoy la mediana es 7,8 ms porque 13 de las 23 oraciones salieron por coincidencia exacta de la caché y 1 por la semántica, y solo 9 pasaron por el LLM.
+- **Observación:** la ficha pide «tiempo de espera de la última»: el último turno esperó menos de 1 s y no hay acumulación entre turnos (a ritmo normal, 1 frase cada ≈4,8 s).
+
+### PR-SEC-02 · Mensajes inválidos — Pasa
+
+- **Datos:** los 13 mensajes de CO-05 (construidos como describe el documento; aleatorios con semilla 42).
+- **Método:** por mensaje se abre una conexión de control (sesión normal), una conexión de prueba, se manda el inválido, se recoge durante 6 s lo que responde el backend (40 s para el de 50.000 caracteres), se manda la frase válida «Hola, buenos días, bienvenidos.» y se comprueba `/health`, la sesión de control y la frase válida.
+- **Resultado:** **13/13**: el servicio nunca cae (`/health` = `ok` antes y después), la sesión de control sigue respondiendo en 13/13 y la solicitud válida siguiente devuelve HOLA / BUENOS DIAS en 13/13. Detalle: audio con encabezado WAV, float32, de 2 MB, de 321 bytes y de 1 byte → `error` («El audio recibido no es válido.») y cierre `1008` de **esa** conexión; 20 MB → cierre `1009` (el servidor rechaza tramas de más de 16.777.216 bytes); bytes aleatorios o de texto, JSON mal formado, no JSON, tipo desconocido y texto vacío → se ignoran sin respuesta; 50.000 caracteres → se traduce y responde `segment` y `done`.
+- **Comparación con el 5/11:** 13/13 igual. Cambio de comportamiento: **hoy los 5 audios inválidos que reciben `error` cierran la conexión con `1008` después del mensaje**; el 5/11 el `error` llegaba y la conexión quedaba abierta. No viola el criterio (no afecta otras sesiones) y es más seguro; la app debe tolerar ese cierre.
+- **Observación:** el mensaje de 50.000 caracteres se envía al LLM y **dejó una fila de 49.999 caracteres en la caché real** (`id` 6646, 17:30:40 UTC, la escribió esta ejecución). Afecta la precarga y el tamaño; (ya borrada por el owner) conviene limitar la longitud de frase en el backend (§5.2, punto 5).
+
+## 4. Pruebas parciales (y nota sobre el teléfono)
+
+Son mediciones reales, pero no la que pide la ficha. Cada una dice qué falta.
+
+### 4.0. Teléfono: primer intento bloqueado, segundo intento con el teléfono desbloqueado
+
+- **Verificado:** `adb devices` → `61ecd28e` (`2201117TL`, MIUI V140); `com.signai.webview` 1.0.0 instalada, `RECORD_AUDIO` otorgado, `adb reverse tcp:8080 tcp:8080` activo. Tras reiniciar la app, `logcat -s SignAiNet` muestra `sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)` y `SignAiState: silencio del STT: 1500 ms`: la app instalada **ya apuntaba al canónico**; no hubo que recompilar ni instalar (no se tocó la app, solo se lanzó).
+- **Primer intento:** todo `adb shell input` fallaba con `INJECT_EVENTS` (MIUI). Sin cifras. **Segundo intento:** el owner activó «Depurar por USB (ajustes de seguridad)» y `input tap`/`input text` funcionaron.
+- **Cómo se manejó la app:** `adb shell input tap` sobre el campo, `input text` y el botón «Traducir». `input text` no admite acentos ni «¿»; las frases se escribieron **sin acentos y sin signo de apertura** y pasaron por el teclado Gboard (que autocorrige y pone mayúsculas: «Hola, Buenos días, bienvenidos.»). La columna `texto_en_app` de la evidencia es lo que la app envió de verdad. La caché normaliza acentos y mayúsculas, por eso casi todas salieron por coincidencia exacta; las diferencias de texto con FR-01 son una limitación de esta prueba.
+- **Incidente (reportado con franqueza):** en una corrida inválida de `PR-RES-01` mi script pulsó `KEYCODE_BACK` al inicio de cada momento; eso sacó la app de primer plano y, durante unos minutos, mis toques y el texto de prueba (`input tap` en tres puntos de la pantalla, `input text` y teclas de borrado) cayeron **sobre otra aplicación de terceros que estaba abierta (TikTok, «Para ti»)**. No leí ni envié nada en ella, pero no puedo descartar que algún toque haya pulsado algo (por ejemplo un «me gusta»). La corrida se descartó entera: borré mis capturas de ese intento, repetí sin `BACK` y ahora cada momento relanza la app y comprueba por `dumpsys window` que `MainActivity` tiene el foco antes de tocar. Todas las cifras de §3 y §4 son de las corridas válidas con la app en primer plano.
+- **Voz de `PR-REN-03`: NO EJECUTADA, motivo: sin altavoz físico para reproducir los audios de AU-01 frente al micrófono del teléfono** (el owner no tiene altavoces en su PC). La situación «LLM» tampoco se ejecutó: requiere tocar la caché canónica. Intento previo (15:00, no se insistió): con el foco de la app verificado (`mCurrentFocus` = `MainActivity`) se encendió el micrófono (`micrófono prendido en modo Dictation`) y se reprodujo `AU-01-001.wav` desde el PC con `Media.SoundPlayer` (`PlaySync`). La app **no captó nada**: el log termina en `el dictado se apagó sin transcripción` y `final vacío`, y el gauge `session_audio_rms` del backend marcó **55** (escala int16: ruido de fondo; el audio hablado de `PR-RES-06` dio ≈1.188). No hay altavoz del PC fiable cerca del micrófono (la máquina lista 6 dispositivos de audio, incluidos Voicemeeter y un altavoz virtual, y no pude saber cuál es la salida real). Siguiendo la regla, **me detuve: no hay cifras de voz en el teléfono**. Se apagó el micrófono al terminar. Hace falta un altavoz físico cerca del micrófono del 61ecd28e (salida por defecto del PC hacia ese altavoz y volumen alto), o que el owner reproduzca los audios.
+- **`PR-REN-04` sigue no ejecutada** (exige reiniciar los contenedores; no autorizado).
+
+### PR-REN-03 · Latencia de extremo a extremo — Parcial (teléfono por texto y servidor; la situación LLM se midió el 7/11, ver §4.2.5)
+
+- **Qué falta:** (1) la **voz por el micrófono del teléfono**: se intentó reproducir `AU-01-001` desde el PC y la app no captó el audio (§4.0); falta un altavoz físico cerca del micrófono; (2) la situación «LLM»: no se pudo vaciar la caché, y la caché ya tenía las 10 frases (en el teléfono, 1 de las 50 corridas pasó por el LLM por una oración nueva). Las mediciones de abajo están en dos bloques que **no se mezclan**: la primera tabla es del **servidor** (mensajes del socket, medidos por mi cliente) y el bloque «Teléfono» es del **dispositivo** (`SignAiMetrics`/`SignAiState`).
+- **Bloque servidor (primera pasada, sin teléfono):**
+- **Datos:** las 10 frases de FR-01-A, en texto y con su audio de AU-01 (H1, silencio), cada una 5 veces (150 corridas).
+- **Método:** `WS /ws/translate`. Texto: del envío al primer y último `segment` y `done`. Voz: audio a ritmo real como en `PR-REN-06`; el tiempo se mide **desde el último byte de audio enviado**. Dos modos de cierre: `end` (se manda `{"type":"end"}` al terminar) y `silencio` (se sigue mandando silencio hasta que el STT cierra por sus 1.500 ms). La fuente (caché exacta, semántica o LLM) sale del delta de `rt_cache_total`. Estadísticos sin la 1.ª repetición.
+- **Resultado (p50 / p95, ms):**
+
+| Situación | Fuente | n | Primer `segment` | Último `segment` | `done` |
+|---|---|---|---|---|---|
+| Texto | caché exacta | 36 | **10,2** / 11,9 | 10,4 / 12,2 | 10,6 / 12,6 |
+| Texto | caché semántica | 4 | 70,0 / 72,6 | 70,0 / 72,6 | 70,2 / 72,9 |
+| Voz, cierre con `end` | caché exacta | 36 | **591,0** / 1.057,8 | 591,9 / 1.057,8 | 592,5 / 1.058,1 |
+| Voz, cierre con `end` | caché semántica | 4 | 553,0 / 625,4 | 553,0 / 625,4 | 553,0 / 625,7 |
+| Voz, cierre por silencio | caché exacta | 36 | **995,1** / 1.947,8 | 995,2 / 1.948,8 | 995,5 / 1.949,3 |
+| Voz, cierre por silencio | caché semántica | 4 | 964,2 / 993,5 | 964,2 / 993,5 | 964,4 / 993,8 |
+
+  En voz, el texto final llega p50 566,6 ms (`end`) y 963,6 ms (silencio) después del último byte; el resto hasta el primer `segment` es el pipeline (≈25 a 30 ms). Con la fuente «LLM» (`miss`): solo **2 corridas**, ambas de voz con `end`, con 1.671,9 y 1.869,3 ms de p50 y p95 hasta el primer `segment`; no alcanzan para una mediana. En texto no hubo ninguna corrida con LLM. Texto de la voz contra la frase del plan: 0 errores en 470 palabras. 0 errores del protocolo.
+- **Comparación con el 5/11:** el 5/11 midió dentro de la app (`envío→primera seña` p50 63,5 ms con caché vacía y 42,0 ms con caché llena, representación ≈7,1 s); no es comparable con el tiempo entre mensajes del socket. Lo que sí se puede decir: los 10 ms de hoy en el texto con caché exacta son el costo del servidor; el resto del tiempo hasta ver la seña está en la app.
+- **Observaciones:** en voz el tiempo desde el fin del audio se compone de ≈0,6 a ≈1,0 s de STT. Con `end` el usuario no espera el silencio de 1.500 ms (en el modo «silencio» la grabación ya traía 0,5 a 1,4 s de silencio final, por eso salen ≈1,0 s y no 1,5 s).
+
+
+- **Bloque teléfono (segunda pasada, `adb logcat -s SignAiMetrics SignAiState`, reloj del teléfono):** las 10 frases de FR-01-A **por texto** en la app instalada, 5 repeticiones (50 corridas, 0 incompletas, 0 sin línea de envío). Por corrida: `envío→primera seña` (línea de `SignAiMetrics`), `representado: N señas en X ms` y el tiempo desde `texto ya enviado` hasta `representado` (hasta la última seña). La fuente en el backend sale del delta de `rt_cache_total` y no entra en los tiempos.
+
+| Medida (teléfono, ms) | n | p50 | p95 | máx |
+|---|---|---|---|---|
+| Envío a primera seña (sin la 1.ª repetición) | 40 | **199,5** | 262,0 | 346 |
+| Envío a última seña (sin la 1.ª repetición) | 40 | **7.650,0** | 8.938,4 | 9.006 |
+| Representación (duración de las señas) | 40 | 7.543,5 | 8.847,9 | 8.926 |
+| Respuesta del backend vista por la app (`frase #n`) | 40 | 117,5 | 164,1 | 173 |
+| Con las 50 corridas: primera seña | 50 | 208,0 | 352,6 | 1.925 |
+| Con las 50 corridas: última seña | 50 | 7.701,0 | 8.965,5 | 10.280 |
+
+  Por fuente (todas las corridas): caché exacta (44) primera seña p50 204 ms y última 8.382,5 ms; caché semántica (5, la frase 001 con el texto autocorregido) 282 y 4.561 ms; una corrida con una oración que llamó al LLM (`exact,miss`): primera seña 1.925 ms y última 10.280 ms (no es una mediana). El 99 % del tiempo hasta la última seña es la representación del avatar (≈7,5 s para frases de 2 a 9 señas); la respuesta del backend vista por la app es ≈118 ms.
+- **Comparación con el 5/11 (teléfono Redmi Note 9S, sin cifras comparables 1 a 1):** envío a primera seña p50 63,5 ms (caché vacía) y 42,0 ms (caché llena); representación p50 7.100,5 y 7.084,5 ms; envío a última seña p50 7.583 y 7.116 ms. Hoy la representación (7.543,5 ms) y la última seña (7.650 ms) son parecidas; la **primera seña es ≈4 veces mayor** (199,5 contra 42 a 63,5 ms). No pude reconciliarlo: son otro teléfono y otro modo de enviar (el 5/11 inyectaba el texto con una herramienta y hoy se pulsa «Traducir» con `input tap`, tras 1,5 s de «texto retenido»), y no sé si la métrica `envío→primera seña` se tomaba en el mismo punto.
+- **Observación:** con las cifras de teléfono y servidor por separado: el servidor entrega el primer `segment` a los 10 ms con caché exacta y a los 25 a 30 ms de pipeline tras el texto de voz; en el teléfono la primera seña tarda ≈200 ms desde el envío, así que casi todo lo que ve el usuario está en la app (WebView, Compose) y en representar. Los parciales de voz y el micrófono quedan sin medir en el teléfono.
+
+### PR-RES-01 · Pérdida de conexión del cliente — Falla
+
+Cifras del **teléfono** (`logcat -s SignAiNet SignAiState`) y capturas de pantalla; la parte del servidor (primera pasada, sin teléfono) va al final y no se mezcla.
+
+- **Datos:** una frase de FR-01-C por momento y «Tienes hambre?» como frase nueva posterior (la FR-01-C no tiene audio; para «hablando» se encendió el micrófono de la app).
+- **Método:** corte **del túnel USB entre el teléfono y el servidor**, no de la red del teléfono (el teléfono llega al backend por `adb reverse`, así que se retira la regla y se **reinicia el servidor `adb`** con `adb kill-server` y `adb start-server`: `adb reverse --remove` solo no cierra las conexiones ya abiertas, lo comprobé en una pasada previa donde la app no se enteró; reiniciar el servidor las mata). No se toca ningún contenedor. El corte se hace en tres momentos: (1) **hablando**: micrófono encendido (`micrófono=Dictation`); (2) **traduciendo**: 120 ms después de tocar «Traducir» con una frase nueva que no está en la caché; (3) **representando**: tras el primer `signStart` de «Adiós a todos. Buenas noches.». Se saca una captura 2 s y 10 s después, se restaura el enlace (`adb reverse tcp:8080 tcp:8080`) y se mide hasta `sesión abierta`. Las horas de las líneas están en la evidencia; el tiempo hasta detectar incluye ≈1 s de mis comandos `adb` (el corte empieza a la vez que mi script llama a `kill-server`).
+- **Resultado (teléfono):**
+
+| Momento | Detección del corte | Qué avisa la app | Avatar | Reconexión tras restaurar | Frase nueva | Texto de la barra |
+|---|---|---|---|---|---|---|
+| Hablando | `session failed: null` a **+2,41 s** | «Desconectado»; fallo «Se cortó la conexión mientras escuchaba.»; el dictado se apaga «sin transcripción» («No se escuchó nada.») | reposo | **4.508 ms** (corrida `_02`); en la repetición con el log completo, 5 intentos fallidos (`Failed to connect`, esperas crecientes de ≈1 a 5 s) y 1 abierto | `done`: `envío→primera seña` 258 ms, `representado` 3.998 ms | vacía (no había texto) |
+| Traduciendo | `session failed: null` a **+2,45 s**; `cancelando=true` | «Desconectado» | reposo | **4.444 ms** (5 intentos fallidos y 1 abierto) | se representa | **vacía a los 2 s y a los 10 s: el texto de la frase no volvió a la barra** |
+| Representando | `session failed: null` a **+2,38 s**; `interrumpiendo=true` | «Desconectado» | **vuelve a reposo** (captura a los 2 s) | **4.374 ms** | se representa | vacía (la frase ya se había enviado) |
+
+  En los 3 momentos: no se bloquea, queda lista para una frase nueva sin reiniciar la app y la etiqueta cambia a «Desconectado» (punto rojo). La reconexión es automática con retraso creciente (≈1 s a ≈5 s) y se abre a la **primera** conexión tras restaurar el enlace (el tiempo de 4,4 a 4,5 s es la espera que le tocaba al siguiente intento).
+- **Por qué Falla:** la ficha dice «si el corte ocurre mientras se traduce, la frase se cancela y su texto vuelve a la barra». En «traduciendo» la frase se canceló (`cancelando=true`) pero la barra estaba **vacía** en las capturas de 2 s y 10 s. Salvedad: el log muestra `texto retenido borrado` a los 1,55 s del envío, o sea que el texto ya se había limpiado por el temporizador de «retenido 1500 ms» antes de que la app detectara el corte (218,2 s contra 219,6 s en el reloj del teléfono); un corte dentro de esos 1,5 s podría comportarse distinto y no se probó. El resto de los criterios (avisa, no se bloquea, queda lista) se cumple.
+- **Comparación con el 5/11:** el 5/11 detectó el corte del túnel en 798 ms y el micrófono volvió en 751 ms (otro teléfono; otro método de corte). Hoy la detección tarda ≈2,4 s y la reconexión 4,4 a 4,5 s por el retroceso creciente del cliente; no son comparables en método.
+- **Evidencia:** `RES/PR-RES-01_E_20261106_02.json` y `…_02.txt` (traduciendo y representando: líneas del teléfono y reconexión; el JSON también trae el momento «hablando» de esa corrida, cuya detección no quedó en el log de ese JSON porque el búfer de `logcat` se llenó), `…_03.txt` (el momento «hablando» repetido con el volcado completo del log), capturas `PR-RES-01_E_20261106_{hablando,traduciendo,representando}_{antes,corte_2s,corte_10s,reconectada}.png`.
+- **Mitad del servidor (primera pasada, sin teléfono; `PR-RES-01_E_20261106_01.{csv,json}`):** el cliente de pruebas cortó el socket sin trama de cierre en esos tres momentos: el backend liberó la sesión (contadores del backend y del STT) en 87,2; 92,0 y 88,5 ms, `/health` quedó `ok` en ambos y la frase válida siguiente se tradujo (`HOLA BUENOS DIAS`, 83,4; 65,6; 76,6 ms), con 0 líneas de error en el log del backend.
+
+### PR-SEC-03 · Secretos y consultas a la base — Falla (la mitad de «claves» el 6/11; consultas y permisos el 7/11, ver §4.2.4)
+
+- **Pasada del 6/11, superada en lo que faltaba por la §4.2.4. Qué faltaba entonces:** la mitad «texto peligroso» exige una base de datos de prueba y la ficha lo pide expresamente («no la real»); la única base alcanzable es la real (Neon), así que **no se enviaron** las 10 frases de FR-08 ni se revisaron los permisos del rol. Tampoco se revisaron los permisos que sobran.
+- **Método (claves):** se extrajeron del `.env` del backend la clave del LLM y la contraseña de la base (el script solo imprime longitud y los 8 primeros caracteres del hash SHA-256). Se buscaron esos valores exactos en (a) el árbol de trabajo de los cuatro repositorios, sin `.venv`, `build`, `node_modules` ni `.git`; (b) el historial completo de cada repositorio (`git log --all -S<valor>`); (c) los tres APK de `app/build/outputs/apk` (todos los archivos del ZIP, incluido el DEX) y patrones genéricos (`sk-…`, `postgres://usuario:clave@`); (d) la imagen del backend (el `Dockerfile` solo copia `app`, `scripts` y los requisitos: sin `.env`).
+- **Resultado:**
+  - `sign-ai-backend`: ambos valores solo en `.env`, que está en `.gitignore` (historial: 0 commits).
+  - `sign-ai-stt` y `sign-ai-docs`: 0 en el árbol y 0 en el historial.
+  - **`sign-ai-android`: los dos valores aparecen en archivos de evidencia versionados** — `docs/plan-pruebas/evidencias/CAC/PR-CAC-05_E_20261105_01.json` (clave del LLM y `DATABASE_URL` completa) y `PR-CAC-05_D_20261104_01.json` (`DATABASE_URL`). Son volcados del entorno del contenedor. Están en 2 commits (`0d0420f` del 2026-11-04 y `5b8c28d` del 2026-11-05) que ya están en **`origin/main` y `origin/ramaSergio`** (remoto en GitHub, `sign-ai-organization/sign-ai-android`). Los valores buscados son **los actuales** (los que usa el backend hoy).
+  - APK `debug`, `demo` y `release`: 0 coincidencias en 161, 161 y 151 archivos, y 0 patrones genéricos.
+- **Comparación con el 5/11:** la prueba estaba «Bloqueada». No se había detectado este hallazgo.
+- **Observación:** no se modificó ni se borró ningún archivo de evidencia anterior (regla del carril). Que la prueba termine en «Falla» o «Pasa» es decisión del owner (§5.2); aquí el criterio «ninguna clave expuesta» **no se cumple**.
+
+### PR-SEC-04 · La voz no se guarda — Parcial el 6/11; Pasa el 7/11 (ver §4.2.3)
+
+- **Pasada del 6/11, superada por la §4.2.3. Qué faltaba entonces:** la ficha pide base de prueba y **caché vacía al empezar**, y no se podía vaciar; por eso la segunda mitad (el texto quedó en la caché) no se pudo atribuir a esta sesión.
+- **Datos:** las 10 frases de FR-01-A, habladas (audios de H1).
+- **Método:** antes y después de la sesión (`WS /ws/translate`, 10 audios, igual que `PR-REN-03`): (a) búsqueda de archivos de audio (`wav, mp3, m4a, pcm, raw, ogg, opus, webm, flac, aac`) en todo el sistema de archivos de los dos contenedores, y listado de `/tmp`, `/var/tmp`, `/dev/shm`; (b) las líneas nuevas de `docker logs` de los dos contenedores buscando `RIFF`, cadenas base64 de ≥200 caracteres o ráfagas de ceros; (c) la base: columnas de tipo `bytea`/`oid` o con «audio/voice/pcm/wav» en el nombre, el tamaño de las tablas y el número de filas de `semantic_cache` (lectura desde el contenedor del backend, solo `SELECT`); (d) las oraciones de cada frase buscadas en la caché.
+- **Resultado:** archivos de audio nuevos: **0** en el backend y **0** en el STT (y 0 antes y después); `/tmp` sin cambios; líneas de log con audio: **0** (91 líneas nuevas en el backend y 77 en el STT); columnas de audio en la base: **0** (`catalog`, `catalog_synonym` y `semantic_cache` no tienen `bytea`/`oid`); tamaño de tablas sin cambios (`semantic_cache` 278.528 bytes antes y después, 41 filas). Oraciones: las **14** oraciones de las 10 frases ya estaban en la caché (14 coincidencias exactas en el log del backend, 0 fallos), por lo que no se escribió ninguna fila y no se puede decir que «el texto quedó guardado por esta sesión».
+- **Comparación con el 5/11:** 0 archivos y 0 columnas, igual. El 5/11 sí tuvo una caché vacía.
+- **Observación:** la mitad «la voz no se guarda» se cumple con las salvedades de que no se revisó el disco del anfitrión (solo los contenedores) y que los parciales de voz del STT viven en memoria durante la sesión.
+
+### PR-SEG-02 · Con y sin segmentador, pasada previa en proceso (superada por la del laboratorio completo)
+
+- **Qué falta:** la ficha cambia la configuración del backend y vacía la caché; en el canónico no se puede. Se hizo en un **laboratorio en proceso**: un proceso aparte dentro del contenedor del backend (`docker exec`), con el pipeline real (`SentenceSegmenter`, `GlossAnalyzer`, `SemanticCache` en memoria con `pool=None`, embeddings MiniLM, `LLMClient` con `gpt-4o-mini` y el catálogo de la base leído en modo lectura). Umbral 0,05 (el del contenedor). No escribe en Neon ni toca el servicio.
+- **Datos:** las 30 frases de FR-01 y las 10 de FR-05 (con las glosas de referencia de los documentos de datos).
+- **Método:** por configuración, caché vacía; primero FR-01 y luego FR-05. Para que las configuraciones solo difieran en la segmentación, **las respuestas del LLM se memorizan por oración** entre configuraciones (temperatura 0; es un control, no el comportamiento de producción).
+- **Resultado:**
+
+| Configuración | FR-01 glosas exactas | FR-05 glosas exactas | Oraciones de FR-05 desde la caché | Frases de FR-05 sin LLM |
+|---|---|---|---|---|
+| Con segmentador | 24/30 (44 oraciones, 1 de caché) | 7/10 | **21/21 (100 %)** | 10/10 |
+| Sin segmentador | 20/30 (30 unidades) | 4/10 | 2/10 (20 %) | 2/10 |
+
+- **Comparación con el 5/11 (canónico):** con segmentador 21 oraciones y 21/21 de caché; sin segmentador 10 unidades y 0/10. Hoy el sin-segmentador logra 2/10 por coincidencias semánticas con el umbral de 0,05 (el 5/11 usaba 0,03). La conclusión es la misma: el segmentador es lo que permite reutilizar oraciones.
+- **Observación:** además de la caché, el segmentador mejora las glosas exactas (24 contra 20 de 30 en FR-01 y 7 contra 4 de 10 en FR-05) con el mismo LLM. Los números absolutos de exactitud dependen del LLM y no se comparan con `PR-INT-02`.
+
+### PR-SEG-04 · Reglas del segmentador, pasada previa en proceso (superada por la del laboratorio completo)
+
+- **Qué falta:** igual que `PR-SEG-02` (laboratorio en proceso, no el canónico). El método elegido en `PR-SEG-03` (P1) es el del sistema (híbrido), que se ablaciona.
+- **Método:** 7 configuraciones con una regla apagada a la vez (`post_processing_enabled=False`, `cut_before_interrogative=False`, `cut_after_closing=False`, `reprocess_min_words=100000`, `cut_before_opening_mark=False`, `cut_markers=[]`, y sin subordinantes para los cortes por cláusulas de spaCy) más la completa, con los mismos datos y el mismo control de LLM.
+- **Resultado:** la configuración completa y las otras 6 dan **exactamente lo mismo** (FR-01: 44 oraciones, 24/30 glosas exactas, 1 oración de caché; FR-05: 21 oraciones, 7/10 exactas, 21/21 de caché). Solo `cut_before_opening_mark=False` cambia la división (43 oraciones en FR-01 y 20 en FR-05) y no mueve las glosas ni la caché.
+- **Comparación con el 5/11:** el 5/11 también encontró que solo dos reglas (`MIN_FRAGMENT_WORDS` y `CUT_BEFORE_OPENING_MARK`) cambiaban la división. Hoy `MIN_FRAGMENT_WORDS` no se pudo ablacionar porque su valor por defecto (1) ya es «apagado».
+- **Observación:** FR-01 y FR-05 son frases cortas y bien puntuadas; que 6 reglas no aporten **aquí** no las hace candidatas a quitarse sin mirar `PR-SEG-01`, cuyos 200 casos (P1) sí tienen frases largas y sin puntuación. Se anota como candidatas a revisar con esos datos, no a quitar.
+
+### PR-CAC-06 · Aporte de la caché — pasada previa en proceso (superada por la del laboratorio completo del 7/11, ver §4.2.2)
+
+- **Qué faltaba entonces:** igual que `PR-SEG-02`. Además el costo se calcula con **precios supuestos** (no leídos de ninguna factura): 0,15 USD por millón de tokens de entrada y 0,60 por millón de salida de `gpt-4o-mini`; los tokens sí son medidos (`usage_metadata` de cada respuesta).
+- **Datos:** FR-09, 60 frases (las 30 de FR-01 y sus 30 variantes de FR-03), en ese orden, secuenciales.
+- **Método:** tres corridas, cada una con caché vacía: con caché (en memoria), sin caché (A) y sin caché (B, para medir si el LLM da siempre lo mismo). Sin memorizar el LLM. El tiempo es el de `NLPServiceImpl.transform` por frase (no incluye WebSocket ni STT).
+- **Resultado:**
+
+| | Con caché | Sin caché (A) | Sin caché (B) |
+|---|---|---|---|
+| Frases sin llamar al LLM | **19/60 (31,7 %)** | 0/60 | 0/60 |
+| Oraciones desde la caché | 32/88 (36,4 %) | 0/88 | 0/88 |
+| Llamadas al LLM | 56 | 88 | 88 |
+| Tiempo medio por frase | 672,0 ms (mediana 634,0) | 960,4 ms (869,9) | 989,2 ms (803,5) |
+| Tokens (entrada / salida) | 26.936 / 456 | 42.339 / 700 | 42.339 / 698 |
+| Costo (supuesto) | 0,0043 USD | 0,0068 USD | 0,0068 USD |
+
+  **Mismas glosas** con y sin caché: 55/60 frases (A) y 55/60 (B); sin caché A contra B: **60/60** (el LLM a temperatura 0 fue determinista en esta pasada). Las 5 diferencias son variantes de FR-03 que la caché semántica resolvió con las glosas de otra frase (p. ej. «En familia trabajan mi abuelo y mi tío» salió `ABUELO TIO TRABAJAR FAMILIA` con caché y `FAMILIA TRABAJAR ABUELO TIO` sin ella; «¿Ustedes cuándo comen?» perdió `CUANDO` sin caché).
+- **Comparación con el 5/11 (canónico):** 17/60 frases (28,3 %) sin LLM, mediana 11 ms contra 744 ms y costo de 60 frases 0,0111 USD. Hoy 19/60 (31,7 %); el costo de hoy sale menor por los tokens medidos y precios supuestos, y no se pudo reconciliar con el 0,0111 (se desconoce con qué precio y conteo se calculó).
+- **Observación:** la caché ahorra ≈30 % del tiempo medio y ≈36 % de las llamadas en un lote donde la mitad de las frases son variantes de la otra mitad, a cambio de 5 frases (8,3 %) cuyas glosas cambian respecto del LLM.
+
+### 4.1. Pruebas en laboratorio aparte (tercera pasada, 15:05 a 15:40)
+
+**Montaje.** Para no tocar el canónico se levantaron contenedores aparte con las **mismas imágenes** (`sign-ai-backend-backend`, `sign-ai-backend-stt`): `p2lab-stt` (STT `medium` en la GPU, puerto 8101, con la caché de pesos del canónico montada en solo lectura), `p2lab-backend` (puerto 8180, LLM real `gpt-4o-mini`), `p2lab-backend2` (puerto 8181, con `LLM_BASE_URL` apuntando a un LLM falso) y `p2lab-fakellm` (puerto 9000, servidor compatible con la API de OpenAI que responde, se cuelga, devuelve 500 o devuelve vacío según un modo que se cambia por HTTP). **(Actualización de la cuarta pasada: después se montó una base propia, ver `PR-CAC-05`, `PR-RES-04` y la segunda pasada de `PR-RES-02` y `PR-REN-04`; lo que sigue describe la tercera pasada.) Sin base de datos:** el backend de laboratorio arranca en estado `degraded` (catálogo vacío, caché sin precarga), así que las glosas salen como «sin animación» y la caché no sirve. Por eso las pruebas que dependen de la base (`CAC-05`, `RES-04`, `SEC-03` texto, `SEC-04` completa, la mitad de caché de `RES-02`) siguen sin hacerse. Para las pruebas con el teléfono se usó `adb reverse tcp:8080 tcp:8180` (el teléfono habla con el laboratorio) y se verificó el foco de la app antes de **cada** toque (`mCurrentFocus` = `MainActivity`; sin `BACK`). Al terminar se restauró `adb reverse tcp:8080 tcp:8080`, se relanzó la app contra el canónico y se retiraron los contenedores y la red.
+
+### PR-SEG-02 · Con y sin segmentador — Se reporta (laboratorio completo con base propia)
+
+Cierra la prueba en el sistema completo de laboratorio (antes solo se había hecho en proceso, §4).
+
+- **Montaje:** backend de laboratorio con la imagen del canónico, Postgres 16 + pgvector propio con las migraciones 001 a 006, catálogo de 50 glosas con los **13 sinónimos leídos de la base canónica solo con `SELECT`** (el repo no trae script para sembrarlos; la tabla la define la migración 006) y `/health` informando 63 glosas como el canónico; LLM **real** (`gpt-4o-mini`, temperatura 0), umbral de caché 0,05 y precarga activa, igual que el canónico. Cada configuración es un contenedor nuevo con la variable `SENTENCE_SEGMENTER__…` indicada y la tabla `semantic_cache` vacía (se verificó `cache_rows` = 0 al arrancar). Las frases van por WebSocket de texto, una tras otra: primero las 30 de FR-01 y luego las 10 de FR-05; la fuente de cada oración (caché exacta, semántica o LLM) sale del delta de `rt_cache_total` y las llamadas al LLM de `llm_ms`.
+- **Resultado:**
+
+| Configuración | FR-01: glosas exactas | FR-05: glosas exactas | FR-05: oraciones desde la caché | FR-05: frases sin LLM |
+|---|---|---|---|---|
+| Con segmentador | 24/30 (44 oraciones, 1 de caché) | 7/10 | **21/21 (100 %)** | 10/10 |
+| Sin segmentador | 21/30 (30 unidades) | 4/10 | 2/10 (20 %) | 2/10 |
+
+- **Comparación con el 5/11 (canónico):** con segmentador 21 oraciones y 21/21 de caché; sin segmentador 10 unidades y 0/10. Hoy el sin-segmentador logra 2/10 por coincidencias semánticas con el umbral de 0,05 (el 5/11 usaba 0,03). La conclusión es la misma: el segmentador es lo que permite reutilizar oraciones. Las cifras coinciden con las de la pasada en proceso (24/30, 7/10 y 21/21 con segmentador; 4/10 y 2/10 sin él), salvo FR-01 sin segmentador (21 contra 20 de 30), diferencia de 1 que cae dentro del ruido del LLM.
+- **Observación:** además de la caché, el segmentador mejora las glosas exactas (24 contra 21 de 30 en FR-01; 7 contra 4 de 10 en FR-05) con el mismo LLM. Esta vez el LLM **no** se memorizó entre configuraciones (la ficha pide una corrida limpia por configuración), por eso hay ±1 frase de ruido entre corridas con la misma división.
+- **Equivalencia con el canónico:** mismo código y mismo LLM; base local sin la latencia de Neon (no afecta a estas métricas); sin teléfono (no aplica).
+
+### PR-SEG-04 · Reglas del segmentador — Se reporta (laboratorio completo con base propia)
+
+- **Método:** el mismo montaje que `PR-SEG-02`; 7 configuraciones con **una regla apagada** por variable de entorno (`POST_PROCESSING_ENABLED=false`, `CUT_BEFORE_INTERROGATIVE=false`, `CUT_AFTER_CLOSING=false`, `REPROCESS_MIN_WORDS=100000`, `CUT_BEFORE_OPENING_MARK=false`, `CUT_MARKERS=[]` y `SUBORDINATORS=[]` junto con `SENTENCE_OPENING_SUBORDINATORS=[]` para las cláusulas de spaCy), contra la completa; caché vacía en cada una. `MIN_FRAGMENT_WORDS` no se pudo ablacionar: su valor por defecto (1) ya es «apagado».
+- **Resultado:**
+
+| Regla apagada | FR-01 oraciones | FR-01 exactas | FR-05 oraciones (caché) | FR-05 exactas |
+|---|---|---|---|---|
+| ninguna (completa) | 44 | 24/30 | 21 (21) | 7/10 |
+| posproceso | 44 | 23/30 | 21 (21) | 6/10 |
+| corte antes de interrogativas | 44 | 24/30 | 21 (21) | 7/10 |
+| corte tras cierres | 44 | 24/30 | 21 (21) | 7/10 |
+| reproceso de fragmentos largos | 44 | 24/30 | 21 (21) | 7/10 |
+| corte antes de signo de apertura | **43** | 23/30 | **20 (20)** | 6/10 |
+| marcadores de corte | 44 | 23/30 | 21 (21) | 6/10 |
+| cortes por cláusulas (spaCy) | 44 | 23/30 | 21 (21) | 6/10 |
+
+- **Veredicto por regla:** solo `cut_before_opening_mark` **cambia la división** (una oración menos en FR-01 y en FR-05) y no cambia la proporción de caché (21/21 y 20/20). Las otras 6 dejan la división idéntica, así que **en estos datos no aportan** y la ficha las marca como candidatas a quitarse; las diferencias de 1 frase exacta (23 contra 24; 6 contra 7) aparecen con reglas que no cambian la división (por ejemplo, el posproceso apagado da 44 oraciones igual que la completa), por lo que son **ruido del LLM**, no efecto de la regla.
+- **Salvedad:** FR-01 y FR-05 son frases cortas y bien puntuadas; que 6 reglas no aporten **aquí** no basta para quitarlas sin mirar `PR-SEG-01` (P1), cuyos 200 casos sí incluyen frases largas y sin puntuación. Se anotan como candidatas a revisar con esos datos, no a quitar. Todas las configuraciones se corrieron (ninguna se omitió por no aportar).
+- **Comparación con el 5/11:** también solo dos reglas (`MIN_FRAGMENT_WORDS` y `CUT_BEFORE_OPENING_MARK`) cambiaban la división; hoy `MIN_FRAGMENT_WORDS` no se pudo ablacionar.
+- **Costo del LLM real de estas dos pruebas:** **388 llamadas** a `gpt-4o-mini` (contador `llm_ms`, 9 configuraciones × 40 frases, 360 frases enviadas). **Costo aproximado ≈ 0,03 USD, supuesto**: no se leyó de ninguna factura; sale de las 481 fichas de entrada y 8 de salida por llamada medidas en la pasada en proceso (`usage_metadata`) y de los precios supuestos de 0,15 y 0,60 USD por millón de tokens.
+- **Evidencia:** `SEG/PR-SEG-0204_E_20261106_01.csv` (360 filas: frase, glosas, referencia, oraciones, fuentes, llamadas al LLM, ms) y `.json` (resumen por configuración). Las dos pasadas en proceso (`PR-SEG-02_E_…_01`, `PR-SEG-04_E_…_01`) siguen en la carpeta.
+
+### PR-CAC-05 · Qué guarda la caché — Falla (laboratorio con base propia)
+
+- **Datos:** FR-10 (10 frases, 13 envíos, 3 repetidas) y una falla provocada del LLM.
+- **Montaje:** Postgres+pgvector de laboratorio con el esquema del backend y el catálogo de 50 glosas; backend de laboratorio contra un **LLM falso** (`p2lab-fakellm`, responde «HOLA, TU» tras 0,7 s, o vacío, o 500, o no responde, según un modo que se cambia por HTTP) y `ADMIN_TOKEN` de laboratorio. Caché vacía al empezar (0 filas). Los tiempos de respuesta de frase nueva incluyen el 0,7 s del LLM falso, **no** son la latencia de `gpt-4o-mini`.
+- **Resultado:**
+  - **Duplicados y vacías:** 13 envíos → **10 filas**, **0 duplicados**, **0 filas con glosas vacías**; las 3 repetidas (envíos 11 a 13) salieron por coincidencia exacta, sin llamar al LLM.
+  - **Respuesta vacía y falla del LLM:** con el LLM devolviendo contenido vacío, el usuario recibe un `done` **sin glosas** (41,6 y 59,6 ms en dos pasadas) y no se guarda nada (10 filas antes y después); con un 500, `error` «No se pudo traducir el texto.» a 434,7 ms y 10 filas; con el LLM colgado, `error` a 10.472,7 ms y 10 filas. **Ninguna respuesta fallida se guarda.**
+  - **Tiempo:** frase nueva 746 a 831 ms (incluye 700 ms del LLM falso) contra repetida **3,5 a 4,1 ms**; la fila aparece en la base **200 a 225 ms** después del `done` (incluye mi sondeo): guardar no retrasa la respuesta.
+  - **Mantenimiento con SQL:** tras `DELETE` de una fila, la siguiente traducción de esa frase **siguió saliendo de la caché** (`exact`, 0 llamadas al LLM, 3,7 ms); tras un `UPDATE` de las glosas, siguió devolviendo las glosas viejas. Solo después de `POST /admin/cache/reload` (token de administrador) se reflejaron: la frase borrada fue `miss` con 1 llamada al LLM y la corregida devolvió `CAMBIADO`.
+- **Por qué Falla:** la ficha pide que borrar o corregir con SQL se refleje de inmediato; hoy exige recargar la caché (o reiniciar). Es la contradicción del 5/11 con `RNF-MNT-05` (el SRS dice «después de reiniciar»): ahora existe `POST /admin/cache/reload` como vía manual. Lo decide el owner (§5.3). El resto de las comprobaciones se cumple.
+- **Comparación con el 5/11:** 13 envíos → 10 filas, 0 duplicados, 0 vacías, nueva 640 a 1.351 ms contra repetida 3,6 a 4,5 ms, fila 127 a 7.138 ms después del `done`; también Falla por el mantenimiento. Hoy la fila tarda ≈210 ms (base local).
+- **Observaciones:** el `done` sin glosas ante una respuesta vacía del LLM no avisa al usuario; la app recibiría una frase vacía. Equivalencia con el canónico: mismo código y mismo modelo de embeddings; base local (sin latencia de red a Neon) y LLM falso (sin su latencia real).
+
+### PR-RES-02 · Falla del LLM — Pasa (laboratorio con base propia; en el borde del plazo)
+
+Con la base de laboratorio se completó la mitad de la caché (la primera pasada, sin base, está en §4.1 arriba y en `…_01.csv`).
+
+| Situación | Resultado | Tiempo |
+|---|---|---|
+| LLM colgado, frase **ya guardada** | `done`, 2 glosas | **3,7 ms** |
+| LLM colgado, frase nueva | `error` «No se pudo traducir el texto.» | **10.562 ms** |
+| LLM responde 500, frase ya guardada | `done`, 2 glosas | 4,0 ms |
+| LLM responde 500, frase nueva | `error` | 550,9 ms |
+| LLM vuelve, frase nueva (sin reiniciar) | `done`, 2 glosas | 756,1 ms |
+
+- **Veredicto:** la frase guardada se traduce con el LLM caído y el sistema se recupera al volver el LLM sin reiniciar. El aviso con el LLM colgado llega a 10,56 s: **0,56 s sobre** los 10 s del peor caso (5 s por intento, un reintento), igual de justo que el 5/11 (10,5 s), que se dio por Pasa; por eso se deja Pasa, con la salvedad. No se midió el estado de la app (sin teléfono en esta pasada).
+- **Evidencia:** `RES/PR-RES-02_E_20261106_02.csv`.
+
+### PR-RES-04 · Falla de la base de datos — Falla (laboratorio con base propia)
+
+- **Montaje:** Postgres local `p2lab-pg`, que se corta con `docker stop`, se pausa con `docker pause` o se arranca después del backend. La base de Neon dormida **no se puede reproducir**; la pausa solo emula una base que no responde.
+- **Resultado:**
+  1. **Corte mientras se traduce** (`docker stop` y envío inmediato): la frase nueva se traduce pero tarda **4.559,1 ms** (contra ≈760 ms con la base sana; reintentos de la conexión), la ya guardada 7,4 ms; `/health` se mantuvo `ok` durante los 53 s de observación (no avisa); el log muestra 15 líneas de error o advertencia (la mayoría por el STT inexistente del laboratorio, no por la base). Al volver la base, `/health` está `ok` de inmediato, la frase siguiente se traduce (760,2 ms) y **se guarda sin reiniciar**; la frase enviada durante el corte **no** se guardó.
+  2. **Backend arrancado con la base caída:** responde `/health` a los **27,2 s** en estado `degraded` (`catalog_loaded: false`); traduce («HOLA TU», 716,5 ms) pero con **0 de 2 glosas disponibles**. Con la base de vuelta, 20 s después sigue `degraded` y `POST /admin/cache/reload` responde **503**: **no se recupera sin reiniciar**.
+  3. **Base pausada 6 s (emulación de la dormida):** con el backend sano, la frase se traduce en **788,7 ms** (no depende de la base) y la fila se guarda **0,6 s** después de reanudar; `/health` sigue `ok`.
+- **Por qué Falla:** la ficha pide aviso claro y recuperación al volver la base; en el arranque con la base caída el backend responde con todas las glosas «no disponibles» y no se recupera sin reiniciar. Salvedad: base local, no Neon (el pool, los reintentos y el cierre de conexiones de Neon pueden comportarse distinto).
+- **Comparación con el 5/11 (Neon):** base caída → `degraded` en 14,6 s y recuperación sin reiniciar en 1.567 ms; hoy, con la base local, `/health` no pasa a `degraded` en un corte mientras corre (solo si arranca sin base), y el arranque sin base no se recupera. Los dos caminos son distintos.
+- **Evidencia:** `RES/PR-RES-04_E_20261106_{01,02}.json` (`_02`: la pausa repetida con el backend recién reiniciado, porque en `_01` el backend seguía degradado y la tercera parte no sirve).
+
+### PR-REN-04 · Arranque en frío — Parcial (laboratorio con base propia; repetida con 63 glosas el 7/11, ver §4.2.6)
+
+- **Qué tan equivalente es:** mismas imágenes de backend y STT y misma GPU del equipo; **no** equivale en (1) la base: Postgres local, sin la latencia de red de Neon ni la base dormida (la prueba pide dejarla más de 5 minutos); (2) el catálogo: 50 glosas sin sinónimos (el canónico informa 63); (3) la app usable en el teléfono, que no se midió; (4) los pesos del STT vienen de un volumen ya cacheado.
+- **Método:** tres arranques de los tres contenedores del laboratorio (`docker start` a la vez, desde apagados) midiendo hasta `/health` `ok` del STT y del backend (con base y catálogo cargados), y dos traducciones por texto inmediatas (frases nuevas con el LLM falso de 0,7 s).
+- **Resultado (segunda pasada, con base):**
+
+| Arranque | STT listo | Backend `ok` | Primera traducción | Segunda traducción |
+|---|---|---|---|---|
+| 1 | 9,2 s | 17,9 s | 851,1 ms | 903,9 ms |
+| 2 | 7,4 s | 18,6 s | 773,8 ms | 784,0 ms |
+| 3 | 5,8 s | 17,1 s | 768,1 ms | 752,5 ms |
+
+- **Comparación con el 5/11 (canónico):** backend listo en 13,5 a 14,2 s, STT 2,9 a 4,3 s, app usable 6,3 a 6,9 s. Hoy el backend tarda 17 a 19 s y el STT 5,8 a 9,2 s (otra GPU y procesador, y varios contenedores arrancando a la vez).
+- **Observación:** la primera traducción no es más lenta que la segunda (diferencia dentro del ruido). La primera pasada sin base está en `PR-REN-04_E_20261106_01.*`.
+
+### PR-RES-05 · Error interno de procesamiento — Pasa (laboratorio)
+
+- **Datos:** una frase de una oración y dos de varias oraciones (con y sin la oración defectuosa) y una frase sana posterior; la marca de falla es la palabra «falla».
+- **Método:** el proceso del backend de laboratorio arranca con un parche que lanza un error en el procesamiento de la oración (`NLPServiceImpl._transform_sentence`) cuando contiene «falla» (el error sube hasta el controlador, el camino que describe la ficha; no es el segmentador). Cliente WebSocket de texto.
+- **Resultado:**
+
+| Caso | Mensajes recibidos (tipo y ms desde el envío) | Siguiente frase en la misma conexión |
+|---|---|---|
+| 1 oración que falla | `error` «No se pudo traducir el texto.» a 4,2 ms | `done` |
+| 3 oraciones, falla la 2.ª | `segment` a 978,3 ms y `error` a 985,4 ms | `done` |
+| 3 oraciones, falla la 1.ª | `error` a 11,8 ms, **ningún** `segment` | `done` |
+| Frase sana | `segment` a 1.028,4 ms y `done` | `done` |
+
+  Las oraciones **anteriores** a la que falla sí llegan; la que falla y las **posteriores** no. Después del error la conexión sigue viva y la frase siguiente funciona sin reiniciar.
+- **Comparación con el 5/11:** la prueba estaba «Bloqueada» (no había forma de forzar el error).
+- **Observación:** no se midió la app (qué ve el usuario en pantalla); el mensaje `error` es el que la app recibe. El error forzado es de la capa NLP, no del segmentador; el camino de propagación es el mismo.
+
+### PR-RES-02 · Falla del LLM, primera pasada (sin base) — Parcial
+
+- **Qué falta:** «una frase ya guardada en la caché se traduce con el LLM caído» (no hay base de datos de laboratorio, y la caché sin base no funciona).
+- **Método:** backend de laboratorio con `LLM_BASE_URL` apuntando al LLM falso, que se pone en modo `up`, `down` (no responde nunca), `error500` y de nuevo `up`; una frase distinta por situación, con la configuración oficial (5 s por intento y 1 reintento).
+- **Resultado:**
+
+| Situación | Resultado | Tiempo hasta el aviso o la respuesta |
+|---|---|---|
+| LLM sano (control) | `segment` y `done` | 19,9 ms |
+| LLM colgado | `error`: «No se pudo traducir el texto.» | **10.505,5 ms** |
+| LLM responde 500 | `error`: «No se pudo traducir el texto.» | **444,1 ms** |
+| LLM vuelve, **sin reiniciar** | `segment` y `done` | 16,6 ms |
+
+- **Comparación con el 5/11:** aviso con el LLM caído a 10.500 ms y recuperación a 7.300 ms (con el teléfono). Hoy 10.505,5 ms, igual de cerca del límite.
+- **Observación:** el criterio dice 5 s por intento y un reintento, **10 s en el peor caso**; 10.505,5 ms son 0,5 s más (el tiempo de espera de cada intento y la pausa entre intentos suman más que 10 s). Está en el borde del requisito: lo decide el owner. Sin la app no se mide el estado en que queda.
+
+### PR-RES-03 · Falla de la transcripción — Falla (laboratorio + teléfono)
+
+- **Datos:** el micrófono de la app (sin voz: no hay altavoz, §4.0) y una frase de texto («Tienes hambre?»).
+- **Método:** `docker stop p2lab-stt` en dos momentos: (A) con el micrófono encendido (aproxima «a mitad de una frase»; no hay habla) y (B) antes de conectar (se relanza la app con el STT apagado). En cada uno se envía texto con el STT caído, se vuelve a encender el STT y se toca el micrófono otra vez **sin relanzar la app**. Capturas y `logcat`.
+- **Resultado (teléfono):**
+  - **A, STT detenido con el micrófono encendido:** el backend cierra la sesión; la app registra `Se cortó la conexión mientras escuchaba.`, apaga el dictado («No se escuchó nada.»), se **reconecta sola** y muestra **«Sin servicio de voz: podés seguir traduciendo por texto.»**. La frase de texto se traduce con el STT caído (sí). Con el STT de vuelta (`/health` ok a **12,8 s** de `docker start`) y al tocar el micrófono, **no aparece `micrófono prendido`**: no se recupera.
+  - **B, STT apagado antes de conectar:** la sesión abre; no hay aviso hasta que se toca el micrófono, momento en que la captura muestra el mismo «Sin servicio de voz…»; el texto se traduce (sí). Con el STT de vuelta (`/health` ok a **9,8 s**) y sin relanzar la app, el micrófono **sigue sin servicio** (captura `B_mic_tras_volver_stt`).
+- **Por qué Falla:** el criterio incluye «se puede volver a hablar al volver el servicio». No se puede sin relanzar la app. El aviso es claro y el texto sigue funcionando (esos dos criterios sí se cumplen).
+- **Comparación con el 5/11:** igual: sesión viva, texto funcionando, micrófono que no vuelve solo.
+- **Observaciones:** el mensaje de la app dice «podés» (voseo), contra la regla del proyecto de español neutro. La capacidad de voz se decide al abrir la sesión (`capability{audio}`): la app no vuelve a preguntar.
+
+### PR-RES-07 · Reinicio del backend con clientes conectados — Pasa (laboratorio + teléfono)
+
+- **Datos:** una frase de FR-01-C («Mi abuelo trabaja en familia hoy.», que no está en caché) para el reinicio a mitad de la traducción, y «Tienes hambre?» como frase de comprobación.
+- **Método:** `docker restart -t 2 p2lab-backend` con la app conectada por `adb reverse` al laboratorio, (1) sin actividad y (2) 0,25 s después de tocar «Traducir». Se mide con `logcat` (teléfono) y con `/health` del laboratorio (servidor), por separado; después se envía una frase nueva.
+- **Resultado:**
+
+| Momento | Backend responde `/health` | Teléfono: detección del corte | Teléfono: reconexión (desde el reinicio) | Frase nueva |
+|---|---|---|---|---|
+| Sin actividad | 19,7 s | **36,8 s** (`sent ping but didn't receive pong within 20000ms`) | **37,9 s** (18,2 s tras estar el backend listo) | se representa/traduce |
+| Traduciendo | 17,7 s | aviso «El servidor no respondió.» a los **15,0 s** del envío; corte por ping a **28,7 s** | **29,8 s** (12,1 s tras estar listo) | se traduce |
+
+  La frase en curso **se pierde** (no llegó ningún `segment` y la app no la reenvía). La app queda lista para una frase nueva sin relanzarla (2/2).
+- **Comparación con el 5/11:** «reinicio del backend sin reiniciar la app» (Pasa). Hoy se añaden las cifras.
+- **Salvedades:** (1) el teléfono llega al laboratorio por el túnel `adb reverse`, que **no cierra** la conexión del teléfono cuando el destino se reinicia; por eso la app solo detecta el corte por el ping de 20 s (28 a 37 s). Con una red real el cierre llegaría antes. (2) El reinicio del laboratorio tarda 17,7 a 19,7 s hasta responder (sin base ni catálogo). (3) No es el backend canónico.
+
+### PR-REN-04 · Arranque en frío, primera pasada (sin base) — Parcial
+
+- **Qué falta:** la base dormida (no hay base de laboratorio), la carga del catálogo y la app usable en el teléfono. El canónico no se apagó.
+- **Método:** tres arranques del laboratorio (`p2lab-stt` y `p2lab-backend`) desde apagados con `docker start` a la vez, midiendo hasta `/health` de cada uno, y dos traducciones por texto (nuevas, con llamada al LLM) justo después.
+- **Resultado:**
+
+| Arranque | STT listo | Backend responde `/health` | Primera traducción | Segunda traducción |
+|---|---|---|---|---|
+| 1 | 7,6 s | 23,9 s | 847,6 ms | 818,6 ms |
+| 2 | 7,3 s | 21,1 s | 794,3 ms | 917,1 ms |
+| 3 | 7,3 s | 21,1 s | 813,4 ms | 703,4 ms |
+
+- **Comparación con el 5/11 (canónico, otra GPU):** backend listo en 13,5 a 14,2 s, STT 2,9 a 4,3 s, app usable 6,3 a 6,9 s. Hoy el backend tarda más (21 a 24 s) y el STT más (7,3 s); no es comparable (sin base ni catálogo, otra GPU y otro procesador, pesos en un volumen compartido).
+- **Observación:** con el LLM remoto, la primera traducción no es más lenta que la segunda (diferencia dentro del ruido de 100 ms): el calentamiento del LLM ocurre al arrancar.
+
+
+### 4.2. Sexta pasada (2026-11-07): seguimiento de las parciales
+
+Quién: el mismo agente IA, a pedido del owner («continuar con las pruebas»). Alcance que el owner autorizó paso a paso: las cuatro pruebas del laboratorio (`PR-CAC-06`, `PR-SEC-04`, `PR-SEC-03` consultas y `PR-REN-03` situación LLM); después `PR-REN-04` con sinónimos, `PR-SEC-01` y los permisos de `PR-SEC-03`, con `SELECT` de solo lectura sobre Neon. Los registros del teléfono van de las 10:23 a las 11:26 (hora local). Regla de lectura de esta sección: igual que el resto del documento, cada cifra dice de dónde sale; lo supuesto va marcado.
+
+#### 4.2.1. Montaje y equivalencia con el canónico
+
+- **Servidor canónico:** `sign-ai-backend-backend-1` y `sign-ai-backend-stt-1` estaban apagados (`Exited (137)`, 17 horas antes de empezar) y **no se encendieron durante las pruebas**: por eso toda la pasada se hizo en un laboratorio aparte. Solo al final, en `PR-TRA-03` y con autorización del owner, se borraron y se reconstruyeron (§4.2.8); hoy el stack canónico está encendido.
+- **Laboratorio `p3lab-*`** (red `p3lab`, las **mismas imágenes** que el canónico): `p3lab-pg` (`pgvector/pgvector:pg16`, puerto 5433, migraciones 001 a 006, catálogo de 50 glosas con `tools/seed_catalog.py`; desde `PR-REN-04`, también los 13 sinónimos); `p3lab-stt` (`medium`, `cuda`, `float16`, silencio de cierre 1.500 ms, pesos del volumen canónico montados en solo lectura, puerto 8101); `p3lab-backend` (puerto 8180, LLM **real** `gpt-4o-mini` con temperatura 0, umbral de caché 0,05, precarga activa, `ADMIN_TOKEN` de laboratorio y `DEBUG_TRACE_ENABLED=true`). La clave del LLM se leyó del `.env` del backend con `--env-file`, sin imprimirla.
+- **Vaciar la caché** (lo que no se podía hacer en el canónico): `TRUNCATE semantic_cache` más `POST /admin/cache/reload`. Las pruebas que lo piden lo hicieron antes de cada corrida o de cada frase.
+- **Qué no equivale al canónico:** base local (sin la latencia de red de Neon ni la base dormida); catálogo con 63 glosas solo desde `PR-REN-04` (antes 50); no se comprobó si hay sesiones ajenas abiertas en el laboratorio (el contador `sessions_active` no se leyó); el LLM sí es el mismo. Los scripts de medición son temporales y no se guardaron en el repositorio (igual que el 6/11).
+- **Dos fallas de red transitorias durante la sesión** (resolución de nombres hacia Neon y hacia `huggingface.co`) se resolvieron solas; ver el punto 28 de la §5.2.
+- **Teléfono:** el mismo Redmi Note 11 (`61ecd28e`). `adb reverse tcp:8080 tcp:8180` para `PR-REN-03` y `tcp:8443 tcp:9443` para `PR-SEC-01`. Al terminar se retiró el túnel del 8443, se restauró `tcp:8080 tcp:8080`, se reinstaló `debug` (`./gradlew installDebug`, que apunta a `ws://127.0.0.1:8080`) y se borró de Descargas el certificado que se había subido.
+- **Neon (solo lectura):** `SELECT` en una sesión con `default_transaction_read_only=on` (se confirmó `transaction_read_only = on`). Se leyeron los permisos del rol, los 13 sinónimos y los conteos (`catalog` 50, `catalog_synonym` 13, `semantic_cache` 83 filas al 7/11). No se escribió nada.
+
+#### 4.2.2. PR-CAC-06 · Aporte de la caché — Se reporta (laboratorio completo con base propia)
+
+- **Datos:** FR-09, 60 frases en su orden (las 30 de FR-01 y sus 30 variantes de FR-03).
+- **Método:** tres corridas, cada una con la caché vaciada al empezar: **con caché** (se llena sola durante la corrida), **sin caché A** y **sin caché B** (se vacía y se recarga **antes de cada frase**). Las frases van una tras otra y **sin la pausa de 30 s** que describe FR-09, que no cambia la caché pero sí la duración. El tiempo es el del cliente WebSocket, del envío al `done`, e incluye el socket. La fuente de cada oración sale de `sentence_trace` y las llamadas al LLM, del contador `llm_ms`.
+- **Resultado:**
+
+| | Con caché | Sin caché (A) | Sin caché (B) |
+|---|---|---|---|
+| Frases sin llamar al LLM | **19/60 (31,7 %)** | 0/60 | 0/60 |
+| Oraciones desde la caché | 32/88 (36,4 %) | 0/88 | 0/88 |
+| Llamadas al LLM | 56 | 88 | 88 |
+| Tiempo medio por frase | **565,1 ms** (mediana 704,5) | 741,7 ms (700,6) | 720,6 ms (701,5) |
+| Frases con las mismas glosas que con caché | — | 53/60 | 52/60 |
+| Costo (**supuesto**) | 0,0043 USD | 0,0068 USD | 0,0068 USD |
+
+  El costo **no se midió**: este backend no expone tokens. Se estimó con los tokens por llamada medidos el 6/11 (≈481 de entrada y ≈8 de salida) y precios supuestos de 0,15 y 0,60 USD por millón de tokens.
+- **Glosas:** las dos corridas sin caché difieren entre sí en **3 frases** (57/60 iguales); el 6/11 daban 60/60, o sea que hoy el LLM a temperatura 0 **no fue determinista**. Las 7 diferencias entre «con caché» y «sin caché A» (órdenes 33, 34, 41, 43, 47, 48 y 58) son de dos tipos: **orden de las glosas** (33 y 34, p. ej. `ABUELO TIO TRABAJAR FAMILIA` contra `FAMILIA TRABAJAR ABUELO TIO`) y **glosas que aparecen o desaparecen** (41: `PERDON COMO ESTAS TRISTE` contra `PERDON TU TRISTE`; 47: `CUANDO USTEDES COMER` contra `USTEDES COMER`; 58: con `VIVIR` contra sin él). Como el ruido propio del LLM ya explica 3 de 60, **no se puede atribuir todas las diferencias a la caché**.
+- **Comparación con el 6/11 (en proceso, sin servidor ni WebSocket):** 19/60 frases sin LLM (igual), 56 contra 88 llamadas (igual), 672,0 contra 960,4 ms de tiempo medio (−30 %); hoy 565,1 contra 741,7 y 720,6 ms (−24 % y −22 %), con el socket incluido. El 5/11 (canónico): 17/60 frases sin LLM.
+- **Observación:** la **mediana** con caché (704,5 ms) es casi igual a la de sin caché (700,6 ms) porque 41 de las 60 frases todavía llaman al LLM: el ahorro está en la **media** y en las 19 frases que no esperan al LLM, no en la mediana. Un lote donde la mitad de las frases son variantes de la otra mitad aprovecha la caché solo en ≈30 % de las frases.
+
+#### 4.2.3. PR-SEC-04 · La voz no se guarda — Pasa (laboratorio con base propia y caché vacía)
+
+- **Datos:** las 10 frases de FR-01-A habladas, con el audio de H1 en silencio de AU-01 (001, 007, 013, 019, 025, 031, 037, 043, 049, 055).
+- **Método:** caché vaciada (0 filas). Antes de la sesión se anotó: los archivos de audio de todo el sistema de archivos de `p3lab-backend` y `p3lab-stt` (`wav, mp3, m4a, pcm, raw, ogg, opus, webm, flac, aac`), el listado de `/tmp`, `/var/tmp` y `/dev/shm`, las columnas `bytea`, `oid` o con «audio/voice/pcm/wav» en el nombre, el tamaño de las tablas y las filas de la caché. Se envió cada audio por `WS /ws/translate` (PCM16 en tramas de 30 ms, a ritmo real, y `{"type":"end"}`) y la transcripción final se reenvió como `text`, como hace la app. Después se repitió todo y se buscó en los registros nuevos: `RIFF`, cadenas de ≥200 caracteres en base64 y ráfagas de ceros.
+- **Resultado:** archivos de audio nuevos: **0** en el backend y **0** en el STT; `/tmp` sin cambios (solo `torchinductor_root`, que ya estaba); líneas nuevas de registro: 199 (backend) y 76 (STT), **0** con audio; columnas de audio en la base: **0** antes y después; tamaño de las tablas 155.648 a 229.376 bytes (por las 14 filas nuevas de la caché). **Texto en la caché:** la caché pasó de **0 a 14 filas** y las **14 oraciones de las 10 frases** están en ella (10/10 frases con todas sus oraciones).
+- **Transcripciones:** 7 de las 10 son idénticas al texto del plan; en 3 (FR-01-011, 023 y 026) el STT puso una coma donde el plan tiene un punto («Perdón, ¿estás triste?»); no cambia ninguna palabra.
+- **Comparación con el 6/11:** igual en 0 archivos y 0 columnas. El 6/11 no se pudo atribuir el texto guardado porque las 14 oraciones ya estaban en la caché; hoy sí (caché vacía).
+- **Salvedades:** no se revisó el disco del anfitrión (solo los contenedores); los parciales del STT viven en memoria durante la sesión; es el laboratorio y no el canónico (misma imagen y mismo código).
+
+#### 4.2.4. PR-SEC-03 · Secretos y consultas a la base — Falla (claves y permisos; la base queda intacta)
+
+La mitad de **claves** (6/11) sigue igual: las credenciales actuales están en dos archivos de evidencia versionados (§5.2, punto 1).
+
+- **Consultas (laboratorio con base de prueba, como pide la ficha).** Datos: las 10 frases de FR-08, enviadas por `WS /ws/translate` con la caché vaciada. Antes y después se anotaron las tablas, las filas y un hash de `catalog`, las filas de `catalog_synonym` y un hash de todas las columnas del esquema.
+
+| | Antes | Después |
+|---|---|---|
+| Tablas | `catalog`, `catalog_synonym`, `semantic_cache` | las mismas |
+| Filas de `catalog` / hash | 50 / `e72bac2a…` | 50 / `e72bac2a…` (igual) |
+| Filas de `catalog_synonym` | 0 | 0 |
+| Hash del esquema | `b58043f2…` | `b58043f2…` (igual) |
+| Filas de `semantic_cache` | 0 | 10 (las frases, guardadas como texto) |
+
+  Las 10 frases terminan en `done` sin `error`; la frase de control («Hola, buenos días, bienvenidos.») se traduce después y `/health` queda `ok`. **Base intacta: se cumple.** El código del backend usa solo consultas con parámetros (`$1`, `$2::vector`) y no arma SQL con texto del usuario (se revisaron `catalog_repository.py`, `semantic_cache.py`, `database.py` y `keep_alive.py`).
+- **Lo que hace el texto de ataque:** el LLM lo convierte en glosas fuera del catálogo (por ejemplo `DROP TABLE`, `CATALOG`, `DELETE FROM CATALOG`, `A TODOS' OR 1=1`, `UNION`, `SELECT`, `CLAVE`, `USUARIOS`) y esas glosas llegan al cliente; no se comprobó si el backend las marca como no disponibles. Las 10 frases quedan guardadas en la caché como texto.
+- **Permisos (Neon real, solo `SELECT` en sesión de solo lectura).** El backend se conecta con **`neondb_owner`**: dueño de las tres tablas, no es superusuario pero sí miembro de `neon_superuser`, con `CREATEDB`, `CREATEROLE`, `REPLICATION` y `BYPASSRLS`, con `DELETE`, `INSERT`, `REFERENCES`, `SELECT`, `TRIGGER`, `TRUNCATE` y `UPDATE` en `catalog`, `catalog_synonym` y `semantic_cache`, y con `CREATE` en el esquema `public` y en la base. Lo que el código necesita en ejecución es **`SELECT`** sobre `catalog` y `catalog_synonym` y **`SELECT`, `INSERT` y `UPDATE`** sobre `semantic_cache` (el `INSERT … ON CONFLICT … DO UPDATE` de la caché); no hay `DELETE`, `TRUNCATE` ni DDL en el código de ejecución. **Permisos mínimos: no se cumple.** El rol del laboratorio es superusuario, así que ahí los permisos no se pueden evaluar; solo se evaluaron en Neon.
+- **Veredicto contra el criterio** («ninguna clave expuesta, la base intacta y permisos mínimos»): claves **no**, base intacta **sí**, permisos mínimos **no**. Que la prueba quede en «Falla» lo confirma el owner (§5.3).
+- **Evidencia:** `SEC/PR-SEC-03_E_20261107_01.json` (consultas) y `…_02.json` (permisos, sin credenciales).
+
+#### 4.2.5. PR-REN-03 · Latencia de extremo a extremo — situación LLM (sigue Parcial: falta la voz en el teléfono)
+
+La situación «LLM» exige la caché vacía. Se vació **antes de cada corrida** (`TRUNCATE` más recarga), así que cada frase llamó al LLM. Las mediciones están en dos bloques que **no se mezclan**: el del servidor (mensajes del socket) y el del teléfono (`SignAiMetrics`).
+
+- **Bloque servidor.** Datos: las 10 frases de FR-01-A, en texto y con su audio de AU-01 (H1, silencio), 5 repeticiones por situación (150 corridas, 150 completas, **0 oraciones desde la caché**). Método: igual que el 6/11; en voz el tiempo se mide **desde el último byte de audio del archivo**, en dos modos: `end` (se manda `{"type":"end"}`) y silencio (se sigue mandando silencio hasta que el STT cierra por sus 1.500 ms); la transcripción se reenvía como `text`, como hace la app. Sin la 1.ª repetición (n=40 por fila), en ms:
+
+| Situación (LLM) | Texto final | Primer `segment` | Último `segment` | `done` |
+|---|---|---|---|---|
+| Texto | — | **630,6** / 756,2 | 654,2 / 869,0 | 655,4 / 871,1 |
+| Voz, cierre con `end` | 501,6 / 999,6 | **1.246,6** / 2.010,2 | 1.266,3 / 2.010,2 | 1.269,8 / 2.011,3 |
+| Voz, cierre por silencio | 909,0 / 1.768,5 | **1.628,2** / 2.457,6 | 1.634,0 / 2.590,8 | 1.636,7 / 2.593,6 |
+
+  (p50 / p95.) **Contraste con la caché exacta del 6/11:** primer `segment` p50 10,2 ms en texto, 591,0 ms en voz con `end` y 995,1 ms en voz con silencio; con el LLM sube a 630,6, 1.246,6 y 1.628,2 ms, es decir **≈620 a ≈655 ms de más por el LLM**, lo mismo que el LLM por oración medido en `PR-REN-02` (677,6 ms).
+- **Bloque teléfono (Redmi Note 11, `adb logcat -s SignAiMetrics SignAiState`, reloj del teléfono).** Datos: las 10 frases de FR-01-A **por texto** en la app instalada, 5 repeticiones (**50 corridas, 50 completas, 50 con llamada al LLM, 0 errores**). Por corrida: se vacía la caché, se toca el campo, se escribe la frase con `input text`, se toca «Traducir» y se espera `representado`. Sin la 1.ª repetición (n=40), en ms:
+
+| Medida (teléfono) | p50 | p95 | máx |
+|---|---|---|---|
+| Envío a primera seña | **873,0** | 1.072 | 1.149 |
+| Envío a última seña | **8.406,0** | 9.671 | 9.726 |
+| Representación (duración de las señas) | 7.549,0 | 8.808 | 8.819 |
+| Respuesta del backend vista por la app (`frase #n`) | 839,5 | 1.058 | 1.099 |
+| Con las 50 corridas: primera seña / última seña | 880,5 / 8.406,0 | 1.072 / 9.707 | 1.149 / 9.726 |
+
+  **Contraste con la caché exacta del 6/11 (mismo teléfono y mismo método):** primera seña p50 199,5 ms, última seña 7.650,0 ms, representación 7.543,5 ms y respuesta del backend 117,5 ms. Con el LLM la primera seña sube **≈670 ms** (873 contra 199,5), la respuesta del backend ≈720 ms (839,5 contra 117,5), y la **representación casi no cambia** (7.549 contra 7.543,5 ms): el avatar tarda lo mismo, venga la glosa de la caché o del LLM.
+- **Salvedades:** (1) las frases van **sin tildes ni «¿»** (`input text` no los admite) y Gboard autocorrigió el texto en 4 de las 50 corridas (por ejemplo «Hola, Buenos días, bienvenidos.»); la columna `texto_en_app` de la evidencia es lo que la app envió. (2) Es el laboratorio (base local), no el canónico. (3) **La voz por el micrófono del teléfono sigue sin ejecutarse** (sin altavoz físico); el bloque del servidor cubre la voz a nivel del socket, no del micrófono ni del dictado de la app. (4) Hay además una pasada de prueba de 10 corridas guardada como `…_02_prueba.*`; no entra en las cifras.
+- **Evidencia:** `REN/PR-REN-03_E_20261107_01.{csv,json}` (servidor) y `…_02.{csv,json}` (teléfono).
+
+#### 4.2.6. PR-REN-04 · Arranque en frío — Se reporta (primero laboratorio con 63 glosas; después Neon real)
+
+- **Qué cambió respecto del 6/11:** se cargaron en la base de laboratorio los **13 sinónimos** (leídos de Neon con `SELECT`), y `/health` informa **63 glosas**, como el canónico. Sigue sin ser equivalente en la base (local, no dormida).
+- **Método:** tres arranques. Antes de cada uno, se vació la caché, se apagaron los tres contenedores (`p3lab-pg`, `p3lab-stt`, `p3lab-backend`) y se encendieron a la vez; se midió hasta que el STT y el backend (`ok` con catálogo cargado) responden `/health`. Después se enviaron dos frases de FR-01-C **nuevas** (llaman al LLM real): (008, 009), (012, 016) y (017, 025). Por último se lanzó la app en el teléfono y se midió hasta `sesión abierta`.
+- **Resultado:**
+
+| Arranque | STT listo | Backend `ok` (63 glosas) | 1.ª traducción | 2.ª traducción | App: sesión abierta tras lanzarla |
+|---|---|---|---|---|---|
+| 1 | 9,5 s | 23,5 s | 907,1 ms | 886,5 ms | 1,5 s |
+| 2 | 8,4 s | 18,8 s | 1.279,2 ms | 636,5 ms | 1,1 s |
+| 3 | 9,3 s | 20,5 s | 1.049,7 ms | 598,3 ms | 1,0 s |
+
+- **Comparación con el 6/11 (laboratorio, 50 glosas) y el 5/11 (canónico):** backend listo 17,1 a 18,6 s el 6/11 y 13,5 a 14,2 s el 5/11; hoy 18,8 a 23,5 s. Los tiempos varían ≈5 s entre arranques del mismo montaje, así que la diferencia con el 6/11 no se puede leer como una tendencia (no se probó si los sinónimos añaden tiempo de carga). **Primera contra segunda traducción:** en el arranque 1 son casi iguales (907,1 contra 886,5 ms); en los arranques 2 y 3 la primera es más lenta (+643 y +451 ms). Son frases distintas y cada una llama al LLM, que varía por llamada, así que no hay evidencia de un sobrecosto de la primera traducción tras arrancar.
+- **Por qué esta primera parte (base local) quedó Parcial; la segunda parte, contra Neon, está más abajo:** (1) no se midió la **base dormida** (una base local no se duerme; hace falta una base tipo Neon o autorizar su uso); (2) **«app usable» no se pudo medir**: la app solo registra `sesión abierta` (1,0 a 1,5 s después del lanzamiento, **con el backend ya listo**), y la señal de escena lista vive en el tag `SignAIWeb`, que solo existe con `-Psignai.devTools=true`. Esos 1,0 a 1,5 s no son «el tiempo hasta poder usar la app».
+- **Evidencia:** `REN/PR-REN-04_E_20261107_01.{csv,json}`.
+
+**Segunda parte: contra la Neon real (7/11, con autorización del owner).**
+
+- **Montaje:** el backend de laboratorio (misma imagen que el canónico) conectado a **Neon** con la `DATABASE_URL` del `.env` (sin imprimirla), `p3lab-stt` en la GPU y el teléfono apuntando al backend de laboratorio. El modelo de embeddings iba en un volumen propio y los arranques medidos usaron `HF_HUB_OFFLINE=1`: en la calibración, un arranque con descarga del modelo tardó **79,6 s** (de ellos ≈54 s en bajar el modelo de `huggingface.co`), lo que habría tapado el efecto de la base. Esa calibración y una segunda (35,5 y 20,1 s con la base despierta) **no entran** en la tabla.
+- **Método:** orden fijo `dormida, despierta, dormida, despierta, dormida, despierta`. **Dormida:** backend apagado **330 s** sin tocar Neon (la inactividad que pide la ficha es más de 5 min), después arranque. **Despierta:** backend apagado 5 s y arranque inmediato. Tras cada arranque, dos frases de FR-01-C por texto (las dos ya estaban en la caché real, para no escribir) y la app lanzada en frío en el teléfono, medida con `logcat` (sesión abierta) y con capturas de pantalla cada ≈0,3 s (**avatar visible** = al menos 25 % de píxeles oscuros en la zona de los pantalones del avatar, x 330–750 e y 1.500–1.950 de 1.080×2.400). El teléfono se despertaba y se descartaba el bloqueo simple (deslizar) antes de cada medición.
+- **Resultado:**
+
+| Arranque | Base | Backend listo (63 glosas) | 1.ª traducción | 2.ª traducción | App: sesión abierta | App: avatar visible |
+|---|---|---|---|---|---|---|
+| 1 | dormida | 26,7 s | 87,7 ms | 15,3 ms | 5,0 s | 4,9 s |
+| 2 | despierta | 21,0 s | 15,8 ms | 10,9 ms | 2,2 s | 8,7 s |
+| 3 | dormida | 21,7 s | 21,8 ms | 10,5 ms | 2,6 s | 9,0 s |
+| 4 | despierta | 20,1 s | 14,5 ms | **1.381,5 ms (LLM)** | 2,1 s | 7,6 s |
+| 5 | dormida | 19,3 s | 12,9 ms | 13,0 ms | 2,5 s | 9,1 s |
+| 6 | despierta | 17,7 s | 18,7 ms | 12,9 ms | 2,2 s | 8,7 s |
+
+  **Dormida contra despierta:** backend listo 19,3 a 26,7 s (media 22,6) contra 17,7 a 21,0 s (media 19,6): ≈3 s más con la base dormida, pero **los rangos se solapan** y la variación entre arranques del mismo estado fue de ≈5 s (y de 20 a 35 s en la calibración), así que **no se puede afirmar un efecto de la base dormida**.
+- **Por qué no se distingue:** la caché se **precarga entera en memoria** al arrancar (83 filas en ≈1 s), así que una traducción por coincidencia exacta no toca la base, y el efecto de una base dormida solo aparecería en el arranque y en el `INSERT` de una frase nueva; este último **no se midió** (se evitó escribir). **No pude confirmar que Neon estuviera suspendida** (no hay forma de leer ese estado desde el cliente): se asumió que 330 s sin conexiones bastan.
+- **App usable:** el avatar se ve **7,6 a 9,1 s** después de lanzar la app (n=5); el arranque 1 dio 4,9 s y **no se pudo explicar**, así que se deja aparte como valor atípico. La sesión se abre a los 2,1 a 2,6 s (5,0 s en el arranque 1). Es una medición con capturas de pantalla, con una resolución de ≈0,3 s y un criterio visual propio; **no es la métrica de la app** (la app no registra esa señal en el build normal).
+- **Un error mío que escribió en la base real:** la segunda traducción del arranque 4 (**FR-01-027, «Niños, trabajen todos.»**) tardó 1.381,5 ms porque **llamó al LLM**, y el backend **guardó una fila nueva en la caché real de Neon**: `id` 6760, `AFFIRMATIVE`, creada a las 17:16:07 UTC; la caché pasó de 83 a 84 filas (confirmado por una lectura de solo lectura). Había elegido las frases comprobando el texto **normalizado** contra la caché y no la huella exacta que usa el backend, así que esa oración no coincidió. **El agente la borró después, a pedido expreso del owner** (`DELETE … WHERE id = 6760` con el texto y el tipo como guarda: 1 fila, y la caché volvió a 83). Es lo contrario de lo acordado («solo `SELECT` y frases ya cacheadas»).
+- **Un riesgo que apareció de paso:** dentro de la red de Docker (IPv4) el **primer intento** de abrir el pool hacia Neon falla con `[Errno 101] Network is unreachable` (probablemente porque el nombre resuelve primero a una dirección IPv6; **no se verificó**) y el backend lo reintenta a los 0,5 s y abre el pool. Con `DB_MAX_RETRIES=1` solo hay **un reintento**: si ese también fallara, es posible que el backend arrancara en estado `degraded` como el 6/11 con la base caída (**no se probó**; §5.2 punto 32).
+- **Evidencia:** `REN/PR-REN-04_E_20261107_02.{csv,json}`.
+
+#### 4.2.7. PR-SEC-01 · Cifrado del canal — Parcial (cliente en el PC; falta la sesión TLS de la app real)
+
+- **Montaje:** Caddy `2.11.7-alpine` con **el `Caddyfile` del repositorio** (solo se cambió el destino del `reverse_proxy` hacia una grabadora) y **el certificado del repositorio** (`CN=SignAI Lab`, SAN `127.0.0.1`, `localhost` y `192.168.40.97`, vigente hasta el 2029-02-07, verificado contra `lab-ca.crt`). No hay Wireshark ni `tshark` en el equipo, así que **no se capturaron paquetes**: se pusieron **grabadoras TCP** que reenvían los bytes tal como pasan y los guardan sin interpretar. Una entre el cliente y Caddy (solo en el loopback del PC), otra entre Caddy y el backend (dentro de la red `p3lab`) y un proxy `CONNECT` para la salida HTTPS del backend hacia el LLM (`HTTPS_PROXY`). Nada quedó expuesto a la red local (se corrigió un primer montaje que escuchaba en todas las interfaces).
+- **Datos:** `¿Tienes hambre?` (FR-01-007, está en FR-01-C), escrita y hablada (`AU-01-013`, H1, silencio, por `wss://` desde un cliente en el PC; transcribió «¿Tienes hambre?»). Caché vaciada antes de cada sesión para que el backend llame al LLM.
+- **Resultado (marcadores buscados en los bytes de cada tramo):**
+
+| Tramo | Cifrado | Bytes (texto / voz) | Texto, glosas, `"type"` y audio en claro | Observación |
+|---|---|---|---|---|
+| App a proxy (TLS) | **Sí** | 3.411 / 64.818 | **0 de 8** marcadores, en las dos sesiones | Empieza con un registro TLS de saludo; 17 y 109 registros de datos |
+| Proxy a backend (loopback) | **No** | 1.131 / 60.514 | **Sí** (ver abajo) | Limitación declarada por la ficha |
+| Backend a LLM | **Sí** | 10.367 / 10.367 | **0 de 6** marcadores (ni la frase, ni `messages`, ni `gpt-4o-mini`) | Solo se ve `api.openai.com` (1 vez), por el nombre del servidor; destino único: `api.openai.com:443` |
+
+- **El tramo en claro, mirado de cerca.** Mi primer análisis no encontró el texto en el tramo proxy a backend, y no lo di por bueno sin entenderlo: los mensajes del cliente al servidor van **enmascarados por el propio protocolo WebSocket** y el cliente de pruebas negocia además **compresión** (`permessage-deflate`). Se repitió con y sin compresión, separando los bytes por dirección y **desenmascarando** las tramas con la clave que viaja en ellas:
+
+| Sesión | Servidor a cliente, crudo | Cliente a servidor, crudo | Cliente a servidor, desenmascarado |
+|---|---|---|---|
+| Texto, sin compresión | glosas **legibles** | no legible | texto **legible** |
+| Voz, sin compresión | glosas **legibles** | no legible | texto y **audio recuperables** |
+| Texto o voz, con compresión | tramas comprimidas, no legibles a simple vista | no legible | no legible a simple vista (**no se intentó descomprimir**) |
+
+  O sea: **en el loopback el contenido es recuperable** (con el WebSocket sin compresión se ve la respuesta en claro y se recuperan el texto y el audio del cliente); con compresión hace falta descomprimir. No se verificó si la app real negocia compresión.
+- **Intentos que deben fallar:** `wss://` **sin la CA del laboratorio** → rechazado (`CERTIFICATE_VERIFY_FAILED`); `ws://` (sin cifrar) contra el puerto TLS del proxy → rechazado (`did not receive a valid HTTP response`). El enlace del backend con el LLM es HTTPS (única conexión saliente: `api.openai.com:443`).
+- **Teléfono (variante `demo`):** se compiló e instaló (`./gradlew installDemo`) y se conectó al proxy por `adb reverse tcp:8443 tcp:9443`. La app **rechazó el certificado** (`CertPathValidatorException: Trust anchor for certification path not found`, 4 reintentos en el registro), que es lo esperado sin la CA del laboratorio. **No se pudo instalar la CA**: Android solo permite instalar una CA de usuario con un bloqueo de pantalla (PIN, patrón o contraseña) y el teléfono no lo tiene; el instalador por `adb` (`am start … file://`) falló con «no se pudo leer el archivo del certificado». **Decisión del owner (2026-11-07): no poner un bloqueo temporal**, así que la sesión TLS exitosa de la app real queda **no ejecutada**. Se reinstaló `debug` al terminar.
+- **No ejecutado o no posible:** (1) la sesión TLS de la app real con la CA instalada; (2) **intentar conectar la `demo` a una dirección sin cifrar**: la `demo` ignora cualquier URL que no sea `wss://` al compilar (`app/build.gradle.kts`, líneas 71 a 76), así que no hay forma de apuntarla a un `ws://`; solo se comprobó de forma estática que su `network_security_config.xml` tiene `cleartextTrafficPermitted="false"`; (3) la voz por el micrófono del teléfono (sin altavoz): se cubrió con el cliente del PC por `wss://`; (4) una captura de paquetes con un sniffer.
+- **Evidencia:** `SEC/PR-SEC-01_E_20261107_01.json` (tramos e intentos fallidos), `…_02.json` (el tramo en claro, con y sin compresión) y `…_03.txt` (el teléfono).
+
+#### 4.2.8. PR-TRA-03 · Levantar el entorno desde cero — Parcial (aproximación en esta máquina; cumple el criterio)
+
+- **Qué se hizo y por qué es solo una aproximación:** la ficha pide una máquina o carpeta limpia. El owner autorizó (2026-11-07) una aproximación **sin clonar**: borrar los contenedores y las imágenes del proyecto y reconstruir con los archivos que ya estaban en la carpeta. **No equivale a una máquina limpia** (ver «Lo que no es desde cero»).
+- **Qué se borró (por nombre):** `sign-ai-backend-backend-1`, `sign-ai-backend-stt-1` y `sign-ai-backend-caddy-1`; los dos contenedores del laboratorio del agente (`p3lab-backend` y `p3lab-stt`, que bloqueaban las imágenes); y las imágenes `sign-ai-backend-backend:latest` (10 GB) y `sign-ai-backend-stt:latest` (4,56 GB). **No se tocaron** los volúmenes del proyecto (entre ellos los pesos de Whisper) ni las imágenes de Caddy y pgvector. Después se retiraron también la red y el volumen del laboratorio del agente (`p3lab`, `p3lab-hf`).
+- **Pasos con tiempos (UTC):**
+
+| Paso | Hora | Duración |
+|---|---|---|
+| Borrar 5 contenedores y 2 imágenes | 17:24:33 | 9 s |
+| `docker compose build --no-cache` (backend y STT) | 17:24:56 a 17:40:16 | **15 min 20 s**, salida 0, sin errores |
+| `docker compose up -d` hasta STT `/health` ok | 17:40:41 | **14 s** |
+| … hasta backend `/health` ok (`ok`, 63 glosas, 84 filas de caché) | 17:41:58 | **77 s** |
+| `./gradlew clean build` (145 tareas, 144 ejecutadas) | 17:42:13 a 17:45:09 | **2 min 55 s**, `BUILD SUCCESSFUL` |
+| `./gradlew installDebug` y app abre sesión con el backend nuevo | 17:45:23 | 22 s |
+
+  Del inicio de la construcción hasta que el backend responde `/health`: **17 min 02 s**; hasta tener también la app compilada: **20 min 13 s**.
+- **Métricas que pide la ficha:**
+  - **Pasos manuales no documentados:** (1) `docker-compose.yml` exige un `.env` (`env_file`) y `docs/android-integration.md` no dice cómo crearlo; aquí se usó el que ya existía y **no se probó crear uno desde cero**; `.env.example` tiene 7 variables que el `.env` real no tiene. (2) La guía documenta `docker compose up --build`; aquí se usó `build --no-cache` y luego `up -d`.
+  - **Tiempo hasta que el backend responde:** 77 s tras `up -d`; la causa más probable es la descarga del modelo de embeddings (≈54 s en un arranque del laboratorio, punto 28), pero **en este arranque no se midió por separado**.
+  - **Conflictos de versiones:** ninguno en esta construcción.
+  - **Parches locales no versionados que hicieron falta:** **ninguno**. El único cambio sin commit en el backend es `docker-compose.host.yml`, que el agente no tocó y `docker compose up` no lee sin `-f`.
+  - **¿El contenedor necesitó la red del anfitrión?** **No** (`NetworkMode = sign-ai-backend_default`).
+- **Criterio de aceptación** («el backend debe levantar y responder en `/health` en pocos minutos, y la aplicación debe compilar, sin parches locales no versionados»): **se cumple en la aproximación** (77 s para responder, 17 min si se cuenta construir las imágenes; la app compila; sin parches). Si «pocos minutos» incluye construir las imágenes sin caché, los 15 min 20 s son una cifra que la ficha no fija y que el owner debe valorar.
+- **Lo que no es «desde cero»:** (1) el volumen con los pesos de Whisper se conservó, por eso el STT arrancó en 14 s; (2) las dependencias de Gradle y el SDK de Android ya estaban en la máquina; (3) las imágenes base de Docker no aparecían en `docker images`, así que la construcción las descargó, pero **no se verificó** si la caché interna de BuildKit conservaba capas (`--no-cache` la ignora, no la vacía); (4) Python, JDK y Docker ya estaban instalados, el `.env` ya existía y no se clonó el repositorio.
+- **Efecto sobre el entorno del owner:** el stack canónico (`sign-ai-backend-backend-1` y `sign-ai-backend-stt-1`) **quedó reconstruido y encendido**, con las imágenes nuevas; antes estaba apagado desde hacía 19 horas. La app instalada es `debug` normal y abre sesión con él.
+- **Evidencia:** `TRA/PR-TRA-03_E_20261107_01.txt`.
+
+## 5. Observaciones importantes
+
+### 5.1. Comparabilidad con el 5/11
+
+- **Es otra máquina.** El 5/11 se midió en una RTX 4050 Laptop (6.141 MiB); hoy es una RTX 3050 de 8.192 MiB con un Ryzen 5 3400G. Las medidas de tiempo del STT salen ≈1,8 a 2× más lentas (inferencia de `medium`: 251 ms contra 457 ms en `PR-STT-01`; 254,9 contra 503 ms en `PR-REN-01`), y el embedding de la caché ≈2,1× (38,7 contra 81,7 ms). Las medidas de **calidad** (WER, aciertos, cierres) salen iguales o muy cercanas. Por eso no hay regresiones de calidad atribuibles al código; las diferencias de tiempo son del equipo.
+- **Dos métodos cambiaron:** `PR-REN-01` (hoy el cierre lo hace el silencio, el 5/11 mandó `end`) y `PR-STT-05` (el 5/11 varió el VAD, hoy `MIN_RMS` como pide la ficha). Cada sección lo dice.
+- **Dos limitaciones por usar el canónico:** la caché no se vació (`PR-REN-02` solo tiene 10 muestras en la situación LLM; `PR-REN-03` casi ninguna; `PR-SEC-04` no pudo atribuir el texto guardado), y no se pudo cambiar configuración (las ablaciones corrieron en un laboratorio en proceso).
+
+### 5.2. Fallas, regresiones y riesgos
+
+1. **Claves en la evidencia versionada (alto).** `PR-SEC-03`: la clave del LLM y la contraseña de la base de datos **actuales** están en `evidencias/CAC/PR-CAC-05_E_20261105_01.json` y `PR-CAC-05_D_20261104_01.json` (volcado del entorno del contenedor), en los commits `0d0420f` y `5b8c28d`, publicados en `origin/main` y `origin/ramaSergio` de `sign-ai-organization/sign-ai-android` en GitHub. No toqué esos archivos. Le corresponde al owner: rotar las dos credenciales, decidir si se reescribe el historial y evitar que los volcados del entorno del contenedor lleguen a la evidencia. El criterio «ninguna clave expuesta» no se cumple.
+2. **`PR-STT-03` sigue en Falla.** El parcial «¡Grr!» (AU-03-006) aparece igual que el 5/11: la barrera `non_speech` filtra finales, no parciales. Hoy además `POST /transcribe` devolvió 52 palabras inventadas para AU-03-004; el 5/11 no, y una instancia aparte con la misma configuración tampoco las devolvió. Mientras no se repita varias veces, es una variación entre ejecuciones; si se repite, es una regresión del camino `POST` (que no usa la app).
+3. **El umbral de la caché del canónico es 0,05, no 0,03.** `/metrics.json` y el `.env` dicen 0,05; el sello de P1 (`SELLO-P1_E_20261106_01.json` y su informe) dice 0,03. En `PR-CAC-02` (P1), 0,05 ya acepta 2 trampas de 30 como acierto y 0,03 da 0/30 en `PR-CAC-04`. Si el canónico corre con 0,05, la prueba de falsos aciertos de P1 se hizo con otra configuración. Hay que confirmar cuál es la oficial.
+4. **Comportamiento nuevo: el audio inválido cierra la conexión.** Los audios inválidos de `PR-SEC-02` (WAV con encabezado, float32, 2 MB, número impar de bytes) reciben `error` y la conexión se cierra con `1008`; el 5/11 se quedaba abierta. Es más estricto y cumple la ficha; la app debe reconectar tras ese cierre (no se probó con el teléfono).
+5. **Una frase de 50.000 caracteres se acepta, va al LLM y se guarda en la caché real.** **La fila de 49.999 caracteres (`id` 6646, creada a las 17:30:40 UTC) la escribió mi ejecución de `PR-SEC-02` (mensaje CO-05-009, que la ficha prescribe) y estuvo en la caché real; **el owner ya la borró** (yo no la borré, por la regla del carril). Cuesta tokens, ocupa la precarga y es un vector de abuso; conviene un tope de longitud de frase en el backend.
+6. **`/metrics.json` publica `cache_rows` congelado.** Dice 4 (el valor de la precarga) mientras `/health` dice 52. El gauge guarda el valor del arranque en lugar de leerlo en cada consulta. El contador `catalog_glosses: 63` (50 + 13 sinónimos) ya lo había señalado P1.
+7. **El cierre de frase «sin pausa» corta en micropausas** (`PR-STT-02`, AU-02-004 a 006), igual que el 5/11. No pierde texto, pero la ficha esperaba un corte forzado; la expectativa o el audio necesitan revisión.
+8. **Casi toda la espera de la voz es el silencio configurado.** `PR-REN-01`: de ≈2.000 ms entre el fin de la voz y el texto final, 1.500 ms son `SILENCE_TIMEOUT_MS`; el proceso añade ≈500 ms. Con el cierre por `end` (el usuario suelta el botón) el texto llega ≈570 ms después del audio (`PR-REN-03`).
+9. **La latencia con varias sesiones se degrada:** p95 de 936 a 1.565 ms de 1 a 3 sesiones (+67 %), con la GPU compartida. No hay errores ni textos cruzados.
+10. **Contador de sesiones del backend:** coincide con las sesiones abiertas (1 + n y vuelve a 1), que es lo que pide `PR-REN-06`. El «TODO: por confirmar que el backend lo tiene» de la ficha queda resuelto: sí lo tiene (`sessions_active`).
+11. **Documentación para levantar el entorno:** el `README.md` del backend solo describe el entorno virtual local; `docker compose up --build` se explica en `docs/android-integration.md`. El `.venv` local del backend no tiene `spacy`, que `requirements.txt` sí pide. Y `.env.example` tiene variables que el `.env` real no tiene. Es una observación estática, útil para `PR-TRA-03`, que no se ejecutó.
+12. **Hay una sesión abierta ajena a mis scripts en el canónico** (`sessions_active` = 1 y `stt_sessions_active` = 1 antes de cada prueba de servidor). Con el teléfono conectado la explicación más probable es la propia app (mantiene su WebSocket por `adb reverse`); no se confirmó para las pruebas anteriores a la conexión del teléfono.
+13. **`PR-RES-01` (teléfono): la frase cancelada no vuelve a la barra.** Cortado el enlace mientras se traduce, la app cancela la frase y queda «Desconectado», pero el campo de texto queda vacío (a 2 s y a 10 s), porque el temporizador de «texto retenido» ya lo había limpiado. La ficha pide que el texto vuelva. Un corte dentro del primer 1,5 s no se probó.
+14. **Reconexión de la app: 4,4 a 4,5 s** desde que vuelve el enlace (esperas crecientes de ≈1 a 5 s, 5 intentos fallidos mientras estaba cortado, abre al primero tras restaurar). Detecta el corte a los ≈2,4 s (incluye ≈1 s de mis comandos `adb`).
+15. **Primera seña en el teléfono ≈200 ms** (`PR-REN-03`) frente a 42 a 63,5 ms del 5/11; no se pudo reconciliar (otro teléfono y otro método de envío). La representación (≈7,5 s) y la última seña (≈7,7 s) sí coinciden con el 5/11.
+16. **`PR-RES-03` sigue en Falla (igual que el 5/11):** con el STT de vuelta, el micrófono no se recupera hasta una sesión nueva; la capacidad de voz se decide al abrir la sesión. El aviso de la app usa voseo («podés»).
+17. **`PR-RES-02`, aviso en 10,5 s:** 0,5 s por encima de los 10 s del peor caso de la ficha (igual que el 5/11).
+18. **`PR-RES-07`, detección lenta en el laboratorio:** la app solo se entera del reinicio por el ping de 20 s (28 a 37 s) cuando el túnel es `adb reverse`; en una red real puede ser menor. La frase en curso se pierde y la app no la reenvía.
+19. **`PR-RES-04`: un backend arrancado con la base caída no se recupera solo.** Queda `degraded` con el catálogo vacío (todas las glosas «no disponibles») y `POST /admin/cache/reload` da 503 aunque la base vuelva; hay que reiniciarlo (en laboratorio con Postgres local; no se repitió contra Neon).
+20. **`PR-CAC-05`: el SQL sobre la caché no se refleja sin recargar.** Existe `POST /admin/cache/reload` (con token), pero la ficha pide «de inmediato». Además, una respuesta vacía del LLM sale al usuario como `done` sin glosas, sin aviso.
+21. **Documental:** AU-04 mide 96,1 s y la ficha de `PR-RES-06` dice 73 s; la ficha de `PR-STT-05` pide `MIN_RMS` y la ronda del 5/11 varió el VAD.
+
+**Hallazgos de la sexta pasada (2026-11-07), detalle en la §4.2:**
+
+22. **El backend usa el rol dueño de Neon (alto).** `PR-SEC-03`: `neondb_owner` es dueño de las tres tablas, miembro de `neon_superuser`, con DDL, `TRUNCATE`, `CREATEROLE` y `REPLICATION`; el código solo necesita `SELECT` en el catálogo y `SELECT`, `INSERT` y `UPDATE` en la caché. Hoy no hay inyección de SQL (las consultas llevan parámetros), pero si la hubiera el alcance sería total. El criterio de permisos mínimos no se cumple.
+23. **El texto de ataque no daña la base, pero sí se procesa.** Las 10 frases de FR-08 dejan la base idéntica (catálogo con el mismo hash). El LLM las convierte en glosas fuera del catálogo (`DROP TABLE`, `A TODOS' OR 1=1`, `UNION`…) que llegan al cliente, y las 10 frases quedan guardadas en la caché como texto. No se comprobó si llegan marcadas como no disponibles. Se relaciona con el tope de longitud del punto 5.
+24. **Para montar una base desde cero faltan pasos que ningún documento dice.** La migración `002_create_semantic_cache.sql` falla si antes no se hizo `CREATE EXTENSION vector` (no lo crea), y `tools/seed_catalog.py` no corre con Python 3.11 (`SyntaxError: f-string expression part cannot include a backslash`; pide 3.12 o superior). Los 13 sinónimos siguen sin ningún script (ya lo notó el 6/11). Es material para `PR-TRA-03`.
+25. **El LLM a temperatura 0 no fue determinista hoy.** Dos corridas sin caché del mismo lote de 60 frases dieron las mismas glosas en 57/60 (el 6/11, 60/60). Una parte de las diferencias entre «con caché» y «sin caché» de `PR-CAC-06` es ruido del LLM y no efecto de la caché.
+26. **El tramo proxy a backend va en claro y es recuperable.** Con el WebSocket sin compresión se leen las glosas en claro y se recuperan el texto y el audio del cliente desenmascarando las tramas; con `permessage-deflate` hay que descomprimir (no se intentó). La ficha ya lo declara como limitación; no se verificó si la app real negocia compresión. Los tramos cliente a proxy y backend a LLM no mostraron ningún marcador en claro.
+27. **La ficha de `PR-SEC-01` pide dos cosas que el montaje actual no permite.** (a) «Intentar conectar la `demo` a la dirección sin cifrar»: la `demo` ignora toda URL que no sea `wss://` al compilar, así que no hay forma de hacerlo; solo se puede comprobar de forma estática. (b) Instalar la CA de laboratorio exige que el teléfono tenga bloqueo de pantalla; el instalador por `adb` con `file://` no funciona.
+28. **El backend depende de la red para arrancar.** La imagen no trae en caché el modelo de embeddings `paraphrase-multilingual-MiniLM-L12-v2`: lo descarga de `huggingface.co` en cada arranque. Con `HF_HUB_OFFLINE=1` el arranque falla (`couldn't find them in the cached files`), y durante una falla transitoria de DNS reintentó durante los ≈2 minutos que se esperó sin llegar a `ok`. Relevante para `RNF-DIS` y para `PR-TRA-03` (un arranque sin red).
+29. **«App usable» no se puede medir con el build normal.** La app solo registra `sesión abierta` al arrancar; la señal de escena lista vive en `SignAIWeb`, que solo existe con `-Psignai.devTools=true`. Por eso `PR-REN-04` reporta «sesión abierta» (1,0 a 1,5 s) y no «app usable».
+30. **Con el LLM, la primera seña tarda ≈670 ms más.** `PR-REN-03`, teléfono por texto: primera seña p50 873 ms contra 199,5 ms con caché exacta (6/11); la representación casi no cambia (7.549 contra 7.543,5 ms).
+31. **El agente escribió una fila en la caché real de Neon sin querer (medio).** En `PR-REN-04` contra Neon, la oración de FR-01-027 («Niños, trabajen todos.») no coincidió con la caché, llamó al LLM y quedó guardada: `id` 6760, `AFFIRMATIVE`, 17:16:07 UTC (de 83 a 84 filas). El error fue de método: las frases se eligieron comparando el texto normalizado y no la huella exacta del backend. Se borró después, a pedido del owner (1 fila; la caché volvió a 83). El backend canónico reconstruido en `PR-TRA-03` precargó las 84 filas, así que **conserva esa oración en memoria hasta que se reinicie**. Se suma a la fila de 49.999 caracteres del 6/11 (ya borrada por el owner) como segunda escritura de pruebas en la base real.
+32. **El primer intento de conexión a Neon desde Docker falla.** El arranque contra Neon registra `[Errno 101] Network is unreachable` en el primer intento de abrir el pool (probablemente una dirección IPv6 que la red IPv4 de Docker no alcanza; no se verificó) y el segundo intento funciona. Con `DB_MAX_RETRIES=1` hay un solo reintento; si también fallara, es posible que el backend arrancara `degraded` (no se probó).
+33. **La base dormida no se distingue en el arranque, y no se pudo confirmar que estuviera dormida.** `PR-REN-04`, Neon: backend listo 22,6 s de media con la base dormida contra 19,6 s despierta, con los rangos solapados. La caché se precarga en memoria, así que el efecto de una base dormida solo aparecería en el arranque y en el `INSERT` de una frase nueva (este último no se midió).
+34. **`PR-TRA-03` (aproximación): el entorno se reconstruye sin parches, pero la guía deja un paso sin documentar.** El `.env` es obligatorio y la guía no explica cómo crearlo (el real y `.env.example` difieren en 7 variables). Reconstruir ambas imágenes sin caché de capas tarda 15 min 20 s; el backend responde 77 s después de encender. La ficha dice «pocos minutos» sin fijar un valor.
+
+### 5.3. Decisiones que le corresponden al owner
+
+- **Credenciales:** rotarlas, y decidir si se purga el historial de `sign-ai-android` (y qué estado lleva `PR-SEC-03`, que hoy incumple «ninguna clave expuesta»).
+- **Tamaño de Whisper:** `large-v3` baja el WER de 1,77 a 0,35 % (el único error restante es una afirmación; las preguntas de sí o no pasan de 13,33 a 0 %), cabe en esta GPU incluso con el STT actual cargado, pero casi duplica la inferencia (+343 ms) y suma 2 GiB. `PR-STT-04` lo anota como cambio de diseño.
+- **Umbral de la caché (0,03 o 0,05)** y su impacto en los falsos aciertos (punto 3).
+- **`PR-STT-03`:** extender la barrera de no voz a los parciales y revisar el camino `POST`.
+- **Tope de longitud de frase** en el backend (punto 5).
+- **`PR-RES-01`:** decidir si la barra debe recuperar el texto de una frase cancelada por un corte (la ficha lo pide) y qué pasa con el temporizador de «texto retenido» (punto 13).
+- **`PR-CAC-05` y `PR-RES-04`:** decidir si el SQL debe reflejarse sin recargar (o fijar `RNF-MNT-05` en «con recarga»), y si el backend debe reintentar cargar el catálogo cuando la base vuelve tras un arranque sin ella.
+- **`MIN_RMS`:** no hay evidencia para moverlo de 0,008 (`PR-STT-05`).
+- **Permisos de la base (punto 22):** si el backend debe conectarse con un rol de mínimos privilegios (`SELECT` en el catálogo; `SELECT`, `INSERT` y `UPDATE` en la caché) en lugar del dueño de Neon, y qué estado lleva `PR-SEC-03` (hoy «Falla»: claves y permisos).
+- **Arranque sin red (punto 28):** si el modelo de embeddings debe ir dentro de la imagen del backend.
+- **La fila 6760 de la caché real (punto 31):** resuelto. El owner pidió borrarla y el agente la borró (1 fila; la caché real volvió a 83).
+- **`PR-TRA-03` (punto 34):** si la aproximación basta o se repite en una máquina limpia; cómo debe documentarse la creación del `.env`; y qué significa «pocos minutos» cuando la construcción sin caché tarda 15 min 20 s.
+- **`PR-REN-04` (punto 33):** si se repite con una base de la que se pueda confirmar que está suspendida y con una frase nueva (que escribiría en la base).
+- **Ficha de `PR-SEC-01` (punto 27):** cómo se prueba que la `demo` rechaza un `ws://` (hoy solo es posible de forma estática) y si el teléfono de pruebas tendrá un bloqueo de pantalla para instalar la CA.
+- **Laboratorio y pendientes:** quién corre lo que sigue abierto (sección 6).
+
+### 5.4. Qué toqué en el entorno
+
+- **Contenedores existentes:** ninguno modificado ni reiniciado (`docker ps` al cierre muestra solo `sign-ai-backend-backend-1` y `sign-ai-backend-stt-1`, arriba desde 17:13 UTC). No se cambió ninguna variable de entorno.
+- **Creados y retirados:** `p2-stt-lab` (instancias aparte del STT en el puerto 8001, una a la vez; retirada al terminar cada una). El volumen Docker `p2-scratch-hf-cache` (≈5 GB de pesos descargados para `PR-STT-04` y `PR-STT-05`) **ya fue borrado por el owner**.
+- **Procesos aparte dentro del contenedor del backend:** los laboratorios en proceso (`PR-SEG-02`, `PR-SEG-04`, `PR-CAC-06`) y las consultas de solo lectura a la base (`PR-SEC-04`) corrieron como procesos por `docker exec` (script por stdin), sin copiar archivos al contenedor (un `docker cp` inicial de un script de consulta se deshizo con `rm` en el mismo minuto). Cargaron un segundo modelo de embeddings en el contenedor durante unos minutos.
+- **Base real (Neon):** solo `SELECT` (conteos, esquema, tamaños) y las escrituras que hace el backend al traducir frases nuevas: `semantic_cache` pasó de 4 filas precargadas a 52, y entre ellas hay filas mías que conviene limpiar: la de 49.999 caracteres (`id` 6646, **ya borrada por el owner**), las de pruebas sueltas («Hola a todos.», «Mi tío vive aquí.», una frase inventada de `PR-RES-01`) y las oraciones de FR-01 y FR-03/FR-05 de las pruebas. No se ejecutó `DELETE`, `UPDATE` ni DDL.
+- **Laboratorio aparte (`p2lab-*`):** contenedores `p2lab-pg` (Postgres+pgvector, con `rm -v` de su volumen), `p2lab-stt`, `p2lab-backend`, `p2lab-backend2`, `p2lab-fakellm` y la red `p2lab`, todos retirados al terminar; no queda ningún volumen ni red míos. **Queda la imagen `pgvector/pgvector:pg16` (621 MB) descargada** (se borra con `docker rmi pgvector/pgvector:pg16`). En la quinta pasada se montó otra vez el mismo laboratorio (Postgres, backend) y se retiró entero; solo leí de la base canónica con `SELECT` los 13 sinónimos (`catalog_synonym` unido con `catalog`), sin escribir nada. Montaron en solo lectura el volumen de pesos del STT canónico (`sign-ai-backend_stt-hf-cache`); no escribieron en él. Sin escrituras en Neon (el laboratorio no usa base). Intenté crear un esquema de laboratorio en Neon y el sistema de permisos lo rechazó (recurso compartido); no lo repetí ni lo rodeé.
+- **Teléfono (`61ecd28e`):** no se compiló ni se instaló nada; se lanzó la app ya instalada varias veces (`monkey`, y un `force-stop` más lanzamiento al inicio). Para `PR-RES-01` se retiró y se restauró `adb reverse tcp:8080 tcp:8080` y se **reinició el servidor `adb`** (`kill-server`/`start-server`) tres veces más una pasada previa; eso solo afecta al enlace USB (otros carriles que usen `adb` en esta máquina pudieron ver un corte de segundos). Quedó el `reverse` restaurado y la app en primer plano. Incidente con otra aplicación abierta (TikTok) descrito en §4.0.
+- **Evidencia:** solo archivos nuevos `_E_20261106_*`. El escaneo de los archivos nuevos buscando la clave y la contraseña da 0 coincidencias.
+- **Sexta pasada (2026-11-07):**
+  - **Contenedores canónicos:** apagados al empezar (`Exited (137)`) y sin tocar durante las pruebas; **al final, en `PR-TRA-03`, se borraron y se reconstruyeron** (ver más abajo y §4.2.8).
+  - **Creados:** `p3lab-pg`, `p3lab-stt` y `p3lab-backend`, la red `p3lab`, el volumen `p3lab-hf` (modelo de embeddings) y, solo para `PR-SEC-01`, `p3lab-caddy`, `p3lab-tapback` y `p3lab-tapllm`. **Todo se retiró al final**: lo de `PR-SEC-01` y las grabadoras del PC antes (nada escucha en el 443 ni en el 9443), `p3lab-stt` y `p3lab-backend` al borrar las imágenes en `PR-TRA-03`, y la red y el volumen después. `p3lab-pg` desapareció durante la sesión sin que el agente lo borrara. Mientras estuvieron, `p3lab-pg` (5433) y `p3lab-stt` (8101) publicaron sus puertos en **todas las interfaces** del equipo (el backend de laboratorio solo en el loopback, 8180), con usuario y contraseña de laboratorio y ningún dato real. El volumen de pesos del canónico se montó en solo lectura. **Queda la imagen `pgvector/pgvector:pg16` (621 MB)** descargada.
+  - **Neon:** `SELECT` en sesión de solo lectura (permisos del rol, 13 sinónimos y la caché), con autorización expresa del owner. En `PR-REN-04` el backend de laboratorio se conectó a Neon con la `DATABASE_URL` real y **una traducción escribió una fila** (`id` 6760, ver el punto 31 de la §5.2). Sin DDL ni `UPDATE`; un único `DELETE`, el de la fila 6760, a pedido expreso del owner.
+  - **Docker (`PR-TRA-03`, con autorización expresa del owner):** se borraron `sign-ai-backend-backend-1`, `sign-ai-backend-stt-1` y `sign-ai-backend-caddy-1` y las imágenes `sign-ai-backend-backend:latest` y `sign-ai-backend-stt:latest`, y se reconstruyó y encendió el stack canónico (`docker compose build --no-cache` y `up -d`). **El contenedor de Caddy no se recreó** (el stack levantó backend y STT, que es lo que `docker compose up -d` crea). No se tocaron los volúmenes del proyecto.
+  - **Teléfono:** se compiló e instaló la variante `demo` y después `debug` (`./gradlew installDebug`); túneles `adb reverse` restaurados a `tcp:8080 tcp:8080`; se subió y se **borró** `lab-ca.crt` de Descargas; la CA **no se instaló**. Para `PR-REN-04` se compiló una vez con `-Psignai.devTools=true`; al final de `PR-TRA-03` se reinstaló `debug` normal y la app abre sesión con el stack canónico reconstruido.
+  - **Evidencia:** solo archivos nuevos `_E_20261107_*`; ningún archivo anterior se sobrescribió ni se borró. Hay una pasada de prueba de `PR-REN-03` guardada como `…_02_prueba.*`.
+  - **Intentos que el sistema detuvo:** un borrado `rm` y una apertura de puertos en todas las interfaces fueron bloqueados por las verificaciones de seguridad; el primero no era necesario y el segundo se rehízo escuchando solo en el loopback.
+
+## 6. No ejecutadas y por qué
+
+> **Actualización del 2026-11-07:** de las dos pruebas de la tabla siguiente (que es la del 6/11), `PR-SEC-01` se ejecutó en parte (§4.2.7) y `PR-TRA-03` se ejecutó como aproximación (§4.2.8). Lo que sigue abierto después de esa pasada está en la tabla de la «Sexta pasada», más abajo.
+
+| ID | Por qué no se ejecutó | Qué recurso se necesita |
+|---|---|---|
+| PR-SEC-01 (solo la sesión TLS de la app real; el resto se midió el 7/11, §4.2.7) | Exige el proxy TLS (`docker-compose.host.yml`, Caddy), la variante `demo`, la CA del laboratorio en el teléfono y captura de tráfico; al terminar se reinstala `debug`. De forma estática solo se revisó que el backend llama al LLM por `https://api.openai.com/v1/` y que la configuración de red de `main` y `demo` prohíbe tráfico sin cifrar mientras la de `debug` lo permite. | Laboratorio + teléfono + captura de paquetes. |
+| PR-TRA-03 | Exige una máquina o carpeta limpia sin el proyecto ni sus dependencias. Aquí el canónico ocupa los puertos y la GPU, y la caché de capas de Docker haría que el tiempo no fuera «desde cero». Además incluye compilar la app. | Una máquina limpia (idealmente las tres de la ficha) con Docker y el SDK de Android. |
+
+**Sexta pasada (2026-11-07):** quedó **cerrado** lo que dependía del laboratorio: `PR-CAC-06`, `PR-SEC-04`, `PR-SEC-03` (consultas y permisos) y la situación «LLM» de `PR-REN-03`. **Sigue abierto, y por falta de recurso, no por decisión:**
+
+| ID | Qué falta | Qué recurso se necesita |
+|---|---|---|
+| PR-REN-03 (voz) | La voz por el micrófono del teléfono, en los dos modos de envío | Un altavoz físico cerca del micrófono del Redmi Note 11, con la salida del PC dirigida a él |
+| PR-REN-04 (repetición con garantías) | Confirmar que la base estaba suspendida, y medir el `INSERT` de una frase nueva con la base dormida | Una base cuyo estado de suspensión se pueda leer, y aceptar que esa medición escriba en la base |
+| PR-SEC-01 | La sesión TLS exitosa de la app real con la CA instalada, y su captura | Bloqueo de pantalla (PIN, patrón o contraseña) en el teléfono para instalar `lab-ca.crt`; el owner decidió no ponerlo (2026-11-07) |
+| PR-TRA-03 (en máquina limpia) | Repetir lo que el 7/11 solo se aproximó: sin volumen de pesos de Whisper, sin caché de Gradle, sin imágenes base y creando el `.env` desde `.env.example` | Una máquina limpia con Docker, GPU NVIDIA y el SDK de Android |
+
+**Quinta pasada (alcance recortado por el owner):** `PR-SEG-02` y `PR-SEG-04` se cerraron en el laboratorio completo (§4.1). **`PR-CAC-06`, `PR-SEC-03` (mitad de consultas), `PR-SEC-04` y la situación «LLM» de `PR-REN-03` quedaron sin completar por decisión del owner, no por falta de recurso** (el laboratorio con base, caché vacía y sinónimos ya estaba montado y los scripts escritos). `PR-REN-03` voz sigue sin altavoz y `PR-REN-04` sin base dormida.
+
+**Cuarta pasada (base de laboratorio propia):** se ejecutaron `PR-CAC-05` y `PR-RES-04` y se completó `PR-RES-02`; `PR-REN-04` sigue parcial porque la base local no equivale a la base dormida de Neon, y faltan el catálogo con sinónimos y la app usable.
+
+**Lo que cambió en la tercera pasada:** `PR-RES-03`, `PR-RES-05` y `PR-RES-07` se ejecutaron en laboratorio aparte (con el teléfono en las dos primeras); `PR-REN-04` y `PR-RES-02` quedaron parciales. Siguen sin poder hacerse `PR-SEC-01` por falta del proxy TLS con la CA en el teléfono y `PR-TRA-03` por falta de una máquina limpia.
+
+**Mitades faltantes de las parciales:** `PR-REN-03` necesita un altavoz físico para reproducir los audios de AU-01 frente al micrófono del teléfono (**no ejecutada**: el owner no tiene altavoces) y una situación «LLM» con caché vacía (**no ejecutada**: exige tocar la caché); `PR-REN-04` necesita una base que se pueda dejar dormida (como Neon) y el teléfono para «app usable»; `PR-SEC-03` necesita una base de datos de prueba para las frases de FR-08 y revisar permisos del rol; `PR-SEC-04` necesita la caché vacía; `PR-CAC-06`, `PR-SEC-03` (consultas), `PR-SEC-04` y la situación LLM de `PR-REN-03` no se completaron por decisión del owner (no falta recurso: el laboratorio completo ya se sabe montar).

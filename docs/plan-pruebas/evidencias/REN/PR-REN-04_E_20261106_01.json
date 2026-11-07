@@ -1,0 +1,36 @@
+{
+  "alcance": "LABORATORIO APARTE (p2lab-stt puerto 8101 y p2lab-backend puerto 8180, mismas imagenes que el canonico, sin base de datos): no incluye base dormida ni carga del catalogo; el backend arranca en estado degraded. No se reinicio el canonico. Sin telefono (no se midio app usable).",
+  "arranques": [
+    {
+      "arranque": 1,
+      "s_stt_listo": 7.6,
+      "s_backend_responde_health": 23.9,
+      "s_ambos_listos": 23.9,
+      "primera_traduccion_ms": 847.6,
+      "segunda_traduccion_ms": 818.6,
+      "fin1": "done",
+      "fin2": "done"
+    },
+    {
+      "arranque": 2,
+      "s_stt_listo": 7.3,
+      "s_backend_responde_health": 21.1,
+      "s_ambos_listos": 21.1,
+      "primera_traduccion_ms": 794.3,
+      "segunda_traduccion_ms": 917.1,
+      "fin1": "done",
+      "fin2": "done"
+    },
+    {
+      "arranque": 3,
+      "s_stt_listo": 7.3,
+      "s_backend_responde_health": 21.1,
+      "s_ambos_listos": 21.1,
+      "primera_traduccion_ms": 813.4,
+      "segunda_traduccion_ms": 703.4,
+      "fin1": "done",
+      "fin2": "done"
+    }
+  ],
+  "gpu": 5410
+}

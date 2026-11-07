@@ -1,0 +1,619 @@
+{
+  "AU-02-001": {
+    "audio_ms": 6315,
+    "t_fin_audio_ms": 6304.3,
+    "t_end_ms": 6304.5,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Buenos días.",
+        "audio_ms": 1380,
+        "_t": 3341.9
+      },
+      {
+        "type": "partial",
+        "text": "Buenos días. ¿Cómo estás?",
+        "audio_ms": 2490,
+        "_t": 4269.4
+      },
+      {
+        "type": "final",
+        "text": "Buenos días. ¿Cómo estás?",
+        "audio_ms": 2010,
+        "_t": 4941.9
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 6306.5
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0
+    }
+  },
+  "AU-02-002": {
+    "audio_ms": 6059,
+    "t_fin_audio_ms": 6037.1,
+    "t_end_ms": 6037.5,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Hoy me siento muy bien.",
+        "audio_ms": 1080,
+        "_t": 2772.7
+      },
+      {
+        "type": "partial",
+        "text": "Hoy me siento muy bien.",
+        "audio_ms": 2040,
+        "_t": 3697.1
+      },
+      {
+        "type": "final",
+        "text": "Hoy me siento muy bien.",
+        "audio_ms": 1470,
+        "_t": 4270.0
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 6040.4
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0
+    }
+  },
+  "AU-02-003": {
+    "audio_ms": 6528,
+    "t_fin_audio_ms": 6516.6,
+    "t_end_ms": 6516.9,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "¿Dónde vive tu familia?",
+        "audio_ms": 1110,
+        "_t": 2710.4
+      },
+      {
+        "type": "partial",
+        "text": "¿Dónde vive tu familia?",
+        "audio_ms": 2040,
+        "_t": 3619.2
+      },
+      {
+        "type": "final",
+        "text": "¿Dónde vive tu familia?",
+        "audio_ms": 1620,
+        "_t": 4447.7
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 6519.2
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0
+    }
+  },
+  "AU-02-004": {
+    "audio_ms": 18197,
+    "t_fin_audio_ms": 18185.4,
+    "t_end_ms": 18186.1,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Mi abuelo vive con mi tío.",
+        "audio_ms": 1320,
+        "_t": 3155.7
+      },
+      {
+        "type": "partial",
+        "text": "Mi abuelo vive con mi tío en una casa grande.",
+        "audio_ms": 2490,
+        "_t": 4298.1
+      },
+      {
+        "type": "partial",
+        "text": "Mi abuelo vive con mi tío en una casa grande y todos los...",
+        "audio_ms": 3600,
+        "_t": 5388.5
+      },
+      {
+        "type": "partial",
+        "text": "Mi abuelo vive con mi tío en una casa grande y todos los días se levantan...",
+        "audio_ms": 4710,
+        "_t": 6705.3
+      },
+      {
+        "type": "partial",
+        "text": "Mi abuelo vive con mi tío en una casa grande y todos los días se levantan bien temprano para trabajar.",
+        "audio_ms": 6000,
+        "_t": 8261.5
+      },
+      {
+        "type": "final",
+        "text": "Mi abuelo vive con mi tío en una casa grande y todos los días se levantan bien temprano para trabajar.",
+        "audio_ms": 6690,
+        "_t": 10936.1
+      },
+      {
+        "type": "partial",
+        "text": "desayunan con la...",
+        "audio_ms": 1350,
+        "_t": 11350.0
+      },
+      {
+        "type": "partial",
+        "text": "desayunan con la familia, hablan de lo que van a hacer y después salen juntos hasta la tarde.",
+        "audio_ms": 5520,
+        "_t": 14170.1
+      },
+      {
+        "type": "final",
+        "text": "Desayunan con la familia, hablan de lo que van a hacer y después salen juntos hasta la tarde.",
+        "audio_ms": 5940,
+        "_t": 16480.0
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 18188.8
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"buffer_max_pausa\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0
+    }
+  },
+  "AU-02-005": {
+    "audio_ms": 17472,
+    "t_fin_audio_ms": 17465.2,
+    "t_end_ms": 17465.4,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Los niños y niñas...",
+        "audio_ms": 1230,
+        "_t": 2860.4
+      },
+      {
+        "type": "partial",
+        "text": "Los niños y niñas llegan a la casa de espacios.",
+        "audio_ms": 2100,
+        "_t": 4008.9
+      },
+      {
+        "type": "partial",
+        "text": "Los niños y niñas llegan a la casa después de estudiar.",
+        "audio_ms": 3240,
+        "_t": 5026.7
+      },
+      {
+        "type": "partial",
+        "text": "Los niños y niñas llegan a la casa después de estudiar. Comen con...",
+        "audio_ms": 4260,
+        "_t": 6677.8
+      },
+      {
+        "type": "partial",
+        "text": "Los niños y niñas llegan a la casa después de estudiar. Comen con gusto lo que preparó la familia.",
+        "audio_ms": 5940,
+        "_t": 7958.1
+      },
+      {
+        "type": "final",
+        "text": "Los niños y niñas llegan a la casa después de estudiar. Comen con gusto lo que preparó la familia.",
+        "audio_ms": 6150,
+        "_t": 10325.7
+      },
+      {
+        "type": "partial",
+        "text": "Cuentan lo que aprendieron durante el",
+        "audio_ms": 1890,
+        "_t": 10808.5
+      },
+      {
+        "type": "partial",
+        "text": "cuentan lo que aprendieron durante el día y luego ayudan a recoger.",
+        "audio_ms": 3900,
+        "_t": 11886.6
+      },
+      {
+        "type": "partial",
+        "text": "cuentan lo que aprendieron durante el día y luego ayudan a recoger la mesa antes de...",
+        "audio_ms": 4980,
+        "_t": 13093.5
+      },
+      {
+        "type": "partial",
+        "text": "cuentan lo que aprendieron durante el día y luego ayudan a recoger la mesa antes de descansar un rato.",
+        "audio_ms": 6210,
+        "_t": 14374.7
+      },
+      {
+        "type": "final",
+        "text": "cuentan lo que aprendieron durante el día y luego ayudan a recoger la mesa antes de descansar un rato.",
+        "audio_ms": 6120,
+        "_t": 15447.2
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 17467.2
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"buffer_max_pausa\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0
+    }
+  },
+  "AU-02-006": {
+    "audio_ms": 17024,
+    "t_fin_audio_ms": 16996.4,
+    "t_end_ms": 16996.7,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "cuando",
+        "audio_ms": 300,
+        "_t": 2321.8
+      },
+      {
+        "type": "partial",
+        "text": "cuando mi hermano está...",
+        "audio_ms": 1230,
+        "_t": 3164.4
+      },
+      {
+        "type": "partial",
+        "text": "Cuando mi hermano está triste, yo...",
+        "audio_ms": 2070,
+        "_t": 4120.2
+      },
+      {
+        "type": "partial",
+        "text": "Cuando mi hermano está triste, yo me siento a su lado.",
+        "audio_ms": 3000,
+        "_t": 5081.4
+      },
+      {
+        "type": "partial",
+        "text": "Cuando mi hermano está triste, yo me siento a su lado. Le pregunto.",
+        "audio_ms": 3990,
+        "_t": 6404.8
+      },
+      {
+        "type": "partial",
+        "text": "Cuando mi hermano está triste, yo me siento a su lado. Le pregunto qué le pasa. Lo dice.",
+        "audio_ms": 5310,
+        "_t": 7745.1
+      },
+      {
+        "type": "partial",
+        "text": "Cuando mi hermano está triste, yo me siento a su lado. Le pregunto qué le pasa. Lo escucho con calma y le...",
+        "audio_ms": 6630,
+        "_t": 9348.1
+      },
+      {
+        "type": "final",
+        "text": "Cuando mi hermano está triste, yo me siento a su lado. Le pregunto qué le pasa. Lo escucho con calma.",
+        "audio_ms": 6360,
+        "_t": 10469.9
+      },
+      {
+        "type": "partial",
+        "text": "y les recuerdo que toda la fa...",
+        "audio_ms": 1680,
+        "_t": 10955.2
+      },
+      {
+        "type": "partial",
+        "text": "y le recuerdo que toda la familia lo quiere mucho.",
+        "audio_ms": 3480,
+        "_t": 11946.4
+      },
+      {
+        "type": "partial",
+        "text": "y le recuerdo que toda la familia lo quiere mucho y que siempre estamos juntos.",
+        "audio_ms": 4470,
+        "_t": 13180.3
+      },
+      {
+        "type": "partial",
+        "text": "y le recuerdo que toda la familia lo quiere mucho y que siempre estamos juntos para ayudarlo.",
+        "audio_ms": 5730,
+        "_t": 14446.1
+      },
+      {
+        "type": "final",
+        "text": "y le recuerdo que toda la familia lo quiere mucho y que siempre estamos juntos para ayudarlo.",
+        "audio_ms": 5700,
+        "_t": 16126.2
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 16998.9
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"buffer_max_pausa\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0
+    }
+  },
+  "AU-02-007": {
+    "audio_ms": 15829,
+    "t_fin_audio_ms": 15795.5,
+    "t_end_ms": 15795.6,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Mit-",
+        "audio_ms": 300,
+        "_t": 1653.9
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho.",
+        "audio_ms": 1320,
+        "_t": 2496.3
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana.",
+        "audio_ms": 2160,
+        "_t": 3367.0
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana.",
+        "audio_ms": 3060,
+        "_t": 4565.7
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos de...",
+        "audio_ms": 4230,
+        "_t": 5897.1
+      },
+      {
+        "type": "partial",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos descansa con la familia.",
+        "audio_ms": 5580,
+        "_t": 7268.4
+      },
+      {
+        "type": "final",
+        "text": "Mi tío trabaja mucho durante la semana, pero los domingos descansa con la familia.",
+        "audio_ms": 5640,
+        "_t": 10087.0
+      },
+      {
+        "type": "partial",
+        "text": "cocina para todos y después nos cuenta y nos vemos en el próximo video.",
+        "audio_ms": 2400,
+        "_t": 10699.6
+      },
+      {
+        "type": "partial",
+        "text": "Cocina para todos y después nos cuenta historias de cuando era niño y vivía al...",
+        "audio_ms": 4710,
+        "_t": 11801.0
+      },
+      {
+        "type": "partial",
+        "text": "Cocina para todos y después nos cuenta historias de cuando era niño y vivía lejos de la ciudad.",
+        "audio_ms": 5850,
+        "_t": 13059.4
+      },
+      {
+        "type": "final",
+        "text": "Cocina para todos y después nos cuenta historias de cuando era niño y vivía lejos de la ciudad.",
+        "audio_ms": 6030,
+        "_t": 14325.5
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 15797.6
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"buffer_max_pausa\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"silencio\"}": 1.0
+    }
+  },
+  "AU-02-008": {
+    "audio_ms": 18069,
+    "t_fin_audio_ms": 18063.6,
+    "t_end_ms": 18063.9,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Buenas noches.",
+        "audio_ms": 300,
+        "_t": 1996.6
+      },
+      {
+        "type": "partial",
+        "text": "Buenas tardes a todos.",
+        "audio_ms": 1260,
+        "_t": 2885.2
+      },
+      {
+        "type": "partial",
+        "text": "Buenas tardes a todos.",
+        "audio_ms": 2160,
+        "_t": 3731.1
+      },
+      {
+        "type": "partial",
+        "text": "Buenas tardes a todos. Si quiero decirles",
+        "audio_ms": 3000,
+        "_t": 4727.8
+      },
+      {
+        "type": "partial",
+        "text": "Buenas tardes a todos. Sí quiero decirles que hoy me...",
+        "audio_ms": 4020,
+        "_t": 5802.5
+      },
+      {
+        "type": "partial",
+        "text": "Buenas tardes a todos. Sí quiero decirles que hoy me siento más o menos.",
+        "audio_ms": 5100,
+        "_t": 6906.9
+      },
+      {
+        "type": "partial",
+        "text": "Buenas tardes a todos. Sí quiero decirles que hoy me siento más o menos.",
+        "audio_ms": 6180,
+        "_t": 8197.5
+      },
+      {
+        "type": "final",
+        "text": "Buenas tardes a todos. Sí quiero decirles que hoy me siento más o menos.",
+        "audio_ms": 5670,
+        "_t": 10110.1
+      },
+      {
+        "type": "partial",
+        "text": "porque dormí poco y tengo mucha...",
+        "audio_ms": 2370,
+        "_t": 10572.3
+      },
+      {
+        "type": "partial",
+        "text": "porque dormí poco y tengo mucha hambre. Así que voy a comer a...",
+        "audio_ms": 4200,
+        "_t": 11712.2
+      },
+      {
+        "type": "partial",
+        "text": "porque dormí poco y tengo mucha hambre. Así que voy a comer algo antes de seguir.",
+        "audio_ms": 5340,
+        "_t": 12936.2
+      },
+      {
+        "type": "partial",
+        "text": "porque dormí poco y tengo mucha hambre. Así que voy a comer algo antes de seguir con el trabajo de la tarde.",
+        "audio_ms": 6540,
+        "_t": 14479.2
+      },
+      {
+        "type": "final",
+        "text": "porque dormí poco y tengo mucha hambre. Así que voy a comer algo antes de seguir con el trabajo de la tarde.",
+        "audio_ms": 7320,
+        "_t": 15698.2
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 18065.8
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"0\",reason=\"silencio\"}": 1.0,
+      "stt_final_total{kept=\"1\",reason=\"buffer_max_pausa\"}": 2.0
+    }
+  },
+  "AU-02-009": {
+    "audio_ms": 3669,
+    "t_fin_audio_ms": 3646.7,
+    "t_end_ms": 3646.8,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Gracias.",
+        "audio_ms": 300,
+        "_t": 1298.9
+      },
+      {
+        "type": "partial",
+        "text": "Gracias a todos.",
+        "audio_ms": 1050,
+        "_t": 2089.7
+      },
+      {
+        "type": "partial",
+        "text": "Gracias a todos. Hasta luego.",
+        "audio_ms": 1860,
+        "_t": 3035.9
+      },
+      {
+        "type": "final",
+        "text": "Gracias a todos. Hasta luego.",
+        "audio_ms": 2010,
+        "_t": 4087.7
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"1\",reason=\"flush\"}": 1.0
+    }
+  },
+  "AU-02-010": {
+    "audio_ms": 6379,
+    "t_fin_audio_ms": 6369.2,
+    "t_end_ms": 6369.5,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "Perdón.",
+        "audio_ms": 300,
+        "_t": 1537.7
+      },
+      {
+        "type": "partial",
+        "text": "Perdón.",
+        "audio_ms": 1140,
+        "_t": 2327.5
+      },
+      {
+        "type": "partial",
+        "text": "Perdón, necesito hablar con...",
+        "audio_ms": 1920,
+        "_t": 3134.3
+      },
+      {
+        "type": "partial",
+        "text": "Perdón, necesito hablar con la persona encargada.",
+        "audio_ms": 2760,
+        "_t": 4185.9
+      },
+      {
+        "type": "partial",
+        "text": "Perdón, necesito hablar con la persona encargada de atender...",
+        "audio_ms": 3780,
+        "_t": 5235.6
+      },
+      {
+        "type": "final",
+        "text": "Perdón, necesito hablar con la persona encargada de atender a las familias.",
+        "audio_ms": 4980,
+        "_t": 7132.7
+      }
+    ],
+    "delta_final": {
+      "stt_final_total{kept=\"1\",reason=\"flush\"}": 1.0
+    }
+  }
+}

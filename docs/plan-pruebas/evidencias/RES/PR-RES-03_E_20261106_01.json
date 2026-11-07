@@ -1,0 +1,43 @@
+{
+  "alcance": "Laboratorio: STT aparte (p2lab-stt, 8101) con backend aparte (p2lab-backend, 8180); telefono por adb reverse tcp:8080 tcp:8180. No se detuvo el STT canonico. La voz real no se pudo reproducir (sin altavoz): el microfono se enciende pero no hay habla, por lo que el corte a mitad de frase se aproxima con el microfono encendido.",
+  "momentos": [
+    {
+      "momento": "detenido_con_el_microfono_encendido",
+      "s_en_detener_stt": 2.0,
+      "log_corte": [
+        "1793996528.974  6174  6205 W SignAiNet: session failed: null",
+        "1793996528.983  6174  6503 I SignAiState: micrófono apagado (venía de Dictation)",
+        "1793996529.008  6174  6174 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Dictation",
+        "1793996529.047  6174  6503 I SignAiNet: recording stopped",
+        "1793996529.048  6174  6174 I SignAiNet: stop() sin grabación activa",
+        "1793996529.048  6174  6503 I SignAiState: dictado detenido: esperando el final de la frase",
+        "1793996529.048  6174  6503 I SignAiState: el dictado se apagó sin transcripción",
+        "1793996529.049  6174  6503 I SignAiState: aviso (no va al indicador): No se escuchó nada.",
+        "1793996529.051  6174  6503 I SignAiState: fallo: Se cortó la conexión mientras escuchaba.",
+        "1793996529.051  6174  6503 I SignAiNet: stop() sin grabación activa",
+        "1793996529.051  6174  6503 I SignAiState: aviso (no va al indicador): Se cortó la conexión mientras escuchaba.",
+        "1793996530.137  6174  6205 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+        "1793996530.188  6174  6174 I SignAiState: aviso visible: Sin servicio de voz: podés seguir traduciendo por texto."
+      ],
+      "texto_con_stt_caido": true,
+      "s_stt_vuelve_health_ok": 12.8,
+      "mic_tras_volver_stt": null,
+      "log_recuperacion": []
+    },
+    {
+      "momento": "apagado_antes_de_conectar",
+      "sesion_abierta_con_stt_caido": true,
+      "log_conexion": [
+        "1793996587.323  7232  7232 I SignAiState: backend session starting",
+        "1793996587.351  7232  7265 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+        "1793996592.444  7232  7232 I SignAiState: silencio del STT: 1500 ms"
+      ],
+      "texto_con_stt_caido": true,
+      "s_stt_vuelve_health_ok": 9.8,
+      "mic_tras_volver_stt_sin_relanzar_app": null,
+      "log_recuperacion": [
+        "1793996607.471  7232  7232 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles"
+      ]
+    }
+  ]
+}

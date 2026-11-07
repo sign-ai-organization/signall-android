@@ -1,0 +1,194 @@
+{
+  "entorno": "Backend de laboratorio completo (imagen del canonico, Postgres+pgvector local con migraciones 001-006, catalogo 50 + 13 sinonimos, caché vacía al empezar cada configuración, LLM real gpt-4o-mini, umbral 0,05); cada configuracion = contenedor nuevo con la variable SENTENCE_SEGMENTER__* indicada; envio por WebSocket de texto",
+  "configs": {
+    "completa": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 24,
+        "mismo_contenido": 24,
+        "oraciones": 44.0,
+        "oraciones_de_cache": 1.0,
+        "pct_oraciones_cache": 2.3,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 7,
+        "mismo_contenido": 7,
+        "oraciones": 21.0,
+        "oraciones_de_cache": 21.0,
+        "pct_oraciones_cache": 100.0,
+        "frases_sin_llm": 10
+      },
+      "s_arranque_backend": 61.3
+    },
+    "sin_segmentador": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 21,
+        "mismo_contenido": 22,
+        "oraciones": 30.0,
+        "oraciones_de_cache": 0,
+        "pct_oraciones_cache": 0.0,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 4,
+        "mismo_contenido": 5,
+        "oraciones": 10.0,
+        "oraciones_de_cache": 2.0,
+        "pct_oraciones_cache": 20.0,
+        "frases_sin_llm": 2
+      },
+      "s_arranque_backend": 65.4
+    },
+    "sin_posproceso": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 23,
+        "mismo_contenido": 23,
+        "oraciones": 44.0,
+        "oraciones_de_cache": 1.0,
+        "pct_oraciones_cache": 2.3,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 6,
+        "mismo_contenido": 6,
+        "oraciones": 21.0,
+        "oraciones_de_cache": 21.0,
+        "pct_oraciones_cache": 100.0,
+        "frases_sin_llm": 10
+      },
+      "s_arranque_backend": 61.3
+    },
+    "sin_corte_antes_interrogativas": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 24,
+        "mismo_contenido": 24,
+        "oraciones": 44.0,
+        "oraciones_de_cache": 1.0,
+        "pct_oraciones_cache": 2.3,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 7,
+        "mismo_contenido": 7,
+        "oraciones": 21.0,
+        "oraciones_de_cache": 21.0,
+        "pct_oraciones_cache": 100.0,
+        "frases_sin_llm": 10
+      },
+      "s_arranque_backend": 65.3
+    },
+    "sin_corte_tras_cierres": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 24,
+        "mismo_contenido": 24,
+        "oraciones": 44.0,
+        "oraciones_de_cache": 1.0,
+        "pct_oraciones_cache": 2.3,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 7,
+        "mismo_contenido": 7,
+        "oraciones": 21.0,
+        "oraciones_de_cache": 21.0,
+        "pct_oraciones_cache": 100.0,
+        "frases_sin_llm": 10
+      },
+      "s_arranque_backend": 61.2
+    },
+    "sin_reproceso_fragmentos_largos": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 24,
+        "mismo_contenido": 24,
+        "oraciones": 44.0,
+        "oraciones_de_cache": 1.0,
+        "pct_oraciones_cache": 2.3,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 7,
+        "mismo_contenido": 7,
+        "oraciones": 21.0,
+        "oraciones_de_cache": 21.0,
+        "pct_oraciones_cache": 100.0,
+        "frases_sin_llm": 10
+      },
+      "s_arranque_backend": 61.3
+    },
+    "sin_corte_antes_de_signo_apertura": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 23,
+        "mismo_contenido": 23,
+        "oraciones": 43.0,
+        "oraciones_de_cache": 1.0,
+        "pct_oraciones_cache": 2.3,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 6,
+        "mismo_contenido": 6,
+        "oraciones": 20.0,
+        "oraciones_de_cache": 20.0,
+        "pct_oraciones_cache": 100.0,
+        "frases_sin_llm": 10
+      },
+      "s_arranque_backend": 67.4
+    },
+    "sin_marcadores_de_corte": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 23,
+        "mismo_contenido": 23,
+        "oraciones": 44.0,
+        "oraciones_de_cache": 1.0,
+        "pct_oraciones_cache": 2.3,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 6,
+        "mismo_contenido": 6,
+        "oraciones": 21.0,
+        "oraciones_de_cache": 21.0,
+        "pct_oraciones_cache": 100.0,
+        "frases_sin_llm": 10
+      },
+      "s_arranque_backend": 60.3
+    },
+    "sin_cortes_por_clausulas_spacy": {
+      "FR-01": {
+        "frases": 30,
+        "exactas": 23,
+        "mismo_contenido": 23,
+        "oraciones": 44.0,
+        "oraciones_de_cache": 1.0,
+        "pct_oraciones_cache": 2.3,
+        "frases_sin_llm": 0
+      },
+      "FR-05": {
+        "frases": 10,
+        "exactas": 6,
+        "mismo_contenido": 6,
+        "oraciones": 21.0,
+        "oraciones_de_cache": 21.0,
+        "pct_oraciones_cache": 100.0,
+        "frases_sin_llm": 10
+      },
+      "s_arranque_backend": 60.3
+    }
+  }
+}

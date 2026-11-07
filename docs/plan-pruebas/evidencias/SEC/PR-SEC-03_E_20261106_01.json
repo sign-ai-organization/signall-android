@@ -1,0 +1,119 @@
+{
+  "secretos_buscados": {
+    "LLM_API_KEY": {
+      "longitud": 164,
+      "sha256_8": "dba1e0c0"
+    },
+    "DB_PASSWORD": {
+      "longitud": 16,
+      "sha256_8": "7108902c"
+    }
+  },
+  "arbol": {
+    "sign-ai-backend": {
+      "LLM_API_KEY": [
+        {
+          "archivo": ".env",
+          "ignorado_por_git": true
+        }
+      ],
+      "DB_PASSWORD": [
+        {
+          "archivo": ".env",
+          "ignorado_por_git": true
+        }
+      ]
+    },
+    "sign-ai-stt": {
+      "LLM_API_KEY": [],
+      "DB_PASSWORD": []
+    },
+    "sign-ai-android": {
+      "LLM_API_KEY": [
+        {
+          "archivo": "docs/plan-pruebas/evidencias/CAC/PR-CAC-05_E_20261105_01.json",
+          "ignorado_por_git": false
+        }
+      ],
+      "DB_PASSWORD": [
+        {
+          "archivo": "docs/plan-pruebas/evidencias/CAC/PR-CAC-05_D_20261104_01.json",
+          "ignorado_por_git": false
+        },
+        {
+          "archivo": "docs/plan-pruebas/evidencias/CAC/PR-CAC-05_E_20261105_01.json",
+          "ignorado_por_git": false
+        }
+      ]
+    },
+    "sign-ai-docs": {
+      "LLM_API_KEY": [],
+      "DB_PASSWORD": []
+    }
+  },
+  "historial": {
+    "sign-ai-backend": {
+      "LLM_API_KEY": {
+        "commits": 0,
+        "rc": 0
+      },
+      "DB_PASSWORD": {
+        "commits": 0,
+        "rc": 0
+      }
+    },
+    "sign-ai-stt": {
+      "LLM_API_KEY": {
+        "commits": 0,
+        "rc": 0
+      },
+      "DB_PASSWORD": {
+        "commits": 0,
+        "rc": 0
+      }
+    },
+    "sign-ai-android": {
+      "LLM_API_KEY": {
+        "commits": 1,
+        "rc": 0
+      },
+      "DB_PASSWORD": {
+        "commits": 2,
+        "rc": 0
+      }
+    },
+    "sign-ai-docs": {
+      "LLM_API_KEY": {
+        "commits": 0,
+        "rc": 0
+      },
+      "DB_PASSWORD": {
+        "commits": 0,
+        "rc": 0
+      }
+    }
+  },
+  "apk": {
+    "sign-ai-android/app/build/outputs/apk/debug/app-debug.apk": {
+      "sha256": "0d77a643b053ae79",
+      "archivos_revisados": 161,
+      "tamano": 40273194,
+      "hallazgos": [],
+      "patrones_genericos": []
+    },
+    "sign-ai-android/app/build/outputs/apk/demo/app-demo.apk": {
+      "sha256": "8cce47915946c2d6",
+      "archivos_revisados": 161,
+      "tamano": 40273290,
+      "hallazgos": [],
+      "patrones_genericos": []
+    },
+    "sign-ai-android/app/build/outputs/apk/release/app-release-unsigned.apk": {
+      "sha256": "8436b2b8bc712e07",
+      "archivos_revisados": 151,
+      "tamano": 35065417,
+      "hallazgos": [],
+      "patrones_genericos": []
+    }
+  }
+}

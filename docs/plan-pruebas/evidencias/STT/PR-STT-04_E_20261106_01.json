@@ -1,0 +1,162 @@
+{
+  "resumen": {
+    "small": {
+      "health": {
+        "status": "ok",
+        "model": "small",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "wer_pct": 3.55,
+      "errores": 10,
+      "palabras": 282,
+      "por_tipo": {
+        "Afirmación": {
+          "wer_pct": 1.39,
+          "errores": 1,
+          "palabras": 72
+        },
+        "Pregunta de sí o no": {
+          "wer_pct": 6.67,
+          "errores": 2,
+          "palabras": 30
+        },
+        "Pregunta de contenido": {
+          "wer_pct": 6.67,
+          "errores": 4,
+          "palabras": 60
+        },
+        "Negación": {
+          "wer_pct": 1.67,
+          "errores": 1,
+          "palabras": 60
+        },
+        "Orden": {
+          "wer_pct": 3.33,
+          "errores": 2,
+          "palabras": 60
+        }
+      },
+      "elapsed_ms_p50": 245.0,
+      "elapsed_ms_p95": 358.1,
+      "wall_ms_p50": 254.5,
+      "gpu_base_mib": 3261,
+      "gpu_con_modelo_cargado_mib": 3999,
+      "gpu_delta_modelo_mib": 738,
+      "gpu_max_durante_mib": 4319,
+      "gpu_delta_max_mib": 1058,
+      "segundos_hasta_listo": 52.2,
+      "audios_sin_texto": [
+        "AU-01-032"
+      ]
+    },
+    "medium": {
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "wer_pct": 1.77,
+      "errores": 5,
+      "palabras": 282,
+      "por_tipo": {
+        "Afirmación": {
+          "wer_pct": 1.39,
+          "errores": 1,
+          "palabras": 72
+        },
+        "Pregunta de sí o no": {
+          "wer_pct": 13.33,
+          "errores": 4,
+          "palabras": 30
+        },
+        "Pregunta de contenido": {
+          "wer_pct": 0.0,
+          "errores": 0,
+          "palabras": 60
+        },
+        "Negación": {
+          "wer_pct": 0.0,
+          "errores": 0,
+          "palabras": 60
+        },
+        "Orden": {
+          "wer_pct": 0.0,
+          "errores": 0,
+          "palabras": 60
+        }
+      },
+      "elapsed_ms_p50": 489.5,
+      "elapsed_ms_p95": 668.0,
+      "wall_ms_p50": 495.4,
+      "gpu_base_mib": 3261,
+      "gpu_con_modelo_cargado_mib": 5247,
+      "gpu_delta_modelo_mib": 1986,
+      "gpu_max_durante_mib": 5407,
+      "gpu_delta_max_mib": 2146,
+      "segundos_hasta_listo": 163.1,
+      "audios_sin_texto": [
+        "AU-01-014"
+      ]
+    },
+    "large-v3": {
+      "health": {
+        "status": "ok",
+        "model": "large-v3",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "wer_pct": 0.35,
+      "errores": 1,
+      "palabras": 282,
+      "por_tipo": {
+        "Afirmación": {
+          "wer_pct": 1.39,
+          "errores": 1,
+          "palabras": 72
+        },
+        "Pregunta de sí o no": {
+          "wer_pct": 0.0,
+          "errores": 0,
+          "palabras": 30
+        },
+        "Pregunta de contenido": {
+          "wer_pct": 0.0,
+          "errores": 0,
+          "palabras": 60
+        },
+        "Negación": {
+          "wer_pct": 0.0,
+          "errores": 0,
+          "palabras": 60
+        },
+        "Orden": {
+          "wer_pct": 0.0,
+          "errores": 0,
+          "palabras": 60
+        }
+      },
+      "elapsed_ms_p50": 832.0,
+      "elapsed_ms_p95": 1075.8,
+      "wall_ms_p50": 838.6,
+      "gpu_base_mib": 3261,
+      "gpu_con_modelo_cargado_mib": 7104,
+      "gpu_delta_modelo_mib": 3843,
+      "gpu_max_durante_mib": 7392,
+      "gpu_delta_max_mib": 4131,
+      "segundos_hasta_listo": 307.7,
+      "audios_sin_texto": []
+    }
+  },
+  "gpu": {
+    "nombre": "NVIDIA GeForce RTX 3050 (8192 MiB)"
+  },
+  "nota": "instancia aparte (docker run, puerto 8001, volumen propio p2-scratch-hf-cache), POST /transcribe de los 60 audios AU-01 en WAV 16 kHz; memoria = delta de nvidia-smi (memory.used) respecto a la base antes de arrancar, con el STT canonico y el escritorio ya ocupando GPU"
+}

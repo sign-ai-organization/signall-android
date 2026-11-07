@@ -1,0 +1,29 @@
+--------- beginning of main
+         1793996378.533  4476  4476 I SignAiState: backend session starting
+         1793996378.557  4476  4516 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793996384.159  4476  4476 I SignAiState: silencio del STT: desconocido
+         1793996418.562  4476  4517 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 0 successful ping/pongs)
+         1793996418.636  4476  4476 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793996419.700  4476  4516 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793996433.611  4476  4476 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Tienes hambre?"
+         1793996434.304  4476  4516 D SignAiNet: segment 0/1 turn=1 -> TU,HAMBRE
+         1793996434.376  4476  4476 I SignAiState: glosas sin animación, avisadas: TU, HAMBRE
+         1793996434.379  4476  4476 I SignAiMetrics: frase #1: 768ms, 1 oraciones, 2 glosas (p50=768ms p95=768ms max=768ms n=1)
+         1793996434.379  4476  4476 I SignAiState: resumen: frases=1 oraciones=1 glosas=2 sin_seña=2 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=768ms p95=768ms max=768ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793996434.380  4476  4476 I SignAiState: aviso (no va al indicador): Esa frase no produjo ninguna seña.
+         1793996435.156  4476  4476 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793996450.390  4476  4476 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Mi abuelo trabaja en familia hoy."
+         1793996451.934  4476  4476 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1793996465.429  4476  4476 I SignAiState: fallo: El servidor no respondió.
+         1793996465.430  4476  4476 I SignAiNet: stop() sin grabación activa
+         1793996465.432  4476  4476 I SignAiState: aviso (no va al indicador): El servidor no respondió.
+         1793996479.705  4476  4517 W SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 1 successful ping/pongs)
+         1793996479.770  4476  4476 I SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+         1793996480.862  4476  4516 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1793996494.946  4476  4476 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Tienes hambre?"
+         1793996495.865  4476  4516 D SignAiNet: segment 0/1 turn=1 -> TU,TENER,HAMBRE
+         1793996495.921  4476  4476 I SignAiState: glosas sin animación, avisadas: TU, TENER, HAMBRE
+         1793996495.923  4476  4476 I SignAiMetrics: frase #2: 977ms, 1 oraciones, 3 glosas (p50=768ms p95=768ms max=977ms n=2)
+         1793996495.923  4476  4476 I SignAiState: resumen: frases=2 oraciones=2 glosas=5 sin_seña=5 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=768ms p95=768ms max=977ms n=2 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1793996495.923  4476  4476 I SignAiState: aviso (no va al indicador): Esa frase no produjo ninguna seña.
+         1793996496.447  4476  4476 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles

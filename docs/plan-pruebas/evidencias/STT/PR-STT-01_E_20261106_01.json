@@ -1,0 +1,110 @@
+{
+  "prueba": "PR-STT-01",
+  "fecha": "2026-11-06",
+  "camino": "POST /transcribe (archivo completo, WAV 16 kHz derivado de audios/16k)",
+  "servicio": {
+    "status": "ok",
+    "model": "medium",
+    "device": "cuda",
+    "requested_device": "cuda",
+    "language": "es",
+    "silence_timeout_ms": 1500
+  },
+  "normalizacion_wer": "minusculas, sin tildes, sin puntuacion, ñ preservada",
+  "total": {
+    "audios": 60,
+    "errores": 5,
+    "palabras": 282,
+    "wer": 0.0177
+  },
+  "por_hablante": {
+    "H1": {
+      "audios": 20,
+      "errores": 0,
+      "palabras": 94,
+      "wer": 0.0
+    },
+    "H2": {
+      "audios": 10,
+      "errores": 4,
+      "palabras": 47,
+      "wer": 0.0851
+    },
+    "H3": {
+      "audios": 10,
+      "errores": 1,
+      "palabras": 47,
+      "wer": 0.0213
+    },
+    "H4": {
+      "audios": 20,
+      "errores": 0,
+      "palabras": 94,
+      "wer": 0.0
+    }
+  },
+  "por_condicion": {
+    "silencio": {
+      "audios": 40,
+      "errores": 5,
+      "palabras": 188,
+      "wer": 0.0266
+    },
+    "ruido": {
+      "audios": 20,
+      "errores": 0,
+      "palabras": 94,
+      "wer": 0.0
+    }
+  },
+  "por_tipo_texto": {
+    "Afirmación": {
+      "audios": 12,
+      "errores": 1,
+      "palabras": 72,
+      "wer": 0.0139
+    },
+    "Pregunta de sí o no": {
+      "audios": 12,
+      "errores": 4,
+      "palabras": 30,
+      "wer": 0.1333
+    },
+    "Pregunta de contenido": {
+      "audios": 12,
+      "errores": 0,
+      "palabras": 60,
+      "wer": 0.0
+    },
+    "Negación": {
+      "audios": 12,
+      "errores": 0,
+      "palabras": 60,
+      "wer": 0.0
+    },
+    "Orden": {
+      "audios": 12,
+      "errores": 0,
+      "palabras": 60,
+      "wer": 0.0
+    }
+  },
+  "elapsed_ms_p50": 457.0,
+  "audios_con_errores": [
+    [
+      "AU-01-003",
+      "Hola, buenos días, bienvenidos.",
+      "Hola, buenos días, bienvenido."
+    ],
+    [
+      "AU-01-014",
+      "¿Tienes hambre?",
+      ""
+    ],
+    [
+      "AU-01-020",
+      "Perdón. ¿Estás triste?",
+      "Perdón, ¿es Astrice?"
+    ]
+  ]
+}

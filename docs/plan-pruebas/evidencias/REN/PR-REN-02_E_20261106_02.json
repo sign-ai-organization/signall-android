@@ -1,0 +1,102 @@
+{
+  "llm": {
+    "frase.segmentation": {
+      "n": 10,
+      "p50": 0.2,
+      "p95": 13.9,
+      "max": 21.1
+    },
+    "frase.validation": {
+      "n": 10,
+      "p50": 0.1,
+      "p95": 0.1,
+      "max": 0.1
+    },
+    "frase.total": {
+      "n": 10,
+      "p50": 895.1,
+      "p95": 1424.2,
+      "max": 1705.9
+    },
+    "oracion.fingerprint": {
+      "n": 17,
+      "p50": 0.1,
+      "p95": 0.1,
+      "max": 0.1
+    },
+    "oracion.cache.exact": {
+      "n": 17,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "oracion.cache.embed": {
+      "n": 16,
+      "p50": 81.7,
+      "p95": 121.1,
+      "max": 147.0
+    },
+    "oracion.cache.similarity": {
+      "n": 16,
+      "p50": 0.1,
+      "p95": 0.2,
+      "max": 0.3
+    },
+    "oracion.llm": {
+      "n": 16,
+      "p50": 677.6,
+      "p95": 1139.5,
+      "max": 1647.5
+    },
+    "n_frases": 10,
+    "llm_por_longitud_oracion": {
+      "corta (<=4 palabras)": {
+        "n": 11,
+        "p50": 657.8,
+        "p95": 1247.2,
+        "max": 1647.5
+      },
+      "media (5-8)": {
+        "n": 5,
+        "p50": 776.6,
+        "p95": 941.1,
+        "max": 970.2
+      }
+    }
+  },
+  "cache": {
+    "frase.segmentation": {
+      "n": 40,
+      "p50": 0.2,
+      "p95": 4.6,
+      "max": 5.5
+    },
+    "frase.validation": {
+      "n": 40,
+      "p50": 0.1,
+      "p95": 0.1,
+      "max": 0.2
+    },
+    "frase.total": {
+      "n": 40,
+      "p50": 2.7,
+      "p95": 7.0,
+      "max": 14.7
+    },
+    "oracion.fingerprint": {
+      "n": 68,
+      "p50": 0.1,
+      "p95": 0.1,
+      "max": 1.2
+    },
+    "oracion.cache.exact": {
+      "n": 68,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.2
+    },
+    "n_frases": 40
+  },
+  "coincidencia_texto_traza": "50/50",
+  "fuente": "lineas \"Pipeline trace\" de docker logs sign-ai-backend-backend-1 (el backend canonico las escribe en el log aunque no mande el mensaje trace al cliente)"
+}

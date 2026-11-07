@@ -1,0 +1,21 @@
+﻿turno;frase_esperada_au04;transcrito;wer;oraciones;segmentos_recibidos;glosas;t_transcript_ms;t_ultimo_segmento_ms;t_done_ms;espera_texto_a_done_ms;orden_ok
+1;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0.0;1;1;HOLA BUENOS DIAS;5971.1;6033.4;6033.8;62.7;True
+2;¿Tienes hambre?;¿Tienes hambre?;0.0;1;1;TU HAMBRE;9387.3;9392.4;9392.8;5.5;True
+3;Yo nunca como mucho.;Yo nunca como mucho.;0.0;1;1;YO NUNCA COMER MUCHO;13690.4;13694.1;13694.5;4.1;True
+4;Por favor, come poco.;Por favor, come poco.;0.0;1;1;POR FAVOR COMER POCO;18219.1;18222.5;18223.1;4.0;True
+5;Mi abuelo y mi tío trabajan en familia.;mi abuelo y mi tío trabajan en familia.;0.0;1;1;ABUELO TIO TRABAJAR FAMILIA;23663.4;23673.4;23673.6;10.2;True
+6;¿Por qué estás triste?;¿Por qué estás triste?;0.0;1;1;POR QUE TU TRISTE;27612.0;27615.5;27615.9;3.9;True
+7;Mi abuelo nunca trabaja.;mi abuelo nunca trabaja.;0.0;1;1;ABUELO NUNCA TRABAJAR;32204.7;32857.0;32858.9;654.2;True
+8;Niños, trabajen todos.;Niños, trabajen todos.;0.0;1;1;NIÑO TODOS TRABAJAR;36729.8;37456.5;37458.6;728.8;True
+9;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0.0;1;1;DONDE TU FAMILIA VIVIR;40647.9;40652.3;40652.4;4.5;True
+10;¿Estás bien?;¿Estás bien?;0.0;1;1;TU BIEN;44360.0;44962.2;44962.3;602.3;True
+11;Estoy contento porque mi hermano está feliz.;Estoy contento porque mi hermano está feliz.;0.0;1;1;YO CONTENTO HERMANO FELIZ;50221.0;50225.4;50225.6;4.6;True
+12;Mi tío nunca está aburrido.;mi tío nunca está aburrido.;0.0;1;1;TIO NUNCA ABURRIDO;55551.7;56361.2;56363.6;811.9;True
+13;Hola, familia, siéntanse bienvenidos.;Hola, familia. Siéntanse bienvenidos.;0.0;2;2;HOLA FAMILIA | SENTIR BIENVENIDO;61130.0;61856.4;61857.0;727.0;True
+14;¿Cuándo comen ustedes?;¿Cuándo comen ustedes?;0.0;1;1;CUANDO USTEDES COMER;65599.7;66159.1;66160.2;560.5;True
+15;Ustedes nunca se sienten mal.;Ustedes nunca se sienten mal.;0.0;1;1;USTEDES NUNCA SENTIR MAL;70552.7;71177.6;71178.5;625.8;True
+16;¿Ustedes trabajan en familia?;¿Ustedes trabajan en familia?;0.0;1;1;USTEDES TRABAJAR FAMILIA;75189.7;75193.1;75193.5;3.8;True
+17;¿Tu hermano está aburrido?;¿Tu hermano está aburrido?;0.0;1;1;TU HERMANO ABURRIDO;79690.7;80439.0;80439.6;748.9;True
+18;Adiós a todos. Buenas noches.;Adiós a todos. Buenas noches.;0.0;2;2;ADIOS TODOS | BUENAS NOCHES;85031.7;85036.6;85037.1;5.4;True
+19;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0.0;2;2;PERDON | TU TRISTE;89984.9;89989.4;89989.7;4.8;True
+20;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0.0;1;1;PERMISO POR FAVOR;95980.4;95985.1;95985.5;5.1;True

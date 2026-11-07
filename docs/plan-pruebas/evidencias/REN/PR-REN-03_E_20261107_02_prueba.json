@@ -1,0 +1,32 @@
+{
+ "sin_1a_rep": {
+  "n": 0,
+  "completas": 0,
+  "con_llamada_llm": 0
+ },
+ "todas": {
+  "n": 10,
+  "completas": 10,
+  "con_llamada_llm": 10,
+  "primera_sena_ms": {
+   "p50": 1024.0,
+   "p95": 1246,
+   "max": 1246
+  },
+  "ultima_sena_ms": {
+   "p50": 8555.0,
+   "p95": 9757,
+   "max": 9757
+  },
+  "representacion_ms": {
+   "p50": 7596.0,
+   "p95": 8844,
+   "max": 8844
+  },
+  "respuesta_backend_ms": {
+   "p50": 893.0,
+   "p95": 1158,
+   "max": 1158
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+  "sin_primera_repeticion": {
+    "ms_primer_parcial": {
+      "n": 40,
+      "p50": 2304.8,
+      "p95": 2864.8,
+      "max": 2945.5
+    },
+    "ms_final": {
+      "n": 40,
+      "p50": 5138.8,
+      "p95": 6306.0,
+      "max": 6584.1
+    },
+    "ms_fin_voz_a_final": {
+      "n": 40,
+      "p50": 1958.4,
+      "p95": 2263.1,
+      "max": 2464.1
+    },
+    "ms_proceso_total_inferencias": {
+      "n": 40,
+      "p50": 2182.3,
+      "p95": 3302.0,
+      "max": 3547.7
+    }
+  },
+  "todas": {
+    "ms_primer_parcial": {
+      "n": 50,
+      "p50": 2325.1,
+      "p95": 2906.2,
+      "max": 2949.8
+    },
+    "ms_final": {
+      "n": 50,
+      "p50": 5138.8,
+      "p95": 6319.6,
+      "max": 6668.9
+    },
+    "ms_fin_voz_a_final": {
+      "n": 50,
+      "p50": 1970.0,
+      "p95": 2341.2,
+      "max": 2464.1
+    },
+    "ms_proceso_total_inferencias": {
+      "n": 50,
+      "p50": 2326.2,
+      "p95": 3324.9,
+      "max": 3648.3
+    }
+  },
+  "sin_texto_final": 0,
+  "esperado_vs_final_wer": null,
+  "wer_stream_final": 0.0,
+  "nota": "fin_de_voz = duracion del archivo menos silencio final de manifiesto.csv (VAD 30 ms); ms_proceso = suma de stt_inference_ms (parciales+final) del audio, via /metrics.json; se sigue mandando silencio a ritmo real hasta el primer final con texto"
+}

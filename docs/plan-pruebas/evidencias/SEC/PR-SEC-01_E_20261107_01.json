@@ -1,0 +1,114 @@
+{
+ "frase": "¿Tienes hambre?",
+ "audio": "AU-01-013",
+ "ca": "SignAI Lab CA (lab-ca.crt)",
+ "texto": {
+  "mensajes": [
+   "capability",
+   "sentence_trace",
+   "segment",
+   "trace",
+   "done"
+  ],
+  "transcripcion": null,
+  "tramo_cliente_a_proxy_TLS": {
+   "bytes": 3411,
+   "empieza_con_registro_TLS_handshake_0x16_0x03": true,
+   "registros_application_data_0x17_0x03": 17,
+   "marcadores_en_claro": {
+    "texto 'hambre' (minuscula)": 0,
+    "texto 'Tienes hambre'": 0,
+    "glosa 'HAMBRE'": 0,
+    "campo \"type\"": 0,
+    "campo \"glosses\"": 0,
+    "campo \"text\"": 0,
+    "64 bytes del audio (PCM16)": 0,
+    "cabecera 'Upgrade: websocket'": 0
+   }
+  },
+  "tramo_proxy_a_backend_loopback": {
+   "bytes": 1131,
+   "marcadores_en_claro": {
+    "texto 'hambre' (minuscula)": 0,
+    "texto 'Tienes hambre'": 0,
+    "glosa 'HAMBRE'": 0,
+    "campo \"type\"": 0,
+    "campo \"glosses\"": 0,
+    "campo \"text\"": 0,
+    "64 bytes del audio (PCM16)": 0,
+    "cabecera 'Upgrade: websocket'": 2
+   }
+  },
+  "tramo_backend_a_LLM": {
+   "bytes": 10367,
+   "empieza_con_registro_TLS_handshake_0x16_0x03": true,
+   "registros_application_data_0x17_0x03": 8,
+   "marcadores_en_claro": {
+    "texto 'hambre'": 0,
+    "'Tienes hambre'": 0,
+    "campo \"messages\"": 0,
+    "campo \"role\"": 0,
+    "palabra 'gpt-4o-mini'": 0,
+    "nombre del servidor api.openai.com (SNI)": 1
+   }
+  }
+ },
+ "voz": {
+  "mensajes": [
+   "transcript",
+   "sentence_trace",
+   "segment",
+   "trace",
+   "done"
+  ],
+  "transcripcion": "¿Tienes hambre?",
+  "tramo_cliente_a_proxy_TLS": {
+   "bytes": 64818,
+   "empieza_con_registro_TLS_handshake_0x16_0x03": true,
+   "registros_application_data_0x17_0x03": 109,
+   "marcadores_en_claro": {
+    "texto 'hambre' (minuscula)": 0,
+    "texto 'Tienes hambre'": 0,
+    "glosa 'HAMBRE'": 0,
+    "campo \"type\"": 0,
+    "campo \"glosses\"": 0,
+    "campo \"text\"": 0,
+    "64 bytes del audio (PCM16)": 0,
+    "cabecera 'Upgrade: websocket'": 0
+   }
+  },
+  "tramo_proxy_a_backend_loopback": {
+   "bytes": 60514,
+   "marcadores_en_claro": {
+    "texto 'hambre' (minuscula)": 0,
+    "texto 'Tienes hambre'": 0,
+    "glosa 'HAMBRE'": 0,
+    "campo \"type\"": 0,
+    "campo \"glosses\"": 0,
+    "campo \"text\"": 0,
+    "64 bytes del audio (PCM16)": 0,
+    "cabecera 'Upgrade: websocket'": 2
+   }
+  },
+  "tramo_backend_a_LLM": {
+   "bytes": 10367,
+   "empieza_con_registro_TLS_handshake_0x16_0x03": true,
+   "registros_application_data_0x17_0x03": 8,
+   "marcadores_en_claro": {
+    "texto 'hambre'": 0,
+    "'Tienes hambre'": 0,
+    "campo \"messages\"": 0,
+    "campo \"role\"": 0,
+    "palabra 'gpt-4o-mini'": 0,
+    "nombre del servidor api.openai.com (SNI)": 1
+   }
+  }
+ },
+ "intentos_que_deben_fallar": {
+  "wss sin la CA del laboratorio": "rechazado: SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)",
+  "ws sin cifrar contra el puerto TLS del proxy": "rechazado: InvalidMessage: did not receive a valid HTTP response"
+ },
+ "destinos_https_del_backend_vistos_por_la_grabadora_del_LLM": [
+  "api.openai.com:443"
+ ]
+}

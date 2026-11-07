@@ -1,0 +1,5 @@
+﻿situacion;modo_llm;texto;mensajes
+LLM sano (control);up;Hola buenos dias a todos;segment:HOLA TU@19.6 | done:@19.9
+LLM colgado (sin respuesta);down;Mi tio vive aqui cerca;error:No se pudo traducir el texto.@10505.5
+LLM responde 500;error500;Mi abuelo trabaja mucho;error:No se pudo traducir el texto.@444.1
+LLM vuelve (sin reiniciar);up;Los ninos comen con gusto;segment:HOLA TU@15.3 | done:@16.6

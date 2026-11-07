@@ -1,0 +1,5 @@
+﻿caso;texto;mensajes;misma_conexion_despues
+1 oracion, falla;Esto falla ahora.;error:No se pudo traducir el texto.@4.2;done
+varias oraciones, falla solo la 2.ª;Hola a todos. Esto falla hoy. Gracias a todos.;segment:AFFIRMATIVE@978.3 | error:No se pudo traducir el texto.@985.4;done
+varias oraciones, falla la 1.ª;Esto falla primero. Buenas noches. Hola a todos.;error:No se pudo traducir el texto.@11.8;done
+siguiente frase sin falla;Hola, buenos días, bienvenidos.;segment:AFFIRMATIVE@1028.4 | done:@1028.5;done

@@ -1,0 +1,59 @@
+{
+  "completa": {
+    "config": {},
+    "segmentador": true,
+    "fr01": {
+      "exactas": 24,
+      "mismo_contenido": 24,
+      "n": 30,
+      "oraciones": 44,
+      "oraciones_de_cache": 1,
+      "pct_oraciones_cache": 2.3,
+      "frases": 30,
+      "frases_sin_llm": 0
+    },
+    "fr05": {
+      "exactas": 7,
+      "mismo_contenido": 7,
+      "n": 10,
+      "oraciones": 21,
+      "oraciones_de_cache": 21,
+      "pct_oraciones_cache": 100.0,
+      "frases": 10,
+      "frases_sin_llm": 10
+    },
+    "n_oraciones_fr01": 44,
+    "n_oraciones_fr05": 21
+  },
+  "sin_segmentador": {
+    "config": {},
+    "segmentador": false,
+    "fr01": {
+      "exactas": 20,
+      "mismo_contenido": 21,
+      "n": 30,
+      "oraciones": 30,
+      "oraciones_de_cache": 0,
+      "pct_oraciones_cache": 0.0,
+      "frases": 30,
+      "frases_sin_llm": 0
+    },
+    "fr05": {
+      "exactas": 4,
+      "mismo_contenido": 5,
+      "n": 10,
+      "oraciones": 10,
+      "oraciones_de_cache": 2,
+      "pct_oraciones_cache": 20.0,
+      "frases": 10,
+      "frases_sin_llm": 2
+    },
+    "n_oraciones_fr01": 30,
+    "n_oraciones_fr05": 10
+  },
+  "llm_llamadas_unicas": 64,
+  "_meta": {
+    "entorno": "laboratorio en proceso: se ejecuta dentro del contenedor del backend (docker exec, proceso aparte) con el pipeline real (SentenceSegmenter, GlossAnalyzer, SemanticCache en memoria con pool=None, EmbeddingModel MiniLM, LLMClient gpt-4o-mini con el catalogo de la base leido en modo lectura). No toca semantic_cache de Neon ni la configuracion del backend canonico.",
+    "fecha": "2026-11-06"
+  }
+}

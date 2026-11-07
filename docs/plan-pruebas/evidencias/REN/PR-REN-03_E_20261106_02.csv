@@ -1,0 +1,51 @@
+﻿corrida;rep;frase;texto_enviado_a_la_app;t_envio_epoch;completo;fuente;texto_en_app;ms_envio_a_primera_sena;ms_envio_a_ultima_sena;ms_representacion;n_senas;ms_frase_respuesta_backend_vista_por_app;oraciones
+1;1;FR-01-001;Hola, buenos dias, bienvenidos.;1793992613.277;True;semantic;Hola, Buenos días, bienvenidos.;358;4591;4426;2;165;1
+2;1;FR-01-005;Buenas tardes. Hoy me siento mas o menos.;1793992632.627;True;exact;Buenas tardes. Hoy me siento mas o menos.;213;8947;8794;4;158;2
+3;1;FR-01-007;Tienes hambre?;1793992653.313;True;exact;Tienes hambre?;258;4019;3903;2;117;1
+4;1;FR-01-011;Perdon. Estas triste?;1793992669.982;True;exact;Perdon. Estas triste?;218;7064;6900;3;170;2
+5;1;FR-01-013;Hola, como estas? Como te llamas?;1793992691.254;True;exact,miss;Hola, como estas? Como te llamas?;1925;10280;8410;4;1876;2
+6;1;FR-01-014;Donde vive tu familia?;1793992714.175;True;exact;Donde vive tu familia?;216;8484;8320;4;165;1
+7;1;FR-01-019;Yo nunca como mucho.;1793992734.782;True;exact;Yo nunca como mucho.;283;8883;8766;4;118;1
+8;1;FR-01-023;Perdon, mi hermano nunca esta contento.;1793992758.185;True;exact;Perdon, mi hermano nunca esta contento.;375;8966;8855;4;110;1
+9;1;FR-01-025;Por favor, come poco.;1793992779.611;True;exact;Por favor, come poco.;253;6655;6540;3;117;1
+10;1;FR-01-026;Con permiso. Dejame pasar, por favor.;1793992800.434;True;exact;Con permiso. Dejame pasar, por favor.;201;4414;4298;2;122;2
+11;2;FR-01-001;Hola, buenos dias, bienvenidos.;1793992818.391;True;semantic;Hola, Buenos días, bienvenidos.;207;4534;4415;2;121;1
+12;2;FR-01-005;Buenas tardes. Hoy me siento mas o menos.;1793992837.433;True;exact;Buenas tardes. Hoy me siento mas o menos.;199;8910;8756;4;158;2
+13;2;FR-01-007;Tienes hambre?;1793992858.525;True;exact;Tienes hambre?;250;4037;3922;2;116;1
+14;2;FR-01-011;Perdon. Estas triste?;1793992874.974;True;exact;Perdon. Estas triste?;217;6962;6794;3;173;2
+15;2;FR-01-013;Hola, como estas? Como te llamas?;1793992896.325;True;exact;Hola, como estas? Como te llamas?;207;8512;8349;4;167;2
+16;2;FR-01-014;Donde vive tu familia?;1793992917.308;True;exact;Donde vive tu familia?;184;8360;8281;4;79;1
+17;2;FR-01-019;Yo nunca como mucho.;1793992938.481;True;exact;Yo nunca como mucho.;258;8847;8764;4;83;1
+18;2;FR-01-023;Perdon, mi hermano nunca esta contento.;1793992961.585;True;exact;Perdon, mi hermano nunca esta contento.;153;8937;8818;4;120;1
+19;2;FR-01-025;Por favor, come poco.;1793992982.868;True;exact;Por favor, come poco.;248;6644;6528;3;117;1
+20;2;FR-01-026;Con permiso. Dejame pasar, por favor.;1793993004.319;True;exact;Con permiso. Dejame pasar, por favor.;118;4475;4388;2;89;2
+21;3;FR-01-001;Hola, buenos dias, bienvenidos.;1793993022.161;True;semantic;Hola, Buenos días, bienvenidos.;346;4548;4394;2;155;1
+22;3;FR-01-005;Buenas tardes. Hoy me siento mas o menos.;1793993040.833;True;exact;Buenas tardes. Hoy me siento mas o menos.;200;8901;8784;4;123;2
+23;3;FR-01-007;Tienes hambre?;1793993061.725;True;exact;Tienes hambre?;172;4165;4028;2;138;1
+24;3;FR-01-011;Perdon. Estas triste?;1793993078.775;True;exact;Perdon. Estas triste?;163;6908;6791;3;122;2
+25;3;FR-01-013;Hola, como estas? Como te llamas?;1793993100.003;True;exact;Hola, como estas? Como te llamas?;183;8474;8399;4;77;2
+26;3;FR-01-014;Donde vive tu familia?;1793993121.328;True;exact;Donde vive tu familia?;186;8405;8322;4;84;1
+27;3;FR-01-019;Yo nunca como mucho.;1793993141.954;True;exact;Yo nunca como mucho.;261;8881;8808;4;74;1
+28;3;FR-01-023;Perdon, mi hermano nunca esta contento.;1793993164.769;True;exact;Perdon, mi hermano nunca esta contento.;257;8894;8822;4;74;1
+29;3;FR-01-025;Por favor, come poco.;1793993186.04;True;exact;Por favor, come poco.;200;6605;6489;3;118;1
+30;3;FR-01-026;Con permiso. Dejame pasar, por favor.;1793993206.843;True;exact;Con permiso. Dejame pasar, por favor.;196;4483;4332;2;164;2
+31;4;FR-01-001;Hola, buenos dias, bienvenidos.;1793993224.371;True;semantic;Hola, buenos dias, bienvenidos.;189;4561;4407;2;155;1
+32;4;FR-01-005;Buenas tardes. Hoy me siento mas o menos.;1793993243.212;True;exact;Buenas tardes. Hoy me siento mas o menos.;187;8919;8790;4;134;2
+33;4;FR-01-007;Tienes hambre?;1793993264.42;True;exact;Tienes hambre?;192;4150;3998;2;154;1
+34;4;FR-01-011;Perdon. Estas triste?;1793993281.784;True;exact;Perdon. Estas triste?;151;6920;6832;3;90;2
+35;4;FR-01-013;Hola, como estas? Como te llamas?;1793993302.398;True;exact;Hola, como estas? Como te llamas?;210;8506;8389;4;122;2
+36;4;FR-01-014;Donde vive tu familia?;1793993323.598;True;exact;Donde vive tu familia?;155;8517;8399;4;119;1
+37;4;FR-01-019;Yo nunca como mucho.;1793993344.69;True;exact;Yo nunca como mucho.;243;8965;8884;4;83;1
+38;4;FR-01-023;Perdon, mi hermano nunca esta contento.;1793993367.712;True;exact;Perdon, mi hermano nunca esta contento.;209;8936;8846;4;91;1
+39;4;FR-01-025;Por favor, come poco.;1793993388.917;True;exact;Por favor, come poco.;213;6703;6630;3;74;1
+40;4;FR-01-026;Con permiso. Dejame pasar, por favor.;1793993409.61;True;exact;Con permiso. Dejame pasar, por favor.;196;4465;4311;2;158;2
+41;5;FR-01-001;Hola, buenos dias, bienvenidos.;1793993427.87;True;semantic;Hola, Buenos días, bienvenidos.;282;4611;4456;2;156;1
+42;5;FR-01-005;Buenas tardes. Hoy me siento mas o menos.;1793993447.59;True;exact;Buenas tardes. Hoy me siento mas o menos.;178;8841;8766;4;79;2
+43;5;FR-01-007;Tienes hambre?;1793993468.542;True;exact;Tienes hambre?;223;4049;3975;2;74;1
+44;5;FR-01-011;Perdon. Estas triste?;1793993485.501;True;exact;Perdon. Estas triste?;183;6819;6726;3;96;2
+45;5;FR-01-013;Hola, como estas? Como te llamas?;1793993506.287;True;exact;Hola, como estas? Como te llamas?;183;8423;8340;4;88;2
+46;5;FR-01-014;Donde vive tu familia?;1793993527.534;True;exact;Donde vive tu familia?;229;8338;8255;4;85;1
+47;5;FR-01-019;Yo nunca como mucho.;1793993548.232;True;exact;Yo nunca como mucho.;250;8920;8838;4;83;1
+48;5;FR-01-023;Perdon, mi hermano nunca esta contento.;1793993571.173;True;exact;Perdon, mi hermano nunca esta contento.;256;9006;8926;4;80;1
+49;5;FR-01-025;Por favor, come poco.;1793993592.461;True;exact;Por favor, come poco.;185;6723;6570;3;155;1
+50;5;FR-01-026;Con permiso. Dejame pasar, por favor.;1793993613.554;True;exact;Con permiso. Dejame pasar, por favor.;190;4499;4346;2;158;2

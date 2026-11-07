@@ -1,0 +1,174 @@
+{
+ "antes": {
+  "tablas": "catalog,catalog_synonym,semantic_cache",
+  "filas_catalog": "50",
+  "md5_catalog": "e72bac2a7b81455af1318b46df14c309",
+  "filas_synonym": "0",
+  "md5_columnas": "b58043f2525daea7f2d05ae3d359b038",
+  "filas_cache": "0",
+  "rol_lab": "lab:super=true"
+ },
+ "despues": {
+  "tablas": "catalog,catalog_synonym,semantic_cache",
+  "filas_catalog": "50",
+  "md5_catalog": "e72bac2a7b81455af1318b46df14c309",
+  "filas_synonym": "0",
+  "md5_columnas": "b58043f2525daea7f2d05ae3d359b038",
+  "filas_cache": "10",
+  "rol_lab": "lab:super=true"
+ },
+ "sin_cambios_catalog": true,
+ "sin_cambios_synonym": true,
+ "mismo_esquema": true,
+ "frases": [
+  {
+   "id": "FR-08-001",
+   "frase": "Mi nombre es O'Brien y vivo con mi familia.",
+   "fin": "done",
+   "oraciones": 1,
+   "glosas": [
+    "YO",
+    "NOMBRE",
+    "VIVIR",
+    "FAMILIA"
+   ],
+   "error": null,
+   "ms": 1453.1
+  },
+  {
+   "id": "FR-08-002",
+   "frase": "DROP TABLE catalog;",
+   "fin": "done",
+   "oraciones": 1,
+   "glosas": [
+    "DROP TABLE",
+    "CATALOG"
+   ],
+   "error": null,
+   "ms": 580.7
+  },
+  {
+   "id": "FR-08-003",
+   "frase": "Hola'; DROP TABLE catalog; --",
+   "fin": "done",
+   "oraciones": 1,
+   "glosas": [
+    "HOLA"
+   ],
+   "error": null,
+   "ms": 722.0
+  },
+  {
+   "id": "FR-08-004",
+   "frase": "Buenos días'; DELETE FROM catalog; --",
+   "fin": "done",
+   "oraciones": 2,
+   "glosas": [
+    "BUENOS DIAS",
+    "DELETE FROM CATALOG"
+   ],
+   "error": null,
+   "ms": 761.8
+  },
+  {
+   "id": "FR-08-005",
+   "frase": "'; UPDATE catalog SET glosa = 'X'; --",
+   "fin": "done",
+   "oraciones": 1,
+   "glosas": [],
+   "error": null,
+   "ms": 846.2
+  },
+  {
+   "id": "FR-08-006",
+   "frase": "' OR '1'='1",
+   "fin": "done",
+   "oraciones": 1,
+   "glosas": [],
+   "error": null,
+   "ms": 511.9
+  },
+  {
+   "id": "FR-08-007",
+   "frase": "Gracias a todos' OR 1=1; --",
+   "fin": "done",
+   "oraciones": 2,
+   "glosas": [
+    "GRACIAS",
+    "A TODOS' OR 1=1"
+   ],
+   "error": null,
+   "ms": 670.0
+  },
+  {
+   "id": "FR-08-008",
+   "frase": "' UNION SELECT clave FROM usuarios; --",
+   "fin": "done",
+   "oraciones": 1,
+   "glosas": [
+    "UNION",
+    "SELECT",
+    "CLAVE",
+    "USUARIOS"
+   ],
+   "error": null,
+   "ms": 849.0
+  },
+  {
+   "id": "FR-08-009",
+   "frase": "Hola \"mundo\" /* comentario */ ; SELECT * FROM catalog; --",
+   "fin": "done",
+   "oraciones": 1,
+   "glosas": [
+    "HOLA"
+   ],
+   "error": null,
+   "ms": 699.8
+  },
+  {
+   "id": "FR-08-010",
+   "frase": "El 100% de mi familia come_hoy \\ y trabaja.",
+   "fin": "done",
+   "oraciones": 1,
+   "glosas": [
+    "FAMILIA",
+    "COMER",
+    "TRABAJAR"
+   ],
+   "error": null,
+   "ms": 785.8
+  }
+ ],
+ "control_valida": true,
+ "health": {
+  "status": "ok",
+  "cache_loaded": true,
+  "cache_rows": 10,
+  "catalog_loaded": true,
+  "catalog_glosses": 50,
+  "silence_timeout_ms": 1500
+ },
+ "columnas_cache": [
+  "id",
+  "original_text",
+  "embedding",
+  "phrase_type",
+  "glosses",
+  "secondary_signals",
+  "had_collision",
+  "created_at"
+ ],
+ "filas_cache_texto": [
+  "{\"id\": 234, \"glosses\": [\"YO\", \"NOMBRE\", \"VIVIR\", \"FAMILIA\"], \"created_at\": \"2026-11-07T15:07:31.182114\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"Mi nombre es O'Brien y vivo con mi familia.\", \"secondary_signals\": []}",
+  "{\"id\": 235, \"glosses\": [\"DROP TABLE\", \"CATALOG\"], \"created_at\": \"2026-11-07T15:07:31.769823\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"DROP TABLE catalog;\", \"secondary_signals\": []}",
+  "{\"id\": 236, \"glosses\": [\"HOLA\"], \"created_at\": \"2026-11-07T15:07:32.528176\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"Hola'; DROP TABLE catalog; --\", \"secondary_signals\": []}",
+  "{\"id\": 237, \"glosses\": [\"DELETE FROM CATALOG\"], \"created_at\": \"2026-11-07T15:07:33.482286\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"DELETE FROM catalog; --\", \"secondary_signals\": []}",
+  "{\"id\": 238, \"glosses\": [\"BUENOS DIAS\"], \"created_at\": \"2026-11-07T15:07:33.485205\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"Buenos días';\", \"secondary_signals\": []}",
+  "{\"id\": 239, \"glosses\": [\"GRACIAS\"], \"created_at\": \"2026-11-07T15:07:35.149405\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"Gracias\", \"secondary_signals\": []}",
+  "{\"id\": 240, \"glosses\": [\"A TODOS' OR 1=1\"], \"created_at\": \"2026-11-07T15:07:35.304131\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"a todos' OR 1=1; --\", \"secondary_signals\": []}",
+  "{\"id\": 241, \"glosses\": [\"UNION\", \"SELECT\", \"CLAVE\", \"USUARIOS\"], \"created_at\": \"2026-11-07T15:07:36.161608\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"' UNION SELECT clave FROM usuarios; --\", \"secondary_signals\": []}",
+  "{\"id\": 242, \"glosses\": [\"HOLA\"], \"created_at\": \"2026-11-07T15:07:36.857555\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"Hola \\\"mundo\\\" /* comentario */; SELECT * FROM catalog; --\", \"secondary_signals\": []}",
+  "{\"id\": 243, \"glosses\": [\"FAMILIA\", \"COMER\", \"TRABAJAR\"], \"created_at\": \"2026-11-07T15:07:37.639018\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"El 100% de mi familia come_hoy \\\\ y trabaja.\", \"secondary_signals\": []}",
+  "{\"id\": 244, \"glosses\": [\"HOLA\", \"BUENOS DIAS\", \"BIENVENIDO\"], \"created_at\": \"2026-11-07T15:07:39.622214\", \"phrase_type\": \"AFFIRMATIVE\", \"had_collision\": false, \"original_text\": \"Hola, buenos días, bienvenidos.\", \"secondary_signals\": []}"
+ ]
+}

@@ -1,0 +1,179 @@
+{
+ "archivos_audio_nuevos": {
+  "p3lab-backend": [],
+  "p3lab-stt": []
+ },
+ "tmp_antes": {
+  "p3lab-backend": [
+   "/dev/shm:",
+   "/tmp:",
+   "torchinductor_root",
+   "/var/tmp:"
+  ],
+  "p3lab-stt": [
+   "/dev/shm:",
+   "/tmp:",
+   "/var/tmp:"
+  ]
+ },
+ "tmp_despues": {
+  "p3lab-backend": [
+   "/dev/shm:",
+   "/tmp:",
+   "torchinductor_root",
+   "/var/tmp:"
+  ],
+  "p3lab-stt": [
+   "/dev/shm:",
+   "/tmp:",
+   "/var/tmp:"
+  ]
+ },
+ "lineas_log_nuevas": {
+  "p3lab-backend": 199,
+  "p3lab-stt": 76
+ },
+ "lineas_log_con_audio": {
+  "p3lab-backend": [],
+  "p3lab-stt": []
+ },
+ "columnas_audio_en_base": {
+  "antes": "0",
+  "despues": "0"
+ },
+ "tamano_tablas_bytes": {
+  "antes": "155648",
+  "despues": "229376"
+ },
+ "filas_cache": {
+  "antes": 0,
+  "despues": 14
+ },
+ "frases": [
+  {
+   "transcript": "Hola, buenos días, bienvenidos.",
+   "fin": "done",
+   "oraciones": [
+    "Hola, buenos días, bienvenidos."
+   ],
+   "frase": "FR-01-001",
+   "audio": "AU-01-001",
+   "plan": "Hola, buenos días, bienvenidos.",
+   "oraciones_en_cache": 1,
+   "n_oraciones": 1
+  },
+  {
+   "transcript": "Buenas tardes. Hoy me siento más o menos.",
+   "fin": "done",
+   "oraciones": [
+    "Buenas tardes.",
+    "Hoy me siento más o menos."
+   ],
+   "frase": "FR-01-005",
+   "audio": "AU-01-007",
+   "plan": "Buenas tardes. Hoy me siento más o menos.",
+   "oraciones_en_cache": 2,
+   "n_oraciones": 2
+  },
+  {
+   "transcript": "¿Tienes hambre?",
+   "fin": "done",
+   "oraciones": [
+    "¿Tienes hambre?"
+   ],
+   "frase": "FR-01-007",
+   "audio": "AU-01-013",
+   "plan": "¿Tienes hambre?",
+   "oraciones_en_cache": 1,
+   "n_oraciones": 1
+  },
+  {
+   "transcript": "Perdón, ¿estás triste?",
+   "fin": "done",
+   "oraciones": [
+    "Perdón,",
+    "¿estás triste?"
+   ],
+   "frase": "FR-01-011",
+   "audio": "AU-01-019",
+   "plan": "Perdón. ¿Estás triste?",
+   "oraciones_en_cache": 2,
+   "n_oraciones": 2
+  },
+  {
+   "transcript": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+   "fin": "done",
+   "oraciones": [
+    "Hola,",
+    "¿cómo estás?",
+    "¿Cómo te llamas?"
+   ],
+   "frase": "FR-01-013",
+   "audio": "AU-01-025",
+   "plan": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+   "oraciones_en_cache": 3,
+   "n_oraciones": 3
+  },
+  {
+   "transcript": "¿Dónde vive tu familia?",
+   "fin": "done",
+   "oraciones": [
+    "¿Dónde vive tu familia?"
+   ],
+   "frase": "FR-01-014",
+   "audio": "AU-01-031",
+   "plan": "¿Dónde vive tu familia?",
+   "oraciones_en_cache": 1,
+   "n_oraciones": 1
+  },
+  {
+   "transcript": "Yo nunca como mucho.",
+   "fin": "done",
+   "oraciones": [
+    "Yo nunca como mucho."
+   ],
+   "frase": "FR-01-019",
+   "audio": "AU-01-037",
+   "plan": "Yo nunca como mucho.",
+   "oraciones_en_cache": 1,
+   "n_oraciones": 1
+  },
+  {
+   "transcript": "Perdón, mi hermano nunca está contento.",
+   "fin": "done",
+   "oraciones": [
+    "Perdón, mi hermano nunca está contento."
+   ],
+   "frase": "FR-01-023",
+   "audio": "AU-01-043",
+   "plan": "Perdón. Mi hermano nunca está contento.",
+   "oraciones_en_cache": 1,
+   "n_oraciones": 1
+  },
+  {
+   "transcript": "Por favor, come poco.",
+   "fin": "done",
+   "oraciones": [
+    "Por favor, come poco."
+   ],
+   "frase": "FR-01-025",
+   "audio": "AU-01-049",
+   "plan": "Por favor, come poco.",
+   "oraciones_en_cache": 1,
+   "n_oraciones": 1
+  },
+  {
+   "transcript": "Con permiso, déjame pasar, por favor.",
+   "fin": "done",
+   "oraciones": [
+    "Con permiso, déjame pasar, por favor."
+   ],
+   "frase": "FR-01-026",
+   "audio": "AU-01-055",
+   "plan": "Con permiso. Déjame pasar, por favor.",
+   "oraciones_en_cache": 1,
+   "n_oraciones": 1
+  }
+ ],
+ "frases_con_todas_sus_oraciones_en_cache": 10
+}

@@ -1,0 +1,36 @@
+{
+  "fecha": "2026-11-07",
+  "origen": "Neon real (base canonica), solo SELECT en sesion de solo lectura (PGOPTIONS default_transaction_read_only=on; transaction_read_only = on, confirmado). Sin credenciales en este archivo.",
+  "rol_que_usa_el_backend": {
+    "nombre": "neondb_owner",
+    "superusuario": false,
+    "createdb": true,
+    "createrole": true,
+    "replication": true,
+    "bypassrls": true,
+    "miembro_de": ["neon_superuser"]
+  },
+  "tablas_publicas": {
+    "catalog": {"duenio": "neondb_owner", "privilegios": ["DELETE", "INSERT", "REFERENCES", "SELECT", "TRIGGER", "TRUNCATE", "UPDATE"]},
+    "catalog_synonym": {"duenio": "neondb_owner", "privilegios": ["DELETE", "INSERT", "REFERENCES", "SELECT", "TRIGGER", "TRUNCATE", "UPDATE"]},
+    "semantic_cache": {"duenio": "neondb_owner", "privilegios": ["DELETE", "INSERT", "REFERENCES", "SELECT", "TRIGGER", "TRUNCATE", "UPDATE"]}
+  },
+  "privilegios_en_esquema_y_base": {"CREATE_en_esquema_public": true, "CREATE_en_base": true, "TEMP_en_base": true},
+  "otros_roles_existentes": ["cloud_admin (superusuario, de Neon)", "neon_service", "neon_superuser", "neondb_owner", "token_roles"],
+  "privilegios_que_necesita_el_backend_en_ejecucion": {
+    "fuente": "Lectura de sign-ai-backend/app: catalog_repository.py solo hace fetch; semantic_cache.py hace fetch, fetchrow con <=> y un INSERT ... ON CONFLICT (original_text, phrase_type) DO UPDATE con parametros; database.py y keep_alive.py hacen SELECT 1 y SELECT $1::vector. No hay DELETE, TRUNCATE ni DDL en el codigo de ejecucion (los DELETE y UPDATE que aparecen en app/ estan en comentarios).",
+    "catalog": ["SELECT"],
+    "catalog_synonym": ["SELECT"],
+    "semantic_cache": ["SELECT", "INSERT", "UPDATE"]
+  },
+  "sobran": [
+    "DELETE, TRUNCATE, TRIGGER y REFERENCES en las tres tablas",
+    "INSERT, UPDATE y DELETE en catalog y catalog_synonym",
+    "ser duenio de las tablas (permite DDL: ALTER y DROP)",
+    "CREATE en el esquema public y en la base",
+    "CREATEDB, CREATEROLE, REPLICATION y BYPASSRLS",
+    "pertenecer a neon_superuser"
+  ],
+  "veredicto_criterio_permisos_minimos": "No se cumple: el backend se conecta con el rol duenio de Neon. Una inyeccion de SQL, que hoy no existe porque las consultas usan parametros, tendria alcance total. Lo decide el owner.",
+  "limites": "No se revisaron los permisos de la cuenta de la consola de Neon ni los de la API. Los privilegios efectivos salen de has_table_privilege y de information_schema.role_table_grants."
+}

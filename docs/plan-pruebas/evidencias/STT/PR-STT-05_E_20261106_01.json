@@ -1,0 +1,74 @@
+{
+  "modelo": "medium",
+  "resumen": {
+    "0.004": {
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "wer_pct": 1.77,
+      "errores": 5,
+      "palabras": 282,
+      "voz_sin_texto": [
+        "AU-01-014"
+      ],
+      "n_voz_sin_texto": 1,
+      "sin_voz_con_texto_post": [],
+      "sin_voz_con_texto_final_ws": [
+        "AU-03-005"
+      ],
+      "sin_voz_con_parcial_ws": []
+    },
+    "0.008": {
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "wer_pct": 1.77,
+      "errores": 5,
+      "palabras": 282,
+      "voz_sin_texto": [
+        "AU-01-014"
+      ],
+      "n_voz_sin_texto": 1,
+      "sin_voz_con_texto_post": [],
+      "sin_voz_con_texto_final_ws": [],
+      "sin_voz_con_parcial_ws": [
+        "AU-03-006"
+      ]
+    },
+    "0.016": {
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "wer_pct": 1.77,
+      "errores": 5,
+      "palabras": 282,
+      "voz_sin_texto": [
+        "AU-01-014"
+      ],
+      "n_voz_sin_texto": 1,
+      "sin_voz_con_texto_post": [],
+      "sin_voz_con_texto_final_ws": [
+        "AU-03-005"
+      ],
+      "sin_voz_con_parcial_ws": [
+        "AU-03-006"
+      ]
+    }
+  },
+  "nota": "MIN_RMS (percentil 90 del RMS por tramo de 30 ms) en una instancia aparte (docker run, puerto 8001); voz: POST /transcribe de los 60 audios de AU-01; sin voz: POST y streaming WS (a 0,5x) de los 8 audios de AU-03. Todo igual salvo MIN_RMS."
+}

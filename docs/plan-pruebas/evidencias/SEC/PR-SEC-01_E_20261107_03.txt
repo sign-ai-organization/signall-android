@@ -1,0 +1,32 @@
+PR-SEC-01 · Parte del teléfono (variante demo) · 2026-11-07
+=========================================================
+
+Teléfono: Redmi Note 11 (2201117TL, id 61ecd28e). App: com.signai.webview, variante `demo`
+(compilada e instalada con `./gradlew installDemo`; direcciona wss://127.0.0.1:8443/ws/translate).
+Túnel: `adb reverse tcp:8443 tcp:9443` -> grabadora TCP del laboratorio -> proxy Caddy (TLS) -> backend.
+
+Lo que SÍ se observó (adb logcat -s SignAiNet SignAiState, hora del teléfono):
+
+11-07 11:15:27.416 SignAiState: backend session starting
+11-07 11:15:27.577 SignAiNet: session failed: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found.
+11-07 11:15:30.661 SignAiNet: session failed: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found.
+11-07 11:15:35.812 SignAiNet: session failed: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found.
+
+Lectura: sin la CA del laboratorio en el almacén del teléfono, la app NO acepta el certificado del
+proxy y no abre la sesión. Es el comportamiento esperado de una conexión verificada. No prueba por
+sí solo que el canal cifrado funcione con la app real, solo que la app exige un certificado confiable.
+
+Lo que NO se pudo ejecutar:
+- Instalar la CA del laboratorio (lab-ca.crt) en el teléfono. Android solo permite instalar una CA de
+  usuario con bloqueo de pantalla (PIN, patrón o contraseña) y el teléfono no lo tiene configurado.
+  Decisión del owner (2026-11-07): no poner un bloqueo temporal; esta parte se declara NO ejecutada.
+- Por eso no hay captura de la sesión TLS exitosa entre la app real y el proxy. Esa parte se cubrió
+  con un cliente de pruebas en el PC por wss:// (ver PR-SEC-01_E_20261107_01.json y _02.json).
+- Intentar conectar la `demo` a una dirección sin cifrar: la `demo` ignora cualquier URL que no sea
+  wss:// al compilar (app/build.gradle.kts, líneas 71 a 76), así que no hay forma de apuntarla a un
+  ws://. Solo se comprobó de forma estática: su network_security_config.xml tiene
+  cleartextTrafficPermitted="false".
+
+Nota de método: el intento de abrir el instalador de certificados con `am start ... file://` falló
+("No fue posible realizar la instalación porque no se pudo leer el archivo del certificado"),
+porque Android no permite leer file:// desde el instalador.

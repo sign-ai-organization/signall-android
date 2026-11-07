@@ -1,0 +1,38 @@
+{
+  "audio_ms": 96085,
+  "t_fin_audio_ms": 96047.3,
+  "t_ultimo_done_ms": 99080.2,
+  "frases_esperadas": 20,
+  "transcripts_finales": 20,
+  "done": 20,
+  "errores": [],
+  "frames_tipos": {
+    "transcript": 74,
+    "capability": 1,
+    "segment": 23,
+    "done": 20
+  },
+  "health_final": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 41,
+    "catalog_loaded": true,
+    "catalog_glosses": 63,
+    "silence_timeout_ms": 1500
+  },
+  "contadores_delta": {
+    "audio_bytes_total": 3073920.0,
+    "audio_chunks_total": 3202.0,
+    "rt_cache_total{source=\"exact\"}": 13.0,
+    "rt_cache_total{source=\"miss\"}": 9.0,
+    "rt_cache_total{source=\"semantic\"}": 1.0,
+    "rt_glosses_total": 62.0,
+    "rt_phrases_total": 20.0,
+    "rt_sentences_total": 23.0,
+    "sessions_total": 1.0
+  },
+  "en_orden": true,
+  "wer_total": 0.0,
+  "espera_max_ms": 811.9,
+  "espera_p50_ms": 7.8
+}

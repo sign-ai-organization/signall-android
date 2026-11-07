@@ -1,0 +1,162 @@
+{
+  "alcance": "LABORATORIO aparte: Postgres+pgvector p2lab-pg (puerto 5433), backend p2lab-backend (8180), LLM falso en modo slow (0,7 s). Sin Neon. No equivale a la base dormida de Neon (el modo pausa solo emula una base que no responde).",
+  "base": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 9,
+    "catalog_loaded": true,
+    "catalog_glosses": 50
+  },
+  "corte_en_traduccion": {
+    "frase_nueva": {
+      "fin": "done",
+      "ms": 4559.1,
+      "glosas": "HOLA TU",
+      "disponibles": 2,
+      "error": null
+    },
+    "frase_repetida": {
+      "fin": "done",
+      "ms": 7.4,
+      "glosas": "HOLA TU",
+      "disponibles": 2,
+      "error": null
+    },
+    "estados_health": [
+      [
+        16.7,
+        "ok"
+      ],
+      [
+        20.7,
+        "ok"
+      ],
+      [
+        24.7,
+        "ok"
+      ],
+      [
+        28.7,
+        "ok"
+      ],
+      [
+        32.8,
+        "ok"
+      ],
+      [
+        36.8,
+        "ok"
+      ],
+      [
+        40.8,
+        "ok"
+      ],
+      [
+        44.9,
+        "ok"
+      ],
+      [
+        48.9,
+        "ok"
+      ],
+      [
+        52.9,
+        "ok"
+      ]
+    ],
+    "lineas_log": [
+      "2026-11-06 20:45:10,460 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:45:16,006 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:45:25,543 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:45:30,955 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:45:35,413 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:45:39,994 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:45:49,325 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:45:49,368 WARNING app.nlp.semantic_cache: Not storing an empty answer for 'Mi tío vive aquí.'",
+      "2026-11-06 20:45:54,275 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:45:54,319 INFO openai._base_client: Retrying request in 0.382516 seconds (retry 1 of 1)",
+      "2026-11-06 20:45:54,708 ERROR app.controller.controller: orchestrator.translate_stream failed for 'Mi abuelo trabaja mucho.'",
+      "2026-11-06 20:45:59,452 ERROR app.controller.router: Could not connect to the STT service",
+      "2026-11-06 20:46:04,496 INFO openai._base_client: Retrying request in 0.406534 seconds (retry 1 of 1)",
+      "2026-11-06 20:46:09,908 ERROR app.controller.controller: orchestrator.translate_stream failed for 'Los niños comen poco.'",
+      "    response = await self._send_with_auth_retry(request, stream=stream, **kwargs)"
+    ],
+    "n_lineas_log": 41
+  },
+  "recuperacion_sin_reiniciar": {
+    "s_hasta_health_ok": 0.0,
+    "health": {
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 10,
+      "catalog_loaded": true,
+      "catalog_glosses": 50
+    },
+    "frase_siguiente": {
+      "fin": "done",
+      "ms": 760.2,
+      "glosas": "HOLA TU",
+      "disponibles": 2,
+      "error": null
+    },
+    "guardada_en_la_base": true,
+    "filas": 10,
+    "frase_perdida_guardada": "0"
+  },
+  "arranque_con_base_caida": {
+    "s_hasta_responder": 27.2,
+    "health_inicial": {
+      "status": "degraded",
+      "cache_loaded": false,
+      "cache_rows": 0,
+      "catalog_loaded": false,
+      "catalog_glosses": 0
+    },
+    "frase_con_base_caida": {
+      "fin": "done",
+      "ms": 716.5,
+      "glosas": "HOLA TU",
+      "disponibles": 0,
+      "error": null
+    },
+    "health_20s_tras_volver_la_base": {
+      "status": "degraded",
+      "cache_loaded": false,
+      "cache_rows": 0,
+      "catalog_loaded": false,
+      "catalog_glosses": 0
+    },
+    "frase_tras_volver_la_base_sin_reiniciar": {
+      "fin": "done",
+      "ms": 715.3,
+      "glosas": "HOLA TU",
+      "disponibles": 0,
+      "error": null
+    },
+    "reload_cache": "<HTTPError 503: 'Service Unavailable'>",
+    "health_tras_reload_cache": {
+      "status": "degraded",
+      "cache_loaded": false,
+      "cache_rows": 0,
+      "catalog_loaded": false,
+      "catalog_glosses": 0
+    }
+  },
+  "base_pausada_emulada": {
+    "frase_con_la_base_pausada": {
+      "fin": "done",
+      "ms": 719.9,
+      "glosas": "HOLA TU",
+      "disponibles": 0,
+      "error": null
+    },
+    "s_hasta_guardada_tras_despausar": null,
+    "health_durante_pausa": {
+      "status": "degraded",
+      "cache_loaded": false,
+      "cache_rows": 0,
+      "catalog_loaded": false,
+      "catalog_glosses": 0
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+ "sinonimos_cargados": 13,
+ "arranques": [
+  {
+   "arranque": 1,
+   "stt_s": 9.5,
+   "backend_s": 23.5,
+   "glosas": 63,
+   "primera_frase": "FR-01-008",
+   "primera_ms": 907.1,
+   "primera_ok": true,
+   "primera_fuentes": "llm",
+   "segunda_frase": "FR-01-009",
+   "segunda_ms": 886.5,
+   "segunda_ok": true,
+   "segunda_fuentes": "llm",
+   "app_sesion_abierta_s": 1.5,
+   "app_avatar_listo_s": null
+  },
+  {
+   "arranque": 2,
+   "stt_s": 8.4,
+   "backend_s": 18.8,
+   "glosas": 63,
+   "primera_frase": "FR-01-012",
+   "primera_ms": 1279.2,
+   "primera_ok": true,
+   "primera_fuentes": "llm",
+   "segunda_frase": "FR-01-016",
+   "segunda_ms": 636.5,
+   "segunda_ok": true,
+   "segunda_fuentes": "llm",
+   "app_sesion_abierta_s": 1.1,
+   "app_avatar_listo_s": null
+  },
+  {
+   "arranque": 3,
+   "stt_s": 9.3,
+   "backend_s": 20.5,
+   "glosas": 63,
+   "primera_frase": "FR-01-017",
+   "primera_ms": 1049.7,
+   "primera_ok": true,
+   "primera_fuentes": "llm",
+   "segunda_frase": "FR-01-025",
+   "segunda_ms": 598.3,
+   "segunda_ok": true,
+   "segunda_fuentes": "llm",
+   "app_sesion_abierta_s": 1.0,
+   "app_avatar_listo_s": null
+  }
+ ]
+}

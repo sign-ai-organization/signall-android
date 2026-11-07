@@ -1,0 +1,82 @@
+{
+ "con_cache": {
+  "frases": 60,
+  "ok": 60,
+  "frases_sin_llm": 19,
+  "pct_sin_llm": 31.7,
+  "oraciones": 88,
+  "oraciones_de_cache": 32,
+  "llamadas_llm": 56,
+  "ms_medio": 565.1,
+  "ms_p50": 704.5
+ },
+ "sin_cache_A": {
+  "frases": 60,
+  "ok": 60,
+  "frases_sin_llm": 0,
+  "pct_sin_llm": 0.0,
+  "oraciones": 88,
+  "oraciones_de_cache": 0,
+  "llamadas_llm": 88,
+  "ms_medio": 741.7,
+  "ms_p50": 700.6
+ },
+ "sin_cache_B": {
+  "frases": 60,
+  "ok": 60,
+  "frases_sin_llm": 0,
+  "pct_sin_llm": 0.0,
+  "oraciones": 88,
+  "oraciones_de_cache": 0,
+  "llamadas_llm": 88,
+  "ms_medio": 720.6,
+  "ms_p50": 701.5
+ },
+ "mismas_glosas_con_vs_A": 53,
+ "mismas_glosas_con_vs_B": 52,
+ "mismas_glosas_A_vs_B": 57,
+ "diferencias_con_vs_A": [
+  {
+   "orden": 33,
+   "frase": "En familia trabajan mi abuelo y mi tío.",
+   "con": "ABUELO TIO TRABAJAR FAMILIA",
+   "sin": "FAMILIA TRABAJAR ABUELO TIO"
+  },
+  {
+   "orden": 34,
+   "frase": "Porque mi hermano está feliz, estoy contento.",
+   "con": "YO CONTENTO HERMANO FELIZ",
+   "sin": "HERMANO FELIZ YO CONTENTO"
+  },
+  {
+   "orden": 41,
+   "frase": "Perdon. ¿Estas triste?",
+   "con": "PERDON COMO ESTAS TRISTE",
+   "sin": "PERDON TU TRISTE"
+  },
+  {
+   "orden": 43,
+   "frase": "Hola ¿cómo estás? ¿Cómo te llamas?",
+   "con": "HOLA COMO ESTAS COMO TU",
+   "sin": "HOLA COMO ESTAS COMO YO"
+  },
+  {
+   "orden": 47,
+   "frase": "¿Ustedes cuándo comen?",
+   "con": "CUANDO USTEDES COMER",
+   "sin": "USTEDES COMER"
+  },
+  {
+   "orden": 48,
+   "frase": "Las personas son diferentes. ¿Tú qué seña usas?",
+   "con": "PERSONAS DIFERENTE QUE SEÑA TU",
+   "sin": "PERSONAS DIFERENTE TU QUE SEÑA"
+  },
+  {
+   "orden": 58,
+   "frase": "Hermano, reside con el abuelo. Trabaja con el tío.",
+   "con": "HERMANO VIVIR ABUELO TRABAJAR TIO",
+   "sin": "HERMANO ABUELO TRABAJAR TIO"
+  }
+ ]
+}

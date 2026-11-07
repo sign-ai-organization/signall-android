@@ -1,0 +1,229 @@
+﻿min_rms;conjunto;audio;tipo_texto;referencia;texto;errores;palabras;drop;via
+0.004;AU-01 (voz);AU-01-001;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.004;AU-01 (voz);AU-01-002;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.004;AU-01 (voz);AU-01-003;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenido.;1;4;;POST
+0.004;AU-01 (voz);AU-01-004;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.004;AU-01 (voz);AU-01-005;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.004;AU-01 (voz);AU-01-006;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.004;AU-01 (voz);AU-01-007;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0;8;;POST
+0.004;AU-01 (voz);AU-01-008;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.004;AU-01 (voz);AU-01-009;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0;8;;POST
+0.004;AU-01 (voz);AU-01-010;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.004;AU-01 (voz);AU-01-011;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.004;AU-01 (voz);AU-01-012;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.004;AU-01 (voz);AU-01-013;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.004;AU-01 (voz);AU-01-014;Pregunta de sí o no;¿Tienes hambre?;;2;2;no_speech;POST
+0.004;AU-01 (voz);AU-01-015;Pregunta de sí o no;¿Tienes hambre?;Tienes hambre?;0;2;;POST
+0.004;AU-01 (voz);AU-01-016;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.004;AU-01 (voz);AU-01-017;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.004;AU-01 (voz);AU-01-018;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.004;AU-01 (voz);AU-01-019;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.004;AU-01 (voz);AU-01-020;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿es Astrice?;2;3;;POST
+0.004;AU-01 (voz);AU-01-021;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.004;AU-01 (voz);AU-01-022;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.004;AU-01 (voz);AU-01-023;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.004;AU-01 (voz);AU-01-024;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.004;AU-01 (voz);AU-01-025;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.004;AU-01 (voz);AU-01-026;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.004;AU-01 (voz);AU-01-027;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿cómo te llamas?;0;6;;POST
+0.004;AU-01 (voz);AU-01-028;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.004;AU-01 (voz);AU-01-029;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.004;AU-01 (voz);AU-01-030;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.004;AU-01 (voz);AU-01-031;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.004;AU-01 (voz);AU-01-032;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.004;AU-01 (voz);AU-01-033;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.004;AU-01 (voz);AU-01-034;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.004;AU-01 (voz);AU-01-035;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.004;AU-01 (voz);AU-01-036;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.004;AU-01 (voz);AU-01-037;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.004;AU-01 (voz);AU-01-038;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.004;AU-01 (voz);AU-01-039;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.004;AU-01 (voz);AU-01-040;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.004;AU-01 (voz);AU-01-041;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.004;AU-01 (voz);AU-01-042;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.004;AU-01 (voz);AU-01-043;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.004;AU-01 (voz);AU-01-044;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.004;AU-01 (voz);AU-01-045;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.004;AU-01 (voz);AU-01-046;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.004;AU-01 (voz);AU-01-047;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.004;AU-01 (voz);AU-01-048;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.004;AU-01 (voz);AU-01-049;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.004;AU-01 (voz);AU-01-050;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.004;AU-01 (voz);AU-01-051;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.004;AU-01 (voz);AU-01-052;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.004;AU-01 (voz);AU-01-053;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.004;AU-01 (voz);AU-01-054;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.004;AU-01 (voz);AU-01-055;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0;6;;POST
+0.004;AU-01 (voz);AU-01-056;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.004;AU-01 (voz);AU-01-057;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.004;AU-01 (voz);AU-01-058;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.004;AU-01 (voz);AU-01-059;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.004;AU-01 (voz);AU-01-060;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.004;AU-03 (sin voz);AU-03-001;silencio, 20 s;;;;;rms;POST
+0.004;AU-03 (sin voz);AU-03-002;silencio, 20 s;;;;;rms;POST
+0.004;AU-03 (sin voz);AU-03-003;ruido, 20 s;;;;;logprob;POST
+0.004;AU-03 (sin voz);AU-03-004;ruido, 20 s, más cerca;;;;;logprob;POST
+0.004;AU-03 (sin voz);AU-03-005;4 tosidos;;;;;logprob;POST
+0.004;AU-03 (sin voz);AU-03-006;4 carraspeos;;;;;rms;POST
+0.004;AU-03 (sin voz);AU-03-007;10 golpes;;;;;logprob;POST
+0.004;AU-03 (sin voz);AU-03-008;teclado sin parar;;;;;no_speech;POST
+0.004;AU-03 (sin voz);AU-03-001;silencio, 20 s;;;;;;WS (ritmo 0,5x)
+0.004;AU-03 (sin voz);AU-03-002;silencio, 20 s;;;;;;WS (ritmo 0,5x)
+0.004;AU-03 (sin voz);AU-03-003;ruido, 20 s;;;;;;WS (ritmo 0,5x)
+0.004;AU-03 (sin voz);AU-03-004;ruido, 20 s, más cerca;;;;;;WS (ritmo 0,5x)
+0.004;AU-03 (sin voz);AU-03-005;4 tosidos;;COUH COUH;;;;WS (ritmo 0,5x)
+0.004;AU-03 (sin voz);AU-03-006;4 carraspeos;;;;;;WS (ritmo 0,5x)
+0.004;AU-03 (sin voz);AU-03-007;10 golpes;;;;;;WS (ritmo 0,5x)
+0.004;AU-03 (sin voz);AU-03-008;teclado sin parar;;;;;;WS (ritmo 0,5x)
+0.008;AU-01 (voz);AU-01-001;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.008;AU-01 (voz);AU-01-002;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.008;AU-01 (voz);AU-01-003;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenido.;1;4;;POST
+0.008;AU-01 (voz);AU-01-004;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.008;AU-01 (voz);AU-01-005;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.008;AU-01 (voz);AU-01-006;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.008;AU-01 (voz);AU-01-007;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0;8;;POST
+0.008;AU-01 (voz);AU-01-008;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.008;AU-01 (voz);AU-01-009;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0;8;;POST
+0.008;AU-01 (voz);AU-01-010;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.008;AU-01 (voz);AU-01-011;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.008;AU-01 (voz);AU-01-012;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.008;AU-01 (voz);AU-01-013;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.008;AU-01 (voz);AU-01-014;Pregunta de sí o no;¿Tienes hambre?;;2;2;no_speech;POST
+0.008;AU-01 (voz);AU-01-015;Pregunta de sí o no;¿Tienes hambre?;Tienes hambre?;0;2;;POST
+0.008;AU-01 (voz);AU-01-016;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.008;AU-01 (voz);AU-01-017;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.008;AU-01 (voz);AU-01-018;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.008;AU-01 (voz);AU-01-019;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.008;AU-01 (voz);AU-01-020;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿es Astrice?;2;3;;POST
+0.008;AU-01 (voz);AU-01-021;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.008;AU-01 (voz);AU-01-022;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.008;AU-01 (voz);AU-01-023;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.008;AU-01 (voz);AU-01-024;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.008;AU-01 (voz);AU-01-025;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.008;AU-01 (voz);AU-01-026;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.008;AU-01 (voz);AU-01-027;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿cómo te llamas?;0;6;;POST
+0.008;AU-01 (voz);AU-01-028;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.008;AU-01 (voz);AU-01-029;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.008;AU-01 (voz);AU-01-030;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.008;AU-01 (voz);AU-01-031;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.008;AU-01 (voz);AU-01-032;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.008;AU-01 (voz);AU-01-033;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.008;AU-01 (voz);AU-01-034;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.008;AU-01 (voz);AU-01-035;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.008;AU-01 (voz);AU-01-036;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.008;AU-01 (voz);AU-01-037;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.008;AU-01 (voz);AU-01-038;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.008;AU-01 (voz);AU-01-039;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.008;AU-01 (voz);AU-01-040;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.008;AU-01 (voz);AU-01-041;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.008;AU-01 (voz);AU-01-042;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.008;AU-01 (voz);AU-01-043;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.008;AU-01 (voz);AU-01-044;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.008;AU-01 (voz);AU-01-045;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.008;AU-01 (voz);AU-01-046;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.008;AU-01 (voz);AU-01-047;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.008;AU-01 (voz);AU-01-048;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.008;AU-01 (voz);AU-01-049;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.008;AU-01 (voz);AU-01-050;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.008;AU-01 (voz);AU-01-051;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.008;AU-01 (voz);AU-01-052;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.008;AU-01 (voz);AU-01-053;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.008;AU-01 (voz);AU-01-054;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.008;AU-01 (voz);AU-01-055;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0;6;;POST
+0.008;AU-01 (voz);AU-01-056;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.008;AU-01 (voz);AU-01-057;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.008;AU-01 (voz);AU-01-058;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.008;AU-01 (voz);AU-01-059;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.008;AU-01 (voz);AU-01-060;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.008;AU-03 (sin voz);AU-03-001;silencio, 20 s;;;;;rms;POST
+0.008;AU-03 (sin voz);AU-03-002;silencio, 20 s;;;;;rms;POST
+0.008;AU-03 (sin voz);AU-03-003;ruido, 20 s;;;;;logprob;POST
+0.008;AU-03 (sin voz);AU-03-004;ruido, 20 s, más cerca;;;;;logprob;POST
+0.008;AU-03 (sin voz);AU-03-005;4 tosidos;;;;;logprob;POST
+0.008;AU-03 (sin voz);AU-03-006;4 carraspeos;;;;;rms;POST
+0.008;AU-03 (sin voz);AU-03-007;10 golpes;;;;;rms;POST
+0.008;AU-03 (sin voz);AU-03-008;teclado sin parar;;;;;no_speech;POST
+0.008;AU-03 (sin voz);AU-03-001;silencio, 20 s;;;;;;WS (ritmo 0,5x)
+0.008;AU-03 (sin voz);AU-03-002;silencio, 20 s;;;;;;WS (ritmo 0,5x)
+0.008;AU-03 (sin voz);AU-03-003;ruido, 20 s;;;;;;WS (ritmo 0,5x)
+0.008;AU-03 (sin voz);AU-03-004;ruido, 20 s, más cerca;;;;;;WS (ritmo 0,5x)
+0.008;AU-03 (sin voz);AU-03-005;4 tosidos;;;;;;WS (ritmo 0,5x)
+0.008;AU-03 (sin voz);AU-03-006;4 carraspeos;;;;;parciales: ¡Grr!;WS (ritmo 0,5x)
+0.008;AU-03 (sin voz);AU-03-007;10 golpes;;;;;;WS (ritmo 0,5x)
+0.008;AU-03 (sin voz);AU-03-008;teclado sin parar;;;;;;WS (ritmo 0,5x)
+0.016;AU-01 (voz);AU-01-001;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.016;AU-01 (voz);AU-01-002;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.016;AU-01 (voz);AU-01-003;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenido.;1;4;;POST
+0.016;AU-01 (voz);AU-01-004;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.016;AU-01 (voz);AU-01-005;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.016;AU-01 (voz);AU-01-006;Afirmación;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;0;4;;POST
+0.016;AU-01 (voz);AU-01-007;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0;8;;POST
+0.016;AU-01 (voz);AU-01-008;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.016;AU-01 (voz);AU-01-009;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;0;8;;POST
+0.016;AU-01 (voz);AU-01-010;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.016;AU-01 (voz);AU-01-011;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.016;AU-01 (voz);AU-01-012;Afirmación;Buenas tardes. Hoy me siento más o menos.;Buenas tardes, hoy me siento más o menos.;0;8;;POST
+0.016;AU-01 (voz);AU-01-013;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.016;AU-01 (voz);AU-01-014;Pregunta de sí o no;¿Tienes hambre?;;2;2;no_speech;POST
+0.016;AU-01 (voz);AU-01-015;Pregunta de sí o no;¿Tienes hambre?;Tienes hambre?;0;2;;POST
+0.016;AU-01 (voz);AU-01-016;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.016;AU-01 (voz);AU-01-017;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.016;AU-01 (voz);AU-01-018;Pregunta de sí o no;¿Tienes hambre?;¿Tienes hambre?;0;2;;POST
+0.016;AU-01 (voz);AU-01-019;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.016;AU-01 (voz);AU-01-020;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿es Astrice?;2;3;;POST
+0.016;AU-01 (voz);AU-01-021;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.016;AU-01 (voz);AU-01-022;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.016;AU-01 (voz);AU-01-023;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.016;AU-01 (voz);AU-01-024;Pregunta de sí o no;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;0;3;;POST
+0.016;AU-01 (voz);AU-01-025;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.016;AU-01 (voz);AU-01-026;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.016;AU-01 (voz);AU-01-027;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿cómo te llamas?;0;6;;POST
+0.016;AU-01 (voz);AU-01-028;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.016;AU-01 (voz);AU-01-029;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.016;AU-01 (voz);AU-01-030;Pregunta de contenido;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;0;6;;POST
+0.016;AU-01 (voz);AU-01-031;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.016;AU-01 (voz);AU-01-032;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.016;AU-01 (voz);AU-01-033;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.016;AU-01 (voz);AU-01-034;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.016;AU-01 (voz);AU-01-035;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.016;AU-01 (voz);AU-01-036;Pregunta de contenido;¿Dónde vive tu familia?;¿Dónde vive tu familia?;0;4;;POST
+0.016;AU-01 (voz);AU-01-037;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.016;AU-01 (voz);AU-01-038;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.016;AU-01 (voz);AU-01-039;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.016;AU-01 (voz);AU-01-040;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.016;AU-01 (voz);AU-01-041;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.016;AU-01 (voz);AU-01-042;Negación;Yo nunca como mucho.;Yo nunca como mucho.;0;4;;POST
+0.016;AU-01 (voz);AU-01-043;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.016;AU-01 (voz);AU-01-044;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.016;AU-01 (voz);AU-01-045;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.016;AU-01 (voz);AU-01-046;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.016;AU-01 (voz);AU-01-047;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.016;AU-01 (voz);AU-01-048;Negación;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;0;6;;POST
+0.016;AU-01 (voz);AU-01-049;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.016;AU-01 (voz);AU-01-050;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.016;AU-01 (voz);AU-01-051;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.016;AU-01 (voz);AU-01-052;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.016;AU-01 (voz);AU-01-053;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.016;AU-01 (voz);AU-01-054;Orden;Por favor, come poco.;Por favor, come poco.;0;4;;POST
+0.016;AU-01 (voz);AU-01-055;Orden;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;0;6;;POST
+0.016;AU-01 (voz);AU-01-056;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.016;AU-01 (voz);AU-01-057;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.016;AU-01 (voz);AU-01-058;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.016;AU-01 (voz);AU-01-059;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.016;AU-01 (voz);AU-01-060;Orden;Con permiso. Déjame pasar, por favor.;con permiso déjame pasar por favor;0;6;;POST
+0.016;AU-03 (sin voz);AU-03-001;silencio, 20 s;;;;;rms;POST
+0.016;AU-03 (sin voz);AU-03-002;silencio, 20 s;;;;;rms;POST
+0.016;AU-03 (sin voz);AU-03-003;ruido, 20 s;;;;;logprob;POST
+0.016;AU-03 (sin voz);AU-03-004;ruido, 20 s, más cerca;;;;;logprob;POST
+0.016;AU-03 (sin voz);AU-03-005;4 tosidos;;;;;logprob;POST
+0.016;AU-03 (sin voz);AU-03-006;4 carraspeos;;;;;rms;POST
+0.016;AU-03 (sin voz);AU-03-007;10 golpes;;;;;rms;POST
+0.016;AU-03 (sin voz);AU-03-008;teclado sin parar;;;;;no_speech;POST
+0.016;AU-03 (sin voz);AU-03-001;silencio, 20 s;;;;;;WS (ritmo 0,5x)
+0.016;AU-03 (sin voz);AU-03-002;silencio, 20 s;;;;;;WS (ritmo 0,5x)
+0.016;AU-03 (sin voz);AU-03-003;ruido, 20 s;;;;;;WS (ritmo 0,5x)
+0.016;AU-03 (sin voz);AU-03-004;ruido, 20 s, más cerca;;;;;;WS (ritmo 0,5x)
+0.016;AU-03 (sin voz);AU-03-005;4 tosidos;;COUH COUH;;;;WS (ritmo 0,5x)
+0.016;AU-03 (sin voz);AU-03-006;4 carraspeos;;;;;parciales: ¡Grr!;WS (ritmo 0,5x)
+0.016;AU-03 (sin voz);AU-03-007;10 golpes;;;;;;WS (ritmo 0,5x)
+0.016;AU-03 (sin voz);AU-03-008;teclado sin parar;;;;;;WS (ritmo 0,5x)

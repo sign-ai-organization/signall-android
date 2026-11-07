@@ -1,0 +1,244 @@
+{
+  "AU-03-001": {
+    "audio_ms": 22037,
+    "t_fin_audio_ms": 22024.0,
+    "t_end_ms": 22024.2,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 22026.2
+      }
+    ],
+    "delta": {
+      "stt_audio_bytes_total": 704640.0,
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_sessions_total": 1.0
+    },
+    "post": {
+      "text": "",
+      "audio_ms": 22037,
+      "elapsed_ms": 0,
+      "drop_reason": "rms",
+      "words": [],
+      "wall_ms": 14.624199946410954
+    }
+  },
+  "AU-03-002": {
+    "audio_ms": 20544,
+    "t_fin_audio_ms": 20527.4,
+    "t_end_ms": 20527.7,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 20530.0
+      }
+    ],
+    "delta": {
+      "stt_audio_bytes_total": 656640.0,
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_sessions_total": 1.0
+    },
+    "post": {
+      "text": "",
+      "audio_ms": 20544,
+      "elapsed_ms": 0,
+      "drop_reason": "rms",
+      "words": [],
+      "wall_ms": 23.153599991928786
+    }
+  },
+  "AU-03-003": {
+    "audio_ms": 20352,
+    "t_fin_audio_ms": 20348.8,
+    "t_end_ms": 20349.1,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 5550,
+        "_t": 20762.0
+      }
+    ],
+    "delta": {
+      "stt_audio_bytes_total": 650880.0,
+      "stt_dropped_total{model=\"medium\",reason=\"logprob\"}": 22.0,
+      "stt_dropped_total{model=\"medium\",reason=\"no_speech\"}": 3.0,
+      "stt_final_total{kept=\"0\",reason=\"buffer_max_pausa\"}": 2.0,
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_partial_stale_total": 22.0,
+      "stt_partial_total{kept=\"0\"}": 22.0,
+      "stt_sessions_total": 1.0
+    },
+    "post": {
+      "text": "",
+      "audio_ms": 20352,
+      "elapsed_ms": 4226,
+      "drop_reason": "logprob",
+      "words": [],
+      "wall_ms": 4239.924699999392
+    }
+  },
+  "AU-03-004": {
+    "audio_ms": 20373,
+    "t_fin_audio_ms": 20361.1,
+    "t_end_ms": 20361.2,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 4290,
+        "_t": 21361.8
+      }
+    ],
+    "delta": {
+      "stt_audio_bytes_total": 651840.0,
+      "stt_dropped_total{model=\"medium\",reason=\"logprob\"}": 10.0,
+      "stt_final_total{kept=\"0\",reason=\"buffer_max_forzado\"}": 2.0,
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_partial_cancelled_total": 4.0,
+      "stt_partial_stale_total": 5.0,
+      "stt_partial_total{kept=\"0\"}": 5.0,
+      "stt_sessions_total": 1.0
+    },
+    "post": {
+      "text": "¿Puedes decirle algo? No, no, todo por el tiempo. No, pero lo que está pasando es que está todo en la red. No está en la red. No está en la red. No está en la red. No está en la red. No está en la red. No está en la red.",
+      "audio_ms": 20373,
+      "elapsed_ms": 3042,
+      "drop_reason": null,
+      "words": [],
+      "wall_ms": 3054.0359999868087
+    }
+  },
+  "AU-03-005": {
+    "audio_ms": 21760,
+    "t_fin_audio_ms": 21760.8,
+    "t_end_ms": 21761.0,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 960,
+        "_t": 22309.9
+      }
+    ],
+    "delta": {
+      "stt_audio_bytes_total": 696000.0,
+      "stt_dropped_total{model=\"medium\",reason=\"logprob\"}": 1.0,
+      "stt_dropped_total{model=\"medium\",reason=\"non_speech\"}": 9.0,
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"0\",reason=\"silencio\"}": 3.0,
+      "stt_partial_cancelled_total": 4.0,
+      "stt_partial_stale_total": 5.0,
+      "stt_partial_total{kept=\"0\"}": 4.0,
+      "stt_partial_total{kept=\"1\"}": 1.0,
+      "stt_sessions_total": 51.0
+    },
+    "post": {
+      "text": "",
+      "audio_ms": 21760,
+      "elapsed_ms": 375,
+      "drop_reason": "logprob",
+      "words": [],
+      "wall_ms": 390.13950002845377
+    }
+  },
+  "AU-03-006": {
+    "audio_ms": 21333,
+    "t_fin_audio_ms": 21333.6,
+    "t_end_ms": 21333.9,
+    "eventos": [
+      {
+        "type": "partial",
+        "text": "¡Grr!",
+        "audio_ms": 300,
+        "_t": 6434.4
+      },
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 990,
+        "_t": 22261.0
+      }
+    ],
+    "delta": {
+      "stt_audio_bytes_total": 682560.0,
+      "stt_dropped_total{model=\"medium\",reason=\"logprob\"}": 2.0,
+      "stt_dropped_total{model=\"medium\",reason=\"non_speech\"}": 6.0,
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_final_total{kept=\"0\",reason=\"silencio\"}": 2.0,
+      "stt_partial_cancelled_total": 4.0,
+      "stt_partial_stale_total": 3.0,
+      "stt_partial_total{kept=\"0\"}": 3.0,
+      "stt_partial_total{kept=\"1\"}": 1.0,
+      "stt_sessions_total": 1.0
+    },
+    "post": {
+      "text": "",
+      "audio_ms": 21333,
+      "elapsed_ms": 0,
+      "drop_reason": "rms",
+      "words": [],
+      "wall_ms": 27.029399992898107
+    }
+  },
+  "AU-03-007": {
+    "audio_ms": 21269,
+    "t_fin_audio_ms": 21244.7,
+    "t_end_ms": 21245.0,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 0,
+        "_t": 21247.5
+      }
+    ],
+    "delta": {
+      "stt_audio_bytes_total": 679680.0,
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_sessions_total": 1.0
+    },
+    "post": {
+      "text": "",
+      "audio_ms": 21269,
+      "elapsed_ms": 0,
+      "drop_reason": "rms",
+      "words": [],
+      "wall_ms": 13.604799984022975
+    }
+  },
+  "AU-03-008": {
+    "audio_ms": 21312,
+    "t_fin_audio_ms": 21310.5,
+    "t_end_ms": 21310.8,
+    "eventos": [
+      {
+        "type": "final",
+        "text": "",
+        "audio_ms": 5610,
+        "_t": 21768.4
+      }
+    ],
+    "delta": {
+      "stt_audio_bytes_total": 681600.0,
+      "stt_dropped_total{model=\"medium\",reason=\"logprob\"}": 5.0,
+      "stt_dropped_total{model=\"medium\",reason=\"no_speech\"}": 3.0,
+      "stt_final_total{kept=\"0\",reason=\"flush\"}": 1.0,
+      "stt_partial_stale_total": 7.0,
+      "stt_partial_total{kept=\"0\"}": 7.0,
+      "stt_sessions_total": 1.0
+    },
+    "post": {
+      "text": "",
+      "audio_ms": 21312,
+      "elapsed_ms": 465,
+      "drop_reason": "no_speech",
+      "words": [],
+      "wall_ms": 478.21870003826916
+    }
+  }
+}

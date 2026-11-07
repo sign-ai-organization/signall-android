@@ -1,0 +1,132 @@
+{
+  "todas": {
+    "ms_envio_a_primera_sena": {
+      "n": 50,
+      "p50": 208.0,
+      "p95": 352.6,
+      "max": 1925
+    },
+    "ms_envio_a_ultima_sena": {
+      "n": 50,
+      "p50": 7701.0,
+      "p95": 8965.5,
+      "max": 10280
+    },
+    "ms_representacion": {
+      "n": 50,
+      "p50": 7577.5,
+      "p95": 8851.0,
+      "max": 8926
+    },
+    "ms_frase_respuesta_backend_vista_por_app": {
+      "n": 50,
+      "p50": 118.5,
+      "p95": 168.6,
+      "max": 1876
+    },
+    "por_fuente": {
+      "exact": {
+        "ms_envio_a_primera_sena": {
+          "n": 44,
+          "p50": 204.0,
+          "p95": 260.6,
+          "max": 375
+        },
+        "ms_envio_a_ultima_sena": {
+          "n": 44,
+          "p50": 8382.5,
+          "p95": 8962.3,
+          "max": 9006
+        }
+      },
+      "exact,miss": {
+        "ms_envio_a_primera_sena": {
+          "n": 1,
+          "p50": 1925,
+          "p95": 1925.0,
+          "max": 1925
+        },
+        "ms_envio_a_ultima_sena": {
+          "n": 1,
+          "p50": 10280,
+          "p95": 10280.0,
+          "max": 10280
+        }
+      },
+      "semantic": {
+        "ms_envio_a_primera_sena": {
+          "n": 5,
+          "p50": 282,
+          "p95": 355.6,
+          "max": 358
+        },
+        "ms_envio_a_ultima_sena": {
+          "n": 5,
+          "p50": 4561,
+          "p95": 4607.0,
+          "max": 4611
+        }
+      }
+    }
+  },
+  "sin_rep1": {
+    "ms_envio_a_primera_sena": {
+      "n": 40,
+      "p50": 199.5,
+      "p95": 262.0,
+      "max": 346
+    },
+    "ms_envio_a_ultima_sena": {
+      "n": 40,
+      "p50": 7650.0,
+      "p95": 8938.4,
+      "max": 9006
+    },
+    "ms_representacion": {
+      "n": 40,
+      "p50": 7543.5,
+      "p95": 8847.9,
+      "max": 8926
+    },
+    "ms_frase_respuesta_backend_vista_por_app": {
+      "n": 40,
+      "p50": 117.5,
+      "p95": 164.1,
+      "max": 173
+    },
+    "por_fuente": {
+      "exact": {
+        "ms_envio_a_primera_sena": {
+          "n": 36,
+          "p50": 197.5,
+          "p95": 257.2,
+          "max": 261
+        },
+        "ms_envio_a_ultima_sena": {
+          "n": 36,
+          "p50": 8382.5,
+          "p95": 8944.0,
+          "max": 9006
+        }
+      },
+      "semantic": {
+        "ms_envio_a_primera_sena": {
+          "n": 4,
+          "p50": 244.5,
+          "p95": 336.4,
+          "max": 346
+        },
+        "ms_envio_a_ultima_sena": {
+          "n": 4,
+          "p50": 4554.5,
+          "p95": 4603.5,
+          "max": 4611
+        }
+      }
+    }
+  },
+  "corridas": 50,
+  "incompletas": 0,
+  "sin_linea": 0,
+  "nota": "Tiempos del telefono (SignAiMetrics/SignAiState, logcat -v epoch, reloj del telefono). ultima sena = de \"texto ya enviado\" a \"representado\". Texto escrito con adb input text (sin acentos ni signo de apertura) y pasado por Gboard (autocorreccion/mayusculas): texto_en_app es lo que la app envio de verdad. fuente = delta de rt_cache_total del backend por frase (no se mezcla con los tiempos)."
+}

@@ -1,0 +1,181 @@
+﻿config;id;texto;glosas;n_oraciones;oraciones_de_cache;ms
+con_cache;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS BIENVENIDO;1;0;756.7
+con_cache;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;2;0;1393.5
+con_cache;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TIO TRABAJAR FAMILIA;1;0;593.5
+con_cache;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;1;0;627.9
+con_cache;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;2;0;1426.7
+con_cache;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER;2;0;1247.0
+con_cache;FR-01-007;¿Tienes hambre?;TU HAMBRE;1;0;892.9
+con_cache;FR-01-008;¿Estás bien?;TU BIEN;1;0;572.8
+con_cache;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;1;0;615.4
+con_cache;FR-01-010;Tu hermano está triste. ¿Se siente mal?;TU HERMANO TRISTE TU SENTIR MAL;2;0;1324.9
+con_cache;FR-01-011;Perdón. ¿Estás triste?;PERDON TU TRISTE;2;0;1316.3
+con_cache;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;1;0;592.0
+con_cache;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;3;0;1925.3
+con_cache;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;1;0;980.4
+con_cache;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER JUICIOSO QUIEN HOMBRE;2;0;1366.3
+con_cache;FR-01-016;¿Por qué estás triste?;POR QUE TU TRISTE;1;0;661.8
+con_cache;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;1;0;1092.7
+con_cache;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;PERSONAS DIFERENTE QUE SEÑA TU;2;0;1361.1
+con_cache;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;1;0;563.5
+con_cache;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;1;0;672.8
+con_cache;FR-01-021;Mi tío nunca está aburrido.;TIO NUNCA ABURRIDO;1;0;596.1
+con_cache;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;1;0;638.5
+con_cache;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON HERMANO NUNCA CONTENTO;2;1;757.4
+con_cache;FR-01-024;Se siente muy bien. La niña nunca está triste.;TU SENTIR MUCHO BIEN NIÑA NUNCA TRISTE;2;0;1994.5
+con_cache;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;1;0;586.1
+con_cache;FR-01-026;Con permiso. Déjame pasar, por favor.;PERMISO POR FAVOR;2;0;1283.0
+con_cache;FR-01-027;Niños, trabajen todos.;NIÑO TODOS TRABAJAR;1;0;600.2
+con_cache;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;2;0;1484.2
+con_cache;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA SENTIR BIENVENIDO;1;0;888.0
+con_cache;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;2;0;1705.5
+con_cache;FR-03-001;HOLA, BUENOS DÍAS, BIENVENIDOS.;HOLA BUENOS DIAS BIENVENIDO;1;1;0.2
+con_cache;FR-03-002;Adios a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;2;2;0.2
+con_cache;FR-03-003;En familia trabajan mi abuelo y mi tío.;ABUELO TIO TRABAJAR FAMILIA;1;1;69.5
+con_cache;FR-03-004;Porque mi hermano está feliz, estoy contento.;YO CONTENTO HERMANO FELIZ;1;1;60.8
+con_cache;FR-03-005;Buenas tardes. Hoy me siento regular.;BUENAS TARDES YO SENTIR;2;1;859.5
+con_cache;FR-03-006;¡Gracias a todos! Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER;2;2;4.5
+con_cache;FR-03-007;Tienes hambre;TU HAMBRE;1;0;640.9
+con_cache;FR-03-008;¿Estas bien?;TU BIEN;1;1;0.2
+con_cache;FR-03-009;¿Trabajan ustedes en familia?;USTEDES TRABAJAR FAMILIA;1;1;47.2
+con_cache;FR-03-010;Está triste tu hermano. ¿Se siente mal?;TU HERMANO TRISTE TU SENTIR MAL;2;2;51.4
+con_cache;FR-03-011;Perdon. ¿Estas triste?;PERDON TU TRISTE;2;2;0.2
+con_cache;FR-03-012;¿Está aburrido tu hermano?;TU HERMANO ABURRIDO;1;1;57.7
+con_cache;FR-03-013;Hola ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;3;3;0.3
+con_cache;FR-03-014;¿Tu familia dónde vive?;TU FAMILIA DONDE VIVIR;1;0;655.8
+con_cache;FR-03-015;La mujer es prudente. ¿Quién es el señor?;MUJER QUIEN HOMBRE;2;0;1642.3
+con_cache;FR-03-016;¿POR QUÉ ESTÁS TRISTE?;POR QUE TU TRISTE;1;1;0.2
+con_cache;FR-03-017;¿Ustedes cuándo comen?;CUANDO USTEDES COMER;1;1;54.8
+con_cache;FR-03-018;Las personas son diferentes. ¿Tú qué seña usas?;PERSONAS DIFERENTE QUE SEÑA TU;2;2;52.8
+con_cache;FR-03-019;Yo jamás como mucho.;YO COMER MUCHO;1;0;629.6
+con_cache;FR-03-020;Mi abuelo jamás trabaja.;ABUELO TRABAJAR;1;0;653.8
+con_cache;FR-03-021;Nunca está aburrido mi tío.;TIO NUNCA ABURRIDO;1;1;105.2
+con_cache;FR-03-022;Nunca se sienten mal ustedes.;USTEDES NUNCA SENTIR MAL;1;1;122.2
+con_cache;FR-03-023;Disculpe. Mi hermano nunca está contento.;DISCULPE HERMANO NUNCA CONTENTO;2;1;648.4
+con_cache;FR-03-024;Se siente excelente. La niña nunca está triste.;TU SENTIR NIÑA NUNCA TRISTE;2;1;589.6
+con_cache;FR-03-025;Por favor, come un poquito.;POR FAVOR COMER;1;0;662.1
+con_cache;FR-03-026;con permiso. déjame pasar, por favor.;PERMISO POR FAVOR;2;2;0.3
+con_cache;FR-03-027;Chicos, trabajen todos.;TRABAJAR TODOS;1;0;761.3
+con_cache;FR-03-028;Hermano, reside con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;2;2;75.2
+con_cache;FR-03-029;Hola familia siéntanse bienvenidos;HOLA FAMILIA SENTIR BIENVENIDO;1;1;7.5
+con_cache;FR-03-030;Tío, come bastante. Hermano, come un poquito.;TIO COMER MUCHO HERMANO COMER;2;0;1348.3
+sin_cache_a;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS BIENVENIDO;1;0;550.3
+sin_cache_a;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;2;0;1127.0
+sin_cache_a;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TIO TRABAJAR FAMILIA;1;0;724.0
+sin_cache_a;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;1;0;1554.1
+sin_cache_a;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;2;0;1145.0
+sin_cache_a;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER;2;0;1372.5
+sin_cache_a;FR-01-007;¿Tienes hambre?;TU HAMBRE;1;0;553.1
+sin_cache_a;FR-01-008;¿Estás bien?;TU BIEN;1;0;541.0
+sin_cache_a;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;1;0;610.5
+sin_cache_a;FR-01-010;Tu hermano está triste. ¿Se siente mal?;TU HERMANO TRISTE TU SENTIR MAL;2;0;1122.1
+sin_cache_a;FR-01-011;Perdón. ¿Estás triste?;PERDON TU TRISTE;2;0;1163.0
+sin_cache_a;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;1;0;604.9
+sin_cache_a;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;3;0;1546.9
+sin_cache_a;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;1;0;550.9
+sin_cache_a;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER JUICIOSO QUIEN HOMBRE;2;0;1297.9
+sin_cache_a;FR-01-016;¿Por qué estás triste?;POR QUE TU TRISTE;1;0;723.4
+sin_cache_a;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;1;0;597.7
+sin_cache_a;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;PERSONAS DIFERENTE QUE SEÑA TU;2;0;1274.3
+sin_cache_a;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;1;0;676.7
+sin_cache_a;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;1;0;902.8
+sin_cache_a;FR-01-021;Mi tío nunca está aburrido.;TIO NUNCA ABURRIDO;1;0;667.9
+sin_cache_a;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;1;0;652.3
+sin_cache_a;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON HERMANO NUNCA CONTENTO;2;0;1030.9
+sin_cache_a;FR-01-024;Se siente muy bien. La niña nunca está triste.;TU SENTIR MUCHO BIEN NIÑA NUNCA TRISTE;2;0;1303.9
+sin_cache_a;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;1;0;516.3
+sin_cache_a;FR-01-026;Con permiso. Déjame pasar, por favor.;PERMISO POR FAVOR;2;0;1440.9
+sin_cache_a;FR-01-027;Niños, trabajen todos.;NIÑO TODOS TRABAJAR;1;0;896.5
+sin_cache_a;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;2;0;1152.1
+sin_cache_a;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA SENTIR BIENVENIDO;1;0;647.1
+sin_cache_a;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;2;0;1193.0
+sin_cache_a;FR-03-001;HOLA, BUENOS DÍAS, BIENVENIDOS.;HOLA BUENOS DIAS BIENVENIDO;1;0;763.1
+sin_cache_a;FR-03-002;Adios a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;2;0;1188.7
+sin_cache_a;FR-03-003;En familia trabajan mi abuelo y mi tío.;FAMILIA TRABAJAR ABUELO TIO;1;0;843.3
+sin_cache_a;FR-03-004;Porque mi hermano está feliz, estoy contento.;HERMANO FELIZ YO CONTENTO;1;0;618.6
+sin_cache_a;FR-03-005;Buenas tardes. Hoy me siento regular.;BUENAS TARDES YO SENTIR;2;0;1229.3
+sin_cache_a;FR-03-006;¡Gracias a todos! Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER;2;0;1278.6
+sin_cache_a;FR-03-007;Tienes hambre;TU HAMBRE;1;0;474.5
+sin_cache_a;FR-03-008;¿Estas bien?;TU BIEN;1;0;745.2
+sin_cache_a;FR-03-009;¿Trabajan ustedes en familia?;USTEDES TRABAJAR FAMILIA;1;0;607.9
+sin_cache_a;FR-03-010;Está triste tu hermano. ¿Se siente mal?;TU HERMANO TRISTE TU SENTIR MAL;2;0;1125.2
+sin_cache_a;FR-03-011;Perdon. ¿Estas triste?;PERDON TU TRISTE;2;0;1618.1
+sin_cache_a;FR-03-012;¿Está aburrido tu hermano?;TU HERMANO ABURRIDO;1;0;910.3
+sin_cache_a;FR-03-013;Hola ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;3;0;2114.3
+sin_cache_a;FR-03-014;¿Tu familia dónde vive?;TU FAMILIA DONDE VIVIR;1;0;695.2
+sin_cache_a;FR-03-015;La mujer es prudente. ¿Quién es el señor?;MUJER QUIEN HOMBRE;2;0;1401.0
+sin_cache_a;FR-03-016;¿POR QUÉ ESTÁS TRISTE?;POR QUE TU TRISTE;1;0;569.9
+sin_cache_a;FR-03-017;¿Ustedes cuándo comen?;USTEDES COMER;1;0;563.1
+sin_cache_a;FR-03-018;Las personas son diferentes. ¿Tú qué seña usas?;PERSONAS DIFERENTE TU QUE SEÑA;2;0;1196.4
+sin_cache_a;FR-03-019;Yo jamás como mucho.;YO COMER MUCHO;1;0;583.7
+sin_cache_a;FR-03-020;Mi abuelo jamás trabaja.;ABUELO TRABAJAR;1;0;828.6
+sin_cache_a;FR-03-021;Nunca está aburrido mi tío.;TIO NUNCA ABURRIDO;1;0;752.0
+sin_cache_a;FR-03-022;Nunca se sienten mal ustedes.;USTEDES NUNCA SENTIR MAL;1;0;624.2
+sin_cache_a;FR-03-023;Disculpe. Mi hermano nunca está contento.;DISCULPE HERMANO NUNCA CONTENTO;2;0;1409.3
+sin_cache_a;FR-03-024;Se siente excelente. La niña nunca está triste.;TU SENTIR NIÑA NUNCA TRISTE;2;0;1359.1
+sin_cache_a;FR-03-025;Por favor, come un poquito.;POR FAVOR COMER;1;0;632.8
+sin_cache_a;FR-03-026;con permiso. déjame pasar, por favor.;PERMISO POR FAVOR;2;0;1361.1
+sin_cache_a;FR-03-027;Chicos, trabajen todos.;TRABAJAR TODOS;1;0;710.7
+sin_cache_a;FR-03-028;Hermano, reside con el abuelo. Trabaja con el tío.;HERMANO ABUELO TRABAJAR TIO;2;0;1292.5
+sin_cache_a;FR-03-029;Hola familia siéntanse bienvenidos;HOLA FAMILIA SENTIR BIENVENIDO;1;0;693.3
+sin_cache_a;FR-03-030;Tío, come bastante. Hermano, come un poquito.;TIO COMER MUCHO HERMANO COMER;2;0;1297.6
+sin_cache_b;FR-01-001;Hola, buenos días, bienvenidos.;HOLA BUENOS DIAS BIENVENIDO;1;0;919.2
+sin_cache_b;FR-01-002;Adiós a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;2;0;1061.6
+sin_cache_b;FR-01-003;Mi abuelo y mi tío trabajan en familia.;ABUELO TIO TRABAJAR FAMILIA;1;0;639.6
+sin_cache_b;FR-01-004;Estoy contento porque mi hermano está feliz.;YO CONTENTO HERMANO FELIZ;1;0;717.0
+sin_cache_b;FR-01-005;Buenas tardes. Hoy me siento más o menos.;BUENAS TARDES YO SENTIR MAS O MENOS;2;0;1242.4
+sin_cache_b;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER;2;0;2567.6
+sin_cache_b;FR-01-007;¿Tienes hambre?;TU HAMBRE;1;0;695.3
+sin_cache_b;FR-01-008;¿Estás bien?;TU BIEN;1;0;746.6
+sin_cache_b;FR-01-009;¿Ustedes trabajan en familia?;USTEDES TRABAJAR FAMILIA;1;0;623.6
+sin_cache_b;FR-01-010;Tu hermano está triste. ¿Se siente mal?;TU HERMANO TRISTE TU SENTIR MAL;2;0;1230.7
+sin_cache_b;FR-01-011;Perdón. ¿Estás triste?;PERDON TU TRISTE;2;0;1287.2
+sin_cache_b;FR-01-012;¿Tu hermano está aburrido?;TU HERMANO ABURRIDO;1;0;790.6
+sin_cache_b;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;3;0;1766.3
+sin_cache_b;FR-01-014;¿Dónde vive tu familia?;DONDE TU FAMILIA VIVIR;1;0;696.2
+sin_cache_b;FR-01-015;La mujer es juiciosa. ¿Quién es el hombre?;MUJER JUICIOSO QUIEN HOMBRE;2;0;1299.2
+sin_cache_b;FR-01-016;¿Por qué estás triste?;POR QUE TU TRISTE;1;0;665.3
+sin_cache_b;FR-01-017;¿Cuándo comen ustedes?;CUANDO USTEDES COMER;1;0;614.9
+sin_cache_b;FR-01-018;Las personas son diferentes. ¿Qué seña usas tú?;PERSONAS DIFERENTE QUE SEÑA TU;2;0;1433.8
+sin_cache_b;FR-01-019;Yo nunca como mucho.;YO NUNCA COMER MUCHO;1;0;610.3
+sin_cache_b;FR-01-020;Mi abuelo nunca trabaja.;ABUELO NUNCA TRABAJAR;1;0;636.5
+sin_cache_b;FR-01-021;Mi tío nunca está aburrido.;TIO NUNCA ABURRIDO;1;0;590.0
+sin_cache_b;FR-01-022;Ustedes nunca se sienten mal.;USTEDES NUNCA SENTIR MAL;1;0;648.0
+sin_cache_b;FR-01-023;Perdón. Mi hermano nunca está contento.;PERDON HERMANO NUNCA CONTENTO;2;0;1490.1
+sin_cache_b;FR-01-024;Se siente muy bien. La niña nunca está triste.;TU SENTIR MUCHO BIEN NIÑA NUNCA TRISTE;2;0;1397.9
+sin_cache_b;FR-01-025;Por favor, come poco.;POR FAVOR COMER POCO;1;0;591.1
+sin_cache_b;FR-01-026;Con permiso. Déjame pasar, por favor.;PERMISO POR FAVOR;2;0;1070.6
+sin_cache_b;FR-01-027;Niños, trabajen todos.;NIÑO TODOS TRABAJAR;1;0;816.3
+sin_cache_b;FR-01-028;Hermano, vive con el abuelo. Trabaja con el tío.;HERMANO VIVIR ABUELO TRABAJAR TIO;2;0;1496.5
+sin_cache_b;FR-01-029;Hola, familia, siéntanse bienvenidos.;HOLA FAMILIA SENTIR BIENVENIDO;1;0;673.9
+sin_cache_b;FR-01-030;Tío, come mucho. Hermano, come poco.;TIO COMER MUCHO HERMANO COMER POCO;2;0;1359.8
+sin_cache_b;FR-03-001;HOLA, BUENOS DÍAS, BIENVENIDOS.;HOLA BUENOS DIAS BIENVENIDO;1;0;848.5
+sin_cache_b;FR-03-002;Adios a todos. Buenas noches.;ADIOS TODOS BUENAS NOCHES;2;0;1322.6
+sin_cache_b;FR-03-003;En familia trabajan mi abuelo y mi tío.;FAMILIA TRABAJAR ABUELO TIO;1;0;651.8
+sin_cache_b;FR-03-004;Porque mi hermano está feliz, estoy contento.;HERMANO FELIZ YO CONTENTO;1;0;598.9
+sin_cache_b;FR-03-005;Buenas tardes. Hoy me siento regular.;BUENAS TARDES YO SENTIR;2;0;1357.5
+sin_cache_b;FR-03-006;¡Gracias a todos! Los niños y las niñas comen con gusto.;GRACIAS TODOS NIÑO NIÑA COMER;2;0;1304.6
+sin_cache_b;FR-03-007;Tienes hambre;TU HAMBRE;1;0;575.4
+sin_cache_b;FR-03-008;¿Estas bien?;TU BIEN;1;0;602.2
+sin_cache_b;FR-03-009;¿Trabajan ustedes en familia?;USTEDES TRABAJAR FAMILIA;1;0;681.4
+sin_cache_b;FR-03-010;Está triste tu hermano. ¿Se siente mal?;TU HERMANO TRISTE TU SENTIR MAL;2;0;1576.2
+sin_cache_b;FR-03-011;Perdon. ¿Estas triste?;PERDON TU TRISTE;2;0;1097.3
+sin_cache_b;FR-03-012;¿Está aburrido tu hermano?;TU HERMANO ABURRIDO;1;0;666.1
+sin_cache_b;FR-03-013;Hola ¿cómo estás? ¿Cómo te llamas?;HOLA COMO ESTAS COMO TU;3;0;1951.5
+sin_cache_b;FR-03-014;¿Tu familia dónde vive?;TU FAMILIA DONDE VIVIR;1;0;685.4
+sin_cache_b;FR-03-015;La mujer es prudente. ¿Quién es el señor?;MUJER QUIEN HOMBRE;2;0;1087.2
+sin_cache_b;FR-03-016;¿POR QUÉ ESTÁS TRISTE?;POR QUE TU TRISTE;1;0;579.9
+sin_cache_b;FR-03-017;¿Ustedes cuándo comen?;USTEDES COMER;1;0;776.0
+sin_cache_b;FR-03-018;Las personas son diferentes. ¿Tú qué seña usas?;PERSONAS DIFERENTE TU QUE SEÑA;2;0;1190.7
+sin_cache_b;FR-03-019;Yo jamás como mucho.;YO COMER MUCHO;1;0;681.2
+sin_cache_b;FR-03-020;Mi abuelo jamás trabaja.;ABUELO TRABAJAR;1;0;638.7
+sin_cache_b;FR-03-021;Nunca está aburrido mi tío.;TIO NUNCA ABURRIDO;1;0;834.9
+sin_cache_b;FR-03-022;Nunca se sienten mal ustedes.;USTEDES NUNCA SENTIR MAL;1;0;628.5
+sin_cache_b;FR-03-023;Disculpe. Mi hermano nunca está contento.;DISCULPE HERMANO NUNCA CONTENTO;2;0;1342.2
+sin_cache_b;FR-03-024;Se siente excelente. La niña nunca está triste.;TU SENTIR NIÑA NUNCA TRISTE;2;0;1209.4
+sin_cache_b;FR-03-025;Por favor, come un poquito.;POR FAVOR COMER;1;0;699.0
+sin_cache_b;FR-03-026;con permiso. déjame pasar, por favor.;PERMISO POR FAVOR;2;0;1259.9
+sin_cache_b;FR-03-027;Chicos, trabajen todos.;TRABAJAR TODOS;1;0;688.2
+sin_cache_b;FR-03-028;Hermano, reside con el abuelo. Trabaja con el tío.;HERMANO ABUELO TRABAJAR TIO;2;0;1203.6
+sin_cache_b;FR-03-029;Hola familia siéntanse bienvenidos;HOLA FAMILIA SENTIR BIENVENIDO;1;0;678.5
+sin_cache_b;FR-03-030;Tío, come bastante. Hermano, come un poquito.;TIO COMER MUCHO HERMANO COMER;2;0;1558.6
