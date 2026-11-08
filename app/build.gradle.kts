@@ -125,6 +125,10 @@ if (devToolsRequested) {
 android {
     namespace = "com.signai.webview"
     compileSdk = 36
+    // build-tools 35.0.0 (el default que pide AGP para compileSdk 36 en esta
+    // versión) no está instalado y el SDK del equipo de pruebas es de solo
+    // lectura. 36.0.0 ya está instalado y es compatible.
+    buildToolsVersion = "36.0.0"
 
     defaultConfig {
         applicationId = "com.signai.webview"
