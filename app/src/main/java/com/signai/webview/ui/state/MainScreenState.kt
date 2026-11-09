@@ -100,7 +100,10 @@ private const val NoticeMs = 5_000L
 
 /** Texto del aviso cuando el servicio de transcripción no está. */
 const val MicUnavailableNotice =
-    "Sin servicio de voz: podés seguir traduciendo por texto."
+    "Sin servicio de voz: puedes seguir traduciendo por texto."
+
+/** Cada cuánto se pregunta si el servicio de voz volvió, mientras no está. */
+private const val VoiceProbeMs = 5_000L
 
 /** Tope de frases esperando detrás de la que se representa (decisión D3). */
 private const val MaxQueuedPhrases = 1
@@ -1117,10 +1120,47 @@ class MainScreenState(
                 if (!event.audio) {
                     if (micMode != MicMode.Off) changeMicMode(MicMode.Off)
                     showNotice(MicUnavailableNotice)
+                    watchForVoiceToReturn()
                 }
             }
 
             is BackendEvent.Disconnected -> onDisconnected()
+        }
+    }
+
+    private var voiceWatchJob: Job? = null
+
+    /**
+     * Vigila si el servicio de transcripción vuelve, para devolver el micrófono
+     * sin pedirle al usuario que reinicie la app (`PR-RES-03`).
+     *
+     * El backend solo dice si hay voz al **abrir** la sesión (frame `capability`),
+     * así que una sesión que empezó sin STT nunca se entera de que volvió. Cada
+     * [VoiceProbeMs] se le pregunta en un socket aparte ([SignAiWebSocketClient.probeVoice]),
+     * que no toca la sesión de verdad ni muestra *Desconectado* mientras la
+     * respuesta siga siendo «no».
+     *
+     * Cuando dice que sí, la sesión se reabre **una vez** para que tome la voz
+     * nueva — pero solo con la app ociosa: sin micrófono, sin frase en vuelo y sin
+     * avatar representando. Si el usuario está en medio de algo, se espera al
+     * siguiente turno del reloj en vez de cortarle la traducción.
+     */
+    private fun watchForVoiceToReturn() {
+        voiceWatchJob?.cancel()
+        voiceWatchJob = scope.launch {
+            while (isActive && !sttAvailable) {
+                delay(VoiceProbeMs)
+                if (!backend.isConnected || sttAvailable) continue
+                if (backend.probeVoice() != true) continue
+                val idle = !micActive &&
+                    pendingText == null &&
+                    !queuePlaying &&
+                    playbackState == PlaybackState.Inactivo
+                if (!idle) continue
+                Log.i(TAG, "el servicio de voz volvió: se reabre la sesión para recuperar el micrófono")
+                backend.close()
+                return@launch
+            }
         }
     }
 
@@ -1221,6 +1261,25 @@ class MainScreenState(
             releaseSentText()
             dictationBuffer = pendingLive
             dictationPending = true
+        } else if (cancellingPhrase && !isReplay) {
+            // PR-RES-01 / RNF-REL-04: la frase que se cortó mientras se traducía
+            // vuelve a la barra, **sea que se dijo o que se escribió**. Por el
+            // micrófono y por teclado llegan por el mismo `pendingText`.
+            //
+            // No basta con soltar la retención: a los [SentTextHoldMs] el
+            // temporizador ya había vaciado el campo, y un corte después de ese
+            // instante dejaba la barra en blanco (medido en `PR-RES-01`).
+            // Si el campo ya tiene otro texto —el usuario empezó a escribir otra
+            // frase mientras esperaba— ese es más nuevo y no se pisa.
+            val cancelled = pendingText.orEmpty().trim()
+            if (cancelled.isNotEmpty() && (inputText.isBlank() || inputText.trim() == cancelled)) {
+                inputText = cancelled
+                transcript = cancelled
+                releaseSentText()
+                dictationBuffer = cancelled
+                dictationPending = true
+                Log.i(TAG, "frase cancelada por el corte: vuelve a la barra. \"$cancelled\"")
+            }
         }
 
         // El `final` de un dictado ya no va a llegar, así que el enrutado se cae.

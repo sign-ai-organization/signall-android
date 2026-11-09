@@ -8,6 +8,9 @@ import com.signai.webview.domain.TranslationSegment
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.coroutines.resume
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -178,6 +181,45 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
     }
 
     /**
+     * Asks the backend, on a throwaway socket, whether voice works right now.
+     *
+     * The backend only tells a session whether the transcription service is up
+     * when that session opens (the `capability` frame), so a session that began
+     * while the STT was down never hears that it came back (`PR-RES-03`). This
+     * opens a second, short-lived socket, reads that first frame and closes it,
+     * leaving the real session — and whatever the user is doing in it — alone.
+     *
+     * Returns `true`/`false` from the frame, or `null` when it could not tell:
+     * no connection, or a backend that never sends the frame (an older one),
+     * which is why it gives up after [PROBE_TIMEOUT_MS] instead of waiting.
+     */
+    suspend fun probeVoice(): Boolean? = withTimeoutOrNull(PROBE_TIMEOUT_MS) {
+        suspendCancellableCoroutine { continuation ->
+            val probe = http.newWebSocket(
+                Request.Builder().url(config.url).build(),
+                object : WebSocketListener() {
+                    override fun onMessage(webSocket: WebSocket, text: String) {
+                        val capability = parseMessage(text)
+                            .filterIsInstance<BackendEvent.Capabilities>()
+                            .firstOrNull() ?: return
+                        if (continuation.isActive) continuation.resume(capability.audio)
+                        webSocket.close(NORMAL_CLOSURE, "probe done")
+                    }
+
+                    override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                        if (continuation.isActive) continuation.resume(null)
+                    }
+
+                    override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+                        if (continuation.isActive) continuation.resume(null)
+                    }
+                },
+            )
+            continuation.invokeOnCancellation { probe.cancel() }
+        }
+    }
+
+    /**
      * Tolerant parser: a message is a JSON object tagged with `type`, and
      * anything unreadable is dropped with a log rather than thrown — a
      * malformed frame must not take the session down.
@@ -287,5 +329,8 @@ class SignAiWebSocketClient(private val config: SignAiBackendConfig) {
 
         /** Cada cuántos segundos el cliente le pregunta al servidor si sigue ahí. */
         const val HeartbeatIntervalSec = 20L
+
+        /** How long [probeVoice] waits for the `capability` frame. */
+        const val PROBE_TIMEOUT_MS = 4_000L
     }
 }
