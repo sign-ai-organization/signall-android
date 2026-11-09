@@ -1,0 +1,34 @@
+PR-RES-03 · Falla de la transcripción · re-verificación tras el arreglo
+Fecha: 2026-11-08, ~19:04 a 19:06 (hora local, UTC-5)
+Código: sign-ai-android f2d5cdb (build debug, backend por adb reverse 8080)
+Teléfono: Redmi Note 11 (2201117TL), id 61ecd28e
+Backend/STT: laboratorio p4lab (imágenes del proyecto, whisper medium en cuda; pesos del volumen del
+         proyecto montados en solo lectura). Base propia; no se tocó Neon ni el stack canónico.
+
+Alcance: SOLO el caso «STT apagado antes de conectar» y la recuperación al volver. No se repitió
+el caso «detenido a mitad de una frase».
+
+Procedimiento y tiempos
+  19:04:16  docker stop p4lab-stt
+  19:04:18  se reinicia la app (force-stop + lanzar)
+  19:04:26  aviso visible: «Sin servicio de voz: puedes seguir traduciendo por texto.»
+            (backend: «Could not connect to the STT service»)
+  19:04:43  docker start p4lab-stt   (el modelo tarda ~15 s en cargar)
+  19:05:05  logcat: «el servicio de voz volvió: se reabre la sesión para recuperar el micrófono»
+  19:05:05  logcat: «sesión perdida: interrumpiendo=false cancelando=false micrófono=Off»
+  19:05:06  logcat: «sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)»
+            sin intervención del operador entre 19:04:43 y 19:05:06.
+  Recuperación: 22 s desde que se encendió el STT (≈15 s de carga del modelo + espera del sondeo,
+  que corre cada 5 s).
+
+Estado de la pantalla tras la reapertura (uiautomator)
+  «Entrada por voz» (clickable=true, enabled=true), «Modo en vivo» (enabled=true); ya no está el
+  aviso de «Sin servicio de voz».
+
+Prueba del micrófono (19:05:51)
+  toque en «Entrada por voz» -> «micrófono prendido en modo Dictation»
+  19:05:55 «No se escuchó nada.» / «final vacío» (no se habló: es lo esperado).
+
+Resultado: el criterio «se puede volver a hablar al volver el servicio» se cumple sin reiniciar la
+app ni abrir una sesión a mano. El 6/11 el micrófono seguía sin servicio hasta una sesión nueva
+(PR-RES-03_E_20261106_01.*). No se transcribió voz real en esta pasada (sin altavoz).

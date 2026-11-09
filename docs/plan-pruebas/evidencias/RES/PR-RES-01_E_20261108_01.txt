@@ -1,0 +1,37 @@
+PR-RES-01 · Pérdida de conexión del cliente · re-verificación tras el arreglo
+Fecha: 2026-11-08, ~19:07 (hora local, UTC-5)
+Código: sign-ai-android f2d5cdb (build debug, -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate)
+Teléfono: Redmi Note 11 (2201117TL), id 61ecd28e
+Backend: laboratorio p4lab (imágenes del proyecto; Postgres 16 + pgvector propio, caché vacía,
+         50 glosas, LLM apuntado a una dirección que no responde -> la frase nueva queda ~10 s en vuelo).
+         No se tocó Neon ni el stack canónico.
+
+Alcance: SOLO el momento «mientras el backend traduce», con texto ESCRITO. No se repitieron los
+otros dos momentos (hablando, representando) ni la ruta por micrófono.
+
+Intento 1 (no válido para el criterio)
+  Corte: `adb reverse --remove tcp:8080` a los 3,5 s del envío.
+  Resultado: el socket abierto sobrevivió a la regla; la app siguió en «Procesando» y la traducción
+  terminó con el error del LLM («No se pudo traducir el texto.», 19:06:45). No hubo desconexión.
+
+Intento 2 (válido)
+  Frase: «Quiero hablar con mi mama» (escrita, enviada con Traducir). Envío 19:07:37.
+  Corte a los 3,5 s del envío (después de los 1,5 s en que el campo se vacía solo): `adb kill-server`
+  a las 19:07:42.
+
+  logcat -s SignAiState:
+    19:07:37.864 texto ya enviado: retenido 1500ms, Traducir bloqueado. "Quiero hablar con mi mama"
+    19:07:39.413 texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+    19:07:48.997 sesión perdida: interrumpiendo=false cancelando=true micrófono=Off
+    19:07:48.998 frase cancelada por el corte: vuelve a la barra. "Quiero hablar con mi mama"
+    19:07:50.139 sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+
+  Pantalla (uiautomator, tras restaurar el enlace):
+    textos: ['Texto listo', 'Quiero hablar con mi mama', 'Traducir', 'TR']
+  -> la barra contiene la frase y Traducir está disponible.
+
+Resultado: el criterio «si el corte ocurre mientras se traduce, la frase se cancela y su texto
+vuelve a la barra» se cumple para texto escrito. El 6/11 la barra quedaba vacía
+(PR-RES-01_E_20261106_*).
+Nota: la app detectó la pérdida a ~7 s del corte (19:07:42 -> 19:07:48,997), no a los ~2,4 s del 6/11;
+mientras tanto la traducción seguía en vuelo. No se investigó la diferencia.
