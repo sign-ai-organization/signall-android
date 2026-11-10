@@ -1,0 +1,8036 @@
+{
+ "base_post": [
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-004",
+   "text": "Este es el canal de subtítulos en español de la Iglesia de Jesucristo de los Santos de los Últimos días. La iglesia es una iglesia de abogados, sancionados, creados por la Iglesia de Jesucristo de los Santos de los Últimos días.",
+   "words": 41,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-003",
+   "text": "Esto es el canal de subtítulos en español de la Iglesia de Jesucristo de los Santos de los Últimos días.",
+   "words": 20,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-004",
+   "text": ". . . . . . .",
+   "words": 7,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-004",
+   "text": "¿Qué te ha dicho la gente? No, no, todo por el tiempo. Yo tengo que ir a la ciudad de la ciudad de las ropas. Me ha faltado la vida. Me ha faltado la vida. Me ha faltado la vida. Me ha faltado la vida. Me ha faltado la vida. Me ha faltado la vida.",
+   "words": 55,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-004",
+   "text": "Este es el canal de subtítulos en español de la Iglesia de Jesucristo de los Santos de los Últimos días.",
+   "words": 20,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-004",
+   "text": "Este es el canal de subtítulos en español de la Iglesia de Jesucristo de los Santos de los Últimos días.",
+   "words": 20,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  }
+ ],
+ "fix_post_patrones_iniciales": [
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-004",
+   "text": "Más información en www.alimmenta.com",
+   "words": 4,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-004",
+   "text": "Subtitulado por la comunidad de Amara.org",
+   "words": 6,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  }
+ ],
+ "fix_post_con_variantes": [
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-003",
+   "text": "No, no, todo por el tiempo. No, nada, nada. No, nada, nada. No, nada, nada. No, nada, nada. No, nada.",
+   "words": 20,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-003",
+   "text": "La música es el canal de subtítulos en español de la Iglesia de Jesucristo de los Santos de los Últimos días.",
+   "words": 21,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-003",
+   "text": "Nuestro canal de subtítulos en español es el canal de subtítulos en español de la Iglesia de Jesucristo de los Santos de los Últimos días.",
+   "words": 25,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-003",
+   "text": "¡Suscríbete al canal y dale a like!",
+   "words": 7,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-004",
+   "text": "¿Qué te ha dicho el espiral? No, no, todo por el tiempo. El pollo, pero la cita. La cita de la verdad. La verdad, sí. La verdad también. La verdad, sí. La verdad, sí. La verdad, sí. La verdad, sí.",
+   "words": 40,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-004",
+   "text": "¡Suscríbete al canal y dale a la campanita!",
+   "words": 8,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-004",
+   "text": "¿Me ha hecho desesperar que? No, no, todo por el tiempo. No, no, no, no, no. Lo de la de la... No te hagas nada. No te hagas nada. No te hagas nada. No te hagas nada. No te hagas nada. No te hagas nada.",
+   "words": 45,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  }
+ ],
+ "final_post": [
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 1,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 2,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 3,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 4,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 5,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 6,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 7,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 8,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 9,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 10,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 11,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 12,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 13,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 14,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 15,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 16,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 17,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 18,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 19,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 20,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 21,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 22,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 23,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 24,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 25,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 26,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 27,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 28,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 29,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-004",
+   "text": "¿Te ha dicho que es mi turno? No, no. ¿Todo por el tiempo? No, no. No, no, no. Por el tiempo. No, no. Por el tiempo. Por el tiempo.",
+   "words": 29,
+   "drop": null
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 30,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 31,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 32,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 33,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 34,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 35,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 36,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 37,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 38,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 39,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-001",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-002",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-003",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-004",
+   "text": "",
+   "words": 0,
+   "drop": "non_speech"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-005",
+   "text": "",
+   "words": 0,
+   "drop": "logprob"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-006",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-007",
+   "text": "",
+   "words": 0,
+   "drop": "rms"
+  },
+  {
+   "mode": "post",
+   "rep": 40,
+   "audio": "AU-03-008",
+   "text": "",
+   "words": 0,
+   "drop": "no_speech"
+  }
+ ],
+ "base_ws": [
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-001",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-002",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-003",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-004",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-005",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-006",
+   "finals_with_text": [],
+   "partials_with_text": [
+    "¡Grr!"
+   ]
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-007",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-008",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-001",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-002",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-003",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-004",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-005",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-006",
+   "finals_with_text": [],
+   "partials_with_text": [
+    "¡Grr!"
+   ]
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-007",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-008",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-001",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-002",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-003",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-004",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-005",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-006",
+   "finals_with_text": [],
+   "partials_with_text": [
+    "¡Grr!"
+   ]
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-007",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-008",
+   "finals_with_text": [],
+   "partials_with_text": []
+  }
+ ],
+ "final_ws": [
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-001",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-002",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-003",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-004",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-005",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-006",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-007",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 1,
+   "audio": "AU-03-008",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-001",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-002",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-003",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-004",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-005",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-006",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-007",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 2,
+   "audio": "AU-03-008",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-001",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-002",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-003",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-004",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-005",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-006",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-007",
+   "finals_with_text": [],
+   "partials_with_text": []
+  },
+  {
+   "mode": "ws",
+   "rep": 3,
+   "audio": "AU-03-008",
+   "finals_with_text": [],
+   "partials_with_text": []
+  }
+ ]
+}
