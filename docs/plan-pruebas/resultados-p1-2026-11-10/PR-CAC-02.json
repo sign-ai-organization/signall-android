@@ -1,0 +1,11 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "Con el umbral del .env del 10/11 (0,05): 23/34 paráfrasis y 1 trampa aceptada. Con 0,03: 21/34 y 0 trampas. A 0,06 se aceptan 3 trampas. El umbral se subió de 0,03 a 0,05 entre rondas; la trampa medida es FR-04-005, distancia 0,031.",
+ "evidencias": [
+  "PR-CAC-02_E_20261110_01.csv",
+  "PR-CAC-02_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}

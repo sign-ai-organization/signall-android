@@ -284,7 +284,8 @@ plan ni al libro: las fichas mandan y el libro es la fuente de los resultados.
 | Evidencia de cada prueba | `evidencias/<BLOQUE>/PR-*_E_20261110_*` |
 | Arnés de la ronda | `docs/plan-pruebas/arnes/` |
 | Bitácora de sesión | `openspec/sessions/2026-11-10-ronda-p1-17-pendientes.md` |
-| Libro de resultados | `resultados-consolidados.xlsx` (se actualiza con lo que diga el owner) |
+| Resultados en el formato que lee el libro | `docs/plan-pruebas/resultados-p1-2026-11-10/PR-*.json` |
+| Libro de resultados | `resultados-consolidados.xlsx`, con las 17 filas como ronda «Ronda P1 10/11» (se cargan con `agregar-ronda.py`) |
 
 ## 8. Cómo se reprodujo
 

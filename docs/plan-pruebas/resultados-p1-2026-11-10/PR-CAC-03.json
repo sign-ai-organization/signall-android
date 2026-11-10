@@ -1,0 +1,11 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "23/34 oraciones cambiadas con umbral 0,05: formato 11/12, orden 9/10, sinónimos 3/12. Un falso acierto. La tabla catalog_synonym tiene 13 filas y no cubre las variantes de FR-03.",
+ "evidencias": [
+  "PR-CAC-03_E_20261110_01.csv",
+  "PR-CAC-03_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}

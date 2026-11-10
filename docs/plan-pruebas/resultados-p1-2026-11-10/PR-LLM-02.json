@@ -1,0 +1,11 @@
+{
+ "estado": "Falla",
+ "obtenido": "Parte A: 0/30 respuestas reales con problemas de formato. Parte B: 9/10 fabricadas. Sigue fallando CO-04-008: «TIO, TRABAJAR. Espero que te sirva.» se lee como TIO, TRABAJAR, ESPERO QUE TE SIRVA; el parser corta por comas y no reconoce la frase de cortesía que viene después del punto. La ficha pide que ninguna respuesta se lea mal.",
+ "evidencias": [
+  "PR-LLM-02_E_20261110_01.csv",
+  "PR-LLM-02_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}

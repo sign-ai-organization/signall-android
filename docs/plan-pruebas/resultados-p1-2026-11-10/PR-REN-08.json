@@ -1,0 +1,10 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "Por texto, 64 B suben y 498 B bajan por frase (media de las 10 de FR-01-A); por voz, 132.638 B suben (PCM16 de 16 kHz) y 575 B bajan. Medido en el socket con el mismo cliente del plan; el teléfono entra por adb reverse, así que es tráfico de loopback y no lo que factura el operador.",
+ "evidencias": [
+  "PR-REN-08_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}

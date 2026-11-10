@@ -1,0 +1,12 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "gpt-4o-mini 20/30 exactas; gpt-4o 24/30; qwen3:4b-instruct 20/30. El modelo local se midió desde el host, porque Ollama en 127.0.0.1:11434 no es alcanzable desde el contenedor; mismo prompt, temperatura 0 y misma reparación contra el catálogo.",
+ "evidencias": [
+  "PR-LLM-01_E_20261110_01.csv",
+  "PR-LLM-01_E_20261110_01.json",
+  "PR-LLM-01-qwen_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}

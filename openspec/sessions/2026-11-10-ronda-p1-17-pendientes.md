@@ -55,13 +55,18 @@ tiene el recurso que les falta.
 - **La caché semántica quedó vacía y luego con 3 frases.** Para medir REN-04 con la caché fría
   se borraron las 107 filas de `semantic_cache` (`DELETE` + `POST /admin/cache/reload`, con
   `ADMIN_TOKEN` agregado al `.env`). La caché es derivada: se rehace sola con el uso.
-- **El libro `resultados-consolidados.xlsx` no se actualizó**: los resultados de esta ronda
-  están en el informe y en la evidencia, y el owner decide si se cargan.
+- **El libro `resultados-consolidados.xlsx` quedó actualizado** (segunda parte de la sesión):
+  se agregaron las 17 filas como tercera ronda, **«Ronda P1 10/11»**, con
+  `docs/plan-pruebas/agregar-ronda.py` y los resultados de
+  `docs/plan-pruebas/resultados-p1-2026-11-10/`. El libro pasa de 148 a 165 filas y el
+  `Resumen` gana una fila en «Por ronda» (17 pruebas: 1 Pasa, 2 Falla, 14 Se reporta).
+  Las filas de las dos rondas anteriores no se tocaron.
 
 ## Decisiones del owner en esta sesión
 
 - Alcance: las 17 pendientes del carril P1, no solo las 2 fallas.
 - Usar el `.env` nuevo de `~/Descargas/envtesis` en vez de correr con el modelo local.
+- Cargar las 17 filas al libro y dejar una copia en `~/Descargas/`.
 
 ## Cómo se reproduce
 
