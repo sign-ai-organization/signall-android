@@ -1,0 +1,35 @@
+PR-STT-03 · Filtros de no voz · repeticion con correccion · 2026-11-10
+Laboratorio aparte p6lab-* (STT medium, cuda, float16, puerto 8001, pesos del volumen del proyecto en solo lectura). No se toco el STT canonico (apagado).
+Audios: AU-03-001 a 008 (16 kHz). POST /transcribe y WS /ws/transcribe a ritmo real (tramas de 30 ms, 2 s de espera, "end", 2 s de espera).
+Codigo: sign-ai-stt, rama fix/stt-03-no-voz (app/non_speech.py, scripts/verify_non_speech.py), sin commit al momento de medir.
+
+LINEA BASE (codigo actual, imagen sign-ai-backend-stt):
+  POST, 20 repeticiones x 8 audios = 160 corridas: 6 con texto inventado (3,75 %), intermitente:
+    AU-03-004 x5 (de 20): "Este es el canal de subtitulos en espanol de la Iglesia de Jesucristo..." (x3), ". . . . . . ." (x1), "Que te ha dicho la gente? No, no, todo por el tiempo... Me ha faltado la vida..." (x1, 55 palabras)
+    AU-03-003 x1 (de 20): "Esto es el canal de subtitulos en espanol de la Iglesia de Jesucristo..."
+  WS, 3 repeticiones x 8 audios = 24 corridas: 0 finales con texto; 3 parciales con texto, los 3 en AU-03-006: "Grr!" (3 de 3 repeticiones).
+
+CAUSA (leida en el codigo, no supuesta):
+  - Los parciales SI pasan por la barrera: transcribe_buffer es la misma funcion para parciales y finales. El informe del 6/11 decia lo contrario y era incorrecto.
+  - "Grr!" se escapaba porque el patron era GRRR+ (tres erres) y el parcial trae dos.
+  - ". . . ." se escapaba porque, al quitar la puntuacion, el texto queda vacio y is_non_speech devolvia False para vacio.
+  - Las coletillas de la iglesia y de creditos no estaban en la lista.
+
+CORRECCION (app/non_speech.py): GRR+ en lugar de GRRR+; un texto sin letras ni numeros es no voz; coletilla "ESTE/ESTO ES EL CANAL DE SUBTITULOS EN ESPANOL"; "SUBTITULADO POR ..."; y, en cualquier parte del texto, WWW, HTTP, AMARA ORG, CANAL DE SUBTITULOS, SUSCRIBETE y DALE A LIKE/LA CAMPANITA.
+  scripts/verify_non_speech.py: 33 comprobaciones, incluidas 15 frases/glosas reales que NO deben descartarse (Gracias, Hola, Como estas, Este es mi hermano, Quiero mas informacion...). Todas pasan.
+
+MEDICION CON LA CORRECCION (la corregida cambio en tres pasos, cada uno con su imagen):
+  Solo patrones iniciales, POST x20 (160 corridas): 2 con texto (1,25 %): "Mas informacion en www.alimmenta.com", "Subtitulado por la comunidad de Amara.org" (otros textos inventados, no los de la linea base).
+  Con creditos y URLs, POST x40 (320 corridas): 7 con texto (2,2 %): 2 variantes de la coletilla de la iglesia, 2 de "Suscribete al canal y dale a like/campanita" y 3 frases libres repetitivas ("No, no, todo por el tiempo...").
+  FINAL (con variantes), POST x40 (320 corridas): 1 con texto (0,3 %): AU-03-004 rep 30, frase libre repetitiva ("Te ha dicho que es mi turno? No, no. Todo por el tiempo? No, no...").
+  FINAL, WS x3 (24 corridas): 0 finales con texto y 0 parciales con texto.
+
+CALIBRACION DE LA TASA DE COMPRESION (no implementada):
+  Alucinaciones libres repetitivas: 1,39 a 2,24. Habla real (79 textos del plan de AU-01 y frases del plan): maximo 1,40.
+  Los rangos se solapan: un umbral por compresion se comeria frases reales largas. No se implemento.
+
+SALVEDADES:
+  - Las alucinaciones son aleatorias entre corridas (cada ronda saca textos distintos); una lista de patrones no puede garantizar "ningun audio produce texto" por POST.
+  - Los resultados de los tres pasos intermedios se midieron con distinto numero de repeticiones (20, 40, 40); los porcentajes son indicativos.
+  - La imagen del laboratorio es la del stt de este repo, no la del canonico; el canonico no se reconstruyo.
+  - Medido solo con medium y MIN_RMS=0,008 (la configuracion actual).

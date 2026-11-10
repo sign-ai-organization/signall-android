@@ -1,0 +1,34 @@
+PR-RES-04 · Falla de la base de datos · repeticion del caso 2 tras el arreglo · 2026-11-10
+Laboratorio aparte p5lab-* (Postgres 16 + pgvector propio, backend reconstruido con el cambio, STT inexistente, LLM real). No se toco Neon ni el stack canonico.
+Codigo: sign-ai-backend, cambios sin commit: app/persistence/recovery.py (nuevo) + attach_pool/set_synonym_pairs/update_catalog + db_recovery_interval_seconds=15 s.
+
+== ANTES de levantar la base (backend arrancado con la base caida) ==
+arranque 13:48:11 UTC; /health respondio a los ~37 s: status=degraded, catalog_loaded=false, catalog_glosses=0
+traduccion de 'Hola, buenos dias.': HOLA y BUENOS DIAS con available=false (0 de 2 glosas)
+POST /admin/cache/reload: HTTP 503
+
+== Base levantada y sembrada (50 glosas) a las 13:50:32 UTC ==
+backend, SIN reiniciar (RestartCount=0, StartedAt=13:48:11):
+2026-11-10 13:49:47,736 INFO app.nlp.nlp_service_impl: SemanticCache MISS for 'Hola, buenos dias.' -> calling LLM
+2026-11-10 13:49:51,054 WARNING app.persistence.recovery: Database recovery attempt failed (TimeoutError); trying again later
+2026-11-10 13:50:11,052 WARNING app.persistence.recovery: Database recovery attempt failed (TimeoutError); trying again later
+2026-11-10 13:50:26,059 WARNING app.persistence.recovery: Database recovery attempt failed (ConnectionRefusedError); trying again later
+2026-11-10 13:50:41,120 INFO app.persistence.recovery: The database is reachable again; the pool is open
+2026-11-10 13:50:41,124 INFO app.persistence.recovery: Catalog loaded after start-up: 50 glosses
+2026-11-10 13:50:41,126 INFO app.nlp.semantic_cache: SemanticCache reloaded 0 rows
+2026-11-10 13:50:56,127 INFO app.persistence.recovery: Database recovery check: nothing left to load; stopping
+2026-11-10 13:51:02,498 INFO app.nlp.nlp_service_impl: SemanticCache MISS for 'Hola, buenos dias.' -> calling LLM
+2026-11-10 13:51:14,465 INFO app.nlp.nlp_service_impl: SemanticCache HIT for 'Hola, buenos dias.'
+2026-11-10 13:51:14,597 INFO app.nlp.semantic_cache: SemanticCache reloaded 1 rows
+2026-11-10 13:51:57,136 INFO app.nlp.nlp_service_impl: SemanticCache HIT for 'Hola, buenos dias.'
+
+== DESPUES ==
+/health: status=ok, catalog_loaded=true, catalog_glosses=50 (recuperado a las 13:50:41, ~9 s despues de dejar la base lista)
+traduccion: HOLA y BUENOS DIAS con available=true y glb_path; la frase se guardo (semantic_cache=1 fila) y la repetida salio por cache (traza 1,6 a 2,0 ms)
+POST /admin/cache/reload: HTTP 200 {status:ok, rows:1}
+La tarea de recuperacion termino sola ('nothing left to load; stopping': 1 vez)
+
+== Salvedades ==
+- Tiempo de espera del cliente WS de 5 a 8 s en todas las frases (incluso con cache, cuando la traza del backend dice 1,6 a 2 ms): atribuido al STT inexistente del laboratorio, NO diagnosticado.
+- Solo se repitio el caso 2 (arranque con la base caida). No se repitieron el caso 1 (corte mientras traduce) ni el 3 (base pausada).
+- Base local, no Neon. Frase enviada ANTES de la recuperacion no se guarda (sin pool): esperado.
