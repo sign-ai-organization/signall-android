@@ -1,0 +1,153 @@
+{
+ "casos": 200,
+ "exactos": 172,
+ "porcentaje": 86.0,
+ "por_grupo": {
+  "Con puntuación": "20/20",
+  "Sin puntuación": "12/20",
+  "Registro de datos": "23/28",
+  "Coloquial": "22/23",
+  "Muletillas": "18/20",
+  "Negativas e imperativas": "17/21",
+  "Casos que no se deben dividir": "22/22",
+  "Números dictados": "16/17",
+  "Trampas": "15/20",
+  "Texto vacío": "2/2",
+  "Una palabra": "2/2",
+  "Muy largo, con puntuación": "1/1",
+  "Muy largo, sin puntuación": "0/1",
+  "Muy largo, una sola oración": "0/1",
+  "Solo muletillas": "2/2"
+ },
+ "limite": "7/9",
+ "no_limite": "165/191",
+ "cortes": {
+  "obtenidos": 144,
+  "obligatorios": 144,
+  "correctos": 134,
+  "precision": 0.931,
+  "cobertura": 0.806
+ },
+ "au05_detalle": [
+  {
+   "id": "AU-05-001",
+   "texto": "Hola, buenos días, bienvenidos.",
+   "obtenido": [
+    "Hola, buenos días, bienvenidos."
+   ],
+   "esperado": [
+    "Hola, buenos días, bienvenidos."
+   ],
+   "exacto": true
+  },
+  {
+   "id": "AU-05-002",
+   "texto": "Buenas tardes. Hoy me siento más o menos.",
+   "obtenido": [
+    "Buenas tardes.",
+    "Hoy me siento más o menos."
+   ],
+   "esperado": [
+    "Buenas tardes.",
+    "Hoy me siento más o menos."
+   ],
+   "exacto": true
+  },
+  {
+   "id": "AU-05-003",
+   "texto": "¿Tienes hambre?",
+   "obtenido": [
+    "¿Tienes hambre?"
+   ],
+   "esperado": [
+    "¿Tienes hambre?"
+   ],
+   "exacto": true
+  },
+  {
+   "id": "AU-05-004",
+   "texto": "Perdón, ¿estás triste?",
+   "obtenido": [
+    "Perdón,",
+    "¿estás triste?"
+   ],
+   "esperado": [
+    "Perdón.",
+    "¿Estás triste?"
+   ],
+   "exacto": false
+  },
+  {
+   "id": "AU-05-005",
+   "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+   "obtenido": [
+    "Hola,",
+    "¿cómo estás?",
+    "¿Cómo te llamas?"
+   ],
+   "esperado": [
+    "Hola, ¿cómo estás?",
+    "¿Cómo te llamas?"
+   ],
+   "exacto": false
+  },
+  {
+   "id": "AU-05-006",
+   "texto": "¿Dónde vive tu familia?",
+   "obtenido": [
+    "¿Dónde vive tu familia?"
+   ],
+   "esperado": [
+    "¿Dónde vive tu familia?"
+   ],
+   "exacto": true
+  },
+  {
+   "id": "AU-05-007",
+   "texto": "Yo nunca como mucho.",
+   "obtenido": [
+    "Yo nunca como mucho."
+   ],
+   "esperado": [
+    "Yo nunca como mucho."
+   ],
+   "exacto": true
+  },
+  {
+   "id": "AU-05-008",
+   "texto": "Perdón, mi hermano nunca está contento.",
+   "obtenido": [
+    "Perdón, mi hermano nunca está contento."
+   ],
+   "esperado": [
+    "Perdón.",
+    "Mi hermano nunca está contento."
+   ],
+   "exacto": false
+  },
+  {
+   "id": "AU-05-009",
+   "texto": "Por favor, come poco.",
+   "obtenido": [
+    "Por favor, come poco."
+   ],
+   "esperado": [
+    "Por favor, come poco."
+   ],
+   "exacto": true
+  },
+  {
+   "id": "AU-05-010",
+   "texto": "Con permiso, déjame pasar, por favor.",
+   "obtenido": [
+    "Con permiso, déjame pasar, por favor."
+   ],
+   "esperado": [
+    "Con permiso.",
+    "Déjame pasar, por favor."
+   ],
+   "exacto": false
+  }
+ ],
+ "au05": "6/10"
+}

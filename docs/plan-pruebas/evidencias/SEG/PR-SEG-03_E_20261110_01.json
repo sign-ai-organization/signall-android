@@ -1,0 +1,74 @@
+{
+ "hibrido_ligero (sistema)": {
+  "casos": 191,
+  "exactos": 165,
+  "porcentaje": 86.4,
+  "por_grupo": {
+   "Con puntuación": "20/20",
+   "Sin puntuación": "12/20",
+   "Registro de datos": "23/28",
+   "Coloquial": "22/23",
+   "Muletillas": "18/20",
+   "Negativas e imperativas": "17/21",
+   "Casos que no se deben dividir": "22/22",
+   "Números dictados": "16/17",
+   "Trampas": "15/20"
+  },
+  "ms_por_texto": 1.38,
+  "borde": "22/29"
+ },
+ "solo_puntuacion": {
+  "casos": 191,
+  "exactos": 131,
+  "porcentaje": 68.6,
+  "por_grupo": {
+   "Con puntuación": "20/20",
+   "Sin puntuación": "1/20",
+   "Registro de datos": "17/28",
+   "Coloquial": "18/23",
+   "Muletillas": "14/20",
+   "Negativas e imperativas": "12/21",
+   "Casos que no se deben dividir": "22/22",
+   "Números dictados": "14/17",
+   "Trampas": "13/20"
+  },
+  "ms_por_texto": 0.02,
+  "borde": "16/29"
+ },
+ "puntuacion_marcadores": {
+  "casos": 191,
+  "exactos": 144,
+  "porcentaje": 75.4,
+  "por_grupo": {
+   "Con puntuación": "20/20",
+   "Sin puntuación": "5/20",
+   "Registro de datos": "17/28",
+   "Coloquial": "20/23",
+   "Muletillas": "18/20",
+   "Negativas e imperativas": "13/21",
+   "Casos que no se deben dividir": "22/22",
+   "Números dictados": "14/17",
+   "Trampas": "15/20"
+  },
+  "ms_por_texto": 0.06,
+  "borde": "19/29"
+ },
+ "spacy_sents_md": {
+  "casos": 191,
+  "exactos": 124,
+  "porcentaje": 64.9,
+  "por_grupo": {
+   "Con puntuación": "18/20",
+   "Sin puntuación": "1/20",
+   "Registro de datos": "16/28",
+   "Coloquial": "18/23",
+   "Muletillas": "14/20",
+   "Negativas e imperativas": "12/21",
+   "Casos que no se deben dividir": "22/22",
+   "Números dictados": "10/17",
+   "Trampas": "13/20"
+  },
+  "ms_por_texto": 2.25,
+  "borde": "16/29"
+ }
+}

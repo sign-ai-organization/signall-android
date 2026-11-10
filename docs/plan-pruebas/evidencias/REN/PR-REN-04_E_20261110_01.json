@@ -1,0 +1,19 @@
+{
+ "situacion": "sistema apagado (backend y STT) y base de datos sin uso durante 5 min 40 s",
+ "ms_hasta_stt_listo": 6037,
+ "ms_hasta_backend_listo": 18516,
+ "tres_frases_con_cache_cargada": [
+  {"frase": "Hola, buenos días, bienvenidos.", "ms_primer_segmento": 3.5, "ms_total": 3.6},
+  {"frase": "¿Tienes hambre?", "ms_primer_segmento": 0.7, "ms_total": 0.8},
+  {"frase": "¿Cuándo comen ustedes?", "ms_primer_segmento": 0.8, "ms_total": 0.9}
+ ],
+ "tres_frases_con_cache_vacia": [
+  {"frase": "Hola, buenos días, bienvenidos.", "ms_primer_segmento": 1186.0, "ms_total": 1186.2},
+  {"frase": "¿Tienes hambre?", "ms_primer_segmento": 917.2, "ms_total": 917.3},
+  {"frase": "¿Cuándo comen ustedes?", "ms_primer_segmento": 1129.3, "ms_total": 1129.5}
+ ],
+ "base_dormida": "no se pudo medir: el cómputo de Neon siguió activo (`started_at` 17:50:24Z, sin suspensión) después de 5 min 40 s sin uso, así que la primera traducción no pagó el despertar de la base",
+ "nota": "El backend hace el warm-up del LLM al arrancar (LLM warm-up took 1153 ms), por eso la primera traducción con la caché vacía no paga la carga del modelo.",
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)"
+}

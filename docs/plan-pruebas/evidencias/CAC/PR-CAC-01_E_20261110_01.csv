@@ -1,0 +1,6 @@
+modelo;disponible;mejor_umbral;parafrasis;trampas;ms_por_oracion
+MiniLM (sistema);True;0.04;22/34;0/30;12.87
+mpnet;True;0.02;18/34;0/30;40.72
+e5-small;False;;"401 Client Error. (Request ID: Root=1-6af35f18-0d3f4b6f28f396e11928b9db;f3249488-cb5e-4dac-ac8f-9f768fafe777)
+
+Repository Not Found for url: https://huggingface.co/sentence-transformers/multilingual-e";;

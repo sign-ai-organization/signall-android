@@ -1,0 +1,1020 @@
+{
+ "consistentes": 28,
+ "total": 30,
+ "detalle": [
+  {
+   "id": "FR-01-001",
+   "respuestas": [
+    [
+     "HOLA",
+     "BUENOS DIAS",
+     "BIENVENIDO"
+    ],
+    [
+     "HOLA",
+     "BUENOS DIAS",
+     "BIENVENIDO"
+    ],
+    [
+     "HOLA",
+     "BUENOS DIAS",
+     "BIENVENIDO"
+    ],
+    [
+     "HOLA",
+     "BUENOS DIAS",
+     "BIENVENIDO"
+    ],
+    [
+     "HOLA",
+     "BUENOS DIAS",
+     "BIENVENIDO"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-002",
+   "respuestas": [
+    [
+     "ADIOS",
+     "TODOS",
+     "BUENAS NOCHES"
+    ],
+    [
+     "ADIOS",
+     "TODOS",
+     "BUENAS NOCHES"
+    ],
+    [
+     "ADIOS",
+     "TODOS",
+     "BUENAS NOCHES"
+    ],
+    [
+     "ADIOS",
+     "TODOS",
+     "BUENAS NOCHES"
+    ],
+    [
+     "ADIOS",
+     "TODOS",
+     "BUENAS NOCHES"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-003",
+   "respuestas": [
+    [
+     "ABUELO",
+     "TIO",
+     "TRABAJAR",
+     "FAMILIA"
+    ],
+    [
+     "ABUELO",
+     "TIO",
+     "TRABAJAR",
+     "FAMILIA"
+    ],
+    [
+     "ABUELO",
+     "TIO",
+     "TRABAJAR",
+     "FAMILIA"
+    ],
+    [
+     "ABUELO",
+     "TIO",
+     "TRABAJAR",
+     "FAMILIA"
+    ],
+    [
+     "ABUELO",
+     "TIO",
+     "TRABAJAR",
+     "FAMILIA"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-004",
+   "respuestas": [
+    [
+     "YO",
+     "CONTENTO",
+     "HERMANO",
+     "FELIZ"
+    ],
+    [
+     "YO",
+     "CONTENTO",
+     "HERMANO",
+     "FELIZ"
+    ],
+    [
+     "YO",
+     "CONTENTO",
+     "HERMANO",
+     "FELIZ"
+    ],
+    [
+     "YO",
+     "CONTENTO",
+     "HERMANO",
+     "FELIZ"
+    ],
+    [
+     "YO",
+     "CONTENTO",
+     "HERMANO",
+     "FELIZ"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-005",
+   "respuestas": [
+    [
+     "BUENAS TARDES",
+     "YO",
+     "SENTIR",
+     "MAS O MENOS"
+    ],
+    [
+     "BUENAS TARDES",
+     "YO",
+     "SENTIR",
+     "MAS O MENOS"
+    ],
+    [
+     "BUENAS TARDES",
+     "YO",
+     "SENTIR",
+     "MAS O MENOS"
+    ],
+    [
+     "BUENAS TARDES",
+     "YO",
+     "SENTIR",
+     "MAS O MENOS"
+    ],
+    [
+     "BUENAS TARDES",
+     "YO",
+     "SENTIR",
+     "MAS O MENOS"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-006",
+   "respuestas": [
+    [
+     "GRACIAS",
+     "TODOS",
+     "NIÑO",
+     "NIÑA",
+     "COMER"
+    ],
+    [
+     "GRACIAS",
+     "TODOS",
+     "NIÑO",
+     "NIÑA",
+     "COMER"
+    ],
+    [
+     "GRACIAS",
+     "TODOS",
+     "NIÑO",
+     "NIÑA",
+     "COMER"
+    ],
+    [
+     "GRACIAS",
+     "TODOS",
+     "NIÑO",
+     "NIÑA",
+     "COMER"
+    ],
+    [
+     "GRACIAS",
+     "TODOS",
+     "NIÑO",
+     "NIÑA",
+     "COMER"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-007",
+   "respuestas": [
+    [
+     "TU",
+     "HAMBRE"
+    ],
+    [
+     "TU",
+     "HAMBRE"
+    ],
+    [
+     "TU",
+     "HAMBRE"
+    ],
+    [
+     "TU",
+     "HAMBRE"
+    ],
+    [
+     "TU",
+     "HAMBRE"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-008",
+   "respuestas": [
+    [
+     "TU",
+     "BIEN"
+    ],
+    [
+     "TU",
+     "BIEN"
+    ],
+    [
+     "TU",
+     "BIEN"
+    ],
+    [
+     "TU",
+     "BIEN"
+    ],
+    [
+     "TU",
+     "BIEN"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-009",
+   "respuestas": [
+    [
+     "USTEDES",
+     "TRABAJAR",
+     "FAMILIA"
+    ],
+    [
+     "USTEDES",
+     "TRABAJAR",
+     "FAMILIA"
+    ],
+    [
+     "USTEDES",
+     "TRABAJAR",
+     "FAMILIA"
+    ],
+    [
+     "USTEDES",
+     "TRABAJAR",
+     "FAMILIA"
+    ],
+    [
+     "USTEDES",
+     "TRABAJAR",
+     "FAMILIA"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-010",
+   "respuestas": [
+    [
+     "TU",
+     "HERMANO",
+     "TRISTE",
+     "SENTIR",
+     "MAL"
+    ],
+    [
+     "HERMANO",
+     "TRISTE",
+     "YO",
+     "SENTIR",
+     "MAL"
+    ],
+    [
+     "TU",
+     "HERMANO",
+     "TRISTE",
+     "SENTIR",
+     "MAL"
+    ],
+    [
+     "TU",
+     "HERMANO",
+     "TRISTE",
+     "SENTIR",
+     "MAL"
+    ],
+    [
+     "HERMANO",
+     "TRISTE",
+     "YO",
+     "SENTIR",
+     "MAL"
+    ]
+   ],
+   "iguales": false
+  },
+  {
+   "id": "FR-01-011",
+   "respuestas": [
+    [
+     "TU",
+     "PERDON",
+     "TRISTE"
+    ],
+    [
+     "TU",
+     "PERDON",
+     "TRISTE"
+    ],
+    [
+     "TU",
+     "PERDON",
+     "TRISTE"
+    ],
+    [
+     "TU",
+     "PERDON",
+     "TRISTE"
+    ],
+    [
+     "TU",
+     "PERDON",
+     "TRISTE"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-012",
+   "respuestas": [
+    [
+     "TU",
+     "HERMANO",
+     "ABURRIDO"
+    ],
+    [
+     "TU",
+     "HERMANO",
+     "ABURRIDO"
+    ],
+    [
+     "TU",
+     "HERMANO",
+     "ABURRIDO"
+    ],
+    [
+     "TU",
+     "HERMANO",
+     "ABURRIDO"
+    ],
+    [
+     "TU",
+     "HERMANO",
+     "ABURRIDO"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-013",
+   "respuestas": [
+    [
+     "HOLA",
+     "COMO ESTAS",
+     "COMO",
+     "TU"
+    ],
+    [
+     "HOLA",
+     "COMO ESTAS",
+     "COMO",
+     "TU"
+    ],
+    [
+     "HOLA",
+     "COMO ESTAS",
+     "COMO",
+     "TU"
+    ],
+    [
+     "HOLA",
+     "COMO ESTAS",
+     "COMO",
+     "TU"
+    ],
+    [
+     "HOLA",
+     "COMO ESTAS",
+     "COMO",
+     "TU"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-014",
+   "respuestas": [
+    [
+     "DONDE",
+     "TU",
+     "FAMILIA",
+     "VIVIR"
+    ],
+    [
+     "DONDE",
+     "TU",
+     "FAMILIA",
+     "VIVIR"
+    ],
+    [
+     "DONDE",
+     "TU",
+     "FAMILIA",
+     "VIVIR"
+    ],
+    [
+     "DONDE",
+     "TU",
+     "FAMILIA",
+     "VIVIR"
+    ],
+    [
+     "DONDE",
+     "TU",
+     "FAMILIA",
+     "VIVIR"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-015",
+   "respuestas": [
+    [
+     "MUJER",
+     "JUICIOSO",
+     "HOMBRE"
+    ],
+    [
+     "MUJER",
+     "JUICIOSO",
+     "HOMBRE"
+    ],
+    [
+     "MUJER",
+     "JUICIOSO",
+     "HOMBRE"
+    ],
+    [
+     "MUJER",
+     "JUICIOSO",
+     "HOMBRE"
+    ],
+    [
+     "MUJER",
+     "JUICIOSO",
+     "HOMBRE"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-016",
+   "respuestas": [
+    [
+     "POR QUE",
+     "TU",
+     "TRISTE"
+    ],
+    [
+     "POR QUE",
+     "TU",
+     "TRISTE"
+    ],
+    [
+     "POR QUE",
+     "TU",
+     "TRISTE"
+    ],
+    [
+     "POR QUE",
+     "TU",
+     "TRISTE"
+    ],
+    [
+     "POR QUE",
+     "TU",
+     "TRISTE"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-017",
+   "respuestas": [
+    [
+     "CUANDO",
+     "USTEDES",
+     "COMER"
+    ],
+    [
+     "CUANDO",
+     "USTEDES",
+     "COMER"
+    ],
+    [
+     "CUANDO",
+     "USTEDES",
+     "COMER"
+    ],
+    [
+     "CUANDO",
+     "USTEDES",
+     "COMER"
+    ],
+    [
+     "CUANDO",
+     "USTEDES",
+     "COMER"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-018",
+   "respuestas": [
+    [
+     "PERSONAS",
+     "DIFERENTE",
+     "SEÑA",
+     "TU"
+    ],
+    [
+     "PERSONAS",
+     "DIFERENTE",
+     "SEÑA",
+     "TU"
+    ],
+    [
+     "PERSONAS",
+     "DIFERENTE",
+     "SEÑA",
+     "TU"
+    ],
+    [
+     "PERSONAS",
+     "DIFERENTE",
+     "SEÑA",
+     "TU"
+    ],
+    [
+     "PERSONAS",
+     "DIFERENTE",
+     "SEÑA",
+     "TU"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-019",
+   "respuestas": [
+    [
+     "YO",
+     "NUNCA",
+     "COMER",
+     "MUCHO"
+    ],
+    [
+     "YO",
+     "NUNCA",
+     "COMER",
+     "MUCHO"
+    ],
+    [
+     "YO",
+     "NUNCA",
+     "COMER",
+     "MUCHO"
+    ],
+    [
+     "YO",
+     "NUNCA",
+     "COMER",
+     "MUCHO"
+    ],
+    [
+     "YO",
+     "NUNCA",
+     "COMER",
+     "MUCHO"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-020",
+   "respuestas": [
+    [
+     "ABUELO",
+     "NUNCA",
+     "TRABAJAR"
+    ],
+    [
+     "ABUELO",
+     "NUNCA",
+     "TRABAJAR"
+    ],
+    [
+     "ABUELO",
+     "NUNCA",
+     "TRABAJAR"
+    ],
+    [
+     "ABUELO",
+     "NUNCA",
+     "TRABAJAR"
+    ],
+    [
+     "ABUELO",
+     "NUNCA",
+     "TRABAJAR"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-021",
+   "respuestas": [
+    [
+     "TIO",
+     "NUNCA",
+     "ABURRIDO"
+    ],
+    [
+     "TIO",
+     "NUNCA",
+     "ABURRIDO"
+    ],
+    [
+     "TIO",
+     "NUNCA",
+     "ABURRIDO"
+    ],
+    [
+     "TIO",
+     "NUNCA",
+     "ABURRIDO"
+    ],
+    [
+     "TIO",
+     "NUNCA",
+     "ABURRIDO"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-022",
+   "respuestas": [
+    [
+     "USTEDES",
+     "NUNCA",
+     "SENTIR",
+     "MAL"
+    ],
+    [
+     "USTEDES",
+     "NUNCA",
+     "SENTIR",
+     "MAL"
+    ],
+    [
+     "USTEDES",
+     "NUNCA",
+     "SENTIR",
+     "MAL"
+    ],
+    [
+     "USTEDES",
+     "NUNCA",
+     "SENTIR",
+     "MAL"
+    ],
+    [
+     "USTEDES",
+     "NUNCA",
+     "SENTIR",
+     "MAL"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-023",
+   "respuestas": [
+    [
+     "HERMANO",
+     "NUNCA",
+     "CONTENTO"
+    ],
+    [
+     "HERMANO",
+     "NUNCA",
+     "CONTENTO"
+    ],
+    [
+     "HERMANO",
+     "NUNCA",
+     "CONTENTO"
+    ],
+    [
+     "HERMANO",
+     "NUNCA",
+     "CONTENTO"
+    ],
+    [
+     "HERMANO",
+     "NUNCA",
+     "CONTENTO"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-024",
+   "respuestas": [
+    [
+     "TU",
+     "SENTIR",
+     "BIEN",
+     "NIÑA",
+     "NUNCA",
+     "TRISTE"
+    ],
+    [
+     "TU",
+     "SENTIR",
+     "BIEN",
+     "NIÑA",
+     "NUNCA",
+     "TRISTE"
+    ],
+    [
+     "TU",
+     "SENTIR",
+     "BIEN",
+     "NIÑA",
+     "NUNCA",
+     "TRISTE"
+    ],
+    [
+     "TU",
+     "SENTIR",
+     "BIEN",
+     "NIÑA",
+     "NUNCA",
+     "TRISTE"
+    ],
+    [
+     "TU",
+     "SENTIR",
+     "BIEN",
+     "NIÑA",
+     "NUNCA",
+     "TRISTE"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-025",
+   "respuestas": [
+    [
+     "POR FAVOR",
+     "COMER",
+     "POCO"
+    ],
+    [
+     "POR FAVOR",
+     "COMER",
+     "POCO"
+    ],
+    [
+     "POR FAVOR",
+     "COMER",
+     "POCO"
+    ],
+    [
+     "POR FAVOR",
+     "COMER",
+     "POCO"
+    ],
+    [
+     "POR FAVOR",
+     "COMER",
+     "POCO"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-026",
+   "respuestas": [
+    [
+     "POR FAVOR"
+    ],
+    [
+     "POR FAVOR"
+    ],
+    [
+     "POR FAVOR"
+    ],
+    [
+     "POR FAVOR"
+    ],
+    [
+     "POR FAVOR"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-027",
+   "respuestas": [
+    [
+     "NIÑO",
+     "TODOS",
+     "TRABAJAR"
+    ],
+    [
+     "NIÑO",
+     "TODOS",
+     "TRABAJAR"
+    ],
+    [
+     "NIÑO",
+     "TODOS",
+     "TRABAJAR"
+    ],
+    [
+     "NIÑO",
+     "TODOS",
+     "TRABAJAR"
+    ],
+    [
+     "NIÑO",
+     "TODOS",
+     "TRABAJAR"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-028",
+   "respuestas": [
+    [
+     "HERMANO",
+     "VIVIR",
+     "ABUELO",
+     "TRABAJAR",
+     "TIO"
+    ],
+    [
+     "HERMANO",
+     "VIVIR",
+     "ABUELO",
+     "TRABAJAR",
+     "TIO"
+    ],
+    [
+     "HERMANO",
+     "VIVIR",
+     "ABUELO",
+     "TRABAJAR",
+     "TIO"
+    ],
+    [
+     "HERMANO",
+     "VIVIR",
+     "ABUELO",
+     "TRABAJAR",
+     "TIO"
+    ],
+    [
+     "HERMANO",
+     "VIVIR",
+     "ABUELO",
+     "TRABAJAR",
+     "TIO"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-029",
+   "respuestas": [
+    [
+     "HOLA",
+     "FAMILIA",
+     "SENTIR",
+     "BIENVENIDO"
+    ],
+    [
+     "HOLA",
+     "FAMILIA",
+     "SENTIR",
+     "BIENVENIDO"
+    ],
+    [
+     "HOLA",
+     "FAMILIA",
+     "SENTIR",
+     "BIENVENIDO"
+    ],
+    [
+     "HOLA",
+     "FAMILIA",
+     "SENTIR",
+     "BIENVENIDO"
+    ],
+    [
+     "HOLA",
+     "FAMILIA",
+     "SENTIR",
+     "BIENVENIDO"
+    ]
+   ],
+   "iguales": true
+  },
+  {
+   "id": "FR-01-030",
+   "respuestas": [
+    [
+     "TIO",
+     "COMER",
+     "MUCHO",
+     "HERMANO",
+     "COMER",
+     "POCO"
+    ],
+    [
+     "TIO",
+     "COMER",
+     "MUCHO",
+     "HERMANO",
+     "COMER",
+     "POCO"
+    ],
+    [
+     "TIO",
+     "COMER",
+     "MUCHO",
+     "HERMANO",
+     "COMER",
+     "POCO"
+    ],
+    [
+     "TIO",
+     "COMER",
+     "MUCHO",
+     "HERMANO",
+     "COMER",
+     "POCO"
+    ],
+    [
+     "TIO",
+     "COMER",
+     "MUCHO",
+     "COMER",
+     "POCO"
+    ]
+   ],
+   "iguales": false
+  }
+ ]
+}

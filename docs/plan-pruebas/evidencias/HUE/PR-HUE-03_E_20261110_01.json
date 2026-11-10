@@ -1,0 +1,357 @@
+{
+ "entradas": 200,
+ "aciertos": 151,
+ "porcentaje": 75.5,
+ "por_tipo": {
+  "AFFIRMATIVE": "34/40",
+  "YES_NO_QUESTION": "17/40",
+  "CONTENT_QUESTION": "40/40",
+  "NEGATIVE": "38/40",
+  "IMPERATIVE": "22/40"
+ },
+ "fallos": [
+  {
+   "id": "CO-02-011",
+   "variante": "con",
+   "texto": "Pase de abordar entregado en la ventanilla dos.",
+   "esperado": "AFFIRMATIVE",
+   "obtenido": "IMPERATIVE"
+  },
+  {
+   "id": "CO-02-011",
+   "variante": "sin",
+   "texto": "pase de abordar entregado en la ventanilla dos",
+   "esperado": "AFFIRMATIVE",
+   "obtenido": "IMPERATIVE"
+  },
+  {
+   "id": "CO-02-016",
+   "variante": "con",
+   "texto": "El caché semántico todavía no está implementado.",
+   "esperado": "AFFIRMATIVE",
+   "obtenido": "NEGATIVE"
+  },
+  {
+   "id": "CO-02-016",
+   "variante": "sin",
+   "texto": "el caché semántico todavía no está implementado",
+   "esperado": "AFFIRMATIVE",
+   "obtenido": "NEGATIVE"
+  },
+  {
+   "id": "CO-02-020",
+   "variante": "con",
+   "texto": "No obstante, el trámite se completó a tiempo.",
+   "esperado": "AFFIRMATIVE",
+   "obtenido": "NEGATIVE"
+  },
+  {
+   "id": "CO-02-020",
+   "variante": "sin",
+   "texto": "no obstante el trámite se completó a tiempo",
+   "esperado": "AFFIRMATIVE",
+   "obtenido": "NEGATIVE"
+  },
+  {
+   "id": "CO-02-021",
+   "variante": "sin",
+   "texto": "tiene alguna pregunta",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-022",
+   "variante": "sin",
+   "texto": "ya diligenció el formulario",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-023",
+   "variante": "sin",
+   "texto": "tiene su documento a la mano",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-024",
+   "variante": "sin",
+   "texto": "ya realizó el pago correspondiente",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-025",
+   "variante": "sin",
+   "texto": "desea continuar con el registro",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-026",
+   "variante": "sin",
+   "texto": "ya recibió la confirmación por correo",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-027",
+   "variante": "sin",
+   "texto": "tiene el código de la cita",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-028",
+   "variante": "sin",
+   "texto": "está todo en orden",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-029",
+   "variante": "con",
+   "texto": "¿Le parece bien que continuemos?",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "CONTENT_QUESTION"
+  },
+  {
+   "id": "CO-02-029",
+   "variante": "sin",
+   "texto": "le parece bien que continuemos",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-030",
+   "variante": "con",
+   "texto": "¿Seguro que no le falta ningún documento?",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "CONTENT_QUESTION"
+  },
+  {
+   "id": "CO-02-030",
+   "variante": "sin",
+   "texto": "seguro que no le falta ningún documento",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "NEGATIVE"
+  },
+  {
+   "id": "CO-02-031",
+   "variante": "sin",
+   "texto": "todo bien",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-032",
+   "variante": "sin",
+   "texto": "es correcto o no",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "NEGATIVE"
+  },
+  {
+   "id": "CO-02-033",
+   "variante": "sin",
+   "texto": "no trajo el formulario firmado",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "NEGATIVE"
+  },
+  {
+   "id": "CO-02-034",
+   "variante": "sin",
+   "texto": "no es este su número de documento",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "NEGATIVE"
+  },
+  {
+   "id": "CO-02-035",
+   "variante": "sin",
+   "texto": "se encuentra bien",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-036",
+   "variante": "con",
+   "texto": "¿Confirma que la información es correcta?",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "CONTENT_QUESTION"
+  },
+  {
+   "id": "CO-02-036",
+   "variante": "sin",
+   "texto": "confirma que la información es correcta",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-037",
+   "variante": "sin",
+   "texto": "recuerda si trajo el documento",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-038",
+   "variante": "sin",
+   "texto": "le molesta si tomamos su firma digital",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-039",
+   "variante": "sin",
+   "texto": "está el intérprete disponible ahora",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-040",
+   "variante": "sin",
+   "texto": "cerramos el caso entonces",
+   "esperado": "YES_NO_QUESTION",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-078",
+   "variante": "con",
+   "texto": "Nada de esto quedó registrado correctamente.",
+   "esperado": "NEGATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-078",
+   "variante": "sin",
+   "texto": "nada de esto quedó registrado correctamente",
+   "esperado": "NEGATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-092",
+   "variante": "con",
+   "texto": "Antes de continuar, firme el consentimiento.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-092",
+   "variante": "sin",
+   "texto": "antes de continuar firme el consentimiento",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-093",
+   "variante": "con",
+   "texto": "Entonces confirme sus datos personales.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-093",
+   "variante": "sin",
+   "texto": "entonces confirme sus datos personales",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-094",
+   "variante": "con",
+   "texto": "Deme su documento de identidad.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-094",
+   "variante": "sin",
+   "texto": "deme su documento de identidad",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-095",
+   "variante": "con",
+   "texto": "Anote su número de contacto.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-095",
+   "variante": "sin",
+   "texto": "anote su número de contacto",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-096",
+   "variante": "con",
+   "texto": "Adjunte una copia de su documento.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-096",
+   "variante": "sin",
+   "texto": "adjunte una copia de su documento",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-097",
+   "variante": "con",
+   "texto": "Acompáñeme a la siguiente sala.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-097",
+   "variante": "sin",
+   "texto": "acompáñeme a la siguiente sala",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-098",
+   "variante": "con",
+   "texto": "Vuelva en veinte minutos.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-098",
+   "variante": "sin",
+   "texto": "vuelva en veinte minutos",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-099",
+   "variante": "con",
+   "texto": "Explique el motivo de su visita.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-099",
+   "variante": "sin",
+   "texto": "explique el motivo de su visita",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-100",
+   "variante": "con",
+   "texto": "Actualice sus datos de contacto.",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  },
+  {
+   "id": "CO-02-100",
+   "variante": "sin",
+   "texto": "actualice sus datos de contacto",
+   "esperado": "IMPERATIVE",
+   "obtenido": "AFFIRMATIVE"
+  }
+ ]
+}

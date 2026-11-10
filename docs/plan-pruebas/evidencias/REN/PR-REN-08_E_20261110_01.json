@@ -1,0 +1,174 @@
+{
+ "filas": [
+  {
+   "id": "FR-01-001",
+   "via": "voz",
+   "transcripcion": "Hola, buenos días, bienvenidos.",
+   "segmentos": 1,
+   "subido": 142742,
+   "bajado": 538,
+   "ms": 570.5
+  },
+  {
+   "id": "FR-01-005",
+   "via": "voz",
+   "transcripcion": "Buenas tardes. Hoy me siento más o menos.",
+   "segmentos": 2,
+   "subido": 166644,
+   "bajado": 691,
+   "ms": 497.9
+  },
+  {
+   "id": "FR-01-007",
+   "via": "voz",
+   "transcripcion": "¿Tienes hambre?",
+   "segmentos": 1,
+   "subido": 86064,
+   "bajado": 369,
+   "ms": 255.1
+  },
+  {
+   "id": "FR-01-011",
+   "via": "voz",
+   "transcripcion": "Perdón, ¿estás triste?",
+   "segmentos": 2,
+   "subido": 127723,
+   "bajado": 565,
+   "ms": 473.5
+  },
+  {
+   "id": "FR-01-013",
+   "via": "voz",
+   "transcripcion": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+   "segmentos": 3,
+   "subido": 128430,
+   "bajado": 786,
+   "ms": 304.0
+  },
+  {
+   "id": "FR-01-014",
+   "via": "voz",
+   "transcripcion": "¿Dónde vive tu familia?",
+   "segmentos": 1,
+   "subido": 115431,
+   "bajado": 588,
+   "ms": 453.1
+  },
+  {
+   "id": "FR-01-019",
+   "via": "voz",
+   "transcripcion": "Yo nunca como mucho.",
+   "segmentos": 1,
+   "subido": 116784,
+   "bajado": 571,
+   "ms": 244.7
+  },
+  {
+   "id": "FR-01-023",
+   "via": "voz",
+   "transcripcion": "Perdón, mi hermano nunca está contento.",
+   "segmentos": 2,
+   "subido": 163917,
+   "bajado": 685,
+   "ms": 487.2
+  },
+  {
+   "id": "FR-01-025",
+   "via": "voz",
+   "transcripcion": "Por favor, come poco.",
+   "segmentos": 1,
+   "subido": 116785,
+   "bajado": 478,
+   "ms": 256.8
+  },
+  {
+   "id": "FR-01-026",
+   "via": "voz",
+   "transcripcion": "Con permiso, déjame pasar, por favor.",
+   "segmentos": 2,
+   "subido": 161862,
+   "bajado": 478,
+   "ms": 497.3
+  },
+  {
+   "id": "FR-01-001",
+   "via": "texto",
+   "subido": 64,
+   "bajado": 428,
+   "segmentos": 1,
+   "ms": 0.8
+  },
+  {
+   "id": "FR-01-005",
+   "via": "texto",
+   "subido": 74,
+   "bajado": 605,
+   "segmentos": 2,
+   "ms": 3.3
+  },
+  {
+   "id": "FR-01-007",
+   "via": "texto",
+   "subido": 48,
+   "bajado": 309,
+   "segmentos": 1,
+   "ms": 0.9
+  },
+  {
+   "id": "FR-01-011",
+   "via": "texto",
+   "subido": 65,
+   "bajado": 496,
+   "segmentos": 2,
+   "ms": 0.7
+  },
+  {
+   "id": "FR-01-013",
+   "via": "texto",
+   "subido": 88,
+   "bajado": 702,
+   "segmentos": 3,
+   "ms": 0.9
+  },
+  {
+   "id": "FR-01-014",
+   "via": "texto",
+   "subido": 61,
+   "bajado": 519,
+   "segmentos": 1,
+   "ms": 0.6
+  },
+  {
+   "id": "FR-01-019",
+   "via": "texto",
+   "subido": 48,
+   "bajado": 507,
+   "segmentos": 1,
+   "ms": 0.6
+  },
+  {
+   "id": "FR-01-023",
+   "via": "texto",
+   "subido": 77,
+   "bajado": 600,
+   "segmentos": 2,
+   "ms": 0.8
+  },
+  {
+   "id": "FR-01-025",
+   "via": "texto",
+   "subido": 49,
+   "bajado": 413,
+   "segmentos": 1,
+   "ms": 0.6
+  },
+  {
+   "id": "FR-01-026",
+   "via": "texto",
+   "subido": 70,
+   "bajado": 396,
+   "segmentos": 2,
+   "ms": 0.8
+  }
+ ]
+}

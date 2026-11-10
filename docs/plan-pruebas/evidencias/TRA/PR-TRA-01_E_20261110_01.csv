@@ -1,0 +1,7 @@
+desde;desde_componente;hacia;hacia_componente;simbolo;clase;pasa_por_interfaz
+app/controller/controller.py;sesion;app.controller.stt_service_client;transcripcion;SttServiceClient;interfaz (ABC/Protocol);sí
+app/controller/controller.py;sesion;app.orchestrator.orchestrator_service;orquestacion;OrchestratorService;interfaz (ABC/Protocol);sí
+app/nlp/gloss_lexicon.py;procesamiento_semantico;app.validation.catalog_repository;catalogo_validacion;normalize_gloss;implementación concreta o función;no
+app/nlp/llm_client.py;procesamiento_semantico;app.validation.catalog_repository;catalogo_validacion;normalize_gloss;implementación concreta o función;no
+app/orchestrator/orchestrator.py;orquestacion;app.nlp.nlp_service;procesamiento_semantico;NLPService;interfaz (ABC/Protocol);sí
+app/orchestrator/orchestrator.py;orquestacion;app.validation.validator_service;catalogo_validacion;ValidatorService;interfaz (ABC/Protocol);sí

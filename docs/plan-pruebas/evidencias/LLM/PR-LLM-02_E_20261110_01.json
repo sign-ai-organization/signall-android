@@ -1,0 +1,154 @@
+{
+ "reales_con_problemas": 0,
+ "reales_total": 30,
+ "problemas": [],
+ "fabricadas_aciertos": 9,
+ "fabricadas_total": 10,
+ "fabricadas": [
+  {
+   "id": "CO-04-001",
+   "caso": "En minúsculas",
+   "entrada": "hola, buenos dias, bienvenido",
+   "esperado": [
+    "HOLA",
+    "BUENOS DIAS",
+    "BIENVENIDO"
+   ],
+   "obtenido": [
+    "HOLA",
+    "BUENOS DIAS",
+    "BIENVENIDO"
+   ],
+   "acierto": true
+  },
+  {
+   "id": "CO-04-002",
+   "caso": "En minúsculas",
+   "entrada": "yo, nunca, comer, mucho",
+   "esperado": [
+    "YO",
+    "NUNCA",
+    "COMER",
+    "MUCHO"
+   ],
+   "obtenido": [
+    "YO",
+    "NUNCA",
+    "COMER",
+    "MUCHO"
+   ],
+   "acierto": true
+  },
+  {
+   "id": "CO-04-003",
+   "caso": "Con tildes",
+   "entrada": "HOLA, CÓMO ESTÁS",
+   "esperado": [
+    "HOLA",
+    "COMO ESTAS"
+   ],
+   "obtenido": [
+    "HOLA",
+    "COMO ESTAS"
+   ],
+   "acierto": true
+  },
+  {
+   "id": "CO-04-004",
+   "caso": "Con tildes",
+   "entrada": "PERDÓN, TÚ, TRISTE",
+   "esperado": [
+    "PERDON",
+    "TU",
+    "TRISTE"
+   ],
+   "obtenido": [
+    "PERDON",
+    "TU",
+    "TRISTE"
+   ],
+   "acierto": true
+  },
+  {
+   "id": "CO-04-005",
+   "caso": "Con puntos",
+   "entrada": "HOLA. BUENOS DIAS. BIENVENIDO.",
+   "esperado": [
+    "HOLA",
+    "BUENOS DIAS",
+    "BIENVENIDO"
+   ],
+   "obtenido": [
+    "HOLA",
+    "BUENOS DIAS",
+    "BIENVENIDO"
+   ],
+   "acierto": true
+  },
+  {
+   "id": "CO-04-006",
+   "caso": "Con puntos",
+   "entrada": "ABUELO, NUNCA, TRABAJAR.",
+   "esperado": [
+    "ABUELO",
+    "NUNCA",
+    "TRABAJAR"
+   ],
+   "obtenido": [
+    "ABUELO",
+    "NUNCA",
+    "TRABAJAR"
+   ],
+   "acierto": true
+  },
+  {
+   "id": "CO-04-007",
+   "caso": "Con texto extra",
+   "entrada": "Claro, aquí tienes la traducción: TU, HAMBRE",
+   "esperado": [
+    "TU",
+    "HAMBRE"
+   ],
+   "obtenido": [
+    "TU",
+    "HAMBRE"
+   ],
+   "acierto": true
+  },
+  {
+   "id": "CO-04-008",
+   "caso": "Con texto extra",
+   "entrada": "TIO, TRABAJAR. Espero que te sirva.",
+   "esperado": [
+    "TIO",
+    "TRABAJAR"
+   ],
+   "obtenido": [
+    "TIO"
+   ],
+   "acierto": false
+  },
+  {
+   "id": "CO-04-009",
+   "caso": "Con espacios dentro de una glosa",
+   "entrada": "POR FAVOR, COMER",
+   "esperado": [
+    "POR FAVOR",
+    "COMER"
+   ],
+   "obtenido": [
+    "POR FAVOR",
+    "COMER"
+   ],
+   "acierto": true
+  },
+  {
+   "id": "CO-04-010",
+   "caso": "Vacía",
+   "entrada": "",
+   "esperado": [],
+   "obtenido": [],
+   "acierto": true
+  }
+ ]
+}

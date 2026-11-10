@@ -1,0 +1,5 @@
+metodo;entradas;aciertos;porcentaje;por_tipo
+completa;200;151;75.5;"{""AFFIRMATIVE"": ""34/40"", ""YES_NO_QUESTION"": ""17/40"", ""CONTENT_QUESTION"": ""40/40"", ""NEGATIVE"": ""38/40"", ""IMPERATIVE"": ""22/40""}"
+sin_interrogativa;200;94;47.0;"{""AFFIRMATIVE"": ""34/40"", ""YES_NO_QUESTION"": ""0/40"", ""CONTENT_QUESTION"": ""0/40"", ""NEGATIVE"": ""38/40"", ""IMPERATIVE"": ""22/40""}"
+sin_negacion;200;117;58.5;"{""AFFIRMATIVE"": ""38/40"", ""YES_NO_QUESTION"": ""17/40"", ""CONTENT_QUESTION"": ""40/40"", ""NEGATIVE"": ""0/40"", ""IMPERATIVE"": ""22/40""}"
+sin_imperativa;200;131;65.5;"{""AFFIRMATIVE"": ""36/40"", ""YES_NO_QUESTION"": ""17/40"", ""CONTENT_QUESTION"": ""40/40"", ""NEGATIVE"": ""38/40"", ""IMPERATIVE"": ""0/40""}"

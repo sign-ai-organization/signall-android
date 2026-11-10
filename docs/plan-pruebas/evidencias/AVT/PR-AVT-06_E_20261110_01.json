@@ -1,0 +1,34 @@
+{
+ "modelos": [
+  {
+   "archivo": "juan.glb",
+   "bytes_glb": 30323680,
+   "clips": 200,
+   "senas": 50,
+   "bytes_animacion": 2823936,
+   "porcentaje": 9.31,
+   "por_sena_promedio": 56479,
+   "por_clip_promedio": 53148.8,
+   "por_clip_min": 37800,
+   "por_clip_max": 76256
+  },
+  {
+   "archivo": "pauline.glb",
+   "bytes_glb": 27850104,
+   "clips": 200,
+   "senas": 50,
+   "bytes_animacion": 4491912,
+   "porcentaje": 16.13,
+   "por_sena_promedio": 89838,
+   "por_clip_promedio": 86598.2,
+   "por_clip_min": 57132,
+   "por_clip_max": 111516
+  }
+ ],
+ "apks": [
+  {
+   "archivo": "app-debug.apk",
+   "bytes": 40297811
+  }
+ ]
+}

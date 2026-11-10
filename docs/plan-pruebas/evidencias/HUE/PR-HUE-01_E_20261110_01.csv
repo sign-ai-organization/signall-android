@@ -1,0 +1,4 @@
+metodo;entradas;aciertos;porcentaje;por_tipo
+reglas;200;151;75.5;"{""AFFIRMATIVE"": ""34/40"", ""YES_NO_QUESTION"": ""17/40"", ""CONTENT_QUESTION"": ""40/40"", ""NEGATIVE"": ""38/40"", ""IMPERATIVE"": ""22/40""}"
+spacy_md;200;90;45.0;"{""AFFIRMATIVE"": ""37/40"", ""YES_NO_QUESTION"": ""20/40"", ""CONTENT_QUESTION"": ""0/40"", ""NEGATIVE"": ""30/40"", ""IMPERATIVE"": ""3/40""}"
+llm;200;172;86.0;"{""AFFIRMATIVE"": ""36/40"", ""YES_NO_QUESTION"": ""23/40"", ""CONTENT_QUESTION"": ""40/40"", ""NEGATIVE"": ""33/40"", ""IMPERATIVE"": ""40/40""}"

@@ -1,0 +1,503 @@
+{
+ "modelo": "paraphrase-multilingual-MiniLM-L12-v2",
+ "umbral": 0.05,
+ "aciertos": 23,
+ "total": 34,
+ "por_tipo_de_variante": {
+  "Formato": "11/12",
+  "Orden": "9/10",
+  "Sinónimos": "3/12"
+ },
+ "falsos_aciertos": 1,
+ "trampas_total": 30,
+ "detalle": [
+  {
+   "id": "FR-03-001",
+   "oracion": 0,
+   "texto": "HOLA, BUENOS DÍAS, BIENVENIDOS.",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-001#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-002",
+   "oracion": 0,
+   "texto": "Adios a todos.",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-002#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-003",
+   "oracion": 0,
+   "texto": "En familia trabajan mi abuelo y mi tío.",
+   "variante": "Orden",
+   "distancia": 0.014,
+   "mas_cercana": "FR-01-003#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-004",
+   "oracion": 0,
+   "texto": "Porque mi hermano está feliz, estoy contento.",
+   "variante": "Orden",
+   "distancia": 0.0068,
+   "mas_cercana": "FR-01-004#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-005",
+   "oracion": 1,
+   "texto": "Hoy me siento regular.",
+   "variante": "Sinónimos",
+   "distancia": 0.2502,
+   "mas_cercana": "FR-01-005#1",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-006",
+   "oracion": 0,
+   "texto": "¡Gracias a todos!",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-006#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-007",
+   "oracion": 0,
+   "texto": "Tienes hambre",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-007#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-008",
+   "oracion": 0,
+   "texto": "¿Estas bien?",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-008#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-009",
+   "oracion": 0,
+   "texto": "¿Trabajan ustedes en familia?",
+   "variante": "Orden",
+   "distancia": 0.0055,
+   "mas_cercana": "FR-01-009#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-010",
+   "oracion": 0,
+   "texto": "Está triste tu hermano.",
+   "variante": "Orden",
+   "distancia": 0.024,
+   "mas_cercana": "FR-01-010#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-011",
+   "oracion": 0,
+   "texto": "Perdon.",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-023#0",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-011",
+   "oracion": 1,
+   "texto": "¿Estas triste?",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-011#1",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-012",
+   "oracion": 0,
+   "texto": "¿Está aburrido tu hermano?",
+   "variante": "Orden",
+   "distancia": 0.0331,
+   "mas_cercana": "FR-01-012#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-013",
+   "oracion": 0,
+   "texto": "Hola",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-013#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-014",
+   "oracion": 0,
+   "texto": "¿Tu familia dónde vive?",
+   "variante": "Orden",
+   "distancia": 0.0531,
+   "mas_cercana": "FR-01-014#0",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-015",
+   "oracion": 0,
+   "texto": "La mujer es prudente.",
+   "variante": "Sinónimos",
+   "distancia": 0.0968,
+   "mas_cercana": "FR-01-015#0",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-015",
+   "oracion": 1,
+   "texto": "¿Quién es el señor?",
+   "variante": "Sinónimos",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-015#1",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-016",
+   "oracion": 0,
+   "texto": "¿POR QUÉ ESTÁS TRISTE?",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-016#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-017",
+   "oracion": 0,
+   "texto": "¿Ustedes cuándo comen?",
+   "variante": "Orden",
+   "distancia": 0.0156,
+   "mas_cercana": "FR-01-017#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-018",
+   "oracion": 1,
+   "texto": "¿Tú qué seña usas?",
+   "variante": "Orden",
+   "distancia": 0.0178,
+   "mas_cercana": "FR-01-018#1",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-019",
+   "oracion": 0,
+   "texto": "Yo jamás como mucho.",
+   "variante": "Sinónimos",
+   "distancia": 0.6325,
+   "mas_cercana": "FR-01-024#1",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-020",
+   "oracion": 0,
+   "texto": "Mi abuelo jamás trabaja.",
+   "variante": "Sinónimos",
+   "distancia": 0.5226,
+   "mas_cercana": "FR-01-021#0",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-021",
+   "oracion": 0,
+   "texto": "Nunca está aburrido mi tío.",
+   "variante": "Orden",
+   "distancia": 0.0491,
+   "mas_cercana": "FR-01-021#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-022",
+   "oracion": 0,
+   "texto": "Nunca se sienten mal ustedes.",
+   "variante": "Orden",
+   "distancia": 0.025,
+   "mas_cercana": "FR-01-022#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-023",
+   "oracion": 0,
+   "texto": "Disculpe.",
+   "variante": "Sinónimos",
+   "distancia": 0.077,
+   "mas_cercana": "FR-01-011#0",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-024",
+   "oracion": 0,
+   "texto": "Se siente excelente.",
+   "variante": "Sinónimos",
+   "distancia": 0.0586,
+   "mas_cercana": "FR-01-024#0",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-025",
+   "oracion": 0,
+   "texto": "Por favor, come un poquito.",
+   "variante": "Sinónimos",
+   "distancia": 0.2808,
+   "mas_cercana": "FR-01-025#0",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-026",
+   "oracion": 0,
+   "texto": "con permiso.",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-026#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-026",
+   "oracion": 1,
+   "texto": "déjame pasar, por favor.",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-026#1",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-027",
+   "oracion": 0,
+   "texto": "Chicos, trabajen todos.",
+   "variante": "Sinónimos",
+   "distancia": 0.1759,
+   "mas_cercana": "FR-01-027#0",
+   "acierto": false
+  },
+  {
+   "id": "FR-03-028",
+   "oracion": 0,
+   "texto": "Hermano, reside con el abuelo.",
+   "variante": "Sinónimos",
+   "distancia": 0.0031,
+   "mas_cercana": "FR-01-028#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-029",
+   "oracion": 0,
+   "texto": "Hola familia siéntanse bienvenidos",
+   "variante": "Formato",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-029#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-030",
+   "oracion": 0,
+   "texto": "Tío, come bastante.",
+   "variante": "Sinónimos",
+   "distancia": 0.0,
+   "mas_cercana": "FR-01-030#0",
+   "acierto": true
+  },
+  {
+   "id": "FR-03-030",
+   "oracion": 1,
+   "texto": "Hermano, come un poquito.",
+   "variante": "Sinónimos",
+   "distancia": 0.1339,
+   "mas_cercana": "FR-01-030#1",
+   "acierto": false
+  }
+ ],
+ "detalle_trampas": [
+  {
+   "id": "FR-04-001",
+   "texto": "Hola, buenas noches, bienvenidos.",
+   "distancia": 0.0573,
+   "mas_cercana": "FR-01-002#1"
+  },
+  {
+   "id": "FR-04-002",
+   "texto": "Buenos días.",
+   "distancia": 0.0866,
+   "mas_cercana": "FR-01-001#0"
+  },
+  {
+   "id": "FR-04-003",
+   "texto": "Mi abuelo y mi tío nunca trabajan en familia.",
+   "distancia": 0.1269,
+   "mas_cercana": "FR-01-020#0"
+  },
+  {
+   "id": "FR-04-004",
+   "texto": "Estoy contento porque mi tío está feliz.",
+   "distancia": 0.1174,
+   "mas_cercana": "FR-01-004#0"
+  },
+  {
+   "id": "FR-04-005",
+   "texto": "Hoy se siente más o menos.",
+   "distancia": 0.0567,
+   "mas_cercana": "FR-01-005#1"
+  },
+  {
+   "id": "FR-04-006",
+   "texto": "Los niños y los abuelos comen con gusto.",
+   "distancia": 0.1761,
+   "mas_cercana": "FR-01-006#1"
+  },
+  {
+   "id": "FR-04-007",
+   "texto": "¿Tienes sed?",
+   "distancia": 0.2935,
+   "mas_cercana": "FR-01-007#0"
+  },
+  {
+   "id": "FR-04-008",
+   "texto": "¿Nunca estás bien?",
+   "distancia": 0.4594,
+   "mas_cercana": "FR-01-010#1"
+  },
+  {
+   "id": "FR-04-009",
+   "texto": "¿Ellos trabajan en familia?",
+   "distancia": 0.1403,
+   "mas_cercana": "FR-01-009#0"
+  },
+  {
+   "id": "FR-04-010",
+   "texto": "Tu tío está triste.",
+   "distancia": 0.1323,
+   "mas_cercana": "FR-01-010#0"
+  },
+  {
+   "id": "FR-04-011",
+   "texto": "¿Estás contento?",
+   "distancia": 0.1482,
+   "mas_cercana": "FR-01-008#0"
+  },
+  {
+   "id": "FR-04-012",
+   "texto": "¿Tu tío está aburrido?",
+   "distancia": 0.1074,
+   "mas_cercana": "FR-01-012#0"
+  },
+  {
+   "id": "FR-04-013",
+   "texto": "¿dónde estás?",
+   "distancia": 0.3148,
+   "mas_cercana": "FR-01-013#1"
+  },
+  {
+   "id": "FR-04-014",
+   "texto": "¿Dónde vive mi familia?",
+   "distancia": 0.0707,
+   "mas_cercana": "FR-01-014#0"
+  },
+  {
+   "id": "FR-04-015",
+   "texto": "¿Quién es el niño?",
+   "distancia": 0.4766,
+   "mas_cercana": "FR-01-015#1"
+  },
+  {
+   "id": "FR-04-016",
+   "texto": "¿Por qué nunca estás triste?",
+   "distancia": 0.0787,
+   "mas_cercana": "FR-01-016#0"
+  },
+  {
+   "id": "FR-04-017",
+   "texto": "¿Cuándo comen ellos?",
+   "distancia": 0.1218,
+   "mas_cercana": "FR-01-017#0"
+  },
+  {
+   "id": "FR-04-018",
+   "texto": "Las personas son iguales.",
+   "distancia": 0.5581,
+   "mas_cercana": "FR-01-018#0"
+  },
+  {
+   "id": "FR-04-019",
+   "texto": "Yo como mucho.",
+   "distancia": 0.2673,
+   "mas_cercana": "FR-01-030#0"
+  },
+  {
+   "id": "FR-04-020",
+   "texto": "Mi abuelo trabaja.",
+   "distancia": 0.1802,
+   "mas_cercana": "FR-01-028#1"
+  },
+  {
+   "id": "FR-04-021",
+   "texto": "Mi tío está aburrido.",
+   "distancia": 0.4606,
+   "mas_cercana": "FR-01-010#0"
+  },
+  {
+   "id": "FR-04-022",
+   "texto": "Ustedes se sienten mal.",
+   "distancia": 0.3578,
+   "mas_cercana": "FR-01-005#1"
+  },
+  {
+   "id": "FR-04-023",
+   "texto": "Mi hermano está contento.",
+   "distancia": 0.042,
+   "mas_cercana": "FR-01-004#0"
+  },
+  {
+   "id": "FR-04-024",
+   "texto": "La niña está triste.",
+   "distancia": 0.3355,
+   "mas_cercana": "FR-01-010#0"
+  },
+  {
+   "id": "FR-04-025",
+   "texto": "Por favor, nunca comas poco.",
+   "distancia": 0.4381,
+   "mas_cercana": "FR-01-019#0"
+  },
+  {
+   "id": "FR-04-026",
+   "texto": "Déjame hablar, por favor.",
+   "distancia": 0.1806,
+   "mas_cercana": "FR-01-026#1"
+  },
+  {
+   "id": "FR-04-027",
+   "texto": "Niños, coman todos.",
+   "distancia": 0.1687,
+   "mas_cercana": "FR-01-006#1"
+  },
+  {
+   "id": "FR-04-028",
+   "texto": "Come con el tío.",
+   "distancia": 0.2273,
+   "mas_cercana": "FR-01-028#1"
+  },
+  {
+   "id": "FR-04-029",
+   "texto": "Hola, niños, siéntanse bienvenidos.",
+   "distancia": 0.2275,
+   "mas_cercana": "FR-01-029#0"
+  },
+  {
+   "id": "FR-04-030",
+   "texto": "Abuelo, come mucho.",
+   "distancia": 0.2099,
+   "mas_cercana": "FR-01-030#0"
+  }
+ ]
+}
