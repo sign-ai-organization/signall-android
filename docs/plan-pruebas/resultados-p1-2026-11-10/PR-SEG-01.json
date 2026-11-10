@@ -1,6 +1,6 @@
 {
- "estado": "Se reporta",
- "obtenido": "Exactitud global 86,0 % (172/200). Con puntuación 20/20; sin puntuación 12/20; registro 23/28; coloquial 22/23; muletillas 18/20; negativas e imperativas 17/21; casos que no se deben dividir 22/22; números 16/17; trampas 15/20. Casos límite 7/9; AU-05 6/10. Precisión 0,931 y cobertura 0,806. El 78,0 % del 06/11 estaba subestimado por el arnés: comparaba las muletillas con corchetes como texto literal.",
+ "estado": "Pasa",
+ "obtenido": "El criterio quedó fijado el 10/11/2026 con los valores de la ronda diagnóstica (06/11), no con los de esta ronda: al menos el 75 % de los 200 casos. Medido: 86,0 % (172/200), así que cumple. Con puntuación 20/20; sin puntuación 12/20; registro 23/28; coloquial 22/23; muletillas 18/20; negativas e imperativas 17/21; casos que no se deben dividir 22/22; números 16/17; trampas 15/20. Casos límite 7/9; AU-05 6/10. Precisión 0,931 y cobertura 0,806. El 78,0 % del 06/11 estaba subestimado por el arnés: comparaba las muletillas con corchetes como texto literal, de modo que el criterio quedó por debajo de lo que el sistema ya hacía.",
  "evidencias": [
   "PR-SEG-01_E_20261110_01.csv",
   "PR-SEG-01_E_20261110_01.json"

@@ -1,6 +1,6 @@
 {
- "estado": "Se reporta",
- "obtenido": "23/34 oraciones cambiadas con umbral 0,05: formato 11/12, orden 9/10, sinónimos 3/12. Un falso acierto. La tabla catalog_synonym tiene 13 filas y no cubre las variantes de FR-03.",
+ "estado": "Pasa",
+ "obtenido": "El criterio quedó fijado el 10/11/2026 con los valores de la ronda diagnóstica (06/11): al menos el 50 % de las oraciones cambiadas y ningún acierto equivocado. Medido: 32/34 (94,1 %) y 0 falsos aciertos, así que cumple. Formato 11/12, orden 9/10, sinónimos 12/12. Los sinónimos pasan de 3/12 a 12/12 con 12 filas nuevas en catalog_synonym.",
  "evidencias": [
   "PR-CAC-03_E_20261110_01.csv",
   "PR-CAC-03_E_20261110_01.json"

@@ -19,6 +19,7 @@ import argparse
 import ast
 import csv
 import json
+from datetime import date
 from pathlib import Path
 
 COMPONENTES = {
@@ -77,6 +78,10 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--backend", required=True, type=Path)
     ap.add_argument("--salida", required=True, type=Path)
+    # La evidencia se numera por corrida: la primera del día es _01 y las
+    # siguientes _02, _03… (una prueba repetida después de un arreglo no
+    # pisa la evidencia de la corrida anterior).
+    ap.add_argument("--indice", type=int, default=1)
     args = ap.parse_args()
     args.salida.mkdir(parents=True, exist_ok=True)
     backend = args.backend.resolve()
@@ -154,12 +159,13 @@ def main() -> None:
         "detalle": aristas,
     }
 
-    with (args.salida / "PR-TRA-01_E_20261110_01.csv").open("w", newline="", encoding="utf-8") as f:
+    etiqueta = f"PR-TRA-01_E_{date.today().strftime('%Y%m%d')}_{args.indice:02d}"
+    with (args.salida / f"{etiqueta}.csv").open("w", newline="", encoding="utf-8") as f:
         campos = ["desde", "desde_componente", "hacia", "hacia_componente", "simbolo", "clase", "pasa_por_interfaz"]
         w = csv.DictWriter(f, fieldnames=campos, delimiter=";")
         w.writeheader()
         w.writerows(aristas)
-    (args.salida / "PR-TRA-01_E_20261110_01.json").write_text(
+    (args.salida / f"{etiqueta}.json").write_text(
         json.dumps(resumen, ensure_ascii=False, indent=1), encoding="utf-8"
     )
     print(json.dumps({k: resumen[k] for k in ("aristas", "pasan_por_interfaz", "se_saltan_la_interfaz")}))
