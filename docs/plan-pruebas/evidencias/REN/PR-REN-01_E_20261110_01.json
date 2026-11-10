@@ -1,0 +1,110 @@
+{
+  "prueba": "PR-REN-01",
+  "fecha": "2026-11-10",
+  "health_stt": {
+    "status": "ok",
+    "model": "medium",
+    "device": "cuda",
+    "requested_device": "cuda",
+    "language": "es",
+    "silence_timeout_ms": 1500
+  },
+  "sin_primera_repeticion": {
+    "ms_primer_parcial": {
+      "n": 40,
+      "p50": 2198.6,
+      "p95": 2853.3,
+      "max": 2868.5,
+      "media": 2190.4
+    },
+    "ms_final": {
+      "n": 40,
+      "p50": 5312.1,
+      "p95": 6439.5,
+      "max": 6474.0,
+      "media": 5277.9
+    },
+    "ms_fin_voz_a_final": {
+      "n": 40,
+      "p50": 2093.0,
+      "p95": 2310.0,
+      "max": 2353.9,
+      "media": 2095.0
+    },
+    "ms_transcripcion_final_log": {
+      "n": 40,
+      "p50": 523.5,
+      "p95": 633.0,
+      "max": 744.0,
+      "media": 520.1
+    },
+    "ms_atraso_log": {
+      "n": 40,
+      "p50": 1020.0,
+      "p95": 1500.0,
+      "max": 1500.0,
+      "media": 1074.8
+    },
+    "ms_fin_habla_a_final_log": {
+      "n": 40,
+      "p50": 2122.0,
+      "p95": 2314.8,
+      "max": 2395.0,
+      "media": 2147.6
+    },
+    "razones": {
+      "silencio": 40
+    },
+    "wer_texto_final": 0.0
+  },
+  "todas": {
+    "ms_primer_parcial": {
+      "n": 50,
+      "p50": 2198.6,
+      "p95": 2860.8,
+      "max": 2887.0,
+      "media": 2199.1
+    },
+    "ms_final": {
+      "n": 50,
+      "p50": 5312.1,
+      "p95": 6437.9,
+      "max": 6474.0,
+      "media": 5279.9
+    },
+    "ms_fin_voz_a_final": {
+      "n": 50,
+      "p50": 2096.8,
+      "p95": 2291.3,
+      "max": 2353.9,
+      "media": 2096.9
+    },
+    "ms_transcripcion_final_log": {
+      "n": 50,
+      "p50": 524.0,
+      "p95": 646.4,
+      "max": 744.0,
+      "media": 522.1
+    },
+    "ms_atraso_log": {
+      "n": 50,
+      "p50": 1020.0,
+      "p95": 1500.0,
+      "max": 1500.0,
+      "media": 1048.8
+    },
+    "ms_fin_habla_a_final_log": {
+      "n": 50,
+      "p50": 2126.5,
+      "p95": 2312.6,
+      "max": 2395.0,
+      "media": 2150.0
+    },
+    "razones": {
+      "silencio": 50
+    },
+    "wer_texto_final": 0.0
+  },
+  "sin_texto_final": 0,
+  "nota": "fin_de_voz = duracion del archivo menos silencio final de manifiesto.csv; se sigue mandando silencio a ritmo real hasta el primer final con texto; tiempos del log del STT (docker logs --since)"
+}
