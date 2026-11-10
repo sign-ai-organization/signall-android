@@ -73,3 +73,31 @@ tiene el recurso que les falta.
 
 Está en `docs/plan-pruebas/RESULTADOS-P1-2026-11-10.md` §8 y en cada script de
 `docs/plan-pruebas/arnes/`.
+
+## Segunda parte: los tres arreglos (misma fecha)
+
+El owner pidió, en este orden: arreglar el parser de LLM-02, bajar el umbral de la caché a 0,04
+y agrandar la lista de verbos imperativos y la tabla de sinónimos. Se hizo todo y se repitieron
+las 10 pruebas afectadas.
+
+- **Backend, `app/nlp/llm_client.py`:** `_parse_glosses` parte también por fin de oración
+  después del separador elegido. PR-LLM-02 pasa de Falla a **Pasa**: 0/30 respuestas reales con
+  problemas, 10/10 fabricadas, y CO-04-008 devuelve `TIO, TRABAJAR`.
+- **Backend, `app/nlp/gloss_analyzer.py`:** siete verbos imperativos más, salto de los
+  marcadores de arranque y de la cláusula previa a la coma. HUE-03 pasa de 151/200 (75,5 %) a
+  **168/200 (84,0 %)**, con las órdenes de 22/40 a 39/40 y los otros cuatro grupos iguales.
+- **Backend, migración `007_catalog_synonyms_fr03.sql`:** 12 sinónimos nuevos (13 → 25 filas).
+  CAC-03 pasa de 23/34 a **32/34** y los sinónimos de 3/12 a **12/12**.
+- **Backend, `.env`:** umbral de 0,05 a **0,04**. CAC-04 se corre por primera vez con ese umbral
+  y **Pasa** con 0/30 trampas; CAC-02 muestra que 0,04 es el punto más alto sin falsos aciertos
+  (0,05 ya acepta 2 de 30).
+- **Arnés:** `cac.py` ahora escribe la evidencia de PR-CAC-04, que antes no se generaba.
+- **Libro:** la ronda de evaluación queda con 29 filas (14 Pasa, 1 Falla, 14 Se reporta). La
+  única falla es TRA-01.
+
+**Trampa de ambiente:** `docker compose build backend` falla por falta de espacio en disco
+(98 %). Para medir se copiaron los dos `.py` al contenedor en marcha y se reinició. El cambio
+está en el repositorio; la imagen hay que reconstruirla cuando haya disco.
+
+**Pendiente de otro lado:** el backend quedó con los cambios en una rama local; falta el PR
+contra `develop`. La app no depende de esos cambios para compilar.

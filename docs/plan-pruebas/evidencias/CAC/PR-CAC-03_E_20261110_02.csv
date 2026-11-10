@@ -1,0 +1,35 @@
+id;oracion;texto;variante;distancia;mas_cercana;acierto
+FR-03-001;0;HOLA, BUENOS DÍAS, BIENVENIDOS.;Formato;0.0;FR-01-001#0;True
+FR-03-002;0;Adios a todos.;Formato;0.0;FR-01-002#0;True
+FR-03-003;0;En familia trabajan mi abuelo y mi tío.;Orden;0.014;FR-01-003#0;True
+FR-03-004;0;Porque mi hermano está feliz, estoy contento.;Orden;0.0068;FR-01-004#0;True
+FR-03-005;1;Hoy me siento regular.;Sinónimos;0.0;FR-01-005#1;True
+FR-03-006;0;¡Gracias a todos!;Formato;0.0;FR-01-006#0;True
+FR-03-007;0;Tienes hambre;Formato;0.0;FR-01-007#0;True
+FR-03-008;0;¿Estas bien?;Formato;0.0;FR-01-008#0;True
+FR-03-009;0;¿Trabajan ustedes en familia?;Orden;0.0055;FR-01-009#0;True
+FR-03-010;0;Está triste tu hermano.;Orden;0.024;FR-01-010#0;True
+FR-03-011;0;Perdon.;Formato;0.0;FR-01-023#0;False
+FR-03-011;1;¿Estas triste?;Formato;0.0;FR-01-011#1;True
+FR-03-012;0;¿Está aburrido tu hermano?;Orden;0.0331;FR-01-012#0;True
+FR-03-013;0;Hola;Formato;0.0;FR-01-013#0;True
+FR-03-014;0;¿Tu familia dónde vive?;Orden;0.0292;FR-01-014#0;True
+FR-03-015;0;La mujer es prudente.;Sinónimos;0.0;FR-01-015#0;True
+FR-03-015;1;¿Quién es el señor?;Sinónimos;0.0;FR-01-015#1;True
+FR-03-016;0;¿POR QUÉ ESTÁS TRISTE?;Formato;0.0;FR-01-016#0;True
+FR-03-017;0;¿Ustedes cuándo comen?;Orden;0.0156;FR-01-017#0;True
+FR-03-018;1;¿Tú qué seña usas?;Orden;0.0178;FR-01-018#1;True
+FR-03-019;0;Yo jamás como mucho.;Sinónimos;0.0;FR-01-019#0;True
+FR-03-020;0;Mi abuelo jamás trabaja.;Sinónimos;0.0;FR-01-020#0;True
+FR-03-021;0;Nunca está aburrido mi tío.;Orden;0.0491;FR-01-021#0;False
+FR-03-022;0;Nunca se sienten mal ustedes.;Orden;0.025;FR-01-022#0;True
+FR-03-023;0;Disculpe.;Sinónimos;0.0;FR-01-023#0;True
+FR-03-024;0;Se siente excelente.;Sinónimos;0.0;FR-01-024#0;True
+FR-03-025;0;Por favor, come un poquito.;Sinónimos;0.0;FR-01-025#0;True
+FR-03-026;0;con permiso.;Formato;0.0;FR-01-026#0;True
+FR-03-026;1;déjame pasar, por favor.;Formato;0.0;FR-01-026#1;True
+FR-03-027;0;Chicos, trabajen todos.;Sinónimos;0.0;FR-01-027#0;True
+FR-03-028;0;Hermano, reside con el abuelo.;Sinónimos;0.0;FR-01-028#0;True
+FR-03-029;0;Hola familia siéntanse bienvenidos;Formato;0.0;FR-01-029#0;True
+FR-03-030;0;Tío, come bastante.;Sinónimos;0.0;FR-01-030#0;True
+FR-03-030;1;Hermano, come un poquito.;Sinónimos;0.0;FR-01-030#1;True

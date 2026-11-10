@@ -1,0 +1,253 @@
+{
+ "modelo": "paraphrase-multilingual-MiniLM-L12-v2",
+ "umbral": 0.04,
+ "falsos_aciertos": 0,
+ "trampas_total": 30,
+ "por_tipo_de_trampa": {
+  "Palabra distinta": "0/10",
+  "Negación": "0/10",
+  "Otra persona": "0/10"
+ },
+ "detalle": [
+  {
+   "id": "FR-04-001",
+   "texto": "Hola, buenas noches, bienvenidos.",
+   "tipo": "Palabra distinta",
+   "distancia": 0.0573,
+   "mas_cercana": "FR-01-002#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-002",
+   "texto": "Buenos días.",
+   "tipo": "Palabra distinta",
+   "distancia": 0.0866,
+   "mas_cercana": "FR-01-001#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-003",
+   "texto": "Mi abuelo y mi tío nunca trabajan en familia.",
+   "tipo": "Negación",
+   "distancia": 0.1269,
+   "mas_cercana": "FR-01-020#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-004",
+   "texto": "Estoy contento porque mi tío está feliz.",
+   "tipo": "Otra persona",
+   "distancia": 0.1174,
+   "mas_cercana": "FR-01-004#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-005",
+   "texto": "Hoy se siente más o menos.",
+   "tipo": "Otra persona",
+   "distancia": 0.0567,
+   "mas_cercana": "FR-01-005#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-006",
+   "texto": "Los niños y los abuelos comen con gusto.",
+   "tipo": "Otra persona",
+   "distancia": 0.2366,
+   "mas_cercana": "FR-01-006#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-007",
+   "texto": "¿Tienes sed?",
+   "tipo": "Palabra distinta",
+   "distancia": 0.2935,
+   "mas_cercana": "FR-01-007#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-008",
+   "texto": "¿Nunca estás bien?",
+   "tipo": "Negación",
+   "distancia": 0.4594,
+   "mas_cercana": "FR-01-010#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-009",
+   "texto": "¿Ellos trabajan en familia?",
+   "tipo": "Otra persona",
+   "distancia": 0.1403,
+   "mas_cercana": "FR-01-009#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-010",
+   "texto": "Tu tío está triste.",
+   "tipo": "Otra persona",
+   "distancia": 0.1323,
+   "mas_cercana": "FR-01-010#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-011",
+   "texto": "¿Estás contento?",
+   "tipo": "Palabra distinta",
+   "distancia": 0.1482,
+   "mas_cercana": "FR-01-008#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-012",
+   "texto": "¿Tu tío está aburrido?",
+   "tipo": "Otra persona",
+   "distancia": 0.1074,
+   "mas_cercana": "FR-01-012#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-013",
+   "texto": "¿dónde estás?",
+   "tipo": "Palabra distinta",
+   "distancia": 0.3148,
+   "mas_cercana": "FR-01-013#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-014",
+   "texto": "¿Dónde vive mi familia?",
+   "tipo": "Otra persona",
+   "distancia": 0.0463,
+   "mas_cercana": "FR-01-014#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-015",
+   "texto": "¿Quién es el niño?",
+   "tipo": "Palabra distinta",
+   "distancia": 0.4766,
+   "mas_cercana": "FR-01-015#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-016",
+   "texto": "¿Por qué nunca estás triste?",
+   "tipo": "Negación",
+   "distancia": 0.0787,
+   "mas_cercana": "FR-01-016#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-017",
+   "texto": "¿Cuándo comen ellos?",
+   "tipo": "Otra persona",
+   "distancia": 0.1218,
+   "mas_cercana": "FR-01-017#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-018",
+   "texto": "Las personas son iguales.",
+   "tipo": "Palabra distinta",
+   "distancia": 0.5581,
+   "mas_cercana": "FR-01-018#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-019",
+   "texto": "Yo como mucho.",
+   "tipo": "Negación",
+   "distancia": 0.2673,
+   "mas_cercana": "FR-01-030#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-020",
+   "texto": "Mi abuelo trabaja.",
+   "tipo": "Negación",
+   "distancia": 0.1802,
+   "mas_cercana": "FR-01-028#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-021",
+   "texto": "Mi tío está aburrido.",
+   "tipo": "Negación",
+   "distancia": 0.4606,
+   "mas_cercana": "FR-01-010#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-022",
+   "texto": "Ustedes se sienten mal.",
+   "tipo": "Negación",
+   "distancia": 0.3578,
+   "mas_cercana": "FR-01-005#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-023",
+   "texto": "Mi hermano está contento.",
+   "tipo": "Negación",
+   "distancia": 0.042,
+   "mas_cercana": "FR-01-004#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-024",
+   "texto": "La niña está triste.",
+   "tipo": "Negación",
+   "distancia": 0.3355,
+   "mas_cercana": "FR-01-010#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-025",
+   "texto": "Por favor, nunca comas poco.",
+   "tipo": "Negación",
+   "distancia": 0.4381,
+   "mas_cercana": "FR-01-019#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-026",
+   "texto": "Déjame hablar, por favor.",
+   "tipo": "Palabra distinta",
+   "distancia": 0.1806,
+   "mas_cercana": "FR-01-026#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-027",
+   "texto": "Niños, coman todos.",
+   "tipo": "Palabra distinta",
+   "distancia": 0.2881,
+   "mas_cercana": "FR-01-006#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-028",
+   "texto": "Come con el tío.",
+   "tipo": "Palabra distinta",
+   "distancia": 0.2273,
+   "mas_cercana": "FR-01-028#1",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-029",
+   "texto": "Hola, niños, siéntanse bienvenidos.",
+   "tipo": "Otra persona",
+   "distancia": 0.2822,
+   "mas_cercana": "FR-01-029#0",
+   "falso_acierto": false
+  },
+  {
+   "id": "FR-04-030",
+   "texto": "Abuelo, come mucho.",
+   "tipo": "Otra persona",
+   "distancia": 0.2099,
+   "mas_cercana": "FR-01-030#0",
+   "falso_acierto": false
+  }
+ ]
+}

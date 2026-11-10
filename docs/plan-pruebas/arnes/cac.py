@@ -259,10 +259,34 @@ def main() -> None:
         ],
     }
 
+    por_trampa: dict[str, list[int]] = {}
+    for resultado in trampas:
+        falso = (9 if resultado["distancia"] is None else resultado["distancia"]) <= umbral_sistema
+        por_trampa.setdefault(resultado["variante"], []).append(int(falso))
+    resumen_04 = {
+        "modelo": MODELOS[sistema],
+        "umbral": umbral_sistema,
+        "falsos_aciertos": sum(1 for r in trampas if (9 if r["distancia"] is None else r["distancia"]) <= umbral_sistema),
+        "trampas_total": len(trampas),
+        "por_tipo_de_trampa": {k: f"{sum(v)}/{len(v)}" for k, v in por_trampa.items()},
+        "detalle": [
+            {
+                "id": r["id"],
+                "texto": r["texto"],
+                "tipo": r["variante"],
+                "distancia": r["distancia"],
+                "mas_cercana": r["mas_cercana"],
+                "falso_acierto": (9 if r["distancia"] is None else r["distancia"]) <= umbral_sistema,
+            }
+            for r in trampas
+        ],
+    }
+
     for nombre, datos in (
         ("PR-CAC-01", resumen_01),
         ("PR-CAC-02", resumen_02),
         ("PR-CAC-03", resumen_03),
+        ("PR-CAC-04", resumen_04),
     ):
         (EVIDENCIA / f"{nombre}_E_20261110_01.json").write_text(
             json.dumps(datos, ensure_ascii=False, indent=1), encoding="utf-8"
@@ -284,15 +308,19 @@ def main() -> None:
                 w.writerow(["umbral", "parafrasis_aciertos", "parafrasis_total", "trampas_falsos", "trampas_total"])
                 for fila in datos["curva"]:
                     w.writerow([fila["umbral"], fila["parafrasis_aciertos"], fila["parafrasis_total"], fila["trampas_falsos"], fila["trampas_total"]])
+            elif nombre == "PR-CAC-04":
+                w.writerow(["id", "texto", "tipo", "distancia", "mas_cercana", "falso_acierto"])
+                for fila in datos["detalle"]:
+                    w.writerow([fila["id"], fila["texto"], fila["tipo"], fila["distancia"], fila["mas_cercana"], fila["falso_acierto"]])
             else:
                 w.writerow(["id", "oracion", "texto", "variante", "distancia", "mas_cercana", "acierto"])
                 for fila in datos["detalle"]:
                     w.writerow([fila["id"], fila["oracion"], fila["texto"], fila["variante"], fila["distancia"], fila["mas_cercana"], fila["acierto"]])
-
     print(json.dumps({
         "CAC-01": resumen_01,
         "CAC-02": {k: v for k, v in resumen_02.items() if k != "curva"},
         "CAC-03": {k: v for k, v in resumen_03.items() if k not in ("detalle", "detalle_trampas")},
+        "CAC-04": {k: v for k, v in resumen_04.items() if k != "detalle"},
     }, ensure_ascii=False, indent=1))
 
 

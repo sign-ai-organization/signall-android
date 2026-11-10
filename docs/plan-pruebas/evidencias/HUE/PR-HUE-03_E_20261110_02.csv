@@ -1,0 +1,2 @@
+metodo;entradas;aciertos;porcentaje;por_tipo
+reglas;200;168;84.0;"{""AFFIRMATIVE"": ""34/40"", ""YES_NO_QUESTION"": ""17/40"", ""CONTENT_QUESTION"": ""40/40"", ""NEGATIVE"": ""38/40"", ""IMPERATIVE"": ""39/40""}"

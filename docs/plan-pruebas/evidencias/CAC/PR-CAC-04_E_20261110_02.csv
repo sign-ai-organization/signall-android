@@ -1,0 +1,31 @@
+id;texto;tipo;distancia;mas_cercana;falso_acierto
+FR-04-001;Hola, buenas noches, bienvenidos.;Palabra distinta;0.0573;FR-01-002#1;False
+FR-04-002;Buenos días.;Palabra distinta;0.0866;FR-01-001#0;False
+FR-04-003;Mi abuelo y mi tío nunca trabajan en familia.;Negación;0.1269;FR-01-020#0;False
+FR-04-004;Estoy contento porque mi tío está feliz.;Otra persona;0.1174;FR-01-004#0;False
+FR-04-005;Hoy se siente más o menos.;Otra persona;0.0567;FR-01-005#1;False
+FR-04-006;Los niños y los abuelos comen con gusto.;Otra persona;0.2366;FR-01-006#1;False
+FR-04-007;¿Tienes sed?;Palabra distinta;0.2935;FR-01-007#0;False
+FR-04-008;¿Nunca estás bien?;Negación;0.4594;FR-01-010#1;False
+FR-04-009;¿Ellos trabajan en familia?;Otra persona;0.1403;FR-01-009#0;False
+FR-04-010;Tu tío está triste.;Otra persona;0.1323;FR-01-010#0;False
+FR-04-011;¿Estás contento?;Palabra distinta;0.1482;FR-01-008#0;False
+FR-04-012;¿Tu tío está aburrido?;Otra persona;0.1074;FR-01-012#0;False
+FR-04-013;¿dónde estás?;Palabra distinta;0.3148;FR-01-013#1;False
+FR-04-014;¿Dónde vive mi familia?;Otra persona;0.0463;FR-01-014#0;False
+FR-04-015;¿Quién es el niño?;Palabra distinta;0.4766;FR-01-015#1;False
+FR-04-016;¿Por qué nunca estás triste?;Negación;0.0787;FR-01-016#0;False
+FR-04-017;¿Cuándo comen ellos?;Otra persona;0.1218;FR-01-017#0;False
+FR-04-018;Las personas son iguales.;Palabra distinta;0.5581;FR-01-018#0;False
+FR-04-019;Yo como mucho.;Negación;0.2673;FR-01-030#0;False
+FR-04-020;Mi abuelo trabaja.;Negación;0.1802;FR-01-028#1;False
+FR-04-021;Mi tío está aburrido.;Negación;0.4606;FR-01-010#0;False
+FR-04-022;Ustedes se sienten mal.;Negación;0.3578;FR-01-005#1;False
+FR-04-023;Mi hermano está contento.;Negación;0.042;FR-01-004#0;False
+FR-04-024;La niña está triste.;Negación;0.3355;FR-01-010#0;False
+FR-04-025;Por favor, nunca comas poco.;Negación;0.4381;FR-01-019#0;False
+FR-04-026;Déjame hablar, por favor.;Palabra distinta;0.1806;FR-01-026#1;False
+FR-04-027;Niños, coman todos.;Palabra distinta;0.2881;FR-01-006#1;False
+FR-04-028;Come con el tío.;Palabra distinta;0.2273;FR-01-028#1;False
+FR-04-029;Hola, niños, siéntanse bienvenidos.;Otra persona;0.2822;FR-01-029#0;False
+FR-04-030;Abuelo, come mucho.;Otra persona;0.2099;FR-01-030#0;False

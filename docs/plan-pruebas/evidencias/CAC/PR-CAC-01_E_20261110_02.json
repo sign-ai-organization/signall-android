@@ -1,0 +1,310 @@
+{
+ "MiniLM (sistema)": {
+  "disponible": true,
+  "modelo": "paraphrase-multilingual-MiniLM-L12-v2",
+  "mejor_umbral": 0.04,
+  "parafrasis_aciertos": 32,
+  "parafrasis_total": 34,
+  "trampas_falsos": 0,
+  "trampas_total": 30,
+  "ms_por_oracion": 17.31,
+  "curva": [
+   {
+    "umbral": 0.01,
+    "parafrasis_aciertos": 25,
+    "parafrasis_total": 34,
+    "trampas_falsos": 0,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.02,
+    "parafrasis_aciertos": 28,
+    "parafrasis_total": 34,
+    "trampas_falsos": 0,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.03,
+    "parafrasis_aciertos": 31,
+    "parafrasis_total": 34,
+    "trampas_falsos": 0,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.04,
+    "parafrasis_aciertos": 32,
+    "parafrasis_total": 34,
+    "trampas_falsos": 0,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.05,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 2,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.06,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 4,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.07,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 4,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.08,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 5,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.09,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 6,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.1,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 6,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.11,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 7,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.12,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 8,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.13,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 10,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.14,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 11,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.15,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 13,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.16,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 13,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.17,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 13,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.18,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 13,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.19,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 15,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.2,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 15,
+    "trampas_total": 30
+   }
+  ]
+ },
+ "mpnet": {
+  "disponible": true,
+  "modelo": "paraphrase-multilingual-mpnet-base-v2",
+  "mejor_umbral": 0.02,
+  "parafrasis_aciertos": 28,
+  "parafrasis_total": 34,
+  "trampas_falsos": 0,
+  "trampas_total": 30,
+  "ms_por_oracion": 38.6,
+  "curva": [
+   {
+    "umbral": 0.01,
+    "parafrasis_aciertos": 24,
+    "parafrasis_total": 34,
+    "trampas_falsos": 0,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.02,
+    "parafrasis_aciertos": 28,
+    "parafrasis_total": 34,
+    "trampas_falsos": 0,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.03,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 2,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.04,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 2,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.05,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 3,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.06,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 4,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.07,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 4,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.08,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 4,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.09,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 5,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.1,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 7,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.11,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 7,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.12,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 8,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.13,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 8,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.14,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 9,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.15,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 10,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.16,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 10,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.17,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 12,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.18,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 13,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.19,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 13,
+    "trampas_total": 30
+   },
+   {
+    "umbral": 0.2,
+    "parafrasis_aciertos": 33,
+    "parafrasis_total": 34,
+    "trampas_falsos": 13,
+    "trampas_total": 30
+   }
+  ]
+ },
+ "e5-small": {
+  "disponible": false,
+  "motivo": "401 Client Error. (Request ID: Root=1-6af380fa-4728e3eb21b502273c5938d5;8c358337-21cc-490e-af76-c80d495b8de6)\n\nRepository Not Found for url: https://huggingface.co/sentence-transformers/multilingual-e"
+ }
+}
