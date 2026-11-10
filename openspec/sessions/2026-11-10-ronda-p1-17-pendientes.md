@@ -99,5 +99,7 @@ las 10 pruebas afectadas.
 (98 %). Para medir se copiaron los dos `.py` al contenedor en marcha y se reinició. El cambio
 está en el repositorio; la imagen hay que reconstruirla cuando haya disco.
 
-**Pendiente de otro lado:** el backend quedó con los cambios en una rama local; falta el PR
-contra `develop`. La app no depende de esos cambios para compilar.
+**Pendiente de otro lado:** los cambios del backend están en la rama
+`fix/glosado-hue-cac-llm-p1` y en el **PR #13 contra `develop`**
+(https://github.com/sign-ai-organization/sign-ai-backend/pull/13), esperando revisión. La app no
+depende de esos cambios para compilar: no se tocó código Kotlin.
