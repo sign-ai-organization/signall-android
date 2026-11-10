@@ -243,7 +243,7 @@
       </div>
       <div class="card">
         <h3>Lo que se propone</h3>
-        <p style="font-size:15px">Tres carriles de <b>23</b>, <b>27</b> y <b>24</b> pruebas,
+        <p style="font-size:15px">Tres carriles de <b>25</b>, <b>23</b> y <b>26</b> pruebas,
           cada uno con un recurso exclusivo para que nadie se pise, y una regla que quita la dependencia
           del equipo: <b>los números solo se publican desde el servidor canónico</b> y los cortes se hacen en
           otro servidor; lo que no produce números se puede correr en cualquier PC y se etiqueta. 11 pruebas corren sin servidor
@@ -396,16 +396,18 @@
     <p class="sub">Cada carril tiene un recurso que se pide por turno: el canónico lo comparten P1 y P2, el
       laboratorio es de P2 y el teléfono es de P3. Nadie toca el recurso de otro sin turno, y esa es la regla que
       evita que dos personas se pisen. Las cadenas de la H5 quedan dentro de un carril.</p>
+    <p class="note" style="margin:0 0 14px"><b>Actualizado el 10/11:</b> cuatro pruebas del carril 2 que no se pudieron medir por falta de recurso pasaron a otros carriles: <b>REN-03</b> y <b>SEC-01</b> al carril 3 (necesitan el teléfono) y <b>TRA-03</b> y <b>REN-04</b> al carril 1 (máquina limpia y la base). El carril 1 pasó a 25 pruebas, el 2 a 23 y el 3 a 26. Cada fila movida lo dice en su celda de «Perfil». Las que ya pasaron se marcan en la columna «Ronda de evaluación» y no se repiten.</p>
 
     <div class="grid g3">
       <div class="card carril p1">
         <p class="who">Carril 1</p>
         <h3>Texto y estático</h3>
-        <p class="big">23 <small>pruebas</small></p>
+        <p class="big">25 <small>pruebas</small></p>
         <ul class="kv">
           <li><span class="k">Recurso</span><span>El servidor canónico, sin reiniciarlo.</span></li>
-          <li><span class="k">Dónde corre</span><span>9 de sus pruebas corren sin servidor; 12 piden el canónico y 2 el teléfono.</span></li>
-          <li><span class="k">Bloques</span><span>LLM, CAC, HUE, SEG, VAL, TRA, e INT-01, REN-08/09, AVT-06.</span></li>
+          <li><span class="k">Dónde corre</span><span>10 de sus pruebas corren sin servidor; 12 piden el canónico y 3 el teléfono.</span></li>
+          <li><span class="k">Bloques</span><span>LLM, CAC, HUE, SEG, VAL, TRA (con TRA-03), e INT-01, REN-04, REN-08/09, AVT-06.</span></li>
+          <li><span class="k">Ya pasaron</span><span>8 de 25; no se repiten.</span></li>
           <li><span class="k">Entrega</span><span>El modelo y el umbral elegidos, que usan los otros dos carriles.</span></li>
           <li><span class="k">No hace</span><span>No reinicia contenedores, no vacía la caché, no cambia el modelo del STT.</span></li>
         </ul>
@@ -414,11 +416,12 @@
       <div class="card carril p2">
         <p class="who">Carril 2 · cortes y audio</p>
         <h3>Audio y estado compartido</h3>
-        <p class="big">27 <small>pruebas</small></p>
+        <p class="big">23 <small>pruebas</small></p>
         <ul class="kv">
           <li><span class="k">Recurso</span><span>El laboratorio: reinicios, TLS, clon y base. Y el STT del canónico cuando mide audio.</span></li>
-          <li><span class="k">Dónde corre</span><span>2 sin servidor; 6 solo con el STT del canónico; 13 con el backend y 6 con el teléfono.</span></li>
-          <li><span class="k">Bloques</span><span>STT, RES y SEC completos, y las ablaciones de SEG y CAC, REN-01 a 06, TRA-03.</span></li>
+          <li><span class="k">Dónde corre</span><span>1 sin servidor; 6 solo con el STT del canónico; 13 con el backend y 3 con el teléfono.</span></li>
+          <li><span class="k">Bloques</span><span>STT y RES completos, SEC-02 a 04, las ablaciones de SEG y CAC, y REN-01, 02, 05 y 06.</span></li>
+          <li><span class="k">Ya pasaron</span><span>13 de 23; no se repiten.</span></li>
           <li><span class="k">Entrega</span><span>El WER, los tiempos del STT y las rupturas controladas.</span></li>
           <li><span class="k">No hace</span><span>No corta el servidor canónico: los cortes van en el laboratorio.</span></li>
         </ul>
@@ -427,11 +430,12 @@
       <div class="card carril p3">
         <p class="who">Carril 3</p>
         <h3>Dispositivo y personas</h3>
-        <p class="big">24 <small>pruebas</small></p>
+        <p class="big">26 <small>pruebas</small></p>
         <ul class="kv">
           <li><span class="k">Recurso</span><span>El teléfono de referencia y los formularios. No hospeda nada.</span></li>
-          <li><span class="k">Dónde corre</span><span>18 con el canónico y el teléfono; 6 con personas. Nada se mide en su PC.</span></li>
-          <li><span class="k">Bloques</span><span>AND y PER completos, AVT, INT-02 a 06, REN-07.</span></li>
+          <li><span class="k">Dónde corre</span><span>20 con el canónico y el teléfono; 6 con personas. Nada se mide en su PC, salvo el proxy TLS de SEC-01, que se levanta en otra máquina.</span></li>
+          <li><span class="k">Bloques</span><span>AND y PER completos, AVT, INT-02 a 06, REN-03, REN-07 y SEC-01.</span></li>
+          <li><span class="k">Ya pasaron</span><span>11 de 26; no se repiten.</span></li>
           <li><span class="k">Entrega</span><span>Los videos de las 50 señas y la evidencia de uso real.</span></li>
           <li><span class="k">No hace</span><span>No levanta backend ni STT, no usa emulador y no mide números del servidor.</span></li>
         </ul>
@@ -453,12 +457,12 @@
 <tr><td><code>INT</code> Integración y extremo a extremo</td><td class='num'>6</td><td class='num'>1</td><td class='num'>—</td><td class='num'>5</td></tr>
 <tr><td><code>AND</code> Aplicación Android</td><td class='num'>6</td><td class='num'>—</td><td class='num'>—</td><td class='num'>6</td></tr>
 <tr><td><code>AVT</code> Avatar</td><td class='num'>7</td><td class='num'>1</td><td class='num'>—</td><td class='num'>6</td></tr>
-<tr><td><code>REN</code> Rendimiento y tiempos</td><td class='num'>9</td><td class='num'>2</td><td class='num'>6</td><td class='num'>1</td></tr>
+<tr><td><code>REN</code> Rendimiento y tiempos</td><td class='num'>9</td><td class='num'>3</td><td class='num'>4</td><td class='num'>2</td></tr>
 <tr><td><code>RES</code> Resiliencia</td><td class='num'>7</td><td class='num'>—</td><td class='num'>7</td><td class='num'>—</td></tr>
-<tr><td><code>SEC</code> Seguridad</td><td class='num'>4</td><td class='num'>—</td><td class='num'>4</td><td class='num'>—</td></tr>
-<tr><td><code>TRA</code> Transversales</td><td class='num'>3</td><td class='num'>2</td><td class='num'>1</td><td class='num'>—</td></tr>
+<tr><td><code>SEC</code> Seguridad</td><td class='num'>4</td><td class='num'>—</td><td class='num'>3</td><td class='num'>1</td></tr>
+<tr><td><code>TRA</code> Transversales</td><td class='num'>3</td><td class='num'>3</td><td class='num'>—</td><td class='num'>—</td></tr>
 <tr><td><code>PER</code> Evaluación con personas</td><td class='num'>6</td><td class='num'>—</td><td class='num'>—</td><td class='num'>6</td></tr>
-<tr class='total'><td>Total</td><td class='num'>74</td><td class='num'>23</td><td class='num'>27</td><td class='num'>24</td></tr>
+<tr class='total'><td>Total</td><td class='num'>74</td><td class='num'>25</td><td class='num'>23</td><td class='num'>26</td></tr>
         </tbody>
       </table>
     </div>
@@ -468,10 +472,10 @@
       <ol class="reglas" style="margin-top:6px">
         <li><b>Oleada 1, en paralelo:</b> los tres arrancan juntos. P1 mide en el canónico, P3 trabaja con el
           teléfono y P2 corre sus cortes en el laboratorio. Ya no hay que esperar a que el otro termine.</li>
-        <li><b>Oleada 2, el turno del canónico:</b> P2 mide su parte de audio (STT-04/05 y REN-03/04/06/09)
+        <li><b>Oleada 2, el turno del canónico:</b> P2 mide su parte de audio (STT-04/05 y REN-06/09)
           en el canónico y P1 para mientras dura. Es el único turno que se comparte, y tiene hora de inicio y
           de fin.</li>
-        <li><b>Oleada 3, cierre:</b> SEC-01 con el build <code>demo</code>, y al terminar se reinstala
+        <li><b>Oleada 3, cierre:</b> SEC-01 (ahora del carril 3) con el build <code>demo</code>, y al terminar se reinstala
           <code>debug</code>. Es el único momento en que se reemplaza la aplicación instalada.</li>
       </ol>
     </div>
@@ -483,7 +487,7 @@
     <p class="sub">Ordenadas por carril y después por bloque. «Perfil» es el mínimo que pide la ficha:
       <b>Local</b> = sin servidor; <b>Solo STT</b> = el servicio de transcripción y la GPU; <b>Canónico</b> =
       el backend de pruebas; <b>Canónico + móvil</b> = además el teléfono; <b>Personas</b> = formularios.
-      «Estado 5/11» es la ronda diagnóstica: los resultados medidos el 5/11, no una predicción.</p>
+      «Estado 5/11» es la ronda diagnóstica: los resultados medidos el 5/11, no una predicción. «Ronda de evaluación» marca las <b>32 pruebas que ya pasaron y no se repiten</b> (8 del carril 1, 13 del 2 y 11 del 3), según los resultados de cada carril; el resto sigue por hacer o por cerrar.</p>
 
     <div class="tools">
       <div class="search">
@@ -496,6 +500,11 @@
         <button data-carril="P2" aria-pressed="false">P2</button>
         <button data-carril="P3" aria-pressed="false">P3</button>
       </div>
+      <div class="seg" role="group" aria-label="Filtrar por estado de la ronda de evaluación">
+        <button data-hecha="todas" aria-pressed="true">Todas</button>
+        <button data-hecha="si" aria-pressed="false">Ya pasaron</button>
+        <button data-hecha="no" aria-pressed="false">El resto</button>
+      </div>
       <div class="count" id="count">74 de 74</div>
     </div>
 
@@ -503,7 +512,7 @@
       <table id="tabla-pruebas">
         <colgroup>
           <col style="width:7.6rem"><col style="width:19rem"><col style="width:4.2rem">
-          <col style="width:13.5rem"><col style="width:6rem"><col style="width:18rem"><col style="width:5.8rem">
+          <col style="width:13.5rem"><col style="width:6rem"><col style="width:18rem"><col style="width:5.8rem"><col style="width:9.5rem">
         </colgroup>
         <thead>
           <tr>
@@ -514,10 +523,11 @@
             <th scope="col">Depende de</th>
             <th scope="col">Datos de entrada</th>
             <th scope="col">Estado 5/11</th>
+            <th scope="col">Ronda de evaluación</th>
           </tr>
         </thead>
         <tbody>
-<tr data-carril="P1" data-perfil="local" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="local" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-SEG-01</td>
       <td><span class="nombre">Exactitud del Segmentador</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -525,8 +535,9 @@
       <td class="dep">—</td>
       <td>Los 200 casos de CO-01 (191 de uso corriente y 9 límite) y las transcripciones de los 10 textos de AU-01, con su división de AU-05.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="local" data-estado="Bloqueada">
+<tr data-carril="P1" data-perfil="local" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-SEG-03</td>
       <td><span class="nombre">Alternativas de Segmentación</span><span class="tipo">Comparación de alternativas</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -534,8 +545,9 @@
       <td class="dep">—</td>
       <td>Los 191 casos de uso corriente de CO-01.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="local" data-estado="Bloqueada">
+<tr data-carril="P1" data-perfil="local" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-HUE-01</td>
       <td><span class="nombre">Alternativas para el Tipo de Frase</span><span class="tipo">Comparación de alternativas</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -543,8 +555,9 @@
       <td class="dep">—</td>
       <td>Las 100 oraciones de CO-02, con y sin puntuación (200 entradas).</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="local" data-estado="Bloqueada">
+<tr data-carril="P1" data-perfil="local" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-HUE-02</td>
       <td><span class="nombre">Reglas de la Huella</span><span class="tipo">Ablación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -552,8 +565,9 @@
       <td class="dep">PR-HUE-01</td>
       <td>Las 100 oraciones de CO-02, con y sin puntuación (200 entradas).</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="local" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="local" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-HUE-03</td>
       <td><span class="nombre">Exactitud del Tipo de Frase</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -561,8 +575,9 @@
       <td class="dep">—</td>
       <td>Las 100 oraciones de CO-02, con puntuación y sin ella (200 entradas).</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Bloqueada">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-CAC-01</td>
       <td><span class="nombre">Alternativas de Embeddings</span><span class="tipo">Comparación de alternativas</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -570,8 +585,9 @@
       <td class="dep">—</td>
       <td>Las 30 variantes de paráfrasis de FR-03, que deben acertar, y las 30 variantes trampa de FR-04, que no deben acertar.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-CAC-02</td>
       <td><span class="nombre">Calibración del Umbral</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -579,8 +595,9 @@
       <td class="dep">PR-CAC-01</td>
       <td>Las 30 variantes de FR-03 y las 30 de FR-04, con las 30 frases de FR-01 cargadas en la caché.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-CAC-03</td>
       <td><span class="nombre">Aciertos de la Caché</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -588,8 +605,9 @@
       <td class="dep">PR-CAC-02</td>
       <td>Las 30 frases de FR-01 y las 30 variantes de FR-03: 10 de formato, 10 de sinónimos y 10 de orden.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-CAC-04</td>
       <td><span class="nombre">Falsos Aciertos</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -597,8 +615,9 @@
       <td class="dep">PR-CAC-02</td>
       <td>Las 30 frases de FR-01 y las 30 variantes de FR-04: 10 con negación, 10 con una palabra distinta y 10 con otra persona.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P1, 6/11.</span></td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-LLM-01</td>
       <td><span class="nombre">Alternativas de LLM</span><span class="tipo">Comparación de alternativas</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -606,8 +625,9 @@
       <td class="dep">—</td>
       <td>Las 30 frases de FR-01.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Falla">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="no" data-estado="Falla">
       <td class="id">PR-LLM-02</td>
       <td><span class="nombre">Formato de Salida</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -615,8 +635,9 @@
       <td class="dep">PR-LLM-01</td>
       <td>Las 30 frases de FR-01 y las 10 respuestas fabricadas de CO-04.</td>
       <td><span class="estado estado-mal">Falla</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-LLM-03</td>
       <td><span class="nombre">Consistencia</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -624,8 +645,9 @@
       <td class="dep">PR-LLM-01</td>
       <td>Las 30 frases de FR-01, cinco veces cada una.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-LLM-04</td>
       <td><span class="nombre">Entradas Problemáticas</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -633,8 +655,9 @@
       <td class="dep">PR-LLM-01</td>
       <td>Las 15 frases de FR-06: 5 muy largas y 10 con números.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P1, 6/11.</span></td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-LLM-05</td>
       <td><span class="nombre">Inyección de Instrucciones</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -642,8 +665,9 @@
       <td class="dep">PR-LLM-01</td>
       <td>Las 18 frases con instrucciones de FR-07.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P1, 6/11.</span></td>
     </tr>
-<tr data-carril="P1" data-perfil="local" data-estado="Pasa">
+<tr data-carril="P1" data-perfil="local" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-VAL-01</td>
       <td><span class="nombre">Validación de Glosas Contra el Catálogo</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -651,8 +675,9 @@
       <td class="dep">—</td>
       <td>Las 70 glosas de CO-03: 50 reales, 10 inexistentes y 10 variantes.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P1, 6/11.</span></td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Falla">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="si" data-estado="Falla">
       <td class="id">PR-VAL-02</td>
       <td><span class="nombre">Catálogo Cargado y Completo</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -660,8 +685,9 @@
       <td class="dep">—</td>
       <td>El catálogo de 50 señas y las 30 frases de FR-01.</td>
       <td><span class="estado estado-mal">Falla</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P1, 6/11.</span></td>
     </tr>
-<tr data-carril="P1" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P1" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-VAL-03</td>
       <td><span class="nombre">Agregar Una Seña sin Tocar Código</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -669,8 +695,9 @@
       <td class="dep">—</td>
       <td>La seña de CT-01 (HAMBRE), con su fila del catálogo y su animación, y la frase FR-01-007 que la usa.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P1, 6/11.</span></td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-INT-01</td>
       <td><span class="nombre">Contrato Entre Componentes</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -678,8 +705,9 @@
       <td class="dep">—</td>
       <td>Una frase de una oración de FR-01-C, una de varias oraciones de FR-01-D y un audio de AU-01.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P1, 6/11.</span></td>
     </tr>
-<tr data-carril="P1" data-perfil="local" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="local" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-AVT-06</td>
       <td><span class="nombre">Peso de las Animaciones</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -687,8 +715,19 @@
       <td class="dep">—</td>
       <td>Las 50 animaciones y el instalador de la aplicación.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="movil" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="movil" data-hecha="no" data-estado="Se reporta">
+      <td class="id">PR-REN-04</td>
+      <td><span class="nombre">Arranque en Frío</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">El sistema apagado al empezar.</span> <span class="nota">Reasignada del carril 2 el 10/11: falta repetirla con una base de la que se pueda confirmar que está suspendida.</span></span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C por situación, repetida 3 veces.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
+    </tr>
+<tr data-carril="P1" data-perfil="movil" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-REN-08</td>
       <td><span class="nombre">Datos Móviles</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -696,8 +735,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-01-A, por voz (con su audio de AU-01) y por texto.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-REN-09</td>
       <td><span class="nombre">Tasa de Procesamiento</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -705,8 +745,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-01-A con sus audios de AU-01, repetidas en orden durante 5 minutos.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="local" data-estado="Falla">
+<tr data-carril="P1" data-perfil="local" data-hecha="no" data-estado="Falla">
       <td class="id">PR-TRA-01</td>
       <td><span class="nombre">Separación de Componentes</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -714,8 +755,9 @@
       <td class="dep">—</td>
       <td>El código del backend.</td>
       <td><span class="estado estado-mal">Falla</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P1" data-perfil="local" data-estado="Pasa">
+<tr data-carril="P1" data-perfil="local" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-TRA-02</td>
       <td><span class="nombre">Análisis Estático</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p1">P1</span></td>
@@ -723,8 +765,19 @@
       <td class="dep">—</td>
       <td>El código del backend y el de la aplicación.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P1, 6/11.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="stt" data-estado="Se reporta">
+<tr data-carril="P1" data-perfil="local" data-hecha="no" data-estado="Pasa">
+      <td class="id">PR-TRA-03</td>
+      <td><span class="nombre">Levantar el Entorno Desde Cero</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p1">P1</span></td>
+      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas. <span class="nota">Máquina limpia: sin el proyecto ni sus dependencias. Lo ideal es correrlo en las tres.</span> <span class="nota">Reasignada del carril 2 el 10/11: falta repetirla en una máquina limpia.</span></span></td>
+      <td class="dep">—</td>
+      <td>El repositorio y sus instrucciones.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+      <td class="dep">—</td>
+    </tr>
+<tr data-carril="P2" data-perfil="stt" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-STT-01</td>
       <td><span class="nombre">Precisión de la Transcripción</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -732,8 +785,9 @@
       <td class="dep">—</td>
       <td>Los 60 audios de AU-01: 40 en silencio y 20 con ruido moderado.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="stt" data-estado="Pasa">
+<tr data-carril="P2" data-perfil="stt" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-STT-02</td>
       <td><span class="nombre">Cierre de Frase y Transcripciones Parciales</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -741,8 +795,9 @@
       <td class="dep">—</td>
       <td>Los 10 audios de AU-02: 3 frases cortas con pausa, 3 de más de 8 segundos sin pausas, 2 de más de 8 segundos con pausas y 2 con mensaje de fin.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 6/11.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="stt" data-estado="Falla">
+<tr data-carril="P2" data-perfil="stt" data-hecha="si" data-estado="Falla">
       <td class="id">PR-STT-03</td>
       <td><span class="nombre">Filtros de No Voz</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -750,8 +805,9 @@
       <td class="dep">—</td>
       <td>Los 8 audios sin voz de AU-03, de 20 segundos.</td>
       <td><span class="estado estado-mal">Falla</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 10/11. Pasó con el criterio cambiado.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="stt" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="stt" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-STT-04</td>
       <td><span class="nombre">Alternativas de Whisper</span><span class="tipo">Comparación de alternativas</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -759,8 +815,9 @@
       <td class="dep">—</td>
       <td>Los 60 audios de AU-01.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="stt" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="stt" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-STT-05</td>
       <td><span class="nombre">Alternativas del Umbral de Ruido</span><span class="tipo">Comparación de alternativas</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -768,8 +825,9 @@
       <td class="dep">PR-STT-04</td>
       <td>Los 60 audios de AU-01 (voz) y los 8 audios sin voz de AU-03.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-SEG-02</td>
       <td><span class="nombre">Con y sin Segmentador</span><span class="tipo">Ablación</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -777,8 +835,9 @@
       <td class="dep">—</td>
       <td>Las 30 frases de FR-01 y las 10 frases de FR-05, que recombinan sus oraciones.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-SEG-04</td>
       <td><span class="nombre">Reglas del Segmentador</span><span class="tipo">Ablación</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -786,8 +845,9 @@
       <td class="dep">PR-SEG-03</td>
       <td>Las 30 frases de FR-01 y las 10 frases de FR-05, que recombinan sus oraciones.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Falla">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="si" data-estado="Falla">
       <td class="id">PR-CAC-05</td>
       <td><span class="nombre">Qué Guarda la Caché</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -795,8 +855,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-10 (13 envíos, 3 de ellas repetidas) y una falla provocada del LLM.</td>
       <td><span class="estado estado-mal">Falla</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 10/11. Pasó con el requisito cambiado.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-CAC-06</td>
       <td><span class="nombre">Aporte de la Caché</span><span class="tipo">Ablación</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -804,8 +865,9 @@
       <td class="dep">—</td>
       <td>El lote de sesión FR-09, de 60 frases.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="stt" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="stt" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-REN-01</td>
       <td><span class="nombre">Latencia de la Transcripción</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -813,8 +875,9 @@
       <td class="dep">—</td>
       <td>Los audios de AU-01 de las 10 frases de FR-01-A, cada uno 5 veces.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-REN-02</td>
       <td><span class="nombre">Latencia del Procesamiento</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -822,26 +885,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-01-B, con oraciones cortas, medias y largas, cada una 5 veces por situación.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
-    </tr>
-<tr data-carril="P2" data-perfil="movil" data-estado="Se reporta">
-      <td class="id">PR-REN-03</td>
-      <td><span class="nombre">Latencia de Extremo a Extremo</span><span class="tipo">Caracterización</span></td>
-      <td><span class="pill pill-p2">P2</span></td>
-      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia.</span></td>
       <td class="dep">—</td>
-      <td>Las 10 frases de FR-01-A, en texto y con su audio de AU-01, cada una 5 veces por situación.</td>
-      <td><span class="estado estado-rep">Se reporta</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="movil" data-estado="Se reporta">
-      <td class="id">PR-REN-04</td>
-      <td><span class="nombre">Arranque en Frío</span><span class="tipo">Caracterización</span></td>
-      <td><span class="pill pill-p2">P2</span></td>
-      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">El sistema apagado al empezar.</span></span></td>
-      <td class="dep">—</td>
-      <td>Una frase de FR-01-C por situación, repetida 3 veces.</td>
-      <td><span class="estado estado-rep">Se reporta</span></td>
-    </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-REN-05</td>
       <td><span class="nombre">Recursos de Una Sesión</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -849,8 +895,9 @@
       <td class="dep">—</td>
       <td>Las 30 frases de FR-01 y los audios de AU-01 de las 10 frases de FR-01-A.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Se reporta">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-REN-06</td>
       <td><span class="nombre">Sesiones Simultáneas</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -858,8 +905,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-01-A por sesión, con su audio de AU-01.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P2" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P2" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-RES-01</td>
       <td><span class="nombre">Pérdida de Conexión del Cliente</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -867,8 +915,9 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-C por cada momento del corte.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 8/11. Pasó solo el momento «mientras se traduce».</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-RES-02</td>
       <td><span class="nombre">Falla del LLM</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -876,8 +925,9 @@
       <td class="dep">—</td>
       <td>Dos frases de FR-01-C: una guardada en la caché y una nueva.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 6/11.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="movil" data-estado="Falla">
+<tr data-carril="P2" data-perfil="movil" data-hecha="si" data-estado="Falla">
       <td class="id">PR-RES-03</td>
       <td><span class="nombre">Falla de la Transcripción</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -885,8 +935,9 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-A, hablada con su audio de AU-01 y escrita (la misma frase en los dos formatos).</td>
       <td><span class="estado estado-mal">Falla</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 8/11. Pasó solo el caso «apagado antes de conectar».</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-RES-04</td>
       <td><span class="nombre">Falla de la Base de Datos</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -894,8 +945,9 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-C por situación.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 10/11. Pasó solo el caso 2 (los casos 1 y 3 no se repitieron).</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Bloqueada">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="si" data-estado="Bloqueada">
       <td class="id">PR-RES-05</td>
       <td><span class="nombre">Error Interno de Procesamiento</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -903,8 +955,9 @@
       <td class="dep">—</td>
       <td>Una frase de una oración de FR-01-C y una de varias oraciones de FR-01-D.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 6/11.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-RES-06</td>
       <td><span class="nombre">Ráfaga de Frases en Una Sesión</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -912,8 +965,9 @@
       <td class="dep">—</td>
       <td>El audio de AU-04: un audio largo de 73 segundos aproximados con 20 frases cortas.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 6/11.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P2" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-RES-07</td>
       <td><span class="nombre">Reinicio del Backend con Clientes Conectados</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -921,17 +975,9 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-C.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 6/11.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="movil" data-estado="Pasa">
-      <td class="id">PR-SEC-01</td>
-      <td><span class="nombre">Cifrado del Canal</span><span class="tipo">Verificación</span></td>
-      <td><span class="pill pill-p2">P2</span></td>
-      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Build <code>demo</code> y proxy TLS. Al terminar se reinstala <code>debug</code>.</span></span></td>
-      <td class="dep">—</td>
-      <td>Una frase de FR-01-C, hablada y escrita.</td>
-      <td><span class="estado estado-ok">Pasa</span></td>
-    </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-SEC-02</td>
       <td><span class="nombre">Mensajes Inválidos</span><span class="tipo">Robustez</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -939,8 +985,9 @@
       <td class="dep">—</td>
       <td>Los 13 mensajes inválidos de CO-05.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 6/11.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="local" data-estado="Bloqueada">
+<tr data-carril="P2" data-perfil="local" data-hecha="si" data-estado="Bloqueada">
       <td class="id">PR-SEC-03</td>
       <td><span class="nombre">Secretos y Consultas a la Base</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -948,8 +995,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases con caracteres peligrosos de FR-08.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 10/11. Pasó con el rol de mínimos privilegios.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="canonico" data-estado="Pasa">
+<tr data-carril="P2" data-perfil="canonico" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-SEC-04</td>
       <td><span class="nombre">La Voz No Se Guarda</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p2">P2</span></td>
@@ -957,17 +1005,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-01-A, habladas.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-CARRIL-2, 6/11.</span></td>
     </tr>
-<tr data-carril="P2" data-perfil="local" data-estado="Pasa">
-      <td class="id">PR-TRA-03</td>
-      <td><span class="nombre">Levantar el Entorno Desde Cero</span><span class="tipo">Verificación</span></td>
-      <td><span class="pill pill-p2">P2</span></td>
-      <td><span class="perfil perfil-local">Local</span><span class="need">Repo y venv. No necesita el servidor de pruebas. <span class="nota">Máquina limpia: sin el proyecto ni sus dependencias. Lo ideal es correrlo en las tres.</span></span></td>
-      <td class="dep">—</td>
-      <td>El repositorio y sus instrucciones.</td>
-      <td><span class="estado estado-ok">Pasa</span></td>
-    </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Falla">
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Falla">
       <td class="id">PR-INT-02</td>
       <td><span class="nombre">Recorrido Completo por Texto</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -975,8 +1015,9 @@
       <td class="dep">—</td>
       <td>Las 30 frases de FR-01.</td>
       <td><span class="estado estado-mal">Falla</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-INT-03</td>
       <td><span class="nombre">Glosas No Disponibles</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -984,8 +1025,9 @@
       <td class="dep">—</td>
       <td>Las 6 frases de FR-11: dos por cada caso.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Bloqueada">
       <td class="id">PR-INT-04</td>
       <td><span class="nombre">Recorrido Completo por Voz</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -993,8 +1035,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-01-A.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Pasa">
       <td class="id">PR-INT-05</td>
       <td><span class="nombre">Sin Conexión a Internet</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1002,8 +1045,9 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-C, escrita y hablada.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Se reporta">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Se reporta">
       <td class="id">PR-INT-06</td>
       <td><span class="nombre">Sesión Larga</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1011,8 +1055,9 @@
       <td class="dep">—</td>
       <td>El lote de sesión FR-09, de 60 frases.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-AND-01</td>
       <td><span class="nombre">Captura y Permisos</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1020,8 +1065,9 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-C, hablada en cada modo.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-AND-02</td>
       <td><span class="nombre">Transcripción, Texto y Estados</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1029,8 +1075,9 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-C, hablada y escrita.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Pasa">
       <td class="id">PR-AND-03</td>
       <td><span class="nombre">Historial</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1038,8 +1085,9 @@
       <td class="dep">—</td>
       <td>Las 12 frases de FR-01-E.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Pasa">
       <td class="id">PR-AND-04</td>
       <td><span class="nombre">Ajustes</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1047,8 +1095,9 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-C para ver el efecto de cada ajuste.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Se reporta">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Se reporta">
       <td class="id">PR-AND-05</td>
       <td><span class="nombre">Pantalla y Dispositivos</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1056,8 +1105,9 @@
       <td class="dep">—</td>
       <td>Una frase corta de FR-01-C y una larga, FR-01-006.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-AND-06</td>
       <td><span class="nombre">Opciones de Accesibilidad</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1065,8 +1115,9 @@
       <td class="dep">—</td>
       <td>FR-01-006, que tiene 6 señas, para ver el avatar con la reducción de animaciones.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-AVT-01</td>
       <td><span class="nombre">Carga y Reposo</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1074,8 +1125,9 @@
       <td class="dep">—</td>
       <td>Cinco aperturas de la aplicación y las 10 frases de FR-01-C.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-AVT-02</td>
       <td><span class="nombre">Las 50 Animaciones</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1083,8 +1135,9 @@
       <td class="dep">—</td>
       <td>Las 50 señas del corpus.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Falla">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Falla">
       <td class="id">PR-AVT-03</td>
       <td><span class="nombre">Cola de Reproducción</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1092,8 +1145,9 @@
       <td class="dep">—</td>
       <td>Las 3 frases de FR-01-D.</td>
       <td><span class="estado estado-mal">Falla</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-AVT-04</td>
       <td><span class="nombre">Continuidad Entre Señas</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1101,8 +1155,9 @@
       <td class="dep">—</td>
       <td>Las 30 frases de FR-01.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-AVT-05</td>
       <td><span class="nombre">Marcadores No Manuales</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1110,8 +1165,9 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-01-A, dos por cada tipo de frase, y la tabla de lo esperado de esta ficha.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Pasa">
+<tr data-carril="P3" data-perfil="movil" data-hecha="si" data-estado="Pasa">
       <td class="id">PR-AVT-07</td>
       <td><span class="nombre">Elección del Avatar</span><span class="tipo">Verificación</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1119,8 +1175,19 @@
       <td class="dep">—</td>
       <td>Una frase de FR-01-C.</td>
       <td><span class="estado estado-ok">Pasa</span></td>
+      <td><span class="estado estado-ok">Pasó · no repetir</span><span class="need">RESULTADOS-P3 consolidado, 8/11.</span></td>
     </tr>
-<tr data-carril="P3" data-perfil="movil" data-estado="Se reporta">
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Se reporta">
+      <td class="id">PR-REN-03</td>
+      <td><span class="nombre">Latencia de Extremo a Extremo</span><span class="tipo">Caracterización</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Reasignada del carril 2 el 10/11: falta medir la voz por el micrófono del teléfono (hace falta un altavoz).</span></span></td>
+      <td class="dep">—</td>
+      <td>Las 10 frases de FR-01-A, en texto y con su audio de AU-01, cada una 5 veces por situación.</td>
+      <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
+    </tr>
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Se reporta">
       <td class="id">PR-REN-07</td>
       <td><span class="nombre">Rendimiento en el Móvil</span><span class="tipo">Caracterización</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1128,8 +1195,19 @@
       <td class="dep">—</td>
       <td>Las 30 frases de FR-01, una tras otra.</td>
       <td><span class="estado estado-rep">Se reporta</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="movil" data-hecha="no" data-estado="Pasa">
+      <td class="id">PR-SEC-01</td>
+      <td><span class="nombre">Cifrado del Canal</span><span class="tipo">Verificación</span></td>
+      <td><span class="pill pill-p3">P3</span></td>
+      <td><span class="perfil perfil-movil">Canónico + móvil</span><span class="need">El backend canónico y el teléfono de referencia. <span class="nota">Build <code>demo</code> y proxy TLS. Al terminar se reinstala <code>debug</code>.</span> <span class="nota">Reasignada del carril 2 el 10/11: falta la sesión TLS de la app real (el teléfono necesita bloqueo de pantalla para instalar la CA). El proxy TLS hay que levantarlo en otra máquina: el carril 3 no hospeda servicios.</span></span></td>
+      <td class="dep">—</td>
+      <td>Una frase de FR-01-C, hablada y escrita.</td>
+      <td><span class="estado estado-ok">Pasa</span></td>
+      <td class="dep">—</td>
+    </tr>
+<tr data-carril="P3" data-perfil="personas" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-PER-01</td>
       <td><span class="nombre">Validación de Glosas por Intérprete</span><span class="tipo">Validación con personas</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1137,8 +1215,9 @@
       <td class="dep">PR-INT-02</td>
       <td>Las 30 frases de FR-01.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="personas" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-PER-02</td>
       <td><span class="nombre">Validación de las 50 Animaciones</span><span class="tipo">Validación con personas</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1146,8 +1225,9 @@
       <td class="dep">PR-AVT-02</td>
       <td>Los 100 videos de CT-02: 50 de referencia y 50 de las animaciones.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="personas" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-PER-03</td>
       <td><span class="nombre">Reconocimiento de Señas Aisladas</span><span class="tipo">Validación con personas</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1155,8 +1235,9 @@
       <td class="dep">PR-AVT-02</td>
       <td>Los 50 videos de las animaciones de CT-02 y las 150 opciones incorrectas de CT-03.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="personas" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-PER-04</td>
       <td><span class="nombre">Comprensión y Naturalidad de Frases Completas</span><span class="tipo">Validación con personas</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1164,8 +1245,9 @@
       <td class="dep">PR-INT-02</td>
       <td>Las 30 frases de FR-01 y sus 90 opciones incorrectas de FR-02 (3 por frase).</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="personas" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-PER-05</td>
       <td><span class="nombre">Usabilidad para el Usuario Oyente</span><span class="tipo">Validación con personas</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1173,8 +1255,9 @@
       <td class="dep">—</td>
       <td>Las 4 frases de FR-01-F.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
-<tr data-carril="P3" data-perfil="personas" data-estado="Bloqueada">
+<tr data-carril="P3" data-perfil="personas" data-hecha="no" data-estado="Bloqueada">
       <td class="id">PR-PER-06</td>
       <td><span class="nombre">Flujo Completo por Voz</span><span class="tipo">Validación con personas</span></td>
       <td><span class="pill pill-p3">P3</span></td>
@@ -1182,6 +1265,7 @@
       <td class="dep">—</td>
       <td>Las 10 frases de FR-01-A y sus 30 opciones incorrectas de FR-02.</td>
       <td><span class="estado estado-blq">Bloqueada</span></td>
+      <td class="dep">—</td>
     </tr>
         </tbody>
       </table>
@@ -1311,7 +1395,7 @@
     <div class="card" style="margin-top:16px">
       <h3>Si un equipo no tiene tarjeta gráfica</h3>
       <p style="font-size:15px">Es el caso del carril 3, y por eso ese carril está armado para que <b>su PC no
-        intervenga</b>: ninguna de sus 24 pruebas se mide en su computador. El render y el cómputo del avatar
+        intervenga</b>: ninguna de sus 26 pruebas se mide en su computador (el proxy TLS de SEC-01 se levanta en otra máquina). El render y el cómputo del avatar
         ocurren en el teléfono, el backend responde desde el servidor canónico y su PC solo ejecuta
         <code>adb</code> y abre los formularios. La GPU es una propiedad del <b>ambiente</b>, no del computador
         de la persona.</p>
@@ -1557,7 +1641,9 @@ inicio / fin      __:__ / __:__   ejecutor: ______</div>
   var q = document.getElementById('q');
   var count = document.getElementById('count');
   var carril = 'todos';
-  var buttons = document.querySelectorAll('.seg button');
+  var hecha = 'todas';
+  var buttons = document.querySelectorAll('.seg[aria-label="Filtrar por carril"] button');
+  var hechaButtons = document.querySelectorAll('.seg[aria-label="Filtrar por estado de la ronda de evaluación"] button');
 
   function apply(){
     var term = (q.value || '').trim().toLowerCase();
@@ -1565,7 +1651,9 @@ inicio / fin      __:__ / __:__   ejecutor: ______</div>
     rows.forEach(function(tr){
       var okCarril = carril === 'todos' || tr.getAttribute('data-carril') === carril;
       var okTerm = !term || (tr.textContent || '').toLowerCase().indexOf(term) !== -1;
-      var show = okCarril && okTerm;
+      var esHecha = tr.getAttribute('data-hecha') === 'si';
+      var okHecha = hecha === 'todas' || (hecha === 'si' ? esHecha : !esHecha);
+      var show = okCarril && okTerm && okHecha;
       tr.classList.toggle('hide', !show);
       if (show) shown++;
     });
@@ -1573,6 +1661,13 @@ inicio / fin      __:__ / __:__   ejecutor: ______</div>
   }
 
   q.addEventListener('input', apply);
+  hechaButtons.forEach(function(b){
+    b.addEventListener('click', function(){
+      hecha = b.getAttribute('data-hecha');
+      hechaButtons.forEach(function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+      apply();
+    });
+  });
   buttons.forEach(function(b){
     b.addEventListener('click', function(){
       carril = b.getAttribute('data-carril');
