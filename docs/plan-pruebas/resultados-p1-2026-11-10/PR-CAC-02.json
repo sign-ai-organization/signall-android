@@ -1,6 +1,6 @@
 {
  "estado": "Se reporta",
- "obtenido": "Con el umbral del .env del 10/11 (0,05): 23/34 paráfrasis y 1 trampa aceptada. Con 0,03: 21/34 y 0 trampas. A 0,06 se aceptan 3 trampas. El umbral se subió de 0,03 a 0,05 entre rondas; la trampa medida es FR-04-005, distancia 0,031.",
+ "obtenido": "Se reporta, como es una prueba de caracterización: mide y reporta, sin criterio de aprobación. Lo que sí quedó decidido el 10/11/2026 es el umbral: 0,04 de distancia máxima, el más alto sin falsos aciertos. Con el umbral del sistema (0,04): 32/34 páfrasis y 0 trampas. Con 0,03: 31/34 y 0; con 0,05: 33/34 y 2 trampas; con 0,06: 33/34 y 4.",
  "evidencias": [
   "PR-CAC-02_E_20261110_01.csv",
   "PR-CAC-02_E_20261110_01.json"

@@ -103,3 +103,35 @@ está en el repositorio; la imagen hay que reconstruirla cuando haya disco.
 `fix/glosado-hue-cac-llm-p1` y en el **PR #13 contra `develop`**
 (https://github.com/sign-ai-organization/sign-ai-backend/pull/13), esperando revisión. La app no
 depende de esos cambios para compilar: no se tocó código Kotlin.
+
+## Tercera parte: los umbrales que faltaban y TRA-01 (misma fecha)
+
+Un compañero del equipo revisó los resultados del carril 1 y señaló dos huecos: cinco pruebas
+en «Se reporta» porque no tenían un mínimo con el cual juzgarlas, y la única Falla. El plan de
+pruebas ya lo pide así: la ronda de evaluación «finaliza cuando … se cuenta con umbrales
+definidos».
+
+- **Umbrales, en el plan de pruebas y el SRS** (`sign-ai-docs`, commit `b23692c`, directo a
+  `main`): SEG-01 ≥ 75 %, HUE-03 ≥ 70 %, CAC-03 ≥ 50 % y 0 falsos aciertos, el umbral de la
+  caché en 0,04 y el mínimo de 10 frases por minuto. **Los valores salen de la ronda diagnóstica
+  del 06/11, no de la del 10/11**: el criterio tiene que existir antes de la medición que se
+  juzga con él.
+- **Solo tres de las cinco pasan a «Pasa»**: SEG-01, HUE-03 y CAC-03. CAC-02 y REN-09 son de
+  caracterización, y el plan las define como «miden y reportan, sin un criterio de aprobación»;
+  lo que se hace con ellas es dejar el número escrito (0,04 y 10) y se quedan en «Se reporta».
+- **TRA-01 pasa**: `normalize_gloss` se movió de `app/validation/catalog_repository.py` a
+  `app/domain/gloss_text.py`, que es la capa que los dos componentes ya comparten. La función
+  es pura, así que la arista desaparece sin cambiar el criterio. El arnés da 4 aristas, 4 por
+  interfaz y 0 saltos. En el backend: rama `fix/glosado-hue-cac-llm-p1`, PR #13.
+- **Los libros**: el carril 2 dejó sus 25 filas de la ronda de evaluación en
+  `resultados-consolidados.xlsx` (commit `e89073e`). Como el Excel es binario y dos carriles
+  sobre el mismo archivo no se fusionan sin perder trabajo, **cada carril lleva su libro**:
+  `resultados-consolidados.xlsx` (74 + 43, todos los carriles) y
+  `resultados-consolidados-p1.xlsx` (74 + 18, solo el carril 1, con los umbrales fijados y
+  TRA-01 en Pasa). Se juntan al terminar el plan de pruebas.
+- **Sin PR en el repo de la app**: se commitea directo a `main`. El PR #14 del `sign-ai-docs` se
+  cerró y el commit entró directo a `main`, por indicación del owner.
+
+**Lo que queda para el owner:** juntar los dos libros en el consolidado cuando terminen los demás
+carriles, y decidir qué se hace con la rama `develop` del backend, que está 22 commits atrás de
+`main` (por eso el PR #13 se lleva dentro todo `main`).

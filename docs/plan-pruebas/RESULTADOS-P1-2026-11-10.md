@@ -285,7 +285,7 @@ plan ni al libro: las fichas mandan y el libro es la fuente de los resultados.
 | Arnés de la ronda | `docs/plan-pruebas/arnes/` |
 | Bitácora de sesión | `openspec/sessions/2026-11-10-ronda-p1-17-pendientes.md` |
 | Resultados en el formato que lee el libro | `docs/plan-pruebas/resultados-p1-2026-11-10/PR-*.json` |
-| Libro de resultados | `resultados-consolidados.xlsx`, en dos rondas: diagnóstica (06/11, 74 filas) y evaluación (10/11, 18 filas, solo del carril P1) |
+| Libro de resultados | `resultados-consolidados-p1.xlsx`, en dos rondas: diagnóstica (06/11, 74 filas) y evaluación (10/11, 18 filas, solo del carril P1). El libro con las filas de todos los carriles es `resultados-consolidados.xlsx` |
 
 ## 8. Cómo se reprodujo
 
@@ -314,7 +314,7 @@ python3 docs/plan-pruebas/arnes/ws.py ren09 --minutos 5 --audios /tmp/p1/wav --t
 Después de la primera corrida el owner pidió atacar los tres huecos de menor riesgo. Se
 arreglaron en el backend y se volvieron a correr las pruebas afectadas. **Los estados de §1 y
 §3 son los de la primera corrida**; los de esta parte están en la tabla de abajo y son los que
-quedaron en el libro.
+quedaron en el libro. La §10 sigue con la tercera parte: los umbrales que faltaban y TRA-01.
 
 ### Qué se cambió
 
@@ -362,3 +362,91 @@ En el libro, la ronda de evaluación queda con **29 filas: 14 Pasa, 1 Falla y 14
 - **`qwen3:4b-instruct` no se midió desde el contenedor** (Ollama escucha en `127.0.0.1:11434` y
   el cortafuegos filtra el puente de Docker). La cifra de 20/30 es la de la mañana, medida desde
   el host con el mismo prompt.
+
+---
+
+## 10. Tercera parte: los umbrales que faltaban y TRA-01
+
+Un compañero del equipo revisó los resultados de este carril y señaló dos cosas: cinco pruebas
+que quedaron en «Se reporta» solo porque no tenían un mínimo con el cual juzgarlas, y una que
+fallaba. Las dos son solucionables, y el plan de pruebas ya lo dice: la ronda de evaluación
+«finaliza cuando se han aplicado las correcciones acordadas, se han ejecutado todas las
+pruebas y **se cuenta con umbrales definidos**».
+
+### 10.1 Los cinco umbrales
+
+| Prueba | Tipo | Lo que decía la ficha | Lo que dice ahora | Medido el 10/11 |
+|---|---|---|---|---|
+| PR-SEG-01 | Verificación | «Umbral por fijar después de la ronda diagnóstica» | Al menos el **75 %** de los 200 casos | 86,0 % (172/200) |
+| PR-HUE-03 | Verificación | Ídem | Al menos el **70 %** de las 200 oraciones | 84,0 % (168/200) |
+| PR-CAC-03 | Verificación | Ídem | Al menos el **50 %** de las oraciones cambiadas y **0** acierto equivocado | 94,1 % (32/34), 0 falsos |
+| PR-CAC-02 | Caracterización | «El umbral definitivo se decide después…» | El umbral queda en **0,04** | 32/34 paráfrasis, 0 trampas |
+| PR-REN-09 | Caracterización | «El mínimo de frases por minuto se fija después…» | Mínimo de **10 frases por minuto** | 13,4 por minuto, 0 errores |
+
+**De dónde salen los valores: de la ronda diagnóstica del 06/11, no de la del 10/11.** El plan y
+los requerimientos lo piden así («fijar el mínimo con los valores de la ronda diagnóstica»), y es
+lo que hace defendible el resultado: el criterio existe **antes** de la medición que se juzga
+con él. Si el mínimo se sacara del 10/11, la ronda de evaluación se estaría calificando a sí
+misma.
+
+| Prueba | Lo que mide la ronda diagnóstica | El mínimo quedó | Margen |
+|---|---|---|---|
+| PR-SEG-01 | 78,0 % (156/200) | 75 % | 3 puntos |
+| PR-HUE-03 | 75,5 % (151/200) | 70 % | 5,5 puntos |
+| PR-CAC-03 | 56,7 % (17/30), sin acierto equivocado | 50 % y 0 falsos | 6,7 puntos |
+| PR-REN-09 | 13,1 frases por minuto | 10 por minuto | 3,1 |
+
+El 78,0 % del 06/11 estaba además subestimado por el arnés (§4.1), así que el mínimo de PR-SEG-01
+queda por debajo de lo que el sistema ya hacía.
+
+**No todas las cinco pueden quedar en «Pasa», y no es un descuido.** El plan define los tipos
+de prueba en su Tabla 3.1: *Verificación* «compara el resultado con un requerimiento o criterio y
+responde si pasa o falla», y *Caracterización* «mide y reporta, **sin un criterio de
+aprobación**; sus resultados sirven para fijar umbrales después». PR-CAC-02 y PR-REN-09 son de
+caracterización, así que lo que se hace con ellas es dejar el número escrito —0,04 y 10— y se
+quedan en «Se reporta». Las tres de verificación sí se califican, y las tres pasan.
+
+### 10.2 TRA-01: la única falla, destrabada
+
+La falla era la misma del 06/11: de 6 aristas entre los cuatro componentes, 2 se saltaban la
+interfaz, y las dos eran la misma importación. `normalize_gloss` —la función que dobla una glosa
+a la clave con la que el catálogo y el NLP coinciden— estaba dentro del componente de validación
+(`app/validation/catalog_repository.py`), así que el NLP tenía que importarla de ahí.
+
+**Qué se hizo:** la función y sus dos tablas de traducción pasaron a
+`app/domain/gloss_text.py`, que es la capa que los dos componentes ya comparten
+(`app/nlp/models.py` importa `PhraseType` de `app.domain.models`, y
+`app/validation/catalog_repository.py` importa `CatalogEntry` de ahí). La función es pura: sin
+estado, sin base de datos, sin asincronía. Importarla no arrastra ninguna implementación, así
+que la arista desaparece sin tocar el criterio de la prueba.
+
+**Resultado:** el arnés (que lee solo el AST, sin necesidad del contenedor) da **4 aristas, 4 por
+interfaz, 0 saltos**. **PR-TRA-01 pasa.** Evidencia: `evidencias/TRA/PR-TRA-01_E_20261110_02.*`.
+
+El SDD no nombra esta función ni en la narrativa ni en los diagramas, así que no hubo que
+tocarlo; el cambio quedó anotado en `docs/sdd-changes.md` del backend.
+
+### 10.3 Los libros
+
+El 10/11 el carril 2 dejó sus 25 filas de la ronda de evaluación en
+`resultados-consolidados.xlsx` (commit `e89073e`), sobre el libro de dos rondas. Como el Excel
+es un archivo binario, dos carriles sobre el mismo archivo no se pueden fusionar en el historial
+sin perder trabajo.
+
+La solución que se adoptó: **cada carril lleva su propio libro**.
+
+| Archivo | Qué trae |
+|---|---|
+| `resultados-consolidados.xlsx` | El libro con las filas de todos los carriles: 74 de la ronda diagnóstica y 43 de la de evaluación (18 del carril 1 y 25 del carril 2) |
+| `resultados-consolidados-p1.xlsx` | La parte del carril 1: 74 de la ronda diagnóstica y 18 de la de evaluación, con los umbrales ya fijados y TRA-01 en Pasa |
+
+Cuando el plan de pruebas termine, los dos se juntan en el libro único. Mientras tanto, los
+cambios de cada carril no se pisan.
+
+### 10.4 Dónde quedó cada cosa
+
+| Repositorio | Qué |
+|---|---|
+| `sign-ai-docs` | Los criterios de las cinco fichas en el plan de pruebas y los tres valores del SRS (RF-NLP-04, RF-NLP-06 y RNF-DES-09), con los borradores y el registro de cambios alineados. Commit `b23692c`, directo a `main` |
+| `sign-ai-backend` | `normalize_gloss` en `app/domain/gloss_text.py`, el umbral 0,04 por defecto y la migración 007. Rama `fix/glosado-hue-cac-llm-p1`, PR #13 contra `develop` |
+| `sign-ai-android` | El libro del carril 1, la evidencia de TRA-01 y este informe |

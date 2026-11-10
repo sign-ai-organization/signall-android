@@ -1,0 +1,44 @@
+{
+ "aristas": 4,
+ "pasan_por_interfaz": 4,
+ "se_saltan_la_interfaz": 0,
+ "saltos": [],
+ "detalle": [
+  {
+   "desde": "app/controller/controller.py",
+   "desde_componente": "sesion",
+   "hacia": "app.controller.stt_service_client",
+   "hacia_componente": "transcripcion",
+   "simbolo": "SttServiceClient",
+   "clase": "interfaz (ABC/Protocol)",
+   "pasa_por_interfaz": "sí"
+  },
+  {
+   "desde": "app/controller/controller.py",
+   "desde_componente": "sesion",
+   "hacia": "app.orchestrator.orchestrator_service",
+   "hacia_componente": "orquestacion",
+   "simbolo": "OrchestratorService",
+   "clase": "interfaz (ABC/Protocol)",
+   "pasa_por_interfaz": "sí"
+  },
+  {
+   "desde": "app/orchestrator/orchestrator.py",
+   "desde_componente": "orquestacion",
+   "hacia": "app.nlp.nlp_service",
+   "hacia_componente": "procesamiento_semantico",
+   "simbolo": "NLPService",
+   "clase": "interfaz (ABC/Protocol)",
+   "pasa_por_interfaz": "sí"
+  },
+  {
+   "desde": "app/orchestrator/orchestrator.py",
+   "desde_componente": "orquestacion",
+   "hacia": "app.validation.validator_service",
+   "hacia_componente": "catalogo_validacion",
+   "simbolo": "ValidatorService",
+   "clase": "interfaz (ABC/Protocol)",
+   "pasa_por_interfaz": "sí"
+  }
+ ]
+}
