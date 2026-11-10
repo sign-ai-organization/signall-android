@@ -306,3 +306,59 @@ python3 docs/plan-pruebas/arnes/avt06.py --modelos app/src/main/assets/web/model
 python3 docs/plan-pruebas/arnes/ws.py ren08 --audios /tmp/p1/wav --textos /tmp/p1/datos/FR-01.json --salida ...
 python3 docs/plan-pruebas/arnes/ws.py ren09 --minutos 5 --audios /tmp/p1/wav --textos /tmp/p1/datos/FR-01.json --salida ...
 ```
+
+---
+
+## 9. Segunda parte: los tres arreglos y la repetición
+
+Después de la primera corrida el owner pidió atacar los tres huecos de menor riesgo. Se
+arreglaron en el backend y se volvieron a correr las pruebas afectadas. **Los estados de §1 y
+§3 son los de la primera corrida**; los de esta parte están en la tabla de abajo y son los que
+quedaron en el libro.
+
+### Qué se cambió
+
+| Dónde | Cambio |
+|---|---|
+| `../sign-ai-backend/app/nlp/llm_client.py` | `_parse_glosses` vuelve a partir cada trozo por fin de oración, además del separador que ya usaba. La frase de cortesía que sigue al punto deja de pegarse a la última glosa. |
+| `../sign-ai-backend/app/nlp/gloss_analyzer.py` | La lista cerrada de verbos imperativos suma siete (`deme`, `anote`, `adjunte`, `acompañeme`, `vuelva`, `explique`, `actualice`); se saltan los marcadores de arranque (`entonces`, `ahora`, `luego`, …) y, si la oración abre con una cláusula y una coma, se mira la primera palabra de la parte que sigue a la coma. |
+| `../sign-ai-backend/app/persistence/migrations/007_catalog_synonyms_fr03.sql` | 12 sinónimos nuevos en `catalog_synonym` (de 13 a 25 filas), idempotentes. |
+| `../sign-ai-backend/.env` | `SEMANTIC_CACHE_SIMILARITY_THRESHOLD` de 0,05 a **0,04**. |
+| `arnes/cac.py` | Ahora también escribe la evidencia de PR-CAC-04 (falsos aciertos), que antes no se generaba. |
+
+### Resultados
+
+| ID | Antes (10/11, mañana) | Ahora | Estado |
+|---|---|---|---|
+| PR-HUE-03 | 151/200 (75,5 %); orden 22/40 | **168/200 (84,0 %); orden 39/40** | Se reporta |
+| PR-HUE-01 | reglas 75,5 %; LLM 86,0 % | reglas **84,0 %**; spaCy 45,0 %; LLM 85,0 % | Se reporta |
+| PR-HUE-02 | completa 75,5 %; sin interrogativa 47,0 %; sin negación 58,5 % | completa **84,0 %**; sin interrogativa 55,5 %; sin negación 67,0 %; sin imperativa 65,5 % | Se reporta |
+| PR-CAC-03 | 23/34; sinónimos 3/12 | **32/34**; formato 11/12, orden 9/10, sinónimos **12/12**; 0 falsos | Se reporta |
+| PR-CAC-04 | no se había corrido con el umbral 0,05 | **0/30 trampas** con 0,04 | **Pasa** |
+| PR-CAC-02 | 0,05: 23/34 y 1 trampa | **0,04: 32/34 y 0 trampas**; 0,03: 31/34 y 0; 0,05: 33/34 y 2 | Se reporta |
+| PR-CAC-01 | MiniLM 22/34; mpnet 18/34 | **MiniLM 32/34** (0,04); mpnet 28/34 (0,02) | Se reporta |
+| PR-LLM-02 | 0/30 reales con problemas; 9/10 fabricadas; fallaba CO-04-008 | **0/30 reales con problemas; 10/10 fabricadas**; CO-04-008 devuelve TIO, TRABAJAR | **Pasa** |
+| PR-LLM-01 | mini 20/30; 4o 24/30; qwen 20/30 | mini 20/30; 4o 23/30; qwen no medido (Ollama no alcanzable desde el contenedor) | Se reporta |
+| PR-LLM-03 | 28/30 | 27/30 | Se reporta |
+
+En el libro, la ronda de evaluación queda con **29 filas: 14 Pasa, 1 Falla y 14 Se reporta**. La
+única falla es PR-TRA-01, que sigue esperando la decisión del owner sobre `normalize_gloss`.
+
+### Cómo se midió, y qué hay que saber
+
+- **Evidencia:** `evidencias/{HUE,CAC,LLM}/PR-*_E_20261110_02.*` (la `_01` es la corrida de la
+  mañana, antes de los arreglos).
+- **La imagen del backend no se pudo reconstruir** (`docker compose build` falla por falta de
+  espacio en disco). Para medir se copiaron los dos archivos al contenedor en marcha y se
+  reinició; el cambio de verdad está en el repositorio. La próxima vez que se reconstruya la
+  imagen, el código va solo.
+- **La lista de verbos se amplió con las órdenes del mismo corpus con el que se mide** (CO-02,
+  registro de datos básicos). La ganancia es real en el dominio, pero está medida sobre el
+  conjunto que se usó para elegir los verbos: no es una ganancia ciega. La lista sigue cerrada y
+  acotada al dominio, como pide ADR-002.
+- **La única orden que se pierde** es la variante sin puntuación de «Antes de continuar, firme el
+  consentimiento»: sin la coma no hay señal de que la orden empiece después. Es el borde que la
+  heurística no puede resolver sin un parser.
+- **`qwen3:4b-instruct` no se midió desde el contenedor** (Ollama escucha en `127.0.0.1:11434` y
+  el cortafuegos filtra el puente de Docker). La cifra de 20/30 es la de la mañana, medida desde
+  el host con el mismo prompt.
