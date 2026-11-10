@@ -1,0 +1,142 @@
+{
+  "prueba": "PR-REN-02",
+  "fecha": "2026-11-10",
+  "frases_llm": 2,
+  "frases_cache": 48,
+  "sin_traza": 0,
+  "total_frase_llm": {
+    "n": 2,
+    "p50": 1783.0,
+    "p95": 2441.5,
+    "max": 2514.7,
+    "media": 1783.0
+  },
+  "total_frase_cache": {
+    "n": 48,
+    "p50": 3.3,
+    "p95": 12.2,
+    "max": 180.3,
+    "media": 8.4
+  },
+  "pasos_llm": {
+    "frase:segmentation": {
+      "n": 2,
+      "p50": 5.8,
+      "p95": 10.9,
+      "max": 11.5,
+      "media": 5.8
+    },
+    "frase:total": {
+      "n": 2,
+      "p50": 1783.0,
+      "p95": 2441.5,
+      "max": 2514.7,
+      "media": 1783.0
+    },
+    "frase:validation": {
+      "n": 2,
+      "p50": 0.1,
+      "p95": 0.1,
+      "max": 0.1,
+      "media": 0.1
+    },
+    "oracion:cache.embed": {
+      "n": 2,
+      "p50": 538.6,
+      "p95": 962.9,
+      "max": 1010.0,
+      "media": 538.6
+    },
+    "oracion:cache.exact": {
+      "n": 2,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.0,
+      "media": 0.0
+    },
+    "oracion:cache.similarity": {
+      "n": 2,
+      "p50": 2.1,
+      "p95": 3.8,
+      "max": 4.0,
+      "media": 2.1
+    },
+    "oracion:fingerprint": {
+      "n": 2,
+      "p50": 0.1,
+      "p95": 0.1,
+      "max": 0.1,
+      "media": 0.1
+    },
+    "oracion:llm": {
+      "n": 2,
+      "p50": 1232.4,
+      "p95": 1460.9,
+      "max": 1486.3,
+      "media": 1232.4
+    }
+  },
+  "pasos_cache": {
+    "frase:segmentation": {
+      "n": 48,
+      "p50": 0.2,
+      "p95": 8.4,
+      "max": 176.6,
+      "media": 5.1
+    },
+    "frase:total": {
+      "n": 48,
+      "p50": 3.3,
+      "p95": 12.2,
+      "max": 180.3,
+      "media": 8.4
+    },
+    "frase:validation": {
+      "n": 48,
+      "p50": 0.1,
+      "p95": 0.2,
+      "max": 2.1,
+      "media": 0.1
+    },
+    "oracion:cache.exact": {
+      "n": 81,
+      "p50": 0.0,
+      "p95": 0.1,
+      "max": 0.3,
+      "media": 0.0
+    },
+    "oracion:fingerprint": {
+      "n": 81,
+      "p50": 0.1,
+      "p95": 0.1,
+      "max": 5.1,
+      "media": 0.2
+    }
+  },
+  "llm_por_longitud_oracion": {
+    "corta": {},
+    "media": {
+      "n": 2,
+      "p50": 1232.4,
+      "p95": 1460.9,
+      "max": 1486.3,
+      "media": 1232.4
+    },
+    "larga": {}
+  },
+  "ws_ms_llm": {
+    "n": 2,
+    "p50": 1789.6,
+    "p95": 2447.2,
+    "max": 2520.3,
+    "media": 1789.6
+  },
+  "ws_ms_cache": {
+    "n": 48,
+    "p50": 10.8,
+    "p95": 36.6,
+    "max": 186.5,
+    "media": 18.7
+  },
+  "nota": "Neon real: la caché no se vació; la situación LLM son las frases cuyas oraciones no estaban en la caché (fuente llm en la traza)"
+}
