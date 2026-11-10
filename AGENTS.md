@@ -224,10 +224,18 @@ Acá: commit y push directo a `main`, sin PR ni rama de feature. **No abrir PRs 
 confirmación para commitear.** Los hermanos usan PR contra `develop` y no se commitean sin
 que el owner lo pida.
 
+**El flujo de los hermanos: PR contra `develop`, y `develop` contra `main`.** Al fusionar un PR
+en `develop`, hay que llevar `develop` a `main` (y `develop` tiene que quedar igual a `main`), o
+larama de integración se atrasa y el PR siguiente se lleva el repo entero adentro. El
+2026-11-10 `develop` estaba **22 commits atrás de `main`** en el backend, 9 en los documentos y
+5 en el STT: en los tres casos `develop` era un ancestro de `main`, sin commits propios, así
+que se igualó con un fast-forward (`git push origin origin/main:develop`), que no pierde nada.
+Los cuatro repos quedaron con `main` y `develop` en el mismo commit.
+
 **`develop` existe acá desde 2026-10-14**, creado como copia exacta de `main` (`4221303`),
 para dejar los tres repos con la misma rama de integración. Por ahora **no cambia el
 flujo**: este repo sigue por `main` directo sin PR. Nadie la mergea ni la borra sin que lo
-pidas.
+pidas. La copia se volvió a igualar con `main` el 2026-11-10 (venía 113 commits atrás).
 
 **El flujo por oraciones ya está en `main`** (2026-10-21). La rama `flujo-oraciones` fue el
 nuevo `main`: un fast-forward (`587ed04` → `2d8c757`) con el merge de `origin/main` que ya
