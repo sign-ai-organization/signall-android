@@ -56,12 +56,12 @@ tiene el recurso que les falta.
   se borraron las 107 filas de `semantic_cache` (`DELETE` + `POST /admin/cache/reload`, con
   `ADMIN_TOKEN` agregado al `.env`). La caché es derivada: se rehace sola con el uso.
 - **El libro `resultados-consolidados.xlsx` quedó con dos rondas**, como pidió el owner: la
-  **diagnóstica** es la primera pasada del 06/11 y la **de evaluación** es la repetición del
-  10/11. La ronda del 05/11 salió del libro y queda en el historial de git. Quedan 102 filas
-  (74 + 28): las 17 de P1 y las 11 que el carril 2 repitió el mismo día. Para los 11 tests que
-  P2 repitió, la fila diagnóstica se restauró a su resultado del 06/11 desde el commit
-  `8be173d`, porque la repetición había pisado el renglón. Las 17 filas de P1 se cargan con
-  `docs/plan-pruebas/agregar-ronda.py` desde `docs/plan-pruebas/resultados-p1-2026-11-10/`.
+  **diagnóstica** es la primera pasada del 06/11 (74 filas) y la **de evaluación** es la
+  repetición del 10/11, con **solo las 18 pruebas del carril P1**. La ronda del 05/11 salió del
+  libro y queda en el historial de git; las 11 filas que el carril 2 había escrito en la ronda
+  de evaluación se sacaron para que cada carril agregue las suyas. Para los tests que P2 había
+  pisado, la fila diagnóstica se restauró a su resultado del 06/11 desde el commit `8be173d`.
+  Quedan 92 filas.
 
 ## Decisiones del owner en esta sesión
 
