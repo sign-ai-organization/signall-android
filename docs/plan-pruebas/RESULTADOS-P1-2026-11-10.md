@@ -453,5 +453,5 @@ carril 2.
 | Repositorio | Qué |
 |---|---|
 | `sign-ai-docs` | Los criterios de las cinco fichas en el plan de pruebas y los tres valores del SRS (RF-NLP-04, RF-NLP-06 y RNF-DES-09), con los borradores y el registro de cambios alineados. Commit `b23692c`, directo a `main` |
-| `sign-ai-backend` | `normalize_gloss` en `app/domain/gloss_text.py`, el umbral 0,04 por defecto y la migración 007. Rama `fix/glosado-hue-cac-llm-p1`, PR #13 contra `develop` |
+| `sign-ai-backend` | `normalize_gloss` en `app/domain/gloss_text.py`, el umbral 0,04 por defecto y la migración 007. Rama `fix/glosado-hue-cac-llm-p1`, PR #13 contra `develop`, ya fusionado en `develop` y llevado a `main` |
 | `sign-ai-android` | El libro consolidado con las filas de todos los carriles, la evidencia de TRA-01 y este informe |
