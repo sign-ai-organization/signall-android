@@ -1,0 +1,11 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "Híbrido del sistema 86,4 % (165/191); puntuación + marcadores 75,4 %; solo puntuación 68,6 %; spaCy sents 64,9 %. Coste 2,19 ms por texto el híbrido y 0,02 ms el de solo puntuación. El orden coincide con el 06/11; el arnés se reimplementó, así que las cifras no son comparables una a una.",
+ "evidencias": [
+  "PR-SEG-03_E_20261110_01.csv",
+  "PR-SEG-03_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}

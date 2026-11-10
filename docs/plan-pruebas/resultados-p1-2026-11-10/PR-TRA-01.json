@@ -1,0 +1,11 @@
+{
+ "estado": "Falla",
+ "obtenido": "6 aristas entre los cuatro componentes: 4 pasan por interfaz (OrchestratorService, SttServiceClient, NLPService, ValidatorService) y 2 se saltan la interfaz: normalize_gloss, importado desde validation por llm_client.py y por gloss_lexicon.py. Es la misma causa del 06/11. La decisión es del owner: si normalize_gloss es kernel compartido la prueba pasa; si cuenta como salto hay que moverla a un módulo neutral.",
+ "evidencias": [
+  "PR-TRA-01_E_20261110_01.csv",
+  "PR-TRA-01_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}

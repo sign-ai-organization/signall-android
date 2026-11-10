@@ -1,0 +1,10 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "68 frases en 303,9 s = 13,4 frases por minuto, 0 errores. Los 10 audios de FR-01-A en orden y en tiempo real durante 5 minutos.",
+ "evidencias": [
+  "PR-REN-09_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}

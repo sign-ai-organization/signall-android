@@ -1,0 +1,11 @@
+{
+ "estado": "Se reporta",
+ "obtenido": "MiniLM (el del sistema) 22/34 con umbral 0,04 y 0 trampas; mpnet 18/34 con 0,02 y 0 trampas; multilingual-e5-small no se pudo cargar (Hugging Face responde 401 en esta máquina). Medido por oración, que es la unidad de la caché: con esa unidad mpnet no supera a MiniLM.",
+ "evidencias": [
+  "PR-CAC-01_E_20261110_01.csv",
+  "PR-CAC-01_E_20261110_01.json"
+ ],
+ "fecha": "10/11/2026",
+ "ejecutor": "Agente IA (P1, sesión 2026-11-10)",
+ "ronda": "Ronda P1 10/11"
+}
