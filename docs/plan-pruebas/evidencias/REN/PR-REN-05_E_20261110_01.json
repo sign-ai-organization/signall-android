@@ -1,0 +1,359 @@
+{
+  "prueba": "PR-REN-05",
+  "fecha": "2026-11-10",
+  "fases": {
+    "reposo": {
+      "gpu_uso": {
+        "media": 3.4,
+        "max": 11.0,
+        "n": 29
+      },
+      "gpu_mem_mib": {
+        "media": 3320.0,
+        "max": 3320.0,
+        "n": 29
+      },
+      "sign-ai-backend-backend-1": {
+        "cpu_pct": {
+          "media": 0.2,
+          "max": 0.43,
+          "n": 14
+        },
+        "mem_mib": {
+          "media": 1315.8,
+          "max": 1315.8,
+          "n": 14
+        }
+      },
+      "sign-ai-backend-stt-1": {
+        "cpu_pct": {
+          "media": 0.3,
+          "max": 0.42,
+          "n": 14
+        },
+        "mem_mib": {
+          "media": 939.6,
+          "max": 939.6,
+          "n": 14
+        }
+      }
+    },
+    "texto": {
+      "gpu_uso": {
+        "media": 4.0,
+        "max": 4.0,
+        "n": 1
+      },
+      "gpu_mem_mib": {
+        "media": 3320.0,
+        "max": 3320.0,
+        "n": 1
+      },
+      "sign-ai-backend-backend-1": {
+        "cpu_pct": {
+          "media": 16.7,
+          "max": 16.68,
+          "n": 1
+        },
+        "mem_mib": {
+          "media": 1315.8,
+          "max": 1315.8,
+          "n": 1
+        }
+      },
+      "sign-ai-backend-stt-1": {
+        "cpu_pct": {
+          "media": 4.5,
+          "max": 4.45,
+          "n": 1
+        },
+        "mem_mib": {
+          "media": 939.8,
+          "max": 939.8,
+          "n": 1
+        }
+      }
+    },
+    "voz": {
+      "gpu_uso": {
+        "media": 34.1,
+        "max": 100.0,
+        "n": 45
+      },
+      "gpu_mem_mib": {
+        "media": 3375.5,
+        "max": 3480.0,
+        "n": 45
+      },
+      "sign-ai-backend-backend-1": {
+        "cpu_pct": {
+          "media": 4.3,
+          "max": 35.12,
+          "n": 24
+        },
+        "mem_mib": {
+          "media": 1315.8,
+          "max": 1315.8,
+          "n": 24
+        }
+      },
+      "sign-ai-backend-stt-1": {
+        "cpu_pct": {
+          "media": 73.7,
+          "max": 161.44,
+          "n": 24
+        },
+        "mem_mib": {
+          "media": 940.2,
+          "max": 940.5,
+          "n": 24
+        }
+      }
+    },
+    "reposo_final": {
+      "gpu_uso": {
+        "media": 5.6,
+        "max": 31.0,
+        "n": 10
+      },
+      "gpu_mem_mib": {
+        "media": 3320.0,
+        "max": 3320.0,
+        "n": 10
+      },
+      "sign-ai-backend-backend-1": {
+        "cpu_pct": {
+          "media": 0.2,
+          "max": 0.66,
+          "n": 6
+        },
+        "mem_mib": {
+          "media": 1315.8,
+          "max": 1315.8,
+          "n": 6
+        }
+      },
+      "sign-ai-backend-stt-1": {
+        "cpu_pct": {
+          "media": 9.2,
+          "max": 54.17,
+          "n": 6
+        },
+        "mem_mib": {
+          "media": 940.2,
+          "max": 940.2,
+          "n": 6
+        }
+      }
+    }
+  },
+  "transcripcion_10_audios": {
+    "gpu_canonico": {
+      "ms": {
+        "n": 10,
+        "p50": 530.0,
+        "p95": 686.9,
+        "max": 763,
+        "media": 529.9
+      },
+      "errores": 0,
+      "palabras": 47,
+      "detalle": [
+        {
+          "audio": "AU-01-001",
+          "ms": 763,
+          "texto": "Hola, buenos días, bienvenidos."
+        },
+        {
+          "audio": "AU-01-007",
+          "ms": 551,
+          "texto": "Buenas tardes. Hoy me siento más o menos."
+        },
+        {
+          "audio": "AU-01-013",
+          "ms": 476,
+          "texto": "¿Tienes hambre?"
+        },
+        {
+          "audio": "AU-01-019",
+          "ms": 490,
+          "texto": "Perdón, ¿estás triste?"
+        },
+        {
+          "audio": "AU-01-025",
+          "ms": 594,
+          "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        },
+        {
+          "audio": "AU-01-031",
+          "ms": 517,
+          "texto": "¿Dónde vive tu familia?"
+        },
+        {
+          "audio": "AU-01-037",
+          "ms": 378,
+          "texto": "Yo nunca como mucho."
+        },
+        {
+          "audio": "AU-01-043",
+          "ms": 543,
+          "texto": "Perdón, mi hermano nunca está contento."
+        },
+        {
+          "audio": "AU-01-049",
+          "ms": 424,
+          "texto": "Por favor, come poco."
+        },
+        {
+          "audio": "AU-01-055",
+          "ms": 563,
+          "texto": "Con permiso, déjame pasar, por favor."
+        }
+      ]
+    },
+    "cpu_explicita": {
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cpu",
+        "requested_device": "cpu",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "arranque_s": 174.2,
+      "ms": {
+        "n": 10,
+        "p50": 15237.0,
+        "p95": 16242.9,
+        "max": 16391,
+        "media": 15326.1
+      },
+      "errores": 0,
+      "palabras": 47,
+      "detalle": [
+        {
+          "audio": "AU-01-001",
+          "ms": 14632,
+          "texto": "Hola, buenos días, bienvenidos."
+        },
+        {
+          "audio": "AU-01-007",
+          "ms": 14729,
+          "texto": "Buenas tardes. Hoy me siento más o menos."
+        },
+        {
+          "audio": "AU-01-013",
+          "ms": 14692,
+          "texto": "¿Tienes hambre?"
+        },
+        {
+          "audio": "AU-01-019",
+          "ms": 14615,
+          "texto": "Perdón, ¿estás triste?"
+        },
+        {
+          "audio": "AU-01-025",
+          "ms": 15223,
+          "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        },
+        {
+          "audio": "AU-01-031",
+          "ms": 15251,
+          "texto": "¿Dónde vive tu familia?"
+        },
+        {
+          "audio": "AU-01-037",
+          "ms": 15677,
+          "texto": "Yo nunca como mucho."
+        },
+        {
+          "audio": "AU-01-043",
+          "ms": 16062,
+          "texto": "Perdón, mi hermano nunca está contento."
+        },
+        {
+          "audio": "AU-01-049",
+          "ms": 15989,
+          "texto": "Por favor, come poco."
+        },
+        {
+          "audio": "AU-01-055",
+          "ms": 16391,
+          "texto": "Con permiso, déjame pasar, por favor."
+        }
+      ]
+    },
+    "pide_cuda_sin_gpu": {
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cpu",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "arranque_s": 184.3,
+      "ms": {
+        "n": 10,
+        "p50": 15879.5,
+        "p95": 16399.2,
+        "max": 16532,
+        "media": 15956.1
+      },
+      "errores": 0,
+      "palabras": 47,
+      "detalle": [
+        {
+          "audio": "AU-01-001",
+          "ms": 16083,
+          "texto": "Hola, buenos días, bienvenidos."
+        },
+        {
+          "audio": "AU-01-007",
+          "ms": 15775,
+          "texto": "Buenas tardes. Hoy me siento más o menos."
+        },
+        {
+          "audio": "AU-01-013",
+          "ms": 16532,
+          "texto": "¿Tienes hambre?"
+        },
+        {
+          "audio": "AU-01-019",
+          "ms": 16190,
+          "texto": "Perdón, ¿estás triste?"
+        },
+        {
+          "audio": "AU-01-025",
+          "ms": 16237,
+          "texto": "Hola, ¿cómo estás? ¿Cómo te llamas?"
+        },
+        {
+          "audio": "AU-01-031",
+          "ms": 15862,
+          "texto": "¿Dónde vive tu familia?"
+        },
+        {
+          "audio": "AU-01-037",
+          "ms": 15604,
+          "texto": "Yo nunca como mucho."
+        },
+        {
+          "audio": "AU-01-043",
+          "ms": 15897,
+          "texto": "Perdón, mi hermano nunca está contento."
+        },
+        {
+          "audio": "AU-01-049",
+          "ms": 15836,
+          "texto": "Por favor, come poco."
+        },
+        {
+          "audio": "AU-01-055",
+          "ms": 15545,
+          "texto": "Con permiso, déjame pasar, por favor."
+        }
+      ]
+    }
+  }
+}

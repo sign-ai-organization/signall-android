@@ -1,0 +1,331 @@
+{
+  "prueba": "PR-STT-04",
+  "fecha": "2026-11-10",
+  "camino": "POST /transcribe, instancias aparte (puerto 8001)",
+  "resultados": {
+    "small": {
+      "total": {
+        "audios": 60,
+        "errores": 7,
+        "palabras": 282,
+        "wer": 0.0248
+      },
+      "por_hablante": {
+        "H1": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "H2": {
+          "audios": 10,
+          "errores": 5,
+          "palabras": 47,
+          "wer": 0.1064
+        },
+        "H3": {
+          "audios": 10,
+          "errores": 2,
+          "palabras": 47,
+          "wer": 0.0426
+        },
+        "H4": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        }
+      },
+      "por_condicion": {
+        "ruido": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "silencio": {
+          "audios": 40,
+          "errores": 7,
+          "palabras": 188,
+          "wer": 0.0372
+        }
+      },
+      "por_tipo": {
+        "Afirmación": {
+          "audios": 12,
+          "errores": 1,
+          "palabras": 72,
+          "wer": 0.0139
+        },
+        "Negación": {
+          "audios": 12,
+          "errores": 1,
+          "palabras": 60,
+          "wer": 0.0167
+        },
+        "Orden": {
+          "audios": 12,
+          "errores": 2,
+          "palabras": 60,
+          "wer": 0.0333
+        },
+        "Pregunta de contenido": {
+          "audios": 12,
+          "errores": 1,
+          "palabras": 60,
+          "wer": 0.0167
+        },
+        "Pregunta de sí o no": {
+          "audios": 12,
+          "errores": 2,
+          "palabras": 30,
+          "wer": 0.0667
+        }
+      },
+      "inferencia_ms": {
+        "n": 60,
+        "p50": 309.5,
+        "p95": 491.7,
+        "max": 1663,
+        "media": 349.7
+      },
+      "audios_con_error": [
+        "AU-01-003",
+        "AU-01-014",
+        "AU-01-032",
+        "AU-01-038",
+        "AU-01-050",
+        "AU-01-051"
+      ],
+      "audios_sin_texto": [],
+      "health": {
+        "status": "ok",
+        "model": "small",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "memoria_gpu_mib": {
+        "base_previa": 3329,
+        "carga": 738,
+        "maxima": 1058
+      },
+      "arranque_s": 55.3
+    },
+    "medium": {
+      "total": {
+        "audios": 60,
+        "errores": 5,
+        "palabras": 282,
+        "wer": 0.0177
+      },
+      "por_hablante": {
+        "H1": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "H2": {
+          "audios": 10,
+          "errores": 4,
+          "palabras": 47,
+          "wer": 0.0851
+        },
+        "H3": {
+          "audios": 10,
+          "errores": 1,
+          "palabras": 47,
+          "wer": 0.0213
+        },
+        "H4": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        }
+      },
+      "por_condicion": {
+        "ruido": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "silencio": {
+          "audios": 40,
+          "errores": 5,
+          "palabras": 188,
+          "wer": 0.0266
+        }
+      },
+      "por_tipo": {
+        "Afirmación": {
+          "audios": 12,
+          "errores": 1,
+          "palabras": 72,
+          "wer": 0.0139
+        },
+        "Negación": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Orden": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de contenido": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de sí o no": {
+          "audios": 12,
+          "errores": 4,
+          "palabras": 30,
+          "wer": 0.1333
+        }
+      },
+      "inferencia_ms": {
+        "n": 60,
+        "p50": 599.5,
+        "p95": 1364.4,
+        "max": 2440,
+        "media": 723.5
+      },
+      "audios_con_error": [
+        "AU-01-003",
+        "AU-01-014",
+        "AU-01-020"
+      ],
+      "audios_sin_texto": [
+        "AU-01-014"
+      ],
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "memoria_gpu_mib": {
+        "base_previa": 3329,
+        "carga": 2018,
+        "maxima": 2178
+      },
+      "arranque_s": 149.2
+    },
+    "large-v3": {
+      "total": {
+        "audios": 60,
+        "errores": 1,
+        "palabras": 282,
+        "wer": 0.0035
+      },
+      "por_hablante": {
+        "H1": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "H2": {
+          "audios": 10,
+          "errores": 0,
+          "palabras": 47,
+          "wer": 0.0
+        },
+        "H3": {
+          "audios": 10,
+          "errores": 1,
+          "palabras": 47,
+          "wer": 0.0213
+        },
+        "H4": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        }
+      },
+      "por_condicion": {
+        "ruido": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "silencio": {
+          "audios": 40,
+          "errores": 1,
+          "palabras": 188,
+          "wer": 0.0053
+        }
+      },
+      "por_tipo": {
+        "Afirmación": {
+          "audios": 12,
+          "errores": 1,
+          "palabras": 72,
+          "wer": 0.0139
+        },
+        "Negación": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Orden": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de contenido": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de sí o no": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 30,
+          "wer": 0.0
+        }
+      },
+      "inferencia_ms": {
+        "n": 60,
+        "p50": 696.0,
+        "p95": 841.4,
+        "max": 954,
+        "media": 705.5
+      },
+      "audios_con_error": [
+        "AU-01-003"
+      ],
+      "audios_sin_texto": [],
+      "health": {
+        "status": "ok",
+        "model": "large-v3",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      },
+      "memoria_gpu_mib": {
+        "base_previa": 3329,
+        "carga": 3842,
+        "maxima": 4130
+      },
+      "arranque_s": 290.0
+    }
+  }
+}

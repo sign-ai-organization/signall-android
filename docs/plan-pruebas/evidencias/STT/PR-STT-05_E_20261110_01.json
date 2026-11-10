@@ -1,0 +1,573 @@
+{
+  "prueba": "PR-STT-05",
+  "fecha": "2026-11-10",
+  "camino": "voz: POST /transcribe; sin voz: POST y WS a 0,5x del ritmo real; medium",
+  "resultados": {
+    "0.004": {
+      "total": {
+        "audios": 60,
+        "errores": 5,
+        "palabras": 282,
+        "wer": 0.0177
+      },
+      "por_hablante": {
+        "H1": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "H2": {
+          "audios": 10,
+          "errores": 4,
+          "palabras": 47,
+          "wer": 0.0851
+        },
+        "H3": {
+          "audios": 10,
+          "errores": 1,
+          "palabras": 47,
+          "wer": 0.0213
+        },
+        "H4": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        }
+      },
+      "por_condicion": {
+        "ruido": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "silencio": {
+          "audios": 40,
+          "errores": 5,
+          "palabras": 188,
+          "wer": 0.0266
+        }
+      },
+      "por_tipo": {
+        "Afirmación": {
+          "audios": 12,
+          "errores": 1,
+          "palabras": 72,
+          "wer": 0.0139
+        },
+        "Negación": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Orden": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de contenido": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de sí o no": {
+          "audios": 12,
+          "errores": 4,
+          "palabras": 30,
+          "wer": 0.1333
+        }
+      },
+      "inferencia_ms": {
+        "n": 60,
+        "p50": 530.5,
+        "p95": 721.8,
+        "max": 889,
+        "media": 548.2
+      },
+      "audios_con_error": [
+        "AU-01-003",
+        "AU-01-014",
+        "AU-01-020"
+      ],
+      "audios_sin_texto": [
+        "AU-01-014"
+      ],
+      "sin_voz_post": {
+        "con_texto": [],
+        "detalle": [
+          {
+            "id": "AU-03-001",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-002",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-003",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-004",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-005",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-006",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-007",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-008",
+            "texto": "",
+            "drop_reason": "no_speech"
+          }
+        ]
+      },
+      "sin_voz_ws": {
+        "finales_con_texto": [
+          "AU-03-005"
+        ],
+        "parciales_con_texto": [],
+        "detalle": {
+          "AU-03-001": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-002": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-003": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-004": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-005": {
+            "finales": [
+              "COUH COUH"
+            ],
+            "parciales": []
+          },
+          "AU-03-006": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-007": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-008": {
+            "finales": [],
+            "parciales": []
+          }
+        }
+      },
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      }
+    },
+    "0.008": {
+      "total": {
+        "audios": 60,
+        "errores": 5,
+        "palabras": 282,
+        "wer": 0.0177
+      },
+      "por_hablante": {
+        "H1": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "H2": {
+          "audios": 10,
+          "errores": 4,
+          "palabras": 47,
+          "wer": 0.0851
+        },
+        "H3": {
+          "audios": 10,
+          "errores": 1,
+          "palabras": 47,
+          "wer": 0.0213
+        },
+        "H4": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        }
+      },
+      "por_condicion": {
+        "ruido": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "silencio": {
+          "audios": 40,
+          "errores": 5,
+          "palabras": 188,
+          "wer": 0.0266
+        }
+      },
+      "por_tipo": {
+        "Afirmación": {
+          "audios": 12,
+          "errores": 1,
+          "palabras": 72,
+          "wer": 0.0139
+        },
+        "Negación": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Orden": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de contenido": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de sí o no": {
+          "audios": 12,
+          "errores": 4,
+          "palabras": 30,
+          "wer": 0.1333
+        }
+      },
+      "inferencia_ms": {
+        "n": 60,
+        "p50": 484.5,
+        "p95": 658.6,
+        "max": 799,
+        "media": 495.7
+      },
+      "audios_con_error": [
+        "AU-01-003",
+        "AU-01-014",
+        "AU-01-020"
+      ],
+      "audios_sin_texto": [
+        "AU-01-014"
+      ],
+      "sin_voz_post": {
+        "con_texto": [],
+        "detalle": [
+          {
+            "id": "AU-03-001",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-002",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-003",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-004",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-005",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-006",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-007",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-008",
+            "texto": "",
+            "drop_reason": "no_speech"
+          }
+        ]
+      },
+      "sin_voz_ws": {
+        "finales_con_texto": [],
+        "parciales_con_texto": [],
+        "detalle": {
+          "AU-03-001": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-002": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-003": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-004": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-005": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-006": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-007": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-008": {
+            "finales": [],
+            "parciales": []
+          }
+        }
+      },
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      }
+    },
+    "0.016": {
+      "total": {
+        "audios": 60,
+        "errores": 5,
+        "palabras": 282,
+        "wer": 0.0177
+      },
+      "por_hablante": {
+        "H1": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "H2": {
+          "audios": 10,
+          "errores": 4,
+          "palabras": 47,
+          "wer": 0.0851
+        },
+        "H3": {
+          "audios": 10,
+          "errores": 1,
+          "palabras": 47,
+          "wer": 0.0213
+        },
+        "H4": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        }
+      },
+      "por_condicion": {
+        "ruido": {
+          "audios": 20,
+          "errores": 0,
+          "palabras": 94,
+          "wer": 0.0
+        },
+        "silencio": {
+          "audios": 40,
+          "errores": 5,
+          "palabras": 188,
+          "wer": 0.0266
+        }
+      },
+      "por_tipo": {
+        "Afirmación": {
+          "audios": 12,
+          "errores": 1,
+          "palabras": 72,
+          "wer": 0.0139
+        },
+        "Negación": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Orden": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de contenido": {
+          "audios": 12,
+          "errores": 0,
+          "palabras": 60,
+          "wer": 0.0
+        },
+        "Pregunta de sí o no": {
+          "audios": 12,
+          "errores": 4,
+          "palabras": 30,
+          "wer": 0.1333
+        }
+      },
+      "inferencia_ms": {
+        "n": 60,
+        "p50": 473.5,
+        "p95": 627.5,
+        "max": 1190,
+        "media": 494.8
+      },
+      "audios_con_error": [
+        "AU-01-003",
+        "AU-01-014",
+        "AU-01-020"
+      ],
+      "audios_sin_texto": [
+        "AU-01-014"
+      ],
+      "sin_voz_post": {
+        "con_texto": [],
+        "detalle": [
+          {
+            "id": "AU-03-001",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-002",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-003",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-004",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-005",
+            "texto": "",
+            "drop_reason": "logprob"
+          },
+          {
+            "id": "AU-03-006",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-007",
+            "texto": "",
+            "drop_reason": "rms"
+          },
+          {
+            "id": "AU-03-008",
+            "texto": "",
+            "drop_reason": "no_speech"
+          }
+        ]
+      },
+      "sin_voz_ws": {
+        "finales_con_texto": [
+          "AU-03-005"
+        ],
+        "parciales_con_texto": [],
+        "detalle": {
+          "AU-03-001": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-002": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-003": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-004": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-005": {
+            "finales": [
+              "COUH COUH"
+            ],
+            "parciales": []
+          },
+          "AU-03-006": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-007": {
+            "finales": [],
+            "parciales": []
+          },
+          "AU-03-008": {
+            "finales": [],
+            "parciales": []
+          }
+        }
+      },
+      "health": {
+        "status": "ok",
+        "model": "medium",
+        "device": "cuda",
+        "requested_device": "cuda",
+        "language": "es",
+        "silence_timeout_ms": 1500
+      }
+    }
+  }
+}
