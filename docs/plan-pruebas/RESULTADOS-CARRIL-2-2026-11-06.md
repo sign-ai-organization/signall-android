@@ -285,7 +285,7 @@ Son mediciones reales, pero no la que pide la ficha. Cada una dice qué falta.
 - **Comparación con el 5/11 (teléfono Redmi Note 9S, sin cifras comparables 1 a 1):** envío a primera seña p50 63,5 ms (caché vacía) y 42,0 ms (caché llena); representación p50 7.100,5 y 7.084,5 ms; envío a última seña p50 7.583 y 7.116 ms. Hoy la representación (7.543,5 ms) y la última seña (7.650 ms) son parecidas; la **primera seña es ≈4 veces mayor** (199,5 contra 42 a 63,5 ms). No pude reconciliarlo: son otro teléfono y otro modo de enviar (el 5/11 inyectaba el texto con una herramienta y hoy se pulsa «Traducir» con `input tap`, tras 1,5 s de «texto retenido»), y no sé si la métrica `envío→primera seña` se tomaba en el mismo punto.
 - **Observación:** con las cifras de teléfono y servidor por separado: el servidor entrega el primer `segment` a los 10 ms con caché exacta y a los 25 a 30 ms de pipeline tras el texto de voz; en el teléfono la primera seña tarda ≈200 ms desde el envío, así que casi todo lo que ve el usuario está en la app (WebView, Compose) y en representar. Los parciales de voz y el micrófono quedan sin medir en el teléfono.
 
-### PR-RES-01 · Pérdida de conexión del cliente — Falla
+### PR-RES-01 · Pérdida de conexión del cliente — Falla el 6/11; Pasa desde el 8/11 tras el arreglo en la app (ver §4.3)
 
 Cifras del **teléfono** (`logcat -s SignAiNet SignAiState`) y capturas de pantalla; la parte del servidor (primera pasada, sin teléfono) va al final y no se mezcla.
 
@@ -440,7 +440,7 @@ Con la base de laboratorio se completó la mitad de la caché (la primera pasada
 - **Veredicto:** la frase guardada se traduce con el LLM caído y el sistema se recupera al volver el LLM sin reiniciar. El aviso con el LLM colgado llega a 10,56 s: **0,56 s sobre** los 10 s del peor caso (5 s por intento, un reintento), igual de justo que el 5/11 (10,5 s), que se dio por Pasa; por eso se deja Pasa, con la salvedad. No se midió el estado de la app (sin teléfono en esta pasada).
 - **Evidencia:** `RES/PR-RES-02_E_20261106_02.csv`.
 
-### PR-RES-04 · Falla de la base de datos — Falla (laboratorio con base propia)
+### PR-RES-04 · Falla de la base de datos — Falla el 6/11; Pasa desde el 10/11 en el caso 2 tras el arreglo del backend (ver §4.4; laboratorio con base propia)
 
 - **Montaje:** Postgres local `p2lab-pg`, que se corta con `docker stop`, se pausa con `docker pause` o se arranca después del backend. La base de Neon dormida **no se puede reproducir**; la pausa solo emula una base que no responde.
 - **Resultado:**
@@ -499,7 +499,7 @@ Con la base de laboratorio se completó la mitad de la caché (la primera pasada
 - **Comparación con el 5/11:** aviso con el LLM caído a 10.500 ms y recuperación a 7.300 ms (con el teléfono). Hoy 10.505,5 ms, igual de cerca del límite.
 - **Observación:** el criterio dice 5 s por intento y un reintento, **10 s en el peor caso**; 10.505,5 ms son 0,5 s más (el tiempo de espera de cada intento y la pausa entre intentos suman más que 10 s). Está en el borde del requisito: lo decide el owner. Sin la app no se mide el estado en que queda.
 
-### PR-RES-03 · Falla de la transcripción — Falla (laboratorio + teléfono)
+### PR-RES-03 · Falla de la transcripción — Falla el 6/11; Pasa desde el 8/11 tras el arreglo en la app (ver §4.3; laboratorio + teléfono)
 
 - **Datos:** el micrófono de la app (sin voz: no hay altavoz, §4.0) y una frase de texto («Tienes hambre?»).
 - **Método:** `docker stop p2lab-stt` en dos momentos: (A) con el micrófono encendido (aproxima «a mitad de una frase»; no hay habla) y (B) antes de conectar (se relanza la app con el STT apagado). En cada uno se envía texto con el STT caído, se vuelve a encender el STT y se toca el micrófono otra vez **sin relanzar la app**. Capturas y `logcat`.
@@ -794,6 +794,17 @@ La falla era del backend: si arrancaba con la base caída, quedaba sin pool, con
 33. **La base dormida no se distingue en el arranque, y no se pudo confirmar que estuviera dormida.** `PR-REN-04`, Neon: backend listo 22,6 s de media con la base dormida contra 19,6 s despierta, con los rangos solapados. La caché se precarga en memoria, así que el efecto de una base dormida solo aparecería en el arranque y en el `INSERT` de una frase nueva (este último no se midió).
 34. **`PR-TRA-03` (aproximación): el entorno se reconstruye sin parches, pero la guía deja un paso sin documentar.** El `.env` es obligatorio y la guía no explica cómo crearlo (el real y `.env.example` difieren en 7 variables). Reconstruir ambas imágenes sin caché de capas tarda 15 min 20 s; el backend responde 77 s después de encender. La ficha dice «pocos minutos» sin fijar un valor.
 
+**Hallazgos del 2026-11-10 (novena pasada):**
+
+35. **Las correcciones se hicieron durante la ronda de evaluación y no se validaron en el stack canónico (alto para la tesis).** El plan de pruebas (`latex/plan-pruebas/main.tex`, sección de las rondas) dice que en la ronda de evaluación «el sistema se mantiene sin cambios», que se repiten la mayoría de las pruebas y que se ejecutan pruebas de regresión; y que la ronda termina con los resultados respaldados por «la versión del sistema utilizada». Las mediciones de este carril se sellaron con backend `9c74e76`, STT `9787e49` y app `4ded3a8` (§1.1). Después se cambió el sistema:
+    - **App, 8/11:** `f2d5cdb` (arreglo de `PR-RES-01` y `PR-RES-03`).
+    - **Backend, 10/11:** rama `fix/recuperacion-base-datos`, commit `1f354ec` (tarea de recuperación de la base).
+    - **STT, 10/11:** rama `fix/stt-03-no-voz`, commit `41f7566` (barrera de no voz).
+    - **Criterios, 10/11:** `RNF-MNT-05` y la ficha de `PR-CAC-05` («después de recargar la caché»); la ficha de `PR-STT-03` (transmisión continua, cero textos; archivo completo, no más de 1 %). El plan dice que los umbrales se fijan al cerrar la ronda diagnóstica; estos se cambiaron ya dentro de la ronda de evaluación, a decisión del owner.
+
+    Los arreglos del backend y del STT se validaron **solo en laboratorio**; el stack canónico no se reconstruyó con ellos (el canónico se reconstruyó el 7/11 en `PR-TRA-03`, con el código anterior). Por eso las cifras de este carril vienen de versiones distintas. **Pruebas que podrían verse afectadas** (es una lista de candidatas por la zona del código, no una medición): por el cambio del STT, `STT-01`, `STT-02`, `STT-04`, `STT-05`, `REN-01` y `RES-06` (usan habla real); por el del backend, `RES-04`, `RES-07`, `REN-04` y `SEC-03` (arranque y recuperación); por el de la app, `REN-03` y todas las que la usan. No se repitió ninguna.
+36. **`PR-SEC-03` solo pasaría con un rol de mínimos privilegios, y todavía no existe.** El owner decidió el 10/11 dejar el rol `neondb_owner` y después preguntó qué hacer para no dejar la prueba en Falla. La vía es crear un rol propio para el backend con solo lo que usa el código: `SELECT` en `catalog` y `catalog_synonym`; `SELECT`, `INSERT` y `UPDATE` en `semantic_cache`; y `USAGE` en la secuencia de `semantic_cache` (su `id` es `SERIAL`). Pasos: crear el rol (mejor desde la consola de Neon), concederle esos permisos como `neondb_owner`, cambiar la `DATABASE_URL` del backend y reiniciarlo, y comprobar dos cosas: que traduce y guarda frases, y que con ese rol `DROP TABLE`, `TRUNCATE` y `CREATE TABLE` dan *permission denied*. **No se ejecutó nada en Neon.** La lista de permisos sale de leer el código y de la medición del 7/11; **no está validada**, y puede faltar algún permiso que el código use y no se vio (se vería como un error al guardar o al arrancar). Se propuso validarla antes en un laboratorio local con el mismo esquema, y está pendiente de que el owner lo pida.
+
 ### 5.3. Decisiones que le corresponden al owner
 
 - **Credenciales:** **el owner informó el 10/11 que ya cambió las claves** que se habían subido al repositorio (la del LLM y la contraseña de la base), así que las que quedaron en los dos archivos de evidencia ya no sirven. Sigue abierto si se purga el historial de `sign-ai-android`, y qué estado lleva `PR-SEC-03` (los archivos con las claves viejas siguen en el historial).
@@ -811,6 +822,8 @@ La falla era del backend: si arrancaba con la base caída, quedaba sin pool, con
 - **`PR-TRA-03` (punto 34):** si la aproximación basta o se repite en una máquina limpia; cómo debe documentarse la creación del `.env`; y qué significa «pocos minutos» cuando la construcción sin caché tarda 15 min 20 s.
 - **`PR-REN-04` (punto 33):** si se repite con una base de la que se pueda confirmar que está suspendida y con una frase nueva (que escribiría en la base).
 - **Ficha de `PR-SEC-01` (punto 27):** cómo se prueba que la `demo` rechaza un `ws://` (hoy solo es posible de forma estática) y si el teléfono de pruebas tendrá un bloqueo de pantalla para instalar la CA.
+- **Congelar y repetir (punto 35): abierto, decide el owner.** Opciones: **(A)** reconstruir el stack canónico con las tres ramas, sellar las versiones y repetir solo las pruebas afectadas más una regresión corta (recomendada por la sesión del 10/11: es lo que pide el plan y cuesta menos que repetirlo todo); **(B)** repetir las 27 en el stack nuevo (lo más limpio, lo más caro: el carril 2 llevó cinco pasadas); **(C)** dejarlo como está y declarar en el informe que cada resultado viene de su versión (casi no cuesta, pero queda un hueco frente a lo que promete el plan). Una pregunta previa que solo responde el owner: si su director o jurado espera que los resultados finales salgan de una sola versión congelada (entonces A o B) o basta con mostrar cada resultado con su versión (entonces C alcanza).
+- **`PR-SEC-03` (punto 36): abierto.** El owner decide si crea el rol de mínimos privilegios en Neon (la prueba pasaría por permisos sin cambiar el criterio) o deja `neondb_owner` y se acepta el riesgo (la prueba queda en Falla documentada, o se cambia el criterio, como se hizo con `CAC-05` y `STT-03`). La sesión recomendó no cambiar el criterio para esconder un riesgo real.
 - **Laboratorio y pendientes:** quién corre lo que sigue abierto (sección 6).
 
 ### 5.4. Qué toqué en el entorno
