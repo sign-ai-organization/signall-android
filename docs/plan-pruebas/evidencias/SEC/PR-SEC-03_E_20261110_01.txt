@@ -1,0 +1,39 @@
+PR-SEC-03 · Secretos y consultas a la base · permisos del rol del backend · 2026-11-10
+Contra la Neon REAL, con el rol que el owner creo y puso en sign-ai-backend/.env (usuario: neondb). Sin imprimir ninguna clave.
+Salvaguardas: consultas de solo lectura; las pruebas de escritura y los intentos de dano se hicieron cada uno dentro de una transaccion que siempre se deshace (lock_timeout 2 s, statement_timeout 5 s); el backend de la prueba corrio con LLM_BASE_URL apuntando a una direccion muerta, para que una frase nueva no pudiera guardar nada.
+
+ROL (consulta de solo lectura)
+  current_user = neondb; rolsuper, rolcreaterole, rolcreatedb, rolreplication, rolbypassrls = todos False.
+  Pertenece a: ningun rol (no esta en neon_superuser).
+  catalog y catalog_synonym: SELECT si; INSERT, UPDATE, DELETE, TRUNCATE no. semantic_cache: SELECT, INSERT, UPDATE si; DELETE y TRUNCATE no.
+  Dueno de las tres tablas: neondb_owner (no el rol del backend). CREATE en el esquema public: no.
+
+LO QUE EL BACKEND DEBE PODER HACER (dentro de una transaccion deshecha)
+  Guardar una frase nueva con la sentencia exacta del backend (INSERT ... ON CONFLICT DO UPDATE, con la secuencia): PERMITIDO.
+  Guardar la misma frase dos veces (rama DO UPDATE): PERMITIDO.
+  Leer el catalogo: 50 glosas y 13 sinonimos.
+
+LO QUE NO DEBE PODER HACER (cada intento en su transaccion, deshecho)
+  CREATE TABLE ............ RECHAZADO: permission denied for schema public
+  DROP TABLE semantic_cache  RECHAZADO: must be owner of table semantic_cache
+  TRUNCATE catalog_synonym . RECHAZADO: permission denied for table catalog_synonym
+  UPDATE catalog (0 filas) . RECHAZADO: permission denied for table catalog
+  DELETE semantic_cache (0)  RECHAZADO: permission denied for table semantic_cache
+  ALTER TABLE catalog ...... RECHAZADO: must be owner of table catalog
+  CREATE ROLE .............. RECHAZADO: permission denied to create role
+  semantic_cache: 103 filas antes y 103 despues; la fila de prueba no quedo.
+
+BACKEND REAL CON ESE ROL (imagen del stack canonico, contenedor aparte, LLM muerto, STT inexistente)
+  Arranco en estado ok a los ~66 s: catalog_glosses 63, cache_loaded true, cache_rows 103 (precarga de 726 ms).
+  Frase ya guardada ("Hola, buenos dias, bienvenidos."): HIT en la cache, glosas HOLA y BUENOS DIAS disponibles.
+  Frase nueva: error "No se pudo traducir el texto." (LLM muerto), sin escribir nada.
+  POST /admin/cache/reload: HTTP 200, 103 filas.
+  Errores de permisos en el log del backend (permission denied / InsufficientPrivilege / must be owner): 0.
+  semantic_cache al terminar: 103 filas, sin filas de prueba.
+
+SALVEDADES
+  - No se probo un guardado REAL por el backend (una frase nueva con el LLM real), para no escribir en la cache real; el guardado se probo con la misma sentencia dentro de una transaccion deshecha.
+  - Los 13 sinonimos se leyeron bien (63 glosas en total), y la secuencia de semantic_cache funciona (el INSERT lo ejercito).
+  - El owner informo que roto las claves expuestas; esta prueba NO lo verifico (no se probaron las claves viejas). Las claves viejas siguen en el historial de git de sign-ai-android.
+  - Las migraciones y el sembrado del catalogo ya no se pueden correr con el rol del backend: necesitan el rol dueno (neondb_owner).
+  - Medido con el codigo del stack canonico actual (sin los cambios de RES-04 ni STT-03).
