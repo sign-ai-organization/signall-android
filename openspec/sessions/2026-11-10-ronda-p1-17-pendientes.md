@@ -123,14 +123,13 @@ definidos».
   `app/domain/gloss_text.py`, que es la capa que los dos componentes ya comparten. La función
   es pura, así que la arista desaparece sin cambiar el criterio. El arnés da 4 aristas, 4 por
   interfaz y 0 saltos. En el backend: rama `fix/glosado-hue-cac-llm-p1`, PR #13.
-- **El libro**: el carril 2 dejó sus 25 filas de la ronda de evaluación en
+- **Los dos libros**: el carril 2 dejó sus 25 filas de la ronda de evaluación en
   `resultados-consolidados.xlsx` (commit `e89073e`). Como el Excel es binario y dos carriles
-  sobre el mismo archivo no se fusionan sin perder trabajo, la forma de no pisarse es tomar
-  siempre la versión del remoto y escribir encima las filas propias. El libro quedó con **117
-  filas** (74 de la diagnóstica y 43 de la de evaluación: 18 del carril 1 y 25 del carril 2), y
-  las seis filas del carril 1 que cambiaron de estado se escribieron encima sin tocar ninguna
-  de las suyas. La ronda de evaluación del carril 1 queda en **18 pruebas, 7 Pasa, 0 Falla y
-  11 Se reporta**.
+  sobre el mismo archivo no se fusionan sin perder trabajo, **cada carril lleva su libro**:
+  `resultados-consolidados.xlsx` (el general, 74 + 43, **sin tocar**: queda como lo dejó el
+  carril 2) y `resultados-consolidados-p1.xlsx` (74 + 18, solo el carril 1, con los umbrales
+  fijados y TRA-01 en Pasa). La ronda de evaluación del carril 1 queda en **18 pruebas, 7 Pasa,
+  0 Falla y 11 Se reporta**. Se juntan al terminar el plan de pruebas.
 - **Sin PR en el repo de la app**: se commitea directo a `main`. El PR #14 del `sign-ai-docs` se
   cerró y el commit entró directo a `main`, por indicación del owner.
 
