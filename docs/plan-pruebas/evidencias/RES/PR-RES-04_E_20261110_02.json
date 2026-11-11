@@ -1,0 +1,122 @@
+{
+  "caso_1": {
+    "alcance": "laboratorio aparte: base detenida con docker stop mientras se traduce; no es Neon",
+    "base_sana": {
+      "health": {
+        "status": "ok",
+        "cache_loaded": true,
+        "cache_rows": 1,
+        "catalog_loaded": true,
+        "catalog_glosses": 50,
+        "silence_timeout_ms": 1500
+      },
+      "filas": 1,
+      "frase_nueva_sin_corte": {
+        "fin": "done",
+        "ms": 918.5,
+        "segmentos": 1,
+        "error": null
+      }
+    },
+    "corte": {
+      "frase_nueva": {
+        "fin": "done",
+        "ms": 1152.5,
+        "segmentos": 1,
+        "error": null
+      },
+      "frase_repetida": {
+        "fin": "done",
+        "ms": 6.5,
+        "segmentos": 1,
+        "error": null
+      },
+      "health_durante": [
+        [
+          0.0,
+          "ok"
+        ],
+        [
+          4.0,
+          "ok"
+        ],
+        [
+          8.0,
+          "ok"
+        ],
+        [
+          12.1,
+          "ok"
+        ],
+        [
+          16.1,
+          "ok"
+        ],
+        [
+          20.1,
+          "ok"
+        ],
+        [
+          24.1,
+          "ok"
+        ],
+        [
+          28.1,
+          "ok"
+        ]
+      ]
+    },
+    "recuperacion_sin_reiniciar": {
+      "s_hasta_health_ok_tras_start": 0.5,
+      "restart_count": "0",
+      "health": {
+        "status": "ok",
+        "cache_loaded": true,
+        "cache_rows": 4,
+        "catalog_loaded": true,
+        "catalog_glosses": 50,
+        "silence_timeout_ms": 1500
+      },
+      "frase_siguiente": {
+        "fin": "done",
+        "ms": 787.4,
+        "segmentos": 1,
+        "error": null
+      },
+      "s_hasta_guardada": 0.2,
+      "filas_antes_del_corte": 2,
+      "filas_al_volver": 2,
+      "filas_final": 3,
+      "frase_del_corte_guardada": false
+    }
+  },
+  "caso_3": {
+    "alcance": "laboratorio aparte: base pausada con docker pause 6 s (emula una base que no responde; no es Neon dormida)",
+    "frase_con_la_base_pausada": {
+      "fin": "done",
+      "ms": 1016.3,
+      "segmentos": 1,
+      "error": null
+    },
+    "health_durante_pausa": {
+      "status": "ok",
+      "cache_loaded": true,
+      "cache_rows": 4,
+      "catalog_loaded": true,
+      "catalog_glosses": 50,
+      "silence_timeout_ms": 1500
+    },
+    "s_pausa": 6.1,
+    "s_hasta_guardada_tras_reanudar": 0.6,
+    "repetida_despues": {
+      "fin": "done",
+      "ms": 3.2,
+      "segmentos": 1,
+      "error": null
+    },
+    "filas": {
+      "antes": 3,
+      "despues": 4
+    }
+  }
+}

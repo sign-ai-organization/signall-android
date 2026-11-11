@@ -1,0 +1,94 @@
+{
+  "alcance": "teléfono Redmi Note 11 por USB, laboratorio p8lab-*; corte con `adb kill-server`; la ruta por micrófono con voz real no se mide (no hay altavoz)",
+  "hablando": {
+    "momento": "hablando",
+    "t_corte": 1794361586.77473,
+    "t_restaura": 1794361632.3734286,
+    "detecto_corte_ms": 27653,
+    "ms_hasta_reconectar_tras_restaurar": 1947,
+    "intentos_fallidos_tras_restaurar": 0,
+    "avisos": [
+      "SignAiState: aviso (no va al indicador): No se escuchó nada.",
+      "SignAiState: fallo: Se cortó la conexión mientras escuchaba.",
+      "SignAiState: aviso (no va al indicador): Se cortó la conexión mientras escuchaba."
+    ],
+    "lineas": [
+      "1794361614.428 SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 0 successful ping/pongs)",
+      "1794361614.472 SignAiState: micrófono apagado (venía de Dictation)",
+      "1794361614.491 SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Dictation",
+      "1794361614.552 SignAiNet: recording stopped",
+      "1794361614.555 SignAiState: dictado detenido: esperando el final de la frase",
+      "1794361614.555 SignAiState: el dictado se apagó sin transcripción",
+      "1794361614.555 SignAiState: aviso (no va al indicador): No se escuchó nada.",
+      "1794361614.556 SignAiState: fallo: Se cortó la conexión mientras escuchaba.",
+      "1794361614.556 SignAiNet: stop() sin grabación activa",
+      "1794361614.556 SignAiState: aviso (no va al indicador): Se cortó la conexión mientras escuchaba.",
+      "1794361614.563 SignAiNet: stop() sin grabación activa",
+      "1794361629.074 SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...",
+      "1794361629.118 SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "1794361631.184 SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "1794361631.229 SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "1794361634.320 SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)"
+    ],
+    "pantalla_tras_restaurar": [
+      "Inactivo",
+      "Escribe una frase...",
+      "Traducir",
+      "TR",
+      "[desc] Entrada por voz",
+      "[desc] Historial reciente",
+      "[desc] Traducir",
+      "[desc] Modo en vivo",
+      "[desc] Abrir Conversación",
+      "[desc] Abrir Ajustes"
+    ],
+    "frase_nueva_llego_segmento": true,
+    "lineas_frase_nueva": [
+      "1794361650.312 SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. \"Quiero hablar con mi mama\"",
+      "1794361651.862 SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles",
+      "1794361652.011 SignAiNet: segment 0/1 turn=1 -> YO",
+      "1794361652.051 SignAiState: resumen: frases=1 oraciones=1 glosas=1 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=1740ms p95=1740ms max=1740ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a",
+      "1794361652.243 SignAiState: signStart: oración→avatar 198 ms (seña 0, reloj JS 76041 ms)"
+    ]
+  },
+  "representando": {
+    "momento": "representando",
+    "t_corte": 1794361676.3787441,
+    "t_restaura": 1794361721.943408,
+    "detecto_corte_ms": 38416,
+    "ms_hasta_reconectar_tras_restaurar": 1929,
+    "intentos_fallidos_tras_restaurar": 0,
+    "avisos": [],
+    "lineas": [
+      "1794361675.803 SignAiState: signStart: oración→avatar 2241 ms (seña 1, reloj JS 19276 ms)",
+      "1794361677.941 SignAiState: signStart: oración→avatar 4379 ms (seña 2, reloj JS 21400 ms)",
+      "1794361680.128 SignAiState: signStart: oración→avatar 6566 ms (seña 3, reloj JS 23583 ms)",
+      "1794361714.795 SignAiNet: session failed: sent ping but didn't receive pong within 20000ms (after 1 successful ping/pongs)",
+      "1794361714.852 SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "1794361718.662 SignAiNet: session failed: unexpected end of stream on http://127.0.0.1:8080/...",
+      "1794361718.713 SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "1794361720.761 SignAiNet: session failed: Failed to connect to /127.0.0.1:8080",
+      "1794361720.786 SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+      "1794361723.872 SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)"
+    ],
+    "pantalla_tras_restaurar": [
+      "Inactivo",
+      "Escribe una frase...",
+      "Traducir",
+      "TR",
+      "[desc] Entrada por voz",
+      "[desc] Historial reciente",
+      "[desc] Traducir",
+      "[desc] Modo en vivo",
+      "[desc] Abrir Conversación",
+      "[desc] Abrir Ajustes"
+    ],
+    "frase_nueva_llego_segmento": true,
+    "lineas_frase_nueva": [
+      "1794361738.677 SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. \"Buenos dias a todos\"",
+      "1794361738.688 SignAiNet: segment 0/1 turn=1 -> BUENOS DIAS,TODOS",
+      "1794361738.810 SignAiState: resumen: frases=2 oraciones=2 glosas=6 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=134ms p95=134ms max=1349ms n=2 duracion_representada=p50=8680ms p95=8680ms max=8680ms n=1 oracion_a_avatar=p50=133ms p95=133ms max=133ms n=1 envio_a_primera_sena=p50=1467ms p95=1467ms max=1467ms n=1",
+      "1794361738.893 SignAiState: signStart: oración→avatar 86 ms (seña 0, reloj JS 82391 ms)"
+    ]
+  }
+}

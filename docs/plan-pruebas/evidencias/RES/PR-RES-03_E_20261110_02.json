@@ -1,0 +1,56 @@
+{
+  "alcance": "STT detenido con el micrófono encendido (sin voz real, no hay altavoz); laboratorio p8lab-*",
+  "ms_hasta_el_aviso": 177,
+  "lineas_con_el_stt_apagado": [
+    "1794362061.563 SignAiNet: session failed: null",
+    "1794362061.572 SignAiState: micrófono apagado (venía de Dictation)",
+    "1794362061.604 SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Dictation",
+    "1794362061.645 SignAiNet: stop() sin grabación activa",
+    "1794362061.646 SignAiNet: recording stopped",
+    "1794362061.646 SignAiState: dictado detenido: esperando el final de la frase",
+    "1794362061.646 SignAiState: el dictado se apagó sin transcripción",
+    "1794362061.646 SignAiState: aviso (no va al indicador): No se escuchó nada.",
+    "1794362061.647 SignAiState: fallo: Se cortó la conexión mientras escuchaba.",
+    "1794362061.647 SignAiNet: stop() sin grabación activa",
+    "1794362061.647 SignAiState: aviso (no va al indicador): Se cortó la conexión mientras escuchaba.",
+    "1794362062.719 SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+    "1794362062.771 SignAiState: aviso visible: Sin servicio de voz: puedes seguir traduciendo por texto."
+  ],
+  "pantalla_con_el_stt_apagado": [
+    "Inactivo",
+    "Sin servicio de voz: puedes seguir traduciendo por texto.",
+    "Escribe una frase...",
+    "Traducir",
+    "TR",
+    "[desc] Entrada por voz",
+    "[desc] Historial reciente",
+    "[desc] Traducir",
+    "[desc] Modo en vivo",
+    "[desc] Abrir Conversación",
+    "[desc] Abrir Ajustes"
+  ],
+  "texto_se_traduce_con_el_stt_apagado": true,
+  "s_hasta_reabrir_la_sesion": 15.3,
+  "pantalla_tras_volver_el_stt": [
+    "Inactivo",
+    "Escribe una frase...",
+    "Traducir",
+    "TR",
+    "[desc] Entrada por voz",
+    "[desc] Historial reciente",
+    "[desc] Traducir",
+    "[desc] Modo en vivo",
+    "[desc] Abrir Conversación",
+    "[desc] Abrir Ajustes"
+  ],
+  "mic_se_enciende_otra_vez": true,
+  "lineas_final": [
+    "1794362077.317 SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles",
+    "1794362079.095 SignAiState: signStart: oración→avatar 2251 ms (seña 1, reloj JS 29283 ms)",
+    "1794362091.386 SignAiState: el servicio de voz volvió: se reabre la sesión para recuperar el micrófono",
+    "1794362091.422 SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off",
+    "1794362092.498 SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)",
+    "1794362101.913 SignAiState: micrófono prendido en modo Dictation",
+    "1794362101.976 SignAiNet: recording 16000Hz mono, chunks of 30ms"
+  ]
+}
