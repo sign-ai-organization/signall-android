@@ -1,0 +1,74 @@
+[
+  {
+    "nivel": 1,
+    "sesiones": 1,
+    "frases": 10,
+    "latencia_ms": {
+      "n": 10,
+      "p50": 501.4,
+      "p95": 656.7,
+      "max": 664.8
+    },
+    "errores": 0,
+    "ajenas": 0,
+    "contador": {
+      "antes": 0.0,
+      "max": 1.0,
+      "despues": 0.0
+    }
+  },
+  {
+    "nivel": 2,
+    "sesiones": 2,
+    "frases": 20,
+    "latencia_ms": {
+      "n": 20,
+      "p50": 574.1,
+      "p95": 1062.9,
+      "max": 1229.3
+    },
+    "errores": 0,
+    "ajenas": 0,
+    "contador": {
+      "antes": 0.0,
+      "max": 2.0,
+      "despues": 0.0
+    }
+  },
+  {
+    "nivel": 3,
+    "sesiones": 3,
+    "frases": 30,
+    "latencia_ms": {
+      "n": 30,
+      "p50": 795.7,
+      "p95": 1082.3,
+      "max": 1235.8
+    },
+    "errores": 0,
+    "ajenas": 0,
+    "contador": {
+      "antes": 0.0,
+      "max": 3.0,
+      "despues": 0.0
+    }
+  },
+  {
+    "nivel": 4,
+    "sesiones": 1,
+    "frases": 10,
+    "latencia_ms": {
+      "n": 10,
+      "p50": 513.0,
+      "p95": 612.7,
+      "max": 623.0
+    },
+    "errores": 0,
+    "ajenas": 0,
+    "contador": {
+      "antes": 0.0,
+      "max": 1.0,
+      "despues": 0.0
+    }
+  }
+]

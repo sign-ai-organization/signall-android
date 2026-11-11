@@ -1,0 +1,84 @@
+{
+  "fases": {
+    "reposo": {
+      "duracion_s": 30.0,
+      "gpu_uso": {
+        "media": 2.9,
+        "max": 6.0,
+        "n": 28
+      },
+      "gpu_mem_mib": {
+        "media": 3197.0,
+        "max": 3197.0,
+        "n": 28
+      },
+      "sign-ai-backend-backend-1": {
+        "cpu_pct": {
+          "media": 0.2,
+          "max": 0.23,
+          "n": 15
+        },
+        "mem_mib": {
+          "media": 1183.7,
+          "max": 1183.74,
+          "n": 15
+        }
+      },
+      "sign-ai-backend-stt-1": {
+        "cpu_pct": {
+          "media": 0.2,
+          "max": 0.27,
+          "n": 15
+        },
+        "mem_mib": {
+          "media": 831.1,
+          "max": 831.1,
+          "n": 15
+        }
+      }
+    },
+    "voz": {
+      "duracion_s": 54.7,
+      "gpu_uso": {
+        "media": 28.1,
+        "max": 100.0,
+        "n": 51
+      },
+      "gpu_mem_mib": {
+        "media": 3234.0,
+        "max": 3325.0,
+        "n": 51
+      },
+      "sign-ai-backend-backend-1": {
+        "cpu_pct": {
+          "media": 2.3,
+          "max": 2.68,
+          "n": 27
+        },
+        "mem_mib": {
+          "media": 1183.7,
+          "max": 1183.74,
+          "n": 27
+        }
+      },
+      "sign-ai-backend-stt-1": {
+        "cpu_pct": {
+          "media": 69.7,
+          "max": 163.64,
+          "n": 27
+        },
+        "mem_mib": {
+          "media": 831.1,
+          "max": 831.3,
+          "n": 27
+        }
+      }
+    }
+  },
+  "transcripcion_10_audios_gpu": {
+    "n": 10,
+    "p50": 468.0,
+    "p95": 598.4,
+    "max": 669.0
+  }
+}

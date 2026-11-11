@@ -35,7 +35,9 @@ APP = "com.signai.webview"
 CAMPO, TRADUCIR = (291, 2132), (288, 1510)  # «Traducir» sube a y=1510 con el teclado abierto
 IDS = ["FR-01-001", "FR-01-005", "FR-01-007", "FR-01-011", "FR-01-013",
        "FR-01-014", "FR-01-019", "FR-01-023", "FR-01-025", "FR-01-026"]
-BASE = "http://127.0.0.1:8180"
+PUERTO = 8180                 # laboratorio; el canónico es 8080 (se cambia con --puerto)
+BASE = f"http://127.0.0.1:{PUERTO}"
+BACKEND = "p8lab-backend"     # contenedor del backend (se cambia con --backend)
 
 
 def adb(*args: str) -> str:
@@ -93,7 +95,7 @@ def vaciar_cache() -> None:
 
 async def precalentar(textos: list[str]) -> None:
     for t in textos:
-        async with websockets.connect("ws://127.0.0.1:8180/ws/translate", max_size=None) as ws:
+        async with websockets.connect(f"ws://127.0.0.1:{PUERTO}/ws/translate", max_size=None) as ws:
             while json.loads(await ws.recv()).get("type") != "capability":
                 pass
             await ws.send(json.dumps({"type": "text", "text": t}))
@@ -136,20 +138,27 @@ def principal() -> None:
     ap.add_argument("--datos", required=True)
     ap.add_argument("--salida", required=True, help="ruta sin extensión")
     ap.add_argument("--reps", type=int, default=5)
+    ap.add_argument("--puerto", type=int, default=8180, help="puerto del backend (laboratorio 8180, canónico 8080)")
+    ap.add_argument("--backend", default="p8lab-backend", help="contenedor del backend")
+    ap.add_argument("--no-vaciar", action="store_true",
+                    help="no vaciar la caché antes de medir (canónico o rama de Neon): solo se precalienta")
     a = ap.parse_args()
+    global PUERTO, BASE, BACKEND
+    PUERTO, BASE, BACKEND = a.puerto, f"http://127.0.0.1:{a.puerto}", a.backend
     fr01 = {f[0]: f[1] for f in json.loads((Path(a.datos) / "FR-01.json").read_text(encoding="utf-8"))}
     frases = [(i, ascii_(fr01[i])) for i in IDS]
     llm = a.situacion == "llm"
 
     adb("start-server")
-    adb("reverse", "tcp:8080", "tcp:8180")
+    adb("reverse", "tcp:8080", f"tcp:{PUERTO}")
     adb("shell", "am", "force-stop", APP)
     adb("logcat", "-c")
     adb("shell", "monkey", "-p", APP, "-c", "android.intent.category.LAUNCHER", "1")
     esperar(r"silencio del STT|backend session", 0, 40)
     time.sleep(10)
     if not llm:
-        vaciar_cache()
+        if not a.no_vaciar:
+            vaciar_cache()
         asyncio.run(precalentar([t for _, t in frases]))
     desde_log = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
@@ -162,7 +171,7 @@ def principal() -> None:
             filas.append({"corrida": len(filas) + 1, "rep": rep, "frase": ident, "texto_enviado_a_la_app": texto, **r})
             print(len(filas), ident, r.get("ms_envio_a_primera_sena"), r.get("ms_envio_a_ultima_sena"), flush=True)
 
-    tr = subprocess.run(["docker", "logs", "p8lab-backend", "--since", desde_log], capture_output=True, text=True, encoding="utf-8")
+    tr = subprocess.run(["docker", "logs", BACKEND, "--since", desde_log], capture_output=True, text=True, encoding="utf-8")
     fuentes = re.findall(r"'source': '(\w+)'", tr.stdout + tr.stderr)
 
     def stats(f: list[dict]) -> dict:

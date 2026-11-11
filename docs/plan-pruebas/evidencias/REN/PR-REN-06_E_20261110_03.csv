@@ -1,0 +1,71 @@
+﻿nivel;sesiones;sesion;id;esperado;transcripcion;latencia_ms;fin;ajena
+1;1;1;AU-01-001;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;496.5;done;False
+1;1;1;AU-01-007;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;555.3;done;False
+1;1;1;AU-01-013;¿Tienes hambre?;¿Tienes hambre?;444.0;done;False
+1;1;1;AU-01-019;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;506.4;done;False
+1;1;1;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;664.8;done;False
+1;1;1;AU-01-031;¿Dónde vive tu familia?;¿Dónde vive tu familia?;486.8;done;False
+1;1;1;AU-01-037;Yo nunca como mucho.;Yo nunca como mucho.;478.7;done;False
+1;1;1;AU-01-043;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;633.3;done;False
+1;1;1;AU-01-049;Por favor, come poco.;Por favor, come poco.;439.6;done;False
+1;1;1;AU-01-055;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;646.9;done;False
+2;2;1;AU-01-001;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;436.4;done;False
+2;2;1;AU-01-007;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;537.8;done;False
+2;2;1;AU-01-013;¿Tienes hambre?;¿Tienes hambre?;577.0;done;False
+2;2;1;AU-01-019;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;545.2;done;False
+2;2;1;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;594.5;done;False
+2;2;1;AU-01-031;¿Dónde vive tu familia?;¿Dónde vive tu familia?;667.0;done;False
+2;2;1;AU-01-037;Yo nunca como mucho.;Yo nunca como mucho.;408.0;done;False
+2;2;1;AU-01-043;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;763.6;done;False
+2;2;1;AU-01-049;Por favor, come poco.;Por favor, come poco.;551.8;done;False
+2;2;1;AU-01-055;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;1054.1;done;False
+2;2;2;AU-01-019;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;547.2;done;False
+2;2;2;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;740.4;done;False
+2;2;2;AU-01-031;¿Dónde vive tu familia?;¿Dónde vive tu familia?;592.4;done;False
+2;2;2;AU-01-037;Yo nunca como mucho.;Yo nunca como mucho.;533.3;done;False
+2;2;2;AU-01-043;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;667.5;done;False
+2;2;2;AU-01-049;Por favor, come poco.;Por favor, come poco.;579.8;done;False
+2;2;2;AU-01-055;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;523.7;done;False
+2;2;2;AU-01-001;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;474.2;done;False
+2;2;2;AU-01-007;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;571.3;done;False
+2;2;2;AU-01-013;¿Tienes hambre?;¿Tienes hambre?;1229.3;done;False
+3;3;1;AU-01-001;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;885.8;done;False
+3;3;1;AU-01-007;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;719.9;done;False
+3;3;1;AU-01-013;¿Tienes hambre?;¿Tienes hambre?;877.5;done;False
+3;3;1;AU-01-019;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;910.0;done;False
+3;3;1;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;1082.6;done;False
+3;3;1;AU-01-031;¿Dónde vive tu familia?;¿Dónde vive tu familia?;751.7;done;False
+3;3;1;AU-01-037;Yo nunca como mucho.;Yo nunca como mucho.;440.7;done;False
+3;3;1;AU-01-043;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;546.6;done;False
+3;3;1;AU-01-049;Por favor, come poco.;Por favor, come poco.;629.4;done;False
+3;3;1;AU-01-055;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;988.2;done;False
+3;3;2;AU-01-019;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;887.4;done;False
+3;3;2;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;689.5;done;False
+3;3;2;AU-01-031;¿Dónde vive tu familia?;¿Dónde vive tu familia?;819.7;done;False
+3;3;2;AU-01-037;Yo nunca como mucho.;Yo nunca como mucho.;743.7;done;False
+3;3;2;AU-01-043;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;772.7;done;False
+3;3;2;AU-01-049;Por favor, come poco.;Por favor, come poco.;799.2;done;False
+3;3;2;AU-01-055;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;976.4;done;False
+3;3;2;AU-01-001;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;1235.8;done;False
+3;3;2;AU-01-007;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;903.3;done;False
+3;3;2;AU-01-013;¿Tienes hambre?;¿Tienes hambre?;653.2;done;False
+3;3;3;AU-01-037;Yo nunca como mucho.;Yo nunca como mucho.;809.1;done;False
+3;3;3;AU-01-043;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;934.7;done;False
+3;3;3;AU-01-049;Por favor, come poco.;Por favor, come poco.;1082.0;done;False
+3;3;3;AU-01-055;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;738.4;done;False
+3;3;3;AU-01-001;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;482.9;done;False
+3;3;3;AU-01-007;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;617.5;done;False
+3;3;3;AU-01-013;¿Tienes hambre?;¿Tienes hambre?;540.4;done;False
+3;3;3;AU-01-019;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;874.7;done;False
+3;3;3;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;668.8;done;False
+3;3;3;AU-01-031;¿Dónde vive tu familia?;¿Dónde vive tu familia?;792.1;done;False
+4;1;1;AU-01-001;Hola, buenos días, bienvenidos.;Hola, buenos días, bienvenidos.;515.5;done;False
+4;1;1;AU-01-007;Buenas tardes. Hoy me siento más o menos.;Buenas tardes. Hoy me siento más o menos.;510.6;done;False
+4;1;1;AU-01-013;¿Tienes hambre?;¿Tienes hambre?;455.0;done;False
+4;1;1;AU-01-019;Perdón. ¿Estás triste?;Perdón, ¿estás triste?;545.1;done;False
+4;1;1;AU-01-025;Hola, ¿cómo estás? ¿Cómo te llamas?;Hola, ¿cómo estás? ¿Cómo te llamas?;623.0;done;False
+4;1;1;AU-01-031;¿Dónde vive tu familia?;¿Dónde vive tu familia?;490.5;done;False
+4;1;1;AU-01-037;Yo nunca como mucho.;Yo nunca como mucho.;487.1;done;False
+4;1;1;AU-01-043;Perdón. Mi hermano nunca está contento.;Perdón, mi hermano nunca está contento.;600.2;done;False
+4;1;1;AU-01-049;Por favor, come poco.;Por favor, come poco.;464.4;done;False
+4;1;1;AU-01-055;Con permiso. Déjame pasar, por favor.;Con permiso, déjame pasar, por favor.;579.0;done;False

@@ -1,0 +1,51 @@
+﻿rep;id;frase;situacion;oraciones;fuentes;ws_ms;total_traza_ms;segmentacion_ms;validacion_ms;llm_ms;embed_ms;fin
+1;FR-01-009;¿Ustedes trabajan en familia?;llm;1;llm;994.3;991.2;0.1;0.1;[955.1];[30.8];done
+1;FR-01-016;¿Por qué estás triste?;llm;1;llm;957.5;953.8;0.1;0.0;[894.9];[55.0];done
+1;FR-01-002;Adiós a todos. Buenas noches.;llm;2;llm/llm;1033.8;1030.3;0.2;0.1;[574.0, 862.9];[160.4, 149.6];done
+1;FR-01-011;Perdón. ¿Estás triste?;llm;2;llm/llm;4569.3;4563.4;0.1;0.1;[4423.2, 738.2];[135.0, 128.8];done
+1;FR-01-003;Mi abuelo y mi tío trabajan en familia.;llm;1;llm;1003.3;999.8;10.0;0.0;[909.6];[78.2];done
+1;FR-01-004;Estoy contento porque mi hermano está feliz.;llm;1;llm;678.8;675.9;0.1;0.0;[589.1];[84.3];done
+1;FR-01-005;Buenas tardes. Hoy me siento más o menos.;llm;2;llm/llm;1089.3;1086.3;0.2;0.1;[646.7, 899.0];[171.8, 180.8];done
+1;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;llm;3;llm/llm/llm;885.7;882.4;0.1;0.1;[488.9, 526.3, 575.8];[292.5, 282.8, 302.8];done
+1;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;llm;2;llm/llm;800.9;798.7;5.0;0.1;[564.1, 649.0];[131.9, 141.2];done
+1;FR-01-024;Se siente muy bien. La niña nunca está triste.;llm;2;llm/llm;1191.6;1188.4;0.1;0.1;[602.5, 1020.3];[156.3, 164.2];done
+2;FR-01-009;¿Ustedes trabajan en familia?;cache;1;cache;6.2;2.8;0.1;0.1;[];[];done
+2;FR-01-016;¿Por qué estás triste?;cache;1;cache;5.8;2.1;0.1;0.1;[];[];done
+2;FR-01-002;Adiós a todos. Buenas noches.;cache;2;cache/cache;7.5;3.8;0.2;0.1;[];[];done
+2;FR-01-011;Perdón. ¿Estás triste?;cache;2;cache/cache;5.5;2.6;0.1;0.1;[];[];done
+2;FR-01-003;Mi abuelo y mi tío trabajan en familia.;cache;1;cache;12.5;9.0;6.6;0.1;[];[];done
+2;FR-01-004;Estoy contento porque mi hermano está feliz.;cache;1;cache;6.2;2.5;0.2;0.0;[];[];done
+2;FR-01-005;Buenas tardes. Hoy me siento más o menos.;cache;2;cache/cache;5.0;2.7;0.1;0.1;[];[];done
+2;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;cache;3;cache/cache/cache;6.5;4.1;0.2;0.1;[];[];done
+2;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;cache;2;cache/cache;9.0;6.4;4.5;0.1;[];[];done
+2;FR-01-024;Se siente muy bien. La niña nunca está triste.;cache;2;cache/cache;4.0;1.9;0.1;0.1;[];[];done
+3;FR-01-009;¿Ustedes trabajan en familia?;cache;1;cache;3.2;1.1;0.1;0.0;[];[];done
+3;FR-01-016;¿Por qué estás triste?;cache;1;cache;3.7;1.1;0.1;0.0;[];[];done
+3;FR-01-002;Adiós a todos. Buenas noches.;cache;2;cache/cache;4.2;1.7;0.1;0.1;[];[];done
+3;FR-01-011;Perdón. ¿Estás triste?;cache;2;cache/cache;4.5;2.3;0.1;0.1;[];[];done
+3;FR-01-003;Mi abuelo y mi tío trabajan en familia.;cache;1;cache;9.0;6.2;4.8;0.1;[];[];done
+3;FR-01-004;Estoy contento porque mi hermano está feliz.;cache;1;cache;3.7;1.5;0.2;0.1;[];[];done
+3;FR-01-005;Buenas tardes. Hoy me siento más o menos.;cache;2;cache/cache;4.2;1.8;0.1;0.1;[];[];done
+3;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;cache;3;cache/cache/cache;4.9;2.5;0.1;0.1;[];[];done
+3;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;cache;2;cache/cache;8.3;6.0;4.0;0.1;[];[];done
+3;FR-01-024;Se siente muy bien. La niña nunca está triste.;cache;2;cache/cache;4.7;2.3;0.2;0.1;[];[];done
+4;FR-01-009;¿Ustedes trabajan en familia?;cache;1;cache;3.5;1.0;0.1;0.0;[];[];done
+4;FR-01-016;¿Por qué estás triste?;cache;1;cache;3.0;1.0;0.1;0.0;[];[];done
+4;FR-01-002;Adiós a todos. Buenas noches.;cache;2;cache/cache;4.2;1.8;0.1;0.1;[];[];done
+4;FR-01-011;Perdón. ¿Estás triste?;cache;2;cache/cache;5.2;2.8;0.1;0.1;[];[];done
+4;FR-01-003;Mi abuelo y mi tío trabajan en familia.;cache;1;cache;7.6;5.3;4.1;0.0;[];[];done
+4;FR-01-004;Estoy contento porque mi hermano está feliz.;cache;1;cache;3.3;1.0;0.1;0.0;[];[];done
+4;FR-01-005;Buenas tardes. Hoy me siento más o menos.;cache;2;cache/cache;4.4;1.9;0.1;0.1;[];[];done
+4;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;cache;3;cache/cache/cache;4.8;2.6;0.1;0.1;[];[];done
+4;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;cache;2;cache/cache;8.8;6.5;4.5;0.1;[];[];done
+4;FR-01-024;Se siente muy bien. La niña nunca está triste.;cache;2;cache/cache;5.2;2.7;0.1;0.1;[];[];done
+5;FR-01-009;¿Ustedes trabajan en familia?;cache;1;cache;3.4;1.1;0.1;0.0;[];[];done
+5;FR-01-016;¿Por qué estás triste?;cache;1;cache;3.2;1.0;0.1;0.0;[];[];done
+5;FR-01-002;Adiós a todos. Buenas noches.;cache;2;cache/cache;3.9;1.7;0.1;0.1;[];[];done
+5;FR-01-011;Perdón. ¿Estás triste?;cache;2;cache/cache;4.1;2.0;0.1;0.0;[];[];done
+5;FR-01-003;Mi abuelo y mi tío trabajan en familia.;cache;1;cache;10.5;8.3;5.5;0.0;[];[];done
+5;FR-01-004;Estoy contento porque mi hermano está feliz.;cache;1;cache;3.6;1.5;0.2;0.0;[];[];done
+5;FR-01-005;Buenas tardes. Hoy me siento más o menos.;cache;2;cache/cache;4.4;2.1;0.2;0.1;[];[];done
+5;FR-01-013;Hola, ¿cómo estás? ¿Cómo te llamas?;cache;3;cache/cache/cache;5.3;2.7;0.1;0.1;[];[];done
+5;FR-01-006;Gracias a todos. Los niños y las niñas comen con gusto.;cache;2;cache/cache;9.0;6.6;4.2;0.1;[];[];done
+5;FR-01-024;Se siente muy bien. La niña nunca está triste.;cache;2;cache/cache;7.0;4.0;0.2;0.2;[];[];done
