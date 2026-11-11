@@ -87,15 +87,15 @@ Cualquier sesión que toque el pipeline tiene que mirar los hermanos antes de de
 
 | Repo | Qué es | Rama | Puerto |
 |---|---|---|---|
-| `../sign-ai-backend` | FastAPI: WS con el cliente, NLP de glosas, catálogo, caché semántico, Neon | `develop` | 8080 |
-| `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 |
+| `../sign-ai-backend` | FastAPI: WS con el cliente, NLP de glosas, catálogo, caché semántico, Neon | `main` | 8080 |
+| `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `main` | 8000 |
 | `../sign-ai-docs` | **Los documentos de la tesis**: los formales en `latex/` (SRS, SDD, memoria, plan de pruebas, SPMP) y los borradores en `borradores/`. Se compilan con `make` | `main` | — |
 | `../signai-avatar` | Producción de las animaciones (Cascadeur): versiona los **GLB finales** de Juan y Pauline, 200 clips cada uno (50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada | `dev` | — |
 
 Reglas por repo:
 
 - **Acá se commitea directo a `main`**, sin PR ni rama de feature. No pidas confirmación.
-- **En los hermanos, nada de commits sin que el owner lo pida** (PR contra `develop`).
+- **En los hermanos, nada de commits sin que el owner lo pida** (PR contra `main`).
   Cada uno tiene su documentación: el backend tiene `CLAUDE.md` (leelo antes de
   tocarlo: código en inglés sin excepción, nombres de clases iguales a los del SDD, y
   nunca commitear), el STT tiene `README.md`.
@@ -221,26 +221,31 @@ cifra sube por construcción y **no es comparable**. Falta remedir con las 28 fr
 ## Git
 
 Acá: commit y push directo a `main`, sin PR ni rama de feature. **No abrir PRs ni pedir
-confirmación para commitear.** Los hermanos usan PR contra `develop` y no se commitean sin
-que el owner lo pida.
+confirmación para commitear.** Los hermanos tampoco se commitean sin que el owner lo pida.
 
-**El flujo de los hermanos: PR contra `develop`, y `develop` contra `main`.** Al fusionar un PR
-en `develop`, hay que llevar `develop` a `main` (y `develop` tiene que quedar igual a `main`), o
-larama de integración se atrasa y el PR siguiente se lleva el repo entero adentro. El
-2026-11-10 `develop` estaba **22 commits atrás de `main`** en el backend, 9 en los documentos y
-5 en el STT: en los tres casos `develop` era un ancestro de `main`, sin commits propios, así
-que se igualó con un fast-forward (`git push origin origin/main:develop`), que no pierde nada.
-Los cuatro repos quedaron con `main` y `develop` en el mismo commit.
+**Todo el trabajo va a `main`, en los cuatro repos.** El owner decidió el **2026-11-11**
+que se abandona la rama `develop`: **no existe más** en ninguno de ellos y **no se vuelve a
+crear**. Las ramas `develop` locales se borraron (eran ancestros de `main`, sin commits
+propios, así que no se perdió nada) y las remotas quedaron atrás de `main`:
 
-**`develop` existe acá desde 2026-10-14**, creado como copia exacta de `main` (`4221303`),
-para dejar los tres repos con la misma rama de integración. Por ahora **no cambia el
-flujo**: este repo sigue por `main` directo sin PR. Nadie la mergea ni la borra sin que lo
-pidas. La copia se volvió a igualar con `main` el 2026-11-10 (venía 113 commits atrás).
+| Repo | `origin/main` | `origin/develop` (obsoleta) |
+|---|---|---|
+| `sign-ai-android` | `704e0ac` | `704e0ac` (igual, se igualó ese día) |
+| `sign-ai-backend` | `301e721` | `301e721` (igual) |
+| `sign-ai-stt` | `4824979` | `4824979` (igual) |
+| `sign-ai-docs` | `401b7d1` | `8ff4fd2` (11 commits atrás) |
+
+Las ramas remotas `origin/develop` **no se borraron**: son historia y borrarlas en el remoto
+de los hermanos es cosa del owner. **No las uses ni las Actualices**: no son un sitio donde
+trabajar.
+
+`../signai-avatar` queda aparte: su rama de trabajo es `dev` y ahí **no se toca nada** por
+decisión del owner.
 
 **El flujo por oraciones ya está en `main`** (2026-10-21). La rama `flujo-oraciones` fue el
 nuevo `main`: un fast-forward (`587ed04` → `2d8c757`) con el merge de `origin/main` que ya
-traía. Se trabaja sobre `main`. `develop` quedó como copia exacta de `main`. El punto de
-retorno es `respaldo/main-2026-10-21`, que apunta al `main` viejo y está en el remoto.
+traía. Se trabaja sobre `main`. El punto de retorno es `respaldo/main-2026-10-21`, que
+apunta al `main` viejo y está en el remoto.
 
 La rama `tiempo-real` **ya no existe**: el trabajo de tiempo real de los tres repos entró
 por fast-forward a `main` acá y a `develop` en los hermanos, y la rama se borró local y

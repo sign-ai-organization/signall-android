@@ -19,8 +19,8 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
 
 | Repo | Qué es | Rama | Puerto | Se levanta con |
 |---|---|---|---|---|
-| `../sign-ai-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `develop` | 8080 | `docker compose up --build` (levanta **también** el STT) |
-| `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `develop` | 8000 | incluido en el compose del backend, o solo desde su repo |
+| `../sign-ai-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `main` | 8080 | `docker compose up --build` (levanta **también** el STT) |
+| `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `main` | 8000 | incluido en el compose del backend, o solo desde su repo |
 | `../sign-ai-docs` | **Los documentos de la tesis**: los formales en LaTeX (SRS, SDD, memoria, plan de pruebas, SPMP), los borradores en Markdown y los diagramas | `main` | — | `make` (compila los PDF) |
 | `../signai-avatar` | Producción de las animaciones con Cascadeur; versiona en `models/` los GLB finales de Juan y Pauline (200 clips cada uno: 50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada desde 2026-09-19 | `dev` | — | — |
 
@@ -34,7 +34,7 @@ sin que el compilador avise. Ese es el motivo de que este archivo exista.
 **Leé `CLAUDE.md` (147 líneas) antes de tocarlo.** Tiene las reglas que no están
 acá: código y comentarios **en inglés sin excepción**, los nombres de clases tienen que
 coincidir con los del SDD, y **nunca hacer `git commit` ni `git push`** — se sugiere el
-mensaje y lo manda el owner, por PR contra `develop`.
+mensaje y lo manda el owner, por PR contra `main`.
 
 - **Contrato con la app**: `docs/android-integration.md` (423 líneas) es la fuente de
   verdad del WebSocket `/ws/translate`: qué campos manda cada frame, qué espera la
@@ -62,7 +62,7 @@ mensaje y lo manda el owner, por PR contra `develop`.
 
 Sin AGENTS.md ni CLAUDE.md: su documentación es el `README.md` (235 líneas), muy
 completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contra
-`develop`**.
+`main`**.
 
 - **Protocolo**: el cliente manda frames **binarios** PCM16LE mono 16 kHz sin cabecera
   WAV (el servidor los reagrupa en 30 ms para el VAD) y el STT responde con **JSON de
@@ -96,10 +96,10 @@ versiones-pasadas/           ← historia, no se edita
 - **Se compila con `make`**: `make` (los cinco), `make srs` (uno), `make watch DOC=srs`
   (recompila al guardar). Los PDF y auxiliares están en `.gitignore` y se regeneran. Un
   cambio en un documento **no está terminado hasta que compila**.
-- **Ese repo trabaja con `develop` y PR contra `main`**, igual que el backend y el STT: los
-  commits llegan a `main` por *pull request* desde `develop`. Un commit directo en `main`
-  local queda por detrás en cuanto el equipo mergea, así que **antes de empezar hay que
-  hacer `git fetch`**: el 2026-11-04 la copia local estaba 20 commits atrás.
+- **Ese repo trabaja con `main`**: los commits llegan a `main` por *pull request*, y desde
+  el 2026-11-11 no hay rama `develop` — todo el trabajo va a `main`. Un commit directo en
+  `main` local queda por detrás en cuanto el equipo mergea, así que **antes de empezar hay
+  que hacer `git fetch`**: el 2026-11-04 la copia local estaba 20 commits atrás.
 - **El control de cambios es git**: `git diff` dice qué se tocó y `git log` cuándo.
 - **`cambios/requerimientos.md` es la bandeja de cambios pendientes**, con estados
   **Propuesto / Acordado / Hecho**: ahí caen las cosas que la app ya hace y el documento
@@ -154,7 +154,7 @@ empaquetan: `assets/web/signs/` se borró el 2026-10-22—. `../material-3d/GLB 
 2026-10-26. No mezclar los pipelines ni copiar scripts entre ellos.
 
 **Regla de git**: como todo hermano, no se commitea ahí sin que el owner lo pida (PR contra
-`develop`). Esta app solo lee `models/`.
+`main`). Esta app solo lee `models/`.
 
 ## Carpetas hermanas que **no** son repositorios
 
