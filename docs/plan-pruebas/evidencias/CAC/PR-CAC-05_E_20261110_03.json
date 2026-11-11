@@ -1,0 +1,32 @@
+{
+  "con_guardado": {
+    "n": 8,
+    "p50": 754.2,
+    "p95": 765.6,
+    "max": 768.8
+  },
+  "sin_guardado": {
+    "n": 8,
+    "p50": 746.1,
+    "p95": 755.7,
+    "max": 758.1
+  },
+  "diferencia_p50_ms": 8.1,
+  "relacion_p50": 1.011,
+  "ms_hasta_guardada": {
+    "n": 8,
+    "p50": 45.8,
+    "p95": 88.3,
+    "max": 94.1
+  },
+  "filas_guardadas": 8,
+  "filas_esperadas": 8,
+  "filas_cache_al_final": 9,
+  "llamadas_al_llm": {
+    "modo": "normal",
+    "normal": 30,
+    "vacio": 27
+  },
+  "errores": 0,
+  "invertido": false
+}

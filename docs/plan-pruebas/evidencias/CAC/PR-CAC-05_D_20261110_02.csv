@@ -1,0 +1,17 @@
+﻿condicion;id;frase;respuesta_ms;fin;ms_hasta_guardada
+con_guardado;FR-01-003;Mi abuelo y mi tío trabajan en familia.;755.2;done;50.5
+sin_guardado;FR-01-001;Hola, buenos días, bienvenidos.;744.2;done;
+con_guardado;FR-01-007;¿Tienes hambre?;751.9;done;44.2
+sin_guardado;FR-01-004;Estoy contento porque mi hermano está feliz.;743.1;done;
+con_guardado;FR-01-009;¿Ustedes trabajan en familia?;744.7;done;83.9
+sin_guardado;FR-01-008;¿Estás bien?;743.6;done;
+con_guardado;FR-01-014;¿Dónde vive tu familia?;765.5;done;45.6
+sin_guardado;FR-01-012;¿Tu hermano está aburrido?;748.5;done;
+con_guardado;FR-01-017;¿Cuándo comen ustedes?;751.1;done;47.7
+sin_guardado;FR-01-016;¿Por qué estás triste?;745.5;done;
+con_guardado;FR-01-020;Mi abuelo nunca trabaja.;754.0;done;80.3
+sin_guardado;FR-01-019;Yo nunca como mucho.;753.7;done;
+con_guardado;FR-01-022;Ustedes nunca se sienten mal.;747.6;done;80.2
+sin_guardado;FR-01-021;Mi tío nunca está aburrido.;744.9;done;
+con_guardado;FR-01-027;Niños, trabajen todos.;749.4;done;44.3
+sin_guardado;FR-01-025;Por favor, come poco.;750.5;done;
