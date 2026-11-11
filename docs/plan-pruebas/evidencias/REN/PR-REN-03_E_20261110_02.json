@@ -1,0 +1,49 @@
+{
+  "situacion": "cache",
+  "todas": {
+    "ms_envio_a_primera_sena": {
+      "n": 50,
+      "p50": 203.0,
+      "p95": 323.6,
+      "max": 410
+    },
+    "ms_envio_a_ultima_sena": {
+      "n": 50,
+      "p50": 7699.0,
+      "p95": 8924.0,
+      "max": 9021
+    },
+    "ms_representacion": {
+      "n": 50,
+      "p50": 7584.5,
+      "p95": 8804.1,
+      "max": 8909
+    }
+  },
+  "sin_rep1": {
+    "ms_envio_a_primera_sena": {
+      "n": 40,
+      "p50": 198.5,
+      "p95": 247.0,
+      "max": 263
+    },
+    "ms_envio_a_ultima_sena": {
+      "n": 40,
+      "p50": 7635.0,
+      "p95": 8894.3,
+      "max": 9021
+    },
+    "ms_representacion": {
+      "n": 40,
+      "p50": 7536.0,
+      "p95": 8803.5,
+      "max": 8909
+    }
+  },
+  "corridas": 50,
+  "incompletas": 0,
+  "fuentes_en_el_backend": {
+    "cache": 75
+  },
+  "nota": "Tiempos del teléfono (SignAiMetrics/SignAiState, logcat -v epoch, reloj del teléfono). ultima seña = de «texto ya enviado» a «representado». Texto escrito con adb input text, en ASCII."
+}
