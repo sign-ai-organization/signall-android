@@ -285,7 +285,7 @@ plan ni al libro: las fichas mandan y el libro es la fuente de los resultados.
 | Arnés de la ronda | `docs/plan-pruebas/arnes/` |
 | Bitácora de sesión | `openspec/sessions/2026-11-10-ronda-p1-17-pendientes.md` |
 | Resultados en el formato que lee el libro | `docs/plan-pruebas/resultados-p1-2026-11-10/PR-*.json` |
-| Libro de resultados | `resultados-consolidados.xlsx`, en dos rondas: diagnóstica (06/11, 74 filas) y evaluación (10/11, 43 filas: 18 del carril 1 y 25 del carril 2) |
+| Libro de resultados | `resultados-consolidados-p1.xlsx`, en dos rondas: diagnóstica (06/11, 74 filas) y evaluación (10/11, 18 filas, solo del carril 1). El libro general, con las filas de todos los carriles, es `resultados-consolidados.xlsx` y no se toca |
 
 ## 8. Cómo se reprodujo
 
@@ -426,27 +426,31 @@ interfaz, 0 saltos**. **PR-TRA-01 pasa.** Evidencia: `evidencias/TRA/PR-TRA-01_E
 El SDD no nombra esta función ni en la narrativa ni en los diagramas, así que no hubo que
 tocarlo; el cambio quedó anotado en `docs/sdd-changes.md` del backend.
 
-### 10.3 El libro
+### 10.3 Los dos libros
 
 El 10/11 el carril 2 dejó sus 25 filas de la ronda de evaluación en
 `resultados-consolidados.xlsx` (commit `e89073e`), sobre el libro de dos rondas. Como el Excel
-es un archivo binario, dos carriles sobre el mismo archivo no se pueden fusionar en el historial
-sin perder trabajo. La forma de no pisarse es tomar siempre la versión que está en el remoto y
-escribir encima las filas propias.
+es un archivo binario, dos carriles sobre el mismo archivo no se fusionan en el historial sin
+perder trabajo, y la instrucción es no tocar lo del otro carril.
 
-El libro quedó con **117 filas**: 74 de la ronda diagnóstica y 43 de la de evaluación (18 del
-carril 1 y 25 del carril 2). Las seis filas del carril 1 que cambiaron de estado con los
-umbrales de §10.1 y con TRA-01 (§10.2) se escribieron encima de la versión del carril 2, sin
-tocar ninguna de las suyas.
+Quedan entonces **dos libros**, y cada uno es de un carril:
+
+| Archivo | Qué trae | De quién es |
+|---|---|---|
+| `resultados-consolidados.xlsx` | 74 de la ronda diagnóstica y 43 de la de evaluación (18 del carril 1 con los estados de la mañana y 25 del carril 2) | El general. **No se toca**: queda como lo dejó el carril 2 |
+| `resultados-consolidados-p1.xlsx` | 74 de la ronda diagnóstica y 18 de la de evaluación, con los umbrales ya fijados (§10.1) y TRA-01 en Pasa (§10.2) | Solo del carril 1 |
+
+El libro del carril 1 queda así:
 
 | Ronda | Pruebas | Pasa | Falla | Se reporta | Bloqueada | Sin ejecutar |
 |---|---|---|---|---|---|---|
 | Diagnóstica (06/11) | 74 | 17 | 6 | 27 | 0 | 24 |
-| De evaluación (10/11) | 43 | 27 | 0 | 16 | 0 | 0 |
+| De evaluación (10/11) | 18 | 7 | 0 | 11 | 0 | 0 |
 
-La ronda de evaluación del carril 1 queda así: **18 pruebas, 7 Pasa, 0 Falla y 11 Se reporta**
-(antes eran 3 Pasa, 1 Falla y 14 Se reporta). Las 25 del carril 2 seunalcan como las dejó el
-carril 2.
+La ronda de evaluación del carril 1 pasa de 3 Pasa, 1 Falla y 14 Se reporta a **7 Pasa, 0 Falla
+y 11 Se reporta**.
+
+Los dos libros se juntan en uno solo cuando terminen los demás carriles.
 
 ### 10.4 Dónde quedó cada cosa
 
@@ -454,4 +458,4 @@ carril 2.
 |---|---|
 | `sign-ai-docs` | Los criterios de las cinco fichas en el plan de pruebas y los tres valores del SRS (RF-NLP-04, RF-NLP-06 y RNF-DES-09), con los borradores y el registro de cambios alineados. Commit `b23692c`, directo a `main` |
 | `sign-ai-backend` | `normalize_gloss` en `app/domain/gloss_text.py`, el umbral 0,04 por defecto y la migración 007. Rama `fix/glosado-hue-cac-llm-p1`, PR #13 contra `develop`, ya fusionado en `develop` y llevado a `main` |
-| `sign-ai-android` | El libro consolidado con las filas de todos los carriles, la evidencia de TRA-01 y este informe |
+| `sign-ai-android` | El libro del carril 1 (`resultados-consolidados-p1.xlsx`), la evidencia de TRA-01 y este informe |
