@@ -1,0 +1,2 @@
+11-10 17:08:20.679 I/SignAiState(15004): cambio de avatar: juan -> pauline
+11-10 17:08:22.302 I/SignAiState(15004): avatar listo: pauline en 1624 ms

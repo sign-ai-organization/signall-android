@@ -1,0 +1,4 @@
+Velocidad guardada 80. Frase FR-01-001. Representación 4.2 s. Intervalos [1.3, 1.26]
+11-10 17:07:55.875 I/SignAiState(15004): signStart: oración→avatar 29 ms (seña 0, reloj JS 566697 ms)
+11-10 17:07:57.174 I/SignAiState(15004): signStart: oración→avatar 1328 ms (seña 1, reloj JS 567978 ms)
+11-10 17:07:58.432 I/SignAiState(15004): signStart: oración→avatar 2587 ms (seña 2, reloj JS 569247 ms)

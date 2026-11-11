@@ -1,0 +1,34 @@
+PR-INT-05 · ronda diagnóstica · 10/11/2026 · Samsung Galaxy A54 (SM-A546E), Android 16
+
+CORTE (antes de abrir la app)
+  settings get global airplane_mode_on         -> 1 (modo avión activado con `cmd connectivity airplane-mode enable`)
+  svc wifi disable / svc data disable
+  dumpsys connectivity                         -> Active default network: none
+  ping -c1 8.8.8.8 (desde el teléfono)         -> connect: Network is unreachable
+  adb reverse --remove tcp:8080 ; adb reverse --list -> vacío (sin túnel al backend)
+  pm clear com.signai.webview + pm grant RECORD_AUDIO (sin caché del WebView)
+
+APERTURA SIN CONEXIÓN (pid de la app: 19519 en todas las lecturas)
+  t+3 s   : pantalla de carga (40 %), sin controles
+  t+10 s  : indicador «Desconectado» (punto rojo); campo, micrófono, historial, Traducir y TR presentes; sin avatar
+  t+30 s  : igual, con «Cargando...» arriba a la izquierda; el avatar no aparece
+
+REINTENTOS DE CONEXIÓN (logcat)
+  SignAiNet: session failed: Failed to connect to /127.0.0.1:8080   -> cada 5 s (17:23:40, :45, :50, :55 ...)
+  SignAiState: sesión perdida: interrumpiendo=false cancelando=false micrófono=Off
+
+FRASE ESCRITA («Por favor, come poco.», FR-01-025)
+  Traducir se ve habilitado (azul) con la frase en el campo. Al tocarlo: la frase se queda en el campo,
+  el estado sigue en «Desconectado» y no aparece ningún aviso nuevo; el log no registra envío ni fallo.
+  Causa en el código: requestTranslation() sale sin hacer nada si playbackState == Desconectado
+  (MainScreenState.kt, alrededor de la línea 1560).
+
+MICRÓFONO («Entrada por voz»)
+  El botón se ve apagado. Al tocarlo no cambia nada y el log no registra nada.
+  (La parte hablada de la ficha no se pudo ejecutar: no hay forma de hablarle a un micrófono bloqueado.)
+
+RESTABLECER LA RED (modo avión desactivado, wifi y datos activados, adb reverse tcp:8080 tcp:8080)
+  Tras ~12 s : el indicador vuelve a «Inactivo» (la app se reconectó sola); «Cargando...» sigue; sin avatar
+  Traducir (misma app, sin reiniciar): Procesando (2,5 s) -> Reproduciendo (5,3 s); 1 oración, 3 glosas,
+  duración 1719 ms. El avatar sigue sin aparecer.
+  force-stop + reabrir con red: avatar y «Inactivo» en 8 s (pid 23755).

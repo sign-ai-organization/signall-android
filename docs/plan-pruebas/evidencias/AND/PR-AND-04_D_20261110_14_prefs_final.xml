@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="freecam" value="false" />
+    <boolean name="large" value="false" />
+    <boolean name="bg" value="false" />
+    <boolean name="grid_default_off" value="true" />
+    <boolean name="reduce_motion" value="false" />
+    <string name="history">[omitido]</string>
+    <boolean name="bold" value="false" />
+    <int name="speed" value="50" />
+    <boolean name="dark_theme" value="true" />
+    <string name="character">Juan</string>
+    <boolean name="demo_sign_fallback" value="false" />
+    <boolean name="grid" value="false" />
+    <boolean name="contrast" value="false" />
+    <int name="interface_size" value="50" />
+</map>

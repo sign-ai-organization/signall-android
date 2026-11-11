@@ -1,0 +1,12 @@
+17:57:36 R2 batería inicio: {'nivel': '73', 'carga_uAh': '3655000', 'usb': 'false', 'ac': 'false', 'temp_dC': '387'}
+17:57:37 R2 pm clear: Success | permiso: ok
+17:58:16 R2 app lista, PSS 585207 kB
+17:58:18 R2 SECUENCIA inicia {'nivel': '72', 'carga_uAh': '3650000', 'usb': 'false', 'ac': 'false', 'temp_dC': '388'}
+17:59:10 R2   frase 5/30 9.9s intentos 1
+18:00:00 R2   frase 10/30 13.8s intentos 1
+18:00:50 R2   frase 15/30 9.9s intentos 1
+18:01:41 R2   frase 20/30 8.3s intentos 1
+18:02:37 R2   frase 25/30 7.7s intentos 1
+18:03:32 R2   frase 30/30 14.2s intentos 1
+18:03:34 R2 SECUENCIA termina {'nivel': '71', 'carga_uAh': '3560000', 'usb': 'false', 'ac': 'false', 'temp_dC': '388'} 315 s
+18:04:47 R2 RESUMEN {"repeticion": 2, "segundos": 315, "gfx_secuencia": {"cuadros": 21253, "janky_pct": 42.81, "p50": 38, "p90": 57, "p95": 65, "p99": 73, "medio_ms": 39.5, "sobre_16_7_pct": 96.7, "sobre_33_3_pct": 67.7, "max_ms": 125}, "gfx_reposo_60s": {"cuadros": 4972, "janky_pct": 35.34, "p50": 31, "p90": 42, "p95": 46, "p99": 53, "medio_ms": 31.2, "sobre_16_7_pct": 96.8, "sobre_33_3_pct": 38.1, "max_ms": 65}, "transicion_ms": {"n": 82, "p50": 2030, "p95": 2132, "min": 1316, "max": 2708}, "hasta_inactivo_s": {"p50": 9.0, "p95": 14.0, "max": 14.3, "con_error_o_reintento": []}, "representacion_ms": {"p50": 6892, "p95": 10597, "max": 12889, "n": 28}, "pss_kB": {"min": 603479, "max": 666857, "inicio": 642771, "final": 659349}, "bateria": {"mAh": 90.0, "mA_prom": 1029, "nivel": ["72", "71"], "temp_C": [38.8, 38.8], "uid_estimado_mAh": 51.0}}
