@@ -1,0 +1,84 @@
+{
+  "fases": {
+    "reposo": {
+      "duracion_s": 30.0,
+      "gpu_uso": {
+        "media": 3.0,
+        "max": 7.0,
+        "n": 28
+      },
+      "gpu_mem_mib": {
+        "media": 3207.0,
+        "max": 3207.0,
+        "n": 28
+      },
+      "p8lab-backend": {
+        "cpu_pct": {
+          "media": 0.2,
+          "max": 0.5,
+          "n": 15
+        },
+        "mem_mib": {
+          "media": 1272.8,
+          "max": 1272.83,
+          "n": 15
+        }
+      },
+      "p8lab-stt": {
+        "cpu_pct": {
+          "media": 0.3,
+          "max": 0.51,
+          "n": 15
+        },
+        "mem_mib": {
+          "media": 868.2,
+          "max": 868.2,
+          "n": 15
+        }
+      }
+    },
+    "voz": {
+      "duracion_s": 55.7,
+      "gpu_uso": {
+        "media": 28.4,
+        "max": 100.0,
+        "n": 52
+      },
+      "gpu_mem_mib": {
+        "media": 3262.4,
+        "max": 3367.0,
+        "n": 52
+      },
+      "p8lab-backend": {
+        "cpu_pct": {
+          "media": 2.3,
+          "max": 3.84,
+          "n": 28
+        },
+        "mem_mib": {
+          "media": 1272.6,
+          "max": 1272.83,
+          "n": 28
+        }
+      },
+      "p8lab-stt": {
+        "cpu_pct": {
+          "media": 73.8,
+          "max": 173.27,
+          "n": 28
+        },
+        "mem_mib": {
+          "media": 867.9,
+          "max": 868.2,
+          "n": 28
+        }
+      }
+    }
+  },
+  "transcripcion_10_audios_gpu": {
+    "n": 10,
+    "p50": 465.0,
+    "p95": 615.6,
+    "max": 675.0
+  }
+}
