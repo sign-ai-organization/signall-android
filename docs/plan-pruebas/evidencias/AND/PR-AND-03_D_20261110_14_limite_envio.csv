@@ -1,0 +1,10 @@
+orden,id,frase,intentos,segundos,estados_vistos
+14,FR-01-002,Adiós a todos. Buenas noches.,1,8.5,Procesando > Reproduciendo > Inactivo
+15,FR-01-004,Estoy contento porque mi hermano está feliz.,1,11.1,Procesando > Reproduciendo > Inactivo
+16,FR-01-005,Buenas tardes. Hoy me siento más o menos.,1,10.8,Procesando > Reproduciendo > Inactivo
+17,FR-01-006,Gracias a todos. Los niños y las niñas comen con gusto.,1,13.2,Procesando > Reproduciendo > Inactivo
+18,FR-01-008,¿Estás bien?,1,6.2,Procesando > Reproduciendo > Inactivo
+19,FR-01-009,¿Ustedes trabajan en familia?,1,7.5,Procesando > Reproduciendo > Inactivo
+20,FR-01-011,Perdón. ¿Estás triste?,1,8.5,Procesando > Reproduciendo > Inactivo
+21,FR-01-012,¿Tu hermano está aburrido?,1,7.6,Procesando > Reproduciendo > Inactivo
+22,FR-01-015,La mujer es juiciosa. ¿Quién es el hombre?,1,10.6,Procesando > Reproduciendo > Inactivo

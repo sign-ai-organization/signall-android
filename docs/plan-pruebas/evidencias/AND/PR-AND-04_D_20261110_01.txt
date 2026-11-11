@@ -1,0 +1,14 @@
+         1794348535.894 17350 17350 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Hola, buenos días, bienvenidos."
+         1794348535.898 17350 17377 D SignAiNet: segment 0/1 turn=1 -> HOLA,BUENOS DIAS,BIENVENIDO
+         1794348535.950 17350 17350 I SignAiMetrics: frase #1: 57ms, 1 oraciones, 3 glosas (p50=57ms p95=57ms max=57ms n=1)
+         1794348535.950 17350 17350 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=57ms p95=57ms max=57ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1794348536.072 17350 17350 I SignAiState: signStart: oración→avatar 125 ms (seña 0, reloj JS 15432 ms)
+         1794348536.072 17350 17350 I SignAiMetrics: oración→avatar: 125 ms (p50=125ms p95=125ms max=125ms n=1)
+         1794348536.072 17350 17350 I SignAiMetrics: envío→primera seña: 180 ms (p50=180ms p95=180ms max=180ms n=1)
+         1794348537.407 17350 17350 I SignAiState: signStart: oración→avatar 1460 ms (seña 1, reloj JS 16851 ms)
+         1794348537.426 17350 17350 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1794348538.862 17350 17350 I SignAiState: signStart: oración→avatar 2914 ms (seña 2, reloj JS 18310 ms)
+         1794348540.539 17350 17350 I SignAiMetrics: representado: 3 señas en 4590ms (p50=4590ms p95=4590ms max=4590ms n=1)
+         1794348568.849 17350 17350 I SignAiState: cambio de avatar: pauline -> juan
+         1794348570.583 17350 17350 I SignAiState: avatar listo: juan en 1735 ms
+         1794348570.583 17350 17350 I SignAiState: aviso (no va al indicador): Avatar cargado.

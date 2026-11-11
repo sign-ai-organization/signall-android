@@ -1,0 +1,6 @@
+Cambio de 50 a 80 entre 17:05:07 y 17:05:14, con la frase ya representándose.
+11-10 17:05:04.464 I/SignAiState(15004): signStart: oración→avatar 22 ms (seña 0, reloj JS 395292 ms)
+11-10 17:05:06.829 I/SignAiState(15004): signStart: oración→avatar 2388 ms (seña 1, reloj JS 397641 ms)
+11-10 17:05:08.843 I/SignAiState(15004): signStart: oración→avatar 4402 ms (seña 2, reloj JS 399675 ms)
+11-10 17:05:10.878 I/SignAiState(15004): signStart: oración→avatar 6437 ms (seña 3, reloj JS 401699 ms)
+11-10 17:05:12.920 I/SignAiState(15004): signStart: oración→avatar 8479 ms (seña 4, reloj JS 403734 ms)

@@ -1,0 +1,14 @@
+orden,id,frase,texto_exacto_en_campo,segundos_hasta_inactivo,estados_vistos
+1,FR-01-001,"Hola, buenos días, bienvenidos.",True,7.2,Reproduciendo > Inactivo
+2,FR-01-003,Mi abuelo y mi tío trabajan en familia.,True,10.8,Procesando > Reproduciendo > Inactivo
+3,FR-01-007,¿Tienes hambre?,True,5.3,Reproduciendo > Inactivo
+4,FR-01-010,Tu hermano está triste. ¿Se siente mal?,True,12.9,Procesando > Error > Inactivo
+5,FR-01-013,"Hola, ¿cómo estás? ¿Cómo te llamas?",True,13.8,Procesando > Reproduciendo > Inactivo
+6,FR-01-014,¿Dónde vive tu familia?,True,10.1,Procesando > Reproduciendo > Inactivo
+7,FR-01-019,Yo nunca como mucho.,True,10.0,Procesando > Reproduciendo > Inactivo
+8,FR-01-021,Mi tío nunca está aburrido.,True,8.8,Procesando > Reproduciendo > Inactivo
+9,FR-01-024,Se siente muy bien. La niña nunca está triste.,True,15.8,Procesando > Reproduciendo > [notificación del sistema, ajena a la app] > Reproduciendo > Inactivo
+10,FR-01-026,"Con permiso. Déjame pasar, por favor.",True,6.3,Procesando > Reproduciendo > Inactivo
+11,FR-01-028,"Hermano, vive con el abuelo. Trabaja con el tío.",True,11.9,Procesando > Reproduciendo > Inactivo
+12,FR-01-029,"Hola, familia, siéntanse bienvenidos.",True,10.5,Procesando > Reproduciendo > Inactivo
+13,FR-01-010 (reintento),Tu hermano está triste. ¿Se siente mal?,True,15.1,Procesando > Reproduciendo > Inactivo

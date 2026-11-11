@@ -1,0 +1,26 @@
+17:34:35 batería al inicio: {'nivel': '81', 'carga_uAh': '4065000', 'usb': 'false', 'ac': 'false', 'temp_dC': '378'}
+17:34:35 reverse: host-9 tcp:8080 tcp:8080
+17:34:36 pm clear: Success | permiso: ok
+17:34:45 app lista: Inactivo | pid 25305
+17:35:15 asentada 30 s | PSS inicial: 643547 kB
+17:35:15 LÍNEA BASE inicia {'nivel': '80', 'carga_uAh': '4045000', 'usb': 'false', 'ac': 'false', 'temp_dC': '379'}
+17:35:45   base 30 s {'nivel': '80', 'carga_uAh': '4035000', 'usb': 'false', 'ac': 'false', 'temp_dC': '379'}
+17:36:16   base 60 s {'nivel': '80', 'carga_uAh': '4025000', 'usb': 'false', 'ac': 'false', 'temp_dC': '380'}
+17:36:46   base 90 s {'nivel': '80', 'carga_uAh': '4015000', 'usb': 'false', 'ac': 'false', 'temp_dC': '380'}
+17:37:16   base 121 s {'nivel': '80', 'carga_uAh': '4005000', 'usb': 'false', 'ac': 'false', 'temp_dC': '381'}
+17:37:47   base 151 s {'nivel': '79', 'carga_uAh': '4000000', 'usb': 'false', 'ac': 'false', 'temp_dC': '381'}
+17:38:17   base 181 s {'nivel': '79', 'carga_uAh': '3985000', 'usb': 'false', 'ac': 'false', 'temp_dC': '381'}
+17:38:47   base 212 s {'nivel': '79', 'carga_uAh': '3975000', 'usb': 'false', 'ac': 'false', 'temp_dC': '382'}
+17:39:17   base 242 s {'nivel': '79', 'carga_uAh': '3965000', 'usb': 'false', 'ac': 'false', 'temp_dC': '382'}
+17:39:47   base 272 s {'nivel': '79', 'carga_uAh': '3960000', 'usb': 'false', 'ac': 'false', 'temp_dC': '382'}
+17:40:17   base 302 s {'nivel': '78', 'carga_uAh': '3950000', 'usb': 'false', 'ac': 'false', 'temp_dC': '383'}
+17:40:18 LÍNEA BASE termina {'nivel': '78', 'carga_uAh': '3950000', 'usb': 'false', 'ac': 'false', 'temp_dC': '383'}
+17:40:20 PRUEBA inicia {'nivel': '78', 'carga_uAh': '3950000', 'usb': 'false', 'ac': 'false', 'temp_dC': '383'}
+17:41:13   frase 5/30 | 10.0s | intentos 1 | PSS 611079 kB
+17:42:04   frase 10/30 | 14.0s | intentos 1 | PSS 611240 kB
+17:42:54   frase 15/30 | 9.9s | intentos 1 | PSS 667362 kB
+17:43:49   frase 20/30 | 8.9s | intentos 1 | PSS 624037 kB
+17:44:44   frase 25/30 | 7.8s | intentos 1 | PSS 662280 kB
+17:45:41   frase 30/30 | 15.4s | intentos 1 | PSS 626577 kB
+17:45:43 PRUEBA termina {'nivel': '77', 'carga_uAh': '3860000', 'usb': 'false', 'ac': 'false', 'temp_dC': '386'} | total 323 s
+17:45:59 TERMINADO: PSS {'inicio': 650196, 'frase_1': 603736, 'frase_10': 601177, 'frase_20': 657717, 'frase_30': 610393} | base 4045000 -> 3950000 | prueba 3950000 -> 3860000

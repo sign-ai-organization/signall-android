@@ -1,0 +1,9 @@
+         1794349607.556 19519 19519 I SignAiState: texto ya enviado: retenido 1500ms, Traducir bloqueado. "Por favor, come poco."
+         1794349609.058 19519 19519 I SignAiState: texto retenido borrado: Traducir y el campo vuelven a estar disponibles
+         1794349609.270 19519 19578 D SignAiNet: segment 0/1 turn=1 -> POR FAVOR,COMER,POCO
+         1794349609.275 19519 19519 I SignAiMetrics: frase #1: 1719ms, 1 oraciones, 3 glosas (p50=1719ms p95=1719ms max=1719ms n=1)
+         1794349609.275 19519 19519 I SignAiState: resumen: frases=1 oraciones=1 glosas=3 sin_seña=0 dictado_frases=0 dictado_palabras=0 duracion_frase=p50=1719ms p95=1719ms max=1719ms n=1 duracion_representada=n/a oracion_a_avatar=n/a envio_a_primera_sena=n/a
+         1794349637.360 23755 23755 I SignAiState: backend session starting
+         1794349637.379 23755 23783 I SignAiNet: sesión abierta: ws://127.0.0.1:8080/ws/translate (SIN CIFRAR)
+         1794349637.406 23755 23755 I SignAiState: aviso visible: Sin servicio de voz: puedes seguir traduciendo por texto.
+         1794349641.886 23755 23755 I SignAiState: silencio del STT: desconocido

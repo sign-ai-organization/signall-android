@@ -1,0 +1,66 @@
+{
+ "repeticion": 2,
+ "segundos": 315,
+ "gfx_secuencia": {
+  "cuadros": 21253,
+  "janky_pct": 42.81,
+  "p50": 38,
+  "p90": 57,
+  "p95": 65,
+  "p99": 73,
+  "medio_ms": 39.5,
+  "sobre_16_7_pct": 96.7,
+  "sobre_33_3_pct": 67.7,
+  "max_ms": 125
+ },
+ "gfx_reposo_60s": {
+  "cuadros": 4972,
+  "janky_pct": 35.34,
+  "p50": 31,
+  "p90": 42,
+  "p95": 46,
+  "p99": 53,
+  "medio_ms": 31.2,
+  "sobre_16_7_pct": 96.8,
+  "sobre_33_3_pct": 38.1,
+  "max_ms": 65
+ },
+ "transicion_ms": {
+  "n": 82,
+  "p50": 2030,
+  "p95": 2132,
+  "min": 1316,
+  "max": 2708
+ },
+ "hasta_inactivo_s": {
+  "p50": 9.0,
+  "p95": 14.0,
+  "max": 14.3,
+  "con_error_o_reintento": []
+ },
+ "representacion_ms": {
+  "p50": 6892,
+  "p95": 10597,
+  "max": 12889,
+  "n": 28
+ },
+ "pss_kB": {
+  "min": 603479,
+  "max": 666857,
+  "inicio": 642771,
+  "final": 659349
+ },
+ "bateria": {
+  "mAh": 90.0,
+  "mA_prom": 1029,
+  "nivel": [
+   "72",
+   "71"
+  ],
+  "temp_C": [
+   38.8,
+   38.8
+  ],
+  "uid_estimado_mAh": 51.0
+ }
+}

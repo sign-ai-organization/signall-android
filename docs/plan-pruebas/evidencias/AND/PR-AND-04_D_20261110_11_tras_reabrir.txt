@@ -1,0 +1,2 @@
+character=Pauline speed=70
+Frase FR-01-001: 4.5 s, intervalos [1.33, 1.46]
