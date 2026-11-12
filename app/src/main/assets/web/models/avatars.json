@@ -3,8 +3,8 @@
   "id": "juan",
   "label": "Juan",
   "path": "models/juan.glb",
-  "bytes": 30323680,
-  "sha256": "5ccf77f3aec4300e33e4d20b6e7edf41ccf577eff04379a87b6cd61dccddbd8c",
+  "bytes": 27727320,
+  "sha256": "6039af8fd09595d179a766f7450076ac7d6b7e209b98203f28346dda420620f7",
   "source": "Juan.glb",
   "source_bytes": 34267268,
   "source_sha256": "cc89d41d925b5f52765fd8fdb322ff09c9d30b6f914fc8ecd3e50fc2a83e3945",
@@ -21,16 +21,24 @@
   "rest_pose": {
    "reference": "0029_afirmativo (keyframe 0)",
    "bones": 46,
-   "delta": 0.2982681393623352
+   "delta": 1.4381853342056274,
+   "adjustment": "approved_rest_pose.json (2026-11-11)",
+   "adjusted_bones": 6
   },
-  "bind_warning": null
+  "bind_warning": null,
+  "approved_transitions": {
+   "approval": "2026-11-11: 50 señas, entradas 01–05; 0020 v3 y 0028 completas",
+   "patch_sha256": "ae9d7c283e294c959faa081f077754b104688ec646467a8b3e5652cbd32121a5",
+   "samplers": 6512,
+   "clips": 200
+  }
  },
  {
   "id": "pauline",
   "label": "Pauline",
   "path": "models/pauline.glb",
-  "bytes": 27850104,
-  "sha256": "663139385dbf8f9fdce41d5c1753124460a95abed322f4fd9e136e087482722b",
+  "bytes": 27594616,
+  "sha256": "6052810aec38beafd41e8d6679042964d862041daac268bed8d5962c1cea1444",
   "source": "Pauline.glb",
   "source_bytes": 33884284,
   "source_sha256": "fd2d27779726af385d1d0a7ac8a2e474e2cd51e185777a510acf8e6839d1c313",
@@ -47,8 +55,16 @@
   "rest_pose": {
    "reference": "0029_afirmativo (keyframe 0)",
    "bones": 46,
-   "delta": 0.2478208839893341
+   "delta": 1.5240933299064636,
+   "adjustment": "approved_rest_pose.json (2026-11-11)",
+   "adjusted_bones": 6
   },
-  "bind_warning": "el TRS de 2.00e+00 de los nodos que no son brazo no es la pose de bind. Revisar el export antes de hornear la pose de descanso."
+  "bind_warning": "el TRS de 2.00e+00 de los nodos que no son brazo no es la pose de bind. Revisar el export antes de hornear la pose de descanso.",
+  "approved_transitions": {
+   "approval": "2026-11-11: 50 señas, entradas 01–05; 0020 v3 y 0028 completas",
+   "patch_sha256": "ae9d7c283e294c959faa081f077754b104688ec646467a8b3e5652cbd32121a5",
+   "samplers": 3356,
+   "clips": 200
+  }
  }
 ]

@@ -1,0 +1,68 @@
+[
+  {
+    "avatar": "juan",
+    "input_sha256": "7c0eddb863b5386dfe4c5c7a44119aaf90e1a7b416bd141f8de68fb3539fea2a",
+    "sample": "grupo 02: 0003–0007; cuatro variantes faciales",
+    "modified_rotation_tracks": 120,
+    "version": "group-02",
+    "windows": {
+      "0003": [
+        1.4583333333333333,
+        2.0
+      ],
+      "0004": [
+        1.5833333333333333,
+        2.0
+      ],
+      "0005": [
+        1.3333333333333333,
+        1.875
+      ],
+      "0006": [
+        1.4583333333333333,
+        1.9583333333333333
+      ],
+      "0007": [
+        1.1666666666666667,
+        1.75
+      ]
+    },
+    "all_entries_unchanged": true,
+    "return_limits_are_provisional": true,
+    "other_180_animations_unchanged": true,
+    "original_unchanged": true
+  },
+  {
+    "avatar": "pauline",
+    "input_sha256": "41ae031a10255089e16970fe73bfdf1083fd4b8e623e6606ad9cbbf3da7cf3b2",
+    "sample": "grupo 02: 0003–0007; cuatro variantes faciales",
+    "modified_rotation_tracks": 120,
+    "version": "group-02",
+    "windows": {
+      "0003": [
+        1.4583333333333333,
+        2.0
+      ],
+      "0004": [
+        1.5833333333333333,
+        2.0
+      ],
+      "0005": [
+        1.3333333333333333,
+        1.875
+      ],
+      "0006": [
+        1.4583333333333333,
+        1.9583333333333333
+      ],
+      "0007": [
+        1.1666666666666667,
+        1.75
+      ]
+    },
+    "all_entries_unchanged": true,
+    "return_limits_are_provisional": true,
+    "other_180_animations_unchanged": true,
+    "original_unchanged": true
+  }
+]

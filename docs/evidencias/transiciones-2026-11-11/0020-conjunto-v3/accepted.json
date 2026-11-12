@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-11",
+  "decision": "bien, ya sigamos con el resto. esa ya dejemosla asi",
+  "selected_version": "0020-smooth-v3",
+  "scope": "conservar esta propuesta de 0020 y continuar, sin afirmar validación lingüística formal",
+  "avatars": [
+    {
+      "avatar": "juan",
+      "file": "juan-despues.glb",
+      "sha256": "1be8105d28772424529603a76ade28df8a0816191f8ad26cea2f7fb602541df4"
+    },
+    {
+      "avatar": "pauline",
+      "file": "pauline-despues.glb",
+      "sha256": "9f68b2d7a52598feb51cc3de8997aaf7c3f12c8a435cabc06a6b59bacc34652c"
+    }
+  ]
+}

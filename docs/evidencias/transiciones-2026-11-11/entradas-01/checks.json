@@ -1,0 +1,22 @@
+[
+  {
+    "avatar": "juan",
+    "checked_clips": 40,
+    "other_clips_exact": 160,
+    "initial_six_rotations_match_rest": true,
+    "approved_returns_exact": true,
+    "prepended_clips_preserve_all_original_samples": true,
+    "protected_gesture_samples_exact": true,
+    "input_output_counts_valid": true
+  },
+  {
+    "avatar": "pauline",
+    "checked_clips": 40,
+    "other_clips_exact": 160,
+    "initial_six_rotations_match_rest": true,
+    "approved_returns_exact": true,
+    "prepended_clips_preserve_all_original_samples": true,
+    "protected_gesture_samples_exact": true,
+    "input_output_counts_valid": true
+  }
+]

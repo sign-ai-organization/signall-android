@@ -1,0 +1,22 @@
+[
+  {
+    "avatar": "juan",
+    "windows": {
+      "0020": [
+        1.958333,
+        2.208333
+      ]
+    },
+    "diagnosis_only": true
+  },
+  {
+    "avatar": "pauline",
+    "windows": {
+      "0020": [
+        1.958333,
+        2.208333
+      ]
+    },
+    "diagnosis_only": true
+  }
+]

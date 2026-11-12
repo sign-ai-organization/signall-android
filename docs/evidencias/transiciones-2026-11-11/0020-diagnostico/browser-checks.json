@@ -1,0 +1,128 @@
+[
+  {
+    "avatar": "juan",
+    "variant": "afirmativo",
+    "requested_time": 1.9583333333333333,
+    "clip": "0020_afirmativo",
+    "time": "1.958 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "juan",
+    "variant": "afirmativo",
+    "requested_time": 2.0,
+    "clip": "0020_afirmativo",
+    "time": "2.000 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "juan",
+    "variant": "afirmativo",
+    "requested_time": 2.1666666666666665,
+    "clip": "0020_afirmativo",
+    "time": "2.167 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "juan",
+    "variant": "afirmativo",
+    "requested_time": 2.2083333333333335,
+    "clip": "0020_afirmativo",
+    "time": "2.208 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "juan",
+    "variant": "pregunta",
+    "requested_time": 2.0,
+    "clip": "0020_pregunta",
+    "time": "2.000 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "juan",
+    "variant": "negacion",
+    "requested_time": 2.0,
+    "clip": "0020_negacion",
+    "time": "2.000 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "juan",
+    "variant": "orden",
+    "requested_time": 2.0,
+    "clip": "0020_orden",
+    "time": "2.000 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "pauline",
+    "variant": "afirmativo",
+    "requested_time": 1.9583333333333333,
+    "clip": "0020_afirmativo",
+    "time": "1.958 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "pauline",
+    "variant": "afirmativo",
+    "requested_time": 2.0,
+    "clip": "0020_afirmativo",
+    "time": "2.000 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "pauline",
+    "variant": "afirmativo",
+    "requested_time": 2.1666666666666665,
+    "clip": "0020_afirmativo",
+    "time": "2.167 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "pauline",
+    "variant": "afirmativo",
+    "requested_time": 2.2083333333333335,
+    "clip": "0020_afirmativo",
+    "time": "2.208 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "pauline",
+    "variant": "pregunta",
+    "requested_time": 2.0,
+    "clip": "0020_pregunta",
+    "time": "2.000 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "pauline",
+    "variant": "negacion",
+    "requested_time": 2.0,
+    "clip": "0020_negacion",
+    "time": "2.000 s",
+    "paused": "Continuar",
+    "raw": true
+  },
+  {
+    "avatar": "pauline",
+    "variant": "orden",
+    "requested_time": 2.0,
+    "clip": "0020_orden",
+    "time": "2.000 s",
+    "paused": "Continuar",
+    "raw": true
+  }
+]

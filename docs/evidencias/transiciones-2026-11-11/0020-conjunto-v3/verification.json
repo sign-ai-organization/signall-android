@@ -1,0 +1,1604 @@
+[
+  {
+    "avatar": "juan",
+    "source": "v1 para c\u00e1lculo com\u00fan, v2 para comparaci\u00f3n; ninguna aprobada",
+    "input_sha256": "aa29eca01bf003e3c1f15cd0bdcef39b13e95adbcc8983332e3adfe10194bd70",
+    "filter_source_sha256": "eaf8ee1de3bb89777fc095727ed5ad6a3d462d5bcd66bd0f85449e57d7472da9",
+    "windows": {
+      "0020": [
+        1.5,
+        2.125
+      ]
+    },
+    "kernel": [
+      1,
+      2,
+      3,
+      2,
+      1
+    ],
+    "taper_seconds": 0.125,
+    "changed_tracks": 144,
+    "changes": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "upper_arm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "forearm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "hand.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "upper_arm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "forearm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "hand.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "upper_arm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "forearm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "hand.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "upper_arm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "forearm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "hand.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "upper_arm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "forearm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "hand.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "upper_arm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "forearm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "hand.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "upper_arm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "forearm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "hand.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "upper_arm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "forearm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "hand.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.03.R",
+        "path": "rotation"
+      }
+    ],
+    "entry_exact": true,
+    "body_curves_exact_to_v2": true,
+    "face_exact": true,
+    "arms_hands_and_fingers_modified_only_in_window": true,
+    "other_196_animations_exact": true,
+    "times_and_nodes_exact": true,
+    "source_unchanged": true,
+    "limits_provisional": true
+  },
+  {
+    "avatar": "pauline",
+    "source": "v1 para c\u00e1lculo com\u00fan, v2 para comparaci\u00f3n; ninguna aprobada",
+    "input_sha256": "b0d547b536c8e01f3dbd9317c6fa2b4cffa06bd08c77f723043b78513f24004e",
+    "filter_source_sha256": "aa586797dc9e92f2308100fb28e893ac7b4772d3bf61134c694b9700c4302f17",
+    "windows": {
+      "0020": [
+        1.5,
+        2.125
+      ]
+    },
+    "kernel": [
+      1,
+      2,
+      3,
+      2,
+      1
+    ],
+    "taper_seconds": 0.125,
+    "changed_tracks": 164,
+    "changes": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "upper_arm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "forearm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "hand.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.04.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "upper_arm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "forearm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "hand.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.04.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "upper_arm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "forearm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "hand.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.04.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "upper_arm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "forearm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "hand.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.04.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "upper_arm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "forearm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "hand.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.04.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "upper_arm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "forearm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "hand.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.04.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "upper_arm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "forearm.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "hand.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.04.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.01.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.03.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "upper_arm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "forearm.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "hand.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.03.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.04.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.01.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.03.R",
+        "path": "rotation"
+      }
+    ],
+    "entry_exact": true,
+    "body_curves_exact_to_v2": true,
+    "face_exact": true,
+    "arms_hands_and_fingers_modified_only_in_window": true,
+    "other_196_animations_exact": true,
+    "times_and_nodes_exact": true,
+    "source_unchanged": true,
+    "limits_provisional": true
+  }
+]

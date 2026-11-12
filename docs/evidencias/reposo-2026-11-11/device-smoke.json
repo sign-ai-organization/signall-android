@@ -1,0 +1,50 @@
+[
+  {
+    "avatar": "pauline",
+    "requested_type": "AFFIRMATIVE",
+    "observed_playing": true,
+    "returned_to_approved_rotations": true
+  },
+  {
+    "avatar": "pauline",
+    "requested_type": "YES_NO_QUESTION",
+    "observed_playing": true,
+    "returned_to_approved_rotations": true
+  },
+  {
+    "avatar": "pauline",
+    "requested_type": "NEGATIVE",
+    "observed_playing": true,
+    "returned_to_approved_rotations": true
+  },
+  {
+    "avatar": "pauline",
+    "requested_type": "IMPERATIVE",
+    "observed_playing": true,
+    "returned_to_approved_rotations": true
+  },
+  {
+    "avatar": "juan",
+    "requested_type": "AFFIRMATIVE",
+    "observed_playing": true,
+    "returned_to_approved_rotations": true
+  },
+  {
+    "avatar": "juan",
+    "requested_type": "YES_NO_QUESTION",
+    "observed_playing": true,
+    "returned_to_approved_rotations": true
+  },
+  {
+    "avatar": "juan",
+    "requested_type": "NEGATIVE",
+    "observed_playing": true,
+    "returned_to_approved_rotations": true
+  },
+  {
+    "avatar": "juan",
+    "requested_type": "IMPERATIVE",
+    "observed_playing": true,
+    "returned_to_approved_rotations": true
+  }
+]

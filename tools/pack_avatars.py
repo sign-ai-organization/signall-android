@@ -17,8 +17,8 @@ costado al representar) y volvió a aplicar la corrección de cabeza; la del
 2026-11-04 reemplazó las cinco caras emocionales por las cuatro marcas
 gramaticales.
 
-Este script hace el empaquetado que la app necesita, sin cambiar ninguna
-animación:
+Este script hace el empaquetado que la app necesita, con las curvas de entrada,
+regreso y correcciones localizadas aprobadas el 2026-11-11:
 
   1. **Verifica** que cada archivo sea el que esperamos: un skin, 102
      articulaciones y exactamente los 200 nombres de clip esperados.
@@ -33,7 +33,10 @@ animación:
      las funciones de `pack_signall.py`. Los que alguna de las 300 variantes
      mueve se conservan: la cara no se toca en esta etapa, pero el asset queda
      listo para cuando el owner apruebe los marcadores.
-  4. **Escribe** `models/juan.glb`, `models/pauline.glb`, el inventario
+  4. **Aplica curvas aprobadas** de `approved_tracks.json.gz`, verificando el
+     hash del empaquetado base. Incluye las cuatro preparaciones añadidas y las
+     selecciones completas de `0020` v3 y `0028`; no depende de copias temporales.
+  5. **Escribe** `models/juan.glb`, `models/pauline.glb`, el inventario
      `models/avatars.json` y `manifest.json`.
 
 El archivo de salida conserva las 200 animaciones. La app elige una de las
@@ -55,11 +58,13 @@ import argparse
 import copy
 import hashlib
 import json
+import math
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import glb_pose as gp  # noqa: E402
+import approved_tracks  # noqa: E402
 import pack_signall as ps  # noqa: E402
 import rest_pose  # noqa: E402
 from split_signs import write_catalog  # noqa: E402
@@ -133,12 +138,43 @@ def check_source(js, name):
     return names
 
 
-def bake_rest_pose(js, binary):
+def apply_approved_rest_pose(js, avatar_id, source_sha):
+    """Aplica solo el reposo aprobado; nunca modifica curvas ni el binario.
+
+    Las rotaciones son específicas de estos exports: una nueva fuente requiere
+    revisar la pose, no reutilizarla silenciosamente sobre otro esqueleto.
+    """
+    config = json.loads((Path(__file__).with_name("approved_rest_pose.json")).read_text())
+    approved = config["avatars"][avatar_id]
+    if source_sha != approved["source_sha256"]:
+        raise SystemExit(f"{avatar_id}: cambió el GLB de origen; revisar el reposo aprobado")
+    rotations = approved["rotations"]
+    expected = {f"{bone}.{side}" for bone in ("upper_arm", "forearm", "hand")
+                for side in ("L", "R")}
+    if set(rotations) != expected:
+        raise SystemExit(f"{avatar_id}: el reposo debe contener exactamente seis huesos")
+    indices = {node.get("name"): i for i, node in enumerate(js["nodes"])}
+    for name, rotation in rotations.items():
+        if (len(rotation) != 4 or not all(math.isfinite(v) for v in rotation)
+                or abs(sum(v * v for v in rotation) - 1) > 1e-5):
+            raise SystemExit(f"{avatar_id}: rotación inválida para {name}")
+    required = {indices[name] for name in rotations}
+    for animation in js["animations"]:
+        animated = {c["target"]["node"] for c in animation["channels"]
+                    if c["target"]["path"] == "rotation"}
+        if not required <= animated:
+            raise SystemExit(f"{avatar_id}: {animation['name']} depende de rotaciones de reposo")
+    for name, rotation in rotations.items():
+        js["nodes"][indices[name]]["rotation"] = rotation[:]
+
+
+def bake_rest_pose(js, binary, avatar_id, source_sha):
     """Hornea la pose de descanso desde `0029_afirmativo` del propio archivo.
 
     Ya no hay clip `0029` sin sufijo. Las cuatro variantes de una seña tienen
     los mismos canales de hueso (solo cambian los pesos de la cara), así que
     tomar la variante `afirmativo` da exactamente la misma pose de brazos.
+    Sobre esa base se aplican las seis rotaciones aprobadas el 2026-11-11.
     """
     names = rest_pose.check_chain(rest_pose.arm_chain(js))
     reference = f"{rest_pose.REFERENCE_ID}_{DEFAULT_SUFFIX}"
@@ -147,7 +183,12 @@ def bake_rest_pose(js, binary):
     t = gp.first_keyframe_time(js, index)
     pose = gp.sample_clip(js, binary, index, t)
     before = rest_pose.hand_positions(js)
+    old_rotations = {n["name"]: n.get("rotation", gp.IDENTITY_Q)[:]
+                     for n in js["nodes"] if n.get("name") in names}
     touched, worst = rest_pose.bake(js, pose, names)
+    apply_approved_rest_pose(js, avatar_id, source_sha)
+    worst = max(abs(a - b) for n in js["nodes"] if n.get("name") in names
+                for a, b in zip(old_rotations[n["name"]], n["rotation"]))
     after = rest_pose.hand_positions(js)
     rest_pose.compact(js, names)
     return {"t": t, "before": before, "after": after,
@@ -245,12 +286,13 @@ def main():
         js, binary = gp.read_glb(source)
         check_source(js, label)
         warning = bind_report(js, binary, label)
-        report = bake_rest_pose(js, binary)
+        report = bake_rest_pose(js, binary, avatar_id, source_sha)
         for line in rest_pose.report_lines(
             report, indent="  ",
             reference=f"el clip 0029_{DEFAULT_SUFFIX} del mismo archivo",
         ):
             print(line)
+        print("  reposo    ajuste aprobado 2026-11-11: brazos a los lados y manos intermedias")
 
         keep = ps.morphs_to_keep(js, binary)
         before_morphs = sum(
@@ -262,6 +304,14 @@ def main():
             for m in js["meshes"])
         print(f"  morphs    {before_morphs} -> {after_morphs} "
               f"(se conservan los que alguna variante anima)")
+
+        binary, transitions = approved_tracks.apply(js, binary, avatar_id)
+        # Las curvas vivas pasan a views propios y deduplicados; después el
+        # compactado puede descartar los accessors viejos sin bytes muertos.
+        binary, curves = approved_tracks.rewrite_animation_accessors(js, binary)
+        js, binary = ps.repack(js, binary, ps.morphs_to_keep(js, binary))
+        print(f"  curvas    200 clips aprobados, {transitions['samplers']} samplers "
+              f"ajustados, {curves} curvas vivas; {len(binary) / 1e6:.2f} MB de binario")
 
         out = models / f"{avatar_id}.glb"
         if args.dry_run:
@@ -293,8 +343,11 @@ def main():
                                   "(keyframe 0)"),
                     "bones": report["bones"],
                     "delta": report["delta"],
+                    "adjustment": "approved_rest_pose.json (2026-11-11)",
+                    "adjusted_bones": 6,
                 },
                 "bind_warning": warning,
+                "approved_transitions": transitions,
             })
 
     if args.dry_run:

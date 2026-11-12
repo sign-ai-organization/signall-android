@@ -123,6 +123,13 @@ Lo que hay que saber antes de tocar esto:
   `turnStartedAt` mide **el pipeline**, no la escena: los números que miden la escena son
   `oracion→avatar:` (`SignAiMetrics.onSignStart`, el `segment` hasta que el muñeco se mueve) y
   `representado:` (`SignAiMetrics.onPlayback`).
+
+  **Desde el 2026-11-11 `representado:` incluye el acomodo final**: los últimos 250 ms
+  del clip se reparten en 700 ms y `onPlaybackDone` se manda cuando el peso del clip
+  llega a cero, o sea **~450 ms después del final nominal** (a velocidad normal;
+  medido en el Redmi: 2,574 s para `0028`, 2,125 s de clip). Las cifras anteriores de
+  ese campo no son comparables con las nuevas sin descontarlo; con `reduceMotion` no
+  se aplica y la salida termina con el clip.
 - **Release the mic without speaking**: returns to Idle immediately with "No se escuchó
   nada." Waiting the full 15 s transcription timeout and then reporting a failure that did
   not happen is the old behaviour. `heardAnythingThisSession` separates "user said nothing"

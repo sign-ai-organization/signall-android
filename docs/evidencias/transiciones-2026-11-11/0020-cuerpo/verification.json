@@ -1,0 +1,858 @@
+[
+  {
+    "avatar": "juan",
+    "source": "entries-03 aprobado, sin arreglo corporal",
+    "input_sha256": "03815fd31e324800c07968cf8a349e9acc3dfd22b5df5aae49af8660a5f27781",
+    "windows": {
+      "0020": [
+        2.0416666666666665,
+        2.25
+      ]
+    },
+    "changed_tracks": 72,
+    "changes": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "path": "rotation",
+        "max_frame_delta_before": 10.47701667981922
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.001",
+        "path": "rotation",
+        "max_frame_delta_before": 6.514365708224647
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.002",
+        "path": "rotation",
+        "max_frame_delta_before": 6.382210430686655
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.003",
+        "path": "rotation",
+        "max_frame_delta_before": 3.3896714376201937
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "neck",
+        "path": "rotation",
+        "max_frame_delta_before": 8.002054863042066
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "head",
+        "path": "rotation",
+        "max_frame_delta_before": 2.5856833496353286
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.L",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.L",
+        "path": "rotation",
+        "max_frame_delta_before": 11.631358657148331
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.R",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.R",
+        "path": "rotation",
+        "max_frame_delta_before": 10.728331063293195
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.L",
+        "path": "rotation",
+        "max_frame_delta_before": 16.59404051461186
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.L",
+        "path": "rotation",
+        "max_frame_delta_before": 3.9601144027974207
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.L",
+        "path": "rotation",
+        "max_frame_delta_before": 10.005265336312632
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "toe.L",
+        "path": "rotation",
+        "max_frame_delta_before": 2.038244389165544
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.R",
+        "path": "rotation",
+        "max_frame_delta_before": 14.22321296751901
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.R",
+        "path": "rotation",
+        "max_frame_delta_before": 6.268148386860726
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.R",
+        "path": "rotation",
+        "max_frame_delta_before": 5.562150627777531
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "path": "rotation",
+        "max_frame_delta_before": 10.47701667981922
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.001",
+        "path": "rotation",
+        "max_frame_delta_before": 6.514365708224647
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.002",
+        "path": "rotation",
+        "max_frame_delta_before": 6.382210430686655
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.003",
+        "path": "rotation",
+        "max_frame_delta_before": 3.3896714376201937
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "neck",
+        "path": "rotation",
+        "max_frame_delta_before": 8.002054863042066
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "head",
+        "path": "rotation",
+        "max_frame_delta_before": 2.5856833496353286
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.L",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.L",
+        "path": "rotation",
+        "max_frame_delta_before": 11.631358657148331
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.R",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.R",
+        "path": "rotation",
+        "max_frame_delta_before": 10.728331063293195
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.L",
+        "path": "rotation",
+        "max_frame_delta_before": 16.59404051461186
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.L",
+        "path": "rotation",
+        "max_frame_delta_before": 3.9601144027974207
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.L",
+        "path": "rotation",
+        "max_frame_delta_before": 10.005265336312632
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "toe.L",
+        "path": "rotation",
+        "max_frame_delta_before": 2.038244389165544
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.R",
+        "path": "rotation",
+        "max_frame_delta_before": 14.22321296751901
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.R",
+        "path": "rotation",
+        "max_frame_delta_before": 6.268148386860726
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.R",
+        "path": "rotation",
+        "max_frame_delta_before": 5.562150627777531
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "path": "rotation",
+        "max_frame_delta_before": 10.47701667981922
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.001",
+        "path": "rotation",
+        "max_frame_delta_before": 6.514365708224647
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.002",
+        "path": "rotation",
+        "max_frame_delta_before": 6.382210430686655
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.003",
+        "path": "rotation",
+        "max_frame_delta_before": 3.3896714376201937
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "neck",
+        "path": "rotation",
+        "max_frame_delta_before": 8.002054863042066
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "head",
+        "path": "rotation",
+        "max_frame_delta_before": 2.5856833496353286
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.L",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.L",
+        "path": "rotation",
+        "max_frame_delta_before": 11.631358657148331
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.R",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.R",
+        "path": "rotation",
+        "max_frame_delta_before": 10.728331063293195
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.L",
+        "path": "rotation",
+        "max_frame_delta_before": 16.59404051461186
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.L",
+        "path": "rotation",
+        "max_frame_delta_before": 3.9601144027974207
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.L",
+        "path": "rotation",
+        "max_frame_delta_before": 10.005265336312632
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "toe.L",
+        "path": "rotation",
+        "max_frame_delta_before": 2.038244389165544
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.R",
+        "path": "rotation",
+        "max_frame_delta_before": 14.22321296751901
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.R",
+        "path": "rotation",
+        "max_frame_delta_before": 6.268148386860726
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.R",
+        "path": "rotation",
+        "max_frame_delta_before": 5.562150627777531
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "path": "rotation",
+        "max_frame_delta_before": 10.47701667981922
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.001",
+        "path": "rotation",
+        "max_frame_delta_before": 6.514365708224647
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.002",
+        "path": "rotation",
+        "max_frame_delta_before": 6.382210430686655
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.003",
+        "path": "rotation",
+        "max_frame_delta_before": 3.3896714376201937
+      },
+      {
+        "clip": "0020_orden",
+        "node": "neck",
+        "path": "rotation",
+        "max_frame_delta_before": 8.002054863042066
+      },
+      {
+        "clip": "0020_orden",
+        "node": "head",
+        "path": "rotation",
+        "max_frame_delta_before": 2.5856833496353286
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.L",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.L",
+        "path": "rotation",
+        "max_frame_delta_before": 11.631358657148331
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.R",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.R",
+        "path": "rotation",
+        "max_frame_delta_before": 10.728331063293195
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.L",
+        "path": "rotation",
+        "max_frame_delta_before": 16.59404051461186
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.L",
+        "path": "rotation",
+        "max_frame_delta_before": 3.9601144027974207
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.L",
+        "path": "rotation",
+        "max_frame_delta_before": 10.005265336312632
+      },
+      {
+        "clip": "0020_orden",
+        "node": "toe.L",
+        "path": "rotation",
+        "max_frame_delta_before": 2.038244389165544
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.R",
+        "path": "rotation",
+        "max_frame_delta_before": 14.22321296751901
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.R",
+        "path": "rotation",
+        "max_frame_delta_before": 6.268148386860726
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.R",
+        "path": "rotation",
+        "max_frame_delta_before": 5.562150627777531
+      }
+    ],
+    "entry_and_arm_curves_exact": true,
+    "fingers_and_face_exact": true,
+    "other_196_animations_exact": true,
+    "times_and_nodes_exact": true,
+    "source_unchanged": true,
+    "limits_provisional": true
+  },
+  {
+    "avatar": "pauline",
+    "source": "entries-03 aprobado, sin arreglo corporal",
+    "input_sha256": "d7825cd5770afa7bfe892cf303046f177ab3287f9e27e818546880456e529ba4",
+    "windows": {
+      "0020": [
+        2.0416666666666665,
+        2.25
+      ]
+    },
+    "changed_tracks": 64,
+    "changes": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "path": "rotation",
+        "max_frame_delta_before": 10.477016229478018
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.001",
+        "path": "rotation",
+        "max_frame_delta_before": 6.514365448524157
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.002",
+        "path": "rotation",
+        "max_frame_delta_before": 6.382210222197366
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.003",
+        "path": "rotation",
+        "max_frame_delta_before": 3.389671313482834
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "neck",
+        "path": "rotation",
+        "max_frame_delta_before": 8.002054451530357
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "head",
+        "path": "rotation",
+        "max_frame_delta_before": 2.5856827100207007
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.L",
+        "path": "rotation",
+        "max_frame_delta_before": 11.631357650659599
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.R",
+        "path": "rotation",
+        "max_frame_delta_before": 10.728336725664947
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.L",
+        "path": "rotation",
+        "max_frame_delta_before": 16.594040950552706
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.L",
+        "path": "rotation",
+        "max_frame_delta_before": 3.96011377024037
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.L",
+        "path": "rotation",
+        "max_frame_delta_before": 10.005265511909752
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "toe.L",
+        "path": "rotation",
+        "max_frame_delta_before": 2.0382447607007075
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.R",
+        "path": "rotation",
+        "max_frame_delta_before": 14.2232129487721
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.R",
+        "path": "rotation",
+        "max_frame_delta_before": 6.268147251780299
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.R",
+        "path": "rotation",
+        "max_frame_delta_before": 5.562151667984573
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "path": "rotation",
+        "max_frame_delta_before": 10.477016229478018
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.001",
+        "path": "rotation",
+        "max_frame_delta_before": 6.514365448524157
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.002",
+        "path": "rotation",
+        "max_frame_delta_before": 6.382210222197366
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.003",
+        "path": "rotation",
+        "max_frame_delta_before": 3.389671313482834
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "neck",
+        "path": "rotation",
+        "max_frame_delta_before": 8.002054451530357
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "head",
+        "path": "rotation",
+        "max_frame_delta_before": 2.5856827100207007
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.L",
+        "path": "rotation",
+        "max_frame_delta_before": 11.631357650659599
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.R",
+        "path": "rotation",
+        "max_frame_delta_before": 10.728336725664947
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.L",
+        "path": "rotation",
+        "max_frame_delta_before": 16.594040950552706
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.L",
+        "path": "rotation",
+        "max_frame_delta_before": 3.96011377024037
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.L",
+        "path": "rotation",
+        "max_frame_delta_before": 10.005265511909752
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "toe.L",
+        "path": "rotation",
+        "max_frame_delta_before": 2.0382447607007075
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.R",
+        "path": "rotation",
+        "max_frame_delta_before": 14.2232129487721
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.R",
+        "path": "rotation",
+        "max_frame_delta_before": 6.268147251780299
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.R",
+        "path": "rotation",
+        "max_frame_delta_before": 5.562151667984573
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "path": "rotation",
+        "max_frame_delta_before": 10.477016229478018
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.001",
+        "path": "rotation",
+        "max_frame_delta_before": 6.514365448524157
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.002",
+        "path": "rotation",
+        "max_frame_delta_before": 6.382210222197366
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.003",
+        "path": "rotation",
+        "max_frame_delta_before": 3.389671313482834
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "neck",
+        "path": "rotation",
+        "max_frame_delta_before": 8.002054451530357
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "head",
+        "path": "rotation",
+        "max_frame_delta_before": 2.5856827100207007
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.L",
+        "path": "rotation",
+        "max_frame_delta_before": 11.631357650659599
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.R",
+        "path": "rotation",
+        "max_frame_delta_before": 10.728336725664947
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.L",
+        "path": "rotation",
+        "max_frame_delta_before": 16.594040950552706
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.L",
+        "path": "rotation",
+        "max_frame_delta_before": 3.96011377024037
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.L",
+        "path": "rotation",
+        "max_frame_delta_before": 10.005265511909752
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "toe.L",
+        "path": "rotation",
+        "max_frame_delta_before": 2.0382447607007075
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.R",
+        "path": "rotation",
+        "max_frame_delta_before": 14.2232129487721
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.R",
+        "path": "rotation",
+        "max_frame_delta_before": 6.268147251780299
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.R",
+        "path": "rotation",
+        "max_frame_delta_before": 5.562151667984573
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "path": "translation",
+        "max_frame_delta_before": null
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "path": "rotation",
+        "max_frame_delta_before": 10.477016229478018
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.001",
+        "path": "rotation",
+        "max_frame_delta_before": 6.514365448524157
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.002",
+        "path": "rotation",
+        "max_frame_delta_before": 6.382210222197366
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.003",
+        "path": "rotation",
+        "max_frame_delta_before": 3.389671313482834
+      },
+      {
+        "clip": "0020_orden",
+        "node": "neck",
+        "path": "rotation",
+        "max_frame_delta_before": 8.002054451530357
+      },
+      {
+        "clip": "0020_orden",
+        "node": "head",
+        "path": "rotation",
+        "max_frame_delta_before": 2.5856827100207007
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.L",
+        "path": "rotation",
+        "max_frame_delta_before": 11.631357650659599
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.R",
+        "path": "rotation",
+        "max_frame_delta_before": 10.728336725664947
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.L",
+        "path": "rotation",
+        "max_frame_delta_before": 16.594040950552706
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.L",
+        "path": "rotation",
+        "max_frame_delta_before": 3.96011377024037
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.L",
+        "path": "rotation",
+        "max_frame_delta_before": 10.005265511909752
+      },
+      {
+        "clip": "0020_orden",
+        "node": "toe.L",
+        "path": "rotation",
+        "max_frame_delta_before": 2.0382447607007075
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.R",
+        "path": "rotation",
+        "max_frame_delta_before": 14.2232129487721
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.R",
+        "path": "rotation",
+        "max_frame_delta_before": 6.268147251780299
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.R",
+        "path": "rotation",
+        "max_frame_delta_before": 5.562151667984573
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "path": "translation",
+        "max_frame_delta_before": null
+      }
+    ],
+    "entry_and_arm_curves_exact": true,
+    "fingers_and_face_exact": true,
+    "other_196_animations_exact": true,
+    "times_and_nodes_exact": true,
+    "source_unchanged": true,
+    "limits_provisional": true
+  }
+]

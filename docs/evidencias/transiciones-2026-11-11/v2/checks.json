@@ -1,0 +1,16 @@
+[
+  {
+    "avatar": "juan",
+    "checked_tracks": 24,
+    "central_samples_exact": true,
+    "return_angular_distance_monotonic": true,
+    "holds_new_rest_after_seconds": 1.9166666666666667
+  },
+  {
+    "avatar": "pauline",
+    "checked_tracks": 24,
+    "central_samples_exact": true,
+    "return_angular_distance_monotonic": true,
+    "holds_new_rest_after_seconds": 1.9166666666666667
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "avatar": "juan",
+    "checked_tracks": {
+      "0000": 24,
+      "0001": 24,
+      "0002": 24
+    },
+    "central_samples_exact": true,
+    "new_signs_entry_exact": true,
+    "return_angular_distance_monotonic": true,
+    "other_188_animations_unchanged": true
+  },
+  {
+    "avatar": "pauline",
+    "checked_tracks": {
+      "0000": 24,
+      "0001": 24,
+      "0002": 24
+    },
+    "central_samples_exact": true,
+    "new_signs_entry_exact": true,
+    "return_angular_distance_monotonic": true,
+    "other_188_animations_unchanged": true
+  }
+]

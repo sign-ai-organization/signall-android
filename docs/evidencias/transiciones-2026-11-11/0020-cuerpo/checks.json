@@ -1,0 +1,742 @@
+[
+  {
+    "avatar": "juan",
+    "checked_changed_tracks": 72,
+    "all_non_target_tracks_exact": true,
+    "outside_window_exact": true,
+    "times_and_nodes_exact": true,
+    "other_196_animations_exact": true,
+    "rotation_delta_checks": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "max_frame_degrees_before": 10.47701667981922,
+        "max_frame_degrees_after": 4.606797245021951
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.001",
+        "max_frame_degrees_before": 6.514365708224647,
+        "max_frame_degrees_after": 2.909753879688185
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.002",
+        "max_frame_degrees_before": 6.382210430686655,
+        "max_frame_degrees_after": 2.858628429973666
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.003",
+        "max_frame_degrees_before": 3.3896714376201937,
+        "max_frame_degrees_after": 1.5288229657067123
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "neck",
+        "max_frame_degrees_before": 8.002054863042066,
+        "max_frame_degrees_after": 2.3074426514353106
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "head",
+        "max_frame_degrees_before": 2.5856833496353286,
+        "max_frame_degrees_after": 0.6033263613216951
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.L",
+        "max_frame_degrees_before": 11.631358657148331,
+        "max_frame_degrees_after": 4.61228778488622
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.R",
+        "max_frame_degrees_before": 10.728331063293195,
+        "max_frame_degrees_after": 4.604132068028359
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.L",
+        "max_frame_degrees_before": 16.59404051461186,
+        "max_frame_degrees_after": 6.641769924916363
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.L",
+        "max_frame_degrees_before": 3.9601144027974207,
+        "max_frame_degrees_after": 1.4988223785885144
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.L",
+        "max_frame_degrees_before": 10.005265336312632,
+        "max_frame_degrees_after": 3.152962911592376
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "toe.L",
+        "max_frame_degrees_before": 2.038244389165544,
+        "max_frame_degrees_after": 0.7194726914365749
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.R",
+        "max_frame_degrees_before": 14.22321296751901,
+        "max_frame_degrees_after": 6.51681878084263
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.R",
+        "max_frame_degrees_before": 6.268148386860726,
+        "max_frame_degrees_after": 3.2701168863924694
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.R",
+        "max_frame_degrees_before": 5.562150627777531,
+        "max_frame_degrees_after": 3.296613932417741
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "max_frame_degrees_before": 10.47701667981922,
+        "max_frame_degrees_after": 4.606797245021951
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.001",
+        "max_frame_degrees_before": 6.514365708224647,
+        "max_frame_degrees_after": 2.909753879688185
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.002",
+        "max_frame_degrees_before": 6.382210430686655,
+        "max_frame_degrees_after": 2.858628429973666
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.003",
+        "max_frame_degrees_before": 3.3896714376201937,
+        "max_frame_degrees_after": 1.5288229657067123
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "neck",
+        "max_frame_degrees_before": 8.002054863042066,
+        "max_frame_degrees_after": 2.3074426514353106
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "head",
+        "max_frame_degrees_before": 2.5856833496353286,
+        "max_frame_degrees_after": 0.6033263613216951
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.L",
+        "max_frame_degrees_before": 11.631358657148331,
+        "max_frame_degrees_after": 4.61228778488622
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.R",
+        "max_frame_degrees_before": 10.728331063293195,
+        "max_frame_degrees_after": 4.604132068028359
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.L",
+        "max_frame_degrees_before": 16.59404051461186,
+        "max_frame_degrees_after": 6.641769924916363
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.L",
+        "max_frame_degrees_before": 3.9601144027974207,
+        "max_frame_degrees_after": 1.4988223785885144
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.L",
+        "max_frame_degrees_before": 10.005265336312632,
+        "max_frame_degrees_after": 3.152962911592376
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "toe.L",
+        "max_frame_degrees_before": 2.038244389165544,
+        "max_frame_degrees_after": 0.7194726914365749
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.R",
+        "max_frame_degrees_before": 14.22321296751901,
+        "max_frame_degrees_after": 6.51681878084263
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.R",
+        "max_frame_degrees_before": 6.268148386860726,
+        "max_frame_degrees_after": 3.2701168863924694
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.R",
+        "max_frame_degrees_before": 5.562150627777531,
+        "max_frame_degrees_after": 3.296613932417741
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "max_frame_degrees_before": 10.47701667981922,
+        "max_frame_degrees_after": 4.606797245021951
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.001",
+        "max_frame_degrees_before": 6.514365708224647,
+        "max_frame_degrees_after": 2.909753879688185
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.002",
+        "max_frame_degrees_before": 6.382210430686655,
+        "max_frame_degrees_after": 2.858628429973666
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.003",
+        "max_frame_degrees_before": 3.3896714376201937,
+        "max_frame_degrees_after": 1.5288229657067123
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "neck",
+        "max_frame_degrees_before": 8.002054863042066,
+        "max_frame_degrees_after": 2.3074426514353106
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "head",
+        "max_frame_degrees_before": 2.5856833496353286,
+        "max_frame_degrees_after": 0.6033263613216951
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.L",
+        "max_frame_degrees_before": 11.631358657148331,
+        "max_frame_degrees_after": 4.61228778488622
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.R",
+        "max_frame_degrees_before": 10.728331063293195,
+        "max_frame_degrees_after": 4.604132068028359
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.L",
+        "max_frame_degrees_before": 16.59404051461186,
+        "max_frame_degrees_after": 6.641769924916363
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.L",
+        "max_frame_degrees_before": 3.9601144027974207,
+        "max_frame_degrees_after": 1.4988223785885144
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.L",
+        "max_frame_degrees_before": 10.005265336312632,
+        "max_frame_degrees_after": 3.152962911592376
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "toe.L",
+        "max_frame_degrees_before": 2.038244389165544,
+        "max_frame_degrees_after": 0.7194726914365749
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.R",
+        "max_frame_degrees_before": 14.22321296751901,
+        "max_frame_degrees_after": 6.51681878084263
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.R",
+        "max_frame_degrees_before": 6.268148386860726,
+        "max_frame_degrees_after": 3.2701168863924694
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.R",
+        "max_frame_degrees_before": 5.562150627777531,
+        "max_frame_degrees_after": 3.296613932417741
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "max_frame_degrees_before": 10.47701667981922,
+        "max_frame_degrees_after": 4.606797245021951
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.001",
+        "max_frame_degrees_before": 6.514365708224647,
+        "max_frame_degrees_after": 2.909753879688185
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.002",
+        "max_frame_degrees_before": 6.382210430686655,
+        "max_frame_degrees_after": 2.858628429973666
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.003",
+        "max_frame_degrees_before": 3.3896714376201937,
+        "max_frame_degrees_after": 1.5288229657067123
+      },
+      {
+        "clip": "0020_orden",
+        "node": "neck",
+        "max_frame_degrees_before": 8.002054863042066,
+        "max_frame_degrees_after": 2.3074426514353106
+      },
+      {
+        "clip": "0020_orden",
+        "node": "head",
+        "max_frame_degrees_before": 2.5856833496353286,
+        "max_frame_degrees_after": 0.6033263613216951
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.L",
+        "max_frame_degrees_before": 11.631358657148331,
+        "max_frame_degrees_after": 4.61228778488622
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.R",
+        "max_frame_degrees_before": 10.728331063293195,
+        "max_frame_degrees_after": 4.604132068028359
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.L",
+        "max_frame_degrees_before": 16.59404051461186,
+        "max_frame_degrees_after": 6.641769924916363
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.L",
+        "max_frame_degrees_before": 3.9601144027974207,
+        "max_frame_degrees_after": 1.4988223785885144
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.L",
+        "max_frame_degrees_before": 10.005265336312632,
+        "max_frame_degrees_after": 3.152962911592376
+      },
+      {
+        "clip": "0020_orden",
+        "node": "toe.L",
+        "max_frame_degrees_before": 2.038244389165544,
+        "max_frame_degrees_after": 0.7194726914365749
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.R",
+        "max_frame_degrees_before": 14.22321296751901,
+        "max_frame_degrees_after": 6.51681878084263
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.R",
+        "max_frame_degrees_before": 6.268148386860726,
+        "max_frame_degrees_after": 3.2701168863924694
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.R",
+        "max_frame_degrees_before": 5.562150627777531,
+        "max_frame_degrees_after": 3.296613932417741
+      }
+    ]
+  },
+  {
+    "avatar": "pauline",
+    "checked_changed_tracks": 64,
+    "all_non_target_tracks_exact": true,
+    "outside_window_exact": true,
+    "times_and_nodes_exact": true,
+    "other_196_animations_exact": true,
+    "rotation_delta_checks": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "max_frame_degrees_before": 10.477016229478018,
+        "max_frame_degrees_after": 4.6067969762442385
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.001",
+        "max_frame_degrees_before": 6.514365448524157,
+        "max_frame_degrees_after": 2.909754263283411
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.002",
+        "max_frame_degrees_before": 6.382210222197366,
+        "max_frame_degrees_after": 2.8586282396508134
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.003",
+        "max_frame_degrees_before": 3.389671313482834,
+        "max_frame_degrees_after": 1.528823494835705
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "neck",
+        "max_frame_degrees_before": 8.002054451530357,
+        "max_frame_degrees_after": 2.307442413515379
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "head",
+        "max_frame_degrees_before": 2.5856827100207007,
+        "max_frame_degrees_after": 0.6033256990302991
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.L",
+        "max_frame_degrees_before": 11.631357650659599,
+        "max_frame_degrees_after": 4.61228803244582
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.R",
+        "max_frame_degrees_before": 10.728336725664947,
+        "max_frame_degrees_after": 4.604133289277273
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.L",
+        "max_frame_degrees_before": 16.594040950552706,
+        "max_frame_degrees_after": 6.641769439430947
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.L",
+        "max_frame_degrees_before": 3.96011377024037,
+        "max_frame_degrees_after": 1.498822423183766
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.L",
+        "max_frame_degrees_before": 10.005265511909752,
+        "max_frame_degrees_after": 3.1529631376522462
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "toe.L",
+        "max_frame_degrees_before": 2.0382447607007075,
+        "max_frame_degrees_after": 0.7194728316221647
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.R",
+        "max_frame_degrees_before": 14.2232129487721,
+        "max_frame_degrees_after": 6.516818634542979
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.R",
+        "max_frame_degrees_before": 6.268147251780299,
+        "max_frame_degrees_after": 3.2701180164355006
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.R",
+        "max_frame_degrees_before": 5.562151667984573,
+        "max_frame_degrees_after": 3.296609597282864
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "max_frame_degrees_before": 10.477016229478018,
+        "max_frame_degrees_after": 4.6067969762442385
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.001",
+        "max_frame_degrees_before": 6.514365448524157,
+        "max_frame_degrees_after": 2.909754263283411
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.002",
+        "max_frame_degrees_before": 6.382210222197366,
+        "max_frame_degrees_after": 2.8586282396508134
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.003",
+        "max_frame_degrees_before": 3.389671313482834,
+        "max_frame_degrees_after": 1.528823494835705
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "neck",
+        "max_frame_degrees_before": 8.002054451530357,
+        "max_frame_degrees_after": 2.307442413515379
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "head",
+        "max_frame_degrees_before": 2.5856827100207007,
+        "max_frame_degrees_after": 0.6033256990302991
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.L",
+        "max_frame_degrees_before": 11.631357650659599,
+        "max_frame_degrees_after": 4.61228803244582
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.R",
+        "max_frame_degrees_before": 10.728336725664947,
+        "max_frame_degrees_after": 4.604133289277273
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.L",
+        "max_frame_degrees_before": 16.594040950552706,
+        "max_frame_degrees_after": 6.641769439430947
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.L",
+        "max_frame_degrees_before": 3.96011377024037,
+        "max_frame_degrees_after": 1.498822423183766
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.L",
+        "max_frame_degrees_before": 10.005265511909752,
+        "max_frame_degrees_after": 3.1529631376522462
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "toe.L",
+        "max_frame_degrees_before": 2.0382447607007075,
+        "max_frame_degrees_after": 0.7194728316221647
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.R",
+        "max_frame_degrees_before": 14.2232129487721,
+        "max_frame_degrees_after": 6.516818634542979
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.R",
+        "max_frame_degrees_before": 6.268147251780299,
+        "max_frame_degrees_after": 3.2701180164355006
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.R",
+        "max_frame_degrees_before": 5.562151667984573,
+        "max_frame_degrees_after": 3.296609597282864
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "max_frame_degrees_before": 10.477016229478018,
+        "max_frame_degrees_after": 4.6067969762442385
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.001",
+        "max_frame_degrees_before": 6.514365448524157,
+        "max_frame_degrees_after": 2.909754263283411
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.002",
+        "max_frame_degrees_before": 6.382210222197366,
+        "max_frame_degrees_after": 2.8586282396508134
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.003",
+        "max_frame_degrees_before": 3.389671313482834,
+        "max_frame_degrees_after": 1.528823494835705
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "neck",
+        "max_frame_degrees_before": 8.002054451530357,
+        "max_frame_degrees_after": 2.307442413515379
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "head",
+        "max_frame_degrees_before": 2.5856827100207007,
+        "max_frame_degrees_after": 0.6033256990302991
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.L",
+        "max_frame_degrees_before": 11.631357650659599,
+        "max_frame_degrees_after": 4.61228803244582
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.R",
+        "max_frame_degrees_before": 10.728336725664947,
+        "max_frame_degrees_after": 4.604133289277273
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.L",
+        "max_frame_degrees_before": 16.594040950552706,
+        "max_frame_degrees_after": 6.641769439430947
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.L",
+        "max_frame_degrees_before": 3.96011377024037,
+        "max_frame_degrees_after": 1.498822423183766
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.L",
+        "max_frame_degrees_before": 10.005265511909752,
+        "max_frame_degrees_after": 3.1529631376522462
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "toe.L",
+        "max_frame_degrees_before": 2.0382447607007075,
+        "max_frame_degrees_after": 0.7194728316221647
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.R",
+        "max_frame_degrees_before": 14.2232129487721,
+        "max_frame_degrees_after": 6.516818634542979
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.R",
+        "max_frame_degrees_before": 6.268147251780299,
+        "max_frame_degrees_after": 3.2701180164355006
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.R",
+        "max_frame_degrees_before": 5.562151667984573,
+        "max_frame_degrees_after": 3.296609597282864
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "max_frame_degrees_before": 10.477016229478018,
+        "max_frame_degrees_after": 4.6067969762442385
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.001",
+        "max_frame_degrees_before": 6.514365448524157,
+        "max_frame_degrees_after": 2.909754263283411
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.002",
+        "max_frame_degrees_before": 6.382210222197366,
+        "max_frame_degrees_after": 2.8586282396508134
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.003",
+        "max_frame_degrees_before": 3.389671313482834,
+        "max_frame_degrees_after": 1.528823494835705
+      },
+      {
+        "clip": "0020_orden",
+        "node": "neck",
+        "max_frame_degrees_before": 8.002054451530357,
+        "max_frame_degrees_after": 2.307442413515379
+      },
+      {
+        "clip": "0020_orden",
+        "node": "head",
+        "max_frame_degrees_before": 2.5856827100207007,
+        "max_frame_degrees_after": 0.6033256990302991
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.L",
+        "max_frame_degrees_before": 11.631357650659599,
+        "max_frame_degrees_after": 4.61228803244582
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.R",
+        "max_frame_degrees_before": 10.728336725664947,
+        "max_frame_degrees_after": 4.604133289277273
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.L",
+        "max_frame_degrees_before": 16.594040950552706,
+        "max_frame_degrees_after": 6.641769439430947
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.L",
+        "max_frame_degrees_before": 3.96011377024037,
+        "max_frame_degrees_after": 1.498822423183766
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.L",
+        "max_frame_degrees_before": 10.005265511909752,
+        "max_frame_degrees_after": 3.1529631376522462
+      },
+      {
+        "clip": "0020_orden",
+        "node": "toe.L",
+        "max_frame_degrees_before": 2.0382447607007075,
+        "max_frame_degrees_after": 0.7194728316221647
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.R",
+        "max_frame_degrees_before": 14.2232129487721,
+        "max_frame_degrees_after": 6.516818634542979
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.R",
+        "max_frame_degrees_before": 6.268147251780299,
+        "max_frame_degrees_after": 3.2701180164355006
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.R",
+        "max_frame_degrees_before": 5.562151667984573,
+        "max_frame_degrees_after": 3.296609597282864
+      }
+    ]
+  }
+]

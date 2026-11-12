@@ -1,0 +1,42 @@
+[
+  {
+    "avatar": "juan",
+    "clip": "0028_afirmativo",
+    "selected_and_rendered": true
+  },
+  {
+    "avatar": "juan",
+    "clip": "0028_pregunta",
+    "selected_and_rendered": true
+  },
+  {
+    "avatar": "juan",
+    "clip": "0028_negacion",
+    "selected_and_rendered": true
+  },
+  {
+    "avatar": "juan",
+    "clip": "0028_orden",
+    "selected_and_rendered": true
+  },
+  {
+    "avatar": "pauline",
+    "clip": "0028_afirmativo",
+    "selected_and_rendered": true
+  },
+  {
+    "avatar": "pauline",
+    "clip": "0028_pregunta",
+    "selected_and_rendered": true
+  },
+  {
+    "avatar": "pauline",
+    "clip": "0028_negacion",
+    "selected_and_rendered": true
+  },
+  {
+    "avatar": "pauline",
+    "clip": "0028_orden",
+    "selected_and_rendered": true
+  }
+]

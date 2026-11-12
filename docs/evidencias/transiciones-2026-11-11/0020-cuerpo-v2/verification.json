@@ -1,0 +1,878 @@
+[
+  {
+    "avatar": "juan",
+    "source": "0020-smooth v1, propuesta a\u00fan no aprobada",
+    "input_sha256": "eaf8ee1de3bb89777fc095727ed5ad6a3d462d5bcd66bd0f85449e57d7472da9",
+    "windows": {
+      "0020": [
+        1.5,
+        2.125
+      ]
+    },
+    "kernel": [
+      1,
+      2,
+      3,
+      2,
+      1
+    ],
+    "taper_seconds": 0.125,
+    "changed_tracks": 88,
+    "changes": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.001",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.002",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.003",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "neck",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "neck",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "head",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.L",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.R",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.L",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "toe.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.R",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "toe.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.001",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.002",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.003",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "neck",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "neck",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "head",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.L",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.R",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.L",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "toe.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.R",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "toe.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.001",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.002",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.003",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "neck",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "neck",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "head",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.L",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.R",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.L",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "toe.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.R",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "toe.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.001",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.002",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.003",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "neck",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "neck",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "head",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.L",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.R",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.L",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "toe.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.R",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "toe.R",
+        "path": "rotation"
+      }
+    ],
+    "entry_and_arm_curves_exact": true,
+    "fingers_and_face_exact": true,
+    "other_196_animations_exact": true,
+    "times_and_nodes_exact": true,
+    "source_unchanged": true,
+    "limits_provisional": true
+  },
+  {
+    "avatar": "pauline",
+    "source": "0020-smooth v1, propuesta a\u00fan no aprobada",
+    "input_sha256": "aa586797dc9e92f2308100fb28e893ac7b4772d3bf61134c694b9700c4302f17",
+    "windows": {
+      "0020": [
+        1.5,
+        2.125
+      ]
+    },
+    "kernel": [
+      1,
+      2,
+      3,
+      2,
+      1
+    ],
+    "taper_seconds": 0.125,
+    "changed_tracks": 76,
+    "changes": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.001",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.002",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine.003",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "neck",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "head",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shoulder.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "heel.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "toe.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thigh.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "shin.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "foot.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "heel.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "toe.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "spine",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.001",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.002",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine.003",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "neck",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "head",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shoulder.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "heel.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "toe.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thigh.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "shin.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "foot.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "heel.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "toe.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "spine",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.001",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.002",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine.003",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "neck",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "head",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shoulder.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "heel.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "toe.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thigh.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "shin.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "foot.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "heel.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "toe.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "spine",
+        "path": "translation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.001",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.002",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine.003",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "neck",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "head",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shoulder.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "heel.02.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "toe.L",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thigh.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "shin.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "foot.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "heel.02.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "toe.R",
+        "path": "rotation"
+      },
+      {
+        "clip": "0020_orden",
+        "node": "spine",
+        "path": "translation"
+      }
+    ],
+    "entry_and_arm_curves_exact": true,
+    "fingers_and_face_exact": true,
+    "other_196_animations_exact": true,
+    "times_and_nodes_exact": true,
+    "source_unchanged": true,
+    "limits_provisional": true
+  }
+]

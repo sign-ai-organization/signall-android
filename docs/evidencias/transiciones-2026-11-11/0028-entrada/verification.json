@@ -1,0 +1,42 @@
+[
+  {
+    "avatar": "juan",
+    "source": "0028-start: inicio sin salto aprobado",
+    "input_sha256": "add44eb97f95383cc72e69b5afba0c2b8502856242f55ae5659f21b02b4d7c05",
+    "windows": {
+      "0028": [
+        0.4166666666666667,
+        0.75
+      ]
+    },
+    "changed_rotation_tracks": 24,
+    "starts_in_approved_rest": true,
+    "all_samples_from_join_exact": true,
+    "approved_return_exact": true,
+    "other_196_animations_exact": true,
+    "other_channels_and_nodes_exact": true,
+    "times_exact": true,
+    "source_unchanged": true,
+    "entry_limits_provisional": true
+  },
+  {
+    "avatar": "pauline",
+    "source": "0028-start: inicio sin salto aprobado",
+    "input_sha256": "8e9a3b9f373303a971f06abf585e07c62ab5f4883c040dc43833422bddb94b4b",
+    "windows": {
+      "0028": [
+        0.4166666666666667,
+        0.75
+      ]
+    },
+    "changed_rotation_tracks": 24,
+    "starts_in_approved_rest": true,
+    "all_samples_from_join_exact": true,
+    "approved_return_exact": true,
+    "other_196_animations_exact": true,
+    "other_channels_and_nodes_exact": true,
+    "times_exact": true,
+    "source_unchanged": true,
+    "entry_limits_provisional": true
+  }
+]

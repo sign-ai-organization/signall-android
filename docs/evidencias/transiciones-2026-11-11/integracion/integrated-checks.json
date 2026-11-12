@@ -1,0 +1,14 @@
+[
+  {
+    "avatar": "juan",
+    "clips_exact_to_approved": 200,
+    "sha256": "6039af8fd09595d179a766f7450076ac7d6b7e209b98203f28346dda420620f7",
+    "bytes": 27727320
+  },
+  {
+    "avatar": "pauline",
+    "clips_exact_to_approved": 200,
+    "sha256": "6052810aec38beafd41e8d6679042964d862041daac268bed8d5962c1cea1444",
+    "bytes": 27594616
+  }
+]

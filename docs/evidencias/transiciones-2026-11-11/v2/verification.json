@@ -1,0 +1,28 @@
+[
+  {
+    "avatar": "juan",
+    "input_sha256": "7c0eddb863b5386dfe4c5c7a44119aaf90e1a7b416bd141f8de68fb3539fea2a",
+    "sample": "0000, cuatro variantes faciales",
+    "modified_rotation_tracks": 24,
+    "version": 2,
+    "untouched_middle": "fin del primer 20% hasta 1,375 s inclusive",
+    "direct_return_start_seconds": 1.375,
+    "direct_return_end_seconds": 1.9166666666666667,
+    "return_limits_are_provisional": true,
+    "other_196_animations_unchanged": true,
+    "original_unchanged": true
+  },
+  {
+    "avatar": "pauline",
+    "input_sha256": "41ae031a10255089e16970fe73bfdf1083fd4b8e623e6606ad9cbbf3da7cf3b2",
+    "sample": "0000, cuatro variantes faciales",
+    "modified_rotation_tracks": 24,
+    "version": 2,
+    "untouched_middle": "fin del primer 20% hasta 1,375 s inclusive",
+    "direct_return_start_seconds": 1.375,
+    "direct_return_end_seconds": 1.9166666666666667,
+    "return_limits_are_provisional": true,
+    "other_196_animations_unchanged": true,
+    "original_unchanged": true
+  }
+]

@@ -1,0 +1,295 @@
+[
+  {
+    "case": "distintas y cuatro variantes",
+    "starts": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "done": 1,
+    "exit": true,
+    "appended": false,
+    "stopped": false,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 3,
+      "length": 4,
+      "backlog": 0,
+      "speed": 1,
+      "baseSpeed": 1
+    }
+  },
+  {
+    "case": "misma se\u00f1a repetida",
+    "starts": [
+      0,
+      1
+    ],
+    "done": 1,
+    "exit": true,
+    "appended": false,
+    "stopped": false,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 1,
+      "length": 2,
+      "backlog": 0,
+      "speed": 1,
+      "baseSpeed": 1
+    }
+  },
+  {
+    "case": "append durante salida",
+    "starts": [
+      0,
+      1
+    ],
+    "done": 1,
+    "exit": true,
+    "appended": true,
+    "stopped": false,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 1,
+      "length": 2,
+      "backlog": 0,
+      "speed": 1,
+      "baseSpeed": 1
+    }
+  },
+  {
+    "case": "stop durante salida",
+    "starts": [
+      0
+    ],
+    "done": 0,
+    "exit": true,
+    "appended": false,
+    "stopped": true,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 0,
+      "length": 0,
+      "backlog": 0,
+      "speed": 1,
+      "baseSpeed": 1
+    }
+  },
+  {
+    "case": "movimiento reducido",
+    "starts": [
+      0,
+      1
+    ],
+    "done": 1,
+    "exit": false,
+    "appended": false,
+    "stopped": false,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 1,
+      "length": 2,
+      "backlog": 0,
+      "speed": 1,
+      "baseSpeed": 1
+    }
+  },
+  {
+    "case": "cambio de velocidad desde siguiente",
+    "starts": [
+      0,
+      1
+    ],
+    "done": 1,
+    "exit": true,
+    "appended": false,
+    "stopped": false,
+    "changed": true,
+    "playing": false,
+    "queue": {
+      "idx": 1,
+      "length": 2,
+      "backlog": 0,
+      "speed": 3,
+      "baseSpeed": 3
+    }
+  },
+  {
+    "case": "\u00faltimo recurso ausente",
+    "starts": [
+      0
+    ],
+    "done": 1,
+    "exit": true,
+    "appended": false,
+    "stopped": false,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 1,
+      "length": 2,
+      "backlog": 0,
+      "speed": 1,
+      "baseSpeed": 1
+    }
+  },
+  {
+    "case": "todos los recursos ausentes",
+    "starts": [],
+    "done": 1,
+    "exit": false,
+    "appended": false,
+    "stopped": false,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 0,
+      "length": 1,
+      "backlog": 0,
+      "speed": 1,
+      "baseSpeed": 1
+    }
+  },
+  {
+    "case": "50 se\u00f1as juan, variantes alternadas",
+    "starts": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "done": 1,
+    "exit": true,
+    "appended": false,
+    "stopped": false,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 49,
+      "length": 50,
+      "backlog": 0,
+      "speed": 3,
+      "baseSpeed": 3
+    }
+  },
+  {
+    "case": "50 se\u00f1as pauline, variantes alternadas",
+    "starts": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "done": 1,
+    "exit": true,
+    "appended": false,
+    "stopped": false,
+    "changed": false,
+    "playing": false,
+    "queue": {
+      "idx": 49,
+      "length": 50,
+      "backlog": 0,
+      "speed": 3,
+      "baseSpeed": 3
+    }
+  }
+]

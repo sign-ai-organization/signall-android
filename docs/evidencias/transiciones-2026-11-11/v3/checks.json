@@ -1,0 +1,24 @@
+[
+  {
+    "duration": 2.4583332538604736,
+    "settle_start": 2.2083332538604736,
+    "settle_end": 2.908333253860474,
+    "settle_span": 0.7,
+    "time_monotonic": true,
+    "weight_monotonic": true,
+    "final_weight": 0,
+    "unchanged_before_tail": true,
+    "avatar": "juan"
+  },
+  {
+    "duration": 2.4583332538604736,
+    "settle_start": 2.2083332538604736,
+    "settle_end": 2.908333253860474,
+    "settle_span": 0.7,
+    "time_monotonic": true,
+    "weight_monotonic": true,
+    "final_weight": 0,
+    "unchanged_before_tail": true,
+    "avatar": "pauline"
+  }
+]

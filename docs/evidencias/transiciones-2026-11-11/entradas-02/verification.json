@@ -1,0 +1,894 @@
+[
+  {
+    "avatar": "juan",
+    "input_sha256": "7c0eddb863b5386dfe4c5c7a44119aaf90e1a7b416bd141f8de68fb3539fea2a",
+    "approved_sources": [
+      {
+        "group": "group-03",
+        "sha256": "165bb2c6661bec7b31a097d15c5d91d30b5038b19eacd1d7a4565cb285556baf"
+      },
+      {
+        "group": "group-04",
+        "sha256": "da0ac6bf57f074d28617e0cccf21540f2619052eb865769264b6d200257f5b51"
+      },
+      {
+        "group": "group-05",
+        "sha256": "6d85bca977e2131ad8c95c0b7fc1e2dd167fa518a3082265e30724923a582e4e"
+      }
+    ],
+    "windows": {
+      "0010": [
+        0.041666666666666664,
+        0.25
+      ],
+      "0011": [
+        0.041666666666666664,
+        0.2916666666666667
+      ],
+      "0012": [
+        0.041666666666666664,
+        0.3333333333333333
+      ],
+      "0013": [
+        0.041666666666666664,
+        0.3333333333333333
+      ],
+      "0014": [
+        0.041666666666666664,
+        0.75
+      ],
+      "0015": [
+        0.041666666666666664,
+        0.6666666666666666
+      ],
+      "0016": [
+        0.041666666666666664,
+        0.7916666666666666
+      ],
+      "0017": [
+        0.041666666666666664,
+        0.75
+      ],
+      "0018": [
+        0.041666666666666664,
+        0.7916666666666666
+      ],
+      "0019": [
+        0.041666666666666664,
+        0.25
+      ]
+    },
+    "entry_joins": {
+      "0011": 0.2916666666666667,
+      "0013": 0.3333333333333333,
+      "0014": 0.75,
+      "0015": 0.6666666666666666,
+      "0016": 0.7916666666666666,
+      "0017": 0.75,
+      "0018": 0.7916666666666666,
+      "0019": 0.25
+    },
+    "hold_rest_until": {
+      "0014": 0.5,
+      "0015": 0.4166666666666667,
+      "0016": 0.5833333333333334,
+      "0017": 0.5,
+      "0018": 0.5833333333333334
+    },
+    "added_preparation_seconds": {
+      "0010": 0.25,
+      "0012": 0.3333333333333333
+    },
+    "nodes_and_other_160_animations_exact": true,
+    "source_unchanged": true,
+    "limits_provisional": true,
+    "checks": [
+      {
+        "clip": "0010_afirmativo",
+        "method": "prepend",
+        "added_seconds": 0.25,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 312,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0010_pregunta",
+        "method": "prepend",
+        "added_seconds": 0.25,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 312,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0010_negacion",
+        "method": "prepend",
+        "added_seconds": 0.25,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 312,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0010_orden",
+        "method": "prepend",
+        "added_seconds": 0.25,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 312,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0011_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.2916666666666667,
+        "protected_from_seconds": 0.2916666666666667,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0011_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.2916666666666667,
+        "protected_from_seconds": 0.2916666666666667,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0011_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.2916666666666667,
+        "protected_from_seconds": 0.2916666666666667,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0011_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.2916666666666667,
+        "protected_from_seconds": 0.2916666666666667,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0012_afirmativo",
+        "method": "prepend",
+        "added_seconds": 0.3333333333333333,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 312,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0012_pregunta",
+        "method": "prepend",
+        "added_seconds": 0.3333333333333333,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 312,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0012_negacion",
+        "method": "prepend",
+        "added_seconds": 0.3333333333333333,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 312,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0012_orden",
+        "method": "prepend",
+        "added_seconds": 0.3333333333333333,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 312,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0013_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.3333333333333333,
+        "protected_from_seconds": 0.3333333333333333,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0013_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.3333333333333333,
+        "protected_from_seconds": 0.3333333333333333,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0013_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.3333333333333333,
+        "protected_from_seconds": 0.3333333333333333,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0013_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.3333333333333333,
+        "protected_from_seconds": 0.3333333333333333,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0014_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0014_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0014_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0014_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0015_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.6666666666666666,
+        "protected_from_seconds": 0.6666666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0015_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.6666666666666666,
+        "protected_from_seconds": 0.6666666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0015_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.6666666666666666,
+        "protected_from_seconds": 0.6666666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0015_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.6666666666666666,
+        "protected_from_seconds": 0.6666666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0016_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0016_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0016_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0016_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0017_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0017_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0017_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0017_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0018_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0018_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0018_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0018_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0019_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.25,
+        "protected_from_seconds": 0.25,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0019_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.25,
+        "protected_from_seconds": 0.25,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0019_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.25,
+        "protected_from_seconds": 0.25,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0019_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.25,
+        "protected_from_seconds": 0.25,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      }
+    ]
+  },
+  {
+    "avatar": "pauline",
+    "input_sha256": "41ae031a10255089e16970fe73bfdf1083fd4b8e623e6606ad9cbbf3da7cf3b2",
+    "approved_sources": [
+      {
+        "group": "group-03",
+        "sha256": "f7b5749ef52cda1cfbe7d77a2b3c024ec4ef74b7a6e03ab1dbba204c7ab5279b"
+      },
+      {
+        "group": "group-04",
+        "sha256": "4885628731d8a2eb6d9b8ae6fe64e4c621715e97652052bddb8015a5bed5881e"
+      },
+      {
+        "group": "group-05",
+        "sha256": "3dcb6c3cc9ddadcb3eecbc247bd472a34358e0d8260ad50558e37b2780f978c3"
+      }
+    ],
+    "windows": {
+      "0010": [
+        0.041666666666666664,
+        0.25
+      ],
+      "0011": [
+        0.041666666666666664,
+        0.2916666666666667
+      ],
+      "0012": [
+        0.041666666666666664,
+        0.3333333333333333
+      ],
+      "0013": [
+        0.041666666666666664,
+        0.3333333333333333
+      ],
+      "0014": [
+        0.041666666666666664,
+        0.75
+      ],
+      "0015": [
+        0.041666666666666664,
+        0.6666666666666666
+      ],
+      "0016": [
+        0.041666666666666664,
+        0.7916666666666666
+      ],
+      "0017": [
+        0.041666666666666664,
+        0.75
+      ],
+      "0018": [
+        0.041666666666666664,
+        0.7916666666666666
+      ],
+      "0019": [
+        0.041666666666666664,
+        0.25
+      ]
+    },
+    "entry_joins": {
+      "0011": 0.2916666666666667,
+      "0013": 0.3333333333333333,
+      "0014": 0.75,
+      "0015": 0.6666666666666666,
+      "0016": 0.7916666666666666,
+      "0017": 0.75,
+      "0018": 0.7916666666666666,
+      "0019": 0.25
+    },
+    "hold_rest_until": {
+      "0014": 0.5,
+      "0015": 0.4166666666666667,
+      "0016": 0.5833333333333334,
+      "0017": 0.5,
+      "0018": 0.5833333333333334
+    },
+    "added_preparation_seconds": {
+      "0010": 0.25,
+      "0012": 0.3333333333333333
+    },
+    "nodes_and_other_160_animations_exact": true,
+    "source_unchanged": true,
+    "limits_provisional": true,
+    "checks": [
+      {
+        "clip": "0010_afirmativo",
+        "method": "prepend",
+        "added_seconds": 0.25,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 105,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0010_pregunta",
+        "method": "prepend",
+        "added_seconds": 0.25,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 105,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0010_negacion",
+        "method": "prepend",
+        "added_seconds": 0.25,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 105,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0010_orden",
+        "method": "prepend",
+        "added_seconds": 0.25,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 105,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0011_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.2916666666666667,
+        "protected_from_seconds": 0.2916666666666667,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0011_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.2916666666666667,
+        "protected_from_seconds": 0.2916666666666667,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0011_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.2916666666666667,
+        "protected_from_seconds": 0.2916666666666667,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0011_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.2916666666666667,
+        "protected_from_seconds": 0.2916666666666667,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0012_afirmativo",
+        "method": "prepend",
+        "added_seconds": 0.3333333333333333,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 105,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0012_pregunta",
+        "method": "prepend",
+        "added_seconds": 0.3333333333333333,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 105,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0012_negacion",
+        "method": "prepend",
+        "added_seconds": 0.3333333333333333,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 105,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0012_orden",
+        "method": "prepend",
+        "added_seconds": 0.3333333333333333,
+        "join_seconds": null,
+        "protected_from_seconds": null,
+        "changed_samplers": 105,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0013_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.3333333333333333,
+        "protected_from_seconds": 0.3333333333333333,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0013_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.3333333333333333,
+        "protected_from_seconds": 0.3333333333333333,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0013_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.3333333333333333,
+        "protected_from_seconds": 0.3333333333333333,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0013_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.3333333333333333,
+        "protected_from_seconds": 0.3333333333333333,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0014_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0014_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0014_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0014_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0015_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.6666666666666666,
+        "protected_from_seconds": 0.6666666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0015_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.6666666666666666,
+        "protected_from_seconds": 0.6666666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0015_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.6666666666666666,
+        "protected_from_seconds": 0.6666666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0015_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.6666666666666666,
+        "protected_from_seconds": 0.6666666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0016_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0016_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0016_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0016_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0017_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0017_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0017_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0017_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.75,
+        "protected_from_seconds": 0.75,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0018_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0018_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0018_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0018_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.7916666666666666,
+        "protected_from_seconds": 0.7916666666666666,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0019_afirmativo",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.25,
+        "protected_from_seconds": 0.25,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0019_pregunta",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.25,
+        "protected_from_seconds": 0.25,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0019_negacion",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.25,
+        "protected_from_seconds": 0.25,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      },
+      {
+        "clip": "0019_orden",
+        "method": "replace_entry",
+        "added_seconds": 0,
+        "join_seconds": 0.25,
+        "protected_from_seconds": 0.25,
+        "changed_samplers": 6,
+        "approved_return_values_exact": true
+      }
+    ]
+  }
+]

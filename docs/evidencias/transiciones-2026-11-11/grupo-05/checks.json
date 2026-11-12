@@ -1,0 +1,30 @@
+[
+  {
+    "avatar": "juan",
+    "checked_tracks": {
+      "0018": 24,
+      "0019": 24,
+      "0020": 24,
+      "0021": 24,
+      "0022": 24
+    },
+    "central_samples_exact": true,
+    "all_entries_exact": true,
+    "return_angular_distance_monotonic": true,
+    "other_180_animations_unchanged": true
+  },
+  {
+    "avatar": "pauline",
+    "checked_tracks": {
+      "0018": 24,
+      "0019": 24,
+      "0020": 24,
+      "0021": 24,
+      "0022": 24
+    },
+    "central_samples_exact": true,
+    "all_entries_exact": true,
+    "return_angular_distance_monotonic": true,
+    "other_180_animations_unchanged": true
+  }
+]

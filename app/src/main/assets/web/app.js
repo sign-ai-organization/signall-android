@@ -38,6 +38,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { REST_EXIT_TAIL, restExitSample } from "./playbackTiming.js";
 
 // ── Estado global ─────────────────────────────────────────────────────────────
 const state = {
@@ -45,6 +46,8 @@ const state = {
   action: null,          // clip en curso
   outgoing: null,        // clip que se va (peso 1 → 0) durante la fundición
   finishing: false,      // la fundición de salida está calendarizada
+  restExitElapsed: 0,
+  restExitBegin: 0,
   playing: false,
   speed: 1,
   loading: false,
@@ -295,7 +298,8 @@ const Debug = {
       // `inUse` es la prueba de que hay dos actions vivas: durante la fundición
       // son 2 (la que entra y la que sale) y el resto del tiempo 1.
       `fundición: ${state.finishing ? "salida" : state.outgoing ? "saliendo" : "-"}` +
-        `  ${CROSSFADE_MS}ms  actions vivas: ${state.mixer?.stats.actions.inUse ?? 0}`,
+        `  ${state.finishing ? Math.round(restExitSample(0, state.action.getClip().duration, state.restExitBegin).span * 1000) : CROSSFADE_MS}ms` +
+        `  actions vivas: ${state.mixer?.stats.actions.inUse ?? 0}`,
     ],
     // El tiempo de silencio vive en el STT, no en el backend ni en la app, y es
     // el segundo bloque más grande de la latencia de punta a punta: con 1500 ms
@@ -759,6 +763,7 @@ function stopPlayback() {
   state.action = null;
   state.outgoing = null;
   state.finishing = false;
+  state.restExitElapsed = 0;
   state.loading = false;
   // Una carga que ya estaba en vuelo no debe resucitar la reproducción después
   // de un reset (o el long press "no resetea" y la seña arranca sola).
@@ -797,6 +802,7 @@ function startClip(clip) {
   const fade = previous && previous !== action ? crossfade() : 0;
 
   state.finishing = false;
+  state.restExitElapsed = 0;
   state.playing = true;
   // RF-AVT-08: si el usuario cambió la velocidad mientras la seña anterior
   // estaba saliendo, el valor nuevo se aplica acá, al arrancar esta. La seña
@@ -920,6 +926,34 @@ async function loadQueueItem(index) {
   }
 }
 
+/** Inicia la salida corporal aprobada; sigue siendo parte del turno. */
+function beginRestExit() {
+  if (state.finishing) return;
+  if (state.outgoing) state.outgoing.stop();
+  state.outgoing = null;
+  state.finishing = true;
+  state.restExitElapsed = 0;
+  state.restExitBegin = state.action.time;
+  // Muestrear manualmente el último tramo evita que el clip se repita al llegar
+  // al final. El reloj del mixer sigue vivo para la fundición de otros turnos.
+  state.action.stopFading();
+  state.action.paused = true;
+  tickRestExit(0);
+}
+
+function tickRestExit(step) {
+  state.restExitElapsed += step;
+  const action = state.action;
+  const sample = restExitSample(state.restExitElapsed, action.getClip().duration, state.restExitBegin);
+  action.time = sample.time;
+  action.setEffectiveWeight(sample.weight);
+  state.mixer.update(0);
+  if (sample.done) {
+    stopPlayback();
+    notifyPlaybackDone();
+  }
+}
+
 /** Pasa al ítem siguiente de la cola, o cierra el turno si no hay más. */
 function advanceQueue() {
   const next = state.queueIdx + 1;
@@ -930,13 +964,17 @@ function advanceQueue() {
     // el muñeco nunca llegó a moverse y no hay action de la cual salir con
     // fundición. Sin esta guarda esto reventaba con "cannot read property of null".
     if (fade > 0 && state.action) {
-      // Salida al reposo. No hace falta escribir ningún keyframe: cuando el
-      // peso de una action llega a 0, `PropertyMixer.apply()` completa con el
-      // valor guardado cuando se creó el binding — el TRS del nodo, o sea la
-      // pose de descanso horneada. Como la fundición se calendariza para
-      // acabar junto con el clip, esperar a que termine no alarga el turno.
-      state.action.fadeOut(fade);
-      state.finishing = true;
+      const remaining = state.action.getClip().duration - state.action.time;
+      if (remaining <= REST_EXIT_TAIL + 0.05) {
+        // El peso completa con el reposo horneado de los nodos. El último tramo
+        // desacelera como la prueba aprobada; el callback espera al peso cero.
+        beginRestExit();
+      } else {
+        // Camino raro (una carga fallida puede llegar acá lejos del final): se
+        // mantiene la salida anterior en vez de estirar el clip entero.
+        state.action.fadeOut(fade);
+        state.finishing = true;
+      }
       return;
     }
     stopPlayback();
@@ -958,26 +996,29 @@ function tickPlayback(dt) {
 
   const clip = action.getClip();
   const step = dt * state.speed;
-  // El clip siguiente entra `fade` antes del final de este, así que la
-  // fundición termina justo cuando termina el clip.
-  const boundary = clip.duration - crossfade();
-
   if (state.finishing) {
-    if (action.time + step >= clip.duration) {
-      state.mixer.update(Math.max(0, clip.duration - action.time));
-      stopPlayback();
-      notifyPlaybackDone();
+    // Una oración añadida durante la salida no debe esperar ni perderse. La
+    // action saliente conserva su pose y peso actuales durante el crossfade.
+    if (state.queueIdx + 1 < state.queue.length) {
+      advanceQueue();
       return;
     }
-    state.mixer.update(step);
+    tickRestExit(step);
     return;
   }
+
+  const smoothFinal = !state.reduceMotion && state.queueIdx + 1 >= state.queue.length;
+  // Entre clips se conserva el crossfade de 100 ms; solo el último acomoda el
+  // cuerpo durante 700 ms. Movimiento reducido mantiene el corte sin mezcla.
+  const boundary = Math.max(0, clip.duration - (smoothFinal ? REST_EXIT_TAIL : crossfade()));
 
   if (action.time + step >= boundary) {
     // Un dt grande (la app volvió del background, p.ej.) no debe teletransportar
     // la mezcla a mitad de camino: se avanza solo hasta la frontera.
-    state.mixer.update(Math.max(0, boundary - action.time));
+    const used = Math.max(0, boundary - action.time);
+    state.mixer.update(used);
     advanceQueue();
+    if (state.finishing) tickRestExit(Math.max(0, step - used));
     return;
   }
   state.mixer.update(step);

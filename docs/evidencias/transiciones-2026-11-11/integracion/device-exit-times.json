@@ -1,0 +1,30 @@
+[
+  {
+    "case": "normal",
+    "speed_setting": 0.5,
+    "start": 401959.10000002384,
+    "done": 404533,
+    "elapsed": 2.5738999999761583
+  },
+  {
+    "case": "normal",
+    "speed_setting": 0.5,
+    "start": 404593.90000003576,
+    "done": 407177.90000003576,
+    "elapsed": 2.584
+  },
+  {
+    "case": "2x",
+    "speed_setting": 1.0,
+    "start": 407241.1999999881,
+    "done": 408549.60000002384,
+    "elapsed": 1.3084000000357627
+  },
+  {
+    "case": "movimiento reducido",
+    "speed_setting": 0.5,
+    "start": 408616.8000000119,
+    "done": 410754.6999999881,
+    "elapsed": 2.1378999999761583
+  }
+]

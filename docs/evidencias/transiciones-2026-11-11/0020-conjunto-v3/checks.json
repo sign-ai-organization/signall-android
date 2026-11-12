@@ -1,0 +1,1870 @@
+[
+  {
+    "avatar": "juan",
+    "checked_changed_tracks": 144,
+    "all_non_target_tracks_exact": true,
+    "outside_window_exact": true,
+    "times_and_nodes_exact": true,
+    "other_196_animations_exact": true,
+    "rotation_delta_checks": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "upper_arm.L",
+        "max_frame_degrees_before": 8.003453046026461,
+        "max_frame_degrees_after": 7.702695079117035
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "forearm.L",
+        "max_frame_degrees_before": 20.74519874704765,
+        "max_frame_degrees_after": 19.976718140769933
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "hand.L",
+        "max_frame_degrees_before": 9.401209099278052,
+        "max_frame_degrees_after": 9.048258320844775
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.01.L",
+        "max_frame_degrees_before": 76.07469444375133,
+        "max_frame_degrees_after": 26.21770193647417
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.02.L",
+        "max_frame_degrees_before": 77.87483749087193,
+        "max_frame_degrees_after": 26.88177258198741
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.03.L",
+        "max_frame_degrees_before": 52.267867551084414,
+        "max_frame_degrees_after": 17.695441323021328
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.01.L",
+        "max_frame_degrees_before": 19.694819117433017,
+        "max_frame_degrees_after": 6.69450146535524
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.02.L",
+        "max_frame_degrees_before": 5.233921786830051,
+        "max_frame_degrees_after": 1.7376691157012825
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.03.L",
+        "max_frame_degrees_before": 20.366891935975787,
+        "max_frame_degrees_after": 6.790170539944512
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.01.L",
+        "max_frame_degrees_before": 72.07003511240893,
+        "max_frame_degrees_after": 24.75122378480277
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.02.L",
+        "max_frame_degrees_before": 80.05562598692065,
+        "max_frame_degrees_after": 27.69077163215965
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.03.L",
+        "max_frame_degrees_before": 51.83695372594926,
+        "max_frame_degrees_after": 17.54547811744303
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.01.L",
+        "max_frame_degrees_before": 70.04358799414715,
+        "max_frame_degrees_after": 24.0147839034055
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.02.L",
+        "max_frame_degrees_before": 86.44057009026,
+        "max_frame_degrees_after": 30.088238737264245
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.03.L",
+        "max_frame_degrees_before": 52.5347952232119,
+        "max_frame_degrees_after": 17.789062040132457
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.01.L",
+        "max_frame_degrees_before": 53.293465612240475,
+        "max_frame_degrees_after": 12.210747985662218
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.02.L",
+        "max_frame_degrees_before": 11.123366818039374,
+        "max_frame_degrees_after": 3.7180711756659184
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.03.L",
+        "max_frame_degrees_before": 7.929776935801379,
+        "max_frame_degrees_after": 2.6473159983333656
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "upper_arm.R",
+        "max_frame_degrees_before": 6.2572250822935205,
+        "max_frame_degrees_after": 5.8031700249769145
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "forearm.R",
+        "max_frame_degrees_before": 21.251195530697608,
+        "max_frame_degrees_after": 20.464638312707176
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "hand.R",
+        "max_frame_degrees_before": 8.086744297240498,
+        "max_frame_degrees_after": 6.28854597969439
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.01.R",
+        "max_frame_degrees_before": 45.922073419350234,
+        "max_frame_degrees_after": 15.491821887057737
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.02.R",
+        "max_frame_degrees_before": 64.83277316211073,
+        "max_frame_degrees_after": 22.13739011750421
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.03.R",
+        "max_frame_degrees_before": 39.357421286418614,
+        "max_frame_degrees_after": 13.23508691064396
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.01.R",
+        "max_frame_degrees_before": 18.050421850282643,
+        "max_frame_degrees_after": 6.033874371695961
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.02.R",
+        "max_frame_degrees_before": 5.498808411107284,
+        "max_frame_degrees_after": 1.8463242092045258
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.03.R",
+        "max_frame_degrees_before": 19.535695730635346,
+        "max_frame_degrees_after": 6.568843904154745
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.01.R",
+        "max_frame_degrees_before": 42.35761446952267,
+        "max_frame_degrees_after": 14.263655528962742
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.02.R",
+        "max_frame_degrees_before": 58.12539558077665,
+        "max_frame_degrees_after": 19.75229396182755
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.03.R",
+        "max_frame_degrees_before": 59.26163746849196,
+        "max_frame_degrees_after": 20.154406590577572
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.01.R",
+        "max_frame_degrees_before": 32.219459972985476,
+        "max_frame_degrees_after": 10.803053248917653
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.02.R",
+        "max_frame_degrees_before": 63.01607238586815,
+        "max_frame_degrees_after": 21.488072271143093
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.03.R",
+        "max_frame_degrees_before": 61.495749050709364,
+        "max_frame_degrees_after": 20.946613385953594
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.01.R",
+        "max_frame_degrees_before": 20.555960038907614,
+        "max_frame_degrees_after": 4.371251485791986
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.02.R",
+        "max_frame_degrees_before": 7.2125998982282145,
+        "max_frame_degrees_after": 2.404348692945412
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.03.R",
+        "max_frame_degrees_before": 2.895301616744891,
+        "max_frame_degrees_after": 0.9645016041472929
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "upper_arm.L",
+        "max_frame_degrees_before": 8.003453046026461,
+        "max_frame_degrees_after": 7.702695079117035
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "forearm.L",
+        "max_frame_degrees_before": 20.74519874704765,
+        "max_frame_degrees_after": 19.976718140769933
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "hand.L",
+        "max_frame_degrees_before": 9.401209099278052,
+        "max_frame_degrees_after": 9.048258320844775
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.01.L",
+        "max_frame_degrees_before": 76.07469444375133,
+        "max_frame_degrees_after": 26.21770193647417
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.02.L",
+        "max_frame_degrees_before": 77.87483749087193,
+        "max_frame_degrees_after": 26.88177258198741
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.03.L",
+        "max_frame_degrees_before": 52.267867551084414,
+        "max_frame_degrees_after": 17.695441323021328
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.01.L",
+        "max_frame_degrees_before": 19.694819117433017,
+        "max_frame_degrees_after": 6.69450146535524
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.02.L",
+        "max_frame_degrees_before": 5.233921786830051,
+        "max_frame_degrees_after": 1.7376691157012825
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.03.L",
+        "max_frame_degrees_before": 20.366891935975787,
+        "max_frame_degrees_after": 6.790170539944512
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.01.L",
+        "max_frame_degrees_before": 72.07003511240893,
+        "max_frame_degrees_after": 24.75122378480277
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.02.L",
+        "max_frame_degrees_before": 80.05562598692065,
+        "max_frame_degrees_after": 27.69077163215965
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.03.L",
+        "max_frame_degrees_before": 51.83695372594926,
+        "max_frame_degrees_after": 17.54547811744303
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.01.L",
+        "max_frame_degrees_before": 70.04358799414715,
+        "max_frame_degrees_after": 24.0147839034055
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.02.L",
+        "max_frame_degrees_before": 86.44057009026,
+        "max_frame_degrees_after": 30.088238737264245
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.03.L",
+        "max_frame_degrees_before": 52.5347952232119,
+        "max_frame_degrees_after": 17.789062040132457
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.01.L",
+        "max_frame_degrees_before": 53.293465612240475,
+        "max_frame_degrees_after": 12.210747985662218
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.02.L",
+        "max_frame_degrees_before": 11.123366818039374,
+        "max_frame_degrees_after": 3.7180711756659184
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.03.L",
+        "max_frame_degrees_before": 7.929776935801379,
+        "max_frame_degrees_after": 2.6473159983333656
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "upper_arm.R",
+        "max_frame_degrees_before": 6.2572250822935205,
+        "max_frame_degrees_after": 5.8031700249769145
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "forearm.R",
+        "max_frame_degrees_before": 21.251195530697608,
+        "max_frame_degrees_after": 20.464638312707176
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "hand.R",
+        "max_frame_degrees_before": 8.086744297240498,
+        "max_frame_degrees_after": 6.28854597969439
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.01.R",
+        "max_frame_degrees_before": 45.922073419350234,
+        "max_frame_degrees_after": 15.491821887057737
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.02.R",
+        "max_frame_degrees_before": 64.83277316211073,
+        "max_frame_degrees_after": 22.13739011750421
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.03.R",
+        "max_frame_degrees_before": 39.357421286418614,
+        "max_frame_degrees_after": 13.23508691064396
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.01.R",
+        "max_frame_degrees_before": 18.050421850282643,
+        "max_frame_degrees_after": 6.033874371695961
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.02.R",
+        "max_frame_degrees_before": 5.498808411107284,
+        "max_frame_degrees_after": 1.8463242092045258
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.03.R",
+        "max_frame_degrees_before": 19.535695730635346,
+        "max_frame_degrees_after": 6.568843904154745
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.01.R",
+        "max_frame_degrees_before": 42.35761446952267,
+        "max_frame_degrees_after": 14.263655528962742
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.02.R",
+        "max_frame_degrees_before": 58.12539558077665,
+        "max_frame_degrees_after": 19.75229396182755
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.03.R",
+        "max_frame_degrees_before": 59.26163746849196,
+        "max_frame_degrees_after": 20.154406590577572
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.01.R",
+        "max_frame_degrees_before": 32.219459972985476,
+        "max_frame_degrees_after": 10.803053248917653
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.02.R",
+        "max_frame_degrees_before": 63.01607238586815,
+        "max_frame_degrees_after": 21.488072271143093
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.03.R",
+        "max_frame_degrees_before": 61.495749050709364,
+        "max_frame_degrees_after": 20.946613385953594
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.01.R",
+        "max_frame_degrees_before": 20.555960038907614,
+        "max_frame_degrees_after": 4.371251485791986
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.02.R",
+        "max_frame_degrees_before": 7.2125998982282145,
+        "max_frame_degrees_after": 2.404348692945412
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.03.R",
+        "max_frame_degrees_before": 2.895301616744891,
+        "max_frame_degrees_after": 0.9645016041472929
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "upper_arm.L",
+        "max_frame_degrees_before": 8.003453046026461,
+        "max_frame_degrees_after": 7.702695079117035
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "forearm.L",
+        "max_frame_degrees_before": 20.74519874704765,
+        "max_frame_degrees_after": 19.976718140769933
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "hand.L",
+        "max_frame_degrees_before": 9.401209099278052,
+        "max_frame_degrees_after": 9.048258320844775
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.01.L",
+        "max_frame_degrees_before": 76.07469444375133,
+        "max_frame_degrees_after": 26.21770193647417
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.02.L",
+        "max_frame_degrees_before": 77.87483749087193,
+        "max_frame_degrees_after": 26.88177258198741
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.03.L",
+        "max_frame_degrees_before": 52.267867551084414,
+        "max_frame_degrees_after": 17.695441323021328
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.01.L",
+        "max_frame_degrees_before": 19.694819117433017,
+        "max_frame_degrees_after": 6.69450146535524
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.02.L",
+        "max_frame_degrees_before": 5.233921786830051,
+        "max_frame_degrees_after": 1.7376691157012825
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.03.L",
+        "max_frame_degrees_before": 20.366891935975787,
+        "max_frame_degrees_after": 6.790170539944512
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.01.L",
+        "max_frame_degrees_before": 72.07003511240893,
+        "max_frame_degrees_after": 24.75122378480277
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.02.L",
+        "max_frame_degrees_before": 80.05562598692065,
+        "max_frame_degrees_after": 27.69077163215965
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.03.L",
+        "max_frame_degrees_before": 51.83695372594926,
+        "max_frame_degrees_after": 17.54547811744303
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.01.L",
+        "max_frame_degrees_before": 70.04358799414715,
+        "max_frame_degrees_after": 24.0147839034055
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.02.L",
+        "max_frame_degrees_before": 86.44057009026,
+        "max_frame_degrees_after": 30.088238737264245
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.03.L",
+        "max_frame_degrees_before": 52.5347952232119,
+        "max_frame_degrees_after": 17.789062040132457
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.01.L",
+        "max_frame_degrees_before": 53.293465612240475,
+        "max_frame_degrees_after": 12.210747985662218
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.02.L",
+        "max_frame_degrees_before": 11.123366818039374,
+        "max_frame_degrees_after": 3.7180711756659184
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.03.L",
+        "max_frame_degrees_before": 7.929776935801379,
+        "max_frame_degrees_after": 2.6473159983333656
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "upper_arm.R",
+        "max_frame_degrees_before": 6.2572250822935205,
+        "max_frame_degrees_after": 5.8031700249769145
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "forearm.R",
+        "max_frame_degrees_before": 21.251195530697608,
+        "max_frame_degrees_after": 20.464638312707176
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "hand.R",
+        "max_frame_degrees_before": 8.086744297240498,
+        "max_frame_degrees_after": 6.28854597969439
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.01.R",
+        "max_frame_degrees_before": 45.922073419350234,
+        "max_frame_degrees_after": 15.491821887057737
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.02.R",
+        "max_frame_degrees_before": 64.83277316211073,
+        "max_frame_degrees_after": 22.13739011750421
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.03.R",
+        "max_frame_degrees_before": 39.357421286418614,
+        "max_frame_degrees_after": 13.23508691064396
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.01.R",
+        "max_frame_degrees_before": 18.050421850282643,
+        "max_frame_degrees_after": 6.033874371695961
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.02.R",
+        "max_frame_degrees_before": 5.498808411107284,
+        "max_frame_degrees_after": 1.8463242092045258
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.03.R",
+        "max_frame_degrees_before": 19.535695730635346,
+        "max_frame_degrees_after": 6.568843904154745
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.01.R",
+        "max_frame_degrees_before": 42.35761446952267,
+        "max_frame_degrees_after": 14.263655528962742
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.02.R",
+        "max_frame_degrees_before": 58.12539558077665,
+        "max_frame_degrees_after": 19.75229396182755
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.03.R",
+        "max_frame_degrees_before": 59.26163746849196,
+        "max_frame_degrees_after": 20.154406590577572
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.01.R",
+        "max_frame_degrees_before": 32.219459972985476,
+        "max_frame_degrees_after": 10.803053248917653
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.02.R",
+        "max_frame_degrees_before": 63.01607238586815,
+        "max_frame_degrees_after": 21.488072271143093
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.03.R",
+        "max_frame_degrees_before": 61.495749050709364,
+        "max_frame_degrees_after": 20.946613385953594
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.01.R",
+        "max_frame_degrees_before": 20.555960038907614,
+        "max_frame_degrees_after": 4.371251485791986
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.02.R",
+        "max_frame_degrees_before": 7.2125998982282145,
+        "max_frame_degrees_after": 2.404348692945412
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.03.R",
+        "max_frame_degrees_before": 2.895301616744891,
+        "max_frame_degrees_after": 0.9645016041472929
+      },
+      {
+        "clip": "0020_orden",
+        "node": "upper_arm.L",
+        "max_frame_degrees_before": 8.003453046026461,
+        "max_frame_degrees_after": 7.702695079117035
+      },
+      {
+        "clip": "0020_orden",
+        "node": "forearm.L",
+        "max_frame_degrees_before": 20.74519874704765,
+        "max_frame_degrees_after": 19.976718140769933
+      },
+      {
+        "clip": "0020_orden",
+        "node": "hand.L",
+        "max_frame_degrees_before": 9.401209099278052,
+        "max_frame_degrees_after": 9.048258320844775
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.01.L",
+        "max_frame_degrees_before": 76.07469444375133,
+        "max_frame_degrees_after": 26.21770193647417
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.02.L",
+        "max_frame_degrees_before": 77.87483749087193,
+        "max_frame_degrees_after": 26.88177258198741
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.03.L",
+        "max_frame_degrees_before": 52.267867551084414,
+        "max_frame_degrees_after": 17.695441323021328
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.01.L",
+        "max_frame_degrees_before": 19.694819117433017,
+        "max_frame_degrees_after": 6.69450146535524
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.02.L",
+        "max_frame_degrees_before": 5.233921786830051,
+        "max_frame_degrees_after": 1.7376691157012825
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.03.L",
+        "max_frame_degrees_before": 20.366891935975787,
+        "max_frame_degrees_after": 6.790170539944512
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.01.L",
+        "max_frame_degrees_before": 72.07003511240893,
+        "max_frame_degrees_after": 24.75122378480277
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.02.L",
+        "max_frame_degrees_before": 80.05562598692065,
+        "max_frame_degrees_after": 27.69077163215965
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.03.L",
+        "max_frame_degrees_before": 51.83695372594926,
+        "max_frame_degrees_after": 17.54547811744303
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.01.L",
+        "max_frame_degrees_before": 70.04358799414715,
+        "max_frame_degrees_after": 24.0147839034055
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.02.L",
+        "max_frame_degrees_before": 86.44057009026,
+        "max_frame_degrees_after": 30.088238737264245
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.03.L",
+        "max_frame_degrees_before": 52.5347952232119,
+        "max_frame_degrees_after": 17.789062040132457
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.01.L",
+        "max_frame_degrees_before": 53.293465612240475,
+        "max_frame_degrees_after": 12.210747985662218
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.02.L",
+        "max_frame_degrees_before": 11.123366818039374,
+        "max_frame_degrees_after": 3.7180711756659184
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.03.L",
+        "max_frame_degrees_before": 7.929776935801379,
+        "max_frame_degrees_after": 2.6473159983333656
+      },
+      {
+        "clip": "0020_orden",
+        "node": "upper_arm.R",
+        "max_frame_degrees_before": 6.2572250822935205,
+        "max_frame_degrees_after": 5.8031700249769145
+      },
+      {
+        "clip": "0020_orden",
+        "node": "forearm.R",
+        "max_frame_degrees_before": 21.251195530697608,
+        "max_frame_degrees_after": 20.464638312707176
+      },
+      {
+        "clip": "0020_orden",
+        "node": "hand.R",
+        "max_frame_degrees_before": 8.086744297240498,
+        "max_frame_degrees_after": 6.28854597969439
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.01.R",
+        "max_frame_degrees_before": 45.922073419350234,
+        "max_frame_degrees_after": 15.491821887057737
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.02.R",
+        "max_frame_degrees_before": 64.83277316211073,
+        "max_frame_degrees_after": 22.13739011750421
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.03.R",
+        "max_frame_degrees_before": 39.357421286418614,
+        "max_frame_degrees_after": 13.23508691064396
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.01.R",
+        "max_frame_degrees_before": 18.050421850282643,
+        "max_frame_degrees_after": 6.033874371695961
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.02.R",
+        "max_frame_degrees_before": 5.498808411107284,
+        "max_frame_degrees_after": 1.8463242092045258
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.03.R",
+        "max_frame_degrees_before": 19.535695730635346,
+        "max_frame_degrees_after": 6.568843904154745
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.01.R",
+        "max_frame_degrees_before": 42.35761446952267,
+        "max_frame_degrees_after": 14.263655528962742
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.02.R",
+        "max_frame_degrees_before": 58.12539558077665,
+        "max_frame_degrees_after": 19.75229396182755
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.03.R",
+        "max_frame_degrees_before": 59.26163746849196,
+        "max_frame_degrees_after": 20.154406590577572
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.01.R",
+        "max_frame_degrees_before": 32.219459972985476,
+        "max_frame_degrees_after": 10.803053248917653
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.02.R",
+        "max_frame_degrees_before": 63.01607238586815,
+        "max_frame_degrees_after": 21.488072271143093
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.03.R",
+        "max_frame_degrees_before": 61.495749050709364,
+        "max_frame_degrees_after": 20.946613385953594
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.01.R",
+        "max_frame_degrees_before": 20.555960038907614,
+        "max_frame_degrees_after": 4.371251485791986
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.02.R",
+        "max_frame_degrees_before": 7.2125998982282145,
+        "max_frame_degrees_after": 2.404348692945412
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.03.R",
+        "max_frame_degrees_before": 2.895301616744891,
+        "max_frame_degrees_after": 0.9645016041472929
+      }
+    ]
+  },
+  {
+    "avatar": "pauline",
+    "checked_changed_tracks": 164,
+    "all_non_target_tracks_exact": true,
+    "outside_window_exact": true,
+    "times_and_nodes_exact": true,
+    "other_196_animations_exact": true,
+    "rotation_delta_checks": [
+      {
+        "clip": "0020_afirmativo",
+        "node": "upper_arm.L",
+        "max_frame_degrees_before": 8.003453391790655,
+        "max_frame_degrees_after": 7.7026945186099445
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "forearm.L",
+        "max_frame_degrees_before": 20.745191548320143,
+        "max_frame_degrees_after": 19.97671286219679
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "hand.L",
+        "max_frame_degrees_before": 9.401209396193327,
+        "max_frame_degrees_after": 9.048259018492484
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.01.L",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.01.L",
+        "max_frame_degrees_before": 76.07469798555287,
+        "max_frame_degrees_after": 26.217704952619414
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.02.L",
+        "max_frame_degrees_before": 77.87483568463553,
+        "max_frame_degrees_after": 26.88177501992107
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.03.L",
+        "max_frame_degrees_before": 52.26786689191507,
+        "max_frame_degrees_after": 17.695439263199095
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.01.L",
+        "max_frame_degrees_before": 19.694817710081164,
+        "max_frame_degrees_after": 6.6945022010443385
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.02.L",
+        "max_frame_degrees_before": 5.233921945438487,
+        "max_frame_degrees_after": 1.737669079963823
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.03.L",
+        "max_frame_degrees_before": 20.366891852259375,
+        "max_frame_degrees_after": 6.790170848527892
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.01.L",
+        "max_frame_degrees_before": 72.0700325102385,
+        "max_frame_degrees_after": 24.75122405458859
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.02.L",
+        "max_frame_degrees_before": 80.0556257481191,
+        "max_frame_degrees_after": 27.69076991650653
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.03.L",
+        "max_frame_degrees_before": 51.83695313761208,
+        "max_frame_degrees_after": 17.545477330159663
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.03.L",
+        "max_frame_degrees_before": 2.4148365394514667e-06,
+        "max_frame_degrees_after": 2.4148365394514667e-06
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.01.L",
+        "max_frame_degrees_before": 70.04358874720369,
+        "max_frame_degrees_after": 24.014785040513775
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.02.L",
+        "max_frame_degrees_before": 86.44056876133925,
+        "max_frame_degrees_after": 30.088238204689866
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.03.L",
+        "max_frame_degrees_before": 52.53479729619368,
+        "max_frame_degrees_after": 17.78906297996362
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.04.L",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.01.L",
+        "max_frame_degrees_before": 53.29346392729967,
+        "max_frame_degrees_after": 12.21074810552369
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.02.L",
+        "max_frame_degrees_before": 11.1233667255911,
+        "max_frame_degrees_after": 3.718071655282713
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.03.L",
+        "max_frame_degrees_before": 7.929777237189373,
+        "max_frame_degrees_after": 2.6473159943559055
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "upper_arm.R",
+        "max_frame_degrees_before": 6.257225168941039,
+        "max_frame_degrees_after": 5.803167058442903
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "forearm.R",
+        "max_frame_degrees_before": 21.251199434725628,
+        "max_frame_degrees_after": 20.464643616623402
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "hand.R",
+        "max_frame_degrees_before": 8.08674381901804,
+        "max_frame_degrees_after": 6.288545732497221
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.01.R",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.01.R",
+        "max_frame_degrees_before": 45.92207557226146,
+        "max_frame_degrees_after": 15.491821831776962
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.02.R",
+        "max_frame_degrees_before": 64.83277408837071,
+        "max_frame_degrees_after": 22.13738793715454
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_index.03.R",
+        "max_frame_degrees_before": 39.357422664851015,
+        "max_frame_degrees_after": 13.235085361630073
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.01.R",
+        "max_frame_degrees_before": 18.050424268271758,
+        "max_frame_degrees_after": 6.033874419180724
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.02.R",
+        "max_frame_degrees_before": 5.498808286301136,
+        "max_frame_degrees_after": 1.8463240923630415
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "thumb.03.R",
+        "max_frame_degrees_before": 19.535695124355566,
+        "max_frame_degrees_after": 6.568842942692824
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.01.R",
+        "max_frame_degrees_before": 42.357613727449966,
+        "max_frame_degrees_after": 14.26365507239318
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.02.R",
+        "max_frame_degrees_before": 58.12539392867765,
+        "max_frame_degrees_after": 19.75229173624326
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_middle.03.R",
+        "max_frame_degrees_before": 59.26163995930672,
+        "max_frame_degrees_after": 20.154408193438844
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.01.R",
+        "max_frame_degrees_before": 32.21945998884514,
+        "max_frame_degrees_after": 10.803055541030897
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.02.R",
+        "max_frame_degrees_before": 63.01607122991654,
+        "max_frame_degrees_after": 21.48807460931692
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_ring.03.R",
+        "max_frame_degrees_before": 61.49574615371452,
+        "max_frame_degrees_after": 20.946614618927825
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "palm.04.R",
+        "max_frame_degrees_before": 2.4148365394514667e-06,
+        "max_frame_degrees_after": 2.4148365394514667e-06
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.01.R",
+        "max_frame_degrees_before": 20.55596115865902,
+        "max_frame_degrees_after": 4.371250848822251
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.02.R",
+        "max_frame_degrees_before": 7.212599371153682,
+        "max_frame_degrees_after": 2.4043487628970053
+      },
+      {
+        "clip": "0020_afirmativo",
+        "node": "f_pinky.03.R",
+        "max_frame_degrees_before": 2.8953019895285186,
+        "max_frame_degrees_after": 0.9645010898480214
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "upper_arm.L",
+        "max_frame_degrees_before": 8.003453391790655,
+        "max_frame_degrees_after": 7.7026945186099445
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "forearm.L",
+        "max_frame_degrees_before": 20.745191548320143,
+        "max_frame_degrees_after": 19.97671286219679
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "hand.L",
+        "max_frame_degrees_before": 9.401209396193327,
+        "max_frame_degrees_after": 9.048259018492484
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.01.L",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.01.L",
+        "max_frame_degrees_before": 76.07469798555287,
+        "max_frame_degrees_after": 26.217704952619414
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.02.L",
+        "max_frame_degrees_before": 77.87483568463553,
+        "max_frame_degrees_after": 26.88177501992107
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.03.L",
+        "max_frame_degrees_before": 52.26786689191507,
+        "max_frame_degrees_after": 17.695439263199095
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.01.L",
+        "max_frame_degrees_before": 19.694817710081164,
+        "max_frame_degrees_after": 6.6945022010443385
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.02.L",
+        "max_frame_degrees_before": 5.233921945438487,
+        "max_frame_degrees_after": 1.737669079963823
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.03.L",
+        "max_frame_degrees_before": 20.366891852259375,
+        "max_frame_degrees_after": 6.790170848527892
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.01.L",
+        "max_frame_degrees_before": 72.0700325102385,
+        "max_frame_degrees_after": 24.75122405458859
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.02.L",
+        "max_frame_degrees_before": 80.0556257481191,
+        "max_frame_degrees_after": 27.69076991650653
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.03.L",
+        "max_frame_degrees_before": 51.83695313761208,
+        "max_frame_degrees_after": 17.545477330159663
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.03.L",
+        "max_frame_degrees_before": 2.4148365394514667e-06,
+        "max_frame_degrees_after": 2.4148365394514667e-06
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.01.L",
+        "max_frame_degrees_before": 70.04358874720369,
+        "max_frame_degrees_after": 24.014785040513775
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.02.L",
+        "max_frame_degrees_before": 86.44056876133925,
+        "max_frame_degrees_after": 30.088238204689866
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.03.L",
+        "max_frame_degrees_before": 52.53479729619368,
+        "max_frame_degrees_after": 17.78906297996362
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.04.L",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.01.L",
+        "max_frame_degrees_before": 53.29346392729967,
+        "max_frame_degrees_after": 12.21074810552369
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.02.L",
+        "max_frame_degrees_before": 11.1233667255911,
+        "max_frame_degrees_after": 3.718071655282713
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.03.L",
+        "max_frame_degrees_before": 7.929777237189373,
+        "max_frame_degrees_after": 2.6473159943559055
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "upper_arm.R",
+        "max_frame_degrees_before": 6.257225168941039,
+        "max_frame_degrees_after": 5.803167058442903
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "forearm.R",
+        "max_frame_degrees_before": 21.251199434725628,
+        "max_frame_degrees_after": 20.464643616623402
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "hand.R",
+        "max_frame_degrees_before": 8.08674381901804,
+        "max_frame_degrees_after": 6.288545732497221
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.01.R",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.01.R",
+        "max_frame_degrees_before": 45.92207557226146,
+        "max_frame_degrees_after": 15.491821831776962
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.02.R",
+        "max_frame_degrees_before": 64.83277408837071,
+        "max_frame_degrees_after": 22.13738793715454
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_index.03.R",
+        "max_frame_degrees_before": 39.357422664851015,
+        "max_frame_degrees_after": 13.235085361630073
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.01.R",
+        "max_frame_degrees_before": 18.050424268271758,
+        "max_frame_degrees_after": 6.033874419180724
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.02.R",
+        "max_frame_degrees_before": 5.498808286301136,
+        "max_frame_degrees_after": 1.8463240923630415
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "thumb.03.R",
+        "max_frame_degrees_before": 19.535695124355566,
+        "max_frame_degrees_after": 6.568842942692824
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.01.R",
+        "max_frame_degrees_before": 42.357613727449966,
+        "max_frame_degrees_after": 14.26365507239318
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.02.R",
+        "max_frame_degrees_before": 58.12539392867765,
+        "max_frame_degrees_after": 19.75229173624326
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_middle.03.R",
+        "max_frame_degrees_before": 59.26163995930672,
+        "max_frame_degrees_after": 20.154408193438844
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.01.R",
+        "max_frame_degrees_before": 32.21945998884514,
+        "max_frame_degrees_after": 10.803055541030897
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.02.R",
+        "max_frame_degrees_before": 63.01607122991654,
+        "max_frame_degrees_after": 21.48807460931692
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_ring.03.R",
+        "max_frame_degrees_before": 61.49574615371452,
+        "max_frame_degrees_after": 20.946614618927825
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "palm.04.R",
+        "max_frame_degrees_before": 2.4148365394514667e-06,
+        "max_frame_degrees_after": 2.4148365394514667e-06
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.01.R",
+        "max_frame_degrees_before": 20.55596115865902,
+        "max_frame_degrees_after": 4.371250848822251
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.02.R",
+        "max_frame_degrees_before": 7.212599371153682,
+        "max_frame_degrees_after": 2.4043487628970053
+      },
+      {
+        "clip": "0020_pregunta",
+        "node": "f_pinky.03.R",
+        "max_frame_degrees_before": 2.8953019895285186,
+        "max_frame_degrees_after": 0.9645010898480214
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "upper_arm.L",
+        "max_frame_degrees_before": 8.003453391790655,
+        "max_frame_degrees_after": 7.7026945186099445
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "forearm.L",
+        "max_frame_degrees_before": 20.745191548320143,
+        "max_frame_degrees_after": 19.97671286219679
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "hand.L",
+        "max_frame_degrees_before": 9.401209396193327,
+        "max_frame_degrees_after": 9.048259018492484
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.01.L",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.01.L",
+        "max_frame_degrees_before": 76.07469798555287,
+        "max_frame_degrees_after": 26.217704952619414
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.02.L",
+        "max_frame_degrees_before": 77.87483568463553,
+        "max_frame_degrees_after": 26.88177501992107
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.03.L",
+        "max_frame_degrees_before": 52.26786689191507,
+        "max_frame_degrees_after": 17.695439263199095
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.01.L",
+        "max_frame_degrees_before": 19.694817710081164,
+        "max_frame_degrees_after": 6.6945022010443385
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.02.L",
+        "max_frame_degrees_before": 5.233921945438487,
+        "max_frame_degrees_after": 1.737669079963823
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.03.L",
+        "max_frame_degrees_before": 20.366891852259375,
+        "max_frame_degrees_after": 6.790170848527892
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.01.L",
+        "max_frame_degrees_before": 72.0700325102385,
+        "max_frame_degrees_after": 24.75122405458859
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.02.L",
+        "max_frame_degrees_before": 80.0556257481191,
+        "max_frame_degrees_after": 27.69076991650653
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.03.L",
+        "max_frame_degrees_before": 51.83695313761208,
+        "max_frame_degrees_after": 17.545477330159663
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.03.L",
+        "max_frame_degrees_before": 2.4148365394514667e-06,
+        "max_frame_degrees_after": 2.4148365394514667e-06
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.01.L",
+        "max_frame_degrees_before": 70.04358874720369,
+        "max_frame_degrees_after": 24.014785040513775
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.02.L",
+        "max_frame_degrees_before": 86.44056876133925,
+        "max_frame_degrees_after": 30.088238204689866
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.03.L",
+        "max_frame_degrees_before": 52.53479729619368,
+        "max_frame_degrees_after": 17.78906297996362
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.04.L",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.01.L",
+        "max_frame_degrees_before": 53.29346392729967,
+        "max_frame_degrees_after": 12.21074810552369
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.02.L",
+        "max_frame_degrees_before": 11.1233667255911,
+        "max_frame_degrees_after": 3.718071655282713
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.03.L",
+        "max_frame_degrees_before": 7.929777237189373,
+        "max_frame_degrees_after": 2.6473159943559055
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "upper_arm.R",
+        "max_frame_degrees_before": 6.257225168941039,
+        "max_frame_degrees_after": 5.803167058442903
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "forearm.R",
+        "max_frame_degrees_before": 21.251199434725628,
+        "max_frame_degrees_after": 20.464643616623402
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "hand.R",
+        "max_frame_degrees_before": 8.08674381901804,
+        "max_frame_degrees_after": 6.288545732497221
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.01.R",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.01.R",
+        "max_frame_degrees_before": 45.92207557226146,
+        "max_frame_degrees_after": 15.491821831776962
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.02.R",
+        "max_frame_degrees_before": 64.83277408837071,
+        "max_frame_degrees_after": 22.13738793715454
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_index.03.R",
+        "max_frame_degrees_before": 39.357422664851015,
+        "max_frame_degrees_after": 13.235085361630073
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.01.R",
+        "max_frame_degrees_before": 18.050424268271758,
+        "max_frame_degrees_after": 6.033874419180724
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.02.R",
+        "max_frame_degrees_before": 5.498808286301136,
+        "max_frame_degrees_after": 1.8463240923630415
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "thumb.03.R",
+        "max_frame_degrees_before": 19.535695124355566,
+        "max_frame_degrees_after": 6.568842942692824
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.01.R",
+        "max_frame_degrees_before": 42.357613727449966,
+        "max_frame_degrees_after": 14.26365507239318
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.02.R",
+        "max_frame_degrees_before": 58.12539392867765,
+        "max_frame_degrees_after": 19.75229173624326
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_middle.03.R",
+        "max_frame_degrees_before": 59.26163995930672,
+        "max_frame_degrees_after": 20.154408193438844
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.01.R",
+        "max_frame_degrees_before": 32.21945998884514,
+        "max_frame_degrees_after": 10.803055541030897
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.02.R",
+        "max_frame_degrees_before": 63.01607122991654,
+        "max_frame_degrees_after": 21.48807460931692
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_ring.03.R",
+        "max_frame_degrees_before": 61.49574615371452,
+        "max_frame_degrees_after": 20.946614618927825
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "palm.04.R",
+        "max_frame_degrees_before": 2.4148365394514667e-06,
+        "max_frame_degrees_after": 2.4148365394514667e-06
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.01.R",
+        "max_frame_degrees_before": 20.55596115865902,
+        "max_frame_degrees_after": 4.371250848822251
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.02.R",
+        "max_frame_degrees_before": 7.212599371153682,
+        "max_frame_degrees_after": 2.4043487628970053
+      },
+      {
+        "clip": "0020_negacion",
+        "node": "f_pinky.03.R",
+        "max_frame_degrees_before": 2.8953019895285186,
+        "max_frame_degrees_after": 0.9645010898480214
+      },
+      {
+        "clip": "0020_orden",
+        "node": "upper_arm.L",
+        "max_frame_degrees_before": 8.003453391790655,
+        "max_frame_degrees_after": 7.7026945186099445
+      },
+      {
+        "clip": "0020_orden",
+        "node": "forearm.L",
+        "max_frame_degrees_before": 20.745191548320143,
+        "max_frame_degrees_after": 19.97671286219679
+      },
+      {
+        "clip": "0020_orden",
+        "node": "hand.L",
+        "max_frame_degrees_before": 9.401209396193327,
+        "max_frame_degrees_after": 9.048259018492484
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.01.L",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.01.L",
+        "max_frame_degrees_before": 76.07469798555287,
+        "max_frame_degrees_after": 26.217704952619414
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.02.L",
+        "max_frame_degrees_before": 77.87483568463553,
+        "max_frame_degrees_after": 26.88177501992107
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.03.L",
+        "max_frame_degrees_before": 52.26786689191507,
+        "max_frame_degrees_after": 17.695439263199095
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.01.L",
+        "max_frame_degrees_before": 19.694817710081164,
+        "max_frame_degrees_after": 6.6945022010443385
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.02.L",
+        "max_frame_degrees_before": 5.233921945438487,
+        "max_frame_degrees_after": 1.737669079963823
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.03.L",
+        "max_frame_degrees_before": 20.366891852259375,
+        "max_frame_degrees_after": 6.790170848527892
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.01.L",
+        "max_frame_degrees_before": 72.0700325102385,
+        "max_frame_degrees_after": 24.75122405458859
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.02.L",
+        "max_frame_degrees_before": 80.0556257481191,
+        "max_frame_degrees_after": 27.69076991650653
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.03.L",
+        "max_frame_degrees_before": 51.83695313761208,
+        "max_frame_degrees_after": 17.545477330159663
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.03.L",
+        "max_frame_degrees_before": 2.4148365394514667e-06,
+        "max_frame_degrees_after": 2.4148365394514667e-06
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.01.L",
+        "max_frame_degrees_before": 70.04358874720369,
+        "max_frame_degrees_after": 24.014785040513775
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.02.L",
+        "max_frame_degrees_before": 86.44056876133925,
+        "max_frame_degrees_after": 30.088238204689866
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.03.L",
+        "max_frame_degrees_before": 52.53479729619368,
+        "max_frame_degrees_after": 17.78906297996362
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.04.L",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.01.L",
+        "max_frame_degrees_before": 53.29346392729967,
+        "max_frame_degrees_after": 12.21074810552369
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.02.L",
+        "max_frame_degrees_before": 11.1233667255911,
+        "max_frame_degrees_after": 3.718071655282713
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.03.L",
+        "max_frame_degrees_before": 7.929777237189373,
+        "max_frame_degrees_after": 2.6473159943559055
+      },
+      {
+        "clip": "0020_orden",
+        "node": "upper_arm.R",
+        "max_frame_degrees_before": 6.257225168941039,
+        "max_frame_degrees_after": 5.803167058442903
+      },
+      {
+        "clip": "0020_orden",
+        "node": "forearm.R",
+        "max_frame_degrees_before": 21.251199434725628,
+        "max_frame_degrees_after": 20.464643616623402
+      },
+      {
+        "clip": "0020_orden",
+        "node": "hand.R",
+        "max_frame_degrees_before": 8.08674381901804,
+        "max_frame_degrees_after": 6.288545732497221
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.01.R",
+        "max_frame_degrees_before": 1.7075472925031877e-06,
+        "max_frame_degrees_after": 1.7075472925031877e-06
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.01.R",
+        "max_frame_degrees_before": 45.92207557226146,
+        "max_frame_degrees_after": 15.491821831776962
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.02.R",
+        "max_frame_degrees_before": 64.83277408837071,
+        "max_frame_degrees_after": 22.13738793715454
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_index.03.R",
+        "max_frame_degrees_before": 39.357422664851015,
+        "max_frame_degrees_after": 13.235085361630073
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.01.R",
+        "max_frame_degrees_before": 18.050424268271758,
+        "max_frame_degrees_after": 6.033874419180724
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.02.R",
+        "max_frame_degrees_before": 5.498808286301136,
+        "max_frame_degrees_after": 1.8463240923630415
+      },
+      {
+        "clip": "0020_orden",
+        "node": "thumb.03.R",
+        "max_frame_degrees_before": 19.535695124355566,
+        "max_frame_degrees_after": 6.568842942692824
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.01.R",
+        "max_frame_degrees_before": 42.357613727449966,
+        "max_frame_degrees_after": 14.26365507239318
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.02.R",
+        "max_frame_degrees_before": 58.12539392867765,
+        "max_frame_degrees_after": 19.75229173624326
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_middle.03.R",
+        "max_frame_degrees_before": 59.26163995930672,
+        "max_frame_degrees_after": 20.154408193438844
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.01.R",
+        "max_frame_degrees_before": 32.21945998884514,
+        "max_frame_degrees_after": 10.803055541030897
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.02.R",
+        "max_frame_degrees_before": 63.01607122991654,
+        "max_frame_degrees_after": 21.48807460931692
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_ring.03.R",
+        "max_frame_degrees_before": 61.49574615371452,
+        "max_frame_degrees_after": 20.946614618927825
+      },
+      {
+        "clip": "0020_orden",
+        "node": "palm.04.R",
+        "max_frame_degrees_before": 2.4148365394514667e-06,
+        "max_frame_degrees_after": 2.4148365394514667e-06
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.01.R",
+        "max_frame_degrees_before": 20.55596115865902,
+        "max_frame_degrees_after": 4.371250848822251
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.02.R",
+        "max_frame_degrees_before": 7.212599371153682,
+        "max_frame_degrees_after": 2.4043487628970053
+      },
+      {
+        "clip": "0020_orden",
+        "node": "f_pinky.03.R",
+        "max_frame_degrees_before": 2.8953019895285186,
+        "max_frame_degrees_after": 0.9645010898480214
+      }
+    ]
+  }
+]
