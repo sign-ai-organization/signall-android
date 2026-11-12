@@ -117,6 +117,7 @@ def main() -> int:
     ap.add_argument("--fr01", required=True)
     ap.add_argument("--salida", required=True)
     ap.add_argument("--fecha", required=True)
+    ap.add_argument("--ronda", default="D", choices=("D", "E"))
     args = ap.parse_args()
 
     frases = frases_fr01(Path(args.fr01))
@@ -152,7 +153,7 @@ def main() -> int:
         top = sorted(pasos, key=lambda p: -p["manos_cm"])[:5]
         resultado[avatar]["mayores"] = [(p["frase"], p["paso"], p["de"], p["a"], round(p["manos_cm"], 1)) for p in top]
 
-    pref = f"PR-AVT-04_D_{args.fecha}_01"
+    pref = f"PR-AVT-04_{args.ronda}_{args.fecha}_01"
     out = Path(args.salida)
     out.mkdir(parents=True, exist_ok=True)
     campos = ["avatar", "frase", "paso", "de", "a", "misma_sena", "manos_cm", "mano_izq_cm", "mano_der_cm",
