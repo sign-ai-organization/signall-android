@@ -379,6 +379,13 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
   resuelve `signs/<id>.glb` **por nombre, sin pedir nada por red**. Desde el 2026-11-04
   reproduce la cara que corresponde al tipo de oración (`FACE_VARIANT_BY_TYPE`): las
   cuatro variantes se distinguen solo por los pesos de la cara, los huesos son idénticos.
+- **`humanize.js` + `nmm.json` son la capa de marcadores no manuales** (2026-11-12): suman
+  sobre el clip la cabeza, la cara y el tronco del intérprete, la prosodia del tipo de
+  oración, la mirada, el parpadeo y la respiración. No tocan los keyframes ni el reloj.
+  `nmm.json` se regenera con `tools/extract_nmm.py`; no se edita a mano. El orden
+  `human.restore()` → `tickPlayback()` → `human.apply()` del render loop **no se cambia**:
+  sin el `restore` la capa se acumula fotograma a fotograma. `SignAI.setHumanize(0)` la
+  apaga. Detalle en `openspec/specs/avatar/spec.md`.
 - **`models/avatars.json`** es el inventario reproducible: hash y tamaño de cada fuente
   original, del archivo empaquetado, clips, articulaciones, variantes y la advertencia de
   pose de bind de Pauline. Los originales `Juan.glb` y `Pauline.glb` viven versionados en

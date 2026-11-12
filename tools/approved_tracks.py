@@ -89,12 +89,32 @@ def rewrite_animation_accessors(js, data):
     return bytes(data), len(seen)
 
 
-def apply(js, binary, avatar_id):
+def project_weights(values, layout):
+    """Las columnas firmadas de un canal de pesos que ahora tiene más."""
+    columns, width = layout
+    return [values[row + c] for row in range(0, len(values), width) for c in columns]
+
+
+def expand_weights(values, layout):
+    """Una curva de pesos firmada, llevada al ancho nuevo con ceros."""
+    columns, width = layout
+    out = []
+    for row in range(0, len(values), len(columns)):
+        wide = [0.0] * width
+        for value, column in zip(values[row:row + len(columns)], columns):
+            wide[column] = value
+        out.extend(wide)
+    return out
+
+
+def apply(js, binary, avatar_id, check_baseline=True, weight_layouts=None):
     config = json.loads(gzip.decompress(PATCH.read_bytes()))
     if config['format'] != 1:
         raise ValueError('versión desconocida de curvas aprobadas')
     approved = config['avatars'][avatar_id]
-    if glb_sha256(js, binary) != approved['baseline_sha256']:
+    # `check_baseline=False` lo usa solo `pack_avatars.py`, después de haber
+    # comprobado este mismo hash sobre el empaquetado sin morphs de ejecución.
+    if check_baseline and glb_sha256(js, binary) != approved['baseline_sha256']:
         raise ValueError(f'{avatar_id}: cambió el empaquetado base; revisar las curvas aprobadas')
     clips = {a['name']: a for a in js['animations']}
     data = bytearray(binary)
@@ -105,10 +125,21 @@ def apply(js, binary, avatar_id):
         target = (js['nodes'][channel['target']['node']]['name'], channel['target']['path'])
         if target != (track['node'], track['path']):
             raise ValueError('el sampler aprobado apunta a otro nodo/canal')
+        # Un canal de pesos del empaquetado con morphs de ejecución trae más
+        # columnas que el que se firmó. `layout` dice en qué columna quedó cada
+        # una de las firmadas: la curva se compara proyectada a esas columnas y
+        # la aprobada se escribe en ellas, con las nuevas en cero.
+        layout = None
+        if track['path'] == 'weights' and weight_layouts:
+            layout = weight_layouts.get(js['nodes'][channel['target']['node']]['mesh'])
         for field in ('input', 'output'):
             before = gp.read_accessor(js, binary, sampler[field])
+            if layout and field == 'output':
+                before = project_weights(before, layout)
             if values_hash(before) != track[f'{field}_sha256']:
                 raise ValueError(f'{avatar_id}/{track["clip"]}: cambió una curva base')
+        if layout and 'output' in track:
+            track = dict(track, output=expand_weights(track['output'], layout))
         times = track.get('input', gp.read_accessor(js, binary, sampler['input']))
         values = track.get('output', gp.read_accessor(js, binary, sampler['output']))
         old_times = gp.read_accessor(js, binary, sampler['input'])

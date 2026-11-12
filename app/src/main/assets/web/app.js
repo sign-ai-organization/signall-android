@@ -23,7 +23,7 @@
 // Contrato con Android (`window.SignAI`) — no cambiar sin tocar el lado Kotlin:
 //   setQueue, appendQueue, playFrom, queuePending, queueState, play, setDebug,
 //   setFreeCamera, setGrid, setBackground, setReduceMotion, setAvatar,
-//   setSpeed, setTheme, setDefaultSign, setSilenceTimeoutMs
+//   setSpeed, setTheme, setDefaultSign, setSilenceTimeoutMs, setHumanize
 // Hacia Android: `window.SignAIBridge.postMessage("onPlaybackDone")`,
 // `postMessage("avatarReady")` (primer avatar), `postMessage("avatarLoaded:<id>")`
 // (cambios posteriores), `postMessage("avatarFailed:<id>")` y
@@ -39,6 +39,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { REST_EXIT_TAIL, restExitSample } from "./playbackTiming.js";
+import { Humanizer } from "./humanize.js";
 
 // ── Estado global ─────────────────────────────────────────────────────────────
 const state = {
@@ -100,6 +101,22 @@ let loadedAvatarId = null;
 let avatarEpoch = 0;
 /** Pivote del avatar en escena, para poder limpiarlo al cambiar. */
 let avatarPivot = null;
+
+// ── Marcadores no manuales y movimiento humano ───────────────────────────────
+//
+// `humanize.js` suma sobre el clip lo que el clip no trae: la cabeza, la boca,
+// las cejas y el tronco del intérprete (medidos en `nmm.json`), la prosodia del
+// tipo de oración, la mirada, el parpadeo y la respiración. No cambia ningún
+// keyframe ni el reloj de la reproducción: `onPlaybackDone`, `signStart` y las
+// duraciones son los de siempre. `SignAI.setHumanize(0)` la apaga entera.
+/** Capa del avatar que está en escena; `null` mientras no hay avatar. */
+let human = null;
+/** Nivel pedido por `setHumanize` (0 = apagada, 1 = completa). */
+let humanLevel = 1;
+/** Los datos medidos, una sola descarga para todos los avatares. */
+const nmmData = fetch("nmm.json")
+  .then(r => (r.ok ? r.json() : null))
+  .catch(err => { console.warn("[SignAI] sin nmm.json:", err); return null; });
 
 const DEFAULT_SIGN_URL = "signs/0000_0000_0000.glb";
 let defaultSignUrl = DEFAULT_SIGN_URL;
@@ -310,6 +327,7 @@ const Debug = {
     stt: () => [
       `silencio STT: ${state.silenceTimeoutMs != null ? state.silenceTimeoutMs + "ms" : "?"}`,
     ],
+    humano: () => human ? human.debugLines() : ["humano: -"],
     avatar: () => [
       `nodos: ${state.nodeCount}`,
       `canvas: ${canvas.clientWidth}x${canvas.clientHeight}`,
@@ -538,6 +556,7 @@ function releaseAvatar() {
   state.finishing = false;
   state.nodeNames = new Set();
   state.nodeCount = 0;
+  human = null;
   if (!avatarPivot) return;
   scene.remove(avatarPivot);
   disposeTree(avatarPivot);
@@ -649,6 +668,13 @@ function loadAvatar(id, initial = false) {
     state.mixer = prepared.mixer;
     state.nodeNames = prepared.nodeNames;
     state.nodeCount = prepared.nodeCount;
+    // La capa se arma con el muñeco todavía en reposo: de ahí lee hacia dónde
+    // mira la cabeza cuando nadie la mueve.
+    human = new Humanizer(gltf.scene, avatarPivot);
+    human.level = humanLevel;
+    human.reduceMotion = state.reduceMotion;
+    const layer = human;
+    nmmData.then(data => { if (human === layer) layer.setData(data); });
 
     // Los clips pertenecen al modelo que se acaba de cargar. Se reindexan
     // enteros (y se vacía la caché) para que una seña no se reproduzca con los
@@ -986,6 +1012,32 @@ function advanceQueue() {
   loadQueueItem(next);
 }
 
+/**
+ * Lo que la capa humana necesita saber de la reproducción en este fotograma:
+ * qué clips están vivos y con cuánto peso, el tipo de oración y si esta seña es
+ * la última de su oración (la siguiente no existe o es de otro tipo).
+ */
+const humanCtx = { layers: [], type: "", last: false, camera: null };
+function humanContext() {
+  const layers = humanCtx.layers;
+  layers.length = 0;
+  for (const action of [state.action, state.outgoing]) {
+    if (!action || !state.playing) continue;
+    const clip = action.getClip();
+    const weight = action.getEffectiveWeight();
+    if (weight <= 0) continue;
+    layers.push({
+      name: clip.name, time: action.time, weight,
+      progress: clip.duration > 0 ? action.time / clip.duration : 0,
+    });
+  }
+  const next = state.queue[state.queueIdx + 1];
+  humanCtx.type = state.playing ? state.currentType : "";
+  humanCtx.last = !next || (next.type || "") !== state.currentType;
+  humanCtx.camera = camera;
+  return humanCtx;
+}
+
 /** Avanza el mixer un frame y resuelve la frontera entre clips. */
 function tickPlayback(dt) {
   if (!state.playing) return;
@@ -1038,7 +1090,11 @@ function renderLoop() {
     camera.updateProjectionMatrix();
   }
 
+  // La capa humana deshace lo suyo, corre el mixer y vuelve a sumar: el mixer no
+  // reescribe un hueso que no cambió, así que sin deshacer se acumularía.
+  human?.restore();
   tickPlayback(dt);
+  human?.apply(dt, humanContext());
   controls.update();
   renderer.render(scene, camera);
   Debug.render();
@@ -1249,7 +1305,27 @@ window.SignAI = {
    */
   setReduceMotion(on) {
     state.reduceMotion = !!on;
+    // La capa humana deja de respirar, mecerse y seguir a las manos; lo que es
+    // parte de la seña (cabeza, cara y prosodia del intérprete) se conserva.
+    if (human) human.reduceMotion = state.reduceMotion;
     if (Debug.enabled) console.log("[SignAI] fundición:", crossfade() > 0 ? "on" : "off");
+  },
+
+  /**
+   * Nivel de la capa de marcadores no manuales y movimiento humano, de 0 a 1.
+   *
+   * 1 (por defecto) aplica todo; 0 la apaga y el avatar reproduce los clips
+   * tal como vienen, que es el comportamiento anterior al 2026-11-12. Sirve
+   * para comparar con y sin la capa en la misma instalación.
+   *
+   * Aditivo: no cambia ningún comando existente (BRG-8).
+   */
+  setHumanize(level) {
+    const value = level === true ? 1 : Number(level);
+    humanLevel = Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 1;
+    if (human) human.level = humanLevel;
+    if (Debug.enabled) Debug.render();
+    return humanLevel;
   },
 
   setSpeed(v) {

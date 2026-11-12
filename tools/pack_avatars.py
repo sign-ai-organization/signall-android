@@ -91,6 +91,27 @@ EXPECTED_CLIP_COUNT = len(SIGN_IDS) * len(SUFFIXES)
 EXPECTED_JOINTS = 102
 FPS = 24
 
+# Morph targets que ningún clip anima pero que la capa de marcadores no manuales
+# (`assets/web/humanize.js`) mueve en tiempo de ejecución con los datos de
+# `nmm.json`: la boca del intérprete. Sin ellos la mandíbula no puede abrirse ni
+# los labios cerrarse en «o», porque la poda los saca por no tener keyframes.
+RUNTIME_MORPHS = (
+    "jawOpen", "mouthClose", "mouthFunnel", "mouthPucker",
+    "mouthStretch_L", "mouthStretch_R", "mouthLowerDown_L", "mouthLowerDown_R",
+    "mouthUpperUp_L", "mouthUpperUp_R", "cheekPuff",
+)
+
+
+def morphs_with_runtime(js, binary):
+    """La poda de siempre más los `RUNTIME_MORPHS`, por nombre y por malla."""
+    keep = ps.morphs_to_keep(js, binary)
+    for mesh_index, mesh in enumerate(js["meshes"]):
+        names = mesh.get("extras", {}).get("targetNames", [])
+        wanted = {i for i, name in enumerate(names) if name in RUNTIME_MORPHS}
+        if wanted and mesh_index in keep:
+            keep[mesh_index] |= wanted
+    return keep
+
 
 def sha256(path):
     digest = hashlib.sha256()
@@ -294,22 +315,41 @@ def main():
             print(line)
         print("  reposo    ajuste aprobado 2026-11-11: brazos a los lados y manos intermedias")
 
-        keep = ps.morphs_to_keep(js, binary)
         before_morphs = sum(
             len(m["primitives"][0].get("targets", []))
             for m in js["meshes"])
-        js, binary = ps.repack(js, binary, keep)
+        # Las curvas aprobadas se firmaron contra el empaquetado **sin** los
+        # morphs de tiempo de ejecución. Ese empaquetado se rearma acá solo para
+        # comprobar su hash; el que se escribe lleva además esos morphs, y cada
+        # curva sigue verificando el hash de la curva que reemplaza.
+        check_js, check_binary = ps.repack(js, binary, ps.morphs_to_keep(js, binary))
+        approved_tracks.apply(check_js, check_binary, avatar_id)
+        del check_js, check_binary
+
+        base_keep = ps.morphs_to_keep(js, binary)
+        full_keep = morphs_with_runtime(js, binary)
+        # Por malla: en qué columna del canal de pesos nuevo quedó cada morph
+        # del empaquetado firmado, y cuántas columnas tiene ahora.
+        layouts = {
+            mesh: ([sorted(full_keep[mesh]).index(i) for i in sorted(base_keep[mesh])],
+                   len(full_keep[mesh]))
+            for mesh in full_keep if full_keep[mesh] != base_keep[mesh]
+        }
+        js, binary = ps.repack(js, binary, full_keep)
         after_morphs = sum(
             len(m["primitives"][0].get("targets", []))
             for m in js["meshes"])
         print(f"  morphs    {before_morphs} -> {after_morphs} "
-              f"(se conservan los que alguna variante anima)")
+              f"(los que alguna variante anima, más {len(RUNTIME_MORPHS)} de la boca "
+              f"para los marcadores no manuales)")
 
-        binary, transitions = approved_tracks.apply(js, binary, avatar_id)
+        binary, transitions = approved_tracks.apply(js, binary, avatar_id,
+                                                    check_baseline=False,
+                                                    weight_layouts=layouts)
         # Las curvas vivas pasan a views propios y deduplicados; después el
         # compactado puede descartar los accessors viejos sin bytes muertos.
         binary, curves = approved_tracks.rewrite_animation_accessors(js, binary)
-        js, binary = ps.repack(js, binary, ps.morphs_to_keep(js, binary))
+        js, binary = ps.repack(js, binary, morphs_with_runtime(js, binary))
         print(f"  curvas    200 clips aprobados, {transitions['samplers']} samplers "
               f"ajustados, {curves} curvas vivas; {len(binary) / 1e6:.2f} MB de binario")
 

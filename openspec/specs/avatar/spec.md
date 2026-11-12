@@ -367,6 +367,39 @@ siendo un corte seco inmediato (`RF-AVT-05`, `RNF-REL-02`), no esta salida.
 Va en el `pivot` padre. Si alguna vez aparece el muñeco descolocado y sin
 escalar después de un cambio en `app.js`, es esto.
 
+## Marcadores no manuales y movimiento humano (2026-11-12)
+
+`assets/web/humanize.js` suma una capa **encima** del clip, cada fotograma, sin tocar
+ningún keyframe ni el reloj de la reproducción. `SignAI.setHumanize(0)` la apaga y la
+escena queda como antes; `setHumanize(1)` es el valor por defecto.
+
+| Qué | De dónde sale | Qué mueve |
+|---|---|---|
+| Cabeza, boca, cejas, ojos, mejillas y tronco **de cada seña** | Medido: `nmm.json`, que `tools/extract_nmm.py` saca de los puntos de cara y cuerpo de LSC50 (toma `0000_0000`, la misma del clip) | `neck`, `head`, `spine.*`, `jaw` y los morph targets de la cara |
+| Prosodia del tipo de oración | **Hipótesis**, tabla `PROSODY` de `humanize.js`: giro lateral repetido en la negación, mentón al frente y tronco adelantado en las preguntas, cabeceo por seña en la orden | `neck`, `head`, `spine.*` |
+| Mirada | Procedural: los ojos compensan el giro de la cabeza para seguir en quien lee, y a ratos acompañan a la mano más apartada | `eyeball.L`, `eyeball.R` |
+| Vida | Procedural: respiración, balanceo del peso, parpadeo, y un tronco que sigue a las manos con retraso | `spine.*`, párpados |
+
+Reglas que hay que conservar:
+
+- **Deshacer antes del mixer.** El mixer de three.js no reescribe una propiedad que no
+  cambió, así que sumar sobre lo que haya se acumularía. El orden del fotograma es
+  `human.restore()` → `tickPlayback()` → `human.apply()`. `restore()` solo deshace si
+  el valor sigue siendo el que la capa escribió: si el mixer o un `stopAllAction()`
+  escribieron después, no pisa nada.
+- **La cabeza no se aparta del clip con una mano sobre la cara** (`contactGuard`): el
+  clip se animó contra una cabeza casi quieta y moverla rompería el contacto. El tronco
+  sí se mueve, porque arrastra juntos brazos y cabeza.
+- **Con una marca gramatical en la cara, las cejas de la seña ceden** (se aplican al
+  35 %): la cara del tipo de oración manda sobre la de la seña.
+- **Movimiento reducido** apaga lo que no es lingüístico (respiración, balanceo,
+  seguimiento de las manos, miradas a la mano) y conserva lo medido y la prosodia.
+- Los 11 morph targets de la boca (`jawOpen`, `mouthPucker`, `mouthFunnel`, …) no los
+  anima ningún clip: `pack_avatars.py` los conserva por nombre (`RUNTIME_MORPHS`).
+
+Lo que **no** está validado: que la prosodia de la tabla sea LSC correcta, y cómo se ve
+y rinde en el teléfono (el 2026-11-12 solo se probó en Chromium de escritorio).
+
 ## Lo que NO hace la escena
 
 - No hay IK, ni cinemática inversa, ni reintentos de pose: los `.glb` traen la
@@ -374,9 +407,10 @@ escalar después de un cambio en `app.js`, es esto.
 - Hay una sola cara por tipo de oración, no una por seña: la variante elegida es la
   misma en las 50 señas (medido el 2026-11-04). No hay emociones: el backend no
   manda esa señal y no se clasifican.
-- No hay movimiento de cabeza en las variantes: los huesos son idénticos entre las cuatro.
-  La negación solo cambia la cara.
-- La escena **sí maneja los morph targets** desde el 2026-11-04, pero solo a través
-  del clip de la variante elegida: no los escribe a mano ni los mezcla entre
-  variantes.
+- No hay movimiento de cabeza **en las variantes**: los huesos son idénticos entre las
+  cuatro. Desde el 2026-11-12 la cabeza de la negación la pone la capa humana (ver
+  «Marcadores no manuales y movimiento humano»), no el clip.
+- Los clips solo mueven los morph targets de la variante elegida. Lo demás de la cara
+  (boca, cejas, ojos y mejillas de cada seña) lo suma `humanize.js` en tiempo de
+  ejecución, sin mezclar variantes.
 - El peso por vértice lo pone Cascadeur, no la app.

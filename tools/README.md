@@ -66,13 +66,23 @@
   33,88 MB; personaje + cara + 200 clips cada uno, rama `dev`), verifica
   skins, articulaciones y nombres de clip, hornea la pose de descanso, **poda los
   morph targets que ninguna variante anima** y compacta el buffer. Escribe
-  `assets/web/models/juan.glb` (30,32 MB), `pauline.glb` (27,85 MB),
+  `assets/web/models/juan.glb` (28,10 MB), `pauline.glb` (27,97 MB; los dos
+  conservan además 11 morph targets de la boca para `humanize.js`),
   `models/avatars.json` (inventario con hashes), `manifest.json` y
   `SignsCatalog.kt`. Cada seña trae cuatro marcas faciales (`_afirmativo`,
   `_pregunta`, `_negacion`, `_orden`) y no hay clip base. La escena resuelve
   `signs/<id>.glb` por nombre contra los clips del avatar elegido, sin descargar
   nada. Sin dependencias externas (no necesita Blender ni Node). Uso:
   `python3 tools/pack_avatars.py [--dry-run]`.
+- **`extract_nmm.py`** — saca **los marcadores no manuales de cada seña** del
+  dataset LSC50 y escribe `assets/web/nmm.json` (104 KB). Lee los 468 puntos de la
+  cara (cámara de cara, 50 fps) y los 33 del cuerpo de la toma `0000_0000`, alinea
+  cada clip con su video por la altura de las muñecas y guarda, a 24 fps, el giro de
+  la cabeza, la inclinación del tronco y los pesos de boca, cejas, ojos y mejillas.
+  No toca los `.glb`. `--dry-run` imprime la tabla de alineación de las 50 señas.
+  Necesita `numpy` y la carpeta `../Prototipo Tesis/data/LANDMARKS` (o `--landmarks`).
+- **`test_humanize.mjs`** — comprueba que la capa `humanize.js` no acumula ni altera
+  la pose de los clips. Necesita `three` instalado aparte; el encabezado dice cómo.
 - **`pack_signall.py`** — el pipeline **anterior**, de un solo avatar: empaquetaba
   `../material-3d/GLB SignALL/` en `models/avatar.glb` (12,98 MB, borrado el
   2026-10-26). Ya no se usa; sigue en el repo porque `pack_avatars.py` le importa
