@@ -1,0 +1,165 @@
+avatar,frase,paso,de,a,misma_sena,manos_cm,mano_izq_cm,mano_der_cm,maximo_cm,hueso_maximo,medio_cm
+juan,FR-01-001,1,HOLA,BUENOS DIAS,False,25.93,25.93,9.61,36.33,f_middle.03.L,10.18
+juan,FR-01-001,2,BUENOS DIAS,BIENVENIDO,False,2.87,1.93,2.87,9.03,heel.02.R,2.61
+juan,FR-01-002,1,ADIOS,TODOS,False,4.96,4.96,0.68,7.16,f_middle.03.L,2.3
+juan,FR-01-002,2,TODOS,BUENAS NOCHES,False,6.47,6.47,1.84,7.76,f_middle.03.L,2.99
+juan,FR-01-003,1,ABUELO,TIO,False,37.02,37.02,4.03,49.71,f_middle.03.L,11.54
+juan,FR-01-003,2,TIO,TRABAJAR,False,8.3,8.3,2.54,10.05,f_middle.03.L,5.08
+juan,FR-01-003,3,TRABAJAR,FAMILIA,False,6.95,6.15,6.95,9.71,f_middle.03.R,5.11
+juan,FR-01-004,1,YO,CONTENTO,False,6.77,6.77,2.78,8.04,f_pinky.03.L,3.12
+juan,FR-01-004,2,CONTENTO,HERMANO,False,2.79,2.79,2.76,3.34,f_middle.03.L,2.31
+juan,FR-01-004,3,HERMANO,FELIZ,False,29.48,29.48,25.51,42.38,f_middle.03.L,14.56
+juan,FR-01-005,1,BUENAS TARDES,YO,False,3.68,3.68,1.99,8.42,toe.R,2.22
+juan,FR-01-005,2,YO,SENTIR,False,37.56,37.56,34.81,52.15,f_index.03.L,19.48
+juan,FR-01-005,3,SENTIR,MAS O MENOS,False,3.3,3.3,2.85,5.08,heel.02.L,2.42
+juan,FR-01-006,1,GRACIAS,TODOS,False,2.08,1.26,2.08,4.9,toe.R,2.22
+juan,FR-01-006,2,TODOS,NIÑO,False,4.21,4.21,0.45,4.75,f_pinky.03.L,2.04
+juan,FR-01-006,3,NIÑO,NIÑA,False,3.05,3.05,0.99,4.9,toe.L,2.2
+juan,FR-01-006,4,NIÑA,COMER,False,3.61,3.61,1.51,5.12,f_middle.03.L,2.09
+juan,FR-01-006,5,COMER,CON GUSTO,False,2.75,2.75,1.0,4.59,heel.02.R,1.54
+juan,FR-01-007,1,TU,HAMBRE,False,1.88,1.88,0.99,8.93,toe.L,1.81
+juan,FR-01-008,1,TU,BIEN,False,1.54,1.54,0.61,6.76,toe.R,1.68
+juan,FR-01-009,1,USTEDES,TRABAJAR,False,5.78,5.78,4.27,7.68,f_middle.03.L,4.05
+juan,FR-01-009,2,TRABAJAR,FAMILIA,False,6.95,6.15,6.95,9.71,f_middle.03.R,5.11
+juan,FR-01-010,1,TU,HERMANO,False,1.74,1.74,1.51,6.63,heel.02.R,1.65
+juan,FR-01-010,2,HERMANO,TRISTE,False,27.4,27.4,25.86,39.83,f_middle.03.L,14.5
+juan,FR-01-010,3,TRISTE,SENTIR,False,38.74,38.74,34.01,53.22,f_index.03.L,19.03
+juan,FR-01-010,4,SENTIR,MAL,False,4.82,4.82,2.6,6.16,f_index.03.L,2.82
+juan,FR-01-011,1,PERDON,TU,False,3.83,2.03,3.83,7.78,heel.02.R,2.52
+juan,FR-01-011,2,TU,TRISTE,False,2.78,2.78,1.0,6.71,toe.R,1.98
+juan,FR-01-012,1,TU,HERMANO,False,1.74,1.74,1.51,6.63,heel.02.R,1.65
+juan,FR-01-012,2,HERMANO,ABURRIDO,False,28.25,28.25,25.45,40.75,f_middle.03.L,14.64
+juan,FR-01-013,1,HOLA,COMO ESTAS,False,3.31,2.4,3.31,4.38,f_middle.03.R,1.93
+juan,FR-01-013,2,COMO ESTAS,COMO,False,5.22,5.22,5.16,8.98,f_middle.03.L,4.07
+juan,FR-01-013,3,COMO,TU,False,6.92,6.92,4.52,12.22,heel.02.R,5.38
+juan,FR-01-013,4,TU,NOMBRE,False,7.13,7.13,1.91,9.34,f_middle.03.L,3.7
+juan,FR-01-014,1,DONDE,TU,False,5.86,2.69,5.86,8.08,heel.02.R,3.78
+juan,FR-01-014,2,TU,FAMILIA,False,7.7,7.7,2.92,10.64,f_middle.03.L,4.31
+juan,FR-01-014,3,FAMILIA,VIVIR,False,6.02,6.02,4.4,8.72,heel.02.R,4.44
+juan,FR-01-015,1,MUJER,JUICIOSO,False,2.44,2.44,2.27,5.85,toe.R,1.93
+juan,FR-01-015,2,JUICIOSO,QUIEN,False,9.24,9.24,2.8,11.78,f_middle.03.L,4.04
+juan,FR-01-015,3,QUIEN,HOMBRE,False,5.38,5.38,1.18,6.13,f_pinky.03.L,2.51
+juan,FR-01-016,1,POR QUE,TU,False,2.31,0.75,2.31,4.41,toe.L,1.73
+juan,FR-01-016,2,TU,TRISTE,False,2.78,2.78,1.0,6.71,toe.R,1.98
+juan,FR-01-017,1,CUANDO,USTEDES,False,2.03,2.03,0.91,5.88,toe.R,1.85
+juan,FR-01-017,2,USTEDES,COMER,False,2.38,0.19,2.38,9.39,toe.R,2.27
+juan,FR-01-018,1,PERSONAS,DIFERENTE,False,4.79,4.79,1.3,6.16,foot.R,2.25
+juan,FR-01-018,2,DIFERENTE,QUE,False,1.93,0.97,1.93,5.33,toe.R,1.23
+juan,FR-01-018,3,QUE,SEÑA,False,7.1,7.1,5.94,8.96,f_middle.03.L,4.57
+juan,FR-01-018,4,SEÑA,TU,False,3.54,3.21,3.54,6.04,foot.R,3.31
+juan,FR-01-019,1,YO,NUNCA,False,4.59,4.59,2.25,5.63,f_pinky.03.L,2.24
+juan,FR-01-019,2,NUNCA,COMER,False,5.62,5.62,1.32,6.7,f_middle.03.L,3.61
+juan,FR-01-019,3,COMER,MUCHO,False,3.55,2.37,3.55,7.51,toe.R,2.19
+juan,FR-01-020,1,ABUELO,NUNCA,False,36.37,36.37,3.0,48.64,f_middle.03.L,11.23
+juan,FR-01-020,2,NUNCA,TRABAJAR,False,6.12,6.12,3.35,7.97,toe.L,5.38
+juan,FR-01-021,1,TIO,NUNCA,False,2.77,2.77,0.34,8.82,toe.L,2.22
+juan,FR-01-021,2,NUNCA,ABURRIDO,False,7.97,7.97,1.73,9.86,f_pinky.03.L,4.36
+juan,FR-01-022,1,USTEDES,NUNCA,False,4.67,4.67,3.18,8.07,toe.R,3.17
+juan,FR-01-022,2,NUNCA,SENTIR,False,39.59,39.59,35.2,53.22,f_index.03.L,20.41
+juan,FR-01-022,3,SENTIR,MAL,False,4.82,4.82,2.6,6.16,f_index.03.L,2.82
+juan,FR-01-023,1,PERDON,HERMANO,False,3.55,2.65,3.55,4.19,eyeball_lookat.L,2.53
+juan,FR-01-023,2,HERMANO,NUNCA,False,28.36,28.36,25.08,41.05,f_middle.03.L,14.48
+juan,FR-01-023,3,NUNCA,CONTENTO,False,5.97,5.97,1.84,7.33,f_middle.03.L,3.64
+juan,FR-01-024,1,NIÑA,SENTIR,False,39.38,39.38,35.06,53.53,f_index.03.L,19.65
+juan,FR-01-024,2,SENTIR,MUCHO,False,3.89,2.5,3.89,5.43,toe.L,2.26
+juan,FR-01-024,3,MUCHO,BIEN,False,4.07,3.46,4.07,5.29,f_pinky.03.R,3.13
+juan,FR-01-024,4,BIEN,NUNCA,False,3.32,3.32,3.28,7.5,toe.R,3.48
+juan,FR-01-024,5,NUNCA,TRISTE,False,7.02,7.02,1.7,8.72,f_ring.03.L,4.3
+juan,FR-01-025,1,POR FAVOR,COMER,False,5.31,5.31,1.25,6.12,f_pinky.03.L,2.68
+juan,FR-01-025,2,COMER,POCO,False,3.38,3.38,2.55,4.81,f_middle.03.L,2.36
+juan,FR-01-026,1,PERMISO,POR FAVOR,False,4.63,4.63,2.73,5.54,f_middle.03.L,3.02
+juan,FR-01-027,1,NIÑO,TODOS,False,2.14,2.14,0.44,8.78,heel.02.L,1.95
+juan,FR-01-027,2,TODOS,TRABAJAR,False,12.5,12.5,3.98,15.76,f_middle.03.L,6.17
+juan,FR-01-028,1,HERMANO,VIVIR,False,25.19,24.02,25.19,35.82,f_middle.03.R,13.52
+juan,FR-01-028,2,VIVIR,ABUELO,False,2.37,2.02,2.37,6.62,toe.L,2.34
+juan,FR-01-028,3,ABUELO,TRABAJAR,False,27.77,27.77,5.54,37.43,f_middle.03.L,10.07
+juan,FR-01-028,4,TRABAJAR,TIO,False,6.16,3.15,6.16,7.08,f_middle.03.R,3.41
+juan,FR-01-029,1,HOLA,FAMILIA,False,7.11,7.11,4.33,9.87,f_middle.03.L,4.87
+juan,FR-01-029,2,FAMILIA,BIENVENIDO,False,6.08,4.47,6.08,11.91,heel.02.R,3.97
+juan,FR-01-030,1,TIO,COMER,False,2.59,2.59,1.19,8.69,toe.L,2.23
+juan,FR-01-030,2,COMER,MUCHO,False,3.55,2.37,3.55,7.51,toe.R,2.19
+juan,FR-01-030,3,MUCHO,HERMANO,False,5.34,3.04,5.34,6.57,f_pinky.03.R,3.1
+juan,FR-01-030,4,HERMANO,COMER,False,25.95,25.58,25.95,37.82,f_middle.03.R,14.07
+juan,FR-01-030,5,COMER,POCO,False,3.38,3.38,2.55,4.81,f_middle.03.L,2.36
+pauline,FR-01-001,1,HOLA,BUENOS DIAS,False,24.92,24.92,9.06,35.3,f_middle.03.L,9.86
+pauline,FR-01-001,2,BUENOS DIAS,BIENVENIDO,False,2.82,1.89,2.82,9.07,heel.02.R,2.6
+pauline,FR-01-002,1,ADIOS,TODOS,False,4.82,4.82,0.64,7.08,heel.02.L,2.27
+pauline,FR-01-002,2,TODOS,BUENAS NOCHES,False,6.36,6.36,1.81,7.65,f_middle.03.L,2.97
+pauline,FR-01-003,1,ABUELO,TIO,False,35.64,35.64,4.0,48.34,f_middle.03.L,11.26
+pauline,FR-01-003,2,TIO,TRABAJAR,False,8.13,8.13,2.42,9.89,f_middle.03.L,5.03
+pauline,FR-01-003,3,TRABAJAR,FAMILIA,False,6.71,6.12,6.71,9.47,f_middle.03.R,5.06
+pauline,FR-01-004,1,YO,CONTENTO,False,6.63,6.63,2.74,7.91,f_pinky.03.L,3.09
+pauline,FR-01-004,2,CONTENTO,HERMANO,False,2.74,2.74,2.74,3.29,f_middle.03.L,2.29
+pauline,FR-01-004,3,HERMANO,FELIZ,False,28.26,28.26,24.46,41.16,f_middle.03.L,14.11
+pauline,FR-01-005,1,BUENAS TARDES,YO,False,3.62,3.62,1.98,8.44,toe.R,2.2
+pauline,FR-01-005,2,YO,SENTIR,False,36.68,36.68,34.02,51.26,f_index.03.L,19.15
+pauline,FR-01-005,3,SENTIR,MAS O MENOS,False,3.24,3.24,2.83,5.13,heel.02.L,2.41
+pauline,FR-01-006,1,GRACIAS,TODOS,False,1.97,1.23,1.97,4.92,toe.R,2.2
+pauline,FR-01-006,2,TODOS,NIÑO,False,4.1,4.1,0.44,4.65,f_pinky.03.L,2.02
+pauline,FR-01-006,3,NIÑO,NIÑA,False,2.97,2.97,0.94,4.93,toe.L,2.18
+pauline,FR-01-006,4,NIÑA,COMER,False,3.55,3.55,1.5,5.06,f_middle.03.L,2.08
+pauline,FR-01-006,5,COMER,CON GUSTO,False,2.72,2.72,1.01,4.61,heel.02.R,1.54
+pauline,FR-01-007,1,TU,HAMBRE,False,1.86,1.86,0.96,8.96,toe.L,1.8
+pauline,FR-01-008,1,TU,BIEN,False,1.52,1.52,0.6,6.78,toe.R,1.68
+pauline,FR-01-009,1,USTEDES,TRABAJAR,False,5.62,5.62,4.21,7.51,f_middle.03.L,4.0
+pauline,FR-01-009,2,TRABAJAR,FAMILIA,False,6.71,6.12,6.71,9.47,f_middle.03.R,5.06
+pauline,FR-01-010,1,TU,HERMANO,False,1.72,1.72,1.52,6.67,heel.02.R,1.65
+pauline,FR-01-010,2,HERMANO,TRISTE,False,26.27,26.27,24.83,38.68,f_middle.03.L,14.07
+pauline,FR-01-010,3,TRISTE,SENTIR,False,37.85,37.85,33.23,52.34,f_index.03.L,18.7
+pauline,FR-01-010,4,SENTIR,MAL,False,4.73,4.73,2.6,6.07,f_index.03.L,2.81
+pauline,FR-01-011,1,PERDON,TU,False,3.73,2.02,3.73,7.82,heel.02.R,2.5
+pauline,FR-01-011,2,TU,TRISTE,False,2.72,2.72,0.99,6.73,toe.R,1.98
+pauline,FR-01-012,1,TU,HERMANO,False,1.72,1.72,1.52,6.67,heel.02.R,1.65
+pauline,FR-01-012,2,HERMANO,ABURRIDO,False,27.09,27.09,24.43,39.59,f_middle.03.L,14.21
+pauline,FR-01-013,1,HOLA,COMO ESTAS,False,3.27,2.37,3.27,4.35,f_middle.03.R,1.91
+pauline,FR-01-013,2,COMO ESTAS,COMO,False,5.15,5.15,4.86,8.91,f_middle.03.L,4.0
+pauline,FR-01-013,3,COMO,TU,False,6.78,6.78,4.31,12.28,heel.02.R,5.31
+pauline,FR-01-013,4,TU,NOMBRE,False,7.04,7.04,1.85,9.25,f_middle.03.L,3.67
+pauline,FR-01-014,1,DONDE,TU,False,5.73,2.63,5.73,8.12,heel.02.R,3.75
+pauline,FR-01-014,2,TU,FAMILIA,False,7.64,7.64,2.76,10.59,f_middle.03.L,4.27
+pauline,FR-01-014,3,FAMILIA,VIVIR,False,5.96,5.96,4.32,8.77,heel.02.R,4.41
+pauline,FR-01-015,1,MUJER,JUICIOSO,False,2.4,2.4,2.25,5.88,toe.R,1.92
+pauline,FR-01-015,2,JUICIOSO,QUIEN,False,9.11,9.11,2.73,11.67,f_middle.03.L,4.0
+pauline,FR-01-015,3,QUIEN,HOMBRE,False,5.26,5.26,1.17,6.01,f_pinky.03.L,2.49
+pauline,FR-01-016,1,POR QUE,TU,False,2.25,0.71,2.25,4.44,toe.L,1.71
+pauline,FR-01-016,2,TU,TRISTE,False,2.72,2.72,0.99,6.73,toe.R,1.98
+pauline,FR-01-017,1,CUANDO,USTEDES,False,1.97,1.97,0.9,5.9,toe.R,1.84
+pauline,FR-01-017,2,USTEDES,COMER,False,2.31,0.2,2.31,9.43,toe.R,2.26
+pauline,FR-01-018,1,PERSONAS,DIFERENTE,False,4.69,4.69,1.29,6.18,foot.R,2.23
+pauline,FR-01-018,2,DIFERENTE,QUE,False,1.92,0.96,1.92,5.34,toe.R,1.23
+pauline,FR-01-018,3,QUE,SEÑA,False,7.02,7.02,5.84,8.9,f_middle.03.L,4.54
+pauline,FR-01-018,4,SEÑA,TU,False,3.55,3.09,3.55,6.06,foot.R,3.28
+pauline,FR-01-019,1,YO,NUNCA,False,4.49,4.49,2.21,5.53,f_pinky.03.L,2.21
+pauline,FR-01-019,2,NUNCA,COMER,False,5.52,5.52,1.33,6.6,f_middle.03.L,3.6
+pauline,FR-01-019,3,COMER,MUCHO,False,3.51,2.35,3.51,7.54,toe.R,2.18
+pauline,FR-01-020,1,ABUELO,NUNCA,False,35.03,35.03,2.94,47.31,f_middle.03.L,10.96
+pauline,FR-01-020,2,NUNCA,TRABAJAR,False,6.05,6.05,3.27,8.07,toe.L,5.36
+pauline,FR-01-021,1,TIO,NUNCA,False,2.71,2.71,0.37,8.83,toe.L,2.21
+pauline,FR-01-021,2,NUNCA,ABURRIDO,False,7.82,7.82,1.74,9.72,f_pinky.03.L,4.34
+pauline,FR-01-022,1,USTEDES,NUNCA,False,4.61,4.61,3.1,8.1,toe.R,3.14
+pauline,FR-01-022,2,NUNCA,SENTIR,False,38.76,38.76,34.44,52.39,f_index.03.L,20.1
+pauline,FR-01-022,3,SENTIR,MAL,False,4.73,4.73,2.6,6.07,f_index.03.L,2.81
+pauline,FR-01-023,1,PERDON,HERMANO,False,3.5,2.63,3.5,4.19,eyeball_lookat.L,2.52
+pauline,FR-01-023,2,HERMANO,NUNCA,False,27.19,27.19,24.07,39.87,f_middle.03.L,14.04
+pauline,FR-01-023,3,NUNCA,CONTENTO,False,5.85,5.85,1.85,7.34,heel.02.L,3.62
+pauline,FR-01-024,1,NIÑA,SENTIR,False,38.49,38.49,34.28,52.64,f_index.03.L,19.32
+pauline,FR-01-024,2,SENTIR,MUCHO,False,3.85,2.47,3.85,5.48,toe.L,2.24
+pauline,FR-01-024,3,MUCHO,BIEN,False,3.99,3.39,3.99,5.21,f_pinky.03.R,3.1
+pauline,FR-01-024,4,BIEN,NUNCA,False,3.29,3.29,3.19,7.53,toe.R,3.46
+pauline,FR-01-024,5,NUNCA,TRISTE,False,6.89,6.89,1.71,8.59,f_ring.03.L,4.28
+pauline,FR-01-025,1,POR FAVOR,COMER,False,5.19,5.19,1.25,6.01,f_pinky.03.L,2.66
+pauline,FR-01-025,2,COMER,POCO,False,3.35,3.35,2.5,4.77,f_middle.03.L,2.35
+pauline,FR-01-026,1,PERMISO,POR FAVOR,False,4.53,4.53,2.68,5.45,f_middle.03.L,2.99
+pauline,FR-01-027,1,NIÑO,TODOS,False,2.08,2.08,0.44,8.85,heel.02.L,1.93
+pauline,FR-01-027,2,TODOS,TRABAJAR,False,12.19,12.19,3.89,15.47,f_middle.03.L,6.09
+pauline,FR-01-028,1,HERMANO,VIVIR,False,24.16,22.93,24.16,34.77,f_middle.03.R,13.1
+pauline,FR-01-028,2,VIVIR,ABUELO,False,2.35,1.99,2.35,6.63,toe.L,2.33
+pauline,FR-01-028,3,ABUELO,TRABAJAR,False,26.66,26.66,5.43,36.31,f_middle.03.L,9.84
+pauline,FR-01-028,4,TRABAJAR,TIO,False,6.08,3.11,6.08,6.99,f_middle.03.R,3.39
+pauline,FR-01-029,1,HOLA,FAMILIA,False,7.07,7.07,4.15,9.83,f_middle.03.L,4.83
+pauline,FR-01-029,2,FAMILIA,BIENVENIDO,False,5.96,4.4,5.96,11.97,heel.02.R,3.93
+pauline,FR-01-030,1,TIO,COMER,False,2.56,2.56,1.21,8.7,toe.L,2.23
+pauline,FR-01-030,2,COMER,MUCHO,False,3.51,2.35,3.51,7.54,toe.R,2.18
+pauline,FR-01-030,3,MUCHO,HERMANO,False,5.27,2.99,5.27,6.5,f_pinky.03.R,3.08
+pauline,FR-01-030,4,HERMANO,COMER,False,24.92,24.5,24.92,36.76,f_middle.03.R,13.65
+pauline,FR-01-030,5,COMER,POCO,False,3.35,3.35,2.5,4.77,f_middle.03.L,2.35

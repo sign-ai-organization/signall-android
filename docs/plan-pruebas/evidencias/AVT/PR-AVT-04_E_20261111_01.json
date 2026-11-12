@@ -1,0 +1,134 @@
+{
+  "limite_continuo_cm": 10.0,
+  "metodo": "último fotograma de A contra primero de B, clips afirmativo, FK sobre los huesos de la skin",
+  "resultado": {
+    "juan": {
+      "pasos": 82,
+      "manos_cm": {
+        "promedio": 9.25,
+        "mediana": 4.89,
+        "p90": 28.2,
+        "p95": 36.99,
+        "maximo": 39.59
+      },
+      "maximo_cm": {
+        "promedio": 13.71,
+        "mediana": 7.77,
+        "p90": 40.65,
+        "p95": 49.65,
+        "maximo": 53.53
+      },
+      "medio_cm": {
+        "promedio": 5.0,
+        "mediana": 3.06,
+        "p90": 14.01,
+        "p95": 14.64,
+        "maximo": 20.41
+      },
+      "sobre_limite_manos": 15,
+      "pct_sobre_limite_manos": 18.3,
+      "max_dif_manos_entre_variantes_cm": 0.0,
+      "mayores": [
+        [
+          "FR-01-022",
+          2,
+          "NUNCA",
+          "SENTIR",
+          39.6
+        ],
+        [
+          "FR-01-024",
+          1,
+          "NIÑA",
+          "SENTIR",
+          39.4
+        ],
+        [
+          "FR-01-010",
+          3,
+          "TRISTE",
+          "SENTIR",
+          38.7
+        ],
+        [
+          "FR-01-005",
+          2,
+          "YO",
+          "SENTIR",
+          37.6
+        ],
+        [
+          "FR-01-003",
+          1,
+          "ABUELO",
+          "TIO",
+          37.0
+        ]
+      ]
+    },
+    "pauline": {
+      "pasos": 82,
+      "manos_cm": {
+        "promedio": 9.0,
+        "mediana": 4.78,
+        "p90": 27.05,
+        "p95": 35.61,
+        "maximo": 38.76
+      },
+      "maximo_cm": {
+        "promedio": 13.49,
+        "mediana": 7.73,
+        "p90": 39.5,
+        "p95": 48.28,
+        "maximo": 52.64
+      },
+      "medio_cm": {
+        "promedio": 4.92,
+        "mediana": 3.03,
+        "p90": 13.59,
+        "p95": 14.2,
+        "maximo": 20.1
+      },
+      "sobre_limite_manos": 15,
+      "pct_sobre_limite_manos": 18.3,
+      "max_dif_manos_entre_variantes_cm": 0.0,
+      "mayores": [
+        [
+          "FR-01-022",
+          2,
+          "NUNCA",
+          "SENTIR",
+          38.8
+        ],
+        [
+          "FR-01-024",
+          1,
+          "NIÑA",
+          "SENTIR",
+          38.5
+        ],
+        [
+          "FR-01-010",
+          3,
+          "TRISTE",
+          "SENTIR",
+          37.9
+        ],
+        [
+          "FR-01-005",
+          2,
+          "YO",
+          "SENTIR",
+          36.7
+        ],
+        [
+          "FR-01-003",
+          1,
+          "ABUELO",
+          "TIO",
+          35.6
+        ]
+      ]
+    }
+  }
+}
