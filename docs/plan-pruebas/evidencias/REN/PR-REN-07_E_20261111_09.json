@@ -1,0 +1,63 @@
+{
+  "corrida": 1,
+  "serie": "192.168.0.14:5555",
+  "duracion_s": 443,
+  "temperatura_c": [
+    35.4,
+    36.8
+  ],
+  "nivel": [
+    51,
+    48
+  ],
+  "descargando": true,
+  "cuadros": {
+    "cuadros": 33069,
+    "janky": 12494,
+    "janky_pct": 37.78,
+    "p50_ms": 34,
+    "p90_ms": 53,
+    "p95_ms": 57,
+    "p99_ms": 69,
+    "medio_ms": 35.1,
+    "peor_ms": 150
+  },
+  "reposo_60s": {
+    "cuadros": 5694,
+    "janky": 1312,
+    "janky_pct": 23.04,
+    "p50_ms": 27,
+    "p90_ms": 36,
+    "p95_ms": 38,
+    "p99_ms": 44,
+    "medio_ms": 27.2,
+    "peor_ms": 57
+  },
+  "transicion_ms": {
+    "n": 82,
+    "p50": 2030,
+    "p95": 2362,
+    "min": 1285,
+    "max": 2695
+  },
+  "representacion_ms": {
+    "n": 30,
+    "p50": 8247,
+    "p95": 12764,
+    "max": 13343
+  },
+  "envio_a_representado_s": {
+    "p50": 10.3,
+    "p95": 14.8
+  },
+  "pss_mb": {
+    "min": 582,
+    "max": 678,
+    "n": 15
+  },
+  "bateria": {
+    "mah": 190.0,
+    "ma": 1545,
+    "nota": "el contador avanza de a 5 mAh"
+  }
+}

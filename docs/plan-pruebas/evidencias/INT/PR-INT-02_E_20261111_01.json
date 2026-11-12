@@ -1,0 +1,72 @@
+{
+  "exactas": 25,
+  "total": 30,
+  "porcentaje": 83.3,
+  "diferentes": [
+    {
+      "id": "FR-01-006",
+      "frase": "Gracias a todos. Los niños y las niñas comen con gusto.",
+      "tipo": "Afirmación",
+      "oraciones_recibidas": "2/2",
+      "esperado": "GRACIAS,TODOS,NIÑO,NIÑA,COMER,CON GUSTO",
+      "obtenido": "GRACIAS,TODOS,NIÑO,NIÑA,COMER",
+      "exacta": false,
+      "representada": true
+    },
+    {
+      "id": "FR-01-010",
+      "frase": "Tu hermano está triste. ¿Se siente mal?",
+      "tipo": "Pregunta de sí o no",
+      "oraciones_recibidas": "2/2",
+      "esperado": "TU,HERMANO,TRISTE,SENTIR,MAL",
+      "obtenido": "TU,HERMANO,TRISTE,TU,SENTIR,MAL",
+      "exacta": false,
+      "representada": true
+    },
+    {
+      "id": "FR-01-013",
+      "frase": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "tipo": "Pregunta de contenido",
+      "oraciones_recibidas": "3/3",
+      "esperado": "HOLA,COMO ESTAS,COMO,TU,NOMBRE",
+      "obtenido": "HOLA,COMO ESTAS,COMO,TU",
+      "exacta": false,
+      "representada": true
+    },
+    {
+      "id": "FR-01-024",
+      "frase": "Se siente muy bien. La niña nunca está triste.",
+      "tipo": "Negación",
+      "oraciones_recibidas": "2/2",
+      "esperado": "NIÑA,SENTIR,MUCHO,BIEN,NUNCA,TRISTE",
+      "obtenido": "TU,SENTIR,BIEN,NIÑA,NUNCA,TRISTE",
+      "exacta": false,
+      "representada": true
+    },
+    {
+      "id": "FR-01-029",
+      "frase": "Hola, familia, siéntanse bienvenidos.",
+      "tipo": "Orden",
+      "oraciones_recibidas": "1/1",
+      "esperado": "HOLA,FAMILIA,BIENVENIDO",
+      "obtenido": "HOLA,FAMILIA,SENTIR,BIENVENIDO",
+      "exacta": false,
+      "representada": true
+    }
+  ],
+  "salud_antes": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 46,
+    "catalog_loaded": true,
+    "catalog_glosses": 75
+  },
+  "salud_despues": {
+    "status": "ok",
+    "cache_loaded": true,
+    "cache_rows": 54,
+    "catalog_loaded": true,
+    "catalog_glosses": 75
+  },
+  "metodo": "frases escritas en la app con uiautomator2; glosas leídas de logcat SignAiNet; la caché no se vació"
+}

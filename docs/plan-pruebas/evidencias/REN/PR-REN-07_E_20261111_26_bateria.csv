@@ -1,0 +1,4 @@
+momento,hora,carga_uah,temp_c,nivel,usb,ac
+antes_de_la_app,20:29:57,2205000,37.9,43,False,False
+inicio_secuencia,20:31:30,2175000,38.0,43,False,False
+fin_secuencia,20:38:46,2020000,38.3,40,False,False

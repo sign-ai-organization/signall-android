@@ -1,0 +1,143 @@
+{
+  "coinciden": 10,
+  "total": 10,
+  "por_tipo": {
+    "Afirmación": "2/2",
+    "Pregunta de sí o no": "2/2",
+    "Pregunta de contenido": "2/2",
+    "Negación": "2/2",
+    "Orden": "2/2"
+  },
+  "filas": [
+    {
+      "n": 1,
+      "id": "FR-01-001",
+      "frase": "Hola, buenos días, bienvenidos.",
+      "tipo_esperado": "Afirmación",
+      "tipo_codigo_esperado": "AFFIRMATIVE",
+      "cara_esperada": "afirmativo",
+      "secuencia_tipo_cara": "AFFIRMATIVE/afirmativo",
+      "tipo_final": "AFFIRMATIVE",
+      "cara_final": "afirmativo",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_01.mp4"
+    },
+    {
+      "n": 2,
+      "id": "FR-01-005",
+      "frase": "Buenas tardes. Hoy me siento más o menos.",
+      "tipo_esperado": "Afirmación",
+      "tipo_codigo_esperado": "AFFIRMATIVE",
+      "cara_esperada": "afirmativo",
+      "secuencia_tipo_cara": "AFFIRMATIVE/afirmativo",
+      "tipo_final": "AFFIRMATIVE",
+      "cara_final": "afirmativo",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_02.mp4"
+    },
+    {
+      "n": 3,
+      "id": "FR-01-007",
+      "frase": "¿Tienes hambre?",
+      "tipo_esperado": "Pregunta de sí o no",
+      "tipo_codigo_esperado": "YES_NO_QUESTION",
+      "cara_esperada": "pregunta",
+      "secuencia_tipo_cara": "YES_NO_QUESTION/pregunta",
+      "tipo_final": "YES_NO_QUESTION",
+      "cara_final": "pregunta",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_03.mp4"
+    },
+    {
+      "n": 4,
+      "id": "FR-01-011",
+      "frase": "Perdón. ¿Estás triste?",
+      "tipo_esperado": "Pregunta de sí o no",
+      "tipo_codigo_esperado": "YES_NO_QUESTION",
+      "cara_esperada": "pregunta",
+      "secuencia_tipo_cara": "AFFIRMATIVE/afirmativo | YES_NO_QUESTION/pregunta",
+      "tipo_final": "YES_NO_QUESTION",
+      "cara_final": "pregunta",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_04.mp4"
+    },
+    {
+      "n": 5,
+      "id": "FR-01-013",
+      "frase": "Hola, ¿cómo estás? ¿Cómo te llamas?",
+      "tipo_esperado": "Pregunta de contenido",
+      "tipo_codigo_esperado": "CONTENT_QUESTION",
+      "cara_esperada": "pregunta",
+      "secuencia_tipo_cara": "AFFIRMATIVE/afirmativo | CONTENT_QUESTION/pregunta",
+      "tipo_final": "CONTENT_QUESTION",
+      "cara_final": "pregunta",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_05.mp4"
+    },
+    {
+      "n": 6,
+      "id": "FR-01-014",
+      "frase": "¿Dónde vive tu familia?",
+      "tipo_esperado": "Pregunta de contenido",
+      "tipo_codigo_esperado": "CONTENT_QUESTION",
+      "cara_esperada": "pregunta",
+      "secuencia_tipo_cara": "CONTENT_QUESTION/pregunta",
+      "tipo_final": "CONTENT_QUESTION",
+      "cara_final": "pregunta",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_06.mp4"
+    },
+    {
+      "n": 7,
+      "id": "FR-01-019",
+      "frase": "Yo nunca como mucho.",
+      "tipo_esperado": "Negación",
+      "tipo_codigo_esperado": "NEGATIVE",
+      "cara_esperada": "negacion",
+      "secuencia_tipo_cara": "NEGATIVE/negacion",
+      "tipo_final": "NEGATIVE",
+      "cara_final": "negacion",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_07.mp4"
+    },
+    {
+      "n": 8,
+      "id": "FR-01-023",
+      "frase": "Perdón. Mi hermano nunca está contento.",
+      "tipo_esperado": "Negación",
+      "tipo_codigo_esperado": "NEGATIVE",
+      "cara_esperada": "negacion",
+      "secuencia_tipo_cara": "AFFIRMATIVE/afirmativo | NEGATIVE/negacion",
+      "tipo_final": "NEGATIVE",
+      "cara_final": "negacion",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_08.mp4"
+    },
+    {
+      "n": 9,
+      "id": "FR-01-025",
+      "frase": "Por favor, come poco.",
+      "tipo_esperado": "Orden",
+      "tipo_codigo_esperado": "IMPERATIVE",
+      "cara_esperada": "orden",
+      "secuencia_tipo_cara": "IMPERATIVE/orden",
+      "tipo_final": "IMPERATIVE",
+      "cara_final": "orden",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_09.mp4"
+    },
+    {
+      "n": 10,
+      "id": "FR-01-026",
+      "frase": "Con permiso. Déjame pasar, por favor.",
+      "tipo_esperado": "Orden",
+      "tipo_codigo_esperado": "IMPERATIVE",
+      "cara_esperada": "orden",
+      "secuencia_tipo_cara": "AFFIRMATIVE/afirmativo | IMPERATIVE/orden",
+      "tipo_final": "IMPERATIVE",
+      "cara_final": "orden",
+      "coincide": true,
+      "grabacion": "PR-AVT-05_E_20261111_10.mp4"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "limite_continuo_cm": 10.0,
+  "metodo": "último fotograma de A contra primero de B, clips afirmativo, FK sobre los huesos de la skin",
+  "resultado": {
+    "juan": {
+      "pasos": 82,
+      "manos_cm": {
+        "promedio": 4.74,
+        "mediana": 3.08,
+        "p90": 10.75,
+        "p95": 12.72,
+        "maximo": 14.22
+      },
+      "maximo_cm": {
+        "promedio": 7.91,
+        "mediana": 7.17,
+        "p90": 12.71,
+        "p95": 15.53,
+        "maximo": 17.29
+      },
+      "medio_cm": {
+        "promedio": 2.98,
+        "mediana": 2.28,
+        "p90": 5.53,
+        "p95": 5.87,
+        "maximo": 6.59
+      },
+      "sobre_limite_manos": 11,
+      "pct_sobre_limite_manos": 13.4,
+      "max_dif_manos_entre_variantes_cm": 0.0,
+      "mayores": [
+        [
+          "FR-01-020",
+          1,
+          "ABUELO",
+          "NUNCA",
+          14.2
+        ],
+        [
+          "FR-01-003",
+          1,
+          "ABUELO",
+          "TIO",
+          14.1
+        ],
+        [
+          "FR-01-001",
+          1,
+          "HOLA",
+          "BUENOS DIAS",
+          13.3
+        ],
+        [
+          "FR-01-010",
+          2,
+          "HERMANO",
+          "TRISTE",
+          12.8
+        ],
+        [
+          "FR-01-023",
+          2,
+          "HERMANO",
+          "NUNCA",
+          12.7
+        ]
+      ]
+    },
+    "pauline": {
+      "pasos": 82,
+      "manos_cm": {
+        "promedio": 4.65,
+        "mediana": 3.05,
+        "p90": 10.54,
+        "p95": 12.44,
+        "maximo": 13.92
+      },
+      "maximo_cm": {
+        "promedio": 7.88,
+        "mediana": 7.21,
+        "p90": 12.49,
+        "p95": 15.25,
+        "maximo": 16.99
+      },
+      "medio_cm": {
+        "promedio": 2.96,
+        "mediana": 2.28,
+        "p90": 5.48,
+        "p95": 5.79,
+        "maximo": 6.51
+      },
+      "sobre_limite_manos": 11,
+      "pct_sobre_limite_manos": 13.4,
+      "max_dif_manos_entre_variantes_cm": 0.0,
+      "mayores": [
+        [
+          "FR-01-020",
+          1,
+          "ABUELO",
+          "NUNCA",
+          13.9
+        ],
+        [
+          "FR-01-003",
+          1,
+          "ABUELO",
+          "TIO",
+          13.7
+        ],
+        [
+          "FR-01-001",
+          1,
+          "HOLA",
+          "BUENOS DIAS",
+          13.1
+        ],
+        [
+          "FR-01-010",
+          2,
+          "HERMANO",
+          "TRISTE",
+          12.5
+        ],
+        [
+          "FR-01-023",
+          2,
+          "HERMANO",
+          "NUNCA",
+          12.4
+        ]
+      ]
+    }
+  }
+}
