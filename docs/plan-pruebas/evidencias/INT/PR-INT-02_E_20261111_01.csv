@@ -1,0 +1,31 @@
+id,frase,tipo,oraciones_recibidas,esperado,obtenido,exacta,representada
+FR-01-001,"Hola, buenos días, bienvenidos.",Afirmación,1/1,"HOLA,BUENOS DIAS,BIENVENIDO","HOLA,BUENOS DIAS,BIENVENIDO",True,True
+FR-01-002,Adiós a todos. Buenas noches.,Afirmación,2/2,"ADIOS,TODOS,BUENAS NOCHES","ADIOS,TODOS,BUENAS NOCHES",True,True
+FR-01-003,Mi abuelo y mi tío trabajan en familia.,Afirmación,1/1,"ABUELO,TIO,TRABAJAR,FAMILIA","ABUELO,TIO,TRABAJAR,FAMILIA",True,True
+FR-01-004,Estoy contento porque mi hermano está feliz.,Afirmación,1/1,"YO,CONTENTO,HERMANO,FELIZ","YO,CONTENTO,HERMANO,FELIZ",True,True
+FR-01-005,Buenas tardes. Hoy me siento más o menos.,Afirmación,2/2,"BUENAS TARDES,YO,SENTIR,MAS O MENOS","BUENAS TARDES,YO,SENTIR,MAS O MENOS",True,True
+FR-01-006,Gracias a todos. Los niños y las niñas comen con gusto.,Afirmación,2/2,"GRACIAS,TODOS,NIÑO,NIÑA,COMER,CON GUSTO","GRACIAS,TODOS,NIÑO,NIÑA,COMER",False,True
+FR-01-007,¿Tienes hambre?,Pregunta de sí o no,1/1,"TU,HAMBRE","TU,HAMBRE",True,True
+FR-01-008,¿Estás bien?,Pregunta de sí o no,1/1,"TU,BIEN","TU,BIEN",True,True
+FR-01-009,¿Ustedes trabajan en familia?,Pregunta de sí o no,1/1,"USTEDES,TRABAJAR,FAMILIA","USTEDES,TRABAJAR,FAMILIA",True,True
+FR-01-010,Tu hermano está triste. ¿Se siente mal?,Pregunta de sí o no,2/2,"TU,HERMANO,TRISTE,SENTIR,MAL","TU,HERMANO,TRISTE,TU,SENTIR,MAL",False,True
+FR-01-011,Perdón. ¿Estás triste?,Pregunta de sí o no,2/2,"PERDON,TU,TRISTE","PERDON,TU,TRISTE",True,True
+FR-01-012,¿Tu hermano está aburrido?,Pregunta de sí o no,1/1,"TU,HERMANO,ABURRIDO","TU,HERMANO,ABURRIDO",True,True
+FR-01-013,"Hola, ¿cómo estás? ¿Cómo te llamas?",Pregunta de contenido,3/3,"HOLA,COMO ESTAS,COMO,TU,NOMBRE","HOLA,COMO ESTAS,COMO,TU",False,True
+FR-01-014,¿Dónde vive tu familia?,Pregunta de contenido,1/1,"DONDE,TU,FAMILIA,VIVIR","DONDE,TU,FAMILIA,VIVIR",True,True
+FR-01-015,La mujer es juiciosa. ¿Quién es el hombre?,Pregunta de contenido,2/2,"MUJER,JUICIOSO,QUIEN,HOMBRE","MUJER,JUICIOSO,QUIEN,HOMBRE",True,True
+FR-01-016,¿Por qué estás triste?,Pregunta de contenido,1/1,"POR QUE,TU,TRISTE","POR QUE,TU,TRISTE",True,True
+FR-01-017,¿Cuándo comen ustedes?,Pregunta de contenido,1/1,"CUANDO,USTEDES,COMER","CUANDO,USTEDES,COMER",True,True
+FR-01-018,Las personas son diferentes. ¿Qué seña usas tú?,Pregunta de contenido,2/2,"PERSONAS,DIFERENTE,QUE,SEÑA,TU","PERSONAS,DIFERENTE,QUE,SEÑA,TU",True,True
+FR-01-019,Yo nunca como mucho.,Negación,1/1,"YO,NUNCA,COMER,MUCHO","YO,NUNCA,COMER,MUCHO",True,True
+FR-01-020,Mi abuelo nunca trabaja.,Negación,1/1,"ABUELO,NUNCA,TRABAJAR","ABUELO,NUNCA,TRABAJAR",True,True
+FR-01-021,Mi tío nunca está aburrido.,Negación,1/1,"TIO,NUNCA,ABURRIDO","TIO,NUNCA,ABURRIDO",True,True
+FR-01-022,Ustedes nunca se sienten mal.,Negación,1/1,"USTEDES,NUNCA,SENTIR,MAL","USTEDES,NUNCA,SENTIR,MAL",True,True
+FR-01-023,Perdón. Mi hermano nunca está contento.,Negación,2/2,"PERDON,HERMANO,NUNCA,CONTENTO","PERDON,HERMANO,NUNCA,CONTENTO",True,True
+FR-01-024,Se siente muy bien. La niña nunca está triste.,Negación,2/2,"NIÑA,SENTIR,MUCHO,BIEN,NUNCA,TRISTE","TU,SENTIR,BIEN,NIÑA,NUNCA,TRISTE",False,True
+FR-01-025,"Por favor, come poco.",Orden,1/1,"POR FAVOR,COMER,POCO","POR FAVOR,COMER,POCO",True,True
+FR-01-026,"Con permiso. Déjame pasar, por favor.",Orden,2/2,"PERMISO,POR FAVOR","PERMISO,POR FAVOR",True,True
+FR-01-027,"Niños, trabajen todos.",Orden,1/1,"NIÑO,TODOS,TRABAJAR","NIÑO,TODOS,TRABAJAR",True,True
+FR-01-028,"Hermano, vive con el abuelo. Trabaja con el tío.",Orden,2/2,"HERMANO,VIVIR,ABUELO,TRABAJAR,TIO","HERMANO,VIVIR,ABUELO,TRABAJAR,TIO",True,True
+FR-01-029,"Hola, familia, siéntanse bienvenidos.",Orden,1/1,"HOLA,FAMILIA,BIENVENIDO","HOLA,FAMILIA,SENTIR,BIENVENIDO",False,True
+FR-01-030,"Tío, come mucho. Hermano, come poco.",Orden,2/2,"TIO,COMER,MUCHO,HERMANO,COMER,POCO","TIO,COMER,MUCHO,HERMANO,COMER,POCO",True,True

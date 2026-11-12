@@ -1,0 +1,11 @@
+n,id,frase,tipo_esperado,tipo_codigo_esperado,cara_esperada,secuencia_tipo_cara,tipo_final,cara_final,coincide,grabacion
+1,FR-01-001,"Hola, buenos días, bienvenidos.",Afirmación,AFFIRMATIVE,afirmativo,AFFIRMATIVE/afirmativo,AFFIRMATIVE,afirmativo,True,PR-AVT-05_E_20261111_01.mp4
+2,FR-01-005,Buenas tardes. Hoy me siento más o menos.,Afirmación,AFFIRMATIVE,afirmativo,AFFIRMATIVE/afirmativo,AFFIRMATIVE,afirmativo,True,PR-AVT-05_E_20261111_02.mp4
+3,FR-01-007,¿Tienes hambre?,Pregunta de sí o no,YES_NO_QUESTION,pregunta,YES_NO_QUESTION/pregunta,YES_NO_QUESTION,pregunta,True,PR-AVT-05_E_20261111_03.mp4
+4,FR-01-011,Perdón. ¿Estás triste?,Pregunta de sí o no,YES_NO_QUESTION,pregunta,AFFIRMATIVE/afirmativo | YES_NO_QUESTION/pregunta,YES_NO_QUESTION,pregunta,True,PR-AVT-05_E_20261111_04.mp4
+5,FR-01-013,"Hola, ¿cómo estás? ¿Cómo te llamas?",Pregunta de contenido,CONTENT_QUESTION,pregunta,AFFIRMATIVE/afirmativo | CONTENT_QUESTION/pregunta,CONTENT_QUESTION,pregunta,True,PR-AVT-05_E_20261111_05.mp4
+6,FR-01-014,¿Dónde vive tu familia?,Pregunta de contenido,CONTENT_QUESTION,pregunta,CONTENT_QUESTION/pregunta,CONTENT_QUESTION,pregunta,True,PR-AVT-05_E_20261111_06.mp4
+7,FR-01-019,Yo nunca como mucho.,Negación,NEGATIVE,negacion,NEGATIVE/negacion,NEGATIVE,negacion,True,PR-AVT-05_E_20261111_07.mp4
+8,FR-01-023,Perdón. Mi hermano nunca está contento.,Negación,NEGATIVE,negacion,AFFIRMATIVE/afirmativo | NEGATIVE/negacion,NEGATIVE,negacion,True,PR-AVT-05_E_20261111_08.mp4
+9,FR-01-025,"Por favor, come poco.",Orden,IMPERATIVE,orden,IMPERATIVE/orden,IMPERATIVE,orden,True,PR-AVT-05_E_20261111_09.mp4
+10,FR-01-026,"Con permiso. Déjame pasar, por favor.",Orden,IMPERATIVE,orden,AFFIRMATIVE/afirmativo | IMPERATIVE/orden,IMPERATIVE,orden,True,PR-AVT-05_E_20261111_10.mp4
