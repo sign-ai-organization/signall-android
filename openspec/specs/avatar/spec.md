@@ -88,6 +88,57 @@ y la escena cambia de uno al otro en caliente. Regenerarlos sí: los escribe
 
 ## La pose de descanso está horneada en los dos `.glb`
 
+**Actualización aprobada por el owner, 2026-11-11:** Juan y Pauline descansan con
+los brazos a los lados, separados de los muslos, y las manos con giro intermedio.
+Se conserva la curvatura de los dedos del frame de referencia. Primero se
+compararon y aprobaron copias renderizadas; después se autorizó integrar.
+
+`tools/pack_avatars.py` parte de `0029_afirmativo` y aplica las seis rotaciones
+específicas por avatar de `tools/approved_rest_pose.json` (`upper_arm`, `forearm`,
+`hand`, ambos lados). Este ajuste reemplaza la orientación de reposo anterior
+descrita abajo, no las curvas de ninguna seña. No cambia cara, torso, piernas,
+geometría ni matrices de bind. El empaquetador exige el hash de origen aprobado
+en `../signai-avatar` (`fc6f372`) y canales explícitos de rotación para esos huesos
+en todos los clips; una entrega nueva requiere revisar la pose.
+
+La regeneración se comprobó byte a byte contra ambas copias aprobadas. Frente a
+los assets anteriores, cada GLB conserva el bloque binario y sus 200 animaciones
+idénticos; solo difieren seis rotaciones de nodos del JSON.
+
+## Entradas y regresos de las 50 señas (integrado el 2026-11-11)
+
+Después del reposo nuevo quedó un segundo problema: los clips empezaban y
+terminaban pasando por el reposo viejo. El owner revisó **propuestas sobre
+copias, de diez en diez**, y aprobó la última el mismo día. Lo integrado:
+
+- **Entrada:** las 50 señas llegan al gesto desde el reposo nuevo. Ocho se
+  enlazan antes del primer movimiento; las otras preparan durante 0,25–0,5 s.
+  `0001` y `0006` ya empezaban moviéndose, así que **se les agregó preparación
+  (0,375 y 0,250 s) y todos sus tiempos se desplazan**: duran más que antes.
+- **Regreso:** sale directamente al reposo nuevo, sin recorrer la postura vieja.
+  Las anclas y el largo del tramo son **por seña**, elegidos al revisar cada
+  propuesta; no son un porcentaje global.
+- **`0020`:** conserva además el suavizado local aprobado en 1,500–2,125 s, que
+  toca manos, dedos y cuerpo. Es una decisión del owner para esa seña, no una
+  regla general.
+- **`0028`:** conserva sus tres correcciones aprobadas: primera postura sin
+  salto, entrada desde el reposo nuevo y regreso nuevo.
+
+`tools/approved_tracks.py` aplica estas curvas desde
+`tools/approved_tracks.json.gz`, con el hash del empaquetado base y un hash por
+curva: si cambia el export o la pose, **falla en vez de aplicar curvas viejas a
+un esqueleto nuevo**. `tools/export_approved_tracks.py` es el único que regenera
+ese archivo, y solo con una aprobación explícita. Los clips resultantes se
+comprobaron contra las copias elegidas: **200 por avatar, valores exactos**.
+
+Lo que **no** cambió: nombres y rutas de clip, cuatro variantes faciales,
+duración de las otras 48 señas, dedos fuera de `0020`, geometría, bind y las
+otras 160 animaciones de cada archivo. Los accessors de animación se reescriben
+deduplicados antes de compactar: el APK **baja** (Juan 30,32 → 27,73 MB; Pauline
+27,85 → 27,59 MB) frente a los assets con solo el reposo nuevo.
+
+**Contexto histórico de la selección del frame base:**
+
 El reposo **no** es una T-pose ni un default de three.js: es el TRS de los nodos
 del `.glb`, que es la pose que Cascadeur dejó en el export — brazos a 35° bajo
 la horizontal, manos a 52 cm del eje, de maniquí.
@@ -266,6 +317,31 @@ mismo esqueleto mientras three.js las mezcla (`crossFadeTo` / `fadeIn` /
   y está bien — los clips son continuos consigo mismos.
 
 Detalle, duración y la cuenta de por qué 100 ms: `openspec/changes/archive/2026-10-17-reposo-y-crossfade/investigacion.md`.
+
+### La salida final no es un `fadeOut` (2026-11-11)
+
+Entre señas se conserva la fundición de 100 ms. Lo que cambió es **el final del
+turno**: el owner aprobó un acomodo más lento del cuerpo. `playbackTiming.js`
+toma los últimos 250 ms del clip y los reparte en 700 ms con una curva Hermite
+(velocidad inicial 1, final 0) mientras el peso del clip baja a 0 con una curva
+quíntica — los huesos terminan en el reposo horneado porque
+`PropertyMixer.apply()` completa con el TRS del nodo cuando el peso llega a 0.
+
+Tres cosas que hay que respetar:
+
+- **No es `fadeOut`**: la action se pausa y se muestrea a mano. Sin la pausa,
+  `LoopRepeat` volvería a empezar el clip al llegar al final.
+- **El callback espera al peso cero.** La salida dura 700 ms y empieza 250 ms
+  antes del final, así que `onPlaybackDone` sale **~450 ms después del final
+  nominal** (medido en el Redmi con `0028`: 2,574 s contra 2,125 s de clip). La
+  representación medida por `SignAiMetrics` **incluye ese tramo**: no es
+  comparable con las cifras anteriores sin decirlo.
+- **Con `reduceMotion` no hay mezcla** (corte seco, como antes), y la salida se
+  acorta si el usuario eligió más velocidad: `dt * speed` también la acelera.
+
+Una oración que llega durante la salida no se pierde: el siguiente ítem arranca y
+se funde sobre la pose retenida. Cortar con `stop()` o perder la conexión sigue
+siendo un corte seco inmediato (`RF-AVT-05`, `RNF-REL-02`), no esta salida.
 
 ## Bugs conocidos
 
