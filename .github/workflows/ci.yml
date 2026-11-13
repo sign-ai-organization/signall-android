@@ -1,0 +1,50 @@
+name: CI
+
+# Lo mínimo que se puede verificar sin device ni servidores: que compile —y con
+# eso ktlint y el lint de Android— y que no entre una credencial nueva.
+#
+# El análisis de SonarQube **no** corre acá a propósito: el servidor es local,
+# en esta máquina, y no está expuesto a internet. Se corre a mano antes de
+# cerrar una sesión:
+#
+#   reestructuracion/herramientas/escanear/sonar.sh signall-android
+#
+# gitleaks escanea el árbol, no la historia completa: la historia de este repo
+# todavía tiene dos credenciales reales de PR-CAC-05 (ver 01-leaks.md) y un job
+# en rojo todos los días solo enseña a ignorarlo. Una credencial nueva aparece
+# en el árbol al momento del push, así que el escaneo del árbol la ve.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Compilar y ktlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: ./gradlew build
+        run: ./gradlew build --no-daemon
+
+  leaks:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: gitleaks 8.30.1 sobre el árbol
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
+            | tar -xz -C /tmp gitleaks
+          /tmp/gitleaks dir . --redact --verbose
