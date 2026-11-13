@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Genera plantilla-resultados.xlsx desde las fichas del Plan de Pruebas.
 
-Fuente: ../sign-ai-docs/latex/plan-pruebas/main.tex (la copia que quedo al retirar
+Fuente: ../signall-docs/latex/plan-pruebas/main.tex (la copia que quedo al retirar
 Overleaf el 2026-11-04; tiene 72 fichas).
-PR-REN-09 se agrega desde ../sign-ai-docs/borradores/plan-pruebas/01-diseno/rendimiento/pruebas.md
+PR-REN-09 se agrega desde ../signall-docs/borradores/plan-pruebas/01-diseno/rendimiento/pruebas.md
 porque todavia no esta en el plan formal (decision del owner, 2026-11-04).
 """
 
@@ -22,9 +22,9 @@ import os
 
 # El plan formal del repositorio y la ficha que todavia no esta en el.
 AQUI = os.path.dirname(os.path.abspath(__file__))
-TEX = sys.argv[1] if len(sys.argv) > 1 else os.path.join(AQUI, "../../../sign-ai-docs/latex/plan-pruebas/main.tex")
+TEX = sys.argv[1] if len(sys.argv) > 1 else os.path.join(AQUI, "../../../signall-docs/latex/plan-pruebas/main.tex")
 MD_REN = sys.argv[2] if len(sys.argv) > 2 else os.path.join(
-    AQUI, "../../../sign-ai-docs/borradores/plan-pruebas/01-diseno/rendimiento/pruebas.md")
+    AQUI, "../../../signall-docs/borradores/plan-pruebas/01-diseno/rendimiento/pruebas.md")
 OUT = os.path.join(AQUI, "plantilla-resultados.xlsx")
 
 # ── Paleta (la del documento LaTeX) ───────────────────────────────────────────
@@ -309,7 +309,7 @@ def hoja_portada(wb, total, n_fichas_ol, tiene_ren09):
     r += 2
 
     datos = [
-        ("Documento fuente", "Plan de Pruebas, ../sign-ai-docs/latex/plan-pruebas/main.tex"),
+        ("Documento fuente", "Plan de Pruebas, ../signall-docs/latex/plan-pruebas/main.tex"),
         ("Pruebas incluidas", f"{total} en 14 bloques ({n_fichas_ol} fichas del plan"
                               + (" + PR-REN-09 desde el borrador" if tiene_ren09 else "") + ")"),
         ("Registro", "una fila por prueba, en cada ronda"),

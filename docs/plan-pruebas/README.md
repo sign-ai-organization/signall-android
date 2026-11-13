@@ -1,5 +1,10 @@
 # Plantilla de resultados — Plan de Pruebas
 
+> Las evidencias de las rondas ya ejecutadas **no están en el repositorio**: viven en
+> `../data/evidencias/plan-pruebas/`. El índice y la equivalencia con las rutas viejas
+> están en [`INDICE-EVIDENCIAS.md`](INDICE-EVIDENCIAS.md). Los reportes de las rondas,
+> en [`../historia/plan-pruebas/`](../historia/plan-pruebas/).
+
 Instrumento para registrar los resultados de las pruebas del plan. Un libro de Excel,
 una fila por prueba, con la ficha ya copiada: lo único que se agrega es lo que se
 obtuvo al ejecutar.
@@ -12,7 +17,7 @@ obtuvo al ejecutar.
 
 | Parte | Origen |
 |---|---|
-| Las 74 fichas (ID, nombre, tipo, objetivo, trazabilidad, entorno, datos, procedimiento, métrica, criterio y evidencia) | `../sign-ai-docs/latex/plan-pruebas/main.tex`, copiadas literalmente: nadie las retipea. |
+| Las 74 fichas (ID, nombre, tipo, objetivo, trazabilidad, entorno, datos, procedimiento, métrica, criterio y evidencia) | `../signall-docs/latex/plan-pruebas/main.tex`, copiadas literalmente: nadie las retipea. |
 | PR-REN-09 «Tasa de procesamiento» | También está ya en el plan formal desde el 2026-11-04. |
 | Los cuatro estados y los doce campos de la ficha | Sección 9.1 del plan (tablas `tab:estados` y `tab:ficha`). |
 
@@ -92,7 +97,7 @@ Ejemplos:
 
 ```
 PR-REN-02_E_20261110_01.json      salida de /metrics.json de la corrida
-PR-STT-01_D_20261108_01.txt       adb logcat -s SignAiMetrics, crudo
+PR-STT-01_D_20261108_01.txt       adb logcat -s SignAllMetrics, crudo
 PR-AVT-02_E_20261112_03.mp4       video de las animaciones
 PR-PER-05_E_20261115_01.pdf       cuestionario SUS respondido
 ```
@@ -120,7 +125,7 @@ Reglas:
 ## Lo que falta
 
 - **Nada del contenido:** el plan formal tiene 74 pruebas y este libro, 74 filas. `PR-REN-09`
-  y `PR-PER-06` ya están en `../sign-ai-docs/latex/plan-pruebas/main.tex`.
+  y `PR-PER-06` ya están en `../signall-docs/latex/plan-pruebas/main.tex`.
 - **Los conteos de los `.md`** se unificaron el 2026-11-04 en `00-bases/resumen.md`,
   `secciones/09-casos-de-prueba.md` y `02-datos/catalogo.md`.
 - **El plan todavía no se compiló en esta máquina**, porque falta instalar TeX Live. El primer
@@ -129,7 +134,7 @@ Reglas:
 ## Regenerar
 
 El libro se genera con `generar-plantilla.py`, que lee
-`../sign-ai-docs/latex/plan-pruebas/main.tex` y la ficha de PR-REN-09 del borrador. Sin
+`../signall-docs/latex/plan-pruebas/main.tex` y la ficha de PR-REN-09 del borrador. Sin
 argumentos usa las rutas del repositorio:
 
 ```bash

@@ -18,8 +18,8 @@ app). «Salto de manos» es la mayor distancia entre las dos muñecas (`hand.L` 
 
     python3 docs/plan-pruebas/arnes/avt04.py \
         --glb app/src/main/assets/web/models \
-        --fr01 ../sign-ai-docs/borradores/plan-pruebas/02-datos/FR-01-frases-dominio.md \
-        --salida docs/plan-pruebas/evidencias/AVT --fecha 20261111
+        --fr01 ../signall-docs/borradores/plan-pruebas/02-datos/FR-01-frases-dominio.md \
+        --salida ../data/evidencias/plan-pruebas/evidencias/AVT --fecha 20261111
 """
 
 from __future__ import annotations

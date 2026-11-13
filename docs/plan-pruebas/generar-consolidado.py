@@ -156,7 +156,7 @@ def main() -> int:
     # ── Portada: el consolidado no es la plantilla, y Overleaf ya no es la fuente ──
     if "Portada" in wb.sheetnames:
         ws = wb["Portada"]
-        ws["C6"] = "Plan de Pruebas, versión 39 (vive en ../sign-ai-docs/latex/plan-pruebas; Overleaf se retiró el 2026-11-04)"
+        ws["C6"] = "Plan de Pruebas, versión 39 (vive en ../signall-docs/latex/plan-pruebas; Overleaf se retiró el 2026-11-04)"
         ws["C7"] = "74 pruebas en 14 bloques, en dos rondas (148 filas)"
         ws["C8"] = "una fila por prueba y por ronda; la columna Ronda dice cuál es cuál"
         ws["C9"] = ("Ronda diagnóstica (el libro que se pasa con --diagnostico) y ronda de "

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Extrae los conjuntos del Anexo C del plan de pruebas a JSON.
 
-Lee `../sign-ai-docs/latex/plan-pruebas/anexo-c-datos.tex` y escribe un JSON por
+Lee `../signall-docs/latex/plan-pruebas/anexo-c-datos.tex` y escribe un JSON por
 conjunto en el directorio de salida. Se ejecuta desde cualquier ruta:
 
     python3 docs/plan-pruebas/arnes/extraer_anexo.py --salida /tmp/opencode/p1/datos

@@ -2,7 +2,7 @@
 """PR-REN-06 · Sesiones simultáneas (ficha: 10 frases de FR-01-A con su audio de AU-01 por sesión).
 
     python docs/plan-pruebas/arnes/ren06.py --url ws://127.0.0.1:8180/ws/translate \
-        --salida docs/plan-pruebas/evidencias/REN/PR-REN-06_E_20261110_02 --calentar
+        --salida ../data/evidencias/plan-pruebas/evidencias/REN/PR-REN-06_E_20261110_02 --calentar
 
 Método (el del 06/11): niveles de 1, 2 y 3 sesiones a la vez más un cuarto nivel de 1 sesión al final.
 Cada sesión es una conexión `/ws/translate` que manda las 10 frases en sucesión (rotadas para que dos

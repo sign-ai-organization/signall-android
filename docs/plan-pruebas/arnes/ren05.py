@@ -3,7 +3,7 @@
 
     python docs/plan-pruebas/arnes/ren05.py --url ws://127.0.0.1:8180/ws/translate \
         --stt http://127.0.0.1:8100 --contenedores p8lab-backend p8lab-stt \
-        --salida docs/plan-pruebas/evidencias/REN/PR-REN-05_E_20261110_02
+        --salida ../data/evidencias/plan-pruebas/evidencias/REN/PR-REN-05_E_20261110_02
 
 Mide dos cosas, como el 06/11:
 1. Una sesión real con los 10 audios de FR-01-A a ritmo real (la misma que `ren06.py`). Mientras

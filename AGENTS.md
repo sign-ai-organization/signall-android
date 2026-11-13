@@ -234,10 +234,10 @@ propios, así que no se perdió nada) y las remotas quedaron atrás de `main`:
 
 | Repo | `origin/main` | `origin/develop` (obsoleta) |
 |---|---|---|
-| `sign-ai-android` | `704e0ac` | `704e0ac` (igual, se igualó ese día) |
-| `sign-ai-backend` | `301e721` | `301e721` (igual) |
-| `sign-ai-stt` | `4824979` | `4824979` (igual) |
-| `sign-ai-docs` | `401b7d1` | `8ff4fd2` (11 commits atrás) |
+| `signall-android` | `704e0ac` | `704e0ac` (igual, se igualó ese día) |
+| `signall-backend` | `301e721` | `301e721` (igual) |
+| `signall-stt` | `4824979` | `4824979` (igual) |
+| `signall-docs` | `401b7d1` | `8ff4fd2` (11 commits atrás) |
 
 Las ramas remotas `origin/develop` **no se borraron**: son historia y borrarlas en el remoto
 de los hermanos es cosa del owner. **No las uses ni las Actualices**: no son un sitio donde
@@ -462,8 +462,8 @@ pide. La regla es leer la fila antes de decidir, no después.
 | **Un frame del WebSocket, un nombre de métrica, el catálogo, o cualquier cosa que cruce a otro repo** | skill **`contrato-websocket`** — el contrato se lee en los dos lados antes de cambiarse, y el otro lado tiene que quedar actualizado o la deuda se dice en voz alta |
 | **Si el código y los documentos no coinciden, o hay que decidir si manda el código o el documento** | skill **`fuentes-de-verdad`** — las dos fuentes, el flujo de revisión y qué hacer cuando no alinean |
 | **Leer, corregir o compilar los documentos de la tesis** | skill **`documentos-tesis`** — dónde viven, cómo se editan, cómo se compilan con `make` y qué se hace con una divergencia |
-| **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, estructura de `sign-ai-docs` |
-| **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | **`ls docs/CONTRASTE-*.md`**. Los contrastes son documentos de trabajo de una sesión: se crean, se actualizan y a veces se borran, así que no hay una lista fija — se buscan por nombre. Cada repo tiene el suyo en su `docs/` (el del backend está en `../signall-backend/docs/`) |
+| **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, estructura de `signall-docs` |
+| **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | **`ls docs/historia/CONTRASTE-*.md`**. Los contrastes son documentos de trabajo de una sesión: se crean, se actualizan y a veces se borran, así que no hay una lista fija — se buscan por nombre. Cada repo tiene el suyo en su `docs/` (el del backend está en `../signall-backend/docs/`) |
 | **El micrófono, el modo en vivo, la cola de la escena o la latencia** | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) + `tools/TIEMPO-REAL.md` |
 | **Probar o verificar en el device, o "va lento"** | skill **`controlar-app-movil`** — qué herramienta usar, y los errores ya pisados |
 | **Compose, Lumo, accesibilidad o performance** | skill **`compose-best-practices`** (Lumo/Phosphor, cero Material 3) + `ui/designsystem/Color.kt` |
