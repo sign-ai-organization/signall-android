@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """PR-RES-01 y PR-RES-03 con el teléfono (Redmi Note 11 por USB).
 
-    python docs/plan-pruebas/arnes/res_telefono.py res01 --salida docs/plan-pruebas/evidencias/RES/PR-RES-01_E_20261110_02
-    python docs/plan-pruebas/arnes/res_telefono.py res03 --salida docs/plan-pruebas/evidencias/RES/PR-RES-03_E_20261110_02
+    python docs/plan-pruebas/arnes/res_telefono.py res01 --salida ../data/evidencias/plan-pruebas/evidencias/RES/PR-RES-01_E_20261110_02
+    python docs/plan-pruebas/arnes/res_telefono.py res03 --salida ../data/evidencias/plan-pruebas/evidencias/RES/PR-RES-03_E_20261110_02
 
 Requisitos: el laboratorio `p8lab-*` arriba (backend en 8180, STT en 8100), la app `com.signai.webview`
 instalada con `RECORD_AUDIO`, y `adb` (se usa la ruta completa del SDK, no está en el PATH).

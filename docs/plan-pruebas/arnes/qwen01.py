@@ -6,7 +6,7 @@ Ollama escucha en `127.0.0.1:11434` y el contenedor del backend no lo alcanza
 comparación se consulta desde el host con el mismo prompt, la misma temperatura
 y la misma reparación contra el catálogo:
 
-    PYTHONPATH=../sign-ai-backend ../tra03/venv/bin/python \
+    PYTHONPATH=../signall-backend ../tra03/venv/bin/python \
         docs/plan-pruebas/arnes/qwen01.py --datos /tmp/p1/datos --salida /tmp/p1/evidencias/LLM
 """
 

@@ -6,7 +6,7 @@
 # primera traducción con las siguientes.
 set -u
 
-BACKEND=../sign-ai-backend
+BACKEND=../signall-backend
 SALIDA=/tmp/opencode/p1-2026-11-10
 ARNE=$(cd "$(dirname "$0")" && pwd)
 DATOS=$SALIDA/datos

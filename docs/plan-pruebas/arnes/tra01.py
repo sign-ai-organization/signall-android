@@ -7,7 +7,7 @@ semántico y catálogo/validación). Una arista pasa por interfaz cuando el
 símbolo importado es una ABC o un Protocol; cualquier otra cosa —una clase
 concreta, una función, un módulo entero— cuenta como salto.
 
-    python3 docs/plan-pruebas/arnes/tra01.py --backend ../sign-ai-backend \
+    python3 docs/plan-pruebas/arnes/tra01.py --backend ../signall-backend \
         --salida /tmp/opencode/p1-2026-11-10/evidencias
 
 No importa el backend ni necesita sus dependencias: solo lee el AST.

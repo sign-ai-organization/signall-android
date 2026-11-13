@@ -5,7 +5,7 @@ oraciones**, y qué tiene que hacer el resto del sistema con esto.
 
 **Rama:** `flujo-oraciones`, desde `develop`. **Sin mergear.**
 
-Plan completo: `../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10.
+Plan completo: `../signall-backend/docs/historia/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10.
 Log de la sesión: `openspec/sessions/2026-10-15-flujo-oraciones-android.md`.
 Spec: `openspec/specs/ui/spec.md` (los 14 IDs que reescribió el plan de octubre:
 `STA-9`, `STA-15` a `STA-20`, `GLS-11`, `GLS-12`, `BRG-14`, `BRG-15` y `OBS-1`

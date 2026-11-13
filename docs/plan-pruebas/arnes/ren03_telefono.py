@@ -2,7 +2,7 @@
 """PR-REN-03 · Latencia de extremo a extremo con el teléfono, por texto (situaciones «caché» y «LLM»).
 
     python docs/plan-pruebas/arnes/ren03_telefono.py --situacion cache --datos <carpeta de extraer_anexo.py> \
-        --salida docs/plan-pruebas/evidencias/REN/PR-REN-03_E_20261110_02
+        --salida ../data/evidencias/plan-pruebas/evidencias/REN/PR-REN-03_E_20261110_02
     python docs/plan-pruebas/arnes/ren03_telefono.py --situacion llm   --datos ... --salida ...
 
 Método (el del 06/11): las 10 frases de FR-01-A, cada una 5 veces, escritas en la app con `adb input text`
