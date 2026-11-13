@@ -6,7 +6,7 @@
 
 El owner pidió **organizar el repo** —carpetas, archivos y documentos— y dejar limpio el
 espacio de trabajo, borrando o moviendo lo que ya estuviera en otro lado. Antes de mirar
-nada se pulleó `../sign-ai-docs` (30 archivos nuevos, sobre todo `plan-pruebas/01-diseno/`).
+nada se pulleó `../signall-docs` (30 archivos nuevos, sobre todo `plan-pruebas/01-diseno/`).
 
 ## Qué se hizo
 
@@ -19,7 +19,7 @@ nada se pulleó `../sign-ai-docs` (30 archivos nuevos, sobre todo `plan-pruebas/
   `docs/marca/` y se repuntaron `MASTER_ICON`/`MASTER_LOGO` (`tools/generar-marca.py:46`)
   más el comentario de `ui/SignAiBranding.kt` y la línea de `tools/README.md`.
 - **`android-integration.md` de la raíz** (352 líneas, del 2026-10-13): copia vieja del
-  contrato. La fuente de verdad es `../sign-ai-backend/docs/android-integration.md`
+  contrato. La fuente de verdad es `../signall-backend/docs/android-integration.md`
   (423 líneas, del 2026-10-21) y todas las referencias vivas ya apuntaban allá. Se corrigió
   la única que apuntaba al archivo pelado (`.env.example:13`) y se actualizó el número de
   líneas en `docs/SISTEMA.md:39` y en el skill `contrato-websocket`, que decían 461.
@@ -68,7 +68,7 @@ El repo pasó de ~2 GB a 1,4 GB en disco. Lo versionado bajó 8 MB.
 - **`PrototipoFrontend/` se queda en la raíz.** Son 23 archivos versionados y lo referencian
   siete archivos de Kotlin (los tokens de `ui/designsystem/foundation/` y `Color.kt`) más
   el spec de UI y `config.yaml`. Borrarle `node_modules` ya resuelve los 595 MB.
-- **No se borró ningún documento por «estar duplicado en `../sign-ai-docs`»**: se comparó
+- **No se borró ningún documento por «estar duplicado en `../signall-docs`»**: se comparó
   archivo por archivo y no hay ninguno. El único duplicado cruzado era el del backend.
 
 ## Qué se midió
@@ -144,7 +144,7 @@ Quedan **nueve** carpetas, todas de código, docs o caché: `app/` (248 MB de lo
 - **`openspec/specs/pipeline/spec.md` sigue describiendo el pipeline viejo** más allá de
   las rutas y las dos líneas corregidas. Arreglarlo es reescribir el spec, no mover
   archivos.
-- **`../sign-ai-docs` no tiene README** (pendiente #7, del otro repo). No se tocó: en los
+- **`../signall-docs` no tiene README** (pendiente #7, del otro repo). No se tocó: en los
   hermanos no se commitea sin que lo pida el owner.
 - **`Para Exportar/` (660 MB) es material del modelador**, no de la app: si algún día se
   confirma que no hace falta, es lo más pesado que queda en `../material-3d/`.

@@ -9,27 +9,27 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
 `sign-ai-organization` de GitHub.
 
 ```
-../sign-ai-stt ──PCM16/WS──▶ ../sign-ai-backend ──WS/JSON──▶ ../sign-ai-android (esta app)
+../signall-stt ──PCM16/WS──▶ ../signall-backend ──WS/JSON──▶ ../signall-android (esta app)
                                       │
                                       └──▶ Neon (Postgres 16 + pgvector): catalog, semantic_cache
 
-../sign-ai-docs  ← documentos de la tesis en LaTeX (se compilan con make)
-../signai-avatar ← animaciones (Cascadeur): GLB finales de Juan y Pauline (rama dev)
+../signall-docs  ← documentos de la tesis en LaTeX (se compilan con make)
+../signall-avatar ← animaciones (Cascadeur): GLB finales de Juan y Pauline (rama dev)
 ```
 
 | Repo | Qué es | Rama | Puerto | Se levanta con |
 |---|---|---|---|---|
-| `../sign-ai-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `main` | 8080 | `docker compose up --build` (levanta **también** el STT) |
-| `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `main` | 8000 | incluido en el compose del backend, o solo desde su repo |
-| `../sign-ai-docs` | **Los documentos de la tesis**: los formales en LaTeX (SRS, SDD, memoria, plan de pruebas, SPMP), los borradores en Markdown y los diagramas | `main` | — | `make` (compila los PDF) |
-| `../signai-avatar` | Producción de las animaciones con Cascadeur; versiona en `models/` los GLB finales de Juan y Pauline (200 clips cada uno: 50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada desde 2026-09-19 | `dev` | — | — |
+| `../signall-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `main` | 8080 | `docker compose up --build` (levanta **también** el STT) |
+| `../signall-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `main` | 8000 | incluido en el compose del backend, o solo desde su repo |
+| `../signall-docs` | **Los documentos de la tesis**: los formales en LaTeX (SRS, SDD, memoria, plan de pruebas, SPMP), los borradores en Markdown y los diagramas | `main` | — | `make` (compila los PDF) |
+| `../signall-avatar` | Producción de las animaciones con Cascadeur; versiona en `models/` los GLB finales de Juan y Pauline (200 clips cada uno: 50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada desde 2026-09-19 | `dev` | — | — |
 
 **El contrato entre ellos son frames de WebSocket, no imports.** Un cambio acá rompe allá
 sin que el compilador avise. Ese es el motivo de que este archivo exista.
 
 ---
 
-## `../sign-ai-backend`
+## `../signall-backend`
 
 **Leé `CLAUDE.md` (147 líneas) antes de tocarlo.** Tiene las reglas que no están
 acá: código y comentarios **en inglés sin excepción**, los nombres de clases tienen que
@@ -58,7 +58,7 @@ mensaje y lo manda el owner, por PR contra `main`.
   traduzca**) y es el que fija que no haya eco: `read_exactly(ws, 3)` con
   `THREE_MESSAGES = ["segment", "segment", "done"]`.
 
-## `../sign-ai-stt`
+## `../signall-stt`
 
 Sin AGENTS.md ni CLAUDE.md: su documentación es el `README.md` (235 líneas), muy
 completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contra
@@ -78,7 +78,7 @@ completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contr
   porque el script produce siempre el mismo WAV para el mismo texto.
 - De `fixtures/` saca el audio `tools/verificar-tiempo-real.sh` para las pruebas end-to-end.
 
-## `../sign-ai-docs`
+## `../signall-docs`
 
 **Los documentos de la tesis.** Desde el **2026-11-04** este repositorio es la **única fuente
 de verdad**: Overleaf se retiró y su MCP se quitó de la configuración global. No hay copia que
@@ -112,9 +112,9 @@ versiones-pasadas/           ← historia, no se edita
 
 ### Cómo se entra en calor
 
-1. `../sign-ai-docs/README.md` — mapa de carpetas y cómo compilar.
-2. `../sign-ai-docs/ESTADO.md` — estado y pendientes de cada documento.
-3. `../sign-ai-docs/latex/<documento>/main.tex` — el documento.
+1. `../signall-docs/README.md` — mapa de carpetas y cómo compilar.
+2. `../signall-docs/ESTADO.md` — estado y pendientes de cada documento.
+3. `../signall-docs/latex/<documento>/main.tex` — el documento.
 4. El skill **`documentos-tesis`** — el flujo de trabajo completo.
 
 ### Dos cosas que confunden
@@ -126,7 +126,7 @@ versiones-pasadas/           ← historia, no se edita
   Overleaf después se volvieron a aplicar el mismo día. Lo que se corrigió y lo que sigue
   abierto está en `ESTADO.md`.
 
-## `../signai-avatar`
+## `../signall-avatar`
 
 **Es la fuente de los GLB de esta app.** Es el repo de producción de las animaciones:
 las señas se hacen en Cascadeur sobre los avatares HumGen3D (Juan y Pauline) y el
@@ -171,14 +171,14 @@ Sin git y sin reglas: material compartido o restos.
   sacarlo de la base del repo (1 GB y git lo ignoraba):
   - `Avatares/` — `Juan_final.glb` (37,87 MB) y `Pauline_final.glb` (35,27 MB), la
     **versión anterior** (2026-10-24) de los dos exports de Cascadeur. Ya no es la fuente:
-    la vigente está versionada en `../signai-avatar/models/`. **Entrada inmutable**: no se
+    la vigente está versionada en `../signall-avatar/models/`. **Entrada inmutable**: no se
     edita; se conserva para comparar.
   - `GLB SignALL/` — el `.glb` único (27 MB) del pipeline intermedio, retirado el
     2026-10-26.
   - `GLB Senas/` — los 32 exports por seña del pipeline viejo (315 MB).
   - `Para Exportar/` — los `.blend` + `.fbx` de Cascadeur (660 MB).
   Ningún script escribe ahí: `pack_signall.py` y `split_signs.py` solo leen.
-  `pack_avatars.py` ya no lee de acá: lee de `../signai-avatar/models/`.
+  `pack_avatars.py` ya no lee de acá: lee de `../signall-avatar/models/`.
 - `../Resources/` — scripts viejos y docs (ADR, documento maestro, backlog). Incluye
   `split_avatar_for_filament.py` y `retarget_blender.py`, que son del **approach
   abandonado**: no sirven de referencia para nada de acá.
@@ -196,7 +196,7 @@ sigue escuchando donde escuchaba y no tiene ninguna configuración de TLS. El bu
 demuestra es `demo` (`wss://127.0.0.1:8443/ws/translate` con `adb reverse tcp:8443 tcp:443`
 y la CA de laboratorio instalada en el teléfono); `debug` sigue en `ws://`, porque es el
 build con el que se mide latencia y el handshake no debe entrar en la comparación. El plan
-completo está en `../sign-ai-backend/docs/plan-proxy-tls.md`.
+completo está en `../signall-backend/docs/plan-proxy-tls.md`.
 
 - **Solo se traduce lo que el cliente manda como `text`.** La voz entra por el mismo
   socket pero vuelve como `transcript`, y esa transcripción **no se traduce**. Si el
@@ -216,8 +216,8 @@ completo está en `../sign-ai-backend/docs/plan-proxy-tls.md`.
 
 Y tres herramientas de este repo que **dependen del código de los hermanos**:
 
-- `tools/verificar-tiempo-real.sh` levanta el compose de `../sign-ai-backend` (que incluye
-  `../sign-ai-stt`) y usa sus fixtures.
-- `tools/mock_backend.py` importa `../sign-ai-backend/app/nlp/llm_client.py` y replica su
+- `tools/verificar-tiempo-real.sh` levanta el compose de `../signall-backend` (que incluye
+  `../signall-stt`) y usa sus fixtures.
+- `tools/mock_backend.py` importa `../signall-backend/app/nlp/llm_client.py` y replica su
   `catalog_repository`: renombrar o mover esos módulos rompe el mock.
-- `tools/local_stt.py` arranca el STT desde `../sign-ai-stt`.
+- `tools/local_stt.py` arranca el STT desde `../signall-stt`.

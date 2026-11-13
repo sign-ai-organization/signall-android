@@ -54,12 +54,12 @@ ejecutó ese comando ni instalará complementos como parte de esta preparación.
 
 ## Fuentes y archivos que deben conservarse
 
-- Origen vigente: `../signai-avatar/models/Juan.glb` y `Pauline.glb`, commit
+- Origen vigente: `../signall-avatar/models/Juan.glb` y `Pauline.glb`, commit
   **`fc6f372` del 2026-11-04**. Solo lectura; el repo hermano queda intacto.
 - Assets de la app: `app/src/main/assets/web/models/juan.glb` y `pauline.glb`.
   No se editan directamente: el empaquetado está en `tools/pack_avatars.py`.
 - El flujo de producción se describe en
-  `../signai-avatar/openspec/specs/animacion-cascadeur/spec.md` (2026-10-26).
+  `../signall-avatar/openspec/specs/animacion-cascadeur/spec.md` (2026-10-26).
   Sus cifras antiguas de 300 clips no describen la entrega actual.
 - La inspección directa de los GLB actuales encontró **200 clips y 102 articulaciones
   por avatar**: 50 señas con cuatro variantes faciales. Los canales de huesos son
@@ -69,7 +69,7 @@ ejecutó ese comando ni instalará complementos como parte de esta preparación.
   arreglos. No se encontraron `.casc` en la búsqueda del entorno compartido ni
   `.mp4` en `../data/`; no significa que no existan en el equipo de Samuel.
 
-Referencia formal consultada: `../sign-ai-docs/latex/srs/main.tex:330–340`, última
+Referencia formal consultada: `../signall-docs/latex/srs/main.tex:330–340`, última
 modificación del archivo en commit `b23692c` del 2026-11-10: el avatar reproduce
 señas preparadas y las concatena mediante interpolación. Esta preparación no cambia
 ese alcance ni modifica los documentos formales.

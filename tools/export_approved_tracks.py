@@ -22,7 +22,7 @@ import pack_avatars as pack
 
 def export(candidates, output):
     result = {'format': 1, 'approval': '2026-11-11: 50 señas, entradas 01–05; 0020 v3 y 0028 completas',
-              'source_repo': '../signai-avatar', 'source_commit': 'fc6f372c8412010d85925fe342fdcf0c073fbdf1',
+              'source_repo': '../signall-avatar', 'source_commit': 'fc6f372c8412010d85925fe342fdcf0c073fbdf1',
               'avatars': {}}
     for avatar, label, filename in pack.AVATARS:
         source = pack.SOURCE_DEFAULT / filename

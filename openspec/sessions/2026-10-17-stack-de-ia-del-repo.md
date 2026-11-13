@@ -54,7 +54,7 @@ desde el `AGENTS.md` ni desde el índice de sesiones, y no tenía log de sesión
 | 1 | Alcance: **solo este repo, estructura**. Los cuatro archivos envenenados y los hermanos quedan reportados para otra sesión. |
 | 2 | `compose-best-practices`: **reescribirlo como Lumo**, en vez de dejar de invocarlo o borrarlo. |
 | 3 | `openspec/changes/`: **archivarlas** y corregir la línea mentirosa. |
-| 4 | Los hermanos: **solo el stack de este repo**. No tocar `../sign-ai-backend`, `../sign-ai-stt` ni `../sign-ai-docs`. |
+| 4 | Los hermanos: **solo el stack de este repo**. No tocar `../signall-backend`, `../signall-stt` ni `../signall-docs`. |
 
 ## Qué se hizo
 
@@ -289,9 +289,9 @@ Esto es lo que se encontró y **no se tocó**, por la decisión de alcance:
 |---|---|---|
 | **4** | **`docs/CAMBIOS.md` §7 (`:167`, `:186`) contradice su propia sección del 2026-10-16** (`:283`): §7 dice que el adelanto automático "se queda" y que `CATCHUP_BACKLOG = 2` no se tocó, cuando D-5 lo eliminó. Los pendientes #3 y #6 de la lista están duplicados, y el #5 está a medio hacer. | Quien lea §7 después de §D-5 se queda con la respuesta equivocada. |
 | **5** | **`tools/` tiene tres scripts sin consumidor**: `build_signs.py`, `patch_webview_glue.py` y `splice_movement.py`, todos del pipeline de landmarks ya muerto. `tools/backup/` tiene un binario y un `sign.json` sin referenciar. | `tools/README.md:111-125` ya los marca como viejos, pero los archivos siguen ahí y el `README` no menciona `backup/`. |
-| **6** | **`../sign-ai-stt` no tiene archivo de agente**: solo `README.md`. Un agente que vaya a tocar el protocolo del STT no tiene ni una regla de git. | |
-| **7** | **`../sign-ai-docs` no tiene ni README.** Una sesión que entre ahí no sabe qué es cada carpeta ni que los `.drawio` los edita el owner. | |
-| **8** | `../sign-ai-backend` tiene `CLAUDE.md` + 2 skills en `.claude/skills/`. opencode lee las dos cosas (CLAUDE.md como fallback y `.claude/skills/`), así que **está bien para opencode** — pero si el owner usa Claude Code, `CLAUDE.md` funciona y las skills también. Nada que hacer. | Sin acción. |
+| **6** | **`../signall-stt` no tiene archivo de agente**: solo `README.md`. Un agente que vaya a tocar el protocolo del STT no tiene ni una regla de git. | |
+| **7** | **`../signall-docs` no tiene ni README.** Una sesión que entre ahí no sabe qué es cada carpeta ni que los `.drawio` los edita el owner. | |
+| **8** | `../signall-backend` tiene `CLAUDE.md` + 2 skills en `.claude/skills/`. opencode lee las dos cosas (CLAUDE.md como fallback y `.claude/skills/`), así que **está bien para opencode** — pero si el owner usa Claude Code, `CLAUDE.md` funciona y las skills también. Nada que hacer. | Sin acción. |
 
 ## Verificación
 

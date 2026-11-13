@@ -71,7 +71,7 @@ tecleo.
 - **PR-TRA-03 y los parches locales.** El criterio pide reconstruir sin parches no
   versionados, pero el `.env` (DATABASE_URL y clave del proveedor) y `local.properties`
   (`sdk.dir`) no están versionados. Se copian del repo real y quedan anotados. Además, el
-  2026-11-05 los árboles de trabajo de `../sign-ai-backend` y `../sign-ai-stt` tienen
+  2026-11-05 los árboles de trabajo de `../signall-backend` y `../signall-stt` tienen
   cambios sin commitear (de los arreglos de la ronda), así que el clon reconstruye el
   **estado publicado** en `origin/main` (`8f27bf8` en los dos), no lo que corre en el
   entorno principal.
@@ -83,7 +83,7 @@ tecleo.
   `cache.similarity` p50 0,1 ms y `cache.embed` p50 39 ms. Se reporta, no se resuelve.
 - **El SRS todavía dice que los documentos se redactan «sobre Overleaf»**
   (`main.tex:2753`), cuando Overleaf se retiró el 2026-11-04 y los documentos viven en
-  `../sign-ai-docs/latex/`. Es una frase suelta de las restricciones de diseño.
+  `../signall-docs/latex/`. Es una frase suelta de las restricciones de diseño.
 
 ## Correcciones del arnés en esta sesión (leer antes de reusar una evidencia)
 
@@ -108,7 +108,7 @@ tecleo.
 ## Pendientes
 
 - **Del otro lado, ninguno**: el carril no cambió frames, glosas, columnas ni nombres de
-  métrica, así que `../sign-ai-backend` y `../sign-ai-stt` no tienen nada que actualizar.
+  métrica, así que `../signall-backend` y `../signall-stt` no tienen nada que actualizar.
   Tampoco se commiteó ni se pusheó en ningún repo.
 - Las dos fallas piden decisión del owner, no de esta sesión: (1) que la app vuelva a leer
   la capacidad de audio cuando el STT se recupera, y (2) si manda la ficha de PR-CAC-05 o

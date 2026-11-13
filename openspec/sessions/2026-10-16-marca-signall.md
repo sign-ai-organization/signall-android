@@ -113,7 +113,7 @@ cual no se llegaba ni a la opción 27.
 
 ## Decisión que el owner todavía no tomó
 
-**Renombrar el paquete `com.signai.webview`.** No es visible para el usuario y
+**Renombrar el paquete `com.signall.app`.** No es visible para el usuario y
 renombrarlo cambia la identidad de la app instalada (habría que reinstalar) y
 toca ~30 archivos más `AGENTS.md` y los flows de `tools/maestro`. Se dejó como
 está y se anotaron las consecuencias en `BRD-1`/`BRD-6` del spec. **Si el owner

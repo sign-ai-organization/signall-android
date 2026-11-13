@@ -1,7 +1,7 @@
 # Plan de recuperación con el modelo oficial y ronda de evaluación
 
 **Fecha:** 2026-11-05 · **Rama:** `main` · **Repos tocados:** este (solo
-`docs/plan-pruebas/` y esta bitácora), `../sign-ai-backend` y `../sign-ai-docs`.
+`docs/plan-pruebas/` y esta bitácora), `../signall-backend` y `../signall-docs`.
 La app y el STT no se tocaron.
 
 ## Qué llegó
@@ -23,7 +23,7 @@ defecto.
    evaluación con cinco carriles de subagentes y reglas contra los loops).
 3. Se revisó el diff del backend: **219 líneas en 12 archivos más 6 nuevos**, todas
    alineadas con el SDD. Se commiteó en `8f27bf8` y se pusheó a `main` y `develop`.
-4. Se corrigió el SRS (`../sign-ai-docs`, `72070e3`): se quitó la sección
+4. Se corrigió el SRS (`../signall-docs`, `72070e3`): se quitó la sección
    «Disponibilidad» duplicada —estaba bajo «Requerimientos de Desempeño» y bajo
    «Atributos del Sistema»— y el peso del APK pasó de 78,19 MB a **33,9 MB release /
    39,0 MB debug**, medidos. `make srs` compila y no quedan etiquetas duplicadas.
@@ -42,7 +42,7 @@ defecto.
 | Umbral de la caché | 0,03 |
 | Barrera de no-voz | En el STT |
 | `PR-INT-03` | Cirugía del catálogo aprobada, camino real, con respaldo y Neon |
-| `PR-AVT-05` | Fuera de este plan; el GLB nuevo está en `../signai-avatar` |
+| `PR-AVT-05` | Fuera de este plan; el GLB nuevo está en `../signall-avatar` |
 | `JUCIOSO` | Se corrige en todos lados, previa confirmación del LSC50 |
 | `RNF-DES-07` | Se fija después de la fase 1 |
 | Consolidado | Dos columnas por bloque, una por ronda |

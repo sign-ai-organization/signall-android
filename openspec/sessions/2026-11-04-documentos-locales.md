@@ -7,13 +7,13 @@
 Decisión del owner: **Overleaf dejó de ser fuente confiable**. «Ya no sirve de nada, ya no es
 una fuente confiable de la información; ahora todo se hace de forma local.» Los cinco
 documentos formales —SRS, SDD, memoria, plan de pruebas y plan de administración— pasan a
-vivir en `../sign-ai-docs`, se editan ahí y se compilan ahí. Pedido concreto: revisar y pulir
+vivir en `../signall-docs`, se editan ahí y se compilan ahí. Pedido concreto: revisar y pulir
 el repo de documentos, instalar LaTeX en la máquina, arreglar `AGENTS.md`, apagar el MCP de
 Overleaf y dejar una forma fácil de ver los documentos mientras se editan.
 
 ## Qué se hizo
 
-**`../sign-ai-docs` (el original, ya no una copia):**
+**`../signall-docs` (el original, ya no una copia):**
 
 - `Makefile` nuevo: `make` compila los cinco, `make <documento>` uno, `make watch DOC=<doc>`
   recompila al guardar, `make open DOC=<doc>` abre el PDF, `make clean` / `make limpiar-aux`
@@ -34,7 +34,7 @@ Overleaf y dejar una forma fácil de ver los documentos mientras se editan.
 
 **`sign-ai-android` (este repo):**
 
-- `AGENTS.md`: «Las tres fuentes» → **«Las dos fuentes»** (código y `../sign-ai-docs`). Fuera
+- `AGENTS.md`: «Las tres fuentes» → **«Las dos fuentes»** (código y `../signall-docs`). Fuera
   toda la sección de Overleaf —lectura libre, escritura con control de cambios, `policies`,
   cookie, IDs de proyecto— reemplazada por «Los documentos de la tesis: locales y
   compilables»: cómo se compila, que el control de cambios es `git diff`, y cómo se miran.
@@ -47,7 +47,7 @@ Overleaf y dejar una forma fácil de ver los documentos mientras se editan.
 - Agentes `@contraste` y `@pipeline`: sin Overleaf; apuntan a `latex/srs/main.tex` y al skill
   nuevo. `openspec/config.yaml` ídem.
 - `docs/plan-pruebas/README.md` y `generar-plantilla.py`: el plan formal es
-  `../sign-ai-docs/latex/plan-pruebas/main.tex`, no Overleaf.
+  `../signall-docs/latex/plan-pruebas/main.tex`, no Overleaf.
 - `openspec/sessions/README.md`: nota de cabecera que marca las sesiones viejas que hablan
   de Overleaf como historia.
 
@@ -89,7 +89,7 @@ Overleaf y dejar una forma fácil de ver los documentos mientras se editan.
 - **La instalación de TeX Live** la corre el owner (necesita sudo):
   `sudo pacman -S --needed texlive-langspanish texlive-latexextra texlive-pictures
   texlive-bibtexextra texlive-fontsrecommended texlive-binextra biber`.
-- **`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` y `docs/sdd-changes.md`**
+- **`../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` y `docs/sdd-changes.md`**
   siguen citando a Overleaf como fuente. No se tocaron: ese repo no se edita sin que el owner
   lo pida.
 - **Los conteos de los borradores del plan de pruebas** no cuadraban entre sí (72, 73 y 74 en
@@ -142,7 +142,7 @@ balanceados en los tres `.tex`, y el plan tiene 74 fichas y 74 IDs distintos.
 
 ## Tercera parte: la copia local estaba 20 commits atrás
 
-Al revisar el estado de git, `../sign-ai-docs` estaba **3 adelante y 20 detrás** de
+Al revisar el estado de git, `../signall-docs` estaba **3 adelante y 20 detrás** de
 `origin/main`. El equipo había seguido trabajando en `develop` y mergeado por PR (#6, #7 y
 #8): SRS con las secciones 4 y 5 (+584 líneas), la memoria reescrita, el SPMP revisado, los
 formularios del plan de pruebas y el `.gitignore` de auxiliares. La copia local era de antes

@@ -6,7 +6,7 @@
 
 ## Qué se hizo
 
-Análisis de `../sign-ai-backend` (repo FastAPI, 29 archivos Python) para definir
+Análisis de `../signall-backend` (repo FastAPI, 29 archivos Python) para definir
 cómo se integra con el front WebView. **No se escribió código de app**: solo
 análisis + plan.
 
@@ -29,7 +29,7 @@ análisis + plan.
 2. **No existe ningún asset de animación por seña** en toda la máquina (solo
    `avatar.glb`), y `app/static_glb/` está vacío → Fase 12 sin empezar.
 3. **`sign-ai-stt` no está clonado**, y `docker-compose.yml` hace
-   `build: ../sign-ai-stt` → falla hoy.
+   `build: ../signall-stt` → falla hoy.
 4. **El backend descarta los frames de texto en silencio** (`router.py:21` solo
    mira `message["bytes"]`). Sin un cambio ahí, una frase escrita no se puede
    traducir (bloquea `CTL-1`/`CTL-2` y `RF-UI-02`).
@@ -64,8 +64,8 @@ extra en el `WebViewAssetLoader` que ya existe (`/signs/` →
                         └── por dentro llama al 👂 STT (audio → texto)
 ```
 
-El usuario clonó `../sign-ai-stt` (el oído, faster-whisper + WebRTC VAD). Con eso
-el `build: ../sign-ai-stt` del compose del backend **deja de apuntar a la nada**:
+El usuario clonó `../signall-stt` (el oído, faster-whisper + WebRTC VAD). Con eso
+el `build: ../signall-stt` del compose del backend **deja de apuntar a la nada**:
 `docker compose up --build` desde `sign-ai-backend` levanta los dos servicios.
 
 El camino de texto **nunca pasa por el oído** (va directo a

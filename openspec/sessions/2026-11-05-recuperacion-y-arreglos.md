@@ -53,7 +53,7 @@ Detalle completo en `docs/plan-pruebas/ARREGLOS-2026-11-05.md`. Resumen:
 | E1, E3 | operación | Hechos en el preflight (`.env.local.off`, `/metrics.json` como evidencia) |
 | S11, S12 | — | No se tocaron: deuda de arquitectura y esquema de Neon, fuera de esta ronda |
 
-Los cambios de `../sign-ai-backend` y `../sign-ai-stt` quedan **sin commit** en el árbol de
+Los cambios de `../signall-backend` y `../signall-stt` quedan **sin commit** en el árbol de
 trabajo, como pide `AGENTS.md`.
 
 ### Fase 2 — verificada el 2026-11-05 a las 05:54
@@ -89,7 +89,7 @@ timeouts viejos eran del camino bridge→host filtrado por `ufw`. `PR-LLM-02` qu
 
 Dos cosas que deja anotadas el carril B: el `llm01_rec.py` de la recuperación todavía corre el
 modelo local por el camino de bridge (el bueno es `backend_tmp_host.sh`), y
-`../sign-ai-backend/docs/android-integration.md` no describe el frame `capability` y sigue
+`../signall-backend/docs/android-integration.md` no describe el frame `capability` y sigue
 hablando de «3 de las 50 señas» y de traducción automática de la voz.
 
 **Carril C · audio y STT (7 pruebas, cerrado).** 4 Se reporta, 2 Pasa, 1 Falla.

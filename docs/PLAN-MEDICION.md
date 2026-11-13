@@ -16,11 +16,11 @@ afirmar en la tesis.
 1. **Cumplir los documentos.** Los seis requisitos de desempeño (RNF-DES-01 a
    RNF-DES-06) están escritos **sin ninguna cifra**: los valores están
    pendientes de TSK-03/04/05 en
-   `../sign-ai-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md:439`.
+   `../signall-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md:439`.
    Estos números son los que los fijan.
 2. **Demostrar el pipeline paso a paso.** Cuánto se tarda en cada etapa, con
    el desglose que ya existe como molde en
-   `../sign-ai-backend/docs/performance.md:24-48`.
+   `../signall-backend/docs/performance.md:24-48`.
 3. **Comparar las dos IAs.** `gpt-4o-mini` (el que está en todos los
    documentos) contra `qwen3:4b-instruct` (el local).
 
@@ -107,7 +107,7 @@ You must use ONLY the glosses in this closed vocabulary:
 
 **Por qué el owner tiene razón en las dos razones que da:**
 
-1. Va contra el plan de pruebas: `../sign-ai-docs/plan-pruebas/01-diseno/llm/general.md:32`
+1. Va contra el plan de pruebas: `../signall-docs/plan-pruebas/01-diseno/llm/general.md:32`
    dice literalmente *"No incluye la lista de las 50 glosas del catálogo, así
    que el modelo puede inventar glosas. Las que no existen las marca como no
    disponibles el validador."*
@@ -140,7 +140,7 @@ El vocabulario se usa en **dos** lugares:
    10/08/2026): *"**El NLP no valida contra el catálogo**, esa función queda
    pendiente para la sección 3.4."* La 3.4 es donde después se escribió
    RF-CAT-02.
-4. `../sign-ai-backend/docs/performance.md` §9: el costo de la lista
+4. `../signall-backend/docs/performance.md` §9: el costo de la lista
    *"es lineal con el tamaño del corpus y se paga en cada llamada"* — 413
    caracteres hoy, ~41 KB a 5 000 glosas.
 
@@ -213,7 +213,7 @@ corrida, con el prompt viejo.
 
 ### Pendiente escrito que esta medición cierra
 
-`../sign-ai-backend/docs/CAMBIOSBACKEND.md:186-188`:
+`../signall-backend/docs/CAMBIOSBACKEND.md:186-188`:
 *"Falta remedir `rt_first_sign_ms` con el LLM de producción. Los 273 ms son de
 `qwen3:4b-instruct` en Ollama local, no de OpenAI. Con OpenAI la cifra es otra y
 esa es la que va a la tesis."*
@@ -240,7 +240,7 @@ Sin esto, las Fases 2 y 3 miden una configuración que va a cambiar.
 **Ojo con la caché.** Cambiar el prompt **no** invalida `semantic_cache`. Sin
 `DELETE FROM semantic_cache;` **y** `docker compose restart backend`, la
 segunda pasada sale como acierto de caché y no mide nada
-(`tools/TIEMPO-REAL.md:78-88` y `../sign-ai-backend/AGENTS.md`).
+(`tools/TIEMPO-REAL.md:78-88` y `../signall-backend/AGENTS.md`).
 
 ---
 
@@ -260,7 +260,7 @@ segunda pasada sale como acierto de caché y no mide nada
 | 1.10 | Backend | Reloj absoluto en cada mensaje del socket | Descomponer la latencia entre procesos |
 | 1.11 | `embedding_model.py:3` | El modelo está **escrito en el código**; hacerlo configurable por entorno | `marco.md:178` obliga a registrar el modelo de embeddings en cada corrida |
 
-**Restricción del plan de pruebas:** `../sign-ai-docs/plan-pruebas/00-bases/marco.md:176-179`
+**Restricción del plan de pruebas:** `../signall-docs/plan-pruebas/00-bases/marco.md:176-179`
 obliga a registrar la configuración de cada corrida, pero **esa lista no
 incluye `SILENCE_TIMEOUT_MS`**, aunque `alcance.md:72` sí lo exige. Es el
 pendiente P-3 de la sesión del 2026-10-16 y sigue abierto.
@@ -284,7 +284,7 @@ Receta, en orden, con el estado de la caché explícito en cada corrida:
 | Caliente, `gpt-4o-mini` | Con esas frases | El mejor caso |
 
 Los 28 fixtures existen como `.wav` en
-`../sign-ai-stt/fixtures/audio/` (no están en git; se generan con
+`../signall-stt/fixtures/audio/` (no están en git; se generan con
 `scripts/make_audio_fixtures.py --all`). Más las 4 `conversacion_*.wav`, que
 son las que tienen 5–8 palabras y por lo tanto sí parecen una conversación.
 
@@ -393,7 +393,7 @@ la energía del audio, no del nombre.
 
 ### Los 28 fixtures sintéticos
 
-`../sign-ai-stt/fixtures/audio/*.wav`, presentes en disco. Los `.json` sí están
+`../signall-stt/fixtures/audio/*.wav`, presentes en disco. Los `.json` sí están
 en git, los `.wav` no.
 
 ---
@@ -416,7 +416,7 @@ en git, los `.wav` no.
 
 ## 12. Lo que este documento NO hace
 
-- **No escribe en `../sign-ai-docs`.** Ese repositorio es del owner y no se
+- **No escribe en `../signall-docs`.** Ese repositorio es del owner y no se
   toca sin que lo pida. Los documentos de la tesis se usan **solo como
   referencia** de qué hay que cumplir.
 - **No implementa nada.** La Fase 0 y la Fase 1 son el trabajo de la próxima

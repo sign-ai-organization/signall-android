@@ -27,7 +27,7 @@ El `flush` fue correcto e instantáneo. El problema era que **nadie lo atendió*
 
 Está en el contrato entre los tres repos, y arreglarlo en uno solo lo cambiaba de lugar.
 
-1. **`../sign-ai-stt` — `app/session.py`, `flush()`**: terminaba en
+1. **`../signall-stt` — `app/session.py`, `flush()`**: terminaba en
    `return result.to_payload("final") if result.text else None`. Con el `end` del cliente
    ya no hay nadie preguntando, pero el cliente **sí había preguntado**: si el filtro de
    descarte se comía el audio no salía nada. Lo mismo con `if self._speech_samples == 0:
@@ -35,7 +35,7 @@ Está en el contrato entre los tres repos, y arreglarlo en uno solo lo cambiaba 
    llegara tarde. El camino por silencio (`feed`) sigue descartando los vacíos: ahí nadie
    pregunta y mandarlos sería ruido en la conexión.
 
-2. **`../sign-ai-backend` — `app/controller/controller.py`**: `send_transcript` ya está
+2. **`../signall-backend` — `app/controller/controller.py`**: `send_transcript` ya está
    antes del `return` por texto vacío (línea 251 vs 253), pero `self._utterance_mode = None`
    está **después** (línea 271). Con un `final` vacío de dictado, el modo quedaba pegado.
    Eso es lo peligroso: si el cliente ya había pasado a tiempo real, el utterance

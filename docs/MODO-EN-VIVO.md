@@ -11,7 +11,7 @@ mic → PCM16/16 kHz → WebSocket → backend → STT → the phrase is split i
 sentences are translated → the avatar signs them in order.
 
 El cambio grande de esta rama (el plan del cambio está en
-`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10): antes el backend mandaba fragmentos (`stream: true, total: 0`) y el avatar representaba
+`../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10): antes el backend mandaba fragmentos (`stream: true, total: 0`) y el avatar representaba
 **a mitad de frase**. Ahora solo hay oraciones, con `total` conocido desde el primero. El
 efecto es que el avatar **no** empieza a representar hasta que termina la primera oración, y
 `rt_first_sign_ms` sube por construcción. Es el costo consciente de la opción A (que se

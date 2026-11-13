@@ -12,7 +12,7 @@ compilar-instalar-probar entero sin meter nada difícil en el medio.
 
 ## Qué se hizo
 
-El SRS dice (`main.tex:837`, y `RF-UI-04` en `../sign-ai-docs`, que piden lo mismo): la
+El SRS dice (`main.tex:837`, y `RF-UI-04` en `../signall-docs`, que piden lo mismo): la
 solicitud del micrófono aparece **la primera vez que se abre la aplicación**. La app la
 pedía la primera vez que se tocaba cualquiera de los dos interruptores, así que el
 diálogo aparecía con el dedo del usuario ya encima del control.
@@ -38,7 +38,7 @@ Lo que pasa en MIUI: **una sola negativa deja el permiso en `USER_FIXED`**. Medi
 Redmi Note 9S el 2026-10-17 —
 
 ```
-$ adb shell dumpsys package com.signai.webview | grep -A2 "runtime permissions"
+$ adb shell dumpsys package com.signall.app | grep -A2 "runtime permissions"
   android.permission.RECORD_AUDIO: granted=false, flags=[ USER_SET|USER_FIXED|… ]
 ```
 

@@ -185,7 +185,7 @@ grabar: mono a 70 kbps (Julián), mono con Grabaciones de voz (Sergio en silenci
 ## El plan cambia: el ruido es de H1 y H4
 
 El owner decidió no regrabar nada y **cambiar el plan**. Se editó
-`../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcripcion.md`:
+`../signall-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcripcion.md`:
 
 - La condición de ruido pasa a ser de **H1 y H4** (era H1 y H2). En la tabla, los diez IDs
   `-006` cambiaron de hablante, de H2 a H4.

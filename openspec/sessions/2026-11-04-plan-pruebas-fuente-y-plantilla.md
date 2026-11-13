@@ -1,6 +1,6 @@
 # Plan de pruebas: cuál es la fuente de verdad, la 7.3 y la plantilla de resultados
 
-**Fecha:** 2026-11-04 · **Rama:** `main` · **Repos tocados:** este y `../sign-ai-docs`
+**Fecha:** 2026-11-04 · **Rama:** `main` · **Repos tocados:** este y `../signall-docs`
 
 ## Qué llegó
 
@@ -17,8 +17,8 @@ Las tres candidatas, medidas el 2026-11-04:
 | Fuente | Fecha real | Fichas | Estado interno |
 |---|---|---|---|
 | Overleaf «Plan de Pruebas» (`6add1e0e35efb959c10cd0fb`) | **2026-11-03 00:18** (hora Colombia), versión 38 | **73** | coherente: texto, tabla y fichas dicen 73 |
-| `../sign-ai-docs/latex/plan-pruebas/main.tex` | commit `1e249c1` del 2026-10-29 | 72 | **copia atrasada**: difiere en 133 líneas y en `\documentclass` (12pt vs 10pt) |
-| `../sign-ai-docs/borradores/plan-pruebas/` (74 archivos: 69 `.md` + 5 `.gs`) | 2026-11-04 (commit `8526c30`, solo AU-01) | 73 | **incoherente**: §9 dice 72, la tabla dice 72, `resumen.md` dice 73 y 74 |
+| `../signall-docs/latex/plan-pruebas/main.tex` | commit `1e249c1` del 2026-10-29 | 72 | **copia atrasada**: difiere en 133 líneas y en `\documentclass` (12pt vs 10pt) |
+| `../signall-docs/borradores/plan-pruebas/` (74 archivos: 69 `.md` + 5 `.gs`) | 2026-11-04 (commit `8526c30`, solo AU-01) | 73 | **incoherente**: §9 dice 72, la tabla dice 72, `resumen.md` dice 73 y 74 |
 
 **Gana Overleaf.** Tres razones: el `README.md` de `sign-ai-docs` dice que los documentos
 formales se editan en Overleaf y que el repo guarda una copia para versionar; Overleaf es el
@@ -92,7 +92,7 @@ Verificado con `soffice --headless --convert-to pdf`: 44 páginas, sin errores d
    (`BuildConfig.DEV_TOOLS`, `-Psignai.devTools=true`), no una preferencia
    (`SettingsRepository.kt:22-23`). `AGENTS.md` ya trae la trampa del build en su lugar. En la
    7.3 se escribió lo que dice el código.
-5. **La copia del `.tex` en `../sign-ai-docs/latex/plan-pruebas/` no es la de Overleaf.** Se
+5. **La copia del `.tex` en `../signall-docs/latex/plan-pruebas/` no es la de Overleaf.** Se
    refresca con `Menu → Download → Source`.
 6. **Los `.md` siguen con los conteos viejos** (72 en la sección 9 y en su tabla, 73 y 74 en
    `resumen.md`). No se tocaron.

@@ -21,7 +21,7 @@ se trabaja la A (tabla tipo gramatical → variante).
   con tablas por variante, por par de variantes y por seña para los dos avatares, más el
   JSON con el resumen por seña al lado. No se renderizó: la medición es geométrica.
 - **Recorrido del tipo verificado**, sin cambios de contrato:
-  `PhraseType` (`../sign-ai-backend/app/domain/models.py:6`) → `analyze(sentence)`
+  `PhraseType` (`../signall-backend/app/domain/models.py:6`) → `analyze(sentence)`
   (`app/nlp/gloss_analyzer.py:78`) → `Segment(type=...)` (`app/nlp/nlp_service_impl.py:87`)
   → frame `segment` con `index`/`total` (`app/controller/controller.py:289`) → parser
   (`data/SignAiWebSocketClient.kt:252`) → `SignQueueItem.type`
@@ -30,7 +30,7 @@ se trabaja la A (tabla tipo gramatical → variante).
   (`app.js:830`), que hoy solo aparece en el diagnóstico.
 - **Propuesta de tabla tipo → variante** y **lista exacta de cambios** para activarlos, en
   [`docs/PLAN-AVATARES-Y-MARCADORES.md`](../../docs/PLAN-AVATARES-Y-MARCADORES.md). La tabla
-  **no se escribió** en `../sign-ai-docs/.../pruebas.md`: la decisión es del owner.
+  **no se escribió** en `../signall-docs/.../pruebas.md`: la decisión es del owner.
 - El plan se puso al día: DOC-5 y DOC-6 actualizados, DOC-9 nuevo, registro de cambios con
   la fila del 2026-11-04. Se corrigió el nombre del inventario a `models/avatars.json`
   (los documentos decían `avatares.json`; el archivo y el script siempre dijeron
@@ -44,7 +44,7 @@ se trabaja la A (tabla tipo gramatical → variante).
   `loadQueueItem`. Los marcadores siguen apagados.
 - **Backend: nada.** El tipo ya viaja por oración; no hace falta frame, campo ni métrica
   nueva para la opción A.
-- **No se tocó Overleaf ni `../sign-ai-backend`.**
+- **No se tocó Overleaf ni `../signall-backend`.**
 
 ## Qué se midió
 
@@ -72,7 +72,7 @@ idénticas).
 
 - **Validación LSC** de las dos filas abiertas: pregunta de contenido y orden. La propuesta
   deja esas dos con el clip base hasta que alguien que sepa LSC defina la cara.
-- **Escribir la tabla aprobada en PR-AVT-05** (`../sign-ai-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`),
+- **Escribir la tabla aprobada en PR-AVT-05** (`../signall-docs/borradores/plan-pruebas/01-diseno/avatar/pruebas.md`),
   que hoy tiene un TODO y pide para la negación un movimiento de cabeza que la variante no
   aporta. Lo hace el owner.
 - **Implementar** `embeddedClipsFor` + `pickVariant` en `app.js` cuando la tabla esté
@@ -81,7 +81,7 @@ idénticas).
 - **`AGENTS.md` y otros documentos siguen diciendo `models/avatares.json`**; el archivo real
   es `models/avatars.json`. No se tocó `AGENTS.md` en esta sesión.
 - **Cabeza de la negación:** si el validador LSC la pide, es una tanda nueva en
-  `../signai-avatar` (Cascadeur), no un cambio de la app.
+  `../signall-avatar` (Cascadeur), no un cambio de la app.
 
 ## Activación de los marcadores (misma sesión, después)
 
@@ -134,7 +134,7 @@ El owner pidió dejar el backend real preparado, sin mock. Se levantaron los dos
   Con la red de compose, Neon daba `TimeoutError` al crear el pool (la resolución devuelve IPv6 y
   el contenedor se queda esperando); con la red del host conecta. `/health` respondió con
   `catalog_glosses: 50` y 109 filas de caché.
-- **STT**: `docker compose up -d --build` en `../sign-ai-stt`. La imagen vieja fallaba al
+- **STT**: `docker compose up -d --build` en `../signall-stt`. La imagen vieja fallaba al
   arrancar con `NameError: REALTIME` (código anterior al commit actual); el rebuild cargó el
   modelo `medium` en CUDA y `/health` respondió `device: cuda`.
 

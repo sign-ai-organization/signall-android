@@ -26,7 +26,7 @@
   levantado y `DATABASE_URL` en `.envJulian`. Sale con código 1 si algo falla:
   `python3 tools/verificar-fases1-3.py`.
 - **`medir-glosado.py`** — cuántas frases de referencia glosa bien el sistema, de punta a
-  punta. Lee las frases y sus glosas de `../sign-ai-docs/borradores/plan-pruebas/02-datos/`
+  punta. Lee las frases y sus glosas de `../signall-docs/borradores/plan-pruebas/02-datos/`
   (no hay una segunda copia) y las manda por el WebSocket: `fr01` son las 30 de PR-INT-02 y
   `fr02` las 90 opciones, que sirven de conjunto de validación porque no están en el prompt.
   Cada línea dice si la frase salió de caché o del modelo, y el resumen avisa si la caché
@@ -62,7 +62,7 @@
 - **`rendimiento/`** — medir de verdad si la app va lenta. Su propio
   [`README.md`](rendimiento/README.md) tiene las recetas y las trampas.
 - **`pack_avatars.py`** — **el pipeline de assets 3D de la app**. Toma los dos
-  originales de `../signai-avatar/models/` (`Juan.glb`, 34,27 MB, y `Pauline.glb`,
+  originales de `../signall-avatar/models/` (`Juan.glb`, 34,27 MB, y `Pauline.glb`,
   33,88 MB; personaje + cara + 200 clips cada uno, rama `dev`), verifica
   skins, articulaciones y nombres de clip, hornea la pose de descanso, **poda los
   morph targets que ninguna variante anima** y compacta el buffer. Escribe

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mock de `../sign-ai-backend` para probar la app sin Neon ni Whisper.
+"""Mock de `../signall-backend` para probar la app sin Neon ni Whisper.
 
 Habla exactamente el mismo protocolo que el backend real, en un solo puerto:
 
@@ -20,7 +20,7 @@ riesgo tiene (descarga nativa + `PathHandler` `/signs/` del WebView).
 
 Por defecto devuelve las glosas fijas de abajo, que hace la prueba determinista.
 Con `--ollama` llama a tu Ollama local usando **el mismo prompt de glosado del
-backend** (`../sign-ai-backend/app/nlp/llm_client.py`) y por el mismo endpoint
+backend** (`../signall-backend/app/nlp/llm_client.py`) y por el mismo endpoint
 compatible con OpenAI, así que se ve la traducción real:
 
     python tools/mock_backend.py --ollama
@@ -87,7 +87,7 @@ def available_signs() -> list[str]:
         return []
     return sorted(p.stem for p in SIGNS_DIR.glob("*.glb"))
 
-# Copia del SYSTEM_PROMPT de ../sign-ai-backend/app/nlp/llm_client.py. Si el
+# Copia del SYSTEM_PROMPT de ../signall-backend/app/nlp/llm_client.py. Si el
 # backend lo cambia, hay que cambiarlo acá también.
 GLOSS_SYSTEM_PROMPT = (
     "You translate short Spanish sentences into LSC (Lengua de Señas "
@@ -161,7 +161,7 @@ def sign_bytes(sign_id: str) -> bytes | None:
 sys.path.insert(0, str(REPO / "tools"))
 from seed_catalog import LSC50, canonical  # noqa: E402
 
-# Copia de normalize_gloss de ../sign-ai-backend/app/validation/catalog_repository.py.
+# Copia de normalize_gloss de ../signall-backend/app/validation/catalog_repository.py.
 # Mismo criterio que el SYSTEM_PROMPT de más arriba: si el backend lo cambia, hay
 # que cambiarlo acá también.
 _ACCENTS = str.maketrans({"Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U", "Ü": "U"})

@@ -214,7 +214,7 @@ python3 tools/verificar-bloqueo-lectura.py          # en sign-ai-android
 python3 tools/verificar-conexiones-stt.py 10        # en sign-ai-backend
 
 # regresiones de la lógica del STT
-docker compose -f ../sign-ai-backend/docker-compose.yml run --rm --no-deps \
+docker compose -f ../signall-backend/docker-compose.yml run --rm --no-deps \
     -v "$PWD/scripts:/app/scripts" stt python -m scripts.verify_session
 
 # la medición grande, con la caché vacía (si no, no mide nada)

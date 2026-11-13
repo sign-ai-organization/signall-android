@@ -47,7 +47,7 @@ activos y 5 en la papelera**, medido con `list_projects`). La ruta vieja `modifi
 se corrigió en `AGENTS.md`, en los skills `overleaf-lectura` y `tres-fuentes-de-verdad`, en
 `agents/contraste.md` y en `docs/CONTRASTE-APPvsDOCUMENTOS.md`; en
 `docs/PLAN-AVATARES-Y-MARCADORES.md` se dejó, porque cita un commit y es historia. En
-`../sign-ai-docs/cambios/requerimientos.md` se marcó `RF-UI-06` como hecho (sección 2,
+`../signall-docs/cambios/requerimientos.md` se marcó `RF-UI-06` como hecho (sección 2,
 pendiente 6.2 y choque 6.3).
 
 ## Qué se decidió
@@ -57,7 +57,7 @@ pendiente 6.2 y choque 6.3).
 - **No se tocaron** las expresiones faciales (líneas 268–269, 743 y 1700–1702 del SRS), el
   identificador de turno (2387–2389), la portada ni el historial del SRS, y las secciones
   3.2–3.6 siguen vacías: quedan para otra sesión desde
-  `../sign-ai-docs/borradores/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`.
+  `../signall-docs/borradores/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md`.
 - **`PR-VAL-03` se corrige, no se borra**: lo que se prueba (el catálogo se cambia sin tocar
   código del backend, `RNF-MNT-01`) sigue siendo cierto; lo que estaba mal era el paso de
   retirar la animación, que ya no existe como archivo por seña.
@@ -80,8 +80,8 @@ pendiente 6.2 y choque 6.3).
   `SignAiWebSocketClient.sendText`, que no lo manda).
 - **Otra sesión:** expresiones faciales (el SRS las afirma y la app solo reproduce el clip
   base) y las secciones del SRS que las mencionan.
-- **`../sign-ai-docs`:** el cambio de `cambios/requerimientos.md` quedó **sin commitear**,
+- **`../signall-docs`:** el cambio de `cambios/requerimientos.md` quedó **sin commitear**,
   como corresponde a un repo hermano; lo manda el owner.
-- **`../sign-ai-docs/cambios/requerimientos.md`:** `RF-CAT-01` sigue pidiendo acordar el
+- **`../signall-docs/cambios/requerimientos.md`:** `RF-CAT-01` sigue pidiendo acordar el
   formato de la clave de animación, que en el código ya es `signs/<id>.glb`
   (`SignsCatalog.kt`); falta que el owner lo dé por acordado.

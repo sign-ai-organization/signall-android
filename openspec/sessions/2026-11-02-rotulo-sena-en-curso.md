@@ -12,7 +12,7 @@ documentos.
 
 ## Qué se hizo
 
-- `app/src/main/java/com/signai/webview/ui/state/MainScreenState.kt:390`:
+- `app/src/main/java/com/signall/app/ui/state/MainScreenState.kt:390`:
   `currentGloss: String?`, estado público de solo lectura.
 - `MainScreenState.kt:339`: `onSignStart()` resuelve el índice de la cola contra
   `turnQueueItems` y escribe el rótulo. **No hay frame nuevo** entre Kotlin y la
@@ -24,11 +24,11 @@ documentos.
 - `MainScreenState.kt:2385`: se apaga en `attachWebView()`. Un WebView nuevo no
   tiene cola; cubre salir de *Acerca de* a mitad de una frase, donde la escena se
   destruye y su `onPlaybackDone` ya no llega.
-- `app/src/main/java/com/signai/webview/ui/screens/stage/AvatarStage.kt:126`:
+- `app/src/main/java/com/signall/app/ui/screens/stage/AvatarStage.kt:126`:
   parámetro `currentGloss`, y la píldora arriba al centro (una sola, con
   `AnimatedContent` adentro para que el ancho acompañe el cambio de texto).
   `GlossTopGap` = 36 dp bajo la barra de estado.
-- `app/src/main/java/com/signai/webview/ui/MainScreen.kt:249`: cableado.
+- `app/src/main/java/com/signall/app/ui/MainScreen.kt:249`: cableado.
 
 El `caption` de depuración (frase entera, arriba a la izquierda con Ajustes →
 Avanzado) **no se tocó**: sigue siendo la vista de diagnóstico.

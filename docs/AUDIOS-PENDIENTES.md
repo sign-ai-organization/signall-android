@@ -24,7 +24,7 @@ cuarto en silencio**. El ruido de Sergio fue una **televisión a unos 10 m**. Lo
 
 El owner decidió el 2026-11-03 **cambiar el plan en vez de regrabar** los diez con ruido. AU-01
 queda con **H1 y H4** en la condición de ruido, y así está en
-`../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcripcion.md`. Las dos
+`../signall-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcripcion.md`. Las dos
 condiciones de ruido se miden por separado, porque no es el mismo ruido: iPad a 10 cm la de H1 y
 televisión a 10 m la de H4. La copia con el nivel igualado sigue en
 `../../data/audios/derivados/ruido-nivel/` por si se quiere usar.

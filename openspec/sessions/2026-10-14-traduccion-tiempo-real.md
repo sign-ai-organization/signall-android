@@ -29,7 +29,7 @@ Entre 2.4 y 4.8 segundos después de que dejabas de hablar.
 ## Los cuatro cuellos de botella que había en el camino
 
 Cada uno estaba medido, no supuesto. Los números están en
-`../sign-ai-backend/docs/performance.md` y `../sign-ai-stt/docs/performance.md`.
+`../signall-backend/docs/performance.md` y `../signall-stt/docs/performance.md`.
 
 1. **El bucle que leía el STT traducía adentro.** Con el LLM en vuelo no sacaba
    el siguiente mensaje del socket, así que un `final` podía quedarse esperando
@@ -125,7 +125,7 @@ falla que más importa cuando el producto es un intérprete de señas.
 
 ## Qué se midió
 
-Sobre los **28 fixtures de audio** de `../sign-ai-stt/fixtures/audio/`,
+Sobre los **28 fixtures de audio** de `../signall-stt/fixtures/audio/`,
 reproducidos por el WebSocket real a velocidad 1x, con GPU libre:
 
 | | antes | después |

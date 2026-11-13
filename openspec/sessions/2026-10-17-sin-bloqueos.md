@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-10-17, noche · **Rama:** `flujo-oraciones` · **Alcance:** solo este
 repo. El backend y el STT no se tocaron; lo que de ellos quedó como deuda está en
-[`CONTRASTE-BACKENDvsDOCUMENTOS.md`](../../../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md).
+[`CONTRASTE-BACKENDvsDOCUMENTOS.md`](../../../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md).
 Overleaf no se tocó: es de solo lectura, y el texto que hay que pegarle está en
 §6 de [`docs/CONTRASTE-APPvsDOCUMENTOS.md`](../../docs/CONTRASTE-APPvsDOCUMENTOS.md).
 

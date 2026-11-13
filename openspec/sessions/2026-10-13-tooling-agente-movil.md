@@ -89,7 +89,7 @@ es `flutter run`).
 ## Verificado en el dispositivo
 
 - `tools/rendimiento/gfxinfo.py`, `sf-medir.sh`, `frames.py` y `perfetto.sh`:
-  los cuatro corrieron contra `com.signai.webview` en `1ed6699f` y dieron
+  los cuatro corrieron contra `com.signall.app` en `1ed6699f` y dieron
   números coherentes.
 - El árbol de accesibilidad expone los `contentDescription` que usan los flows:
   `Abrir Conversación`, `Abrir Ajustes`, `Cerrar`, `Traducir` (con su `TextView`

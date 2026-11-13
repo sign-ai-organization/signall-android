@@ -12,9 +12,9 @@ editar, porque pueden haberse corrido.
 - **A6 no se implementa.** Los marcadores faciales por tipo de frase siguen siendo decisión
   del owner. Solo se corrigen los datos: los huesos de cara existen y son joints, pero los
   clips actuales los dejan casi quietos.
-- **`../sign-ai-docs` no se edita.** Las correcciones del plan de pruebas se proponen en la
+- **`../signall-docs` no se edita.** Las correcciones del plan de pruebas se proponen en la
   sesión y se le avisan al owner.
-- **`../sign-ai-backend` no se commitea.** Su documentación la edita el owner; la corrección
+- **`../signall-backend` no se commitea.** Su documentación la edita el owner; la corrección
   exacta de `docs/android-integration.md` se propone, no se aplica.
 - **Overleaf es solo lectura.** Avisar antes de abrirlo porque el MCP puede lanzar una
   ventana de Chromium con perfil aislado. No escribir ni compilar en Overleaf.
@@ -129,13 +129,13 @@ Son comentarios, no comportamiento. Corregirlos y volver a compilar:
 
 Anotar la corrección exacta en la sesión y avisarle al owner. No aplicar.
 
-### `../sign-ai-docs/plan-pruebas`
+### `../signall-docs/plan-pruebas`
 
 - `00-bases/trazabilidad.md:140`: "hoy hay 32 de las 50" → "hoy hay 50 de las 50 (2026-10-22)".
 - `01-diseno/avatar/general.md:32`: "hoy 32 de las 50" → "50 de las 50".
 - `01-diseno/avatar/pruebas.md:59`: "lleva 32 de las 50 animaciones" → "lleva las 50".
 
-### `../sign-ai-backend/docs/android-integration.md`
+### `../signall-backend/docs/android-integration.md`
 
 - Ejemplo de `segment` (líneas 211 y 213): `glb_path` `/static/glb/hola.glb` y
   `/static/glb/como.glb` → `signs/0000_0000_0000.glb` y `signs/0044_0000_0000.glb` (o el

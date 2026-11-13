@@ -95,10 +95,10 @@ corresponder al orden en que llegaron y el avatar representaría la frase al rev
 El buffer de reordenamiento resolvería un caso que la app ya prohíbe.
 
 **Alineación verificada:** el pendiente "Desacoplar la traducción de la lectura del
-STT" (`../sign-ai-backend/docs/performance.md:676-681`) pide exactamente "lanzar cada
+STT" (`../signall-backend/docs/performance.md:676-681`) pide exactamente "lanzar cada
 traducción como tarea y garantizar el orden de las frases" — A cumple las dos
 mitades. `performance.md:331-334` lo nombra como requisito.
-`../sign-ai-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md:160`
+`../signall-docs/documentos/requerimientos/SignAI_Requerimientos_Consolidados_v0.16.md:160`
 (RF-INT-SW-04) y `:553` (RNF-REL-01) exigen no bloquear el hilo principal.
 Ningún documento exige traducir frases en paralelo. El docstring de
 `controller.py:29-36` **ya afirma que esto está hecho** y no lo está.
@@ -149,7 +149,7 @@ creó para que el avatar alcance a quien habla, pero **quien lee el avatar es un
 persona sorda que no está mirando a quien habla**. No hay carrera que empatar.
 
 Lo que sí hace es **alterar la velocidad**, que es justo la variable que hay que
-medir limpia. En `../sign-ai-docs/plan-pruebas/01-diseno/personas/pruebas.md:165`
+medir limpia. En `../signall-docs/plan-pruebas/01-diseno/personas/pruebas.md:165`
 está **PR-PER-04** (obligatoria), que le pregunta a usuarios con LSC: *"¿La
 velocidad es adecuada? 1 es muy lenta o muy rápida y 5 es adecuada"*. Si el avatar
 va a 1,0× unas veces y a 1,6× otras sin avisar, la calificación mezcla dos cosas que
@@ -199,7 +199,7 @@ feature**. Sin esto, las fases 2 no se pueden afirmar en la tesis.
 
 | # | Fase | Repos | Qué |
 |---|---|---|---|
-| 1 | **Que los números existan** | backend, app, stt | `llm` como métrica real (ya pendiente en `../sign-ai-backend/docs/performance.md:756-763`); una métrica del tiempo que el bucle de lectura estuvo trabado; el mensaje de puente `signStart` con reloj propio; arreglar las dos gauges rotas y `stt_end_to_final_ms` |
+| 1 | **Que los números existan** | backend, app, stt | `llm` como métrica real (ya pendiente en `../signall-backend/docs/performance.md:756-763`); una métrica del tiempo que el bucle de lectura estuvo trabado; el mensaje de puente `signStart` con reloj propio; arreglar las dos gauges rotas y `stt_end_to_final_ms` |
 | 2 | **La puerta** (D-2) | backend | `handle_text` a su propia tarea, una a la vez |
 | 2 | **Los cables** (D-3) | backend | mismo archivo, mismo rato |
 | 3 | **La primera oración** (D-1) | android | `flushSegments` + `appendQueue`/`playFrom` |

@@ -60,9 +60,9 @@ Todo leyendo el JSON del GLB y los accessors con Python, el 2026-10-24:
 - Origen `GLB SignALL (GLB por Sena).glb`: **27 159 508 bytes** (27,16 MB), misma raíz
   `HG_Branden` y 102 joints. El export viejo `GLB Senas/0000 - GRACIAS.glb` tiene
   `HG_Branden.001`.
-- Fuente del contrato del WebSocket: `../sign-ai-backend/docs/android-integration.md` §3-4
+- Fuente del contrato del WebSocket: `../signall-backend/docs/android-integration.md` §3-4
   (`text`, `end`, `segment`, `done`, `transcript`; la voz no se traduce) y
-  `../sign-ai-backend/AGENTS.md`.
+  `../signall-backend/AGENTS.md`.
 
 ## Cómo se verificó
 
@@ -78,10 +78,10 @@ Todo leyendo el JSON del GLB y los accessors con Python, el 2026-10-24:
   decisión del owner. Lo único que cambió es el dato: los huesos de cara existen y son
   joints, pero los clips actuales no los mueven.
 - **No se abrió Overleaf.** La cookie puede haber vencido y el MCP abre una ventana de
-  Chromium; la auditoría se podía cerrar con código + `../sign-ai-docs`, y el SRS no se
+  Chromium; la auditoría se podía cerrar con código + `../signall-docs`, y el SRS no se
   necesitaba para corregir afirmaciones sobre el GLB. Queda pendiente si el owner quiere
   contrastar A6 contra el `.tex`.
-- **No se tocaron los hermanos.** `../sign-ai-docs` y `../sign-ai-backend` solo se leyeron.
+- **No se tocaron los hermanos.** `../signall-docs` y `../signall-backend` solo se leyeron.
 
 ## Qué quedó pendiente
 
@@ -96,11 +96,11 @@ owner o a otra sesión):
   ajuste prendido (346); BRG-12 sigue con "GLB de 10 MB" (368).
 - `docs/CONTRASTE-APPvsDOCUMENTOS.md:280` (A6): dice "no tiene morph targets" y "0
   animaciones", ambas falsas desde el 2026-10-22.
-- `app/src/main/java/com/signai/webview/ui/state/MainScreenState.kt:851` y `:1529`:
+- `app/src/main/java/com/signall/app/ui/state/MainScreenState.kt:851` y `:1529`:
   comentarios que siguen hablando de "las 18 señas sin animación exportada (0032-0049)".
-- `../sign-ai-docs/plan-pruebas/00-bases/trazabilidad.md:140`,
+- `../signall-docs/plan-pruebas/00-bases/trazabilidad.md:140`,
   `01-diseno/avatar/general.md:32` y `01-diseno/avatar/pruebas.md:59`: "32 de las 50".
-- `../sign-ai-backend/docs/android-integration.md` §7: dice que el catálogo guarda
+- `../signall-backend/docs/android-integration.md` §7: dice que el catálogo guarda
   `/static/glb/*.glb` y que tiene 3 de las 50 glosas. El seed real
   (`tools/seed_catalog.py`) escribe `signs/<id>.glb` para las 50.
 - `docs/PLAN-MEDICION.md:68` y `:258`: "avatar.glb (10 MB)".
@@ -111,11 +111,11 @@ owner o a otra sesión):
 
 - Se creó [`docs/PLAN-AVATARES-Y-MARCADORES.md`](../../docs/PLAN-AVATARES-Y-MARCADORES.md), con el plan, el contraste documental, la respuesta sobre el tipo de señal del backend y las preguntas que bloquean una implementación alineada.
 - Leídos los dos GLB sin modificarlos: Juan 37.872.312 bytes y Pauline 35.272.616 bytes; cada uno contiene 300 clips (50 señas × base + cinco variantes), 102 articulaciones y canales de pesos faciales. Entre las cinco variantes y el clip base los canales de huesos coinciden en las 50 señas de los dos archivos; los de pesos cambian. Hashes SHA-256 y contexto en el plan.
-- Confirmado en `../sign-ai-backend` (`78006a523875adaa11c72831e4997310d47191ab`): `GlossAnalyzer` produce cinco tipos gramaticales; no clasifica emociones. `secondary_signals` son colisiones gramaticales, no emociones, y no viajan en el frame `segment`. El tipo principal ya llega a Android y la app ya lo pasa a JavaScript.
-- Contraste: `../sign-ai-docs` v0.16 (2026-10-21) limita RF-AVT-03 a cejas y PR-AVT-05 exige una tabla esperada antes de probar. SRS Overleaf `main.tex` v524 (consulta 2026-10-24) habla de marcadores faciales según tipo gramatical. SDD Overleaf `main.tex` v212 (consulta 2026-10-24) aún describe 50 GLB por seña, mientras la app usa uno y los dos nuevos son archivos completos por avatar. No se resolvió por cuenta propia.
+- Confirmado en `../signall-backend` (`78006a523875adaa11c72831e4997310d47191ab`): `GlossAnalyzer` produce cinco tipos gramaticales; no clasifica emociones. `secondary_signals` son colisiones gramaticales, no emociones, y no viajan en el frame `segment`. El tipo principal ya llega a Android y la app ya lo pasa a JavaScript.
+- Contraste: `../signall-docs` v0.16 (2026-10-21) limita RF-AVT-03 a cejas y PR-AVT-05 exige una tabla esperada antes de probar. SRS Overleaf `main.tex` v524 (consulta 2026-10-24) habla de marcadores faciales según tipo gramatical. SDD Overleaf `main.tex` v212 (consulta 2026-10-24) aún describe 50 GLB por seña, mientras la app usa uno y los dos nuevos son archivos completos por avatar. No se resolvió por cuenta propia.
 - **Decisión del owner, 2026-10-24:** no permitir cambiar de avatar durante una operación; el selector debe quedar habilitado solo en reposo absoluto.
-- **Decisiones del owner, 2026-10-24:** usar dos GLB completos (Juan y Pauline) y todo el rostro, no solo las cejas. Esto requiere proponer actualizar `RF-AVT-03` de `../sign-ai-docs` y el empaquetado descrito por el SDD de Overleaf; no se escribieron esos documentos.
+- **Decisiones del owner, 2026-10-24:** usar dos GLB completos (Juan y Pauline) y todo el rostro, no solo las cejas. Esto requiere proponer actualizar `RF-AVT-03` de `../signall-docs` y el empaquetado descrito por el SDD de Overleaf; no se escribieron esos documentos.
 - **Pendiente del owner:** elegir entre las tres opciones del plan para relacionar tipo gramatical y variante facial. El owner consultará esa decisión. No añadir una clasificación emocional ni un campo al WebSocket mientras siga abierta.
-- Se ejecutó `git pull --ff-only` en `../sign-ai-docs`: `main` ya estaba al día en `dc8d49c79285489815164adaf8a1fa7ef6e83b24`; no hubo cambios nuevos que alteren la investigación.
+- Se ejecutó `git pull --ff-only` en `../signall-docs`: `main` ya estaba al día en `dc8d49c79285489815164adaf8a1fa7ef6e83b24`; no hubo cambios nuevos que alteren la investigación.
 - **Instrucción del owner:** `docs/PLAN-AVATARES-Y-MARCADORES.md` es un documento vivo; cualquier persona que trabaje en la iniciativa lo actualiza en cada paso. Se agregaron la matriz de diferencias DOC-1–DOC-8 y el registro de cambios para hacerlo verificable.
-- No se modificó código, GLB, backend, documentos de `../sign-ai-docs` ni Overleaf.
+- No se modificó código, GLB, backend, documentos de `../signall-docs` ni Overleaf.

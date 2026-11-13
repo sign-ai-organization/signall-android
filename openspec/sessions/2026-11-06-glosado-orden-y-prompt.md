@@ -21,7 +21,7 @@ no estuviera en el prompt (aprobó FR-02).
 | STT | Nada: la calibración de `AVG_LOGPROB_THRESHOLD` ya estaba cerrada (`9787e49`) | — |
 | Android | `tools/medir-glosado.py` y esta entrada | este commit |
 
-El detalle de cada cosa está en `../sign-ai-backend/docs/sessions/`:
+El detalle de cada cosa está en `../signall-backend/docs/sessions/`:
 `2026-11-06-fase5-backend.md`, `2026-11-06-prompt-experimento.md` y
 `2026-11-06-orden-glosas.md`.
 

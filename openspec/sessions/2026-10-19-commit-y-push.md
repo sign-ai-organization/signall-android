@@ -101,7 +101,7 @@ backend no tienen esa regla, y ahora su voz propia dice `representar`.
   números que se pueden citar de ella todavía no están remedidos con las 28
   frases. La línea base de `rt_first_sign_ms` (913 ms p50 / 1336 ms p95) es
   del camino por palabras y **no es comparable** con el de ahora.
-- El contraste del backend (`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`)
+- El contraste del backend (`../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`)
   es nuevo: nadie lo revisó todavía, y es el que tiene la lista de lo que
   el SRS deja abierto del lado del servidor.
 - **Una rama del backend estaba solo en local**:
