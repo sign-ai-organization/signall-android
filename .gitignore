@@ -69,3 +69,8 @@ __pycache__/
 # Archivos de bloqueo de LibreOffice: los crea al abrir un .xlsx y se van solos.
 # No son datos, y el nombre lleva el de la máquina.
 .~lock.*#
+
+# Informes de las herramientas de la reestructuración. Los reportes de gitleaks dicen
+# dónde está cada credencial (y con --redact=0, cuál es) y los de SonarQube cambian en
+# cada corrida: son de la máquina, no del proyecto.
+reestructuracion/herramientas/informes/
