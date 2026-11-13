@@ -5,7 +5,7 @@ temperature: 0.1
 permission:
   edit:
     "*": ask
-    "app/src/main/java/com/signai/webview/domain/*": allow
+    "app/src/main/java/com/signall/app/domain/*": allow
     "docs/*": allow
     "openspec/*": allow
   bash:
@@ -30,7 +30,7 @@ dependa un repo hermano.
    `../sign-ai-backend/docs/android-integration.md` es la fuente de verdad, y su
    `CLAUDE.md` tiene reglas que no son tuyas: **código en inglés sin excepción** y **nunca
    commit ni push**. Del lado de la app, el contrato de salida es
-   `domain/SignAiCommands.kt` y el parser está en `ui/webview/WebViewSignAiController.kt`.
+   `domain/SignAllCommands.kt` y el parser está en `ui/webview/WebViewSignAllController.kt`.
 3. **Cargá el skill `fuentes-de-verdad`** si la decisión toca el comportamiento de la
    tesis, no solo el mecanismo. Y si tocás documentos, cargá `documentos-tesis`: los
    documentos viven en `../sign-ai-docs/latex/` y se comprueban con `make`.

@@ -194,12 +194,12 @@ tools/dev.sh text "hola"              # escribir
 tools/dev.sh back                     # atrás
 tools/dev.sh tree                     # UI tree con refs @eN
 tools/dev.sh install-debug            # ./gradlew installDebug + relanzar
-tools/dev.sh logcat-tag SignAIWeb 80  # últimas 80 líneas del bridge JS→Kotlin
+tools/dev.sh logcat-tag SignAllWeb 80  # últimas 80 líneas del bridge JS→Kotlin
 tools/dev.sh log 40                   # últimas líneas del device log
 tools/dev.sh doctor                   # valida entorno (mobilewright doctor)
 ```
 
-El package por defecto es `com.signai.webview` (este repo). Se puede
+El package por defecto es `com.signall.app` (este repo). Se puede
 sobrescribir con `$APP_PKG` y `$APP_ACTIVITY`. El device se fija con
 `$MOBILECLI_DEVICE`.
 
@@ -240,7 +240,7 @@ nada a accesibilidad. No se puede tocar ni inspeccionar el avatar con
 
 Para el estado de la escena:
 
-- `tools/dev.sh logcat-tag SignAIWeb 80` — el bridge JS→Kotlin.
+- `tools/dev.sh logcat-tag SignAllWeb 80` — el bridge JS→Kotlin.
 - El **modo debug** de la app (Ajustes → AVATAR → depurar), que enciende el
   overlay `#status` con el FPS en pantalla.
 
@@ -257,7 +257,7 @@ device/emulador después de cada cambio. Con este tooling:
 # humano o agente: un solo comando
 tools/dev.sh install-debug
 tools/dev.sh shot post-build
-tools/dev.sh logcat-tag SignAIWeb 40   # ver mensajes del bridge JS↔Kotlin
+tools/dev.sh logcat-tag SignAllWeb 40   # ver mensajes del bridge JS↔Kotlin
 ```
 
 Con MCP, la versión agente es `mobile_install_app` + `mobile_launch_app`

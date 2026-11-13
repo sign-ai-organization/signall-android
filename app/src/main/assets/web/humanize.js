@@ -1,4 +1,4 @@
-// SignAI — capa de marcadores no manuales y de movimiento humano.
+// SignAll — capa de marcadores no manuales y de movimiento humano.
 //
 // Los clips traen manos y brazos. Esta capa pone **encima** lo que el clip no
 // trae, sin tocar un solo keyframe:

@@ -8,7 +8,7 @@ metadata:
 
 # Accesibilidad en Android
 
-Checklist genérica, aplicable a cualquier Compose. **Lo específico de SignAI está en el
+Checklist genérica, aplicable a cualquier Compose. **Lo específico de SignAll está en el
 skill `compose-best-practices`** (los tokens, los drawers, el WebView) y en
 `references/design_tokens.md` (los ratios de contraste reales).
 
@@ -44,7 +44,7 @@ anuncia no existe para parte de quien la usa.
 
 **El avatar 3D no existe para la accesibilidad**: sale en el árbol como
 `android.webkit.WebView` **sin ningún hijo**, porque el canvas de Three.js no publica
-nada. No se puede tocar ni leer. Para el estado de la escena: el tag `SignAIWeb` de
+nada. No se puede tocar ni leer. Para el estado de la escena: el tag `SignAllWeb` de
 logcat, o el modo debug de Ajustes → AVANZADO.
 
 ## References

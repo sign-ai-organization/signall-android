@@ -42,7 +42,7 @@ REPO = Path(__file__).resolve().parent.parent
 # Los exports por seña viven fuera del repo, en `../material-3d/GLB Senas/`.
 SRC_DEFAULT = REPO.parent / "material-3d" / "GLB Senas"
 DEST_DEFAULT = REPO / "app/src/main/assets/web"
-CATALOG_PATH = REPO / "app/src/main/java/com/signai/webview/domain/SignsCatalog.kt"
+CATALOG_PATH = REPO / "app/src/main/java/com/signall/app/domain/SignsCatalog.kt"
 
 # Componentes de accessor → stride en floats, para leer el bbox del personaje.
 COMPONENTS = {"VEC2": 2, "VEC3": 3, "VEC4": 4, "SCALAR": 1, "MAT4": 16}
@@ -255,7 +255,7 @@ def write_catalog(manifest, packed=False, generator=None,
             "     * and changes nothing, so the caller skips straight to the fallback. A path\n"
             "     * that is *not* in this layout is a real remote asset and still goes down\n"
             "     * the download path.").format(n=len(ids))
-    text = f"""package com.signai.webview.domain
+    text = f"""package com.signall.app.domain
 
 /**
  * Signs shipped inside the APK, from `{generator}`.

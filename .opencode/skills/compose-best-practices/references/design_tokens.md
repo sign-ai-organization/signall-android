@@ -1,18 +1,18 @@
-# Los tokens de SignAI
+# Los tokens de SignAll
 
 ## Color
 
 **La fuente única es `ui/designsystem/Color.kt`**, en el bloque `// CUSTOMIZED`. No hay
 otra. Un color nuevo se agrega ahí y se consume desde los dos modos.
 
-Se llega al color con `colors` de `SignAiTheme` (que delega en Lumo y expone `Colors`).
-**`SignAiColors` ya no existe.** Y `MaterialTheme.colorScheme` **no** se usa: no hay
+Se llega al color con `colors` de `SignAllTheme` (que delega en Lumo y expone `Colors`).
+**`SignAllColors` ya no existe.** Y `MaterialTheme.colorScheme` **no** se usa: no hay
 Material 3 en el proyecto.
 
 ```kotlin
 // correcto
 Text(color = colors.text)
-Surface(color = colors.surface, shape = SignAiShapes.card)
+Surface(color = colors.surface, shape = SignAllShapes.card)
 
 // mal
 Text(color = Color(0xFFF5F4F0))
@@ -74,10 +74,10 @@ La tabla de ratios está en `Color.kt`. Lo que importa:
 
 | Token | Para qué |
 |---|---|
-| `SignAiSpacing` | Espaciado. Nada de `.dp` sueltos. |
-| `SignAiSizes` | Tamaños de componentes e íconos. |
-| `SignAiShapes` | Radios. |
-| `SignAiMotion` | Duraciones, easings y `LocalReduceMotion`. |
+| `SignAllSpacing` | Espaciado. Nada de `.dp` sueltos. |
+| `SignAllSizes` | Tamaños de componentes e íconos. |
+| `SignAllShapes` | Radios. |
+| `SignAllMotion` | Duraciones, easings y `LocalReduceMotion`. |
 | `pressScale` | La escala del feedback táctil. |
 
 ## Tipografía
@@ -86,7 +86,7 @@ La tabla de ratios está en `Color.kt`. Lo que importa:
 `res/font/` porque Android no trae Arial ni Helvetica y Liberation es métricamente
 compatible con Arial. Así el layout y el peso coinciden con el prototipo.
 
-`SignAiTheme` aplica, sobre la base: `fontScale` y `uiScale` (este último escala
+`SignAllTheme` aplica, sobre la base: `fontScale` y `uiScale` (este último escala
 `LocalDensity`), `bold`, `highContrast` (que sobreescribe `outline`) y `reduceMotion`.
 
 ## Modo claro y MIUI

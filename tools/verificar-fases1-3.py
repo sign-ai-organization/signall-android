@@ -241,7 +241,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Verifica las fases 1 y 3 de punta a punta.")
     parser.add_argument(
         "--uri",
-        default=os.environ.get("SIGNAI_WS", "ws://127.0.0.1:8080/ws/translate"),
+        default=os.environ.get("SIGNALL_WS", "ws://127.0.0.1:8080/ws/translate"),
         help="WebSocket del backend (default: ws://127.0.0.1:8080/ws/translate)",
     )
     parser.add_argument("--no-db", action="store_true", help="Salta la sección de base de datos.")

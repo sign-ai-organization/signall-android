@@ -56,7 +56,7 @@ Para verificar en pantalla cargá el skill `controlar-app-movil`.
 
 **El canvas 3D no aparece en el árbol de accesibilidad**: sale como
 `android.webkit.WebView` sin ningún hijo. No lo vas a poder tocar ni leer con `mobile-mcp`.
-Para el estado de la escena: el tag `SignAIWeb` de logcat, o el modo debug de
+Para el estado de la escena: el tag `SignAllWeb` de logcat, o el modo debug de
 Ajustes → AVANZADO.
 
 ## Qué devolvés

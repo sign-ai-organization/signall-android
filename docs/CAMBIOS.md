@@ -142,7 +142,7 @@ Quedó:
 
 ## 6. Métricas del teléfono
 
-`SignAiMetrics` perdió lo de fragmento:
+`SignAllMetrics` perdió lo de fragmento:
 
 | antes | ahora |
 |---|---|
@@ -321,7 +321,7 @@ habla con el STT.
 el reloj propio de JS. Con eso existe por primera vez el tramo de **oración
 recibida → avatar moviéndose**, que antes no lo medía nadie: ni el backend
 (cronometra hasta mandar el `segment`) ni el teléfono (`play()` se llama antes
-de que el `.glb` termine de bajar). Sale en `SignAiMetrics` como
+de que el `.glb` termine de bajar). Sale en `SignAllMetrics` como
 `oracion_a_avatar`.
 
 ### Dos herramientas que faltaban

@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-11-03 · **Rama:** `main` · **Commit:** `44264e5`
 **Archivos tocados:** `ui/screens/conversation/ConversationPanel.kt`,
-`ui/designsystem/foundation/SignAiShapes.kt`, `ui/designsystem/foundation/SignAiSizes.kt`,
+`ui/designsystem/foundation/SignAllShapes.kt`, `ui/designsystem/foundation/SignAllSizes.kt`,
 `openspec/specs/ui/spec.md`, `openspec/sessions/2026-11-03-conversacion-en-burbujas.md`
 y el índice de sesiones.
 
@@ -91,7 +91,7 @@ no es la única señal en ningún caso.
 
 ### 3.3 Ancho máximo: 88 % del panel, en fracción
 
-`SignAiSizes.conversationBubbleMaxWidthFraction = 0.88f`.
+`SignAllSizes.conversationBubbleMaxWidthFraction = 0.88f`.
 
 Por qué una fracción y no un dp: el panel mide `min(88 % del ancho de pantalla, 350 dp)`,
 así que un techo fijo en dp no sirve en un teléfono angosto. Con 0,88 quedan unos **269 dp
@@ -115,12 +115,12 @@ ConversationTurnItem
 ├── Column(horizontalAlignment = End)            ← la frase
 │   └── ConversationBubble("TÚ", soft, cornerBubbleEnd,
 │                          fillMaxWidth(0.88f).wrapContentWidth(End))
-│       └── SignAiText(turn.text, quote)
+│       └── SignAllText(turn.text, quote)
 ├── Spacer(8 dp)
 └── Row(verticalAlignment = CenterVertically)    ← la traducción + Repetir
     ├── ConversationBubble("TRADUCCIÓN", surface, cornerBubbleStart,
     │                      weight(1f, fill = false))
-    │   └── SignAiText(turn.gloss, gloss)
+    │   └── SignAllText(turn.gloss, gloss)
     ├── Spacer(12 dp)
     └── TurnRepeatButton(phrase, onRepeat)       ← CNV-5, igual que antes
 ```
@@ -138,7 +138,7 @@ ConversationTurnItem
 
 ### 4.2 Tokens nuevos (foundation)
 
-`SignAiShapes`:
+`SignAllShapes`:
 
 ```kotlin
 val cornerBubbleStart = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp, bottomStart = 6.dp, bottomEnd = 18.dp)
@@ -148,11 +148,11 @@ val cornerBubbleEnd   = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp, bot
 18 dp como las pestañas de los drawers, con **la esquina que apunta al hablante bajada a
 6 dp**, que es lo que hace que se lean como burbujas y no como tarjetas.
 
-`SignAiSizes`: `conversationBubbleMaxWidthFraction = 0.88f` (constante, con el comentario
+`SignAllSizes`: `conversationBubbleMaxWidthFraction = 0.88f` (constante, con el comentario
 del cálculo de 306 dp → 269 dp).
 
-Todo lo demás son tokens existentes: `SignAiSpacing` (`sm`, `smLg`, `md`, `xs`) en vez de
-dp sueltos, `typography.quote` / `gloss` / `label`, y colores de `SignAiTheme.colors`.
+Todo lo demás son tokens existentes: `SignAllSpacing` (`sm`, `smLg`, `md`, `xs`) en vez de
+dp sueltos, `typography.quote` / `gloss` / `label`, y colores de `SignAllTheme.colors`.
 
 ---
 
@@ -226,7 +226,7 @@ LaunchedEffect(turns.size, reduceMotion) {
 // volver a sentarse en el final. No se vuelve a hacer scroll al ítem, para no deshacer
 // el anclaje de arriba y producir un sube y baja.
 val newestGloss = turns.lastOrNull()?.gloss
-val phraseTextSize = SignAiTheme.typography.quote.fontSize
+val phraseTextSize = SignAllTheme.typography.quote.fontSize
 LaunchedEffect(newestGloss, phraseTextSize, reduceMotion) {
     if (turns.isEmpty()) return@LaunchedEffect
     listState.sitOnNewestTurn(animated = !reduceMotion)
@@ -268,7 +268,7 @@ private suspend fun LazyListState.sitOnNewestTurn(animated: Boolean) {
 ## 6. Qué se verificó (y dónde)
 
 Todo en el **Redmi Note 9S físico** (1080 × 2400, 440 dpi), build `debug` con
-`-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate` y `adb reverse tcp:8080 tcp:8080`.
+`-Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate` y `adb reverse tcp:8080 tcp:8080`.
 
 El backend real no estaba levantado y el que había corriendo en el 8080 (un falso de una
 sesión anterior) devuelve siempre tres glosas cortas, así que para probar glosas **largas**

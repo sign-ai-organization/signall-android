@@ -1,4 +1,4 @@
-# SignAI — instrucciones para el agente
+# SignAll — instrucciones para el agente
 
 Tesis: español hablado → Lengua de Señas Colombiana (LSC) con un avatar 3D. Este repo
 tiene **solo el código de la app**. El resto del sistema vive en repos hermanos, y el
@@ -126,7 +126,7 @@ habla con el STT ni con Neon. Los cuatro invariantes que hay que no romper:
 - **El `final` siempre llega**, incluso vacío: el STT responde a todo `end` (`flush()`).
   Un `final` sin texto es "no se escuchó nada", no un error.
 - **Los mismos nombres de métrica en los dos lados** (`rt_*` en el backend,
-  `SignAiMetrics` en el device): un número que no se instrumentó en las dos partes no se
+  `SignAllMetrics` en el device): un número que no se instrumentó en las dos partes no se
   puede comparar con nada.
 
 Para cambiar un frame o un nombre de métrica: cargá el skill **`contrato-websocket`**.
@@ -145,7 +145,7 @@ Para cambiar un frame o un nombre de métrica: cargá el skill **`contrato-webso
 4. **Referenciá los hermanos por ruta relativa** (`../sign-ai-backend`), nunca con rutas
    absolutas de esta máquina: las sesiones se corren en directorios distintos.
 5. **Los números se miden donde están.** Latencias del device acá (`adb logcat -s
-   SignAiMetrics`), del STT y del backend allá. Un p50 del avatar mezclado con un p50 del
+   SignAllMetrics`), del STT y del backend allá. Un p50 del avatar mezclado con un p50 del
    STT no es un p50 de nada.
 6. **Cuando algo no se pueda resolver leyendo, preguntar.** Las decisiones abiertas están
    marcadas como tales en los `CLAUDE.md`/`docs/` de cada repo; no rellenarlas por inferencia.
@@ -169,7 +169,7 @@ Trampas que hacen perder tiempo:
 - **Device físico por USB**: el default `BACKEND_WS_URL` es `ws://10.0.2.2:8080/ws/translate`,
   que es el loopback del **emulador**. En un teléfono real usá
   `adb reverse tcp:8080 tcp:8080` y compilá con
-  `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. Sin eso la app muestra "Sin
+  `-Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. Sin eso la app muestra "Sin
   conexión con el servidor" y parece un problema del backend.
 - **La demo del cifrado usa el build `demo`, no `debug`.** `demo` hereda `release` (solo
   `wss://`), se firma con la clave de `debug` y trae su `network_security_config` con las CA
@@ -182,14 +182,14 @@ Trampas que hacen perder tiempo:
   `debug`, así que lo reemplaza: después de la demo, `./gradlew installDebug`.
 - **La consola de la escena y el bloque AVANZADO no son un ajuste del teléfono.** No hay
   interruptor en Ajustes: existen solo si la compilación los pide, con
-  `./gradlew installDebug -Psignai.devTools=true` o `SIGNAI_DEV_TOOLS=1 ./gradlew installDebug`.
+  `./gradlew installDebug -Psignall.devTools=true` o `SIGNALL_DEV_TOOLS=1 ./gradlew installDebug`.
   Están **apagados por defecto, incluso en `debug`**, y `release`/`demo` los ignoran siempre.
   Si no aparecen, no es un bug: es el build. **La grilla del suelo también arranca
   apagada** (`Settings.grid = false`, 2026-11-05) y sin `DEV_TOOLS` no se dibuja aunque
   una instalación vieja tenga la preferencia en `true`.
 - **`RECORD_AUDIO` es permiso de runtime y no está pre-otorgado.** Tocar el mic sin él dice
   "No se pudo abrir el micrófono", que se lee como un fallo del STT y no lo es:
-  `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO`.
+  `adb shell pm grant com.signall.app android.permission.RECORD_AUDIO`.
 - **El teclado se cierra sacándole el foco al campo, no solo escondiéndolo.** Con solo
   `hide()` se iba un segundo y volvía, porque el `TextField` seguía con el foco y la
   siguiente recomposición lo mostraba de nuevo. Regla general: **tocar un control cierra el
@@ -207,9 +207,9 @@ AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2
 |---|---|---|
 | STT | `:8000/metrics` | ms de inferencia por modelo, espera de GPU, lag de audio, drops por razón |
 | Backend | `:8080/metrics` | `rt_first_sign_ms`, `rt_phrase_total_ms`, `rt_sentence_delay_ms`, `rt_phrases_total`, `rt_sentences_total` |
-| Device | `adb logcat -s SignAiMetrics` | oraciones por frase, glosas, **duración de la representación**, p50/p95/max |
-| Device | `adb logcat -s SignAiNet` | cada `segment` que mandó el backend, con `index`/`total` |
-| Escena | `adb logcat -s SignAIWeb` | consola JS (solo en el build con `DEV_TOOLS`; ver la trampa del build) |
+| Device | `adb logcat -s SignAllMetrics` | oraciones por frase, glosas, **duración de la representación**, p50/p95/max |
+| Device | `adb logcat -s SignAllNet` | cada `segment` que mandó el backend, con `index`/`total` |
+| Escena | `adb logcat -s SignAllWeb` | consola JS (solo en el build con `DEV_TOOLS`; ver la trampa del build) |
 
 **Regla: agregar la métrica antes de agregar la feature.** Un número que no se
 instrumentó no se puede afirmar que mejoró. Y al citar un número, decí de dónde salió.
@@ -260,13 +260,13 @@ de dónde se hizo el trabajo, no una rama a la que volver.
 
 - **Lumo UI by Noman R** (https://www.lumoui.com/) para componentes nuevos — **NO** el
   Lumo Design System de Vaadin. Es Compose y shadcn-like: se adopta como base y después
-  se personaliza en el Design System de SignAI. Consultá su documentación actual antes
+  se personaliza en el Design System de SignAll. Consultá su documentación actual antes
   de tomar una decisión de Lumo; no asumas que funciona como una librería común.
 - **Migrar Material 3 progressivement, nunca agregar Material 3 nuevo.** Hoy el repo tiene
   **cero** imports de `material3`.
 - **Iconos**: Phosphor para cualquier cosa nueva; evitá `material-icons-extended`.
-- **Tokens**: viven en `ui/designsystem/foundation/` (`SignAiSizes`, `SignAiShapes`,
-  `SignAiSpacing`, `SignAiMotion`, `pressScale`). Usalos en vez de `.dp` sueltos.
+- **Tokens**: viven en `ui/designsystem/foundation/` (`SignAllSizes`, `SignAllShapes`,
+  `SignAllSpacing`, `SignAllMotion`, `pressScale`). Usalos en vez de `.dp` sueltos.
 - **Paleta**: fuente única en `ui/designsystem/Color.kt` (`// CUSTOMIZED`).
   `docs/manual-identidad-visual.md` es la referencia de marca y hay que aplicarlo.
   Reglas que muerden: **dark = grafito** y es el **default**; el **azul de marca
@@ -285,7 +285,7 @@ de dónde se hizo el trabajo, no una rama a la que volver.
 
 El WebView carga por `WebViewAssetLoader` en
 `https://appassets.androidplatform.net/assets/web/index.html`. JS→Kotlin va por
-`window.SignAIBridge.postMessage("onPlaybackDone")` al terminar la cola,
+`window.SignAllBridge.postMessage("onPlaybackDone")` al terminar la cola,
 `postMessage("avatarReady")` cuando el personaje ya está en escena (no en
 `onPageFinished`, que dispara mientras baja el GLB de 13 MB), `progress:<0..100>` con el
 avance real de la escena para la barra del splash y `signStart:<idx>:<jsMs>` por cada seña.
@@ -304,20 +304,20 @@ y empieza a cargar: si se crea en la primera composición, ese frame se paga ant
 exista el splash y el usuario ve la ventana vacía durante segundos (medido en el Redmi
 Note 9S, 2026-10-22). No lo "simplifiques" creando el WebView directo.
 
-**La fuente de verdad del contrato es `domain/SignAiCommands.kt`**: los nombres exactos de
+**La fuente de verdad del contrato es `domain/SignAllCommands.kt`**: los nombres exactos de
 cada comando están ahí, no en este archivo. Kotlin los llama con
-`evaluateJavascript("window.SignAI?.<método>(...)")`.
+`evaluateJavascript("window.SignAll?.<método>(...)")`.
 
 - **Compatible hacia atrás, siempre**: mantené el guard `?.` y los nombres existentes. Un
   método nuevo es **aditivo**. Borrar o renombrar uno rompe en silencio.
 - El listener es `WebViewCompat.addWebMessageListener` (con feature-guard); si la
-  feature falta, `onPageFinished` tapa el splash y el timeout de 8 s de `SignAiSplash`
+  feature falta, `onPageFinished` tapa el splash y el timeout de 8 s de `SignAllSplash`
   cubre el resto.
 
 ## Gotchas
 
 - Todo el estado de Compose vive en `ui/state/MainScreenState.kt`. No hay ViewModel, ni
-  DI, ni navegación. Historial y ajustes en `SharedPreferences "signai"/"history"` detrás
+  DI, ni navegación. Historial y ajustes en `SharedPreferences "signall"/"history"` detrás
   de `data/SignHistoryRepository.kt` y `data/SettingsRepository.kt`.
 - **Los dos drawers son un solo componente** (`ui/designsystem/components/EdgeDrawer.kt`,
   `side = Start/End`) con tap + drag; Conversation es `Start`, Settings es `End`, y abrir
@@ -362,7 +362,7 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
 - **El avatar 3D es invisible para toda la instrumentación de accesibilidad**: sale como
   `android.webkit.WebView` sin ningún hijo, porque el canvas de Three.js no publica nada.
   No se puede tocar ni leer con `mobile-mcp`, Maestro ni `uiautomator`. Para el estado de
-  la escena: el tag `SignAIWeb` de logcat o el overlay de diagnóstico, los dos solo en el
+  la escena: el tag `SignAllWeb` de logcat o el overlay de diagnóstico, los dos solo en el
   build con `DEV_TOOLS` (ver la trampa del build).
 - **Los cues del pipeline (`micMode`, cola, estados de turno) están documentados en
   [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md).** Si la tarea toca el micrófono, el
@@ -388,7 +388,7 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
   oración, la mirada, el parpadeo y la respiración. No tocan los keyframes ni el reloj.
   `nmm.json` se regenera con `tools/extract_nmm.py`; no se edita a mano. El orden
   `human.restore()` → `tickPlayback()` → `human.apply()` del render loop **no se cambia**:
-  sin el `restore` la capa se acumula fotograma a fotograma. `SignAI.setHumanize(0)` la
+  sin el `restore` la capa se acumula fotograma a fotograma. `SignAll.setHumanize(0)` la
   apaga. Detalle en `openspec/specs/avatar/spec.md`.
 - **`models/avatars.json`** es el inventario reproducible: hash y tamaño de cada fuente
   original, del archivo empaquetado, clips, articulaciones, variantes y la advertencia de
@@ -409,7 +409,7 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
 - **Arranque medido el 2026-10-26 en el Redmi Note 9S**: Juan, **1,81–3,42 s** según
   caché de página (3,42 s en frío, 1,95–2,50 s en caliente); Pauline, **1,95 s**. Un
   cambio de avatar en caliente tarda **1,90–2,57 s** (parseo 1,18–1,95 s) y se mide en
-  `SignAiState` (`cambio de avatar`, `avatar listo`) y `SignAIWeb`. El splash espera a
+  `SignAllState` (`cambio de avatar`, `avatar listo`) y `SignAllWeb`. El splash espera a
   `avatarReady`, así que eso es lo que se ve antes de la escena.
 - `renderer.setPixelRatio` está **capado en 1.75** a propósito. Sin cap, el Redmi Note 9S
   renderiza 19,6 MP/frame y el GPU queda en ~37 ms/frame, con 99 % de jank.

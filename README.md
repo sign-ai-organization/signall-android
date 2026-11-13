@@ -1,6 +1,6 @@
-# SignAI — app Android
+# SignAll — app Android
 
-App del proyecto **SignAI**: español hablado → Lengua de Señas Colombiana representada
+App del proyecto **SignAll**: español hablado → Lengua de Señas Colombiana representada
 por un avatar 3D. Esta app es **una pieza del sistema**, no el sistema: la voz la
 transcribe un servicio aparte, el texto lo traduce otro, y la app solo reproduce el
 resultado. Los otros repos viven al lado, en `../`.
@@ -38,7 +38,7 @@ avatar y los clips sean locales.
 Los cuatro repos tienen que quedar bajo la misma carpeta padre:
 
 ```
-SignAI/
+SignAll/
 ├── sign-ai-android/     ← este repo
 ├── sign-ai-backend/     ← FastAPI: WebSocket, NLP de glosas, catálogo
 ├── sign-ai-stt/         ← faster-whisper + VAD: audio → texto
@@ -98,7 +98,7 @@ Si no tienes GPU NVIDIA, lee la nota de CPU en
 **Teléfono** (ajusta la IP a la de tu máquina en la red actual):
 
 ```bash
-./gradlew installDebug -Psignai.backendWsUrl=ws://192.168.80.49:8080/ws/translate
+./gradlew installDebug -Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate
 ```
 
 Para verificar sin instalar: `./gradlew build`.
@@ -114,8 +114,8 @@ cuando cambia la IP.
 | Cómo te conectas | Dirección | Comando |
 |---|---|---|
 | Emulador | `ws://10.0.2.2:8080/ws/translate` | `./gradlew installDebug` |
-| Teléfono por USB | `ws://127.0.0.1:8080/ws/translate` | `adb reverse tcp:8080 tcp:8080` y luego `./gradlew installDebug -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate` |
-| Teléfono por WiFi | `ws://<IP-del-PC>:8080/ws/translate` | `./gradlew installDebug -Psignai.backendWsUrl=ws://192.168.80.49:8080/ws/translate` |
+| Teléfono por USB | `ws://127.0.0.1:8080/ws/translate` | `adb reverse tcp:8080 tcp:8080` y luego `./gradlew installDebug -Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate` |
+| Teléfono por WiFi | `ws://<IP-del-PC>:8080/ws/translate` | `./gradlew installDebug -Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate` |
 | Demo cifrada (`demo`) | `wss://…` | ver § 6 |
 
 `adb reverse` **solo existe por USB**: no hay equivalente por red. Por WiFi se usa la IP
@@ -166,15 +166,15 @@ Ajustes → WiFi. El teléfono también se anuncia por mDNS: `adb mdns services`
 Ya sin cable, instalar y probar es igual que siempre:
 
 ```bash
-./gradlew installDebug -Psignai.backendWsUrl=ws://192.168.80.49:8080/ws/translate
-adb logcat -s SignAiNet
+./gradlew installDebug -Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate
+adb logcat -s SignAllNet
 ```
 
 **Si el teléfono está conectado por USB y WiFi a la vez, hay dos dispositivos** y Gradle
 falla con `more than one device/emulator`. Desconecta el cable o fija el destino:
 
 ```bash
-ANDROID_SERIAL=192.168.80.19:5555 ./gradlew installDebug -Psignai.backendWsUrl=...
+ANDROID_SERIAL=192.168.80.19:5555 ./gradlew installDebug -Psignall.backendWsUrl=...
 ```
 
 ### Windows
@@ -191,7 +191,7 @@ No verificado en una máquina Windows; esto es el procedimiento esperado. Los co
 ```powershell
 adb tcpip 5555
 adb connect 192.168.80.19:5555
-.\gradlew.bat installDebug "-Psignai.backendWsUrl=ws://192.168.80.49:8080/ws/translate"
+.\gradlew.bat installDebug "-Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate"
 ```
 
 Las comillas alrededor de `-P...` no son opcionales en PowerShell: sin ellas el argumento
@@ -243,10 +243,10 @@ Consecuencias prácticas:
 
 ```bash
 # ¿la app abrió el socket y contra qué dirección?
-adb logcat -s SignAiNet          # "sesión abierta: ws://…" y cada "segment i/n"
+adb logcat -s SignAllNet          # "sesión abierta: ws://…" y cada "segment i/n"
 
 # ¿cuánto tardó y cuántas señas representó?
-adb logcat -s SignAiMetrics      # "envío→primera seña", "representado: N señas en Xms"
+adb logcat -s SignAllMetrics      # "envío→primera seña", "representado: N señas en Xms"
 
 # ¿los servicios están sanos desde el PC?
 curl -s http://127.0.0.1:8080/metrics
@@ -281,7 +281,7 @@ adb reverse tcp:8443 tcp:443
 ./gradlew installDemo
 
 # por WiFi: directo a la IP de la máquina
-./gradlew installDemo -Psignai.backendWsUrl=wss://192.168.80.49/ws/translate
+./gradlew installDemo -Psignall.backendWsUrl=wss://192.168.80.49/ws/translate
 ```
 
 En el teléfono tiene que estar instalada la **CA de laboratorio**; si falta, el handshake
@@ -300,8 +300,8 @@ vuelve con `./gradlew installDebug`.
 |---|---|---|
 | "Sin conexión con el servidor" en un teléfono físico | el APK apunta a `10.0.2.2`, que es el host del **emulador** | compila con la IP de tu red, o usa `adb reverse` |
 | `more than one device/emulator` | USB y WiFi conectados a la vez | desconecta el cable o usa `ANDROID_SERIAL` |
-| El cambio de IP rompió todo | la dirección está horneada en el APK | recompila con `-Psignai.backendWsUrl` |
-| "No se pudo abrir el micrófono" | `RECORD_AUDIO` es permiso de runtime y no viene otorgado | `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO` |
+| El cambio de IP rompió todo | la dirección está horneada en el APK | recompila con `-Psignall.backendWsUrl` |
+| "No se pudo abrir el micrófono" | `RECORD_AUDIO` es permiso de runtime y no viene otorgado | `adb shell pm grant com.signall.app android.permission.RECORD_AUDIO` |
 | El backend responde en el `8080` pero las frases no cambian de glosa | `semantic_cache` no se invalida al cambiar prompt o modelo | `DELETE FROM semantic_cache;` |
 | Sembraste el catálogo y no se ve | `CatalogRepository.load_all()` lo carga **una sola vez** al arrancar | reinicia el backend |
 | `Trust anchor for certification path not found` en `demo` | falta la CA de laboratorio en el teléfono | instálala; no es un fallo de la app |

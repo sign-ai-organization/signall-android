@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# Ayudas para manejar el emulador/dispositivo Android en este repo (SignAI
+# Ayudas para manejar el emulador/dispositivo Android en este repo (SignAll
 # WebView, Kotlin/Gradle), basadas en mobilecli
 # (https://github.com/mobile-next/mobilecli).
 #
@@ -30,10 +30,10 @@
 #   tools/dev.sh terminate <pkg>          termina una app
 #   tools/dev.sh apps                     lista apps instaladas
 #   tools/dev.sh fg                       app en foreground
-#   tools/dev.sh logcat-tag <tag> [n]     filtra logcat por tag (ej: SignAIWeb)
+#   tools/dev.sh logcat-tag <tag> [n]     filtra logcat por tag (ej: SignAllWeb)
 #   tools/dev.sh doctor                   valida entorno (mobilewright doctor)
 #
-# El package de este repo es `com.signai.webview` y la activity de entrada
+# El package de este repo es `com.signall.app` y la activity de entrada
 # es `MainActivity`. Se puede fijar con $APP_PKG y $APP_ACTIVITY.
 #
 # Sin escala: mobilecli trabaja en píxeles reales del device. La captura sale
@@ -43,8 +43,8 @@ set -euo pipefail
 SHOTS_DIR="${DEV_SHOTS_DIR:-/tmp/shots}"
 mkdir -p "$SHOTS_DIR"
 
-APP_PKG="${APP_PKG:-com.signai.webview}"
-APP_ACTIVITY="${APP_ACTIVITY:-com.signai.webview.MainActivity}"
+APP_PKG="${APP_PKG:-com.signall.app}"
+APP_ACTIVITY="${APP_ACTIVITY:-com.signall.app.MainActivity}"
 
 cmd="${1:-help}"
 shift || true
@@ -98,7 +98,7 @@ case "$cmd" in
                   mobilecli device logs $(_dev_flag) --limit "$n" ;;
   logcat-tag)     [[ $# -ge 1 ]] || { print -ru2 -- "uso: logcat-tag <tag> [n]"; exit 2; }
                   n="${2:-80}"
-                  # logcat filtra por texto; para este repo el tag clave es "SignAIWeb"
+                  # logcat filtra por texto; para este repo el tag clave es "SignAllWeb"
                   # (ver AGENTS.md § "Kotlin ↔ JS bridge")
                   adb logcat -d 2>/dev/null | grep -i "$1" | tail -"$n" ;;
   clearlog)       adb logcat -c ;;

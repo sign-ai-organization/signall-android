@@ -76,8 +76,8 @@ y la escena cambia de uno al otro en caliente. Regenerarlos sí: los escribe
   repetición en curso. Mientras el avatar carga, la barra de abajo y el botón de
   reproducir quedan bloqueados.
 - **Cómo viaja**: el avatar inicial va en la URL de la página (`?avatar=<id>`) y
-  los cambios usan `window.SignAI.setAvatar(id)`, método aditivo declarado en
-  `domain/SignAiCommands.kt`. La escena responde `avatarLoaded:<id>` o
+  los cambios usan `window.SignAll.setAvatar(id)`, método aditivo declarado en
+  `domain/SignAllCommands.kt`. La escena responde `avatarLoaded:<id>` o
   `avatarFailed:<id>`; el splash espera ese aviso, no `onPageFinished`.
 - **El orden importa**: el modelo nuevo se parsea **antes** de liberar el
   anterior, así un cambio que falla deja el avatar viejo en pantalla. Al liberar
@@ -334,7 +334,7 @@ Tres cosas que hay que respetar:
 - **El callback espera al peso cero.** La salida dura 700 ms y empieza 250 ms
   antes del final, así que `onPlaybackDone` sale **~450 ms después del final
   nominal** (medido en el Redmi con `0028`: 2,574 s contra 2,125 s de clip). La
-  representación medida por `SignAiMetrics` **incluye ese tramo**: no es
+  representación medida por `SignAllMetrics` **incluye ese tramo**: no es
   comparable con las cifras anteriores sin decirlo.
 - **Con `reduceMotion` no hay mezcla** (corte seco, como antes), y la salida se
   acorta si el usuario eligió más velocidad: `dt * speed` también la acelera.
@@ -370,7 +370,7 @@ escalar después de un cambio en `app.js`, es esto.
 ## Marcadores no manuales y movimiento humano (2026-11-12)
 
 `assets/web/humanize.js` suma una capa **encima** del clip, cada fotograma, sin tocar
-ningún keyframe ni el reloj de la reproducción. `SignAI.setHumanize(0)` la apaga y la
+ningún keyframe ni el reloj de la reproducción. `SignAll.setHumanize(0)` la apaga y la
 escena queda como antes; `setHumanize(1)` es el valor por defecto.
 
 | Qué | De dónde sale | Qué mueve |

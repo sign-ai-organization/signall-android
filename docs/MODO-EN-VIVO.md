@@ -64,7 +64,7 @@ Lo que hay que saber antes de tocar esto:
 - **Los dos interruptores se deshabilitan por el otro, en los dos sentidos, y ninguno se
   deshabilita mientras está prendido.** Prendido, cada uno es el único que puede cortar su
   modo. **Un control deshabilitado se marca apagando el icono y la etiqueta a `muted`, nunca
-  bajándole el alfa a la superficie** (ver `SignAiBottomBar`).
+  bajándole el alfa a la superficie** (ver `SignAllBottomBar`).
 - **Apagar el TR deja el campo limpio** (`stopCapture`), no retenido: para entonces lo que
   decía el campo ya se representó. Lo único que sobrevive es el texto de un dictado sin mandar.
   **Apagar el TR tampoco manda nada**: el en vivo manda cada frase al cerrarse, no al
@@ -121,8 +121,8 @@ Lo que hay que saber antes de tocar esto:
   unidad es la frase completa, así que el tiempo que el usuario tarda en hablarla no es del
   turno de traducción. Lo que sí incluye es la espera por la frase anterior en vuelo.
   `turnStartedAt` mide **el pipeline**, no la escena: los números que miden la escena son
-  `oracion→avatar:` (`SignAiMetrics.onSignStart`, el `segment` hasta que el muñeco se mueve) y
-  `representado:` (`SignAiMetrics.onPlayback`).
+  `oracion→avatar:` (`SignAllMetrics.onSignStart`, el `segment` hasta que el muñeco se mueve) y
+  `representado:` (`SignAllMetrics.onPlayback`).
 
   **Desde el 2026-11-11 `representado:` incluye el acomodo final**: los últimos 250 ms
   del clip se reparten en 700 ms y `onPlaybackDone` se manda cuando el peso del clip

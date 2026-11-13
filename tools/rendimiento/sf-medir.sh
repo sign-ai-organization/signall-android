@@ -51,7 +51,7 @@
 #       "adb -s 1ed6699f shell 'input swipe 540 1900 540 700 3000'"
 set -u
 
-PKG="${APP_PKG:-com.signai.webview}"
+PKG="${APP_PKG:-com.signall.app}"
 DEV="${DEV:-$(adb devices | awk 'NR>1 && $2=="device" {print $1; exit}')}"
 ETIQUETA="${1:?falta la etiqueta}"
 DUR="${2:-3}"

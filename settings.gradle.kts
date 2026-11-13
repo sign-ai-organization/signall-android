@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "SignAI-WebView"
+rootProject.name = "SignAll"
 include(":app")

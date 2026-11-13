@@ -1,12 +1,12 @@
 ---
 name: compose-best-practices
-description: Escribir UI en Compose para la app SignAI — Lumo UI y Phosphor, cero Material 3, los tokens de ui/designsystem/, el estado en MainScreenState y las trampas de layout del WebView y los drawers. Usar al crear o cambiar un composable, al elegir un componente o un icono, al tocar tema, tipografía, espaciado, animación o accesibilidad, o en una code review de UI.
+description: Escribir UI en Compose para la app SignAll — Lumo UI y Phosphor, cero Material 3, los tokens de ui/designsystem/, el estado en MainScreenState y las trampas de layout del WebView y los drawers. Usar al crear o cambiar un composable, al elegir un componente o un icono, al tocar tema, tipografía, espaciado, animación o accesibilidad, o en una code review de UI.
 ---
 
-# Compose en SignAI
+# Compose en SignAll
 
 Este proyecto **no usa Material 3**. `grep -rl material3 app/src/main/java` da **cero**.
-La UI es **Lumo UI** (Noman R) + **Phosphor Icons**, sobre el Design System de SignAI.
+La UI es **Lumo UI** (Noman R) + **Phosphor Icons**, sobre el Design System de SignAll.
 
 > ⚠️ Este skill reemplazó a un skill genérico que decía "only androidx.compose.material3.*
 > allowed" y "use MaterialTheme.colorScheme". **Eso está mal acá** y ya fue corregido. Si
@@ -18,15 +18,15 @@ La UI es **Lumo UI** (Noman R) + **Phosphor Icons**, sobre el Design System de S
    `androidx.compose.material.*`. Si un componente no existe en Lumo, **se construye** con
    `foundation` y los tokens — no se importa de Material.
 2. **Componente nuevo = Lumo primero.** Lumo es Compose y shadcn-like: se **adopta como
-   base** y después se personaliza en el Design System de SignAI. Consultá
+   base** y después se personaliza en el Design System de SignAll. Consultá
    <https://www.lumoui.com/> antes de decidir; no asumas que funciona como una librería
    convencional.
 3. **Icono nuevo = Phosphor.** Nunca `material-icons-extended`.
 4. **Ningún valor de estilo escrito a mano.** Nada de `.dp` sueltos ni de
    `Color(0xFF...)` en un composable.
-   - Espaciado, tamaños, formas, motion → `ui/designsystem/foundation/` (`SignAiSpacing`,
-     `SignAiSizes`, `SignAiShapes`, `SignAiMotion`, `pressScale`).
-   - Color → `ui/designsystem/Color.kt`. Se consume con `colors` de `SignAiTheme`, **no**
+   - Espaciado, tamaños, formas, motion → `ui/designsystem/foundation/` (`SignAllSpacing`,
+     `SignAllSizes`, `SignAllShapes`, `SignAllMotion`, `pressScale`).
+   - Color → `ui/designsystem/Color.kt`. Se consume con `colors` de `SignAllTheme`, **no**
      con `MaterialTheme.colorScheme`.
 5. **Todo el estado de Compose vive en `ui/state/MainScreenState.kt`.** No hay ViewModel,
    ni Hilt, ni navegación. Un componente nuevo recibe su estado por parámetro y emite

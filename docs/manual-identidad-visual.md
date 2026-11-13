@@ -123,7 +123,7 @@ El texto cumple como mínimo 4,5:1 en ambos modos. La app respeta "Contraste aum
 |---|---|
 | Paleta clara y oscura, tokens `strong`, `soft`, `live` | `ui/designsystem/Color.kt` |
 | Fondo y suelo de la escena 3D | `assets/web/app.js` (`BG_COLOR`, `GridHelper`) e `index.html` |
-| Nombre de marca | `ui/SignAiBranding.kt` |
+| Nombre de marca | `ui/SignAllBranding.kt` |
 | Tamaños, radios, espacios, movimiento | `ui/designsystem/foundation/` |
 
 Cambiar un color se hace en `Color.kt` y se actualiza este manual en el mismo cambio. Hay una versión en PDF (`manual-identidad-visual.pdf`) para compartir.

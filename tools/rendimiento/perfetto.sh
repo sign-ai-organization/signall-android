@@ -43,7 +43,7 @@
 #   vistas de Compose.
 set -euo pipefail
 
-PKG="${APP_PKG:-com.signai.webview}"
+PKG="${APP_PKG:-com.signall.app}"
 DEV="${DEV:-$(adb devices | awk 'NR>1 && $2=="device" {print $1; exit}')}"
 ETIQUETA="${1:?falta la etiqueta}"
 DUR="${2:-6}"

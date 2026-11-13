@@ -1,4 +1,4 @@
-appId: com.signai.webview
+appId: com.signall.app
 ---
 # Plantilla para partir de este. Sustituye los ids por los `contentDescription`
 # que existen de verdad (la tabla esta en tools/HERRAMIENTAS.md) y los textos por

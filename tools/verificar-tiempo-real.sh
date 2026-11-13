@@ -26,9 +26,9 @@ set -uo pipefail
 
 BACKEND_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../sign-ai-backend" && pwd)"
 STT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../sign-ai-stt" && pwd)"
-BACKEND_URL="${SIGNAI_BACKEND_URL:-ws://127.0.0.1:8080/ws/translate}"
-FIXTURES="${SIGNAI_FIXTURES:-$STT_DIR/fixtures/audio}"
-PKG="com.signai.webview"
+BACKEND_URL="${SIGNALL_BACKEND_URL:-ws://127.0.0.1:8080/ws/translate}"
+FIXTURES="${SIGNALL_FIXTURES:-$STT_DIR/fixtures/audio}"
+PKG="com.signall.app"
 
 # Presupuesto del pipeline: p95 de la primera seña, en ms desde la transcripción
 # final (que es lo que mide `rt_first_sign_ms`). Medido el 2026-10-15 sobre los 28
@@ -36,7 +36,7 @@ PKG="com.signai.webview"
 # p95 422. El margen es amplio porque la cifra depende entero del LLM que haya
 # atrás — con OpenAI es otra cosa — y este presupuesto es una guarda contra
 # regresiones, no un objetivo de producto.
-SIGNAI_P95_MAX_MS="${SIGNAI_P95_MAX_MS:-1200}"
+SIGNALL_P95_MAX_MS="${SIGNALL_P95_MAX_MS:-1200}"
 
 BOLD=$'\033[1m'; RED=$'\033[31m'; GREEN=$'\033[32m'; YELLOW=$'\033[33m'; OFF=$'\033[0m'
 declare -a RESULTS=()
@@ -196,10 +196,10 @@ check_latency() {
     return
   fi
 
-  if (( p95 <= SIGNAI_P95_MAX_MS )); then
-    record "primera seña p95 = ${p95}ms (pipeline, caché vacía)" 0 "presupuesto ${SIGNAI_P95_MAX_MS}ms"
+  if (( p95 <= SIGNALL_P95_MAX_MS )); then
+    record "primera seña p95 = ${p95}ms (pipeline, caché vacía)" 0 "presupuesto ${SIGNALL_P95_MAX_MS}ms"
   else
-    record "primera seña p95 = ${p95}ms (pipeline, caché vacía)" 1 "presupuesto ${SIGNAI_P95_MAX_MS}ms; fijate si el LLM de atrás es el de siempre"
+    record "primera seña p95 = ${p95}ms (pipeline, caché vacía)" 1 "presupuesto ${SIGNALL_P95_MAX_MS}ms; fijate si el LLM de atrás es el de siempre"
   fi
 }
 
@@ -280,7 +280,7 @@ check_device() {
   # túnel entra por el 8443. Del lado del teléfono va `-k` a propósito: lo que se
   # prueba acá es que el túnel llega al proxy y que el handshake TLS se completa.
   # Que el teléfono **confíe** en la CA de laboratorio lo demuestra el build
-  # `demo` en `adb logcat -s SignAiNet`, no `curl`.
+  # `demo` en `adb logcat -s SignAllNet`, no `curl`.
   lab_ca="$BACKEND_DIR/deploy/certs/lab-ca.crt"
   if [[ -f "$lab_ca" ]]; then
     if curl -sf --cacert "$lab_ca" https://127.0.0.1/health >/dev/null 2>&1; then
@@ -323,7 +323,7 @@ check_device() {
   echo "    2. al apagar TR, el campo vuelve a mostrar lo dictado que estaba esperando"
   echo
   echo "  mientras tanto, los logs:"
-  echo "    adb logcat -s SignAiState SignAiNet SignAiMetrics"
+  echo "    adb logcat -s SignAllState SignAllNet SignAllMetrics"
   echo "  en el backend:"
   echo "    curl -s 127.0.0.1:8080/metrics | grep -E '^rt_(phrases|sentences|glosses)_total'"
   record "app relanzada" 0

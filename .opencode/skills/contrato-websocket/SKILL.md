@@ -1,6 +1,6 @@
 ---
 name: contrato-websocket
-description: Cambiar el contrato entre la app Android y los repos hermanos (frames del WebSocket /ws/translate, nombres de glosas, columnas del catálogo de Neon, nombres de métricas) sin romper el otro lado en silencio. Usar antes y después de tocar cualquier cosa que cruce de un repo a otro, cuando se agrega o renombra un campo del protocolo, o cuando hay que cambiar un nombre de métrica rt_* o de SignAiMetrics.
+description: Cambiar el contrato entre la app Android y los repos hermanos (frames del WebSocket /ws/translate, nombres de glosas, columnas del catálogo de Neon, nombres de métricas) sin romper el otro lado en silencio. Usar antes y después de tocar cualquier cosa que cruce de un repo a otro, cuando se agrega o renombra un campo del protocolo, o cuando hay que cambiar un nombre de métrica rt_* o de SignAllMetrics.
 ---
 
 # Cambiar el contrato entre repos
@@ -16,7 +16,7 @@ Por eso este skill es un procedimiento, no una lista de campos.
 1. **Leé el contrato en los dos lados.** El del backend es
    `../sign-ai-backend/docs/android-integration.md` (423 líneas) — es la fuente de verdad
    y hay que **actualizarlo en el mismo cambio**. Del lado de la app, el contrato de
-   salida es `domain/SignAiCommands.kt` y el parser está en `WebViewSignAiController`.
+   salida es `domain/SignAllCommands.kt` y el parser está en `WebViewSignAllController`.
 2. **Leé las reglas del repo que vas a tocar antes de escribir en él.** El backend tiene
    `CLAUDE.md`: código en inglés sin excepción, y **nunca hacer `git commit` ni
    `git push`**. El STT tiene `README.md`.
@@ -49,7 +49,7 @@ lo fija como prueba. Si tocás esa ruta, corré esa prueba.
 
 ## Los nombres de métrica
 
-`rt_*` en el backend, `SignAiMetrics` en el device. **Un número que no se instrumentó en
+`rt_*` en el backend, `SignAllMetrics` en el device. **Un número que no se instrumentó en
 las dos partes no se puede comparar con nada.**
 
 `rt_first_sign_ms` conserva el nombre aunque cambiara lo que mide, para que se pueda

@@ -16,8 +16,8 @@ miden gestos **entre sí**, porque la inflación es común a todos.
 
 ```bash
 ./gradlew installRelease
-adb -s 1ed6699f shell am force-stop com.signai.webview
-adb -s 1ed6699f shell am start -n com.signai.webview/.MainActivity
+adb -s 1ed6699f shell am force-stop com.signall.app
+adb -s 1ed6699f shell am start -n com.signall.app/.MainActivity
 ```
 
 Y para partir de cero en cada medición, todos los scripts resetean el contador
@@ -41,7 +41,7 @@ que arrancó, no el gesto.
    entrada o de red, no de dibujo. Sale de `OldestInputEvent`, que es la marca
    que puso el propio input de Android en el evento, así que no está
    contaminada por los cientos de ms que tarda `adb shell input` desde el host.
-3. **Vuelta de cada petición de red** — acá es la llamada al backend de SignAI.
+3. **Vuelta de cada petición de red** — acá es la llamada al backend de SignAll.
    Separa "la app tarda" de "la red tarda". En una app con esqueleto de carga
    son dos problemas distintos y se arreglan distinto.
 
@@ -106,7 +106,7 @@ tools/rendimiento/frames.py /tmp/reposo.jsonl
   dobles.
 - **El nombre de la capa no lleva `SurfaceView - `.** En Flutter sí, porque el
   motor abre un `SurfaceView`. Acá el WebView es un `AndroidView`, así que la
-  capa es la de la activity: `com.signai.webview/com.signai.webview.MainActivity#0`.
+  capa es la de la activity: `com.signall.app/com.signall.app.MainActivity#0`.
   `sf-medir.sh` la autodetecta.
 - **`gfxinfo.py` y `sf-medir.sh` pueden discrepar, y la discrepancia es
   información.** En la misma medición (un arrastre de drawer) `gfxinfo.py` dio

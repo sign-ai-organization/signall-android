@@ -1,6 +1,6 @@
 ---
 name: controlar-app-movil
-description: Conducir la app Android nativa de SignAI (Kotlin/Compose + WebView) en el emulador o en el dispositivo físico - compilarla, instalarla, tocar pantallas, leer el árbol de accesibilidad, verificar cambios en pantalla y medir rendimiento. Usar cuando haya que probar, verificar, depurar o mostrar en pantalla algo de la app, cuando el usuario pida "probá en el móvil", "levantá la app", "instalala y probala", "verificá en el dispositivo", o cuando reporte que la app se siente lenta o va lento.
+description: Conducir la app Android nativa de SignAll (Kotlin/Compose + WebView) en el emulador o en el dispositivo físico - compilarla, instalarla, tocar pantallas, leer el árbol de accesibilidad, verificar cambios en pantalla y medir rendimiento. Usar cuando haya que probar, verificar, depurar o mostrar en pantalla algo de la app, cuando el usuario pida "probá en el móvil", "levantá la app", "instalala y probala", "verificá en el dispositivo", o cuando reporte que la app se siente lenta o va lento.
 metadata:
   opencode/slash: "true"
 ---
@@ -40,7 +40,7 @@ no expone nada a accesibilidad. No vas a poder tocar ni leer el avatar con
 `mobile-mcp` ni con Maestro. Para el estado de la escena hay dos caminos, y
 ninguno es el árbol:
 
-- `tools/dev.sh logcat-tag SignAIWeb 80` — el bridge JS→Kotlin loguea a ese tag.
+- `tools/dev.sh logcat-tag SignAllWeb 80` — el bridge JS→Kotlin loguea a ese tag.
 - Prender el modo debug de la app (Ajustes → AVATAR → depurar) y leer el overlay
   `#status`, que es parte de la escena.
 
@@ -90,7 +90,7 @@ las partes por separado:
 
 ```bash
 ./gradlew installDebug                          # solo compilar + instalar
-tools/dev.sh launch                              # relanzar (com.signai.webview/.MainActivity)
+tools/dev.sh launch                              # relanzar (com.signall.app/.MainActivity)
 tools/dev.sh terminate                           # cerrar la app
 tools/dev.sh install app/build/outputs/apk/debug/app-debug.apk
 ```
@@ -99,7 +99,7 @@ tools/dev.sh install app/build/outputs/apk/debug/app-debug.apk
 builds largos, desmembralo y andá leyendo el log:
 
 ```bash
-cd /home/diegocachy/tesisTesteos/SignAI/webview
+cd "$(git rev-parse --show-toplevel)"
 setsid nohup ./gradlew installDebug > /tmp/gradle.log 2>&1 < /dev/null &
 tail -f /tmp/gradle.log
 ```
@@ -123,7 +123,7 @@ Y el loop completo de "verificar un cambio":
 ```bash
 tools/dev.sh install-debug
 tools/dev.sh shot post-build
-tools/dev.sh logcat-tag SignAIWeb 40
+tools/dev.sh logcat-tag SignAllWeb 40
 ```
 
 ## Si la app no levanta
@@ -131,7 +131,7 @@ tools/dev.sh logcat-tag SignAIWeb 40
 Por orden, y sin adivinar:
 
 ```bash
-tools/dev.sh logcat-tag SignAIWeb 60     # el bridge JS→Kotlin
+tools/dev.sh logcat-tag SignAllWeb 60     # el bridge JS→Kotlin
 adb -s 1ed6699f logcat -d AndroidRuntime:E System.err:W '*:S' | tail -40
 tools/dev.sh fg                          # ¿está en foreground?
 ```
@@ -145,7 +145,7 @@ No hay backend contra el que comparar en este repo, pero sí almacenamiento loca
 La historia y los ajustes viven en SharedPreferences `signai/history`:
 
 ```bash
-adb -s 1ed6699f shell "run-as com.signai.webview cat /data/data/com.signai.webview/shared_prefs/signai.xml"
+adb -s 1ed6699f shell "run-as com.signall.app cat /data/data/com.signall.app/shared_prefs/signall.xml"
 ```
 
 `run-as` solo funciona en builds debug. Para probar una escritura de verdad,
@@ -177,8 +177,8 @@ número sin medición es una hipótesis.
 # 1. la app en build release: en debug no hay optimizaciones de R8 y el
 #    número no extrapola a lo que siente el usuario
 ./gradlew installRelease
-adb -s 1ed6699f shell am force-stop com.signai.webview
-adb -s 1ed6699f shell am start -n com.signai.webview/.MainActivity
+adb -s 1ed6699f shell am force-stop com.signall.app
+adb -s 1ed6699f shell am start -n com.signall.app/.MainActivity
 
 # 2. medir
 tools/rendimiento/gfxinfo.py reproducir --sec 4 \
@@ -194,7 +194,7 @@ Los tres números que hay que mirar siempre:
 2. **Latencia toque → primer fotograma**. Si está alta, el problema es de entrada
    o de red, no de dibujo.
 3. **Vuelta de cada petición de red** — acá es la llamada al backend de
-   SignAI. Separa "la app tarda" de "la red tarda".
+   SignAll. Separa "la app tarda" de "la red tarda".
 
 Dos trampas que ya costaron una medición entera en el repo hermano:
 

@@ -55,7 +55,7 @@
 #   gfxinfo.py scroll    --sec 4 --run "adb -s 1ed6699f shell 'input swipe 540 1900 540 700 3000'"
 #
 # <etiqueta>  nombre de la medicion, sale en el resumen
-# --pkg        package Android (default com.signai.webview)
+# --pkg        package Android (default com.signall.app)
 # --sec        ventana de medicion en segundos (default 3). El comando de
 #              --run corre en paralelo, en el HOST.
 # --jsonl      vuelca los fotogramas crudos en JSONL para frames.py
@@ -187,7 +187,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("etiqueta")
     ap.add_argument("--dev", default=os.environ.get("DEV", ""))
-    ap.add_argument("--pkg", default=os.environ.get("APP_PKG", "com.signai.webview"))
+    ap.add_argument("--pkg", default=os.environ.get("APP_PKG", "com.signall.app"))
     ap.add_argument("--sec", type=float, default=3.0)
     ap.add_argument("--jsonl")
     ap.add_argument("--run", default=None)

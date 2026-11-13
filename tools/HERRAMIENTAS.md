@@ -84,7 +84,7 @@ que hay adentro cambia con la animación.
 
 Para el estado de la escena usá estos dos caminos:
 
-- **`tools/dev.sh logcat-tag SignAIWeb 80`** — el bridge JS→Kotlin loguea a ese
+- **`tools/dev.sh logcat-tag SignAllWeb 80`** — el bridge JS→Kotlin loguea a ese
   tag (ver `AGENTS.md` § Kotlin ↔ JS bridge).
 - **Modo debug de la app** (Ajustes → AVATAR → depurar): enciende el overlay
   `#status` y el grid de la escena. Es lo único que muestra FPS y estado del
@@ -113,7 +113,7 @@ tools/dev.sh tap 540 1200             # tocar (coordenadas reales del device)
 tools/dev.sh text "hola"              # escribir
 tools/dev.sh back                     # atrás
 tools/dev.sh log 40                   # últimas líneas del device log
-tools/dev.sh logcat-tag SignAIWeb 80  # el bridge JS→Kotlin
+tools/dev.sh logcat-tag SignAllWeb 80  # el bridge JS→Kotlin
 tools/dev.sh install-debug            # ./gradlew installDebug + relanzar
 ```
 
@@ -214,8 +214,8 @@ Vive en `tools/rendimiento/`, con su propio
 ```bash
 # medir en build release: en debug no hay R8 y el número no extrapola
 ./gradlew installRelease
-adb -s 1ed6699f shell am force-stop com.signai.webview
-adb -s 1ed6699f shell am start -n com.signai.webview/.MainActivity
+adb -s 1ed6699f shell am force-stop com.signall.app
+adb -s 1ed6699f shell am start -n com.signall.app/.MainActivity
 
 # la principal: reparto por fotograma, latencia de toque, red
 tools/rendimiento/gfxinfo.py reproducir --sec 4 \
@@ -237,7 +237,7 @@ normal de Android, así que `gfxinfo framestats` es **la** fuente de verdad, y e
 más informativa: trae los timestamps de cada fase del fotograma, no solo el
 total.
 
-Verificado contra `com.signai.webview` en el Redmi Note 9S: `Total frames
+Verificado contra `com.signall.app` en el Redmi Note 9S: `Total frames
 rendered: 332`, con la tabla `PROFILEDATA` de 17 columnas por fotograma.
 
 ### La capa de SurfaceFlinger
@@ -246,7 +246,7 @@ El nombre de la capa **no** lleva el prefijo `SurfaceView - ` que tiene en
 Flutter: el WebView de esta app es un `AndroidView`, no un `SurfaceView`.
 
 ```
-com.signai.webview/com.signai.webview.MainActivity#0
+com.signall.app/com.signall.app.MainActivity#0
 ```
 
 `sf-medir.sh` lo autodetecta, así que no hay que hardcodearlo.

@@ -67,4 +67,4 @@ Un cambio de UI **no está terminado hasta que se ve en el device**:
       (`setReduceMotion`).
 
 > Recordá: el avatar 3D **no** aparece en el árbol de accesibilidad. Para el estado de la
-> escena, el tag `SignAIWeb` de logcat o el modo debug de Ajustes → AVANZADO.
+> escena, el tag `SignAllWeb` de logcat o el modo debug de Ajustes → AVANZADO.

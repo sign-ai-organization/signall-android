@@ -29,15 +29,15 @@ def probe(port, report):
             assert 'exceptionDetails' not in result.get('result', {}), result
             return result['result']['result'].get('value')
 
-        ev('window.__nativeBridge=window.SignAIBridge;window.__events=[];window.SignAIBridge={postMessage(m){window.__events.push([String(m),performance.now()]);return window.__nativeBridge?.postMessage(m);}};true')
+        ev('window.__nativeBridge=window.SignAllBridge;window.__events=[];window.SignAllBridge={postMessage(m){window.__events.push([String(m),performance.now()]);return window.__nativeBridge?.postMessage(m);}};true')
         try:
             for label, speed, reduce in (('normal', .5, False), ('normal', .5, False),
                                          ('2x', 1.0, False), ('movimiento reducido', .5, True)):
                 result = ev('''(async()=>{
-                  window.SignAI.stop();window.SignAI.setReduceMotion(RE);window.SignAI.setSpeed(SP);
+                  window.SignAll.stop();window.SignAll.setReduceMotion(RE);window.SignAll.setSpeed(SP);
                   window.__events=[];
-                  window.SignAI.setQueue(JSON.stringify([{url:'signs/0028_0000_0000.glb',type:'NEGATIVE'}]));
-                  const play=setInterval(()=>window.SignAI.play(),16);
+                  window.SignAll.setQueue(JSON.stringify([{url:'signs/0028_0000_0000.glb',type:'NEGATIVE'}]));
+                  const play=setInterval(()=>window.SignAll.play(),16);
                   return await new Promise((resolve,reject)=>{
                     const id=setInterval(()=>{
                       const start=window.__events.find(e=>e[0].startsWith('signStart:'));
@@ -49,7 +49,7 @@ def probe(port, report):
                 })()'''.replace('RE', 'true' if reduce else 'false').replace('SP', str(speed)))
                 rows.append({'case': label, 'speed_setting': speed, **result})
         finally:
-            ev('window.SignAI.stop();window.SignAI.setDebug(false);window.SignAI.setReduceMotion(false);window.SignAI.setSpeed(.5);window.SignAIBridge=window.__nativeBridge;delete window.__nativeBridge')
+            ev('window.SignAll.stop();window.SignAll.setDebug(false);window.SignAll.setReduceMotion(false);window.SignAll.setSpeed(.5);window.SignAllBridge=window.__nativeBridge;delete window.__nativeBridge')
     report.write_text(json.dumps(rows, indent=2) + '\n')
     for row in rows:
         print(row['case'], f"{row['elapsed']:.3f} s de signStart a onPlaybackDone")

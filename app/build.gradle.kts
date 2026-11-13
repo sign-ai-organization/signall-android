@@ -31,11 +31,11 @@ val buildNumber: Int = git("rev-list", "--count", "HEAD").toIntOrNull()?.coerceA
 // y que el enlace con el backend sea WSS (`:1100`), así que **un build de
 // release solo puede apuntar a `wss://`**. Para desarrollar hace falta `ws://`
 // contra la máquina que corre el backend, y ese es el bypass: la propiedad
-// `-Psignai.backendWsUrl`, que **solo** lee el build type `debug`.
+// `-Psignall.backendWsUrl`, que **solo** lee el build type `debug`.
 //
-//   ./gradlew installDebug -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate
+//   ./gradlew installDebug -Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate
 //
-val backendWsUrlOverride: String? = project.findProperty("signai.backendWsUrl") as String?
+val backendWsUrlOverride: String? = project.findProperty("signall.backendWsUrl") as String?
 
 /**
  * Default de debug: el alias del emulador a la máquina de desarrollo, para que
@@ -50,7 +50,7 @@ val debugBackendWsUrl = "ws://10.0.2.2:8080/ws/translate"
  * Todavía no hay dominio deployed, y inventar uno sería peor que no tener ninguno:
  * un APK de release sin configurar habla con nadie en vez de hablar con el host
  * de otra persona, y el fallo es ruidoso. Cuando el backend esté desplegado se
- * pasa `-Psignai.backendWsUrl=wss://…` y deja de hacer falta.
+ * pasa `-Psignall.backendWsUrl=wss://…` y deja de hacer falta.
  */
 val releaseBackendWsUrl = "wss://backend.invalid/ws/translate"
 
@@ -66,13 +66,13 @@ val releaseBackendWsUrl = "wss://backend.invalid/ws/translate"
  * la IP por DHCP siga siendo la misma ni de una regla del cortafuegos. El camino
  * por Wi-Fi se pasa explícitamente, con la IP de la máquina:
  *
- *   ./gradlew installDemo -Psignai.backendWsUrl=wss://192.168.80.49/ws/translate
+ *   ./gradlew installDemo -Psignall.backendWsUrl=wss://192.168.80.49/ws/translate
  */
 val demoBackendWsUrl = "wss://127.0.0.1:8443/ws/translate"
 
 if (backendWsUrlOverride != null && !backendWsUrlOverride.startsWith("wss://")) {
     logger.lifecycle(
-        "SignAI: release y demo ignoran -Psignai.backendWsUrl=$backendWsUrlOverride porque no " +
+        "SignAll: release y demo ignoran -Psignall.backendWsUrl=$backendWsUrlOverride porque no " +
             "es wss://; release usa $releaseBackendWsUrl y demo usa $demoBackendWsUrl.",
     )
 }
@@ -80,15 +80,15 @@ if (backendWsUrlOverride != null && !backendWsUrlOverride.startsWith("wss://")) 
 // ── Herramientas de desarrollo ──────────────────────────────────────────────
 //
 // El bloque AVANZADO de Ajustes y la consola de la escena (`setDebug` del puente,
-// la que se lee con `adb logcat -s SignAIWeb`) **no son un ajuste del teléfono**:
+// la que se lee con `adb logcat -s SignAllWeb`) **no son un ajuste del teléfono**:
 // existen solo si la compilación los pide. Antes eran el interruptor «Modo debug»
 // de Settings, persistido en SharedPreferences; eso permitía encenderlos desde
 // cualquier APK de producción y dejaba viva una preferencia vieja.
 //
-// Se piden por el mismo camino que `signai.backendWsUrl`:
+// Se piden por el mismo camino que `signall.backendWsUrl`:
 //
-//   ./gradlew installDebug -Psignai.devTools=true
-//   SIGNAI_DEV_TOOLS=1 ./gradlew installDebug
+//   ./gradlew installDebug -Psignall.devTools=true
+//   SIGNALL_DEV_TOOLS=1 ./gradlew installDebug
 //
 // **Apagados por defecto, incluso en debug** (decisión del owner, 2026-11-03).
 // Release y `demo` los ignoran siempre: producción no compone `Section("AVANZADO")`
@@ -101,29 +101,29 @@ fun devToolsFlag(raw: String?): Boolean? =
         else -> null
     }
 
-val devToolsFromProperty = devToolsFlag(project.findProperty("signai.devTools") as String?)
+val devToolsFromProperty = devToolsFlag(project.findProperty("signall.devTools") as String?)
 val devToolsFromEnvironment =
-    devToolsFlag(providers.environmentVariable("SIGNAI_DEV_TOOLS").orNull)
+    devToolsFlag(providers.environmentVariable("SIGNALL_DEV_TOOLS").orNull)
 val devToolsRequested = devToolsFromProperty ?: devToolsFromEnvironment ?: false
 
 if (devToolsFromProperty != null && devToolsFromEnvironment != null &&
     devToolsFromProperty != devToolsFromEnvironment
 ) {
     logger.lifecycle(
-        "SignAI: -Psignai.devTools=$devToolsFromProperty gana sobre " +
-            "SIGNAI_DEV_TOOLS=$devToolsFromEnvironment.",
+        "SignAll: -Psignall.devTools=$devToolsFromProperty gana sobre " +
+            "SIGNALL_DEV_TOOLS=$devToolsFromEnvironment.",
     )
 }
 
 if (devToolsRequested) {
     logger.lifecycle(
-        "SignAI: AVANZADO y la consola de la escena solo existen en debug; " +
+        "SignAll: AVANZADO y la consola de la escena solo existen en debug; " +
             "release y demo los ignoran.",
     )
 }
 
 android {
-    namespace = "com.signai.webview"
+    namespace = "com.signall.app"
     compileSdk = 36
     // build-tools 35.0.0 (el default que pide AGP para compileSdk 36 en esta
     // versión) no está instalado y el SDK del equipo de pruebas es de solo
@@ -131,7 +131,7 @@ android {
     buildToolsVersion = "36.0.0"
 
     defaultConfig {
-        applicationId = "com.signai.webview"
+        applicationId = "com.signall.app"
         minSdk = 26
         targetSdk = 36
         versionCode = buildNumber

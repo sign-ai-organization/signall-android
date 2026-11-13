@@ -1,4 +1,4 @@
-// SignAI — escena 3D del avatar.
+// SignAll — escena 3D del avatar.
 //
 // El personaje se carga UNA vez desde `models/juan.glb` o `models/pauline.glb`
 // (elección de Ajustes → Personaje). No hay retargeting ni interpretación de
@@ -20,11 +20,11 @@
 // que `signs/<id>.glb` es un identificador: el pedido por red solo ocurre si el
 // clip no vino en el archivo.
 //
-// Contrato con Android (`window.SignAI`) — no cambiar sin tocar el lado Kotlin:
+// Contrato con Android (`window.SignAll`) — no cambiar sin tocar el lado Kotlin:
 //   setQueue, appendQueue, playFrom, queuePending, queueState, play, setDebug,
 //   setFreeCamera, setGrid, setBackground, setReduceMotion, setAvatar,
 //   setSpeed, setTheme, setDefaultSign, setSilenceTimeoutMs, setHumanize
-// Hacia Android: `window.SignAIBridge.postMessage("onPlaybackDone")`,
+// Hacia Android: `window.SignAllBridge.postMessage("onPlaybackDone")`,
 // `postMessage("avatarReady")` (primer avatar), `postMessage("avatarLoaded:<id>")`
 // (cambios posteriores), `postMessage("avatarFailed:<id>")` y
 // `postMessage("signStart:<idx>:<jsMs>")` por cada seña.
@@ -108,7 +108,7 @@ let avatarPivot = null;
 // las cejas y el tronco del intérprete (medidos en `nmm.json`), la prosodia del
 // tipo de oración, la mirada, el parpadeo y la respiración. No cambia ningún
 // keyframe ni el reloj de la reproducción: `onPlaybackDone`, `signStart` y las
-// duraciones son los de siempre. `SignAI.setHumanize(0)` la apaga entera.
+// duraciones son los de siempre. `SignAll.setHumanize(0)` la apaga entera.
 /** Capa del avatar que está en escena; `null` mientras no hay avatar. */
 let human = null;
 /** Nivel pedido por `setHumanize` (0 = apagada, 1 = completa). */
@@ -116,7 +116,7 @@ let humanLevel = 1;
 /** Los datos medidos, una sola descarga para todos los avatares. */
 const nmmData = fetch("nmm.json")
   .then(r => (r.ok ? r.json() : null))
-  .catch(err => { console.warn("[SignAI] sin nmm.json:", err); return null; });
+  .catch(err => { console.warn("[SignAll] sin nmm.json:", err); return null; });
 
 const DEFAULT_SIGN_URL = "signs/0000_0000_0000.glb";
 let defaultSignUrl = DEFAULT_SIGN_URL;
@@ -268,7 +268,7 @@ const grid = new THREE.GridHelper(4, 8, 0x25272c, 0x25272c);
 grid.visible = false; // por defecto sin grilla (suelo)
 scene.add(grid);
 
-// Fondo opcional (bosque): se carga una vez, se activa vía SignAI.setBackground(true)
+// Fondo opcional (bosque): se carga una vez, se activa vía SignAll.setBackground(true)
 // El mismo fondo que arriba; `setTheme` alterna entre este y el claro del prototipo.
 const BG_COLOR = new THREE.Color(0x121316);
 const BG_LIGHT = new THREE.Color(0xf4f4f2);
@@ -295,12 +295,12 @@ function setStatus(msg) {
  * la barra se comporta como antes.
  */
 function reportProgress(pct) {
-  try { window.SignAIBridge?.postMessage(`progress:${Math.round(pct)}`); } catch (e) { /* no bridge */ }
+  try { window.SignAllBridge?.postMessage(`progress:${Math.round(pct)}`); } catch (e) { /* no bridge */ }
 }
 
 // ── DEBUG ─────────────────────────────────────────────────────────────────────
 // Centro único de opciones debug. Para agregar una opción: agregar una función
-// a `flags` que devuelva líneas de texto. Toggle: window.SignAI.setDebug(bool).
+// a `flags` que devuelva líneas de texto. Toggle: window.SignAll.setDebug(bool).
 const Debug = {
   enabled: false,
   el: null,
@@ -507,13 +507,13 @@ function unresolvedTracks(clip, nodeNames) {
 
 /** Avisa a Android que el cambio de avatar terminó (`avatarLoaded:<id>`). */
 function notifyAvatarLoaded(id) {
-  try { window.SignAIBridge?.postMessage(`avatarLoaded:${id}`); } catch (e) { /* no bridge */ }
-  console.log(`[SignAI] avatar cargado: ${id} · ${Math.round(performance.now())} ms`);
+  try { window.SignAllBridge?.postMessage(`avatarLoaded:${id}`); } catch (e) { /* no bridge */ }
+  console.log(`[SignAll] avatar cargado: ${id} · ${Math.round(performance.now())} ms`);
 }
 
 /** Avisa que el avatar pedido no se pudo cargar (`avatarFailed:<id>`). */
 function notifyAvatarFailed(id) {
-  try { window.SignAIBridge?.postMessage(`avatarFailed:${id}`); } catch (e) { /* no bridge */ }
+  try { window.SignAllBridge?.postMessage(`avatarFailed:${id}`); } catch (e) { /* no bridge */ }
 }
 
 /** Libera geometrías, materiales y texturas de un árbol que se va de escena. */
@@ -584,7 +584,7 @@ function prepareAvatar(gltf) {
   // ahí, la perdería el primer frame y el muñeco aparecería descolocado y sin
   // escalar — sin ningún error, solo feo.
   const pivot = new THREE.Object3D();
-  pivot.name = "SignAiPivot";
+  pivot.name = "SignAllPivot";
   pivot.add(root);
   const box = new THREE.Box3();
   root.updateWorldMatrix(true, true);
@@ -657,7 +657,7 @@ function loadAvatar(id, initial = false) {
 
     const parsedAt = Math.round(performance.now() - started);
     const prepared = prepareAvatar(gltf);
-    console.log(`[SignAI] ${id} parseado · nodos:`, prepared.nodeCount,
+    console.log(`[SignAll] ${id} parseado · nodos:`, prepared.nodeCount,
       "·", parsedAt, "ms");
 
     // Recién acá se reemplaza: el anterior se va con sus texturas y geometrías.
@@ -684,7 +684,7 @@ function loadAvatar(id, initial = false) {
     for (const clip of prepared.animations) embeddedClips.set(clip.name, clip);
     loadedAvatarId = id;
     if (initial) reportProgress(85);
-    console.log(`[SignAI] ${id}: ${embeddedClips.size} clips indexados`);
+    console.log(`[SignAll] ${id}: ${embeddedClips.size} clips indexados`);
 
     // Seña de arranque, para que la app abra mostrando algo aunque el backend
     // esté caído.
@@ -695,7 +695,7 @@ function loadAvatar(id, initial = false) {
         (missing ? ` · ${missing} tracks sin resolver` : "") +
         " · presiona Enviar",
       );
-      if (missing) console.warn("[SignAI] tracks sin hueso:", missing, clips[0].name);
+      if (missing) console.warn("[SignAll] tracks sin hueso:", missing, clips[0].name);
     }).catch(err => {
       setStatus("Error cargando la seña por defecto");
       console.error(err);
@@ -717,11 +717,11 @@ function loadAvatar(id, initial = false) {
         const totalMs = Math.round(performance.now() - started);
         if (initial) {
           // Este es el número que ve el owner: el splash se va justo después.
-          console.log(`[SignAI] escena lista (${id}) · ${totalMs} ms`);
+          console.log(`[SignAll] escena lista (${id}) · ${totalMs} ms`);
           reportProgress(100);
-          try { window.SignAIBridge?.postMessage("avatarReady"); } catch (e) { /* no bridge */ }
+          try { window.SignAllBridge?.postMessage("avatarReady"); } catch (e) { /* no bridge */ }
         } else {
-          console.log(`[SignAI] cambio de avatar a ${id} listo · ${totalMs} ms`);
+          console.log(`[SignAll] cambio de avatar a ${id} listo · ${totalMs} ms`);
           notifyAvatarLoaded(id);
         }
       })));
@@ -750,7 +750,7 @@ loadAvatar(avatarId, true);
 
 // ── Reproducción ──────────────────────────────────────────────────────────────
 function notifyPlaybackDone() {
-  try { window.SignAIBridge?.postMessage("onPlaybackDone"); } catch (e) { /* no bridge */ }
+  try { window.SignAllBridge?.postMessage("onPlaybackDone"); } catch (e) { /* no bridge */ }
 }
 
 /**
@@ -770,8 +770,8 @@ function notifyPlaybackDone() {
  */
 function notifySignStart(index) {
   const msg = `signStart:${index}:${Math.round(performance.now())}`;
-  try { window.SignAIBridge?.postMessage(msg); } catch (e) { /* no bridge */ }
-  if (Debug.enabled) console.log(`[SignAI] signStart ${msg}`);
+  try { window.SignAllBridge?.postMessage(msg); } catch (e) { /* no bridge */ }
+  if (Debug.enabled) console.log(`[SignAll] signStart ${msg}`);
 }
 
 /**
@@ -819,7 +819,7 @@ function startClip(clip) {
   const mixer = state.mixer;
   if (!mixer) return false;
   const missing = unresolvedTracks(clip, state.nodeNames);
-  if (missing) console.warn("[SignAI] seña con", missing, "tracks sin hueso:", clip.name);
+  if (missing) console.warn("[SignAll] seña con", missing, "tracks sin hueso:", clip.name);
 
   const previous = state.action;
   const action = mixer.clipAction(clip);
@@ -838,7 +838,7 @@ function startClip(clip) {
   if (Debug.enabled) {
     const how = fade > 0 ? "fundición" : !previous && crossfade() > 0
       ? "fundición desde el reposo" : "corte seco";
-    console.log(`[SignAI] ${how} -> ${action.getClip().name || "(clip sin nombre)"}`);
+    console.log(`[SignAll] ${how} -> ${action.getClip().name || "(clip sin nombre)"}`);
   }
 
   if (fade > 0) {
@@ -879,7 +879,7 @@ function preloadNext() {
   const next = state.queue[state.queueIdx + 1];
   if (!next || signCache.has(next.url)) return;
   loadSignClips(next.url).catch(err =>
-    console.warn("[SignAI] no se pudo precargar", next.url, err));
+    console.warn("[SignAll] no se pudo precargar", next.url, err));
 }
 
 /**
@@ -910,8 +910,8 @@ function pickVariant(clips, variants, type) {
  */
 function notifySignFailed(index, item) {
   const gloss = (item && (item.gloss || item.url)) || "(sin nombre)";
-  try { window.SignAIBridge?.postMessage(`signFailed:${index}`); } catch (e) { /* no bridge */ }
-  console.warn(`[SignAI] seña ${index} (${gloss}) no se pudo cargar: se saltea`);
+  try { window.SignAllBridge?.postMessage(`signFailed:${index}`); } catch (e) { /* no bridge */ }
+  console.warn(`[SignAll] seña ${index} (${gloss}) no se pudo cargar: se saltea`);
 }
 
 /**
@@ -1133,7 +1133,7 @@ canvas.addEventListener("pointerup", () => { activePointers = Math.max(0, active
 canvas.addEventListener("pointercancel", () => { activePointers = 0; cancelPress(); });
 
 // ── API para Android ──────────────────────────────────────────────────────────
-window.SignAI = {
+window.SignAll = {
   /**
    * Secuencia a reproducir. `json` llega como string (Kotlin lo entrecomilla) y
    * se parsea acá para no interpolar datos crudos en el script.
@@ -1316,7 +1316,7 @@ window.SignAI = {
     // La capa humana deja de respirar, mecerse y seguir a las manos; lo que es
     // parte de la seña (cabeza, cara y prosodia del intérprete) se conserva.
     if (human) human.reduceMotion = state.reduceMotion;
-    if (Debug.enabled) console.log("[SignAI] fundición:", crossfade() > 0 ? "on" : "off");
+    if (Debug.enabled) console.log("[SignAll] fundición:", crossfade() > 0 ? "on" : "off");
   },
 
   /**

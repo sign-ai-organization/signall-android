@@ -1,4 +1,4 @@
-# Pipeline SignAI (WebView) — flujo de datos
+# Pipeline SignAll (WebView) — flujo de datos
 
 > **Actualización del 2026-11-05:** los dos `.glb` de origen pasan a la versión del
 > 2026-11-04 (`fc6f372`), con **cuatro marcas faciales** (`_afirmativo`, `_pregunta`,
@@ -119,7 +119,7 @@ WebSocket  ws://<backend>:8080/ws/translate          ← la app SOLO habla con e
               el GLB del avatar elegido (resuelto por nombre) con crossfade de 100 ms
                      │
                      ▼
-              window.SignAIBridge.postMessage("onPlaybackDone")
+              window.SignAllBridge.postMessage("onPlaybackDone")
 ```
 
 **El contrato son frames de WebSocket, no imports.** Un cambio aquí rompe en el hermano sin
@@ -267,9 +267,9 @@ mueve ahora es el clip horneado en el GLB.
 
 ## El puente Kotlin ↔ JS
 
-**La fuente de verdad es `domain/SignAiCommands.kt`.** No esta lista.
+**La fuente de verdad es `domain/SignAllCommands.kt`.** No esta lista.
 
-### Kotlin → JS: `window.SignAI.<método>(…)`
+### Kotlin → JS: `window.SignAll.<método>(…)`
 
 Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe en silencio.
 
@@ -289,7 +289,7 @@ Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe e
 | `setFreeCamera(on)` · `setGrid(on)` · `setBackground(on)` | Ajustes de escena |
 | `setSilenceTimeoutMs(ms)` | Solo para el overlay de depurar; el valor llega desde `/health` del backend |
 
-### JS → Kotlin: `window.SignAIBridge.postMessage(…)`
+### JS → Kotlin: `window.SignAllBridge.postMessage(…)`
 
 | Mensaje | Cuándo |
 |---|---|
@@ -302,7 +302,7 @@ Siempre con el guard `?.`, y siempre **aditivo**: borrar o renombrar uno rompe e
 | `progress:<0..100>` | Avance real de la escena para la barra del splash (45–100) |
 
 `avatarReady` es lo que **tapa el splash** — no `onPageFinished`, que dispara mientras el
-GLB de 34,28 MB (Juan) o 29,46 MB (Pauline) todavía se está bajando. `SignAiSplash` tiene
+GLB de 34,28 MB (Juan) o 29,46 MB (Pauline) todavía se está bajando. `SignAllSplash` tiene
 además un timeout de 8 s.
 
 ## El catálogo de Neon

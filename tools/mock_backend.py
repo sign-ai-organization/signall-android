@@ -42,7 +42,7 @@ Y en la app. En el emulador `10.0.2.2` ya es el host, no hace falta nada:
 
 En un celular físico, la IP de tu compu en la red local (nunca `127.0.0.1`):
 
-    ./gradlew installDebug -Psignai.backendWsUrl=ws://<TU-IP-LAN>:8080/ws/translate
+    ./gradlew installDebug -Psignall.backendWsUrl=ws://<TU-IP-LAN>:8080/ws/translate
 
 No escucha audio real: ignora los frames binarios. Es para ver la app, no para
 medir nada.

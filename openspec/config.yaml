@@ -1,7 +1,7 @@
 schema: spec-driven
 
 context: |
-  ## SignAI — contexto técnico
+  ## SignAll — contexto técnico
 
   **Objetivo**: traducir español hablado a Lengua de Señas Colombiana (LSC) con un avatar
   3D, en una app Android. Esta app es **una pieza** del sistema: los repos hermanos viven
@@ -16,7 +16,7 @@ context: |
   de acá como evidencia, contrastalo contra el código.
 
   ### Stack
-  - Shell: Jetpack Compose + WebView (`WebViewAssetLoader`), paquete `com.signai.webview`
+  - Shell: Jetpack Compose + WebView (`WebViewAssetLoader`), paquete `com.signall.app`
   - UI: **Lumo UI de Noman R** (Compose, NO el Lumo de Vaadin) + **Phosphor Icons**.
     **Cero imports de `material3`** — no se agrega Material 3 nuevo.
   - Tipografía: **Liberation Sans** incluida en `res/font/`, métricamente compatible con
@@ -109,21 +109,21 @@ context: |
     `.blend` de origen y re-exportando; nunca en `app.js`.
 
   ### Puente Kotlin ↔ JS
-  **La fuente de verdad es `domain/SignAiCommands.kt`, no esta lista.**
-  - Kotlin → JS, `window.SignAI.<método>()` **siempre con guard `?.`**:
+  **La fuente de verdad es `domain/SignAllCommands.kt`, no esta lista.**
+  - Kotlin → JS, `window.SignAll.<método>()` **siempre con guard `?.`**:
     `play`, `playFrom`, `setQueue`, `appendQueue`, `stop`, `setSpeed`, `setReduceMotion`,
     `setTheme`, `setDefaultSign`, `setDebug`, `setFreeCamera`, `setGrid`, `setBackground`,
     `setSilenceTimeoutMs`. Todo método nuevo es **aditivo**: borrar o renombrar uno rompe
     en silencio.
-  - JS → Kotlin, `window.SignAIBridge.postMessage(...)` vía
+  - JS → Kotlin, `window.SignAllBridge.postMessage(...)` vía
     `WebViewCompat.addWebMessageListener` (con feature-guard):
     `onPlaybackDone`, `avatarReady`, `avatarLoaded:<id>`, `avatarFailed:<id>`,
     `signStart:<idx>:<jsMs>`, `signFailed:<idx>`, `progress:<0..100>`.
   - `avatarReady` es lo que **tapa el splash**, no `onPageFinished`: ese dispara mientras
-    el GLB de 34,28 MB (Juan) o 29,46 MB (Pauline) todavía baja. `SignAiSplash` tiene un
+    el GLB de 34,28 MB (Juan) o 29,46 MB (Pauline) todavía baja. `SignAllSplash` tiene un
     timeout de 8 s de reserva.
   - El canvas de Three.js **no publica nada a accesibilidad**: sale en el árbol como
-    `android.webkit.WebView` sin hijos. Para su estado, el tag `SignAIWeb` de logcat o el
+    `android.webkit.WebView` sin hijos. Para su estado, el tag `SignAllWeb` de logcat o el
     modo debug de Ajustes → AVANZADO.
 
   ### Flujo de runtime (el que importa)
@@ -159,7 +159,7 @@ context: |
   WebView es solo el canvas 3D.
 
   - **Marca: SignALL** (rebranding del 2026-10-16). Centralizada en
-    `ui/SignAiBranding.kt`. **El nombre ya no está abierto.**
+    `ui/SignAllBranding.kt`. **El nombre ya no está abierto.**
   - **Tema: oscuro por defecto** (`Settings.darkTheme = true`). El oscuro es **grafito**
     (`#121316` fondo, `#1A1B1F` superficie, `#33363D` borde) y el azul de marca `#1C4CFC`
     vive **solo en la acción principal y los controles**. El ámbar `live`/`onLive`

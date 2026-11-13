@@ -3,8 +3,8 @@
 # Publica el APK `demo` para instalarlo desde el navegador del teléfono, sin cable.
 #
 #   tools/wifi/publicar-apk.sh
-#   SIGNAI_HOST=192.168.80.49 tools/wifi/publicar-apk.sh
-#   SIGNAI_WS_URL=wss://otra-maquina/ws/translate tools/wifi/publicar-apk.sh
+#   SIGNALL_HOST=192.168.80.49 tools/wifi/publicar-apk.sh
+#   SIGNALL_WS_URL=wss://otra-maquina/ws/translate tools/wifi/publicar-apk.sh
 #   tools/wifi/publicar-apk.sh --no-build      # republica el APK que ya está
 #
 # Qué hace:
@@ -44,13 +44,13 @@ host_ip() {
     | head -1
 }
 
-HOST="${SIGNAI_HOST:-$(host_ip)}"
+HOST="${SIGNALL_HOST:-$(host_ip)}"
 if [[ -z "$HOST" ]]; then
-  echo "no pude resolver la IP de la red local; pasá SIGNAI_HOST=192.168.x.x" >&2
+  echo "no pude resolver la IP de la red local; pasá SIGNALL_HOST=192.168.x.x" >&2
   exit 2
 fi
 
-WS_URL="${SIGNAI_WS_URL:-wss://$HOST/ws/translate}"
+WS_URL="${SIGNALL_WS_URL:-wss://$HOST/ws/translate}"
 
 # El certificado es de una identidad, no del proxy: si la IP cambió por DHCP el
 # TLS falla y el síntoma se ve en la app, no acá. Mejor avisar antes.
@@ -63,7 +63,7 @@ fi
 
 if (( BUILD )); then
   echo "compilando demo con $WS_URL ..."
-  ( cd "$APP_DIR" && ./gradlew --quiet assembleDemo -Psignai.backendWsUrl="$WS_URL" )
+  ( cd "$APP_DIR" && ./gradlew --quiet assembleDemo -Psignall.backendWsUrl="$WS_URL" )
 fi
 
 APK="$(find "$BUILD_DIR" -name '*.apk' -print -quit 2>/dev/null || true)"
@@ -93,12 +93,12 @@ SIZE="$(du -h "$APK" | cut -f1)"
 DATE="$(date '+%Y-%m-%d %H:%M')"
 
 mkdir -p "$APK_DIR"
-cp "$APK" "$APK_DIR/signai-demo.apk"
-cp "$APK" "$APK_DIR/signai-demo-$SHA.apk"
+cp "$APK" "$APK_DIR/signall-demo.apk"
+cp "$APK" "$APK_DIR/signall-demo-$SHA.apk"
 
 # Keep the last three versioned copies: each one is 40 MB and the download page
 # only links the current one.
-ls -1t "$APK_DIR"/signai-demo-*.apk 2>/dev/null | tail -n +4 | xargs -r rm -f
+ls -1t "$APK_DIR"/signall-demo-*.apk 2>/dev/null | tail -n +4 | xargs -r rm -f
 
 cat > "$APK_DIR/index.html" <<HTML
 <!doctype html>
@@ -106,7 +106,7 @@ cat > "$APK_DIR/index.html" <<HTML
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SignAI — APK</title>
+<title>SignAll — APK</title>
 <style>
   :root { color-scheme: dark; }
   body { margin: 0; min-height: 100vh; display: grid; place-items: center;
@@ -127,10 +127,10 @@ cat > "$APK_DIR/index.html" <<HTML
 </head>
 <body>
 <main>
-  <h1>SignAI</h1>
+  <h1>SignAll</h1>
   <p>Tocá el botón, bajá el APK y aceptá la instalación. Es el build <code>demo</code>:
      habla <code>wss://</code> con el backend de esta máquina.</p>
-  <a href="signai-demo.apk">Descargar el APK · $SIZE</a>
+  <a href="signall-demo.apk">Descargar el APK · $SIZE</a>
   <dl>
     <dt>Versión</dt><dd>$VERSION</dd>
     <dt>Build</dt><dd>$SHA</dd>
@@ -152,14 +152,14 @@ cat > "$APK_DIR/latest.json" <<JSON
   "size": "$SIZE",
   "published_at": "$DATE",
   "ws_url": "$WS_URL",
-  "apk": "signai-demo.apk"
+  "apk": "signall-demo.apk"
 }
 JSON
 
 echo
 echo "APK publicado"
 echo "  página:   https://$HOST/apk/"
-echo "  archivo:  https://$HOST/apk/signai-demo.apk"
+echo "  archivo:  https://$HOST/apk/signall-demo.apk"
 echo "  servidor: $WS_URL"
 echo "  build:    $VERSION · $SHA · $SIZE · $DATE"
 echo

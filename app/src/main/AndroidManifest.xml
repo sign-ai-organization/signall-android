@@ -14,7 +14,7 @@
          puesto en la aplicación el sistema lo ignora y la ventana queda en el
          default (`adjustPan`). Con `adjustPan` el sistema **panea** la ventana
          entera hacia arriba cuando el teclado se abre, y encima la app también
-         reserva el inset del teclado (`imePadding` en `SignAiBottomBar`): se
+         reserva el inset del teclado (`imePadding` en `SignAllBottomBar`): se
          sumaban los dos desplazamientos y quedaba un hueco de ~200 dp entre el
          teclado y los botones (owner, 2026-10-22). Con `adjustResize` y
          edge-to-edge (`enableEdgeToEdge`) la ventana no se resizea ni se panea:

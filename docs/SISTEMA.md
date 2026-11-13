@@ -1,10 +1,10 @@
-# El sistema SignAI — referencia de los repositorios hermanos
+# El sistema SignAll — referencia de los repositorios hermanos
 
 Este archivo es **referencia**, no reglas. Las reglas están en `AGENTS.md`. Se carga
 cuando la tarea toca el pipeline, el WebSocket, el STT, el catálogo o los documentos de
 la tesis.
 
-Esta app es **una de las piezas** del sistema SignAI (tesis, Ingeniería de Sistemas,
+Esta app es **una de las piezas** del sistema SignAll (tesis, Ingeniería de Sistemas,
 PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
 `sign-ai-organization` de GitHub.
 
@@ -119,7 +119,7 @@ versiones-pasadas/           ← historia, no se edita
 
 ### Dos cosas que confunden
 
-- **El nombre del sistema**: **los documentos dicen `SignAll` y el código dice `SignAI`**, a
+- **El nombre del sistema**: **los documentos dicen `SignAll` y el código dice `SignAll`**, a
   propósito. El owner decidió el 2026-11-04 que en la tesis el nombre es `SignAll`; los
   repositorios de GitHub y los documentos internos de los repos no se renombraron.
 - **La copia quedó congelada el 2026-11-04** y las correcciones que se habían hecho en
@@ -209,7 +209,7 @@ completo está en `../sign-ai-backend/docs/plan-proxy-tls.md`.
 - **El `final` siempre llega**, incluso vacío: el STT responde a todo `end`
   (`flush()`). Un `final` sin texto es "no se escuchó nada", no un error.
 - **Los mismos nombres de métrica en los dos lados** (`rt_*` en el backend,
-  `SignAiMetrics` en el device): un número que no se instrumentó en las dos partes no se
+  `SignAllMetrics` en el device): un número que no se instrumentó en las dos partes no se
   puede comparar con nada. `rt_first_sign_ms` conserva el nombre aunque cambiara lo que
   mide, para que se pueda comparar contra la línea base — aunque **no** sea comparable:
   la línea base es del camino por palabras.

@@ -26,8 +26,8 @@ Si el binario de `transcribe-cpp` o el modelo no están, se cae a `whisper.cpp`
 con el modelo grande, que es más lento pero más exacto. Se puede forzar con
 variables de entorno:
 
-    SIGNAI_STT_ENGINE=transcribe-cpp|whisper
-    SIGNAI_STT_MODEL=/ruta/al/modelo
+    SIGNALL_STT_ENGINE=transcribe-cpp|whisper
+    SIGNALL_STT_MODEL=/ruta/al/modelo
 """
 
 from __future__ import annotations
@@ -57,7 +57,7 @@ WHISPER_MODELS = [
 SAMPLE_RATE = 16_000
 BYTES_PER_SAMPLE = 2
 
-ENGINE = os.getenv("SIGNAI_STT_ENGINE", "")
+ENGINE = os.getenv("SIGNALL_STT_ENGINE", "")
 
 # Silencio: RMS por debajo de esto cuenta como pausa. Es el mismo criterio
 # simplest que usa el STT del backend (MIN_RMS=0.008), sin el VAD.
@@ -134,12 +134,12 @@ def transcribe(pcm: bytes, language: str = "es") -> str:
     if not pcm or not engine:
         return ""
 
-    with tempfile.TemporaryDirectory(prefix="signai-stt-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="signall-stt-") as tmp:
         wav_path = pathlib.Path(tmp) / "audio.wav"
         wav_path.write_bytes(pcm_to_wav(pcm))
 
         if engine == "transcribe-cpp":
-            model = pathlib.Path(os.getenv("SIGNAI_STT_MODEL", TRANSCRIBE_MODEL))
+            model = pathlib.Path(os.getenv("SIGNALL_STT_MODEL", TRANSCRIBE_MODEL))
             return _run([
                 str(TRANSCRIBE_CLI),
                 "--model", str(model),
@@ -147,7 +147,7 @@ def transcribe(pcm: bytes, language: str = "es") -> str:
                 "--language", language,
             ])
 
-        model = pathlib.Path(os.getenv("SIGNAI_STT_MODEL", "")) if os.getenv("SIGNAI_STT_MODEL") else next(
+        model = pathlib.Path(os.getenv("SIGNALL_STT_MODEL", "")) if os.getenv("SIGNALL_STT_MODEL") else next(
             (m for m in WHISPER_MODELS if m.is_file()), None
         )
         if model is None:

@@ -36,15 +36,15 @@ def run(port, url, report, full):
 
         if url:
             cmd('Page.navigate', {'url': url})
-            ev('new Promise((resolve,reject)=>{let n=0;const id=setInterval(()=>{const s=document.getElementById("status")?.textContent||"";if(window.SignAI&&s.includes("Avatar listo")){clearInterval(id);resolve(true);}else if(++n>600){clearInterval(id);reject("avatar no listo: "+s);}},100);})')
-            assert ev('(window.__events=[]);window.__nativeBridge=window.SignAIBridge;window.SignAIBridge={postMessage(msg){window.__events.push(String(msg));return window.__nativeBridge?.postMessage(msg);}};true'), 'No se pudo observar el bridge'
+            ev('new Promise((resolve,reject)=>{let n=0;const id=setInterval(()=>{const s=document.getElementById("status")?.textContent||"";if(window.SignAll&&s.includes("Avatar listo")){clearInterval(id);resolve(true);}else if(++n>600){clearInterval(id);reject("avatar no listo: "+s);}},100);})')
+            assert ev('(window.__events=[]);window.__nativeBridge=window.SignAllBridge;window.SignAllBridge={postMessage(msg){window.__events.push(String(msg));return window.__nativeBridge?.postMessage(msg);}};true'), 'No se pudo observar el bridge'
         else:
-            assert ev('!!window.SignAI'), 'WebView no listo'
+            assert ev('!!window.SignAll'), 'WebView no listo'
             ev('new Promise((resolve,reject)=>{let n=0;const id=setInterval(()=>{const s=document.getElementById("status").textContent;if(s.includes("Avatar listo")){clearInterval(id);resolve(true);}else if(++n>900){clearInterval(id);reject("avatar no listo: "+s);}},100);})')
-            wrapped = ev('window.__events=[];window.__nativeBridge=window.SignAIBridge;window.SignAIBridge={postMessage(msg){window.__events.push(String(msg));return window.__nativeBridge.postMessage(msg);}};window.SignAIBridge!==window.__nativeBridge')
+            wrapped = ev('window.__events=[];window.__nativeBridge=window.SignAllBridge;window.SignAllBridge={postMessage(msg){window.__events.push(String(msg));return window.__nativeBridge.postMessage(msg);}};window.SignAllBridge!==window.__nativeBridge')
             assert wrapped, 'No se pudo observar el bridge'
         original_avatar = ev('new URL(location.href).searchParams.get("avatar")||"juan"')
-        ev('window.SignAI.setDebug(true)')
+        ev('window.SignAll.setDebug(true)')
 
         def queue(label, ids, speed=.5, reduce=False, append=False, stop=False, change_speed=False):
             items = [{'url': f'signs/{i:04d}_0000_0000.glb', 'type': ('AFFIRMATIVE', 'YES_NO_QUESTION', 'NEGATIVE', 'IMPERATIVE')[k % 4]}
@@ -52,8 +52,8 @@ def run(port, url, report, full):
             options = {'items': items, 'speed': speed, 'reduce': reduce, 'append': append, 'stop': stop, 'change': change_speed}
             expression = '''(async()=>{
               const o=OPTIONS; window.__events=[];
-              window.SignAI.setReduceMotion(o.reduce);window.SignAI.setSpeed(o.speed);
-              window.SignAI.setQueue(JSON.stringify(o.items));window.SignAI.play();
+              window.SignAll.setReduceMotion(o.reduce);window.SignAll.setSpeed(o.speed);
+              window.SignAll.setQueue(JSON.stringify(o.items));window.SignAll.play();
               return await new Promise((resolve,reject)=>{
                 const started=performance.now(),deadline=started+240000;let exit=false,appended=false,stopped=false,changed=false,finishedAt=null;
                 const id=setInterval(()=>{
@@ -62,19 +62,19 @@ def run(port, url, report, full):
                   // El avatar puede seguir cargando la seña de arranque cuando la
                   // escena ya avisó "lista"; `play()` es no-op hasta que termine.
                   const finished=window.__events.includes('onPlaybackDone');
-                  if(!starts.length&&!finished&&performance.now()-started<30000)window.SignAI.play();
+                  if(!starts.length&&!finished&&performance.now()-started<30000)window.SignAll.play();
                   if(text.includes('fundición: salida'))exit=true;
                   if(o.change&&!changed&&starts.length===1){
-                    window.SignAI.setSpeed(1.5);changed=true;
-                    if(window.SignAI.queueState().speed!==o.speed*2){clearInterval(id);reject('velocidad cambió dentro de la seña');return;}
+                    window.SignAll.setSpeed(1.5);changed=true;
+                    if(window.SignAll.queueState().speed!==o.speed*2){clearInterval(id);reject('velocidad cambió dentro de la seña');return;}
                   }
-                  if(exit&&o.append&&!appended){appended=true;window.SignAI.appendQueue(JSON.stringify([{url:'signs/0028_0000_0000.glb',type:'NEGATIVE'}]));}
-                  if(exit&&o.stop&&!stopped){stopped=true;window.SignAI.stop();finishedAt=performance.now();}
+                  if(exit&&o.append&&!appended){appended=true;window.SignAll.appendQueue(JSON.stringify([{url:'signs/0028_0000_0000.glb',type:'NEGATIVE'}]));}
+                  if(exit&&o.stop&&!stopped){stopped=true;window.SignAll.stop();finishedAt=performance.now();}
                   const done=window.__events.filter(x=>x==='onPlaybackDone').length;
                   if(done&&!finishedAt)finishedAt=performance.now();
                   if(finishedAt&&performance.now()-finishedAt>150){
                     clearInterval(id);resolve({starts:starts.map(x=>Number(x.split(':')[1])),done,exit,appended,stopped,changed,
-                      playing:document.getElementById('debug').textContent.includes('play: true'),queue:window.SignAI.queueState()});
+                      playing:document.getElementById('debug').textContent.includes('play: true'),queue:window.SignAll.queueState()});
                   }else if(performance.now()>deadline){clearInterval(id);reject('timeout: '+text);}
                 },16);
               });
@@ -109,14 +109,14 @@ def run(port, url, report, full):
                 for avatar in ('juan', 'pauline'):
                     # `setAvatar` arranca la carga y vuelve enseguida: la señal
                     # real de "listo" es que la barra pase de "Cargando avatar".
-                    ev(f'window.SignAI.setAvatar({json.dumps(avatar)})')
+                    ev(f'window.SignAll.setAvatar({json.dumps(avatar)})')
                     ev('new Promise((resolve,reject)=>{let n=0;const id=setInterval(()=>{const s=document.getElementById("status").textContent;if(s.includes("Avatar listo")){clearInterval(id);resolve(true);}else if(++n>600){clearInterval(id);reject("avatar no listo: "+s);}},100);})')
                     queue(f'50 señas {avatar}, variantes alternadas', list(range(50)), speed=1.5)
         finally:
-            ev('window.SignAI.stop();window.SignAI.setDebug(false);window.SignAI.setReduceMotion(false);window.SignAI.setSpeed(.5)')
-            ev(f'window.SignAI.setAvatar({json.dumps(original_avatar)})')
+            ev('window.SignAll.stop();window.SignAll.setDebug(false);window.SignAll.setReduceMotion(false);window.SignAll.setSpeed(.5)')
+            ev(f'window.SignAll.setAvatar({json.dumps(original_avatar)})')
             if not url:
-                ev('window.SignAIBridge=window.__nativeBridge;delete window.__nativeBridge;delete window.__events')
+                ev('window.SignAllBridge=window.__nativeBridge;delete window.__nativeBridge;delete window.__events')
         report.write_text(json.dumps(results, indent=2) + '\n')
     return results
 

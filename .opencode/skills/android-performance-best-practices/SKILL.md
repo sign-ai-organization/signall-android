@@ -8,7 +8,7 @@ metadata:
 
 # Performance en Android
 
-Checklist genérica. **Lo específico de SignAI está en el skill `compose-best-practices`** y
+Checklist genérica. **Lo específico de SignAll está en el skill `compose-best-practices`** y
 en `tools/rendimiento/`.
 
 ## Las dos reglas que acá importan más

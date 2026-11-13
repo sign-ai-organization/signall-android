@@ -121,20 +121,20 @@ transcribe.
 ### Probar con tu propia voz (esto no lo puede hacer un agente)
 
 ```bash
-./gradlew installDebug -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate
+./gradlew installDebug -Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate
 adb reverse tcp:8080 tcp:8080
-adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO
+adb shell pm grant com.signall.app android.permission.RECORD_AUDIO
 adb logcat -c
-adb logcat -s SignAiState SignAiMetrics SignAiNet SignAIWeb
+adb logcat -s SignAllState SignAllMetrics SignAllNet SignAllWeb
 ```
 
 Los logs:
 
 ```bash
-adb logcat -s SignAiMetrics      # latencias del teléfono
-adb logcat -s SignAiNet          # cada oración que llega del backend
-adb logcat -s SignAiState        # en qué modo está el micrófono y por qué
-adb logcat -s SignAIWeb          # consola del JS (modo depuración prendido)
+adb logcat -s SignAllMetrics      # latencias del teléfono
+adb logcat -s SignAllNet          # cada oración que llega del backend
+adb logcat -s SignAllState        # en qué modo está el micrófono y por qué
+adb logcat -s SignAllWeb          # consola del JS (modo depuración prendido)
 ```
 
 > **Un agente no puede hablarle al micrófono.** La app usa
@@ -174,18 +174,18 @@ Dos cosas más que hay que comprobar:
 En los logs:
 
 ```
-SignAiState: micrófono prendido en modo Dictation
-SignAiNet: recording 16000Hz mono, chunks of 30ms
-SignAiMetrics: dictado #1: 6 palabras, 35 caracteres
-SignAiNet: recording stopped                                   <- el mic se apagó solo
-SignAiState: dictado cerrado: 35 caracteres a la espera de confirmación
+SignAllState: micrófono prendido en modo Dictation
+SignAllNet: recording 16000Hz mono, chunks of 30ms
+SignAllMetrics: dictado #1: 6 palabras, 35 caracteres
+SignAllNet: recording stopped                                   <- el mic se apagó solo
+SignAllState: dictado cerrado: 35 caracteres a la espera de confirmación
 ```
 
 Y si tocás el micrófono **sin** haber esperados el silencio:
 
 ```
-SignAiState: micrófono apagado (venía de Dictation)
-SignAiState: dictado detenido: esperando el final de la frase   <- el `end` abrió el cierre
+SignAllState: micrófono apagado (venía de Dictation)
+SignAllState: dictado detenido: esperando el final de la frase   <- el `end` abrió el cierre
 ```
 
 Ese es el otro camino del `end`: la captura se cortó antes de que la pausa del
@@ -320,7 +320,7 @@ conversacion_4  bien, muchas gracias, hasta manana
 ```bash
 # reproducir un WAV por el WebSocket, a velocidad real, y ver la línea de tiempo
 python3 tools/medir-primera-sena.py
-adb logcat -s SignAiNet
+adb logcat -s SignAllNet
 ```
 
 ### Qué mirar además del ritmo
@@ -458,7 +458,7 @@ comiéndose audio que Whisper transcribió bien.
 ### Teléfono
 
 ```bash
-adb logcat -s SignAiMetrics
+adb logcat -s SignAllMetrics
 ```
 
 El resumen (`resumen:`) trae `frases`, `oraciones`, `glosas`, `sin_seña`,
@@ -509,13 +509,13 @@ cd ../sign-ai-stt
 
 | Síntoma | Causa | Qué hacer |
 |---|---|---|
-| "No se pudo abrir el micrófono" | falta el permiso en runtime | `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO` |
-| "Sin conexión con el servidor" en el teléfono | el `10.0.2.2` del build es para emulador | `adb reverse tcp:8080 tcp:8080` y compilar con `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate` |
+| "No se pudo abrir el micrófono" | falta el permiso en runtime | `adb shell pm grant com.signall.app android.permission.RECORD_AUDIO` |
+| "Sin conexión con el servidor" en el teléfono | el `10.0.2.2` del build es para emulador | `adb reverse tcp:8080 tcp:8080` y compilar con `-Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate` |
 | Transcripción vacía | filtro de confianza de Whisper | mirá `stt_dropped_total{reason="logprob"}` |
 | La frase se parte en dos | dos oraciones separadas por 1,5 s de silencio | normal: es el divisor de oraciones haciendo su trabajo |
-| El avatar representa una seña y después otra rara | glosa fuera de LSC50 | encendé **Ajustes → AVANZADO → depurar** y mirá `SignAiNet` |
+| El avatar representa una seña y después otra rara | glosa fuera de LSC50 | encendé **Ajustes → AVANZADO → depurar** y mirá `SignAllNet` |
 | La medición sale a 1 ms y no es creíble | la caché semántica está caliente | `DELETE FROM semantic_cache;` **y reiniciar el backend** (§1) |
-| `session failed: null` en logcat, en bucle | el backend se reinició y una sesión quedó colgada | reiniciá la app: `adb shell am force-stop com.signai.webview` |
+| `session failed: null` en logcat, en bucle | el backend se reinició y una sesión quedó colgada | reiniciá la app: `adb shell am force-stop com.signall.app` |
 | Al apagar TR queda todo deshabilitado y dice "Procesando..." | se confundió "el `done` ya llegó" con "el avatar ya terminó": una oración larga deja cola | la fuente de verdad es `queuePlaying`, no `playbackState` (`STA-18`) |
 | El otro interruptor no se ve deshabilitado | el relleno `soft` atenuado al 35 % sobre `surface` da dos colores casi iguales | se apaga el icono y la etiqueta a `muted`, nunca la superficie (`STA-17`) |
 | Traducir manda dos veces lo mismo | el campo tiene la frase que la voz ya representó | 1,5 s de retención: el texto se ve, Traducir no, y después se borra solo (`STA-20`) |
