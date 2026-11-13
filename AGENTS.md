@@ -223,6 +223,10 @@ cifra sube por construcción y **no es comparable**. Falta remedir con las 28 fr
 Acá: commit y push directo a `main`, sin PR ni rama de feature. **No abrir PRs ni pedir
 confirmación para commitear.** Los hermanos tampoco se commitean sin que el owner lo pida.
 
+> **Excepción vigente desde el 2026-11-13, mientras dure la reestructuración:** **nada de
+> `push`.** Se commitea local y se para ahí; el push lo ordena el owner, repo por repo.
+> Ver `reestructuracion/00-general.md`.
+
 **Todo el trabajo va a `main`, en los cuatro repos.** El owner decidió el **2026-11-11**
 que se abandona la rama `develop`: **no existe más** en ninguno de ellos y **no se vuelve a
 crear**. Las ramas `develop` locales se borraron (eran ancestros de `main`, sin commits

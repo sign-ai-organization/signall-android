@@ -110,16 +110,18 @@ toca `ui/` y la otra `assets/web/`.
 Verificación cruzada, READMEs finales, y una última pasada de Sonar y de gitleaks sobre
 todo, con las credenciales ya rotadas.
 
-### Reglas de convivencia (las cuatro que evitan el desastre)
+### Reglas de convivencia (las cinco que evitan el desastre)
 
 1. **Un archivo tiene un solo dueño a la vez.** Si dos lo necesitan, se reparte por
    archivo, no por tarea.
 2. **Nadie hace `force-push`. Nunca.** Un `force-push` obliga a todos a re-clonar, que es
    justo lo que esta reorganización quiere evitar.
-3. **`pull --rebase` antes de cada push, commits chicos y un tema por commit.** Un commit
+3. **`pull --rebase` antes de cada commit, commits chicos y un tema por commit.** Un commit
    de 76 archivos se revisa; uno de 300 no.
 4. **Durante la ola 0, `main` está congelado para todos menos para quien hace los
    cimientos.** Los demás trabajan en su rama y no mergean hasta que termine.
+5. **Nada de `push`.** Todo queda local hasta que el owner lo ordene, repo por repo. Esto
+   vale para los cinco repos y también para las ramas de trabajo.
 
 ### Decisiones ya tomadas (2026-11-13)
 
@@ -348,4 +350,5 @@ volver a conceder `RECORD_AUDIO`, que son dos minutos.
 | 2026-11-13 | R-01 ejecutado: la historia está limpia salvo **dos credenciales reales** en android (Neon + OpenAI, dentro de evidencias de `PR-CAC-05`). Pendiente que el owner las rote. |
 | 2026-11-13 | **Los cinco repositorios renombrados en GitHub** a `sign-all-*` y los `origin` locales reapuntados; `fetch` verificado en los cinco. Los proyectos de Sonar se rehicieron como `sign-all-*` y se borraron los viejos. |
 | 2026-11-13 | Convención fijada: la carpeta local conserva el nombre viejo para no romper las rutas relativas de `AGENTS.md`, `docs/` y `tools/`. Un clon nuevo se hace con el nombre viejo. |
+| 2026-11-13 | **Super regla del owner: nada de `push`.** Se commitea local y se espera la orden, repo por repo. Queda anotada en `AGENTS.md`, en el prompt de R-02 y en `prompts/R-00-arranque.md`. |
 

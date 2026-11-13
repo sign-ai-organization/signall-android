@@ -85,12 +85,17 @@ ajustes de la instalación anterior no pasan a la nueva (de todos modos R-03 ren
 `SharedPreferences`, así que no tiene sentido migrarlos). El build `demo` comparte
 `applicationId` con `debug`, así que lo sigue reemplazando.
 
+## Regla que está por encima de todo
+
+**Nada de `push`.** Se commitea local y se para ahí. El push lo ordena el owner cuando lo
+decida; esto vale para los cinco repos y también para cualquier rama.
+
 ## Al cerrar
 
 - Escribe `reestructuracion/02-android.md` con lo que se cambió, lo que quedó pendiente y
   los números de verificación.
 - Actualiza la fila de R-02 en `reestructuracion/00-general.md` y agrega la línea de
   bitácora con la fecha y el commit.
-- Commit directo a `main` y push, sin PR. No commitees archivos ajenos al bloque.
+- Commit local en `main`, sin PR y **sin push**. No commitees archivos ajenos al bloque.
 - Si algo del plan no cierra o una decisión no está tomada, **pregunta**; no la resuelvas
   por tu cuenta.
