@@ -53,13 +53,18 @@ if [ ! -f "$ruta/sonar-project.properties" ]; then
   exit 2
 fi
 
+# La clave del proyecto la manda el sonar-project.properties, no el nombre de la
+# carpeta: el repo ya se llama sign-all-* pero la carpeta local conserva el nombre
+# viejo, y la clave tiene que seguir al repositorio, no a la carpeta.
+clave=$(sed -n 's/^sonar\.projectKey=//p' "$ruta/sonar-project.properties" | tr -d '\r')
+
 if ! curl -fsS http://localhost:9000/api/system/status 2>/dev/null | grep -q '"status":"UP"'; then
   echo "SonarQube no responde en http://localhost:9000." >&2
   echo "Levantarlo con: docker compose -f $HERR/docker-compose.sonarqube.yml up -d" >&2
   exit 2
 fi
 
-echo "Escaneando $repo con el proyecto '$repo'…"
+echo "Escaneando $repo con el proyecto '$clave'…"
 docker run --rm \
   --network host \
   -e SONAR_TOKEN \
@@ -68,9 +73,7 @@ docker run --rm \
   -w /usr/src \
   sonarsource/sonar-scanner-cli:latest \
   -Dsonar.host.url=http://localhost:9000 \
-  -Dsonar.token="$SONAR_TOKEN" \
-  -Dsonar.projectKey="$repo" \
-  -Dsonar.projectName="$repo"
+  -Dsonar.token="$SONAR_TOKEN"
 
 echo
-echo "Resultado: http://localhost:9000/dashboard?id=$repo"
+echo "Resultado: http://localhost:9000/dashboard?id=$clave"

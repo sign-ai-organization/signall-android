@@ -56,23 +56,70 @@ estaba 1 commit atrás. Los dos quedaron alineados y pusheados. No se perdió na
 
 ---
 
-## 2. Orden de trabajo propuesto
+## 2. Orden de trabajo: cimientos primero, paralelo después
 
-El rename toca los cinco repos y el contrato entre ellos, así que el orden importa.
-**La regla es: primero se decide la marca, después se renombra el código, y el renombre
-de los repositorios de GitHub va al final.**
+El problema que hay que evitar es concreto: si una persona mueve el paquete de la app
+mientras otra toca pantallas, las dos están editando los mismos 76 archivos y el merge es
+una pelea. Por eso el trabajo se parte en dos clases, y no se mezclan:
 
-| Fase | Qué | Repo | Estado |
+- **Cimientos**: lo que comparten todos y no se puede editar por partes. Nombres, rutas,
+  contrato entre repos y configuración de build. **Va en serie, una sola persona, con
+  `main` congelado.**
+- **Módulos**: cada uno con su pedazo de archivos y su dueño. **Va en paralelo**, y solo
+  después de que los cimientos estén quietos.
+
+### Ola 0 — cimientos (una sola persona, `main` congelado)
+
+| # | Qué | Repo | ¿Bloquea a los demás? |
 |---|---|---|---|
-| **0** | Línea base: alinear remotos, escanear leaks sobre la historia completa | todos | ✔ alinear · ✔ gitleaks (2 credenciales a rotar) |
-| **1** | Decidir la marca y el alcance (ver § 3) | — | **pendiente del owner** |
-| **2** | Rename técnico en la app: paquete, `applicationId`, recursos, textos | android | pendiente |
-| **3** | Rename en backend y STT: títulos, nombres de servicio, logs, docker | backend, stt | pendiente |
-| **4** | Limpieza de documentos + README por repo | los cinco | pendiente |
-| **5** | Calidad: SonarQube en cada repo, CI mínimo | los cuatro | Sonar ✔ instalado y con línea base · CI pendiente |
-| **6** | Renombrar los repositorios en GitHub | org | pendiente |
+| C0 | Renombrar los repositorios en GitHub y actualizar los `origin` | los cinco | ✔ hecho 2026-11-13 |
+| C1 | `namespace`, `applicationId` → `com.signall.app` y el paquete Kotlin | android | **sí**: nadie toca `app/` |
+| C2 | Identificadores internos: tags de logcat, `window.SignAI`, `SignAiBridge`, `SharedPreferences` | android | **sí**: mismos archivos que C1 |
+| C3 | Nombres que cruzan el WebSocket (`rt_*`, frames) | android + backend | **sí**: es un solo cambio en dos repos |
+| C4 | Sacar las evidencias pesadas de `docs/` y arreglar los enlaces | android | **sí**: mueve rutas que otros citan |
+| C5 | `sonar-project.properties` y CI mínimo | los cuatro | no, pero toca la raíz de cada repo |
 
-El detalle de cada bloque, con su repositorio y su entregable, está en § 5.
+C1 y C2 se hacen **juntos, en un solo hilo**: son los mismos archivos y separarlos obliga a
+pasar dos veces por 76 archivos.
+
+Mientras la ola 0 corre, esto **sí** puede avanzar en paralelo, porque no comparte un solo
+archivo con android:
+
+- **backend**: sus propios nombres internos, su README y su configuración de Sonar.
+- **stt**: lo mismo.
+- **plan de pruebas y mediciones**: no toca código.
+- **`sign-all-docs` y `sign-all-avatar`**: no se tocan por dentro; no hay nada que hacer.
+
+### Ola 1 — módulos en paralelo
+
+Con los cimientos quietos, cada persona toma un área y la mueve sin pisar a nadie. La
+división es por **archivo**, no por tema: dos personas pueden trabajar en "la app" si una
+toca `ui/` y la otra `assets/web/`.
+
+| Área | Dueño toca | No toca |
+|---|---|---|
+| UI / Compose | `app/src/main/java/**/ui/**` | `assets/web/**`, `domain/**` |
+| Escena 3D y avatar | `app/src/main/assets/web/**` | Kotlin |
+| Pipeline, mic y socket | `**/data/**`, `**/domain/**` | `ui/**` |
+| Documentos y tesis | `docs/**`, `openspec/**`, `*.md` | código |
+| Backend | repo backend completo | los demás repos |
+| STT | repo STT completo | los demás repos |
+
+### Ola 2 — cierre
+
+Verificación cruzada, READMEs finales, y una última pasada de Sonar y de gitleaks sobre
+todo, con las credenciales ya rotadas.
+
+### Reglas de convivencia (las cuatro que evitan el desastre)
+
+1. **Un archivo tiene un solo dueño a la vez.** Si dos lo necesitan, se reparte por
+   archivo, no por tarea.
+2. **Nadie hace `force-push`. Nunca.** Un `force-push` obliga a todos a re-clonar, que es
+   justo lo que esta reorganización quiere evitar.
+3. **`pull --rebase` antes de cada push, commits chicos y un tema por commit.** Un commit
+   de 76 archivos se revisa; uno de 300 no.
+4. **Durante la ola 0, `main` está congelado para todos menos para quien hace los
+   cimientos.** Los demás trabajan en su rama y no mergean hasta que termine.
 
 ### Decisiones ya tomadas (2026-11-13)
 
@@ -85,25 +132,37 @@ El detalle de cada bloque, con su repositorio y su entregable, está en § 5.
 4. **Las herramientas de trabajo corren locales, gratis y sin cuenta.** SonarQube
    comunitario en Docker (no SonarCloud) y gitleaks en la máquina. Quedaron instaladas y
    probadas en esta sesión; ver `herramientas/README.md`.
+5. **Se renombra antes de que nadie más clone.** El renombre de los repositorios se
+   adelantó a todo lo demás: es lo único que obliga a un clon nuevo, y hacerlo al final
+   habría obligado a cada persona a re-apuntar su `origin`.
 
-Tabla de renombre (se aplica en la fase 6, de una sola vez):
+Tabla de renombre (**hecha** el 2026-11-13 en GitHub; los `origin` locales ya apuntan a
+las URLs nuevas):
 
-| Hoy | Queda |
-|---|---|
-| `sign-ai-android` | `sign-all-android` |
-| `sign-ai-backend` | `sign-all-backend` |
-| `sign-ai-stt` | `sign-all-stt` |
-| `sign-ai-docs` | `sign-all-docs` |
-| `signai-avatar` | `sign-all-avatar` |
+| Antes | Ahora | Carpeta local |
+|---|---|---|
+| `sign-ai-android` | `sign-all-android` | sigue siendo `sign-ai-android` |
+| `sign-ai-backend` | `sign-all-backend` | sigue siendo `sign-ai-backend` |
+| `sign-ai-stt` | `sign-all-stt` | sigue siendo `sign-ai-stt` |
+| `sign-ai-docs` | `sign-all-docs` | sigue siendo `sign-ai-docs` |
+| `signai-avatar` | `sign-all-avatar` | sigue siendo `signai-avatar` |
 
-Lo que arrastra el renombre, para no olvidarlo: la URL de `origin` en cada clon, las
-rutas relativas `../signai-avatar` que aparecen en `AGENTS.md`, `docs/` y los scripts de
-`tools/`, y los enlaces entre documentos. GitHub redirige las URLs viejas, así que un
-clon que no se actualice no se rompe, pero queda desprolijo.
+**Convención mientras dure la reestructuración:** el repositorio en GitHub ya se llama
+`sign-all-*`, pero la carpeta local conserva el nombre viejo. Así las rutas relativas
+`../sign-ai-backend` que están escritas en `AGENTS.md`, en `docs/` y en los scripts de
+`tools/` siguen funcionando para todos, y un clon nuevo se hace con el nombre viejo:
+
+```bash
+git clone git@github.com:sign-ai-organization/sign-all-backend.git sign-ai-backend
+```
+
+Renombrar las carpetas es un `mv` y una pasada de enlaces; se hace al final, de una vez,
+cuando ya no haya nadie escribiendo documentos (ver C4 y la ola 2).
 
 Aparte: en el directorio hermano hay dos carpetas que **no son repositorios**
 (`sign-ai-video/`, `sign-ai-video-vertical/`). No entran en el renombre de GitHub; si
 hay que renombrar la carpeta local es una decisión aparte.
+
 
 ---
 
@@ -244,28 +303,36 @@ Hay cuatro familias y no todas se tratan igual:
 
 ---
 
-## 5. Plan por sesiones
+## 5. Plan por bloques
 
-Cada bloque es una sesión aparte, con su propio prompt. El orden es el que menos cosas
-rompe: primero lo que no se ve, después lo que se ve, y el renombre de GitHub al final.
+Cada bloque es una sesión aparte, con su propio prompt en `prompts/`. La columna "ola"
+dice cuándo se puede hacer: los de la ola 0 van en serie, los de la ola 1 pueden ir a la
+vez.
 
-| Bloque | Sesión | Qué se hace | Repos | Entregable |
-|---|---|---|---|---|
-| R-01 | Leaks | gitleaks sobre toda la historia; rotar lo que aparezca | los 5 | **hecho**: 2 credenciales a rotar → `01-leaks.md` |
-| R-02 | Paquete | `applicationId` y `namespace` → `com.signall.app`, renombre del paquete Kotlin, `app_name`, textos de UI | android | app compilada e instalada como app nueva |
-| R-03 | Internos | tags de logcat, `SignAiBridge`, `window.SignAI`, `SignAiState`, `SharedPreferences` | android | tags nuevos documentados |
-| R-04 | Métricas | nombres que cruzan el socket, cambiados el mismo día en los dos lados | android + backend | tabla viejo → nuevo |
-| R-05 | Docs | sacar evidencias pesadas, dejar lo vivo, mover lo cerrado a `docs/historia/` | android | `docs/` bajo 10 MB |
-| R-06 | README | un README corto por repositorio | los 5 | 5 READMEs |
-| R-07 | Calidad | `sonar-project.properties` en cada repo + GitHub Actions mínimo | los 4 | análisis en el panel y CI verde |
-| R-08 | GitHub | renombrar los cinco repositorios | org | URLs nuevas |
+| Bloque | Ola | Qué se hace | Repo | Entregable | Puede ir en paralelo con |
+|---|---|---|---|---|---|
+| R-01 | — | gitleaks sobre toda la historia | los 5 | **hecho** → `01-leaks.md` | — |
+| R-08 | 0 · C0 | renombrar los repos en GitHub y los `origin` | los 5 | **hecho** · `sign-all-*` | — |
+| R-02 | 0 · C1 | `namespace`, `applicationId` y paquete Kotlin → `com.signall.app` | android | app instalada con el nombre nuevo | backend, STT |
+| R-03 | 0 · C2 | tags, `window.SignAI`, `SignAiBridge`, `SignAiState`, `SharedPreferences` | android | tags nuevos | backend, STT |
+| R-04 | 0 · C3 | nombres que cruzan el socket, en los dos lados el mismo día | android + backend | tabla viejo → nuevo | **nada** |
+| R-05 | 0 · C4 | sacar evidencias pesadas, dejar lo vivo, `docs/historia/` | android | `docs/` bajo 10 MB | backend, STT |
+| R-07 | 0 · C5 | `sonar-project.properties` + GitHub Actions | los 4 | panel y CI | cualquiera |
+| R-06 | 1 | README corto por repositorio | los 5 | 5 READMEs | todo, al final de la ola 0 |
+| — | 2 | verificación cruzada y última pasada de Sonar y gitleaks | todos | informe de cierre | — |
 
-Los bloques R-02 a R-04 forman un solo hilo: el nombre. R-05 y R-06 son el otro hilo:
-la presentación. R-07 es el tercero: la evidencia de calidad.
+R-02 y R-03 son **un solo hilo**: mismos 76 archivos, separados obligan a pasar dos veces.
+R-08 se adelantó al principio porque es lo único que obliga a un clon nuevo.
 
-**Orden confirmado:** este, con el paquete en R-02. El owner delegó el orden. Va
-temprano porque el rename del nombre arrastra todo lo demás y así se hace una sola vez;
-el precio es reinstalar la app y volver a conceder `RECORD_AUDIO`, que son dos minutos.
+**Advertencia que hay que decirle a cualquiera que se sume mientras la ola 0 esté
+abierta:** en android no se toca `app/` ni `docs/`. Se trabaja en backend, en STT, en
+mediciones o en la tesis. Tocar la app en ese momento es garantizar un conflicto en 76
+archivos.
+
+**Orden confirmado:** el de arriba. El owner delegó el orden y el criterio que manda es
+"primero lo que obliga a re-clonar y lo que toca los cimientos". El paquete va primero
+porque arrastra todo lo demás y así se hace una sola vez; el precio es reinstalar la app y
+volver a conceder `RECORD_AUDIO`, que son dos minutos.
 
 ---
 
@@ -276,7 +343,9 @@ el precio es reinstalar la app y volver a conceder `RECORD_AUDIO`, que son dos m
 | 2026-11-13 | Alineación de los cinco repos. `sign-ai-docs` fast-forward `2a9feb5` → `503a002`; `sign-ai-android` merge de `FableAvatar` → `main` (`9db21ad` → `64c4dd5`) y push. Árbol de trabajo de android intacto. |
 | 2026-11-13 | Se crea esta carpeta y este documento. |
 | 2026-11-13 | Decidido: los cinco repos se renombran a `sign-all-*`; docs y avatar solo cambian de nombre, no de contenido. Esta sesión es solo de planificación. |
-| 2026-11-13 | El owner delega el orden al agente. Orden confirmado: R-01 → R-08, con el paquete en R-02. |
+| 2026-11-13 | El owner delega el orden al agente. Orden confirmado: cimientos en serie, módulos en paralelo. |
 | 2026-11-13 | Herramientas instaladas: SonarQube 9.9.8 LTS Community en Docker (`:9000`, Postgres 17, solo en 127.0.0.1) y gitleaks 8.30.1 ya presente. Tres proyectos con su primer análisis. |
 | 2026-11-13 | R-01 ejecutado: la historia está limpia salvo **dos credenciales reales** en android (Neon + OpenAI, dentro de evidencias de `PR-CAC-05`). Pendiente que el owner las rote. |
+| 2026-11-13 | **Los cinco repositorios renombrados en GitHub** a `sign-all-*` y los `origin` locales reapuntados; `fetch` verificado en los cinco. Los proyectos de Sonar se rehicieron como `sign-all-*` y se borraron los viejos. |
+| 2026-11-13 | Convención fijada: la carpeta local conserva el nombre viejo para no romper las rutas relativas de `AGENTS.md`, `docs/` y `tools/`. Un clon nuevo se hace con el nombre viejo. |
 

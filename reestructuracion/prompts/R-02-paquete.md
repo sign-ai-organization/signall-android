@@ -27,6 +27,9 @@ que rotar. Eso no bloquea este trabajo y no se toca acá.
 Que la app deje de llamarse `com.signai.webview` y pase a `com.signall.app`, sin cambiar
 nada de lo que hace.
 
+**Este bloque es un cimiento**: mientras dure, nadie más toca `app/`. Si alguien tiene que
+trabajar, va a backend, a STT o a la tesis. Avisar antes de empezar y avisar al terminar.
+
 ## Lo que hay hoy (medido, no lo vuelvas a contar desde cero)
 
 - `namespace` y `applicationId` en `app/build.gradle.kts`: los dos `com.signai.webview`.
@@ -71,8 +74,8 @@ nada de lo que hace.
    y comprobar que se representa y que el historial queda en
    `shared_prefs/signai.xml` bajo la instalación nueva.
 5. `./reestructuracion/herramientas/escanear/sonar.sh sign-ai-android` con el Sonar local
-   levantado, y confirmar que el análisis no empeoró respecto de la línea base
-   (13.806 ncloc, 63 code smells, 1 bug).
+   levantado (el proyecto en Sonar se llama `sign-all-android`), y confirmar que el
+   análisis no empeoró respecto de la línea base (13.806 ncloc, 63 code smells, 1 bug).
 
 ## Consecuencia que hay que decirle al owner
 

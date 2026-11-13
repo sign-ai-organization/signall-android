@@ -46,8 +46,9 @@ El script lee el token de `SONAR_TOKEN` o de `reestructuracion/herramientas/.env
 (ignorado por git). El token ya está creado en esta instalación, con nombre
 `reestructuracion`.
 
-Necesita un `sonar-project.properties` en la raíz del repo analizado. Las plantillas
-están en `plantillas/`. Hoy solo `sign-ai-android` lo tiene puesto; en el backend y en el
+Necesita un `sonar-project.properties` en la raíz del repo analizado; la clave del
+proyecto la manda ese archivo (`sign-all-*`), no el nombre de la carpeta local. Las plantillas
+están en `plantillas/`. Hoy solo la app lo tiene puesto; en el backend y en el
 STT se copia cuando se haga R-07.
 
 Detalle que costó tiempo y está resuelto en el script: `. .env.sonar` deja el token como
@@ -58,9 +59,9 @@ el `export`.
 
 | Proyecto | ncloc | bugs | code smells | vulnerabilidades | fiabilidad | duplicación |
 |---|---|---|---|---|---|---|
-| `sign-ai-android` | 13.806 | 1 | 63 | 0 | C | 4,8 % |
-| `sign-ai-backend` | 2.349 | 1 | 6 | 0 | E | 0 % |
-| `sign-ai-stt` | 853 | 0 | 2 | 0 | A | 0 % |
+| `sign-all-android` | 13.806 | 1 | 63 | 0 | C | 4,8 % |
+| `sign-all-backend` | 2.349 | 1 | 6 | 0 | E | 0 % |
+| `sign-all-stt` | 853 | 0 | 2 | 0 | A | 0 % |
 
 - Los tres tienen **cobertura 0 %**: no hay tests, ni en backend ni en STT ni en la app.
   SonarQube lo va a repetir en cada análisis hasta que exista el primero.
