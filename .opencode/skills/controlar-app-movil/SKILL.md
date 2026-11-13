@@ -142,7 +142,7 @@ tools/dev.sh fg                          # ¿está en foreground?
 ## Verificar que lo que escribiste persistió
 
 No hay backend contra el que comparar en este repo, pero sí almacenamiento local.
-La historia y los ajustes viven en SharedPreferences `signai/history`:
+La historia y los ajustes viven en SharedPreferences `signall/history`:
 
 ```bash
 adb -s 1ed6699f shell "run-as com.signall.app cat /data/data/com.signall.app/shared_prefs/signall.xml"

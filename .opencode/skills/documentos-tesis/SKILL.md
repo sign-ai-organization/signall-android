@@ -1,31 +1,31 @@
 ---
 name: documentos-tesis
-description: Leer, editar y compilar los documentos de la tesis (SRS, SDD, memoria, plan de pruebas, plan de administración) que viven en ../sign-ai-docs/latex/. Usar cuando haya que consultar un documento, corregir un .tex, compilarlo con make, revisar un cambio contra el código, o cuando el owner pida tocar el SRS o el SDD.
+description: Leer, editar y compilar los documentos de la tesis (SRS, SDD, memoria, plan de pruebas, plan de administración) que viven en ../signall-docs/latex/. Usar cuando haya que consultar un documento, corregir un .tex, compilarlo con make, revisar un cambio contra el código, o cuando el owner pida tocar el SRS o el SDD.
 ---
 
 # Los documentos de la tesis: locales, editables y compilables
 
-Desde el **2026-11-04** todo vive en `../sign-ai-docs`. Overleaf se retiró y su MCP se quitó
+Desde el **2026-11-04** todo vive en `../signall-docs`. Overleaf se retiró y su MCP se quitó
 de `~/.config/opencode/opencode.json`: **si algo existe solo allá, no cuenta.**
 
 ## Dónde está cada cosa
 
 | Qué | Ruta |
 |---|---|
-| Documentos formales (el original, lo que se edita) | `../sign-ai-docs/latex/<documento>/main.tex` |
+| Documentos formales (el original, lo que se edita) | `../signall-docs/latex/<documento>/main.tex` |
 | Documentos: `srs` · `sdd` · `memoria` · `plan-pruebas` · `administracion` | `latex/<documento>/` |
-| Borradores en Markdown que alimentan los documentos | `../sign-ai-docs/borradores/` |
-| Cambios pendientes y su estado | `../sign-ai-docs/cambios/` |
-| Diagramas (.drawio y PNG exportado) | `../sign-ai-docs/diagramas/` |
-| Historia | `../sign-ai-docs/versiones-pasadas/` (no se edita) |
-| Estado de cada documento y pendientes conocidos | `../sign-ai-docs/ESTADO.md` |
+| Borradores en Markdown que alimentan los documentos | `../signall-docs/borradores/` |
+| Cambios pendientes y su estado | `../signall-docs/cambios/` |
+| Diagramas (.drawio y PNG exportado) | `../signall-docs/diagramas/` |
+| Historia | `../signall-docs/versiones-pasadas/` (no se edita) |
+| Estado de cada documento y pendientes conocidos | `../signall-docs/ESTADO.md` |
 
-La estructura completa está en `../sign-ai-docs/README.md`.
+La estructura completa está en `../signall-docs/README.md`.
 
 ## Compilar: es parte de editar
 
 ```bash
-cd ../sign-ai-docs
+cd ../signall-docs
 make                 # los cinco documentos y un resumen con páginas y hora
 make srs             # uno solo
 make watch DOC=srs   # recompila al guardar
@@ -38,7 +38,7 @@ make open DOC=srs    # abre el PDF
   error. `make limpiar-aux` es el último recurso.
 - **Los PDF y auxiliares no se versionan** (están en `.gitignore`): se regeneran.
 - En VS Code, guardar recompila y el PDF queda al lado (`Ctrl+Alt+V` para abrirlo,
-  `Ctrl+clic` para saltar del PDF a la línea). Está configurado en `../sign-ai-docs/.vscode/`.
+  `Ctrl+clic` para saltar del PDF a la línea). Está configurado en `../signall-docs/.vscode/`.
 
 ## Escribir
 
@@ -54,7 +54,7 @@ make open DOC=srs    # abre el PDF
   se renombra o se quita uno, hay que buscar dónde más se cita antes de terminar.
 - **Los `.drawio` y los borradores de requerimientos los edita el owner**: los cambios grandes
   se proponen.
-- **No se commitea ni se pushea `../sign-ai-docs` sin que el owner lo pida** (el repo de la
+- **No se commitea ni se pushea `../signall-docs` sin que el owner lo pida** (el repo de la
   app sí se commitea directo a `main`).
 
 ## Lo que hay que saber antes de creerle a un documento

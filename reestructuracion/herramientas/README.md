@@ -47,9 +47,8 @@ El script lee el token de `SONAR_TOKEN` o de `reestructuracion/herramientas/.env
 `reestructuracion`.
 
 Necesita un `sonar-project.properties` en la raíz del repo analizado; la clave del
-proyecto la manda ese archivo (`sign-all-*`), no el nombre de la carpeta local. Las plantillas
-están en `plantillas/`. Hoy solo la app lo tiene puesto; en el backend y en el
-STT se copia cuando se haga R-07.
+proyecto la manda ese archivo (`signall-*`), no el nombre de la carpeta local. Las plantillas
+están en `plantillas/` y desde R-07 los tres repos de código tienen el archivo en su raíz.
 
 Detalle que costó tiempo y está resuelto en el script: `. .env.sonar` deja el token como
 variable de shell, y `docker run -e` solo copia variables **exportadas**. El script hace
@@ -59,12 +58,21 @@ el `export`.
 
 | Proyecto | ncloc | bugs | code smells | vulnerabilidades | fiabilidad | duplicación |
 |---|---|---|---|---|---|---|
-| `sign-all-android` | 13.806 | 1 | 63 | 0 | C | 4,8 % |
-| `sign-all-backend` | 2.349 | 1 | 6 | 0 | E | 0 % |
-| `sign-all-stt` | 853 | 0 | 2 | 0 | A | 0 % |
+| `signall-android` | 13.806 | 1 | 63 | 0 | C | 4,8 % |
+| `signall-backend` | 2.349 | 1 | 6 | 0 | E | 0 % |
+| `signall-stt` | 1.347 | 0 | 5 | 0 | A | 0 % |
 
 - Los tres tienen **cobertura 0 %**: no hay tests, ni en backend ni en STT ni en la app.
   SonarQube lo va a repetir en cada análisis hasta que exista el primero.
+- El STT pasó de 853 a 1.347 líneas y de 2 a 5 code smells después de R-07 porque ahora
+  también se analiza `scripts/`, no solo `app/`. No es una regresión: es que antes se
+  miraba media casa.
+- Las claves nuevas son `signall-android`, `signall-backend` y `signall-stt`. En el
+  servidor quedaron los proyectos viejos de la primera corrida (`sign-all-*`); borrarlos
+  es del owner.
+- Hoy los tres repos de código tienen CI en `.github/workflows/ci.yml`: compilación o
+  análisis estático, y gitleaks sobre el árbol. El análisis de SonarQube no puede correr
+  en Actions porque el servidor vive en esta máquina.
 - La fiabilidad del backend es E por un solo bug. Conviene mirarlo antes que la deuda de
   estilo.
 - El análisis de Kotlin necesita los binarios compilados: `sonar.kotlin.binaries` apunta

@@ -6,8 +6,8 @@ cual.
 ---
 
 Trabajamos en el proyecto **SignAll** (tesis: español hablado → Lengua de Señas Colombiana
-con avatar 3D). Estás en el repo `sign-ai-android`; los hermanos son `../sign-ai-backend`,
-`../sign-ai-stt`, `../sign-ai-docs` y `../signai-avatar`. Los repositorios en GitHub ya se
+con avatar 3D). Estás en el repo `sign-ai-android`; los hermanos son `../signall-backend`,
+`../signall-stt`, `../signall-docs` y `../signall-avatar`. Los repositorios en GitHub ya se
 llaman `sign-all-*`, pero las carpetas locales conservan el nombre viejo a propósito: no
 las renombres. Leé primero `AGENTS.md` y después `reestructuracion/00-general.md`, que tiene
 el plan completo, las decisiones tomadas, las abiertas y las herramientas; tu trabajo es

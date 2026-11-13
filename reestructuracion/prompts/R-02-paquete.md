@@ -74,7 +74,7 @@ trabajar, va a backend, a STT o a la tesis. Avisar antes de empezar y avisar al 
    y comprobar que se representa y que el historial queda en
    `shared_prefs/signai.xml` bajo la instalación nueva.
 5. `./reestructuracion/herramientas/escanear/sonar.sh sign-ai-android` con el Sonar local
-   levantado (el proyecto en Sonar se llama `sign-all-android`), y confirmar que el
+   levantado (el proyecto en Sonar se llama `signall-android`), y confirmar que el
    análisis no empeoró respecto de la línea base (13.806 ncloc, 63 code smells, 1 bug).
 
 ## Consecuencia que hay que decirle al owner

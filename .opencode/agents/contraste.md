@@ -20,7 +20,7 @@ Comparás **lo que hace el código** contra **lo que dicen los documentos**, y l
 las diferencias**. Lo que coincide no se lista.
 
 1. **Cargá el skill `fuentes-de-verdad` primero.** Define las dos fuentes y el flujo.
-2. Las dos fuentes son: **este repo** (el código) y **`../sign-ai-docs`** — los documentos
+2. Las dos fuentes son: **este repo** (el código) y **`../signall-docs`** — los documentos
    formales en `latex/` (SRS, SDD, memoria, plan de pruebas, SPMP), los requerimientos
    consolidados en `borradores/requerimientos/` y los cambios pendientes en
    `cambios/requerimientos.md`. **Overleaf quedó retirado el 2026-11-04**: no es fuente.
