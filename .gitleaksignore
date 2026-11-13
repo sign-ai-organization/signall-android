@@ -1,0 +1,9 @@
+# Falsos positivos de gitleaks, clasificados en reestructuracion/01-leaks.md.
+# Cada línea es el campo `Fingerprint` de un hallazgo, con su archivo, su regla y
+# su línea. No van credenciales reales acá: una credencial que estuvo publicada
+# se rota, no se ignora.
+#
+# El .glb es binario y el escáner lee cadenas sueltas de la malla.
+app/src/main/assets/web/models/pauline.glb:generic-api-key:1
+# `LIVE_KEY_PERMANENT` es el nombre de un morph target del avatar, no una clave.
+tools/measure_face_markers.py:generic-api-key:60
