@@ -11,6 +11,9 @@ Ya hay dos archivos llenos y no son planes, son resultados:
   reales comprometidas).
 - **`herramientas/README.md`** — el SonarQube local, cómo levantarlo y cómo escanear.
 
+Los prompts de cada bloque se guardan en `prompts/`: se escriben una vez y se copian tal
+cual en la sesión que ejecuta. Hoy está `prompts/R-02-paquete.md`.
+
 > **Esta sesión solo planea. No se implementa nada.** Acá se deciden las cosas y se
 > escribe el orden; la implementación va en sesiones aparte, una por bloque, y cada una
 > recibe su propio prompt.
