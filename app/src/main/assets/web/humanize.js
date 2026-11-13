@@ -20,6 +20,11 @@
 // `restore()` (deshace lo que esta capa escribió, solo si nadie más escribió
 // después), corre el mixer, y `apply()` vuelve a sumar. Con `level` en 0 esta
 // capa no escribe nada y el avatar es exactamente el de antes.
+//
+// Después de pintar se hace otro `restore()`: fuera del fotograma el esqueleto
+// queda sin la capa. Cuando una action arranca, el mixer guarda la pose que
+// encuentra como su «estado original» y vuelve a ella al terminar o al fundir;
+// si la encuentra con la capa puesta, la capa queda horneada en el reposo.
 
 import * as THREE from "three";
 
@@ -58,9 +63,21 @@ export const TUNING = Object.freeze({
   followSeconds: 0.28,
   // Mirada.
   eyeMaxDeg: 24,
+  // En reposo los ojos del avatar quedan unos 5° bajos (la pose de descanso del GLB deja
+  // la pupila en la mitad de abajo del ojo: mirada al suelo). Los clips de seña los
+  // suben ellos mismos, así que esto solo actúa cuando no hay una seña sonando.
+  restEyeLiftDeg: 5,
+  // Mirar a la mano más lejana de vez en cuando. APAGADO: en el celular los ojos se
+  // disparan al tope (±24° de lado, 17° de pitch) con un parpadeo, justo antes de cada
+  // cambio de palabra, y se ve como un tic. La lógica queda por si se afina.
+  glances: false,
   glanceMinGap: 2.2,
   glanceSeconds: [0.35, 0.7],
   // Parpadeo espontáneo, en segundos entre uno y otro.
+  // Cuánto del parpadeo medido en el intérprete (`nmm.json`) se aplica. 0 = solo el
+  // espontáneo. Lo medido deja los párpados a medio cerrar (0,2–0,5) medio segundo al
+  // principio y al final de cada seña: se ve como cerrar los ojos entre palabras.
+  nmmBlinkGain: 0,
   blinkGap: [2.2, 5.5],
   blinkSeconds: 0.24,
 });
@@ -380,7 +397,7 @@ export class Humanizer {
     for (const channel of Object.keys(FACE_MAP)) {
       let value = sample[channel] * TUNING.faceGain;
       if (marked && BROW_CHANNELS.has(channel)) value *= TUNING.lexicalBrowUnderMarker;
-      if (channel === "eyeBlink") value = Math.max(sample[channel], lids);
+      if (channel === "eyeBlink") value = Math.max(sample[channel] * TUNING.nmmBlinkGain, lids);
       // Una pizca de vida en la boca en reposo, para que no sea una máscara.
       if (live && (channel === "mouthSmile_L" || channel === "mouthSmile_R")) {
         value += 0.04 * (1 + drift(t * 0.5, channel.length));
@@ -419,9 +436,9 @@ export class Humanizer {
     const glance = this.glance;
     glance.cooldown -= dt;
     let target = null;
-    if (live && this.clock < glance.until && glance.side) {
+    if (TUNING.glances && live && this.clock < glance.until && glance.side) {
       target = this.bones[glance.side].getWorldPosition(_g3);
-    } else if (live && glance.cooldown <= 0 && ctx.layers.length) {
+    } else if (TUNING.glances && live && glance.cooldown <= 0 && ctx.layers.length) {
       const side = this.farHand(scale);
       if (side) {
         glance.side = side;
@@ -440,7 +457,8 @@ export class Humanizer {
     // Microsacadas: el ojo nunca está del todo quieto.
     const jitter = live ? 0.6 * DEG : 0;
     const targetYaw = clamp(yawWant, -max, max) + jitter * drift(this.clock * 3.1, 3.3);
-    const targetPitch = clamp(pitchWant, -max * 0.7, max * 0.7) + jitter * drift(this.clock * 2.7, 8.8);
+    const restLift = TUNING.restEyeLiftDeg * DEG * (1 - s.signing);
+    const targetPitch = clamp(pitchWant, -max * 0.7, max * 0.7) - restLift + jitter * drift(this.clock * 2.7, 8.8);
     // Un salto grande de mirada va con parpadeo, como en una persona.
     if (Math.abs(targetYaw - s.eyeYaw) > 10 * DEG && this.blink.t < 0) this.blink.t = 0;
     s.eyeYaw = approach(s.eyeYaw, targetYaw, dt, 0.035);

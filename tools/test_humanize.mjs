@@ -10,7 +10,7 @@
 //   cp <repo>/tools/test_humanize.mjs tools/
 //   cp <repo>/app/src/main/assets/web/{humanize.js,nmm.json} app/src/main/assets/web/
 //   echo '{"type":"module"}' > app/src/main/assets/web/package.json
-//   node tools/test_humanize.mjs      # → mismatches: 0, finalIdentical: true
+//   node tools/test_humanize.mjs      # → mismatches: 0, finalIdentical: true, outsideFrameMismatches: 0
 import * as THREE from "three";
 import { Humanizer } from "../app/src/main/assets/web/humanize.js";
 import fs from "node:fs";
@@ -68,4 +68,28 @@ for (let step = 0; step < 400; step++) {
   frames++;
 }
 h.restore();
-console.log(JSON.stringify({ frames, mismatches, finalIdentical: snap(A) === snap(B), maxHeadOffsetDeg: +maxHead.toFixed(1), maxMorph: +maxMorph.toFixed(2) }));
+
+// Segunda parte: las órdenes llegan **fuera** del fotograma, como en la app
+// (`startClip` corre después de un `await`). El loop es el de `app.js`: restore,
+// mixer, apply, pintar, restore. Sin el segundo `restore` el mixer guarda la capa
+// como pose de reposo y los ojos se van acumulando turno a turno.
+const C = build(), D = build();
+const h2 = new Humanizer(D.root, D.pivot); h2.setData(nmm);
+let outside = 0;
+for (let step = 0; step < 1200; step++) {
+  const dt = 1 / 60;
+  h2.restore();
+  C.mixer.update(dt); D.mixer.update(dt);
+  const layers = D.act ? [{ name: D.act.getClip().name, time: D.act.time, weight: D.act.getEffectiveWeight(), progress: D.act.time / 2 }] : [];
+  D.root.updateWorldMatrix(true, true);
+  h2.apply(dt, { layers, type: layers.length ? "AFFIRMATIVE" : "", last: true, camera: cam });
+  h2.restore();                                   // el de después de pintar
+  if (snap(C) !== snap(D)) outside++;
+  const phase = step % 200;                       // seis turnos: arrancar y parar
+  if (phase === 80) h2.blink.t = 0.05;            // la orden cae a mitad de un parpadeo
+  for (const s of [C, D]) {
+    if (phase === 80) s.act = s.mixer.clipAction(s.clips[0]).reset().play().fadeIn(0.1);
+    if (phase === 180) { s.mixer.stopAllAction(); s.act = null; }
+  }
+}
+console.log(JSON.stringify({ frames, mismatches, finalIdentical: snap(A) === snap(B), maxHeadOffsetDeg: +maxHead.toFixed(1), maxMorph: +maxMorph.toFixed(2), outsideFrameMismatches: outside }));

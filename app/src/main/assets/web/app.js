@@ -1097,6 +1097,14 @@ function renderLoop() {
   human?.apply(dt, humanContext());
   controls.update();
   renderer.render(scene, camera);
+  // Y la deshace otra vez apenas se pintó: entre un fotograma y el siguiente el
+  // esqueleto tiene que quedar sin la capa. Las señas arrancan fuera de este loop
+  // (`startClip` corre después de un `await`, o por una orden de Kotlin), y al
+  // arrancar el mixer guarda la pose que encuentre como «reposo» para volver a ella
+  // al terminar. Si encuentra la capa puesta, guarda la mirada desviada o un
+  // parpadeo a medias, y cada turno suma otro poco: ojos en blanco y párpados
+  // cerrados en reposo (2026-11-12).
+  human?.restore();
   Debug.render();
 }
 renderLoop();

@@ -65,3 +65,23 @@ muy robótico».
   describen. No se tocó ningún documento de `../sign-ai-docs`.
 - Las cifras de tamaño de PR-AVT-06 y los hashes de los `.glb` cambiaron.
 - `../sign-ai-avatar` no se tocó: los originales siguen en `fc6f372`.
+
+## Corrección de la noche: ojos en blanco y párpados cerrados en reposo
+
+- **Síntoma (visto por el owner en el teléfono)**: la mirada estaba bien durante la seña;
+  al terminar se iba hacia arriba o abajo hasta quedar en blanco, y en reposo los párpados
+  quedaban cerrados. Empeoraba con cada turno.
+- **Causa**: las señas arrancan **fuera** del render loop (`startClip` corre después de un
+  `await` en `loadQueueItem`). Al arrancar, el mixer de three.js guarda la pose que encuentra
+  como «estado original» y vuelve a ella al parar o al fundir. La encontraba con la capa
+  humana puesta (mirada a la cámara, parpadeo a medias) y la capa volvía a sumarse encima.
+- **Arreglo**: un segundo `human?.restore()` en `app.js`, justo después de
+  `renderer.render`. El orden `restore → tickPlayback → apply` no cambió.
+- **Verificado**: simulación en Node de 8 turnos sin el arreglo → el ojo en reposo se desvía
+  ~11° por turno (11,8° → 91,2°) y `eyeBlink` queda en 0,45; con el arreglo, 0,0° y 0,00.
+  `tools/test_humanize.mjs` tiene un caso nuevo (`outsideFrameMismatches`): 0 con el
+  arreglo, 1.200 de 1.200 sin él. Instalado en el teléfono con `installDebug`.
+- **No verificado**: el resultado visual en el teléfono (el canvas no se puede leer).
+- **Queda por decidir**: los ajustes provisionales de `TUNING` (`restEyeLiftDeg: 5`,
+  `nmmBlinkGain: 0`, `glances: false`) se hicieron con este defecto presente; puede que
+  alguno ya no haga falta.
