@@ -260,8 +260,7 @@ fun MainScreen(state: MainScreenState) {
                                 status = state.statusLine,
                                 state = state.stateForUi,
                                 doneVisible = state.doneVisible,
-                                // Grabación ciega: la glosa en pantalla delataría la seña.
-                                currentGloss = if (state.settings.blindDemo) null else state.currentGloss,
+                                currentGloss = state.currentGloss,
                                 // Repetir es un control más: cierra el teclado, y cierra
                                 // de verdad, como todos los demás.
                                 onRepeat = {
