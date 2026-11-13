@@ -26,7 +26,7 @@ nada se pulleó `../signall-docs` (30 archivos nuevos, sobre todo `plan-pruebas/
 
 ### Movidos
 
-- `Revisión de develop.md` (raíz) → **`docs/REVISION-DEVELOP.md`**. Se actualizó la
+- `Revisión de develop.md` (raíz) → **`docs/historia/REVISION-DEVELOP.md`**. Se actualizó la
   referencia en `openspec/sessions/2026-10-15-flujo-oraciones-android.md:172`.
 - `data/LSC50.pdf` (1,8 MB) → **`docs/lsc50-dataset.pdf`**. `data/` desapareció como
   carpeta.

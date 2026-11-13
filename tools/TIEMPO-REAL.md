@@ -7,7 +7,7 @@ frases usar, qué señas hay y qué significa cada número.
 > **Si llegaste desde `develop`:** este archivo cambió entero con el flujo por
 > oraciones. Lo que aquí dice "antes" es el camino por palabras, que ya no
 > existe. El plan del cambio está en
-> `../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10, y el resumen de qué
+> `../signall-backend/docs/historia/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10, y el resumen de qué
 > cambió en cada repo está en `docs/CAMBIOS.md`, `../signall-backend/docs/CAMBIOSBACKEND.md`
 > y `../signall-stt/docs/CAMBIOSSTT.md`.
 

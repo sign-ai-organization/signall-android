@@ -28,7 +28,7 @@ tiene el recurso que les falta.
 - **Las 17 corridas:** SEG-01/03, HUE-01/02/03, CAC-01/02/03, LLM-01/02/03, AVT-06, REN-04,
   REN-08, REN-09, TRA-01 y TRA-03. Resultado: **1 Pasa, 2 Falla, 14 Se reporta**.
 - **Cierre:** 33 archivos de evidencia en `evidencias/<BLOQUE>/PR-*_E_20261110_*`, el sello
-  `SELLO-P1_E_20261110_01.json` y el informe `docs/plan-pruebas/RESULTADOS-P1-2026-11-10.md`.
+  `SELLO-P1_E_20261110_01.json` y el informe `docs/historia/plan-pruebas/RESULTADOS-P1-2026-11-10.md`.
 
 ## Hallazgos
 
@@ -71,7 +71,7 @@ tiene el recurso que les falta.
 
 ## Cómo se reproduce
 
-Está en `docs/plan-pruebas/RESULTADOS-P1-2026-11-10.md` §8 y en cada script de
+Está en `docs/historia/plan-pruebas/RESULTADOS-P1-2026-11-10.md` §8 y en cada script de
 `docs/plan-pruebas/arnes/`.
 
 ## Segunda parte: los tres arreglos (misma fecha)

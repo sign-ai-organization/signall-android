@@ -8,14 +8,14 @@
 > sigue siendo la versión anterior.
 >
 > **Actualización del 2026-10-27:** los dos `.glb` de origen pasan a leerse del repo
-> hermano `../signai-avatar/models/` (rama `dev`, commit `cf014ef`), que versiona la
+> hermano `../signall-avatar/models/` (rama `dev`, commit `cf014ef`), que versiona la
 > versión con la **cadera centrada** del 2026-10-26. `tools/pack_avatars.py` no cambia
 > más que la ruta: el resultado sigue teniendo 300 clips, 102 articulaciones y los mismos
 > nombres y duraciones. `../material-3d/Avatares/` queda como versión anterior.
 >
 > **Actualización del 2026-10-26:** hay **dos archivos completos, uno por avatar**
 > (`models/juan.glb`, 34,28 MB, y `models/pauline.glb`, 29,46 MB), armados por
-> `tools/pack_avatars.py` desde `../signai-avatar/models/`. Cada uno trae el personaje y
+> `tools/pack_avatars.py` desde `../signall-avatar/models/`. Cada uno trae el personaje y
 > sus **300 clips** (50 señas × 6 variantes); la escena carga solo el avatar elegido en
 > Ajustes. El `models/avatar.glb` de 12,98 MB se borró. El flujo de runtime no cambió.
 >
@@ -45,8 +45,8 @@ runtime.
 ### Flujo de assets — cómo llega una animación al APK
 
 ```
-../signai-avatar/models/Juan.glb               los dos exports finales de Cascadeur:
-../signai-avatar/models/Pauline.glb            personaje, esqueleto y 200 clips cada uno
+../signall-avatar/models/Juan.glb               los dos exports finales de Cascadeur:
+../signall-avatar/models/Pauline.glb            personaje, esqueleto y 200 clips cada uno
       │                            (fuente versionada, rama dev; 34,27 y 33,88 MB)
       ▼
 tools/pack_avatars.py              verifica skins, articulaciones y nombres de clip;
@@ -77,7 +77,7 @@ completos**, uno por avatar, desde el 2026-10-26.
 para que la lista de código y el asset no puedan divergir.
 
 **Agregar o cambiar una seña** = regenerar los dos `.glb` desde
-`../signai-avatar/models/` y correr `pack_avatars.py`. No es un paso más: es el único
+`../signall-avatar/models/` y correr `pack_avatars.py`. No es un paso más: es el único
 procedimiento. `tools/pack_signall.py` es el pipeline viejo de un solo avatar y no procesa
 estos archivos.
 
@@ -94,7 +94,7 @@ WebSocket  ws://<backend>:8080/ws/translate          ← la app SOLO habla con e
   └─ voz  ──► frames binarios PCM16 ──► el backend reenvía al STT
                      │  {"type":"end"} al cerrar la captura
                      ▼
-              ../sign-ai-stt  (faster-whisper + VAD)
+              ../signall-stt  (faster-whisper + VAD)
                      │  transcript (muestra en vivo, NO se traduce)
                      │  final     (siempre llega, incluso vacío)
                      ▼
@@ -229,7 +229,7 @@ cuyos pesos cambian; `pickVariant` elige uno según el tipo de oración que lleg
 vigentes conservan los morph targets que alguna de las 200 variantes anima —59 bloques en
 Juan y 58 en Pauline, contados el 2026-11-05—.
 
-Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide un marcador facial
+Es el punto **A6** de `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide un marcador facial
 según el tipo de frase y desde el 2026-11-04 hay implementación para los cinco tipos del
 backend, con cuatro caras (pregunta sí/no y pregunta de contenido comparten `_pregunta`).
 Lo que falta es la validación lingüística de LSC, no el código.
@@ -333,7 +333,7 @@ como referencia del dataset, y eso es lo que documenta `specs/dataset/spec.md`. 
 del dataset está en `docs/lsc50-dataset.pdf`; los CSVs de muestra que había en
 `data/LANDMARKS/` se borraron del repo el 2026-10-22.
 
-Los scripts de captura de ese pipeline quedaron en `../signai-avatar`, donde la **demo
+Los scripts de captura de ese pipeline quedaron en `../signall-avatar`, donde la **demo
 Flask de landmarks está congelada desde el 2026-09-19**. El repo siguió activo para otra
 cosa: versiona los GLB finales de Cascadeur en `models/`. No se copian scripts entre los
 dos pipelines.

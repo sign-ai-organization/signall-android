@@ -4,10 +4,10 @@
 
 ## Qué llegó
 
-Cerrar [`docs/PENDIENTES-AUDITORIA-2026-10-24.md`](../../docs/PENDIENTES-AUDITORIA-2026-10-24.md):
+Cerrar [`docs/historia/PENDIENTES-AUDITORIA-2026-10-24.md`](../../docs/historia/PENDIENTES-AUDITORIA-2026-10-24.md):
 corregir, sin reescribir de cero, las frases que habían quedado viejas en
 `openspec/specs/avatar/spec.md`, `openspec/specs/ui/spec.md`,
-`docs/CONTRASTE-APPvsDOCUMENTOS.md`, `docs/PLAN-MEDICION.md` y los comentarios de
+`docs/historia/CONTRASTE-APPvsDOCUMENTOS.md`, `docs/PLAN-MEDICION.md` y los comentarios de
 `MainScreenState.kt`. Cada dato nuevo tenía que verificarse contra el GLB y el código;
 ninguno se copió de la sesión del 2026-10-24. A6 no se implementa, los hermanos no se
 editan y Overleaf no se abre.
@@ -58,7 +58,7 @@ inicio de cualquier otro, sobre los 2450 pares ordenados → **mediana 5,6 cm** 
 | `specs/ui/spec.md:344` | el fallback alcanzaba a las 18 | histórico; hoy no alcanza a ninguna, y apagado saltea y avisa |
 | `specs/ui/spec.md:346` | una glosa sin clip "va directo al sign por defecto" | con el ajuste prendido usa la reserva; apagado se saltea y avisa; sin red en los dos casos |
 | `specs/ui/spec.md:368` | GLB de 10 MB y `avatarReady` = "personaje en escena" | 12,98 MB y `avatarReady` = clips indexados + seña de arranque + shaders + frame pintado |
-| `docs/CONTRASTE-APPvsDOCUMENTOS.md` | A6 "sin morph targets / 0 animaciones"; B4/B5 sin resolver; §5 "hoy hay 32"; resumen y §9 #4 | A6 con los datos medidos y la conclusión igual; B4/B5 resuelto (validar contenido, no exportar); §5 con 50 desde el 2026-10-22 |
+| `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` | A6 "sin morph targets / 0 animaciones"; B4/B5 sin resolver; §5 "hoy hay 32"; resumen y §9 #4 | A6 con los datos medidos y la conclusión igual; B4/B5 resuelto (validar contenido, no exportar); §5 con 50 desde el 2026-10-22 |
 | `docs/PLAN-MEDICION.md` | "`avatar.glb` (10 MB)" en §2.2 y en el plan | 12,98 MB, sin tocar presupuesto ni timeout |
 | `MainScreenState.kt` | cuatro comentarios con "las 18 señas sin animación (0032–0049)" | "una glosa sin clip (hoy ninguna)" |
 

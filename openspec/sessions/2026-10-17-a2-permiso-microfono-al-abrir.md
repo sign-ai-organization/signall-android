@@ -5,7 +5,7 @@ repo. No se tocó Overleaf ni ningún hermano.
 
 ## Qué llegó
 
-El pedido fue agarrar uno de los siete ítems de `docs/CONTRASTE-APPvsDOCUMENTOS.md` y
+El pedido fue agarrar uno de los siete ítems de `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` y
 hacerlo completo: código, build e instalación en el device. Se eligió **A2**, que es el
 más chico y el que el propio documento sugiere primero porque verifica el ciclo
 compilar-instalar-probar entero sin meter nada difícil en el medio.
@@ -71,7 +71,7 @@ y no llega a aparecer en un `dump`.
 
 - **Los otros seis ítems** del contraste: A1, A3, A4, A5, A7 y A13. El owner los pidió
   después, de menor a mayor complejidad: **A13 → A3 → A5 → A1 → A4 + A7**. El registro
-  de avance vive en `docs/CONTRASTE-APPvsDOCUMENTOS.md` §8 y §9, que es donde también se
+  de avance vive en `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` §8 y §9, que es donde también se
   anotan las diferencias y los problemas que aparecen.
 - **A4 tiene una decisión del owner sin resolver** (`CONTRASTE-APPvsDOCUMENTOS.md` §7):
   si la desconexión respeta el modo TR o corta el micrófono como cualquier error. `fail()`

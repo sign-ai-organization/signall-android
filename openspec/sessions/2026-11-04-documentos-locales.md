@@ -89,7 +89,7 @@ Overleaf y dejar una forma fácil de ver los documentos mientras se editan.
 - **La instalación de TeX Live** la corre el owner (necesita sudo):
   `sudo pacman -S --needed texlive-langspanish texlive-latexextra texlive-pictures
   texlive-bibtexextra texlive-fontsrecommended texlive-binextra biber`.
-- **`../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` y `docs/sdd-changes.md`**
+- **`../signall-backend/docs/historia/CONTRASTE-BACKENDvsDOCUMENTOS.md` y `docs/sdd-changes.md`**
   siguen citando a Overleaf como fuente. No se tocaron: ese repo no se edita sin que el owner
   lo pida.
 - **Los conteos de los borradores del plan de pruebas** no cuadraban entre sí (72, 73 y 74 en

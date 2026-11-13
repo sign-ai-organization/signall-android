@@ -122,9 +122,9 @@ la del sistema es Neon) · `PR-PER-01` a `PR-PER-06` (necesitan intérpretes de 
   Fecha, Ejecutor y Ronda. Las once primeras columnas no se tocaron.
 - `docs/plan-pruebas/evidencias/`: **261 archivos** (CSV, JSON, PNG, TXT y un MP4) con la
   convención `PR-<BLOQUE>-<NN>_D_20261104_<nn>.<ext>`.
-- `docs/plan-pruebas/ANALISIS-2026-11-04.md`: los resultados por causa, las decisiones y los
+- `docs/historia/plan-pruebas/ANALISIS-2026-11-04.md`: los resultados por causa, las decisiones y los
   matices, para trabajar en otra sesión.
-- `docs/plan-pruebas/PRUEBAS-2026-11-04-1626.md`: la bitácora de la sesión con lo que hay que
+- `docs/historia/plan-pruebas/PRUEBAS-2026-11-04-1626.md`: la bitácora de la sesión con lo que hay que
   mirar (sin los resultados, que viven en el libro).
 
 ## Lo que queda abierto

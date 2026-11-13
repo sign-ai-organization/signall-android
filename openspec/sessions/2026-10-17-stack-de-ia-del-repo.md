@@ -44,7 +44,7 @@ entradas que ya estaban bien.
 muerta de septiembre; y `integracion-backend/tasks.md:76` decía que el catálogo estaba
 vacío y que "era lo único que bloquea", cuando se sembró el 2026-10-14.
 
-**7. `docs/CONTRASTE-DOCUMENTOS.md` (548 líneas) estaba huérfano**: nadie lo referenciaba
+**7. `docs/historia/CONTRASTE-DOCUMENTOS.md` (548 líneas) estaba huérfano**: nadie lo referenciaba
 desde el `AGENTS.md` ni desde el índice de sesiones, y no tenía log de sesión.
 
 ## Decisiones del owner
@@ -167,7 +167,7 @@ ARKit (`brow_dwn_L`, `brow_outer_up_L`, `eye_blink_open_L`, `jaw_open_lt_rt_frwd
 **cero morph targets**, y `app.js` no menciona morph targets ni ninguno de esos nombres.
 La expresión facial viene **horneada en el clip**.
 
-Eso confirma el punto **A6** de `docs/CONTRASTE-DOCUMENTOS.md`, que ya decía "nada se anima
+Eso confirma el punto **A6** de `docs/historia/CONTRASTE-DOCUMENTOS.md`, que ya decía "nada se anima
 en código" y lo tenía como **en pausa** (RF-AVT-03). Y obliga a matizar un "bug conocido":
 la **ceja derecha casi estática** es un síntoma real, pero la causa que se le atribuía —los
 pesos de `DEF-browTL` contra `DEF-browTR`— **no se puede verificar**, porque esos huesos no

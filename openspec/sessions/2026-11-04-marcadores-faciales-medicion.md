@@ -4,7 +4,7 @@
 
 ## Qué llegó
 
-Orden 8 de [`docs/PLAN-SEMANA-13.md`](../../docs/PLAN-SEMANA-13.md): pavimentar el terreno
+Orden 8 de [`docs/historia/PLAN-SEMANA-13.md`](../../docs/historia/PLAN-SEMANA-13.md): pavimentar el terreno
 de los marcadores faciales **sin activarlos**. El owner fijó ese día que los marcadores son
 **gramaticales, no emocionales**: la clasificación de alegría/tristeza/sorpresa se intentó y
 no se logró, y el backend no manda ninguna señal emocional. Queda descartada la opción B y

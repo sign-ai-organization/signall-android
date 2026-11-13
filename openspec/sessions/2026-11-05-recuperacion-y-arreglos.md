@@ -1,7 +1,7 @@
 # Recuperación de la ronda diagnóstica y arreglos P0
 
 **Día:** jueves 5 de noviembre de 2026, madrugada. **Sesión:** ejecución del plan
-`docs/plan-pruebas/PLAN-2026-11-05-recuperacion-y-ronda-oficial.md`, fases 1 y 2.
+`docs/historia/plan-pruebas/PLAN-2026-11-05-recuperacion-y-ronda-oficial.md`, fases 1 y 2.
 
 - **Objetivo:** volver a medir las 24 pruebas que la ronda del 2026-11-04 había medido con
   `qwen3:4b-instruct` (modelo local) usando el modelo oficial `gpt-4o-mini`; después aplicar
@@ -37,7 +37,7 @@
 
 ### Fase 2 — arreglos aplicados
 
-Detalle completo en `docs/plan-pruebas/ARREGLOS-2026-11-05.md`. Resumen:
+Detalle completo en `docs/historia/plan-pruebas/ARREGLOS-2026-11-05.md`. Resumen:
 
 | ID | Repo | Qué |
 |---|---|---|

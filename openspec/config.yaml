@@ -5,7 +5,7 @@ context: |
 
   **Objetivo**: traducir español hablado a Lengua de Señas Colombiana (LSC) con un avatar
   3D, en una app Android. Esta app es **una pieza** del sistema: los repos hermanos viven
-  en `../sign-ai-backend`, `../sign-ai-stt`, `../sign-ai-docs` y `../signai-avatar`.
+  en `../signall-backend`, `../signall-stt`, `../signall-docs` y `../signall-avatar`.
 
   **Este archivo se reescribió entero el 2026-10-17.** La versión anterior describía un
   pipeline de landmarks con `sign.json`, que se reemplazó por clips GLB el 2026-10-13, y
@@ -35,7 +35,7 @@ context: |
     **identificador lógico** que manda el backend; `app.js` lo traduce al clip `<id>` por
     nombre (`embeddedClipsFor`) y no pide nada por red. No hay archivo por seña.
   - Los originales vienen de **Cascadeur** y viven versionados en el repo hermano
-    `../signai-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev`, commit `fc6f372`,
+    `../signall-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev`, commit `fc6f372`,
     2026-11-04): son la entrada inmutable del empaquetado y no se editan.
     Esa versión reemplazó las caras emocionales por las cuatro marcas gramaticales y mantuvo
     la cadera centrada.
@@ -85,7 +85,7 @@ context: |
   conservan los morph targets que alguna variante anima (**59** bloques de target en Juan y
   **58** en Pauline, contados el 2026-11-05). Los huesos de cara se mueven casi nada (rango
   máximo de un componente del cuaternión: 0,0012, medido sobre el archivo anterior). Es el
-  punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores por tipo de
+  punto **A6** de `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide marcadores por tipo de
   frase y desde el 2026-11-04 hay implementación con cuatro caras (pregunta sí/no y pregunta
   de contenido comparten `_pregunta`); falta la validación lingüística de LSC.
 
@@ -174,13 +174,13 @@ context: |
     `openspec/changes/<nombre>/`.
 
   ### Repos hermanos
-  - `../sign-ai-backend` — FastAPI, NLP de glosas, catálogo, caché semántico, Neon. Rama
+  - `../signall-backend` — FastAPI, NLP de glosas, catálogo, caché semántico, Neon. Rama
     `develop`. **Código en inglés y nunca commit sin que lo pida el owner** (ver su
     `CLAUDE.md`).
-  - `../sign-ai-stt` — faster-whisper + WebRTC VAD. Rama `develop`.
-  - `../sign-ai-docs` — requerimientos, diagramas del SDD, plan de pruebas. Rama `main`.
+  - `../signall-stt` — faster-whisper + WebRTC VAD. Rama `develop`.
+  - `../signall-docs` — requerimientos, diagramas del SDD, plan de pruebas. Rama `main`.
     Los `.drawio` y el `.md` de requerimientos **los edita el owner**.
-  - `../signai-avatar` — producción de las animaciones con Cascadeur. Rama `dev`:
+  - `../signall-avatar` — producción de las animaciones con Cascadeur. Rama `dev`:
     versiona los GLB finales de Juan y Pauline en `models/`, que es de donde los lee
     `tools/pack_avatars.py`. Su demo Flask de landmarks está congelada desde el
     2026-09-19 y no se le copian scripts. No se commitea ahí sin que lo pida el owner.
@@ -198,7 +198,7 @@ rules:
     - "No reintroducir dependencias muertas (Flask, Filament, Unity, Flutter)"
     - "Si el cambio cruza a otro repo, decir **qué falta del otro lado** en la propuesta"
     - "No inventar terminología: una palabra que no esté en
-      `../sign-ai-docs/documentos/requerimientos/` es del owner hasta que la avale"
+      `../signall-docs/documentos/requerimientos/` es del owner hasta que la avale"
   tasks:
     - "Separar las tareas de código de las de assets/Blender"
     - "Indicar si el cambio requiere **re-empaquetar los GLB** y por lo tanto correr
@@ -221,7 +221,7 @@ operations:
         contra los specs viejos: las listas de nombres de este repo se equivocaron en las
         dos direcciones"
       - "Para ver una pose sin instalar en el device: `tools/preview_pose.py`"
-      - "Un cambio de asset es: actualizar `../signai-avatar/models/` en la rama `dev`
+      - "Un cambio de asset es: actualizar `../signall-avatar/models/` en la rama `dev`
         (eso lo hace el owner) y correr `tools/pack_avatars.py`. **Nunca editar
         `juan.glb`, `pauline.glb` ni `SignsCatalog.kt` a mano**"
       - "Si se toca el contrato, cargar el skill `contrato-websocket` y decir qué queda
@@ -238,7 +238,7 @@ operations:
         fecha, y se corrigen antes las casillas que mienten sobre el estado real"
       - "Borrado no, archivado: las carpetas de septiembre de 2026 apuntan a un pipeline
         inexistente, pero **registran que ese trabajo existió**"
-      - "Los documentos de la tesis viven en `../sign-ai-docs/latex/` desde el
+      - "Los documentos de la tesis viven en `../signall-docs/latex/` desde el
         2026-11-04; Overleaf quedó retirado. Una corrección de redacción se hace en el
         `.tex` y se comprueba con `make`; una divergencia de contenido (el documento dice
         una cosa y el código hace otra) la decide el owner"

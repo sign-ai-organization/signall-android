@@ -100,7 +100,7 @@ sin commitear (`openspec/specs/dataset/spec.md`, el typo `JUCIOSO` → `JUICIOSO
   empaquetado. No se hizo evaluación visual completa de las 50 señas.
 - El owner instaló Blender; `blender --version` confirmó **5.2.3 LTS**. No se
   ejecutó una prueba de importación/exportación ni se instalaron complementos.
-- Se dejó `docs/PREPARACION-AJUSTES-ANIMACIONES.md`: entorno, alcance, fuentes,
+- Se dejó `docs/historia/PREPARACION-AJUSTES-ANIMACIONES.md`: entorno, alcance, fuentes,
   uso propuesto de Blender con scripts Python y pasos pendientes para otra sesión.
   No hace falta MCP, modelos locales ni CUDA adicional para empezar por esa vía.
 - **Todo este seguimiento queda local, sin commit ni push**, por pedido del owner.

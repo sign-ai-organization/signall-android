@@ -7,7 +7,7 @@ deja escrito acá para que lo pegue el owner.
 ## Qué llegó
 
 El owner pidió seguir con los ítems que quedaban de
-`docs/CONTRASTE-APPvsDOCUMENTOS.md` **de menor a mayor complejidad**, anotando las
+`docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` **de menor a mayor complejidad**, anotando las
 diferencias que aparecieran en ese mismo documento y marcando los estados. El orden
 que se siguió: A2 → A13 → A3 → A5 → **A4 + A7 + A1**.
 
@@ -48,7 +48,7 @@ servía: el teléfono no alcanzaba a `192.168.78.102:8080`.
 | **A5** | "Seña no disponible" glosa por glosa | `b899af6` |
 | **A7 + A4 + A1** | Los siete estados del SRS, la desconexión que no deja la app trabada, y el tercer estado visible | este commit |
 
-El detalle de cada uno está en `docs/CONTRASTE-APPvsDOCUMENTOS.md` §8, con lo que se
+El detalle de cada uno está en `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` §8, con lo que se
 midió en el Redmi Note 9S y lo que no se pudo probar.
 
 ## El indicador, después de la segunda vuelta

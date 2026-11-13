@@ -17,7 +17,7 @@ defecto.
 1. Se leyó la ronda completa (`ANALISIS`, `PRUEBAS`, el libro y las 261 evidencias) y se
    reconstruyó el mecanismo de contaminación: `.env.local` gana sobre `.env`, compose lo
    inyecta si existe y `docker-compose.host.yml` vuelve a forzar el Ollama local.
-2. Se escribió **`docs/plan-pruebas/PLAN-2026-11-05-recuperacion-y-ronda-oficial.md`**:
+2. Se escribió **`docs/historia/plan-pruebas/PLAN-2026-11-05-recuperacion-y-ronda-oficial.md`**:
    criterio C1–C5, **24 pruebas a repetir**, **34 válidas** con su justificación y **16
    bloqueadas**; fase 1 (recuperación), fase 2 (arreglos P0/P1/P2) y fase 3 (ronda de
    evaluación con cinco carriles de subagentes y reglas contra los loops).

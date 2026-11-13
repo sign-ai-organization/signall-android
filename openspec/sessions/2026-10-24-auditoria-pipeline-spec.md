@@ -94,7 +94,7 @@ owner o a otra sesión):
 - `openspec/specs/ui/spec.md`: GLS-5 sigue hablando de las 18 señas sin animación (344);
   GLS-10 dice que una glosa sin clip "va directo al sign por defecto", que solo pasa con el
   ajuste prendido (346); BRG-12 sigue con "GLB de 10 MB" (368).
-- `docs/CONTRASTE-APPvsDOCUMENTOS.md:280` (A6): dice "no tiene morph targets" y "0
+- `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md:280` (A6): dice "no tiene morph targets" y "0
   animaciones", ambas falsas desde el 2026-10-22.
 - `app/src/main/java/com/signall/app/ui/state/MainScreenState.kt:851` y `:1529`:
   comentarios que siguen hablando de "las 18 señas sin animación exportada (0032-0049)".

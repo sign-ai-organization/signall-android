@@ -45,7 +45,7 @@ Datos de entrada, Procedimiento y Evidencia de la ficha.
 Overleaf se completa (faltaban `plan-pruebas` y `SPMP`; la cuenta tiene **7 proyectos
 activos y 5 en la papelera**, medido con `list_projects`). La ruta vieja `modificaciones/`
 se corrigió en `AGENTS.md`, en los skills `overleaf-lectura` y `tres-fuentes-de-verdad`, en
-`agents/contraste.md` y en `docs/CONTRASTE-APPvsDOCUMENTOS.md`; en
+`agents/contraste.md` y en `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md`; en
 `docs/PLAN-AVATARES-Y-MARCADORES.md` se dejó, porque cita un commit y es historia. En
 `../signall-docs/cambios/requerimientos.md` se marcó `RF-UI-06` como hecho (sección 2,
 pendiente 6.2 y choque 6.3).

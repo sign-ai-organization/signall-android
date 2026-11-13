@@ -10,7 +10,7 @@ exactas, 88,4 % de glosas).
   producción y el catálogo de 50 glosas, pidiendo la respuesta **antes** del recorte, con
   `docs/plan-pruebas/sonda-glosado.py` dentro del contenedor del backend.
 - **Resultado:** el hallazgo cambia la lectura del número y está escrito, con las tres
-  propuestas y sus costos, en `docs/plan-pruebas/PROPUESTA-MEJORA-GLOSADO-2026-11-05.md`.
+  propuestas y sus costos, en `docs/historia/plan-pruebas/PROPUESTA-MEJORA-GLOSADO-2026-11-05.md`.
 
 ## Lo que se midió
 
@@ -46,7 +46,7 @@ de ella. Queda para el owner y no bloquea la propuesta 1.
 
 ## Lo que quedó
 
-- `docs/plan-pruebas/PROPUESTA-MEJORA-GLOSADO-2026-11-05.md` — el análisis completo, las tres
+- `docs/historia/plan-pruebas/PROPUESTA-MEJORA-GLOSADO-2026-11-05.md` — el análisis completo, las tres
   propuestas, las decisiones abiertas y cómo reportarlo en la tesis.
 - `docs/plan-pruebas/sonda-glosado.py` y `sonda-glosado.log` — la medición reproducible.
 - **Sin código tocado, sin cambio de contrato, sin commits en los hermanos.** La propuesta 1

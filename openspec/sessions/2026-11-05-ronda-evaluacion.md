@@ -1,7 +1,7 @@
 # Ronda de evaluación de las 74 pruebas
 
 **Día:** jueves 5 de noviembre de 2026. **Sesión:** fase 3 del plan
-`docs/plan-pruebas/PLAN-2026-11-05-recuperacion-y-ronda-oficial.md`.
+`docs/historia/plan-pruebas/PLAN-2026-11-05-recuperacion-y-ronda-oficial.md`.
 
 - **Objetivo:** correr las 74 pruebas sobre el sistema arreglado, con `gpt-4o-mini`, y dejar
   el libro de evaluación con las 74 filas de la ronda diagnóstica y las 74 de esta.

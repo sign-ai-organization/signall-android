@@ -28,7 +28,7 @@ del backend, así que sin calentar la primera frase falla y la segunda anda.
 No hace falta mientras se pruebe el camino de texto, pero para verlo:
 
 ```bash
-cd ../sign-ai-stt
+cd ../signall-stt
 python -m scripts.mic_test_client.py
 ```
 
@@ -36,7 +36,7 @@ Habla al micrófono. Si no querés el STT real, el backend trae uno falso que
 contesta cualquier cosa:
 
 ```bash
-cd ../sign-ai-backend
+cd ../signall-backend
 python -m scripts.fixtures.fake_stt_server
 ```
 
@@ -232,7 +232,7 @@ Límite conocido: si la ruta no cambia pero **cambia el contenido**, la caché
 sigue vieja (haría falta un ETag o un hash del servidor). Para forzarlo:
 
 ```bash
-adb shell run-as com.signai.webview rm -rf cache/signs
+adb shell run-as com.signall.app rm -rf cache/signs
 ```
 
 ---
@@ -240,7 +240,7 @@ adb shell run-as com.signai.webview rm -rf cache/signs
 ## Cuando esté el backend de verdad
 
 ```bash
-cd ../sign-ai-backend
+cd ../signall-backend
 cp .env.example .env      # y completar DATABASE_URL y LLM_*
 docker compose up --build # levanta el backend + el STT
 ```

@@ -15,7 +15,7 @@ horneada por hueso y la escena solo la reproduce.
 
 **Cambio del 2026-10-26**: hay **dos archivos completos, uno por avatar**. El
 `models/avatar.glb` de 12,98 MB se borró; `tools/pack_avatars.py` arma los dos
-desde `../signai-avatar/models/`, el repo hermano que versiona los GLB finales en su rama
+desde `../signall-avatar/models/`, el repo hermano que versiona los GLB finales en su rama
 `dev`. La escena indexa solo el avatar elegido y resuelve `signs/<id>.glb` por nombre
 contra sus clips (`embeddedClipsFor` en `app.js`).
 
@@ -98,7 +98,7 @@ específicas por avatar de `tools/approved_rest_pose.json` (`upper_arm`, `forear
 `hand`, ambos lados). Este ajuste reemplaza la orientación de reposo anterior
 descrita abajo, no las curvas de ninguna seña. No cambia cara, torso, piernas,
 geometría ni matrices de bind. El empaquetador exige el hash de origen aprobado
-en `../signai-avatar` (`fc6f372`) y canales explícitos de rotación para esos huesos
+en `../signall-avatar` (`fc6f372`) y canales explícitos de rotación para esos huesos
 en todos los clips; una entrega nueva requiere revisar la pose.
 
 La regeneración se comprobó byte a byte contra ambas copias aprobadas. Frente a
@@ -197,7 +197,7 @@ la pose viene sola.
 
 ```bash
 python3 tools/pack_avatars.py --dry-run   # informe de los dos, sin escribir
-python3 tools/pack_avatars.py             # los dos, desde ../signai-avatar/models
+python3 tools/pack_avatars.py             # los dos, desde ../signall-avatar/models
 ```
 
 `tools/pack_signall.py` es el pipeline viejo de un solo avatar: no procesa estos dos
@@ -273,7 +273,7 @@ componente del cuaternión de rotación de un hueso de cara era **0,0012** (`jaw
 `0015`), contra **1,996** del mayor hueso del cuerpo (`thigh.L`, clip `0034`), y sus
 5 canales de pesos por clip valían 1,0 constante. **No se remidió sobre los dos
 archivos nuevos**: sirve como referencia de los clips base, no como afirmación sobre
-las variantes. Es el punto **A6** de `docs/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide
+las variantes. Es el punto **A6** de `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md`: el SRS pide
 marcadores por tipo de frase y desde el 2026-11-04 hay una primera implementación con
 tres filas medidas y dos pendientes de validación lingüística.
 

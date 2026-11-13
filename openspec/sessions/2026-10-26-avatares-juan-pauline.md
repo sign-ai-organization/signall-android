@@ -38,7 +38,7 @@ señas como lo estamos mostrando ahora».
    faciales a propósito.
 5. **Documentación.** `AGENTS.md`, `.gitignore`, `openspec/specs/{avatar,ui,pipeline}`,
    `openspec/config.yaml`, `tools/README.md`, `tools/seed_catalog.py`, `docs/SISTEMA.md`,
-   `docs/PLAN-MEDICION.md`, `docs/CONTRASTE-APPvsDOCUMENTOS.md` y el plan, que pasa de
+   `docs/PLAN-MEDICION.md`, `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` y el plan, que pasa de
    «no se implementó nada» a «implementado el 2026-10-26» con una sección de resultado.
 
 ## Qué se decidió

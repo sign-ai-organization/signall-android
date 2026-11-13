@@ -4,7 +4,7 @@
 
 ## Qué llegó
 
-La ronda del carril P2 (`docs/plan-pruebas/RESULTADOS-CARRIL-2-2026-11-06.md`) dejó seis pruebas en
+La ronda del carril P2 (`docs/historia/plan-pruebas/RESULTADOS-CARRIL-2-2026-11-06.md`) dejó seis pruebas en
 **Falla**. El owner pidió arreglar las dos que son de la app: `PR-RES-01` y `PR-RES-03`. Para la
 primera, precisó que la barra de texto debe recuperar la frase **sea que se dijo por el micrófono
 o que se escribió**.

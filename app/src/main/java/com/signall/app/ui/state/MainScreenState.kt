@@ -73,7 +73,7 @@ private const val QueueSettlePollMs = 16L
  *
  * El único número que no sale de un documento: el SRS dice *qué* señal mostrar
  * (`main.tex:726-773`) y ningún documento dice cuánto esperar. Queda anotado en
- * `docs/CONTRASTE-APPvsDOCUMENTOS.md` §6 #5, con el texto propuesto para el SRS.
+ * `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` §6 #5, con el texto propuesto para el SRS.
  */
 private const val TurnSilenceMs = 15_000L
 
@@ -540,7 +540,7 @@ class MainScreenState(
      * **No** se limpia sola: un WebView sin proceso de render no renderiza nunca
      * más, así que solo un WebView nuevo —o reiniciar la app— lo arregla. Que se
      * reinicie solo en vez de que la app muera es decisión del owner, y está anotada
-     * en `docs/CONTRASTE-APPvsDOCUMENTOS.md` §9.
+     * en `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` §9.
      */
     private var sceneDead = false
 
@@ -2415,7 +2415,7 @@ class MainScreenState(
                 // La carrera que queda —que el `done` viejo llegue después y cierre
                 // el turno de la frase nueva— es el precio de que el protocolo no
                 // permita cancelar una frase en el backend. Está anotada en
-                // `../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`.
+                // `../signall-backend/docs/historia/CONTRASTE-BACKENDvsDOCUMENTOS.md`.
                 Log.i(TAG, "el fin de la frase cancelada nunca llegó: se olvida el descarte")
                 staleTurn = StaleTurn.None
                 return@launch

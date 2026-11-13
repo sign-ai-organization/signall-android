@@ -1,6 +1,6 @@
 # Migración UI — Material 3 → Lumo UI + Phosphor + SignAI Design System
 
-Migración visual y arquitectónica de `app/src/main/java/com/signai/webview/MainActivity.kt`
+Migración visual y arquitectónica de `app/src/main/java/com/signall/app/MainActivity.kt`
 a Lumo UI (nomanr) como base de componentes, Phosphor Icons en lugar de
 `material-icons-extended`, y un Design System propio centralizado.
 
@@ -275,7 +275,7 @@ Las carpetas marcadas con `[N]`, `[P]`, `[U]`, `[S]` indican a qué capa
 pertenecen (negocio / presentación / UI reusable / screen).
 
 ```
-app/src/main/java/com/signai/webview/
+app/src/main/java/com/signall/app/
 ├── MainActivity.kt                       # entry point (~15 líneas)
 │
 ├── data/                                # [N] Capa 1 — negocio
@@ -368,8 +368,8 @@ rompe, se revierte la fase antes de continuar.
 - [ ] 0.3 Crear `lumo.properties` en la raíz:
       ```
       ThemeName=SignAiTheme
-      ComponentsDir=app/src/main/java/com/signai/webview/ui/designsystem
-      PackageName=com.signai.webview.ui.designsystem
+      ComponentsDir=app/src/main/java/com/signall/app/ui/designsystem
+      PackageName=com.signall.app.ui.designsystem
       ```
       (Nota: si Lumo exige el dir ya creado, lo creamos vacío antes.)
 - [ ] 0.4 `./gradlew lumo --init && ./gradlew lumo --setup` → genera `Theme.kt`, `Colors.kt`, `Typography.kt`, `foundation/`.

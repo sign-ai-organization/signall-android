@@ -1,7 +1,7 @@
 # Plan: conectar el móvil con el backend
 
 Vamos a hacer que la app deje de inventarse las señas y hable con el backend
-real de `../sign-ai-backend`. Lo hacemos **por partes**, en orden, para que cada
+real de `../signall-backend`. Lo hacemos **por partes**, en orden, para que cada
 parte se pueda probar sola en el celular.
 
 La idea es no tocar casi nada de lo que ya funciona: la pantalla, los drawers, el
@@ -33,8 +33,8 @@ cd ../webview && ./gradlew installDebug
                         └── por dentro llama al 👂 STT (audio → texto)
 ```
 
-- **👂 `../sign-ai-stt`** — el oído. Convierte audio en texto. Ya está clonado.
-- **🧠 `../sign-ai-backend`** — el cerebro. Convierte texto en glosas, las revisa
+- **👂 `../signall-stt`** — el oído. Convierte audio en texto. Ya está clonado.
+- **🧠 `../signall-backend`** — el cerebro. Convierte texto en glosas, las revisa
   contra el catálogo, pregunta al LLM.
 - **📱 este repo (`webview`)** — la boca y la cara. Captura el audio, muestra el
   texto, hace las señas.
@@ -82,9 +82,9 @@ Ya tiene listo el canal: un WebSocket en `ws://IP-DEL-BACKEND:8080/ws/translate`
       mandábamos una frase escrita, la tiraba sin avisar. **Hecho en el PR #7.**
       Verificado con `python -m scripts.verify_text_frames`.
 - [x] **0.3 — Poder correr el oído.** Ya está. Dos formas:
-      - **De verdad:** `docker compose up --build` desde `../sign-ai-backend`
+      - **De verdad:** `docker compose up --build` desde `../signall-backend`
         levanta los dos servicios (el `docker-compose.yml` del backend ya sabe
-        construir `../sign-ai-stt`). Cuesta descargar el modelo la primera vez.
+        construir `../signall-stt`). Cuesta descargar el modelo la primera vez.
       - **Para el camino de texto:** el oído falso del backend
         (`python -m scripts.fixtures.fake_stt_server`) alcanza y no cuesta nada.
         La frase escrita nunca pasa por el oído, solo necesita que acepte la
@@ -116,7 +116,7 @@ Con el backend y el oído levantados, el repo del STT trae un cliente de prueba 
 toma el micrófono de la laptop:
 
 ```bash
-cd ../sign-ai-stt
+cd ../signall-stt
 pip install -r requirements-dev.txt
 python scripts/mic_test_client.py
 ```
