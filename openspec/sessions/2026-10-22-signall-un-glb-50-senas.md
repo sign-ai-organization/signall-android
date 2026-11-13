@@ -100,7 +100,7 @@ backend y el STT locales que ya estaban corriendo.
 - **`catalog` de Neon**: `tools/seed_catalog.py` ya maneja el manifest nuevo y ahora informa
   50/50 con animación, pero **no se re-sembró**. No hace falta para que funcione: los paths no
   cambiaron. Si se re-siembra, hay que reiniciar el backend (carga el catálogo una sola vez).
-- **`../sign-ai-docs` y Overleaf**: siguen diciendo que 18 señas no tienen animación. Ese
+- **`../signall-docs` y Overleaf**: siguen diciendo que 18 señas no tienen animación. Ese
   contraste se propone, no se aplica desde acá (el `.tex` lo edita el owner).
 
 ## Segunda parte: el splash cubre toda la carga

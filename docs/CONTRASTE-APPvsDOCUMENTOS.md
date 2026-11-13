@@ -5,12 +5,12 @@
 **Fuente de verdad:** el **SRS de Overleaf**, proyecto `6a122a19bb9a5dd9d390ba3d`,
 archivo `main.tex`, **1370 líneas**, versión 426, editado el **2026-10-17** (releído
 después de esa edición).
-**Segundo documento:** `../sign-ai-docs` (`v0.16` y `cambios/requerimientos.md`),
+**Segundo documento:** `../signall-docs` (`v0.16` y `cambios/requerimientos.md`),
 usado de apoyo cuando el SRS no habla de algo.
 **Contraste del backend:** vive en el repo del backend, no acá
-(`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`).
+(`../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`).
 
-> **La fuente de verdad es el SRS.** Cuando el SRS y `../sign-ai-docs` no
+> **La fuente de verdad es el SRS.** Cuando el SRS y `../signall-docs` no
 > coincidan, manda el SRS y el desajuste se reporta al owner. Los números de
 > línea de abajo son del `main.tex` de la versión 426: si el SRS se vuelve a editar,
 > verificá que sigan apuntando a lo mismo.
@@ -43,7 +43,7 @@ Ninguno requiere inventar el requisito.
 | **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:754-765`) | ✅ Hecho · **el SRS necesita un ajuste** (§9 #9) |
 | **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt`, `queueItemsFor` y `onSignFailed` | §Alcance (`main.tex:200-202`) y tabla, fila *Reproduciendo* (`main.tex:747`) | ✅ Hecho |
 | **A7** | De **9 estados a 7** | `ui/state/PlaybackState.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, completa (`main.tex:717-766`) | ✅ Hecho |
-| **A13** | Armar la **métrica de latencia de punta a punta** | `ui/state/SignAiMetrics.kt`, y en `MainScreenState.kt` `onSignStart` y `onPlaybackDone` | §Aspectos de medición (`main.tex:836-849`) | ✅ Hecho el instrumento. **La medición no va en este documento**: es del plan de pruebas de `../sign-ai-docs` (decisión del owner, 2026-10-17) |
+| **A13** | Armar la **métrica de latencia de punta a punta** | `ui/state/SignAiMetrics.kt`, y en `MainScreenState.kt` `onSignStart` y `onPlaybackDone` | §Aspectos de medición (`main.tex:836-849`) | ✅ Hecho el instrumento. **La medición no va en este documento**: es del plan de pruebas de `../signall-docs` (decisión del owner, 2026-10-17) |
 | **A14** | Que la app **no se pueda quedar congelada**: cuando nadie contesta, tiene que haber un reloj que la saque | `ui/state/MainScreenState.kt`, `data/SignAiWebSocketClient.kt`, `ui/webview/AvatarWebView.kt`, `assets/web/app.js` | **Ningún documento**: el SRS dice *qué* señal mostrar, nunca *cuánto* esperar (§6 #5) | ✅ Hecho y verificado en el device (6 cambios + 1 encontrado al verificar) |
 
 
@@ -286,7 +286,7 @@ momento correcto y emitirlo con el mismo formato que las otras: **hecho**.
 
 **Lo que queda no es código y no es de acá.** La **medición** de ese número —con
 cuántas frases y en qué máquina— la maneja el **plan de pruebas** de
-`../sign-ai-docs`. Este contraste solo deja constancia de que el instrumento está.
+`../signall-docs`. Este contraste solo deja constancia de que el instrumento está.
 
 **Lo que no es código.** La tercera medida del SRS, *legibilidad del avatar*
 evaluada con ISO 9241-11 (`main.tex:848`), es un estudio con usuarios. No se
@@ -311,7 +311,7 @@ abrirlas de nuevo.
 
 | ID | Por qué está cerrado |
 |---|---|
-| **A8** | El SRS ya dice Three.js 0.169.0 en WebView, no Filament. El `.drawio` de C4-2 que decía Filament está en `../sign-ai-docs` y lo edita el owner |
+| **A8** | El SRS ya dice Three.js 0.169.0 en WebView, no Filament. El `.drawio` de C4-2 que decía Filament está en `../signall-docs` y lo edita el owner |
 | **A9** | El SRS dice que en modo TR el micrófono **permanece encendido** (`main.tex:737`). La app hace eso |
 | **A10** | El tope de 8 s pasó a ser búfer del **servidor** (`main.tex:1177`). La app no tiene temporizador y no debe tener |
 | **A11** | El SRS documenta la interfaz real: paneles, hoja de historial, Acerca de, velocidad de señas (`main.tex:803`), modo oscuro/claro, los cinco ajustes de accesibilidad y el bloque Avanzado. Todo existe |
@@ -364,7 +364,7 @@ Reportado al owner el 2026-10-17. **Nada de esto se toca desde acá.**
 | 1 | La §3 del SRS está vacía y conserva los subtítulos de una plantilla de juegos ("Funcionalidad 1: Jugar", "Registro y Autenticación", "Administración", "Consultas"). Con eso desaparecieron los IDs `RF-*` y `RNF-*` que usan `v0.16` y el plan de pruebas | Overleaf, `main.tex` §3 |
 | 2 | El SRS dice "SignAI" 25 veces y "SignALL" ninguna. Delegado al compañero | Overleaf, todo el documento |
 | 3 | Dos marcadores de trabajo sin completar: `[PENDIENTE: tamaño del APK con todos los archivos GLB.]` | Overleaf, `main.tex:932` y `:1155` |
-| 4 | `../sign-ai-docs/cambios/requerimientos.md` punto 19 pide "límite de intentos" de reconexión. El owner decidió **sin** límite: espera creciente hasta 5 s, indefinida. Hay que corregir ese texto | `../sign-ai-docs` |
+| 4 | `../signall-docs/cambios/requerimientos.md` punto 19 pide "límite de intentos" de reconexión. El owner decidió **sin** límite: espera creciente hasta 5 s, indefinida. Hay que corregir ese texto | `../signall-docs` |
 | 5 | **Ningún documento dice cuánto esperar antes de decidir que algo salió mal.** El SRS dice *qué* señal mostrar ante un error o una desconexión, y RNF-REL-02 dice que el avatar vuelva a reposo, pero en ningún lado hay un plazo. La app lo inventó: **15 s de silencio**. Sin ese número, una espera larga es indistinguible de un cuelgue | Overleaf, tabla de estados, filas *Procesando* y *Error* (`main.tex:717-766`) |
 | 6 | **Apagar el micrófono con una frase en vuelo.** `main.tex:737` dice que en modo TR el micrófono permanece encendido, y nada dice de qué modo se lo apaga a mitad de una traducción. La decisión del owner: apagarlo **cancela la frase** y su texto vuelve al campo editable | Overleaf, `main.tex:737` y la fila *Grabando* |
 | 7 | **Seña que existe pero no se puede descargar.** `main.tex:200-202` cubre "cuando una glosa no existe en el catálogo"; no cubre el caso de que la glosa existe y el archivo no baja. La decisión del owner: se saltea esa seña, se siguen representando las demás y el indicador muestra "Seña no disponible" | Overleaf, `main.tex:200-202` y la fila *Reproduciendo* (`main.tex:747`) |
@@ -469,7 +469,7 @@ a abrir.
   **Riesgo conocido y aceptado por el owner:** esos 15 s pueden declarar fallida una
   frase que sí iba a funcionar, porque **la consulta a la base de datos no tiene
   tiempo máximo**. El dueño de ese problema es el backend, y la propuesta está en su
-  contraste (`../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`, hallazgo 1).
+  contraste (`../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`, hallazgo 1).
   Acá queda solo la marca: **esto se revisa del lado del backend**.
 - **A14, apagar el micrófono con una frase en vuelo: cancela.** Si hay una frase
   esperando respuesta y el usuario apaga el micrófono o el TR, esa frase se cancela
@@ -773,7 +773,7 @@ anotan acá para que no se pierdan, y se marcan las que necesitan una decisión.
 
 **Lo que NO va acá** (decisión del owner, 2026-10-17): las **mediciones**. Los
 números de la corrida con el backend real son del **plan de pruebas** de
-`../sign-ai-docs`, no de este contraste. Y las **18 señas que alguna vez faltaron**
+`../signall-docs`, no de este contraste. Y las **18 señas que alguna vez faltaron**
 ya están en el archivo único desde el 2026-10-22: lo que queda es validar su
 contenido con el owner y el director, no exportarlas. La app entra sola con
 cualquier seña nueva que exista.
@@ -785,7 +785,7 @@ cualquier seña nueva que exista.
 | 3 | El reloj del turno (`turnStartedAt`) **se reinicia** en `resumeListeningIfMicOn`, y el `done` puede llegar **antes** de que la escena se mueva: una frase habría medido desde el reloj de la siguiente, o no habría medido | `MainScreenState.kt` | **Resuelto en A13** con `turnSentAt`, que solo se pone al mandar una frase |
 | 4 | Hay **dos** casos de "glosa sin seña" y el SRS habla de uno solo: la glosa que **no está en el catálogo** (`main.tex:200-202` "cuando una glosa no existe en el catálogo") y la glosa que el catálogo anuncia pero **cuyo clip no está en el APK** (era el caso de `0032`–`0049` antes del 2026-10-22; **hoy no hay ninguna**, §5 de este documento). Con la seña de prueba apagada las dos se saltaban en silencio | `MainScreenState.kt` | **Resuelto en A5**: el aviso sale en los dos casos, porque las dos terminan en la misma rama (`sin seña ni fallback`). Decirlo solo para la primera habría sido mentir en silencio al revés: el catálogo **sí** anuncia la glosa, lo que no hay es el clip. Hoy no queda ninguna en ese caso; el aviso sigue para una glosa futura |
 | 5 | La clave `duracion_firmado` del `snapshot()` de `SignAiMetrics` seguía usando la palabra que `AGENTS.md` retiró el 2026-10-16 | `SignAiMetrics.kt` | **Resuelto en A13**: ahora es `duracion_representada`. Era una cadena de logcat, no un nombre de código |
-| 6 | **No hay dominio del backend.** Ni el SRS (`main.tex:1088`, `:1100`) ni `../sign-ai-docs` nombran uno, así que no había con qué armar el `wss://` | `app/build.gradle.kts` | En A3 el default de release quedó en `wss://backend.invalid/ws/translate`: un host que por construcción no resuelve (`.invalid`, RFC 2606). Es deliberado: un APK sin configurar habla con nadie en vez de con el host de otra persona, y el fallo es ruidoso. **Decisión del owner (2026-10-17): no hay dominio y no se va a tener, porque es un prototipo.** Queda así a propósito y no se vuelve a abrir |
+| 6 | **No hay dominio del backend.** Ni el SRS (`main.tex:1088`, `:1100`) ni `../signall-docs` nombran uno, así que no había con qué armar el `wss://` | `app/build.gradle.kts` | En A3 el default de release quedó en `wss://backend.invalid/ws/translate`: un host que por construcción no resuelve (`.invalid`, RFC 2606). Es deliberado: un APK sin configurar habla con nadie en vez de con el host de otra persona, y el fallo es ruidoso. **Decisión del owner (2026-10-17): no hay dominio y no se va a tener, porque es un prototipo.** Queda así a propósito y no se vuelve a abrir |
 | 7 | **A1 no es separable de A7.** El SRS solo pide que "el indicador pase a *Texto listo*" (`main.tex:735`), y el indicador de la app es la etiqueta de estado del escenario. Convertir `dictationReadyToSend` en el estado `TextoListo` —que es justamente lo que hace A7— **deja A1 hecho**: la etiqueta pasa a decir "Texto listo" mientras el texto espera, en vez de un aviso de 3 s | `SignAiBottomBar.kt`, `MainScreenState.kt` | Hacer A1 con un mecanismo visual aparte (un ícono, un anillo) sería inventar un requisito que el SRS no pide, y además **chocaría con una decisión ya tomada**: el bloque de comentario de `SignAiBottomBar.kt` (el del ícono del micrófono) documenta que el ícono **no** cambia en el tercer estado porque se probó en el dispositivo y el botón dejaba de leerse como micrófono. **Resuelto con A7**: se conservó esa decisión y la señal del tercer estado pasó a ser el nombre del estado (*Texto listo*), que es lo que pedía el SRS |
 | 8 | El comentario de `SignAiBottomBar.kt` (el del ícono del micrófono) decía que la señal del tercer estado es el **placeholder del campo**. No es así: el placeholder solo se ve cuando el campo está vacío, y en el tercer estado el campo **tiene** la frase. El propio estado lo dice en otro comentario (`MainScreenState.stateForUi`: "con la frase escrita arriba, un placeholder no se ve nunca, que es justo cuando hace falta"). O sea: la app creía que tenía una señal persistente y no la tenía | `SignAiBottomBar.kt` | **Resuelto en A7**: la señal es el estado `TextoListo`, y el comentario que daba el placeholder por bueno está corregido |
 | 9 | **El SRS hay que ajustarlo en dos puntos**, por decisiones que el owner tomó el 2026-10-17. No es un error del documento: son requisitos que la app cumple distinto y el documento tiene que reflejarlo | Overleaf, `main.tex` | **(a)** `main.tex:737` dice que en modo TR el micrófono **permanece encendido**; con la caída de conexión la app lo **apaga** y avisa. **(b)** La fila *Desconectado* (`main.tex:754-765`) no dice qué pasa con el micrófono. El texto exacto que hay que pegar está en `openspec/sessions/2026-10-17-estados-y-desconexion.md` |
@@ -800,4 +800,4 @@ cualquier seña nueva que exista.
 | 18 | **El WebView no avisaba si moría.** Sin `onReceivedError` ni `onRenderProcessGone`, si el navegador mataba el proceso del WebView el estado se quedaba en *Reproduciendo* con el avatar quieto | `ui/webview/AvatarWebView.kt` | **Resuelto por A14**, y con los dos caminos decididos por separado (2026-10-17): si la **página** no cargó, aviso y la app sigue; si el **proceso de render** murió, se devuelve `false` y el sistema reinicia la app, porque un WebView sin proceso de render no renderiza nunca más y dejarla viva mostraría un canvas negro hasta que el usuario la cerrara a mano. **Y no se va a probar** (decisión del owner, 2026-10-17): no hay forma de pedirle al navegador que mate su proceso, y forzarlo a mano no probaría el caso real |
 | 19 | **El `done` podía cerrar el turno antes de que la cola estuviera lista.** `finishTurn` cerraba el turno mientras `appendQueue` todavía resolvía los assets, con dos efectos: la interfaz decía *Inactivo* un instante antes de *Reproduciendo*, y en modo en vivo la frase de reserva podía salir antes de que la anterior entregara su cola | `MainScreenState.finishTurn`, `appendQueue` | **Resuelto por A14**: el `done` espera al trabajo pendiente, y el arreglo de la fila 20 vino con él. **Medido en el device**: con una seña que tarda 2 s en bajarse, el log da `el fin de la frase llegó con la cola todavía armándose: se espera` y el turno cierra 1,8 s después, cuando la cola ya está entregada |
 | 20 | **Dos oraciones del mismo turno salían las dos como "la primera" de la cola.** `appendQueue` decidía `first = !queueStarted` **antes** de resolver los assets, así que si una oración tardaba más en resolver que la siguiente, las dos Deliver por `setQueue` + `play()` y **la segunda pisaba la cola** que la primera ya estaba representando: la frase se cortaba a mitad, en silencio, y el turno se cerraba sobre una cola que ya no era la de la frase | `ui/state/MainScreenState.kt`, `appendQueue` | **Resuelto por A14** (`STA-29`): la entrega se serializa con `queueDeliveryGate` y `first` se lee después de resolver. Medido en el device: con una seña que tarda 2 s en bajarse, la frase se representaba al revés o se cortaba; después, en orden |
-| 21 | **El `done` no lleva con qué identificar a qué frase pertenece.** Cancelar una frase es local —el protocolo no tiene un frame para cancelarla— así que la app tiene que **tragarse** el `done` de la frase cancelada a ciegas. Si en el medio salió otra frase y el `done` viejo se perdió, se descarta el correcto y el turno nuevo se queda esperando hasta el reloj de 15 s | `ui/state/MainScreenState.kt`, `StaleTurn` | **Deuda de protocolo, no de la app.** Lo que la app hace está anotado en `openspec/specs/ui/spec.md` `STA-25` y el cambio que lo arreglaría de verdad —un id de turno en `segment`/`done`, o un frame `cancel`— está propuesto en el repo del backend: `../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`. **Requiere tocar el backend, así que no se toca sin que el owner lo pida** |
+| 21 | **El `done` no lleva con qué identificar a qué frase pertenece.** Cancelar una frase es local —el protocolo no tiene un frame para cancelarla— así que la app tiene que **tragarse** el `done` de la frase cancelada a ciegas. Si en el medio salió otra frase y el `done` viejo se perdió, se descarta el correcto y el turno nuevo se queda esperando hasta el reloj de 15 s | `ui/state/MainScreenState.kt`, `StaleTurn` | **Deuda de protocolo, no de la app.** Lo que la app hace está anotado en `openspec/specs/ui/spec.md` `STA-25` y el cambio que lo arreglaría de verdad —un id de turno en `segment`/`done`, o un frame `cancel`— está propuesto en el repo del backend: `../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`. **Requiere tocar el backend, así que no se toca sin que el owner lo pida** |

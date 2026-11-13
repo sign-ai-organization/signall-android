@@ -20,7 +20,7 @@ para lo que ya se sabía (el plan está fijado en 74: 73 fichas más `PR-REN-09`
    motivo. La clasificación se le mostró al owner y no se reordenó la tabla.
 3. Se armó un arnés fuera del repo (`/tmp/opencode/pruebas/`): cliente del WS del backend
    (texto y audio), cliente del STT (streaming real y POST), lectura de las tablas de
-   `../sign-ai-docs/borradores/plan-pruebas/02-datos/`, WER, evidencias y resultados en JSON.
+   `../signall-docs/borradores/plan-pruebas/02-datos/`, WER, evidencias y resultados en JSON.
 4. Se ejecutó en tandas que no compitieran por el mismo recurso: STT, backend y celular en
    paralelo; después caché/ablaciones/rendimiento con el backend quieto; después
    resiliencia/seguridad, que reinician contenedores.

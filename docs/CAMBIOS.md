@@ -5,7 +5,7 @@ oraciones**, y qué tiene que hacer el resto del sistema con esto.
 
 **Rama:** `flujo-oraciones`, desde `develop`. **Sin mergear.**
 
-Plan completo: `../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10.
+Plan completo: `../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10.
 Log de la sesión: `openspec/sessions/2026-10-15-flujo-oraciones-android.md`.
 Spec: `openspec/specs/ui/spec.md` (los 14 IDs que reescribió el plan de octubre:
 `STA-9`, `STA-15` a `STA-20`, `GLS-11`, `GLS-12`, `BRG-14`, `BRG-15` y `OBS-1`
@@ -243,7 +243,7 @@ tools/medir-primera-sena.py   # de dónde sale la primera seña (frío y calient
 tools/medir-retraso.py        # ¿el avatar alcanza a representar mientras hablás?
 ```
 
-Ambas corren los 28 fixtures de `../sign-ai-stt/fixtures/audio` por el WebSocket
+Ambas corren los 28 fixtures de `../signall-stt/fixtures/audio` por el WebSocket
 real, sin micrófono.
 
 **La línea base nueva** (28 fixtures, backend y STT reales, `qwen3:4b-instruct` en

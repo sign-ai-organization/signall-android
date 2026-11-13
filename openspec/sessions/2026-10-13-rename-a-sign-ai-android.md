@@ -11,8 +11,8 @@
    flows de `tools/maestro/`, los scripts de `tools/rendimiento/` y
    `tools/pinch.sh`, más los ajustes a `AGENTS.md`, `tools/README.md` y el
    índice de sesiones. Sin secretos (revisado); los `.sh` con bit de ejecución.
-2. **Renombrada la carpeta** `/home/diegocachy/tesisTesteos/SignAI/webview` →
-   `/home/diegocachy/tesisTesteos/SignAI/sign-ai-android`. Con `mv` del
+2. **Renombrada la carpeta** `/home/diegocachy/tesisTesteos/SignAll/webview` →
+   `/home/diegocachy/tesisTesteos/SignAll/sign-ai-android`. Con `mv` del
    directorio entero: el `.git` viaja con la carpeta, así que **no se pierde el
    repositorio**. Verificado después: mismo `origin`
    (`sign-ai-android.git`), misma rama `main`, mismo historial (67 commits) y
@@ -31,7 +31,7 @@
   `sign-ai-stt/`, `signai-avatar/`.
 - **No hubo que tocar ninguna ruta en el código.** Un `grep` de
   `SignAI/webview` solo encuentra artefactos de `app/build/` (se regeneran) y
-  `com/signai/webview`, que es el **nombre del paquete**, no la carpeta. Los
+  `com/signall/app`, que es el **nombre del paquete**, no la carpeta. Los
   paths de Gradle son relativos al root. Por eso el rename no toca ni un
   archivo.
 

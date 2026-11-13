@@ -79,6 +79,6 @@ Todo en el Redmi Note 9S físico (serial `1ed6699f`), 2026-10-26, leyendo `SignA
 - **El SDD de Overleaf** todavía describe 50 archivos GLB; lo tiene que actualizar el owner
   (este repo no escribe en Overleaf).
 - **PR-AVT-06**: registrar la medición del APK, la memoria y la carga en el plan de pruebas
-  de `../sign-ai-backend`/`../sign-ai-docs`.
-- `../sign-ai-backend` y `../sign-ai-stt` **no se tocaron**: se levantaron con la imagen ya
+  de `../signall-backend`/`../signall-docs`.
+- `../signall-backend` y `../signall-stt` **no se tocaron**: se levantaron con la imagen ya
   construida y el código actual montado de solo lectura. No hay commits que mandar allá.

@@ -2,7 +2,7 @@
 """Empaqueta los dos avatares completos (Juan y Pauline) para la app.
 
 Los exports finales de Cascadeur viven versionados en el repo hermano
-`../signai-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev`, commit
+`../signall-avatar/models/` (`Juan.glb` y `Pauline.glb`, rama `dev`, commit
 `fc6f372`, 2026-11-04). Cada archivo trae el personaje, su esqueleto de 102
 articulaciones y **200 clips**: las 50 señas de LSC50 (`0000`..`0049`) por
 cuatro marcas faciales —`_afirmativo`, `_pregunta`, `_negacion` y `_orden`—.
@@ -44,11 +44,11 @@ cuatro por tipo de oración desde el 2026-11-04; no existe una toma neutra.
 
 Uso:
 
-    python3 tools/pack_avatars.py                 # los dos, desde ../signai-avatar/models
+    python3 tools/pack_avatars.py                 # los dos, desde ../signall-avatar/models
     python3 tools/pack_avatars.py --dry-run       # informe, sin escribir
     python3 tools/pack_avatars.py --source-dir OTRA/CARPETA
 
-Los dos `.glb` de origen se versionan en el repo hermano `../signai-avatar`
+Los dos `.glb` de origen se versionan en el repo hermano `../signall-avatar`
 (rama `dev`, carpeta `models/`): son la entrega final del pipeline de Cascadeur
 y solo se reemplazan cuando el owner aprueba una versión nueva. Sus hashes,
 tamaños y conteos quedan en `models/avatars.json`, que es lo que permite
@@ -71,7 +71,7 @@ from split_signs import write_catalog  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 DEST_DEFAULT = REPO / "app/src/main/assets/web"
-# Los exports finales se versionan en el repo hermano `../signai-avatar` (rama
+# Los exports finales se versionan en el repo hermano `../signall-avatar` (rama
 # `dev`, carpeta `models/`). No se editan: son la entrada inmutable del
 # empaquetado. `../material-3d/Avatares/` conserva la versión anterior del
 # 2026-10-24, que ya no es la fuente.
@@ -281,7 +281,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--source-dir", type=Path, default=SOURCE_DEFAULT,
                         help="carpeta con Juan.glb y Pauline.glb "
-                             "(por defecto ../signai-avatar/models)")
+                             "(por defecto ../signall-avatar/models)")
     parser.add_argument("--dest", type=Path, default=DEST_DEFAULT,
                         help="assets/web (donde viven models/ y manifest.json)")
     parser.add_argument("--dry-run", action="store_true",

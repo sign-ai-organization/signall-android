@@ -31,7 +31,7 @@
 
 3. **Estructura destino diseñada** (single-module, solo paquetes nuevos):
    ```
-   com.signai.webview.{data, ui.{theme, designsystem, icons, webview, screens.*}}
+   com.signall.app.{data, ui.{theme, designsystem, icons, webview, screens.*}}
    ```
 
 4. **Mapeo Material 3 → Lumo** definido componente por componente
@@ -116,7 +116,7 @@ clave del `AGENTS.md` y del brief original:
    ui-tooling-preview/ui-util/material-ripple:1.7.6 (los primeros 4 ya
    venían transitivos por BOM; material-ripple se añadió explícito).
 4. **Ejecutado `./gradlew lumo --setup`** → generó 5 archivos en
-   `app/src/main/java/com/signai/webview/ui/designsystem/`:
+   `app/src/main/java/com/signall/app/ui/designsystem/`:
    `Theme.kt` (con `SignAiTheme` + `SignAiTheme()` wrapper),
    `Color.kt` (paleta Lumo default LightColors/DarkColors),
    `Typography.kt` (h1..h4, body1..3, label1..3, button, input),
@@ -220,8 +220,8 @@ clave del `AGENTS.md` y del brief original:
 
    Colisión de nombres resuelta con `import ... as`:
    ```kotlin
-   import com.signai.webview.ui.designsystem.SignAiTheme as LumoSignAiTheme
-   import com.signai.webview.ui.designsystem.Typography as LumoTypography
+   import com.signall.app.ui.designsystem.SignAiTheme as LumoSignAiTheme
+   import com.signall.app.ui.designsystem.Typography as LumoTypography
    ```
 
 2. **`MainActivity.kt` envuelto** con `SignAiTheme { … }` encima del
@@ -246,7 +246,7 @@ clave del `AGENTS.md` y del brief original:
 - **`SignAiTheme` (nuestro, paquete `ui.theme`) vs `LumoSignAiTheme`
   (Generado por Lumo, paquete `ui.designsystem`)**: el nuestro es el
   entry point público; el de Lumo queda como detalle interno. Cualquier
-  consumidor futuro importa `com.signai.webview.ui.theme.SignAiTheme`.
+  consumidor futuro importa `com.signall.app.ui.theme.SignAiTheme`.
 - **`SignAiTypography` como object con properties** — alternativo era
   una `val SignAiTypography = LumoSignAiTheme.typography` plana. Elegí
   object para exponer un namespacing claro si en Fase 7 necesitamos
@@ -268,7 +268,7 @@ clave del `AGENTS.md` y del brief original:
 
 - `./gradlew build` ✅ (11s, 0 errores)
 - `./gradlew installDebug` ✅
-- App en foreground ✅ (`mResumedActivity: com.signai.webview/.MainActivity`)
+- App en foreground ✅ (`mResumedActivity: com.signall.app/.MainActivity`)
 - Screenshot ✅ paridad visual exacta con estado pre-Fase 1
 - Sin `AndroidRuntime: FATAL` ✅
 - Sin crashes en logcat ✅

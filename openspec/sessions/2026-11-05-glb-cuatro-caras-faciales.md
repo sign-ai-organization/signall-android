@@ -4,7 +4,7 @@
 
 ## Qué llegó
 
-El owner pidió traer de `../signai-avatar` (rama `dev`) el GLB nuevo que dejó Samuel
+El owner pidió traer de `../signall-avatar` (rama `dev`) el GLB nuevo que dejó Samuel
 con cuatro marcas faciales —afirmación, negación, orden y pregunta—, revisar los clips
 y nombres reales, regenerar los assets de la app con `tools/pack_avatars.py`, ajustar
 `FACE_VARIANT_BY_TYPE` si hacía falta, compilar, instalar y verificar las cuatro caras
@@ -128,5 +128,5 @@ diagnóstico.
 - Validación **LSC** de las cuatro caras y de la decisión de compartir `pregunta` entre
   pregunta sí/no y pregunta de contenido. La medición del 2026-11-05 da el material para
   esa revisión, pero no la reemplaza.
-- `../signai-avatar` quedó con `dev` en `fc6f372` (fast-forward local); esta sesión no
+- `../signall-avatar` quedó con `dev` en `fc6f372` (fast-forward local); esta sesión no
   creó commits ahí.

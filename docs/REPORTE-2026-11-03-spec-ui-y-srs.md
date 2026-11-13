@@ -104,7 +104,7 @@ registra el spec actualizado y las dos ediciones del SRS. También se actualizó
 
 ## 5. Qué no se tocó
 
-- `../sign-ai-docs`.
+- `../signall-docs`.
 - `docs/PLAN-SEMANA-13.md`, que lo lleva la sesión maestra.
 - El código de la app: esta sesión solo cambió documentación.
 

@@ -23,7 +23,7 @@ Verificado hoy, leyendo el código:
 | La app espera la transcripción y la usa | ✅ hecho | con red de seguridad por si nunca llega |
 | El backend recibe audio binario | ✅ hecho | `app/controller/router.py:60` |
 | El backend reenvía al STT | ✅ hecho | `stt_service_client_impl.py` → `ws://stt:8000/ws/transcribe` |
-| El servicio STT existe | ✅ hecho | repo `../sign-ai-stt`, `app/main.py:62` (`/ws/transcribe`) |
+| El servicio STT existe | ✅ hecho | repo `../signall-stt`, `app/main.py:62` (`/ws/transcribe`) |
 | `docker-compose.yml` con ambos servicios | ✅ hecho | el del backend ya declara `backend` + `stt` |
 
 **O sea: lo que falta es prender dos contenedores y apuntar la app.** No hay
@@ -66,7 +66,7 @@ Parar el mock primero, si está corriendo:
 pkill -f mock_backend
 ```
 
-Después, en `../sign-ai-backend`:
+Después, en `../signall-backend`:
 
 ```bash
 docker compose up --build
@@ -122,7 +122,7 @@ Desde `sign-ai-android`:
 ```bash
 adb reverse tcp:8080 tcp:8080
 ./gradlew installDebug -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate
-adb shell am start -n com.signai.webview/.MainActivity
+adb shell am start -n com.signall.app/.MainActivity
 ```
 
 **Ojo con esto:** la URL por defecto del build es `ws://10.0.2.2:8080/ws/translate`,
@@ -225,7 +225,7 @@ Saven para no perder tiempo:
   (`android:forceDarkAllowed=false` en `res/values/themes.xml`): con él prendido
   MIUI invierte el texto dentro de contenedores con scroll.
 - **`RECORD_AUDIO` no viene concedido.** Hay que grantingarlo antes de probar el
-  micro: `adb shell pm grant com.signai.webview android.permission.RECORD_AUDIO`.
+  micro: `adb shell pm grant com.signall.app android.permission.RECORD_AUDIO`.
   Sin eso el micro no abre y la app muestra "No se pudo abrir el micrófono.",
   que parece un bug del STT y no es.
 - **El STT es una dependencia dura, no opcional.** `router.py:107-112` conecta al

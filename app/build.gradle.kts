@@ -15,7 +15,7 @@ plugins {
 // pantalla Acerca de y, más adelante, en el reporte de métricas. `versionCode`
 // sale de la cantidad de commits para que cada APK publicado sea estrictamente
 // más nuevo que el anterior y Android nunca rechace la instalación por
-// "downgrade" (`../sign-ai-backend/docs/plan-wifi.md`, fase 2).
+// "downgrade" (`../signall-backend/docs/plan-wifi.md`, fase 2).
 fun git(vararg args: String): String =
     runCatching {
         providers.exec { commandLine("git", *args) }.standardOutput.asText.get().trim()

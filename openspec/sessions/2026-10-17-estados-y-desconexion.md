@@ -15,7 +15,7 @@ Lo de A2 está en `2026-10-17-a2-permiso-microfono-al-abrir.md`. Acá está el r
 
 ## La herramienta de verificación
 
-El backend real (`../sign-ai-backend`) necesita base de datos y clave de LLM, así
+El backend real (`../signall-backend`) necesita base de datos y clave de LLM, así
 que no arrancó. Para poder **medir** en vez de suponer se escribió un backend falso
 en `/tmp/opencode/fake-backend.py`, **fuera del repo**, que habla lo justo del
 protocolo de `/ws/translate` y decide qué hacer con una palabra clave en el texto:

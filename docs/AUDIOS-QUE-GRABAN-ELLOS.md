@@ -3,7 +3,7 @@
 Lista de los **40 audios de AU-01** que no graba el owner. Con los 39 de
 [`AUDIOS-QUE-GRABO.md`](AUDIOS-QUE-GRABO.md) se completan los 79 del plan de pruebas.
 
-Fuente: `../sign-ai-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcripcion.md`
+Fuente: `../signall-docs/borradores/plan-pruebas/02-datos/AU-01-audios-transcripcion.md`
 (v0.1). Las diez frases son las de FR-01-A; cada una la leen cuatro personas en silencio y
 dos de ellas otra vez con ruido de fondo.
 

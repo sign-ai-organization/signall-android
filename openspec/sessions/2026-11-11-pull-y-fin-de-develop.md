@@ -28,7 +28,7 @@ Solo dos repos tenían commits nuevos:
 `openspec/sessions/`, verificado con `git diff --name-only d72ec4e..704e0ac` filtrando esas
 dos carpetas → vacío.
 
-`../signai-avatar` no se tocó: `dev` ya estaba en `fc6f372`, igual que `origin/dev`.
+`../signall-avatar` no se tocó: `dev` ya estaba en `fc6f372`, igual que `origin/dev`.
 
 ### El borrado de `develop`
 
@@ -61,12 +61,12 @@ sin commitear (`openspec/specs/dataset/spec.md`, el typo `JUCIOSO` → `JUICIOSO
   sesión futura la busque: la tabla de repos de `AGENTS.md` y de `docs/SISTEMA.md` ahora
   dice `main` para el backend y el STT, las reglas de PR de los hermanos apuntan a `main`, y
   la sección `## Git` de `AGENTS.md` cuenta qué se borró y por qué.
-- **`../signai-avatar` queda excluido**: su rama de trabajo es `dev` y ahí no se toca nada.
+- **`../signall-avatar` queda excluido**: su rama de trabajo es `dev` y ahí no se toca nada.
 - **No se borraron las ramas remotas.** La decisión del owner fue sobre las locales.
 
 ## Qué se verificó
 
-- **Los seis documentos compilan** en `../sign-ai-docs` con `make all`, incluido el `vfp`
+- **Los seis documentos compilan** en `../signall-docs` con `make all`, incluido el `vfp`
   nuevo: `srs` 124 páginas, `sdd` 48, `memoria` 72, `plan-pruebas` 143, `administracion`
   43, `vfp` 35. Compilación local con `latexmk` (TeX Live instalado en la máquina).
 - **La app compila**: `./gradlew build` → `BUILD SUCCESSFUL` en 1 min 18 s (144 tareas, 60
@@ -81,7 +81,7 @@ sin commitear (`openspec/specs/dataset/spec.md`, el typo `JUCIOSO` → `JUICIOSO
 - **Instalar la app en un device** para que el owner pueda probar (falta por el `adb devices`
   vacío).
 - **Fichas `PR-REN-07` y `PR-AVT-05`**: la sesión `2026-11-10-p3-and03-and04.md` las
-  dejó pendientes de actualizar en `../sign-ai-docs` con los valores nuevos de la ronda
+  dejó pendientes de actualizar en `../signall-docs` con los valores nuevos de la ronda
   diagnóstica. El pull del 11/11 trae cambios en `latex/plan-pruebas/main.tex`, pero **no
   verifiqué** si cierran esas dos fichas: es un pendiente de otro repo.
 - **El `develop` remoto del backend sigue disparando el CI** (`.github/workflows/ci.yml`
@@ -94,7 +94,7 @@ sin commitear (`openspec/specs/dataset/spec.md`, el typo `JUCIOSO` → `JUICIOSO
 - El owner pidió investigar cómo mejorar movimientos existentes, sin contratar
   animadores ni aprender animación. Después limitó expresamente esta sesión a
   información y preparación documental: **no empezar las correcciones**.
-- Se inspeccionaron en lectura los GLB de `../signai-avatar`, commit `fc6f372`
+- Se inspeccionaron en lectura los GLB de `../signall-avatar`, commit `fc6f372`
   (2026-11-04), y los empaquetados de Android: 200 clips y 102 articulaciones por
   avatar; canales de huesos idénticos entre variantes faciales y entre origen y
   empaquetado. No se hizo evaluación visual completa de las 50 señas.
@@ -120,7 +120,7 @@ sin commitear (`openspec/specs/dataset/spec.md`, el typo `JUCIOSO` → `JUICIOSO
   Son archivos temporales, no assets de producción.
 - Base visual: el `juan.glb` empaquetado de la app (SHA-256
   `5ccf77f3aec4300e33e4d20b6e7edf41ccf577eff04379a87b6cd61dccddbd8c`).
-  Original hermano comprobado sin cambios: `../signai-avatar/models/Juan.glb`,
+  Original hermano comprobado sin cambios: `../signall-avatar/models/Juan.glb`,
   commit `fc6f372c8412010d85925fe342fdcf0c073fbdf1`, SHA-256
   `cc89d41d925b5f52765fd8fdb322ff09c9d30b6f914fc8ecd3e50fc2a83e3945`.
 - La copia cambia solo las rotaciones de `upper_arm.L/R` y `forearm.L/R`:
@@ -133,7 +133,7 @@ sin commitear (`openspec/specs/dataset/spec.md`, el typo `JUCIOSO` → `JUICIOSO
 - Blender 5.2.3 LTS se usó solo para importar copias de visualización sin clips y
   renderizar; **no se exportó desde Blender el GLB candidato**. Se evitó así alterar
   las curvas por conversión. La forma natural de las manos queda a revisión del owner.
-- Referencia formal leída: `../sign-ai-docs/latex/srs/main.tex:330–340`, corpus
+- Referencia formal leída: `../signall-docs/latex/srs/main.tex:330–340`, corpus
   cerrado y reproducción de movimientos preparados. No se modificaron documentos.
 - Pendiente: aprobación visual. No se integró, compiló ni instaló la app: el APK
   permanece intacto por el alcance solicitado. Sin commit ni push.
@@ -179,7 +179,7 @@ sin commitear (`openspec/specs/dataset/spec.md`, el typo `JUCIOSO` → `JUICIOSO
   Todos esos huesos tienen canales de rotación explícitos en los 200 clips.
 - Fuentes originales sin cambios: asset Pauline SHA-256
   `663139385dbf8f9fdce41d5c1753124460a95abed322f4fd9e136e087482722b`;
-  `../signai-avatar/models/Pauline.glb` en `fc6f372`, SHA-256
+  `../signall-avatar/models/Pauline.glb` en `fc6f372`, SHA-256
   `fd2d27779726af385d1d0a7ac8a2e474e2cd51e185777a510acf8e6839d1c313`.
 - Pendiente aprobación visual de Pauline e integración explícita posterior.
   No se modificó ni instaló la app; los candidatos continúan separados.
@@ -196,7 +196,7 @@ sin commitear (`openspec/specs/dataset/spec.md`, el typo `JUCIOSO` → `JUICIOSO
 - Se regeneraron los dos GLB, `avatars.json` y `manifest.json`. `SignsCatalog.kt`
   no cambia. Los GLB resultantes coinciden byte a byte con las copias aprobadas:
   200 clips y binario idénticos al asset anterior; solo seis rotaciones cambiadas.
-- Fuentes de `../signai-avatar` intactas. La advertencia histórica de bind de
+- Fuentes de `../signall-avatar` intactas. La advertencia histórica de bind de
   Pauline sigue presente, sin intentar cambiarla dentro de este alcance.
 - `./gradlew build -Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate` pasó
   (incluido ktlint); `installDebug` con la misma propiedad instaló en el Redmi

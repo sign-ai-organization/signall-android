@@ -7,9 +7,9 @@ frases usar, qué señas hay y qué significa cada número.
 > **Si llegaste desde `develop`:** este archivo cambió entero con el flujo por
 > oraciones. Lo que aquí dice "antes" es el camino por palabras, que ya no
 > existe. El plan del cambio está en
-> `../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10, y el resumen de qué
-> cambió en cada repo está en `docs/CAMBIOS.md`, `../sign-ai-backend/docs/CAMBIOSBACKEND.md`
-> y `../sign-ai-stt/docs/CAMBIOSSTT.md`.
+> `../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md` §10, y el resumen de qué
+> cambió en cada repo está en `docs/CAMBIOS.md`, `../signall-backend/docs/CAMBIOSBACKEND.md`
+> y `../signall-stt/docs/CAMBIOSSTT.md`.
 
 ---
 
@@ -39,7 +39,7 @@ limpia, la misma en los dos modos.
 
 ### Lo que se midió (28 fixtures, backend + STT reales, 2026-10-15)
 
-Las 28 frases de `../sign-ai-stt/fixtures/audio` reproducidas por el WebSocket a
+Las 28 frases de `../signall-stt/fixtures/audio` reproducidas por el WebSocket a
 velocidad 1x, con `qwen3:4b-instruct` en Ollama local (`127.0.0.1:11434`) y la
 caché semántica vacía:
 
@@ -81,7 +81,7 @@ no alcanza: el proceso sigue con la copia en memoria y la segunda pasada sigue
 saliendo a 1 ms.
 
 ```bash
-cd ../sign-ai-backend
+cd ../signall-backend
 export $(grep -o '^DATABASE_URL=.*' .env | head -1 | xargs)
 psql "$DATABASE_URL" -c "DELETE FROM semantic_cache;"
 docker compose restart backend        # <- sin esto no es una medición en frío
@@ -106,7 +106,7 @@ tools/medir-retraso.py                        # cuánto se sigue representando t
 ### Requisitos previos
 
 ```bash
-cd ../sign-ai-backend && docker compose up -d --build   # backend + STT
+cd ../signall-backend && docker compose up -d --build   # backend + STT
 curl -s 127.0.0.1:8080/health   # {"status":"ok","cache_loaded":true,"cache_rows":0}
 curl -s 127.0.0.1:8000/health   # {...}
 ```
@@ -395,7 +395,7 @@ se sigue representando después de que el hablante terminó de hablar.
 Por qué, en orden de peso:
 
 1. **Alteraba la variable que había que medir.** La prueba obligatoria **PR-PER-04**
-   (`../sign-ai-docs/plan-pruebas/01-diseno/personas/pruebas.md`) pregunta a
+   (`../signall-docs/plan-pruebas/01-diseno/personas/pruebas.md`) pregunta a
    usuarios con LSC si la velocidad es adecuada, de 1 a 5. Con el adelanto prendido
    la respuesta mezclaba la velocidad que eligió la persona con un factor que
    nadie le dijo, y la prueba no podía separarlas.
@@ -477,11 +477,11 @@ habría parecido roto.
 
 ```bash
 # ¿el contrato del WebSocket sigue igual? qué se traduce, qué no, y el `end`
-docker compose -f ../sign-ai-backend/docker-compose.yml exec backend \
+docker compose -f ../signall-backend/docker-compose.yml exec backend \
     python scripts/verify_client_frames.py
 
 # ¿el divisor de oraciones parte bien?
-docker compose -f ../sign-ai-backend/docker-compose.yml exec backend \
+docker compose -f ../signall-backend/docker-compose.yml exec backend \
     python scripts/verify_sentence_segmenter.py
 
 # extremo a punta, sin hablar
@@ -499,7 +499,7 @@ Los `.wav` **no están en el repo** (son 1,5 MB de binario); sí están los `.js
 Se generan con Piper:
 
 ```bash
-cd ../sign-ai-stt
+cd ../signall-stt
 ./venv/bin/python scripts/make_audio_fixtures.py --all
 ```
 

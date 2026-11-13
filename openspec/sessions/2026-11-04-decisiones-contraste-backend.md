@@ -13,15 +13,15 @@ puntos 2, 7 y 14 son de documentos y quedaron para la sesión aparte.
 
 | Punto | Archivo | Qué cambió |
 |---|---|---|
-| 1 | `../sign-ai-backend/app/controller/controller.py` y `router.py` | `handle_audio_chunk` rechaza un fragmento vacío, uno impar o uno mayor a `AUDIO_MAX_CHUNK_BYTES` (32 KiB) y devuelve `False`; el bucle de lectura manda el frame `error`, cierra con código **1008** y corta la sesión. Contador `audio_chunks_rejected_total{reason}` |
-| 1 | `../sign-ai-backend/scripts/verify_audio_validation.py` | **Nuevo.** Los tres rechazos y el caso válido, sin STT ni base |
+| 1 | `../signall-backend/app/controller/controller.py` y `router.py` | `handle_audio_chunk` rechaza un fragmento vacío, uno impar o uno mayor a `AUDIO_MAX_CHUNK_BYTES` (32 KiB) y devuelve `False`; el bucle de lectura manda el frame `error`, cierra con código **1008** y corta la sesión. Contador `audio_chunks_rejected_total{reason}` |
+| 1 | `../signall-backend/scripts/verify_audio_validation.py` | **Nuevo.** Los tres rechazos y el caso válido, sin STT ni base |
 | 3 | `.env`, `.env.local`, `.env.local.example`, `.gitignore`, `docker-compose.yml` | `.env` queda con `gpt-4o-mini`, `LLM_BASE_URL` vacío, 5000 ms y 1 reintento. Qwen pasa a `.env.local`, que no se versiona y compose monta si existe (`required: false`) |
 | 3 | `scripts/verify_official_config.py` | **Nuevo.** Verifica las dos configuraciones y que `.env.local` no entre al repo |
 | 4 | `docs/sdd.md` | Sincronizado en §7.1 (`handleText(text, turn)`, `Gloss.semanticCategory`, `CatalogEntry.semanticCategory`, `SemanticCache.lookup/store` con glosas), §7.2 (`done` también en el error) y §7.5 (etiqueta `source`, dos tramos, direcciones enmascaradas y `/health`) |
 | 4 | `docs/sdd-changes.md` | Las tres entradas del 2026-10-21 y la de métricas quedan marcadas como **aplicadas** |
 | 5 | `data/SignAiWebSocketClient.kt` | `sendText` devuelve el turno y lo manda en el frame; el contador arranca en 1 en cada conexión. `Segment`, `PhraseDone` y `Failure` llevan `turn: Int?` |
 | 5 | `ui/state/MainScreenState.kt` | `currentTurn` compara el turno de cada frame y descarta segmentos, `done` y `error` de turnos viejos. `StaleTurn` queda como respaldo cuando el backend no manda el campo |
-| 6 | `../sign-ai-backend/app/main.py` | `_redact_url` deja esquema y ruta y oculta host y puerto en `/metrics.json` |
+| 6 | `../signall-backend/app/main.py` | `_redact_url` deja esquema y ruta y oculta host y puerto en `/metrics.json` |
 | 6 | `scripts/verify_endpoints.py` | **Nuevo.** Verifica el enmascarado y el estado del catálogo en `/health` |
 | 10 | `app/main.py` | `/health` publica `catalog_loaded` y `catalog_glosses`; con el catálogo vacío responde `degraded` |
 | 11 | `app/config/settings.py`, `app/persistence/database.py`, `app/nlp/semantic_cache.py`, `app/main.py` | `DB_CONNECT_TIMEOUT_SECONDS` (5 s) y `DB_ACQUIRE_TIMEOUT_SECONDS` (5 s); el segundo se pasa a cada `pool.acquire` |
@@ -66,7 +66,7 @@ puntos 2, 7 y 14 son de documentos y quedaron para la sesión aparte.
 
 ## Qué quedó pendiente
 
-- **Punto 2:** reescribir RF-CAT-03 en `../sign-ai-docs` y Overleaf. Sesión de documentos.
+- **Punto 2:** reescribir RF-CAT-03 en `../signall-docs` y Overleaf. Sesión de documentos.
 - **Punto 7:** la tanda de documentos y Overleaf, con control de cambios. Sesión aparte.
 - **Punto 8:** quitar o enmascarar el texto de las frases en los logs **antes** de una demo
   con personas reales. Hoy se queda, como se decidió.

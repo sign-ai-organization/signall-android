@@ -2,7 +2,7 @@
 
 **Día:** miércoles 2026-10-15 · **Rama:** `flujo-oraciones` (sin mergear)
 
-La tercera y última fase de `../sign-ai-docs/auditoria-flujo-2026-10-15.md` §6.3:
+La tercera y última fase de `../signall-docs/auditoria-flujo-2026-10-15.md` §6.3:
 sacar de la app el camino por palabras y dejar dos modos que tienen reglas
 distintas — el dictado **espera** y el en vivo **manda solo** — con la oración como
 unidad de entrega.
@@ -238,7 +238,7 @@ imposible. Ya está pisado y documentado en `tools/TIEMPO-REAL.md` §8.
 - [ ] Decidir **cuándo** se mergea `flujo-oraciones` a `main` en los tres repos.
       La base ya está decidida (ver arriba); lo que falta es el momento.
 - [ ] **Propagar la desviación de RF-UI-01** al documento de requerimientos
-      (`../sign-ai-docs/documentos/requerimientos/`) y a `trazabilidad.md`: RF-UI-01
+      (`../signall-docs/documentos/requerimientos/`) y a `trazabilidad.md`: RF-UI-01
       va de "Parcial" a un criterio distinto, y RF-STT-03 y RNF-REL-04 de "No
       implementado" a implementado.
 - [ ] Repetir `medir-primera-sena.py` con el LLM de producción y no con Ollama

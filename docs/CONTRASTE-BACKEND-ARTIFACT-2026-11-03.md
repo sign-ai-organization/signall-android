@@ -82,7 +82,7 @@ que Overleaf, en este minuto, sea idéntico a esa copia.**
 ## 1. Qué proponía el artifact y qué concluía
 
 El artifact no es un contraste nuevo: es una **revalidación** del contraste que ya
-existía en `../sign-ai-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`, con una
+existía en `../signall-backend/docs/CONTRASTE-BACKENDvsDOCUMENTOS.md`, con una
 columna añadida —«main hoy»— que miraba `a03bbc9`. Su valor está en tres cosas:
 ordenó las 43 filas, separó los cambios de código que el documento no numeraba
 (17), listó los nueve puntos de la §10.3 y agregó dos bloques que el documento no
@@ -161,7 +161,7 @@ artifact** · **❔ no verificable**.
 | 18 | El SRS dice «el NLP no consume memoria» | ✅ | Corregido: «El procesamiento del lenguaje natural sí consume memoria…» (`latex/srs/main.tex:1287-1290`) |
 | 19 | El SRS dice «dos puntos de entrada»; son cuatro | ✅ | `main.py:186`, `:199`, `:212` y `router.py:200`; el SRS dice cuatro (`latex/srs/main.tex:712`) |
 | 20 | El SRS dice FastAPI 0.115 y LangChain 1.4.6 | ✅ | SRS 0.143.0 / 1.4.5 (`latex/srs/main.tex:1110`, `:1131`); `requirements.txt:2` y `:14`; la imagen del 21/10 tiene exactamente esas versiones |
-| 21 | El SRS dice «8 s de audio por frase» del servidor | ✅ | El tope está en el STT (`../sign-ai-stt/app/config.py:51`, `MAX_BUFFER_MS=8000`); el SRS ya lo atribuye al STT (`latex/srs/main.tex:1278`) |
+| 21 | El SRS dice «8 s de audio por frase» del servidor | ✅ | El tope está en el STT (`../signall-stt/app/config.py:51`, `MAX_BUFFER_MS=8000`); el SRS ya lo atribuye al STT (`latex/srs/main.tex:1278`) |
 | 22 | RF-INT-SW-01 dice que el STT es «componente interno» | ✅ | `v0.16:145` dice «servicio propio… por WebSocket»; RNF-POR-02 lo pone en contenedor aparte (`v0.16:846`) |
 | 23 | RNF-SEC-01 pide un límite por cliente | ✅ | Requisito reescrito a medir sesiones (`v0.16:756-761`, SRS `main.tex:2847`); el código publica `sessions_active` y `sessions_total` (`router.py:216-217`) |
 | 24 | RNF-SEC-02 pide validar que lo recibido sea audio | 🔴 | El requisito sigue (`v0.16:765-771`, SRS `main.tex:2856`) y el código **no valida nada**: `controller.py:102-121` reenvía cualquier byte, incluido vacío o impar |
@@ -224,12 +224,12 @@ código: es una configuración que pisa la decisión.
 | E9 | Eco de la frase escrita | ✅ | `handle_text` no llama a `send_transcript` (`controller.py:129-184`); `handle_transcript` solo reenvía (`:202-217`) |
 | E10 | Migración 003: cuatro columnas en `catalog` | ✅ | `migrations/003_add_catalog_asset_metadata.sql`; en Neon están `fps`, `total_frames`, `asset_bytes`, `asset_sha256` |
 | E11 | Normalización del catálogo | ✅ | `catalog_repository.py:13-29` (`normalize_gloss`, conserva la Ñ) |
-| E12 | Lectura periódica del `/health` del STT | ✅ | `main.py:157-179` cada 30 s; el STT publica `silence_timeout_ms` (`../sign-ai-stt/app/main.py:35-42`) |
+| E12 | Lectura periódica del `/health` del STT | ✅ | `main.py:157-179` cada 30 s; el STT publica `silence_timeout_ms` (`../signall-stt/app/main.py:35-42`) |
 | E13 | RMS sin `audioop` | ✅ | `controller.py:55-73` |
 | E14 | Métricas en el código | 🟡 | Métricas sí (`main.py:199-230`); **`/metrics.json` sigue publicando `llm_base_url` y `stt_ws_url` sin enmascarar** (`main.py:219`, `:223`) → S2 |
 | E15 | Vaciar el caché antes de remedir | 🟡 | Sigue siendo manual; `CLAUDE.md:90-96` dice `DELETE` sin reiniciar → S3 |
 | E16 | `flujo-oraciones` pasó a `main` | ✅ | `respaldo/main-2026-10-21` existe (`979e99d`); hoy `develop` y `main` están en `c8aa516` |
-| E17 | Borrado de `docs/requirements.md` | 🟡 | Borrado, y `CLAUDE.md:28` apunta al v0.16; **la ruta que usa ya no existe**: `../sign-ai-docs/documentos/requerimientos/` (hoy es `borradores/requerimientos/`) |
+| E17 | Borrado de `docs/requirements.md` | 🟡 | Borrado, y `CLAUDE.md:28` apunta al v0.16; **la ruta que usa ya no existe**: `../signall-docs/documentos/requerimientos/` (hoy es `borradores/requerimientos/`) |
 
 ---
 
@@ -316,7 +316,7 @@ código: es una configuración que pisa la decisión.
     encendida. La decisión de §6.1 (oficial `gpt-4o-mini`, local en `.env.local`)
     no se ejecutó, y no existe `.env.local`.
 
-12. **La ruta de los requerimientos ya no existe.** `../sign-ai-docs/documentos/`
+12. **La ruta de los requerimientos ya no existe.** `../signall-docs/documentos/`
     no está; el consolidado vive en `borradores/requerimientos/`. `CLAUDE.md:28`
     del backend, `AGENTS.md` de la app y las citas del contraste apuntan a la ruta
     vieja.
@@ -428,16 +428,16 @@ necesitan una respuesta antes de que alguien escriba en el SRS o en el SDD.
 ## Anexo: comprobaciones que se pueden repetir
 
 ```bash
-# Desde ../sign-ai-backend
+# Desde ../signall-backend
 # Estado de los repos
-git -C ../sign-ai-backend log --oneline -1        # c8aa516
-git -C ../sign-ai-stt log --oneline -1            # 7a571c2
-git -C ../sign-ai-docs log --oneline -1           # c778326
+git -C ../signall-backend log --oneline -1        # c8aa516
+git -C ../signall-stt log --oneline -1            # 7a571c2
+git -C ../signall-docs log --oneline -1           # c778326
 
 # Los 12 PNG, en los tres destinos
-md5sum ../sign-ai-docs/diagramas/png/*.png \
-       ../sign-ai-backend/docs/diagrams/*.png \
-       ../sign-ai-docs/latex/sdd/images/*.png
+md5sum ../signall-docs/diagramas/png/*.png \
+       ../signall-backend/docs/diagrams/*.png \
+       ../signall-docs/latex/sdd/images/*.png
 
 # Los scripts del backend, con el código actual y sin red
 docker run --rm --network none -v "$PWD":/app -w /app \

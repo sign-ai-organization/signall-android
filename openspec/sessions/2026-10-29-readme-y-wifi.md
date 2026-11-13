@@ -34,7 +34,7 @@ los dos en `Marmolejo Villalba_5G`:
 
 | Qué | Valor | Cómo |
 |---|---|---|
-| Arranque del STT | ~10 s hasta `/health` | `docker compose up -d` desde `../sign-ai-backend` |
+| Arranque del STT | ~10 s hasta `/health` | `docker compose up -d` desde `../signall-backend` |
 | Arranque del backend | ~52 s hasta `/health` | ídem, con modelo `medium` en GPU y catálogo de Neon |
 | ADB por WiFi | `adb tcpip 5555` + `adb connect 192.168.80.19:5555` | la entrada USB y la de red conviven; mDNS lo anuncia como `adb-1ed6699f` |
 | Instalación por red | 26 s con `ANDROID_SERIAL`, 10 s sin cable | `installDebug -Psignai.backendWsUrl=ws://192.168.80.49:8080/ws/translate` |
@@ -63,7 +63,7 @@ resolvió por cuenta propia**:
 
 1. **Decisión del owner sobre el 8080.** O se acepta que Docker lo publique (y se corrige
    `plan-wifi.md`), o se cierra con reglas en `DOCKER-USER` / volviendo a red de host.
-   Es en `../sign-ai-backend`.
+   Es en `../signall-backend`.
 2. **`plan-wifi.md` fase 3** (dirección editable en AVANZADO): es lo que hace que cambiar
    de red no obligue a recompilar. Sin eso, "en cualquier red" no se cumple.
 3. **Windows**: el procedimiento del README está marcado como *esperado*, no verificado.

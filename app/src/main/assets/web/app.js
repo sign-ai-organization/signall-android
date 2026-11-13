@@ -132,7 +132,7 @@ let defaultSignUrl = DEFAULT_SIGN_URL;
 // Los tres porqués de quitarla, en orden de peso:
 //
 //   1. **Alteraba la variable que había que medir.** La prueba obligatoria
-//      PR-PER-04 (`../sign-ai-docs/plan-pruebas/01-diseno/personas/pruebas.md`)
+//      PR-PER-04 (`../signall-docs/plan-pruebas/01-diseno/personas/pruebas.md`)
 //      pregunta a usuarios con LSC si la velocidad es adecuada, en una escala de
 //      1 a 5. Con el adelanto prendido la misma respuesta mezcla dos cosas —la
 //      velocidad que eligió la persona y un factor que nadie le dijo— y la
@@ -145,7 +145,7 @@ let defaultSignUrl = DEFAULT_SIGN_URL;
 //      SDD; solo en este archivo y en la auditoría del 15 de octubre. Y dos
 //      números mágicos sin criterio escrito (`2` y `1.6`) contradicen la regla
 //      del backend de que ningún umbral numérico va hardcodeado en la lógica
-//      funcional (`../sign-ai-backend/CLAUDE.md`).
+//      funcional (`../signall-backend/CLAUDE.md`).
 //
 // Lo que sí era cierto y sigue siendo cierto: las 32 señas duran 2,15 s de
 // media y una frase larga tarda más en representarse de lo que se dice. Eso ya

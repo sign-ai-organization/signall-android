@@ -6,7 +6,7 @@ conjunto de validación con FR-02, que trae las mismas convenciones de glosa y n
 está en el prompt del modelo.
 
 Las frases y sus glosas de referencia se leen del documento de datos de la tesis
-(`../sign-ai-docs/borradores/plan-pruebas/02-datos/`), así que no hay una segunda
+(`../signall-docs/borradores/plan-pruebas/02-datos/`), así que no hay una segunda
 copia que se pueda desincronizar. Cuenta:
 
 - frases con glosas exactas (mismo contenido y mismo orden),

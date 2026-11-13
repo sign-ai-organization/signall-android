@@ -176,11 +176,11 @@ lingüística de los 400 clips.
 - Scripts, visores, comprobaciones y capturas en
   `docs/evidencias/transiciones-2026-11-11/`, subcarpetas `v2/` y `v3/`.
 - V2 modifica solo seis rotaciones por variante de `0000`. V3 no cambia GLB.
-- Fuentes: `../signai-avatar/models/`, commit
+- Fuentes: `../signall-avatar/models/`, commit
   `fc6f372c8412010d85925fe342fdcf0c073fbdf1`; fuentes intactas.
 - La prueba del visor no es una prueba del controlador de reproducción real,
   ni una medición de latencia, ni una revisión de cada seña.
-- El SRS vigente, `../sign-ai-docs/latex/srs/main.tex:339–340`, establece
+- El SRS vigente, `../signall-docs/latex/srs/main.tex:339–340`, establece
   concatenación de señas grabadas mediante interpolación; no se crean señas.
 
 ## Hallazgo al preparar la extensión

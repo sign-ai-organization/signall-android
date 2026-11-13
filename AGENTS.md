@@ -32,7 +32,7 @@ explicar, y el detalle técnico después de la idea, no antes.
   discutir, y una cifra de fixture no es una cifra de persona. Decí siempre
   "medido con 28 frases reproducidas por el socket", no "medido".
 - **No inventes terminología.** Si una palabra no está en
-  `../sign-ai-docs/latex/` ni en `../sign-ai-docs/borradores/`, es palabra mía hasta que el
+  `../signall-docs/latex/` ni en `../signall-docs/borradores/`, es palabra mía hasta que el
   owner la avale. Preguntá antes de escribir una en un documento.
 - **Una decisión, una pregunta.** Cuando algo sea decisión del owner, presentá las
   opciones con lo que se gana y lo que se pierde, y pará ahí. No advanced por las
@@ -49,7 +49,7 @@ El owner decidió (2026-10-17) que ninguna fuente se resuelve por cuenta propia.
 ahora son **dos**:
 
 1. **Este repo** — el código.
-2. **`../sign-ai-docs`** — los documentos: los formales en `latex/` (SRS, SDD, memoria, plan de
+2. **`../signall-docs`** — los documentos: los formales en `latex/` (SRS, SDD, memoria, plan de
    pruebas, plan de administración) y los borradores en `borradores/`, con los cambios
    pendientes en `cambios/`.
 
@@ -62,8 +62,8 @@ El flujo que pidió el owner:
    dos está mal —el **documento** o el **código**— y ahí preguntarle al owner.
 
 Un detalle práctico: los documentos son `.tex` que se compilan con `make` desde
-`../sign-ai-docs`. **Un cambio en un documento no está terminado hasta que compila**
-(`cd ../sign-ai-docs && make srs`), y lo que se tocó se ve en `git diff`: desde que Overleaf
+`../signall-docs`. **Un cambio en un documento no está terminado hasta que compila**
+(`cd ../signall-docs && make srs`), y lo que se tocó se ve en `git diff`: desde que Overleaf
 se retiró, el control de cambios es el historial de git, no una herramienta aparte.
 
 ### No hay desempate entre dos documentos
@@ -77,7 +77,7 @@ discutir.
 
 **Cuál de los dos está mal lo decide el owner.** La sesión puede proponer el texto y dejarlo
 en el `.tex`, pero una divergencia de contenido no se resuelve escribiendo por cuenta propia:
-se anota en `../sign-ai-docs/cambios/` o en el log de sesión y se pregunta.
+se anota en `../signall-docs/cambios/` o en el log de sesión y se pregunta.
 
 ---
 
@@ -87,10 +87,10 @@ Cualquier sesión que toque el pipeline tiene que mirar los hermanos antes de de
 
 | Repo | Qué es | Rama | Puerto |
 |---|---|---|---|
-| `../sign-ai-backend` | FastAPI: WS con el cliente, NLP de glosas, catálogo, caché semántico, Neon | `main` | 8080 |
-| `../sign-ai-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `main` | 8000 |
-| `../sign-ai-docs` | **Los documentos de la tesis**: los formales en `latex/` (SRS, SDD, memoria, plan de pruebas, SPMP) y los borradores en `borradores/`. Se compilan con `make` | `main` | — |
-| `../signai-avatar` | Producción de las animaciones (Cascadeur): versiona los **GLB finales** de Juan y Pauline, 200 clips cada uno (50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada | `dev` | — |
+| `../signall-backend` | FastAPI: WS con el cliente, NLP de glosas, catálogo, caché semántico, Neon | `main` | 8080 |
+| `../signall-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `main` | 8000 |
+| `../signall-docs` | **Los documentos de la tesis**: los formales en `latex/` (SRS, SDD, memoria, plan de pruebas, SPMP) y los borradores en `borradores/`. Se compilan con `make` | `main` | — |
+| `../signall-avatar` | Producción de las animaciones (Cascadeur): versiona los **GLB finales** de Juan y Pauline, 200 clips cada uno (50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada | `dev` | — |
 
 Reglas por repo:
 
@@ -101,7 +101,7 @@ Reglas por repo:
   nunca commitear), el STT tiene `README.md`.
 - **Los `.drawio` y el `.md` de requerimientos los edita el owner**: los cambios grandes
   se proponen, no se aplican en silencio.
-- **`../signai-avatar` es la fuente de los GLB de esta app.** En su rama `dev` versiona
+- **`../signall-avatar` es la fuente de los GLB de esta app.** En su rama `dev` versiona
   `models/Juan.glb` y `models/Pauline.glb` (200 clips cada uno: 50 señas × 4 marcas
   faciales; desde el 2026-11-04 con esas caras). De ahí los lee `tools/pack_avatars.py`; no se copian ni se editan a
   mano, y sus commits no los hace esta sesión sin que el owner lo pida. La demo Flask de
@@ -142,7 +142,7 @@ Para cambiar un frame o un nombre de métrica: cargá el skill **`contrato-webso
 3. **Cada sesión deja rastro donde corresponde**: `openspec/sessions/YYYY-MM-DD-<slug>.md`
    acá y en el repo hermano que se tocó. Cuando el dato venga de afuera, dejar **de qué
    repo y de qué commit** salió: sin eso la próxima sesión no puede reproducirlo.
-4. **Referenciá los hermanos por ruta relativa** (`../sign-ai-backend`), nunca con rutas
+4. **Referenciá los hermanos por ruta relativa** (`../signall-backend`), nunca con rutas
    absolutas de esta máquina: las sesiones se corren en directorios distintos.
 5. **Los números se miden donde están.** Latencias del device acá (`adb logcat -s
    SignAllMetrics`), del STT y del backend allá. Un p50 del avatar mezclado con un p50 del
@@ -176,7 +176,7 @@ Trampas que hacen perder tiempo:
   del **usuario** como anclas; apunta a `wss://127.0.0.1:8443/ws/translate`. El túnel es
   `adb reverse tcp:8443 tcp:443`, porque el `443` no se puede mapear en el teléfono
   (`cannot bind listener: Permission denied`). El proxy y el certificado los levanta el
-  backend (`../sign-ai-backend/deploy/`, `docs/plan-proxy-tls.md`); si falta la CA de
+  backend (`../signall-backend/deploy/`, `docs/plan-proxy-tls.md`); si falta la CA de
   laboratorio en el teléfono, el handshake falla con `Trust anchor for certification path
   not found` y eso **no** es un problema de la app. `demo` comparte `applicationId` con
   `debug`, así que lo reemplaza: después de la demo, `./gradlew installDebug`.
@@ -243,7 +243,7 @@ Las ramas remotas `origin/develop` **no se borraron**: son historia y borrarlas 
 de los hermanos es cosa del owner. **No las uses ni las Actualices**: no son un sitio donde
 trabajar.
 
-`../signai-avatar` queda aparte: su rama de trabajo es `dev` y ahí **no se toca nada** por
+`../signall-avatar` queda aparte: su rama de trabajo es `dev` y ahí **no se toca nada** por
 decisión del owner.
 
 **El flujo por oraciones ya está en `main`** (2026-10-21). La rama `flujo-oraciones` fue el
@@ -393,7 +393,7 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
 - **`models/avatars.json`** es el inventario reproducible: hash y tamaño de cada fuente
   original, del archivo empaquetado, clips, articulaciones, variantes y la advertencia de
   pose de bind de Pauline. Los originales `Juan.glb` y `Pauline.glb` viven versionados en
-  `../signai-avatar/models/` (rama `dev`) y no se editan. `../material-3d/Avatares/`
+  `../signall-avatar/models/` (rama `dev`) y no se editan. `../material-3d/Avatares/`
   conserva la versión anterior (`*_final.glb`, 2026-10-24), que ya **no** es la fuente.
 - **`assets/web/signs/` ya no existe** (borrado el 2026-10-22: 32 `.glb`, 5,7 MB en el
   APK). Era el layout viejo y nadie los pedía porque toda glosa del catálogo resuelve su
@@ -401,7 +401,7 @@ cada comando están ahí, no en este archivo. Kotlin los llama con
   identificador** que manda el backend y `app.js` la sigue parseando para sacar el `<id>`;
   lo que ya no hay es un archivo detrás. No la "limpies" del código: es el contrato.
 - **Nunca edites `models/juan.glb` ni `models/pauline.glb` a mano**: se regeneran con
-  `tools/pack_avatars.py` desde `../signai-avatar/models/Juan.glb` y
+  `tools/pack_avatars.py` desde `../signall-avatar/models/Juan.glb` y
   `.../Pauline.glb`, que también reescriben `models/avatars.json`, `manifest.json` y
   `domain/SignsCatalog.kt`. El script hornea la pose de descanso y poda los morph targets
   que ninguna de las 200 variantes mueve. `tools/pack_signall.py` es el pipeline viejo de
@@ -463,7 +463,7 @@ pide. La regla es leer la fila antes de decidir, no después.
 | **Si el código y los documentos no coinciden, o hay que decidir si manda el código o el documento** | skill **`fuentes-de-verdad`** — las dos fuentes, el flujo de revisión y qué hacer cuando no alinean |
 | **Leer, corregir o compilar los documentos de la tesis** | skill **`documentos-tesis`** — dónde viven, cómo se editan, cómo se compilan con `make` y qué se hace con una divergencia |
 | **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, estructura de `sign-ai-docs` |
-| **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | **`ls docs/CONTRASTE-*.md`**. Los contrastes son documentos de trabajo de una sesión: se crean, se actualizan y a veces se borran, así que no hay una lista fija — se buscan por nombre. Cada repo tiene el suyo en su `docs/` (el del backend está en `../sign-ai-backend/docs/`) |
+| **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | **`ls docs/CONTRASTE-*.md`**. Los contrastes son documentos de trabajo de una sesión: se crean, se actualizan y a veces se borran, así que no hay una lista fija — se buscan por nombre. Cada repo tiene el suyo en su `docs/` (el del backend está en `../signall-backend/docs/`) |
 | **El micrófono, el modo en vivo, la cola de la escena o la latencia** | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) + `tools/TIEMPO-REAL.md` |
 | **Probar o verificar en el device, o "va lento"** | skill **`controlar-app-movil`** — qué herramienta usar, y los errores ya pisados |
 | **Compose, Lumo, accesibilidad o performance** | skill **`compose-best-practices`** (Lumo/Phosphor, cero Material 3) + `ui/designsystem/Color.kt` |
@@ -482,17 +482,17 @@ Se invocan con `@nombre`.
 # Los documentos de la tesis: locales y compilables
 
 Desde el **2026-11-04** los cinco documentos formales —SRS, SDD, memoria, plan de pruebas y
-plan de administración— viven en `../sign-ai-docs/latex/`, uno por carpeta, y **ese
+plan de administración— viven en `../signall-docs/latex/`, uno por carpeta, y **ese
 repositorio es la fuente de verdad**. Overleaf se retiró ese día y su MCP se quitó de la
 configuración global: no hay copia que sincronizar ni nada que se edite en dos lugares.
 
-- **Se edita el `.tex` y se compila**: `cd ../sign-ai-docs && make srs`. Un documento que no
+- **Se edita el `.tex` y se compila**: `cd ../signall-docs && make srs`. Un documento que no
   compila no es un cambio terminado, y el error se lee; no se reintenta hasta que pase.
 - **El control de cambios es git.** `git diff` dice qué se tocó y `git log` cuándo. Los
-  cambios de fondo se anotan en `../sign-ai-docs/cambios/`.
+  cambios de fondo se anotan en `../signall-docs/cambios/`.
 - **Escribir en `latex/` se pide, igual que antes**: una corrección de redacción se hace; una
   divergencia de contenido se pregunta primero (ver § Las dos fuentes de verdad).
-- **Los diagramas** se editan en `../sign-ai-docs/diagramas/draw.io/` y se exportan a
+- **Los diagramas** se editan en `../signall-docs/diagramas/draw.io/` y se exportan a
   `diagramas/png/`; los PNG que están dentro de `latex/` existen para que el documento
   compile.
 - **`versiones-pasadas/` es historia**: no se edita ni se cita como si fuera vigente.

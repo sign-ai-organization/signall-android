@@ -24,8 +24,8 @@
 # el STT en 8000 y un dispositivo adb conectado para el bloque de dispositivo.
 set -uo pipefail
 
-BACKEND_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../sign-ai-backend" && pwd)"
-STT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../sign-ai-stt" && pwd)"
+BACKEND_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../signall-backend" && pwd)"
+STT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../signall-stt" && pwd)"
 BACKEND_URL="${SIGNALL_BACKEND_URL:-ws://127.0.0.1:8080/ws/translate}"
 FIXTURES="${SIGNALL_FIXTURES:-$STT_DIR/fixtures/audio}"
 PKG="com.signall.app"

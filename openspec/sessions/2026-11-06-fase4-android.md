@@ -10,7 +10,7 @@
 
 - **RES-03:** `BackendEvent.Capabilities`, el caso `capability` en `SignAiWebSocketClient.kt` y
   `sttAvailable` en `MainScreenState` (que deshabilita el micrófono). El backend envía el frame
-  en `../sign-ai-backend/app/controller/controller.py` (`send_capability`).
+  en `../signall-backend/app/controller/controller.py` (`send_capability`).
 - **AVT-03:** opción B (decisión D3 del 2026-11-05): una frase nueva se encola detrás de la que
   suena, con tope `MaxQueuedPhrases = 1`.
 
@@ -28,5 +28,5 @@ avatar en blanco o con otra glosa durante el resto de la frase.
 
 ## Pendiente (otro lado)
 
-- `../sign-ai-backend/docs/android-integration.md` no describe el frame `capability`. No se
+- `../signall-backend/docs/android-integration.md` no describe el frame `capability`. No se
   tocó: es otro repositorio.

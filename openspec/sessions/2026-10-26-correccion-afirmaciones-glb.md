@@ -94,13 +94,13 @@ sección:
   clips los dejan casi quietos. Implementar marcadores es rig + assets + escena, y
   decisión del owner.
 - **No se abrió Overleaf.** No hizo falta para corregir afirmaciones sobre el GLB.
-- **No se tocaron los hermanos.** Ni `../sign-ai-docs` ni `../sign-ai-backend`.
+- **No se tocaron los hermanos.** Ni `../signall-docs` ni `../signall-backend`.
 
 ## Propuestas para documentos que no se editan desde acá
 
 No se aplicaron; quedan para el owner.
 
-**`../sign-ai-docs/plan-pruebas`**
+**`../signall-docs/plan-pruebas`**
 
 - `00-bases/trazabilidad.md:140` (RF-INT-HW-04): "hoy hay 32 de las 50" →
   "hoy hay 50 de las 50 (2026-10-22)".
@@ -111,7 +111,7 @@ No se aplicaron; quedan para el owner.
 - `01-diseno/avatar/general.md:32`: "(hoy 32 de las 50)" → "(hoy 50 de las 50)".
 - `01-diseno/avatar/pruebas.md:59`: "lleva 32 de las 50 animaciones" → "lleva las 50".
 
-**`../sign-ai-backend/docs/android-integration.md`**
+**`../signall-backend/docs/android-integration.md`**
 
 - Líneas 219 y 221: `glb_path` `/static/glb/hola.glb` y `/static/glb/como.glb` →
   `signs/0030_0000_0000.glb` y `signs/0044_0000_0000.glb`. **Ojo:** el path real no es

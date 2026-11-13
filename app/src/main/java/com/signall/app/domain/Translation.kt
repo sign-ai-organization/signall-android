@@ -1,7 +1,7 @@
 package com.signall.app.domain
 
 /**
- * Translation result coming from `../sign-ai-backend`. Mirrors the Python
+ * Translation result coming from `../signall-backend`. Mirrors the Python
  * `PhraseType` / `Gloss` / `ValidatedSegment` of `app/domain/models.py`; the
  * wire's snake_case keys are mapped to camelCase here.
  */

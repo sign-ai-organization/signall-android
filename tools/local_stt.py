@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """STT local para el mock: transcripción del audio que manda la app.
 
-El backend real delega la transcripción en el repo `../sign-ai-stt`
+El backend real delega la transcripción en el repo `../signall-stt`
 (faster-whisper). Para no depender de ese contenedor, el mock usa los motores
 y los modelos que ya están en `~/.cache/opencode-voice/`, sin descargar nada.
 

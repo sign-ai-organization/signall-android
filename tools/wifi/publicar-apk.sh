@@ -12,7 +12,7 @@
 #   2. avisa si el certificado de laboratorio no cubre esa IP,
 #   3. compila `demo` con esa dirección adentro, así el APK recién instalado
 #      conecta sin tocar nada,
-#   4. copia el APK a `../sign-ai-backend/deploy/apk/`, que Caddy sirve en
+#   4. copia el APK a `../signall-backend/deploy/apk/`, que Caddy sirve en
 #      `https://<IP>/apk/`,
 #   5. escribe la página de descarga con SHA, versión, tamaño y fecha,
 #   6. imprime la URL y un QR para el teléfono.
@@ -20,12 +20,12 @@
 # El APK pesa ~40 MB: la primera descarga por Wi-Fi tarda. La página muestra el
 # tamaño para que nadie crea que se colgó.
 #
-# El plan completo está en `../sign-ai-backend/docs/plan-wifi.md`, fase 2.
+# El plan completo está en `../signall-backend/docs/plan-wifi.md`, fase 2.
 
 set -euo pipefail
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-BACKEND_DIR="$(cd "$APP_DIR/../sign-ai-backend" && pwd)"
+BACKEND_DIR="$(cd "$APP_DIR/../signall-backend" && pwd)"
 APK_DIR="$BACKEND_DIR/deploy/apk"
 BUILD_DIR="$APP_DIR/app/build/outputs/apk/demo"
 BUILD=1

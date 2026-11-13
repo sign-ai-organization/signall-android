@@ -6,7 +6,7 @@ transcribe un servicio aparte, el texto lo traduce otro, y la app solo reproduce
 resultado. Los otros repos viven al lado, en `../`.
 
 ```
-../sign-ai-stt ──PCM16/WS──▶ ../sign-ai-backend ──WS/JSON──▶ esta app
+../signall-stt ──PCM16/WS──▶ ../signall-backend ──WS/JSON──▶ esta app
                                       │
                                       └──▶ Neon (Postgres 16 + pgvector)
 ```
@@ -56,7 +56,7 @@ SignAll/
 ### Paso 1 — Credenciales
 
 ```bash
-cd ../sign-ai-backend
+cd ../signall-backend
 cp .env.example .env
 ```
 
@@ -67,7 +67,7 @@ frase. Son credenciales reales: `.env` está en `.gitignore` y no se sube.
 ### Paso 2 — Levantar backend y STT
 
 ```bash
-cd ../sign-ai-backend
+cd ../signall-backend
 docker compose up -d
 ```
 
@@ -85,7 +85,7 @@ curl -s http://127.0.0.1:8080/health   # {"status":"ok","cache_loaded":true,...}
 ```
 
 Si no tienes GPU NVIDIA, lee la nota de CPU en
-[`../sign-ai-stt/README.md`](../sign-ai-stt/README.md).
+[`../signall-stt/README.md`](../signall-stt/README.md).
 
 ### Paso 3 — Compilar e instalar la app
 
@@ -132,7 +132,7 @@ Funciona completo: ADB, instalación y traducción. Medido el 2026-10-29 con un 
 Note 9S en `192.168.80.19` y el PC en `192.168.80.49`, los dos en la misma red.
 
 > **Hay un plan para esto.** El camino WiFi tiene su propio documento,
-> [`../sign-ai-backend/docs/plan-wifi.md`](../sign-ai-backend/docs/plan-wifi.md) (2026-10-27),
+> [`../signall-backend/docs/plan-wifi.md`](../signall-backend/docs/plan-wifi.md) (2026-10-27),
 > y conviene leerlo antes de cambiar cualquier cosa de esta sección. Según su checklist,
 > la fase 1 (`ufw` para el 443) y la fase 2 (APK servido por Caddy en `/apk/`) están
 > hechas; **la fase 3 no**: la dirección del backend todavía no se puede editar desde la
@@ -206,7 +206,7 @@ tools/wifi/publicar-apk.sh
 ```
 
 Compila el build `demo` con la IP actual adentro, lo copia a
-`../sign-ai-backend/deploy/apk/` y muestra la URL y un QR. En el teléfono abres
+`../signall-backend/deploy/apk/` y muestra la URL y un QR. En el teléfono abres
 `https://<IP>/apk/` y lo instalas. Necesita Caddy levantado (el `443`) y la CA de
 laboratorio instalada en el teléfono.
 
@@ -273,7 +273,7 @@ Es el build que demuestra el canal cifrado, y **el que el plan elige para el cam
 CA de laboratorio. También es el que se publica en `https://<IP>/apk/` para instalar sin
 cable. La app habla TLS contra Caddy, que corre en el host del backend escuchando en el
 `443` y reenvía al backend en claro por `127.0.0.1:8080`.
-El plan completo está en `../sign-ai-backend/docs/plan-proxy-tls.md`.
+El plan completo está en `../signall-backend/docs/plan-proxy-tls.md`.
 
 ```bash
 # por USB: Caddy en el 443, mapeado al 8443 del teléfono
@@ -316,10 +316,10 @@ vuelve con `./gradlew installDebug`.
 | Reglas de trabajo, git, UI, gotchas | [`AGENTS.md`](AGENTS.md) |
 | Los repos hermanos, el contrato del WebSocket | [`docs/SISTEMA.md`](docs/SISTEMA.md) |
 | El micrófono, la cola de la escena, la latencia | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) |
-| El camino WiFi completo y lo que falta | `../sign-ai-backend/docs/plan-wifi.md` |
+| El camino WiFi completo y lo que falta | `../signall-backend/docs/plan-wifi.md` |
 | Probar en el dispositivo, medir rendimiento | [`tools/README.md`](tools/README.md) y [`tools/rendimiento/README.md`](tools/rendimiento/README.md) |
 | Colores, marca, contraste | [`docs/manual-identidad-visual.md`](docs/manual-identidad-visual.md) |
-| El protocolo exacto del backend | `../sign-ai-backend/docs/android-integration.md` |
+| El protocolo exacto del backend | `../signall-backend/docs/android-integration.md` |
 
 Este repo commitea directo a `main`, sin PR ni rama de feature. En los hermanos se pide
 permiso primero, y se hace PR contra `develop`.
