@@ -14,9 +14,9 @@ Por eso este skill es un procedimiento, no una lista de campos.
 ## Antes de cambiar nada
 
 1. **Leé el contrato en los dos lados.** El del backend es
-   `../sign-ai-backend/docs/android-integration.md` (423 líneas) — es la fuente de verdad
+   `../signall-backend/docs/android-integration.md` (423 líneas) — es la fuente de verdad
    y hay que **actualizarlo en el mismo cambio**. Del lado de la app, el contrato de
-   salida es `domain/SignAllCommands.kt` y el parser está en `WebViewSignAllController`.
+   salida es `domain/SignAllCommands.kt` y el parser está en `SignAllWebViewController`.
 2. **Leé las reglas del repo que vas a tocar antes de escribir en él.** El backend tiene
    `CLAUDE.md`: código en inglés sin excepción, y **nunca hacer `git commit` ni
    `git push`**. El STT tiene `README.md`.
@@ -82,5 +82,5 @@ agregar la feature.
 ## No confundir los tres repositorios
 
 `docs/SISTEMA.md` tiene el detalle de cada hermano: el `CLAUDE.md` del backend, el
-protocolo del STT, y que `../signai-avatar` es la fuente de los GLB (rama `dev`) pero
+protocolo del STT, y que `../signall-avatar` es la fuente de los GLB (rama `dev`) pero
 **no** del contrato.

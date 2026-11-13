@@ -73,11 +73,14 @@ una pelea. Por eso el trabajo se parte en dos clases, y no se mezclan:
 | # | Qué | Repo | ¿Bloquea a los demás? |
 |---|---|---|---|
 | C0 | Renombrar los repositorios en GitHub y actualizar los `origin` | los cinco | ✔ hecho 2026-11-13 |
-| C1 | `namespace`, `applicationId` → `com.signall.app` y el paquete Kotlin | android | **sí**: nadie toca `app/` |
-| C2 | Identificadores internos: tags de logcat, `window.SignAI`, `SignAiBridge`, `SharedPreferences` | android | **sí**: mismos archivos que C1 |
-| C3 | Nombres que cruzan el WebSocket (`rt_*`, frames) | android + backend | **sí**: es un solo cambio en dos repos |
-| C4 | Sacar las evidencias pesadas de `docs/` y arreglar los enlaces | android | **sí**: mueve rutas que otros citan |
-| C5 | `sonar-project.properties` y CI mínimo | los cuatro | no, pero toca la raíz de cada repo |
+| C1 | `namespace`, `applicationId` → `com.signall.app` y el paquete Kotlin | android | ✅ hecho · `cf9fb5b` |
+| C2 | Identificadores internos: tags de logcat, `window.SignAll`, `SignAllBridge`, `SharedPreferences` | android | ✅ hecho · `cf9fb5b` |
+| C3 | Nombres que cruzan el WebSocket (`rt_*`, frames) | android + backend | ✅ verificado: no se renombra nada · `9bac1f7` |
+| C4 | Sacar las evidencias pesadas de `docs/` y arreglar los enlaces | android | ✅ hecho · `14b2c24` |
+| C5 | `sonar-project.properties` y CI mínimo | android, backend, STT | ✅ hecho · `8f90f1d`, backend `43ada1f`, STT `429019e` |
+
+El detalle de lo ejecutado, con números y pendientes, está en
+[`02-android.md`](02-android.md) y [`03-contrato.md`](03-contrato.md).
 
 C1 y C2 se hacen **juntos, en un solo hilo**: son los mismos archivos y separarlos obliga a
 pasar dos veces por 76 archivos.
@@ -88,7 +91,7 @@ archivo con android:
 - **backend**: sus propios nombres internos, su README y su configuración de Sonar.
 - **stt**: lo mismo.
 - **plan de pruebas y mediciones**: no toca código.
-- **`sign-all-docs` y `sign-all-avatar`**: no se tocan por dentro; no hay nada que hacer.
+- **`signall-docs` y `signall-avatar`**: no se tocan por dentro; no hay nada que hacer.
 
 ### Ola 1 — módulos en paralelo
 
@@ -143,27 +146,25 @@ las URLs nuevas):
 
 | Antes | Ahora | Carpeta local |
 |---|---|---|
-| `sign-ai-android` | `sign-all-android` | sigue siendo `sign-ai-android` |
-| `sign-ai-backend` | `sign-all-backend` | sigue siendo `sign-ai-backend` |
-| `sign-ai-stt` | `sign-all-stt` | sigue siendo `sign-ai-stt` |
-| `sign-ai-docs` | `sign-all-docs` | sigue siendo `sign-ai-docs` |
-| `signai-avatar` | `sign-all-avatar` | sigue siendo `signai-avatar` |
+| `sign-ai-android` | `signall-android` | `signall-android` ✅ |
+| `sign-ai-backend` | `signall-backend` | `signall-backend` ✅ |
+| `sign-ai-stt` | `signall-stt` | `signall-stt` ✅ |
+| `sign-ai-docs` | `signall-docs` | `signall-docs` ✅ |
+| `signai-avatar` | `signall-avatar` | `signall-avatar` ✅ |
 
-**Convención mientras dure la reestructuración:** el repositorio en GitHub ya se llama
-`sign-all-*`, pero la carpeta local conserva el nombre viejo. Así las rutas relativas
-`../sign-ai-backend` que están escritas en `AGENTS.md`, en `docs/` y en los scripts de
-`tools/` siguen funcionando para todos, y un clon nuevo se hace con el nombre viejo:
+**Convención vigente:** el nombre es `signall-*`, con dos `l` y sin guion, en el
+repositorio y en la carpeta. El owner renombró las cinco carpetas locales el 2026-11-13,
+así que las rutas relativas `../signall-backend`, `../signall-stt`, `../signall-docs` y
+`../signall-avatar` son las que funcionan; `AGENTS.md`, `docs/`, `tools/` y `.opencode` se
+actualizaron en el commit `39d6a82`.
 
-```bash
-git clone git@github.com:sign-ai-organization/sign-all-backend.git sign-ai-backend
-```
-
-Renombrar las carpetas es un `mv` y una pasada de enlaces; se hace al final, de una vez,
-cuando ya no haya nadie escribiendo documentos (ver C4 y la ola 2).
+Lo único que sigue con el nombre viejo es la **URL del remoto**: el 2026-11-13 se
+renombraron en GitHub a `sign-all-*` y los cinco `origin` quedaron apuntando ahí.
+Unificar eso es del owner, porque toca GitHub, no el código.
 
 Aparte: en el directorio hermano hay dos carpetas que **no son repositorios**
-(`sign-ai-video/`, `sign-ai-video-vertical/`). No entran en el renombre de GitHub; si
-hay que renombrar la carpeta local es una decisión aparte.
+(`sign-ai-video/`, `sign-ai-video-vertical/`) y que el owner pasó a `signall-video/` y
+`signall-video-vertical/`. No entran en el renombre de GitHub.
 
 
 ---
@@ -196,6 +197,8 @@ Ninguna de estas la resuelve esta sesión: se presentan y se espera respuesta.
   ahora, hay que reinstalar y volver a conceder `RECORD_AUDIO`; si se deja para el final,
   todo el trabajo de reestructuración se hace sobre el paquete viejo y el rename queda
   como último paso visible.
+- **Resuelto: se hizo ahora**, como primer bloque de la ola 0 (`cf9fb5b`). El costo fue
+  reinstalar y volver a conceder el permiso; el paquete ya no se toca más.
 
 ### 3.3 ¿Se renombra también la organización de GitHub?
 
@@ -215,10 +218,10 @@ Hay cuatro familias y no todas se tratan igual:
 
 | Familia | Ejemplos | Qué hacer |
 |---|---|---|
-| Solo del device | `SignAIWeb` (tag de logcat), `SignAiBridge`, `window.SignAI`, `SignAiState` | **renombrar**: nadie más los usa |
-| Cruza al hermano | nombres de métrica `rt_*`, frames del socket | **no tocar sin coordinar los dos lados en el mismo cambio** |
+| Solo del device | `SignAIWeb` (tag de logcat), `SignAiBridge`, `window.SignAI`, `SignAiState` | **renombrar**: nadie más los usa · ✅ `cf9fb5b` |
+| Cruza al hermano | nombres de métrica `rt_*`, frames del socket | **no tocar sin coordinar los dos lados en el mismo cambio** · ✅ verificado el 2026-11-13: no hay marca en el cable, no se renombra |
 | Contrato de datos | `signs/<id>.glb`, clips `0000_afirmativo`, glosas `GLS-*` | **no tocar nunca**: son identificadores, no marca |
-| Persistencia local | `SharedPreferences "signai"` | renombrar junto con el `applicationId`; al ser instalación nueva no hace falta migrar |
+| Persistencia local | `SharedPreferences "signai"` | renombrar junto con el `applicationId`; al ser instalación nueva no hace falta migrar · ✅ `"signall"` |
 
 - **Recomiendo:** renombrar todo lo de la primera fila, y para la segunda hacer **un
   commit en cada repo el mismo día**, con el mismo nombre nuevo a los dos lados. Nunca
@@ -239,7 +242,7 @@ Hay cuatro familias y no todas se tratan igual:
      (`PLAN-SEMANA-13.md`, `PENDIENTES-AUDITORIA-*.md`, `REVISION-DEVELOP.md`, los
      `CONTRASTE-*.md` viejos). No se borran: git ya tiene la historia, pero un archivo
      marcado como historia no se vuelve a leer por error.
-- Lo que **no** se toca acá: `../sign-ai-docs/latex/` es la fuente de verdad de la tesis
+- Lo que **no** se toca acá: `../signall-docs/latex/` es la fuente de verdad de la tesis
   y se edita con el flujo de `make`.
 
 ### 3.6 README por repositorio
@@ -294,12 +297,12 @@ Hay cuatro familias y no todas se tratan igual:
 - **`sign-ai-docs` por dentro: nada.** Es la fuente de verdad de la tesis; su contenido se
   edita con su propio flujo (`make`), no para que diga SignAll. Solo cambia el nombre del
   repositorio.
-- **`signai-avatar` por dentro: nada.** Ni los `.glb` de `../signai-avatar`
+- **`signai-avatar` por dentro: nada.** Ni los `.glb` de `../signall-avatar`
   (`models/Juan.glb`, `models/Pauline.glb`), ni `tools/pack_avatars.py`. Se regeneran solo
   cuando el owner lo pide.
 - Los identificadores del contrato: frames del WebSocket, `signs/<id>.glb`, nombres de
   los 200 clips, glosas `GLS-*`.
-- `../sign-ai-docs/latex/`: se edita con su flujo, no se renombra por estética.
+- `../signall-docs/latex/`: se edita con su flujo, no se renombra por estética.
 - Las ramas remotas viejas (`origin/develop`, `respaldo/*`): son historia del owner.
 - `android:forceDarkAllowed=false` y todos los "no lo saques" de `AGENTS.md`.
 
@@ -314,17 +317,21 @@ vez.
 | Bloque | Ola | Qué se hace | Repo | Entregable | Puede ir en paralelo con |
 |---|---|---|---|---|---|
 | R-01 | — | gitleaks sobre toda la historia | los 5 | **hecho** → `01-leaks.md` | — |
-| R-08 | 0 · C0 | renombrar los repos en GitHub y los `origin` | los 5 | **hecho** · `sign-all-*` | — |
-| R-02 | 0 · C1 | `namespace`, `applicationId` y paquete Kotlin → `com.signall.app` | android | app instalada con el nombre nuevo | backend, STT |
-| R-03 | 0 · C2 | tags, `window.SignAI`, `SignAiBridge`, `SignAiState`, `SharedPreferences` | android | tags nuevos | backend, STT |
-| R-04 | 0 · C3 | nombres que cruzan el socket, en los dos lados el mismo día | android + backend | tabla viejo → nuevo | **nada** |
-| R-05 | 0 · C4 | sacar evidencias pesadas, dejar lo vivo, `docs/historia/` | android | `docs/` bajo 10 MB | backend, STT |
-| R-07 | 0 · C5 | `sonar-project.properties` + GitHub Actions | los 4 | panel y CI | cualquiera |
+| R-08 | 0 · C0 | renombrar los repos en GitHub y los `origin` | los 5 | **hecho** · `sign-all-*` en el remoto | — |
+| R-02 | 0 · C1 | `namespace`, `applicationId` y paquete Kotlin → `com.signall.app` | android | ✅ hecho · `cf9fb5b` | backend, STT |
+| R-03 | 0 · C2 | tags, `window.SignAll`, `SignAllBridge`, `SignAllState`, `SharedPreferences` | android | ✅ hecho · `cf9fb5b` | backend, STT |
+| R-04 | 0 · C3 | nombres que cruzan el socket, en los dos lados el mismo día | android + backend | ✅ verificado: **no se renombra nada** · `9bac1f7`, backend `da38a77` | **nada** |
+| R-05 | 0 · C4 | sacar evidencias pesadas, dejar lo vivo, `docs/historia/` | android | ✅ hecho · `14b2c24` · `docs/` 5,6 MB | backend, STT |
+| R-07 | 0 · C5 | `sonar-project.properties` + GitHub Actions | android, backend, STT | ✅ hecho · `8f90f1d`, `43ada1f`, `429019e` | cualquiera |
 | R-06 | 1 | README corto por repositorio | los 5 | 5 READMEs | todo, al final de la ola 0 |
 | — | 2 | verificación cruzada y última pasada de Sonar y gitleaks | todos | informe de cierre | — |
 
 R-02 y R-03 son **un solo hilo**: mismos 76 archivos, separados obligan a pasar dos veces.
 R-08 se adelantó al principio porque es lo único que obliga a un clon nuevo.
+
+**Los prompts de R-03, R-04, R-05 y R-07 no existían** cuando se ejecutó la ola 0. Los
+bloques se corrieron con el alcance de esta tabla y lo que quedó escrito es el resultado,
+no el prompt. Escribirlos queda pendiente si alguien tiene que repetir el trabajo.
 
 **Advertencia que hay que decirle a cualquiera que se sume mientras la ola 0 esté
 abierta:** en android no se toca `app/` ni `docs/`. Se trabaja en backend, en STT, en
@@ -351,4 +358,10 @@ volver a conceder `RECORD_AUDIO`, que son dos minutos.
 | 2026-11-13 | **Los cinco repositorios renombrados en GitHub** a `sign-all-*` y los `origin` locales reapuntados; `fetch` verificado en los cinco. Los proyectos de Sonar se rehicieron como `sign-all-*` y se borraron los viejos. |
 | 2026-11-13 | Convención fijada: la carpeta local conserva el nombre viejo para no romper las rutas relativas de `AGENTS.md`, `docs/` y `tools/`. Un clon nuevo se hace con el nombre viejo. |
 | 2026-11-13 | **Super regla del owner: nada de `push`.** Se commitea local y se espera la orden, repo por repo. Queda anotada en `AGENTS.md`, en el prompt de R-02 y en `prompts/R-00-arranque.md`. |
+| 2026-11-13 | El owner renombra las **cinco carpetas locales** a `signall-*` (dos `l`, sin guion) y aclara que esa es la grafía. Se actualizan 119 archivos con rutas muertas, incluidos `.opencode/`, `AGENTS.md`, `docs/` y las bitácoras. Commit `39d6a82`. |
+| 2026-11-13 | **R-02 + R-03** en un solo hilo (`cf9fb5b`): paquete `com.signall.app`, 75 archivos movidos con `git mv`, toda la familia `SignAi*`/`SignAI*` → `SignAll*` y las `SharedPreferences` a `"signall"`. `./gradlew build` en verde. |
+| 2026-11-13 | **R-04** (`9bac1f7` y backend `da38a77`): el contrato no lleva la marca —ni frames ni `rt_*`—, así que no se renombra nada. Tabla en `03-contrato.md`. |
+| 2026-11-13 | **R-05** (`14b2c24`): `docs/` pasa de 246 MB y 1 736 archivos a **5,6 MB y 99**. Evidencias a `../data/evidencias/`, reportes cerrados a `docs/historia/`, índice nuevo. |
+| 2026-11-13 | **R-07** (`8f90f1d`, backend `43ada1f`, STT `429019e`): claves `signall-*` en Sonar, `.gitleaksignore` y CI mínimo. Sonar de android sale idéntico a la línea base. |
+| 2026-11-13 | Pendiente que bloquea el cierre de la ola 0: el Redmi rechaza la instalación con `INSTALL_FAILED_USER_RESTRICTED`. Sin habilitar "Instalar vía USB" en MIUI no se pudo verificar la app corriendo con el paquete nuevo. |
 

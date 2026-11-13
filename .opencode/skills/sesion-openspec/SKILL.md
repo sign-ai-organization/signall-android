@@ -85,5 +85,5 @@ Estas reglas son del `AGENTS.md` y aplican acá igual:
 - **Acá se commitea directo a `main`**, sin PR ni rama de feature, y sin pedir
   confirmación.
 - **En los hermanos, nada de commits sin que el owner lo pida.** Si esta sesión dejó
-  entrada en `../sign-ai-backend` o `../sign-ai-stt`, eso se le dice al owner y lo manda
+  entrada en `../signall-backend` o `../signall-stt`, eso se le dice al owner y lo manda
   él.

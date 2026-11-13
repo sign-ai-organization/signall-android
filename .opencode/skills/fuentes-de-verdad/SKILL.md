@@ -1,6 +1,6 @@
 ---
 name: fuentes-de-verdad
-description: Revisar las dos fuentes de verdad del proyecto —el código y ../sign-ai-docs, con los documentos formales en latex/— antes de decidir o implementar, y resolver qué hacer cuando no coinciden. Usar cuando una decisión técnica tenga que contrastarse contra los documentos, cuando el código y un documento no digan lo mismo, cuando haya que decidir si se adapta el código al documento o al revés, o cuando el owner pida una auditoría de conformidad.
+description: Revisar las dos fuentes de verdad del proyecto —el código y ../signall-docs, con los documentos formales en latex/— antes de decidir o implementar, y resolver qué hacer cuando no coinciden. Usar cuando una decisión técnica tenga que contrastarse contra los documentos, cuando el código y un documento no digan lo mismo, cuando haya que decidir si se adapta el código al documento o al revés, o cuando el owner pida una auditoría de conformidad.
 ---
 
 # Las dos fuentes de verdad
@@ -8,7 +8,7 @@ description: Revisar las dos fuentes de verdad del proyecto —el código y ../s
 Decisión del owner del **2026-10-17**, actualizada el **2026-11-04**.
 
 1. **Este repo** — el código.
-2. **`../sign-ai-docs`** — los documentos: los formales en `latex/` (SRS, SDD, memoria, plan de
+2. **`../signall-docs`** — los documentos: los formales en `latex/` (SRS, SDD, memoria, plan de
    pruebas, plan de administración) y los borradores en `borradores/`, con los cambios
    pendientes en `cambios/`.
 
@@ -38,7 +38,7 @@ Casi siempre sí, y hay una forma de hacerlo sin adivinar:
 | El documento tiene una fecha **posterior** al cambio, y menciona el comportamiento nuevo | El código está atrasado |
 | El documento tiene fecha **anterior** y describe algo que el código ya no hace | El documento quedó atrás |
 | El código tiene un ID de spec que lo respalda y una fecha de sesión que lo explica | El documento quedó atrás |
-| `../sign-ai-docs/cambios/requerimientos.md` lo tiene como **Propuesto** o **Acordado** | La decisión ya está tomada: hay que aplicar lo acordado |
+| `../signall-docs/cambios/requerimientos.md` lo tiene como **Propuesto** o **Acordado** | La decisión ya está tomada: hay que aplicar lo acordado |
 
 Ese último es el más útil: **`cambios/requerimientos.md` es la bandeja de cambios
 pendientes**, con estados Propuesto / Acordado / Hecho. Ahí caen las cosas que la app ya
@@ -79,7 +79,7 @@ cuál**:
 - **Se pregunta**, cuando no se puede determinar cuál de los dos está mal.
 
 **Cuál de los dos está mal lo decide el owner.** Después de esa decisión, la sesión puede
-escribir el cambio en el `.tex`, compilarlo y anotarlo en `../sign-ai-docs/cambios/`, pero el
+escribir el cambio en el `.tex`, compilarlo y anotarlo en `../signall-docs/cambios/`, pero el
 texto que resuelve una divergencia de contenido no se pone por cuenta propia: se propone.
 
 ## Una advertencia sobre los documentos de este repo

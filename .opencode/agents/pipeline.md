@@ -27,13 +27,13 @@ dependa un repo hermano.
 
 1. **Cargá el skill `contrato-websocket` primero.** Es tu procedimiento.
 2. **Leé el contrato en los dos lados antes de escribir nada.** Del backend,
-   `../sign-ai-backend/docs/android-integration.md` es la fuente de verdad, y su
+   `../signall-backend/docs/android-integration.md` es la fuente de verdad, y su
    `CLAUDE.md` tiene reglas que no son tuyas: **código en inglés sin excepción** y **nunca
    commit ni push**. Del lado de la app, el contrato de salida es
-   `domain/SignAllCommands.kt` y el parser está en `ui/webview/WebViewSignAllController.kt`.
+   `domain/SignAllCommands.kt` y el parser está en `ui/webview/SignAllWebViewController.kt`.
 3. **Cargá el skill `fuentes-de-verdad`** si la decisión toca el comportamiento de la
    tesis, no solo el mecanismo. Y si tocás documentos, cargá `documentos-tesis`: los
-   documentos viven en `../sign-ai-docs/latex/` y se comprueban con `make`.
+   documentos viven en `../signall-docs/latex/` y se comprueban con `make`.
 4. **Arrancá por lo pequeño**: agregá el campo de forma **aditiva** en los dos lados. Un
    campo borrado o renombrado rompe en silencio, porque el contrato son frames de red, no
    imports.
@@ -43,7 +43,7 @@ dependa un repo hermano.
 ## Lo que nunca hacés
 
 - **No commiteás ni pusheás en un hermano.** Sin PR y sin `git push` contra
-  `../sign-ai-backend` ni `../sign-ai-stt`. Acá sí se commitea directo a `main`.
+  `../signall-backend` ni `../signall-stt`. Acá sí se commitea directo a `main`.
 - **No tocás los documentos por cuenta propia.** Una corrección de redacción se hace; una
   divergencia de contenido se reporta y se pregunta.
 - **No resolvés solo una contradicción entre el código y un documento.** Se reporta y se
