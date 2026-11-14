@@ -363,5 +363,5 @@ volver a conceder `RECORD_AUDIO`, que son dos minutos.
 | 2026-11-13 | **R-04** (`9bac1f7` y backend `da38a77`): el contrato no lleva la marca —ni frames ni `rt_*`—, así que no se renombra nada. Tabla en `03-contrato.md`. |
 | 2026-11-13 | **R-05** (`14b2c24`): `docs/` pasa de 246 MB y 1 736 archivos a **5,6 MB y 99**. Evidencias a `../data/evidencias/`, reportes cerrados a `docs/historia/`, índice nuevo. |
 | 2026-11-13 | **R-07** (`8f90f1d`, backend `43ada1f`, STT `429019e`): claves `signall-*` en Sonar, `.gitleaksignore` y CI mínimo. Sonar de android sale idéntico a la línea base. |
-| 2026-11-13 | Pendiente que bloquea el cierre de la ola 0: el Redmi rechaza la instalación con `INSTALL_FAILED_USER_RESTRICTED`. Sin habilitar "Instalar vía USB" en MIUI no se pudo verificar la app corriendo con el paquete nuevo. |
+| 2026-11-13 | **Verificado en el device.** Con "Instalar vía USB" habilitado en MIUI, `installDebug` entra y la app arranca con `com.signall.app`: escena lista en 3 307 ms, una frase de dos glosas representada, métricas bajo `SignAllMetrics` y el historial en `shared_prefs/signall.xml`. |
 

@@ -103,27 +103,34 @@ nombres `rt_*`. El detalle y el porqué están en [03-contrato.md](03-contrato.m
 
 | Qué | Resultado |
 |---|---|
-| `./gradlew build` | en verde, dos veces (después de R-02 y después de R-03) |
-| `./gradlew installDebug` | **bloqueado por el device**: `INSTALL_FAILED_USER_RESTRICTED` |
+| `./gradlew build` | en verde, tres veces (después de R-02, de R-03 y al cerrar) |
+| `./gradlew installDebug` | instalada, después de habilitar "Instalar vía USB" en MIUI |
+| App corriendo | sesión abierta contra el backend, escena lista en **3 307 ms** (Juan, 200 clips) |
+| Frase "Hola, como estas?" | 1 segmento, **2 glosas** (`HOLA`, `COMO ESTAS`) representadas |
+| `SignAllMetrics` | frase #1 **2 304 ms** · envío→primera seña **2 308 ms** · oración→avatar **163 ms** · 2 señas en **4 673 ms** |
+| `SignAllNet` | `segment 0/1 turn=1` — el frame y el `turn` llegaron intactos |
+| `SharedPreferences` | el historial quedó en `shared_prefs/signall.xml` |
 | gitleaks sobre el árbol exportado de git | `no leaks found` (60 MB escaneados) |
 | SonarQube `signall-android` | 13 806 ncloc · 63 code smells · 1 bug · 4,8 % duplicación · cobertura 0 % |
+
+Los tiempos son de **una** frase en el Redmi Note 9S con el backend en Docker y
+`adb reverse`: sirven para comprobar que el camino funciona, no como medición de
+latencia, que necesita las 28 frases.
 
 El análisis de Sonar salió **idéntico a la línea base**: el trabajo no agregó deuda.
 
 ## Pendiente
 
-1. **Instalar en el device.** El Redmi rechaza la instalación con
-   `INSTALL_FAILED_USER_RESTRICTED`: MIUI pide habilitar "Instalar vía USB" en Opciones de
-   desarrollador y confirmar en pantalla. Sin eso no se pudo comprobar la app corriendo:
-   ni el splash, ni `RECORD_AUDIO` con el paquete nuevo, ni que el historial quede en
-   `shared_prefs/signall.xml`.
-2. **Proyectos viejos en SonarQube.** Quedaron `sign-all-android`, `sign-all-backend` y
+1. **Proyectos viejos en SonarQube.** Quedaron `sign-all-android`, `sign-all-backend` y
    `sign-all-stt` con el primer análisis. Los nuevos son `signall-*`. Borrarlos es del
    owner.
-3. **Rotar las dos credenciales** de Neon y OpenAI (ver `01-leaks.md`).
-4. **El nombre de los repos en GitHub** sigue siendo `sign-all-*` en los cinco `origin`;
+2. **Rotar las dos credenciales** de Neon y OpenAI (ver `01-leaks.md`).
+3. **El nombre de los repos en GitHub** sigue siendo `sign-all-*` en los cinco `origin`;
    las carpetas locales ya son `signall-*`. Unificar es del owner.
-5. **CI en `signall-docs`**: el § 4 del plan dice que ese repositorio no se toca por
+4. **CI en `signall-docs`**: el § 4 del plan dice que ese repositorio no se toca por
    dentro y el § 5 de R-07 dice "los cuatro". No se creó: es una decisión del owner.
+5. La app vieja (`com.signai.webview`) sigue instalada en el teléfono y **no se
+   desinstaló**: borrarla se lleva el historial y los ajustes del owner. Las dos conviven
+   sin problema hasta que él decida.
 6. Los nombres internos del **backend** y del **STT** (`SignAI` en documentación, log de
    arranque y compose) son su bloque, no el contrato.
