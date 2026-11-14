@@ -139,9 +139,3 @@ Sigue abierto:
    sin problema hasta que él decida.
 6. Los nombres internos del **backend** y del **STT** (`SignAI` en documentación, log de
    arranque y compose) son su bloque, no el contrato.
-
-5. La app vieja (`com.signai.webview`) sigue instalada en el teléfono y **no se
-   desinstaló**: borrarla se lleva el historial y los ajustes del owner. Las dos conviven
-   sin problema hasta que él decida.
-6. Los nombres internos del **backend** y del **STT** (`SignAI` en documentación, log de
-   arranque y compose) son su bloque, no el contrato.
