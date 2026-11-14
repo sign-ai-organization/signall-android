@@ -8,8 +8,8 @@ modelo o del recorte contra el catalogo.
 
 Se corre DENTRO del contenedor del backend:
 
-    docker cp docs/plan-pruebas/sonda-glosado.py sign-ai-backend-backend-1:/tmp/
-    docker exec -i sign-ai-backend-backend-1 python /tmp/sonda-glosado.py
+    docker cp docs/plan-pruebas/sonda-glosado.py signall-backend-backend-1:/tmp/
+    docker exec -i signall-backend-backend-1 python /tmp/sonda-glosado.py
 
 Las 50 glosas del catalogo van una por linea; se verifica el tamano antes de
 medir, porque una lista mal armada hace que el recorte dropee glosas que si

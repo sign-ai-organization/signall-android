@@ -41,7 +41,7 @@ URL = "ws://127.0.0.1:8080/ws/translate"
 # Rutas relativas al repo, nunca absolutas: las sesiones se corren en directorios
 # distintos y una ruta de esta máquina deja de existir en la siguiente (AGENTS.md).
 RAIZ = Path(__file__).resolve().parents[1]
-STT = RAIZ.parent / "sign-ai-stt"
+STT = RAIZ.parent / "signall-stt"
 AUDIO = STT / "fixtures" / "audio"
 MANIFEST = RAIZ / "app" / "src" / "main" / "assets" / "web" / "manifest.json"
 

@@ -18,7 +18,7 @@ import re
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[4]
-ANEXO = RAIZ / "sign-ai-docs" / "latex" / "plan-pruebas" / "anexo-c-datos.tex"
+ANEXO = RAIZ / "signall-docs" / "latex" / "plan-pruebas" / "anexo-c-datos.tex"
 
 
 def limpiar(texto: str) -> str:

@@ -8,7 +8,7 @@
 Método (el del 06/11): las 10 frases de FR-01-A, cada una 5 veces, escritas en la app con `adb input text`
 (en ASCII, sin acentos ni «¿», como el 06/11) y enviadas con «Traducir». Los tiempos salen del logcat
 del teléfono (reloj del teléfono): `ms_envio_a_primera_sena` es la línea `envío→primera seña` de
-`SignAiMetrics`; `ms_envio_a_ultima_sena` es de `texto ya enviado` a `representado`; `ms_representacion`
+`SignAllMetrics`; `ms_envio_a_ultima_sena` es de `texto ya enviado` a `representado`; `ms_representacion`
 es el `representado: N señas en X ms`. Se reporta con las 50 corridas y sin la primera repetición (40).
 - `cache`: antes de medir se envían las 10 frases al backend para que estén en la caché.
 - `llm`: antes de cada envío se vacía la caché (`delete` y `POST /admin/cache/reload` con `X-Admin-Token: lab`).
@@ -31,7 +31,7 @@ from pathlib import Path
 import websockets
 
 ADB = r"C:\Users\Sergio\AppData\Local\Android\Sdk\platform-tools\adb.exe"
-APP = "com.signai.webview"
+APP = "com.signall.app"
 CAMPO, TRADUCIR = (291, 2132), (288, 1510)  # «Traducir» sube a y=1510 con el teclado abierto
 IDS = ["FR-01-001", "FR-01-005", "FR-01-007", "FR-01-011", "FR-01-013",
        "FR-01-014", "FR-01-019", "FR-01-023", "FR-01-025", "FR-01-026"]
@@ -69,7 +69,7 @@ def resumen(v: list[float]) -> dict | None:
 
 def lineas(desde: float) -> list[tuple[float, str]]:
     out = []
-    for l in adb("logcat", "-d", "-v", "epoch", "-s", "SignAiState", "SignAiMetrics").splitlines():
+    for l in adb("logcat", "-d", "-v", "epoch", "-s", "SignAllState", "SignAllMetrics").splitlines():
         m = re.match(r"\s*(\d+\.\d+)\s+\d+\s+\d+\s+\w\s+(.*)", l)
         if m and float(m.group(1)) >= desde:
             out.append((float(m.group(1)), m.group(2)))
@@ -181,7 +181,7 @@ def principal() -> None:
     datos = {"situacion": a.situacion, "todas": stats(filas), "sin_rep1": stats([f for f in filas if f["rep"] > 1]),
              "corridas": len(filas), "incompletas": sum(not f["completo"] for f in filas),
              "fuentes_en_el_backend": {s: fuentes.count(s) for s in set(fuentes)},
-             "nota": "Tiempos del teléfono (SignAiMetrics/SignAiState, logcat -v epoch, reloj del teléfono). "
+             "nota": "Tiempos del teléfono (SignAllMetrics/SignAllState, logcat -v epoch, reloj del teléfono). "
                      "ultima seña = de «texto ya enviado» a «representado». Texto escrito con adb input text, en ASCII."}
     ruta = Path(a.salida)
     with open(ruta.with_suffix(".csv"), "w", encoding="utf-8-sig", newline="") as f:

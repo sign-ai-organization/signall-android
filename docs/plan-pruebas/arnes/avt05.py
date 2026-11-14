@@ -5,8 +5,8 @@ Manda por la app las 10 frases de FR-01-A (dos por tipo de frase), lee el panel
 de diagnóstico del avatar (`tipo` y `cara`) mientras se representan, graba la
 pantalla y saca una captura con la cara a mitad de la primera seña.
 
-Hace falta una compilación con `-Psignai.devTools=true` (es la que trae el panel)
-y `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. El tipo esperado es
+Hace falta una compilación con `-Psignall.devTools=true` (es la que trae el panel)
+y `-Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. El tipo esperado es
 el de la última oración de la frase, como dice FR-01.
 
     ~/venv/bin/python docs/plan-pruebas/arnes/avt05.py --serie RZCW90DTMQJ \
@@ -53,7 +53,7 @@ def main() -> int:
     ap.add_argument("--salida", required=True)
     ap.add_argument("--fecha", required=True)
     ap.add_argument("--ronda", default="E")
-    ap.add_argument("--paquete", default="com.signai.webview")
+    ap.add_argument("--paquete", default="com.signall.app")
     args = ap.parse_args()
     out = Path(args.salida)
     out.mkdir(parents=True, exist_ok=True)

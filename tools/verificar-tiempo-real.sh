@@ -20,7 +20,7 @@
 # `verify_sentence_segmenter.py` + `verify_client_frames.py` (que sí existen) y
 # las dos mediciones de acá, `medir-primera-sena.py` y `medir-retraso.py`.
 #
-# Requisitos: docker compose corriendo en sign-ai-backend, el backend en 8080,
+# Requisitos: docker compose corriendo en signall-backend, el backend en 8080,
 # el STT en 8000 y un dispositivo adb conectado para el bloque de dispositivo.
 set -uo pipefail
 
@@ -134,7 +134,7 @@ check_contract() {
 check_fixtures() {
   banner "3. Transcripción de los 28 fixtures de audio"
   if [[ ! -f "$FIXTURES/index.json" ]]; then
-    record "fixtures generados" 1 "corré scripts/make_audio_fixtures.py --all en sign-ai-stt"
+    record "fixtures generados" 1 "corré scripts/make_audio_fixtures.py --all en signall-stt"
     return
   fi
   record "fixtures generados" 0 "$(python3 -c "import json;print(json.load(open('$FIXTURES/index.json'))['count'])") clips"

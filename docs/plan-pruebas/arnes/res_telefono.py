@@ -4,13 +4,13 @@
     python docs/plan-pruebas/arnes/res_telefono.py res01 --salida ../data/evidencias/plan-pruebas/evidencias/RES/PR-RES-01_E_20261110_02
     python docs/plan-pruebas/arnes/res_telefono.py res03 --salida ../data/evidencias/plan-pruebas/evidencias/RES/PR-RES-03_E_20261110_02
 
-Requisitos: el laboratorio `p8lab-*` arriba (backend en 8180, STT en 8100), la app `com.signai.webview`
+Requisitos: el laboratorio `p8lab-*` arriba (backend en 8180, STT en 8100), la app `com.signall.app`
 instalada con `RECORD_AUDIO`, y `adb` (se usa la ruta completa del SDK, no está en el PATH).
 La app apunta a `ws://127.0.0.1:8080/ws/translate`; el túnel es `adb reverse tcp:8080 tcp:8180`.
 
 res01 · cada momento (hablando = micrófono encendido; representando = el avatar está haciendo las señas):
   corta el túnel USB con `adb kill-server` (como el 8/11), espera, lo restaura, y mide con el logcat del
-  teléfono (`SignAiNet`, `SignAiState`; reloj del teléfono) cuándo detectó el corte, cuánto tardó en
+  teléfono (`SignAllNet`, `SignAllState`; reloj del teléfono) cuándo detectó el corte, cuánto tardó en
   reconectar y cuántos intentos hizo; guarda lo que mostró la pantalla (uiautomator + captura) y manda una
   frase nueva para ver si la app queda lista sin reiniciarla.
 res03 · enciende el micrófono, detiene el STT (`docker stop p8lab-stt`), observa el aviso, comprueba que el
@@ -28,11 +28,11 @@ import time
 from pathlib import Path
 
 ADB = r"C:\Users\Sergio\AppData\Local\Android\Sdk\platform-tools\adb.exe"
-APP = "com.signai.webview"
+APP = "com.signall.app"
 MIC = (798, 2132)         # «Entrada por voz»
 CAMPO = (291, 2132)       # «Escribe una frase...»
 TRADUCIR = (288, 1510)    # botón «Traducir» con el teclado abierto (sube; cerrado está en y=2268)
-LOG = ("SignAiNet", "SignAiState")
+LOG = ("SignAllNet", "SignAllState")
 
 
 def adb(*args: str, timeout: int = 60) -> str:

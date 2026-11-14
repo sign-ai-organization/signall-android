@@ -49,7 +49,7 @@ import websockets
 URL = "ws://127.0.0.1:8080/ws/translate"
 METRICS = "http://127.0.0.1:8080/metrics.json"
 
-DATA = Path(__file__).resolve().parent.parent.parent / "sign-ai-docs/borradores/plan-pruebas/02-datos"
+DATA = Path(__file__).resolve().parent.parent.parent / "signall-docs/borradores/plan-pruebas/02-datos"
 FR_01 = DATA / "FR-01-frases-dominio.md"
 FR_02 = DATA / "FR-02-opciones-frases.md"
 

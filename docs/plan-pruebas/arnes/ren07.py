@@ -8,7 +8,7 @@ app quieta (gfxinfo) y después las 30 frases de FR-01 seguidas por texto.
 
 Fuentes: `dumpsys gfxinfo` reiniciado al empezar la secuencia, `dumpsys meminfo`
 cada 30 s, el contador de carga de `dumpsys battery`, y los `signStart` y
-`representado` de `SignAiState` / `SignAiMetrics`.
+`representado` de `SignAllState` / `SignAllMetrics`.
 
     ~/venv/bin/python docs/plan-pruebas/arnes/ren07.py --serie 192.168.0.14:5555 \
         --fr01 ../signall-docs/borradores/plan-pruebas/02-datos/FR-01-frases-dominio.md \
@@ -29,7 +29,7 @@ from pathlib import Path
 
 import uiautomator2 as u2
 
-PKG = "com.signai.webview"
+PKG = "com.signall.app"
 HORA = re.compile(r"^(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)\.(\d{3})")
 
 
@@ -112,7 +112,7 @@ def main() -> int:
     # secuencia
     adb(S, "logcat", "-c")
     lg = open(out / f"{nn(5)}_logcat.txt", "w", encoding="utf-8")
-    proc = subprocess.Popen(["adb", "-s", S, "logcat", "-v", "threadtime", "-s", "SignAiState", "SignAiMetrics", "SignAiNet"],
+    proc = subprocess.Popen(["adb", "-s", S, "logcat", "-v", "threadtime", "-s", "SignAllState", "SignAllMetrics", "SignAllNet"],
                             stdout=lg, stderr=subprocess.DEVNULL)
     mem = []
     parar = threading.Event()

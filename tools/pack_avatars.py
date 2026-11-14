@@ -75,7 +75,7 @@ DEST_DEFAULT = REPO / "app/src/main/assets/web"
 # `dev`, carpeta `models/`). No se editan: son la entrada inmutable del
 # empaquetado. `../material-3d/Avatares/` conserva la versión anterior del
 # 2026-10-24, que ya no es la fuente.
-SOURCE_DEFAULT = REPO.parent / "signai-avatar" / "models"
+SOURCE_DEFAULT = REPO.parent / "signall-avatar" / "models"
 
 # El orden define el orden del inventario; el `id` es el que viaja a la escena.
 AVATARS = (

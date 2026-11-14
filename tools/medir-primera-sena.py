@@ -41,7 +41,7 @@ URL = "ws://127.0.0.1:8080/ws/translate"
 # Rutas relativas al repo, nunca absolutas: las sesiones se corren en directorios
 # distintos y una ruta de esta máquina deja de existir en la siguiente (AGENTS.md).
 RAIZ = Path(__file__).resolve().parents[1]
-AUDIO = RAIZ.parent / "sign-ai-stt" / "fixtures" / "audio"
+AUDIO = RAIZ.parent / "signall-stt" / "fixtures" / "audio"
 
 # Un frame de 30 ms es lo que manda `AudioCapture`; reproducirlo a la misma
 # velocidad es lo más cerca de hablar que se llega sin una persona.

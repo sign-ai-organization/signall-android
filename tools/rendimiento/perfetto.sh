@@ -52,7 +52,7 @@ CATS="${3:-sched freq idle gfx view am wm}"
 SALIDA="${PERFETTO_OUT_DIR:-$HOME/perfetto-traces}"
 mkdir -p "$SALIDA"
 RUTA="$SALIDA/perfetto-${ETIQUETA}.perfetto-trace"
-REMOTO=/data/misc/perfetto-traces/perfetto-signai
+REMOTO=/data/misc/perfetto-traces/perfetto-signall
 
 echo "### capturando ${DUR}s [$CATS] en $DEV para $PKG"
 adb -s "$DEV" shell "perfetto -o $REMOTO -t ${DUR}s $CATS"

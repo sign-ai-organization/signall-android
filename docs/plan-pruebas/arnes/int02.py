@@ -2,7 +2,7 @@
 """PR-INT-02 · Recorrido completo por texto.
 
 Escribe en la app, una por una, las 30 frases de FR-01 (con `uiautomator2`, que
-sí admite tildes y «¿»), toca «Traducir» y lee del `logcat` (`SignAiNet`) las
+sí admite tildes y «¿»), toca «Traducir» y lee del `logcat` (`SignAllNet`) las
 glosas que la app recibió de cada oración. Compara la lista de glosas de la
 frase con la esperada de FR-01.
 
@@ -28,7 +28,7 @@ from pathlib import Path
 
 import uiautomator2 as u2
 
-SEGMENTO = re.compile(r"SignAiNet: segment (\d+)/(\d+) turn=(\d+) -> (.*)$")
+SEGMENTO = re.compile(r"SignAllNet: segment (\d+)/(\d+) turn=(\d+) -> (.*)$")
 
 
 def adb(serie, *args) -> str:
@@ -54,7 +54,7 @@ def main() -> int:
     ap.add_argument("--salida", required=True)
     ap.add_argument("--fecha", required=True)
     ap.add_argument("--ronda", default="E")
-    ap.add_argument("--paquete", default="com.signai.webview")
+    ap.add_argument("--paquete", default="com.signall.app")
     args = ap.parse_args()
 
     lista = list(frases(Path(args.fr01)))
@@ -82,7 +82,7 @@ def main() -> int:
         log = ""
         while time.time() < fin:
             time.sleep(1.5)
-            log = adb(args.serie, "logcat", "-d", "-s", "SignAiNet", "SignAiState", "SignAiMetrics")
+            log = adb(args.serie, "logcat", "-d", "-s", "SignAllNet", "SignAllState", "SignAllMetrics")
             if "representado:" in log or "No se pudo traducir" in log:
                 break
         crudo.append(f"### {id_} · {texto}\n{log}")
@@ -117,7 +117,7 @@ def main() -> int:
         "exactas": exactas, "total": len(filas), "porcentaje": round(100 * exactas / len(filas), 1),
         "diferentes": [f for f in filas if not f["exacta"]],
         "salud_antes": antes, "salud_despues": despues,
-        "metodo": "frases escritas en la app con uiautomator2; glosas leídas de logcat SignAiNet; la caché no se vació",
+        "metodo": "frases escritas en la app con uiautomator2; glosas leídas de logcat SignAllNet; la caché no se vació",
     }, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"exactas {exactas}/{len(filas)}")
     return 0

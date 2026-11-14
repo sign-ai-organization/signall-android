@@ -12,7 +12,7 @@ interface SettingsRepository {
 }
 
 /**
- * Persists [Settings] in the shared `signai` SharedPreferences file (same file
+ * Persists [Settings] in the shared `signall` SharedPreferences file (same file
  * as the history, different keys).
  */
 class SharedPrefsSettingsRepository(context: Context) : SettingsRepository {
