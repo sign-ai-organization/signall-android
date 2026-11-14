@@ -213,6 +213,20 @@ android {
     }
 }
 
+androidComponents {
+    // La suite unitaria se corre una sola vez, sobre `debug`. Las pruebas de
+    // composables necesitan el `ComponentActivity` que declara
+    // `ui-test-manifest`, y ese artefacto es `debugImplementation`: en `release`
+    // y en `demo` el manifiesto de prueba no existe y Robolectric no puede
+    // lanzar la actividad. Las pruebas de lógica sí pasarían en las tres, pero
+    // no hay razón para correr la suite tres veces.
+    beforeVariants(selector().all()) { variant ->
+        if (variant.buildType != "debug") {
+            variant.enableUnitTest = false
+        }
+    }
+}
+
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)

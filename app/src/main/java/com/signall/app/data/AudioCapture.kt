@@ -46,6 +46,10 @@ class AudioCapture(private val onChunk: (ByteArray) -> Unit) {
     }
 
     /** Opens the recorder, or returns null and says why in logcat. */
+    // `RECORD_AUDIO` lo comprueba quien llama antes de arrancar la captura; el
+    // `@SuppressLint` tiene que estar en este método porque acá, y no en
+    // `start()`, es donde se construye el `AudioRecord`.
+    @SuppressLint("MissingPermission")
     private fun createRecorder(sampleRate: Int, frameSamples: Int): AudioRecord? {
         val minBuffer = AudioRecord.getMinBufferSize(
             sampleRate,
