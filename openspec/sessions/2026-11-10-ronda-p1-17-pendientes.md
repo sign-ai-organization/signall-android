@@ -6,7 +6,7 @@
 
 El owner trajo todo de los remotos y pidió correr otra vez **solo las pruebas que no habían
 quedado como pasadas**, en el carril P1. La división vigente es la del reparto que Sergio
-actualizó el 10/11 (`2ad7b1c`): 25 pruebas para P1, 23 para P2 y 26 para P3, con 32 marcadas
+actualizó el 10/11 (`5ec19f7`): 25 pruebas para P1, 23 para P2 y 26 para P3, con 32 marcadas
 «Pasó · no repetir». De las 25 de P1, 8 ya habían pasado el 6/11, así que quedaban 17.
 
 Antes de arrancar se revisó la división: suma 74, no hay pruebas repetidas ni sin dueño, y las
@@ -16,7 +16,7 @@ tiene el recurso que les falta.
 ## Qué se hizo
 
 - **Remotos:** `git fetch --all --prune` y `pull --ff-only` en los cinco repos. Entraron
-  `a7d4eec` (backend), `4824979` (STT), `ca21dc1` (docs), `dc90b99` (app). `signai-avatar` no
+  `a7d4eec` (backend), `4824979` (STT), `ca21dc1` (docs), `b35a82d` (app). `signai-avatar` no
   tenía novedades.
 - **Ambiente:** la contraseña de Neon había rotado (el backend arrancaba `degraded` con
   `InvalidPasswordError`) y la clave de OpenAI del `.env` devolvía 401. El owner pasó un
@@ -60,7 +60,7 @@ tiene el recurso que les falta.
   repetición del 10/11, con **solo las 18 pruebas del carril P1**. La ronda del 05/11 salió del
   libro y queda en el historial de git; las 11 filas que el carril 2 había escrito en la ronda
   de evaluación se sacaron para que cada carril agregue las suyas. Para los tests que P2 había
-  pisado, la fila diagnóstica se restauró a su resultado del 06/11 desde el commit `8be173d`.
+  pisado, la fila diagnóstica se restauró a su resultado del 06/11 desde el commit `04aa37c`.
   Quedan 92 filas.
 
 ## Decisiones del owner en esta sesión
@@ -124,7 +124,7 @@ definidos».
   es pura, así que la arista desaparece sin cambiar el criterio. El arnés da 4 aristas, 4 por
   interfaz y 0 saltos. En el backend: rama `fix/glosado-hue-cac-llm-p1`, PR #13.
 - **Los dos libros**: el carril 2 dejó sus 25 filas de la ronda de evaluación en
-  `resultados-consolidados.xlsx` (commit `e89073e`). Como el Excel es binario y dos carriles
+  `resultados-consolidados.xlsx` (commit `476896f`). Como el Excel es binario y dos carriles
   sobre el mismo archivo no se fusionan sin perder trabajo, **cada carril lleva su libro**:
   `resultados-consolidados.xlsx` (el general, 74 + 43, **sin tocar**: queda como lo dejó el
   carril 2) y `resultados-consolidados-p1.xlsx` (74 + 18, solo el carril 1, con los umbrales

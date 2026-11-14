@@ -1,7 +1,7 @@
 # Propuesta para subir la exactitud del glosado
 
 **Fecha:** 2026-11-05
-**Origen:** ronda de evaluación (cierre `5b8c28d`), pruebas `PR-INT-02` y `PR-LLM-02`.
+**Origen:** ronda de evaluación (cierre `ea4cfbf`), pruebas `PR-INT-02` y `PR-LLM-02`.
 **Estado:** propuesta. No hay código escrito ni decisión tomada.
 
 ---

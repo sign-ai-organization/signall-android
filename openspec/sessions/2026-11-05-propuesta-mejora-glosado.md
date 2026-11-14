@@ -1,7 +1,7 @@
 # Propuesta para subir la exactitud del glosado
 
 **Día:** jueves 5 de noviembre de 2026.
-**Origen:** cierre de la ronda de evaluación (`5b8c28d`), fallo `PR-INT-02` (17/30 frases
+**Origen:** cierre de la ronda de evaluación (`ea4cfbf`), fallo `PR-INT-02` (17/30 frases
 exactas, 88,4 % de glosas).
 
 - **Objetivo:** saber **por qué** falla el 43 % de las frases antes de proponer un arreglo,

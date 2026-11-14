@@ -48,7 +48,7 @@ diferencias que ya se identificaron, **la decisión que se tomó en cada una** y
 lo que hay que cambiar en la app. La fuente de verdad es el **SRS de `latex/srs/main.tex`**
 (la copia del 2026-11-02 en el repositorio; hasta el 2026-11-04 era el de Overleaf). No
 rehagas ese análisis desde cero: extendelo, y concentrate en lo que cambió desde el
-2026-10-17 (commit `0b3c7f8` del app).
+2026-10-17 (commit `a75174a` del app).
 
 ## Lo que no hacés
 

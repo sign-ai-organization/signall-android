@@ -19,13 +19,13 @@ Solo dos repos tenían commits nuevos:
 
 | Repo | Antes | Después | Qué traía |
 |---|---|---|---|
-| `sign-ai-android` | `d72ec4e` | `704e0ac` | 12 commits: la ronda P3 del 10/11 (fichas `PR-AND-03`, `PR-AND-04`, `PR-INT-05`, `PR-REN-07`), las repeticiones y umbrales del carril 2, y 129 archivos de evidencia |
+| `sign-ai-android` | `2d33f8c` | `69181d2` | 12 commits: la ronda P3 del 10/11 (fichas `PR-AND-03`, `PR-AND-04`, `PR-INT-05`, `PR-REN-07`), las repeticiones y umbrales del carril 2, y 129 archivos de evidencia |
 | `sign-ai-docs` | `b23692c` | `401b7d1` | 27 commits: umbrales del carril 2 en las fichas y el **documento nuevo `latex/vfp/`** (versión final de la propuesta), con sus borradores en `borradores/vfp/` |
 | `sign-ai-backend` | `301e721` | `301e721` | nada (solo se borró la rama remota `fix/glosado-hue-cac-llm-p1`, ya fusionada) |
 | `sign-ai-stt` | `4824979` | `4824979` | nada |
 
 **En la app no cambió una línea de código**: los 12 commits son de `docs/plan-pruebas/` y
-`openspec/sessions/`, verificado con `git diff --name-only d72ec4e..704e0ac` filtrando esas
+`openspec/sessions/`, verificado con `git diff --name-only 2d33f8c..69181d2` filtrando esas
 dos carpetas → vacío.
 
 `../signall-avatar` no se tocó: `dev` ya estaba en `fc6f372`, igual que `origin/dev`.
@@ -36,7 +36,7 @@ Las cuatro ramas `develop` locales eran **ancestros de `main`**, sin commits pro
 (comprobado con `git merge-base --is-ancestor develop main` antes de cada borrado), así que
 se borraron con `git branch -d` y no se perdió nada:
 
-- `sign-ai-android`: `7707da6` (venía 116 commits atrás)
+- `sign-ai-android`: `360be98` (venía 116 commits atrás)
 - `sign-ai-backend`: `301e721` (igual a `main`)
 - `sign-ai-stt`: `7a571c2` (5 atrás)
 - `sign-ai-docs`: `8ff4fd2` (11 atrás)
@@ -46,7 +46,7 @@ de los hermanos es cosa del owner. Quedaron así:
 
 | Repo | `origin/main` | `origin/develop` |
 |---|---|---|
-| `sign-ai-android` | `704e0ac` | `704e0ac` |
+| `sign-ai-android` | `69181d2` | `69181d2` |
 | `sign-ai-backend` | `301e721` | `301e721` |
 | `sign-ai-stt` | `4824979` | `4824979` |
 | `sign-ai-docs` | `401b7d1` | `8ff4fd2` |

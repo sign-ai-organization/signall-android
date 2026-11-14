@@ -43,9 +43,9 @@ servía: el teléfono no alcanzaba a `192.168.78.102:8080`.
 
 | ID | Qué | Commit |
 |---|---|---|
-| **A13** | La métrica de "tiempo hasta la primera seña" (`SignAiMetrics.onFirstSign`, `turnSentAt`) | `95510e6` |
-| **A3** | `wss://` por default, `ws://` solo como bypass de debug, sin texto en claro en release | `262c161` |
-| **A5** | "Seña no disponible" glosa por glosa | `b899af6` |
+| **A13** | La métrica de "tiempo hasta la primera seña" (`SignAiMetrics.onFirstSign`, `turnSentAt`) | `817f89f` |
+| **A3** | `wss://` por default, `ws://` solo como bypass de debug, sin texto en claro en release | `603065c` |
+| **A5** | "Seña no disponible" glosa por glosa | `e0b008c` |
 | **A7 + A4 + A1** | Los siete estados del SRS, la desconexión que no deja la app trabada, y el tercer estado visible | este commit |
 
 El detalle de cada uno está en `docs/historia/CONTRASTE-APPvsDOCUMENTOS.md` §8, con lo que se

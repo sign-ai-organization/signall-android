@@ -1,6 +1,6 @@
 # Resiliencia en la app · PR-RES-01 y PR-RES-03
 
-**Fecha:** 2026-11-08, tarde · **Rama:** `main` · **Commit:** `f2d5cdb`
+**Fecha:** 2026-11-08, tarde · **Rama:** `main` · **Commit:** `6efbd55`
 
 ## Qué llegó
 

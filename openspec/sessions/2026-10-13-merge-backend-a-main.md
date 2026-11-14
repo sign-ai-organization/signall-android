@@ -18,7 +18,7 @@ Se mergeó `feat/integracion-backend-v2` a `main` y se pusheó directo a `origin
   (`appKotlin` borrado del árbol, 128 borrados sin commitear) y no rastrea el
   código actual. No es destino de este trabajo — el webview es su propio repo.
 - **Merge fast-forward.** `main` no tenía commits propios (0 detrás, 2 adelante),
-  así que la historia queda lineal: `41cae76..1ec830c`. Nada se perdió.
+  así que la historia queda lineal: `84737aa..99e468e`. Nada se perdió.
 - **Build verificado antes de mergear**: `./gradlew build` en verde
   (`BUILD SUCCESSFUL`), sin errores de lint.
 

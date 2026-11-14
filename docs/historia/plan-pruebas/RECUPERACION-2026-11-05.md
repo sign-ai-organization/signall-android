@@ -6,7 +6,7 @@ diagnóstica del 2026-11-04, **qué** se volvió a medir y **qué** números cam
 pide el plan.
 
 - **Ronda que se recupera:** la del 2026-11-04, cerrada con 74 de 74 filas en el commit
-  `6c28985`.
+  `7f08d74`.
 - **Por qué se repite:** esa ronda midió el LLM con `qwen3:4b-instruct` (Ollama local), no
   con el modelo oficial `gpt-4o-mini`.
 - **Qué no se repite:** 34 pruebas que el modelo local no podía tocar y las 16 que siguen
@@ -33,7 +33,7 @@ ficha (M4) y configuración del cliente (M5).
 | Componente | Referencia |
 |---|---|
 | App | `com.signai.webview`, Redmi Note 9S (Android 11), build `debug` con `-Psignai.backendWsUrl=ws://127.0.0.1:8080/ws/translate`, `DEV_TOOLS` apagado, `adb reverse tcp:8080` |
-| App (HEAD) | `746438f` en `main` |
+| App (HEAD) | `88260af` en `main` |
 | Backend | `8f27bf8` en `main`, imagen `sha256:f92c6adcfabed6d78853b6dc701be3ba4b248cdd708bfac37feb1346c95b4316`, reconstruida desde ese commit |
 | STT | `7a571c2` en `main`, `medium` en CUDA |
 | Base | Neon de la tesis (no una base de laboratorio) |

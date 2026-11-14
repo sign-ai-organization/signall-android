@@ -22,13 +22,13 @@ El estado real, después de `git fetch --all --prune` en los cuatro repos:
 Los 17 commits de la app son los del 2026-10-17: los siete estados del SRS, el
 indicador con el nombre del estado, `rt_first_sign_ms`, `wss://` por default,
 el permiso de micrófono al abrir, el trabajo de Overleaf y A14 (que la app no
-se pueda quedar congelada). El remoto se había quedado en `04a9d24`.
+se pueda quedar congelada). El remoto se había quedado en `3c248b2`.
 
 ## Qué se hizo
 
 ### Commits nuevos
 
-**App** (1 commit, `32f5b1f`): el contraste de la app contra el SRS de la
+**App** (1 commit, `a916041`): el contraste de la app contra el SRS de la
 **versión 426** (1370 líneas, editado el 2026-10-17), con las referencias al
 código pasado a **por función y no por número de línea**, A14 en la tabla, y
 el contraste del backend mudado a su repo. Se borran

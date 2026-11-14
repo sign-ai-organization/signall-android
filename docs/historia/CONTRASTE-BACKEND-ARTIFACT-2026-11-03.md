@@ -23,7 +23,7 @@ documentos: solo deja el estado y las decisiones que faltan.
 | `sign-ai-backend` | `main` = `develop` = **`c8aa516`**, árbol limpio | Código, migraciones, `docs/`, `deploy/`, `.github/` |
 | `sign-ai-stt` | `main` = `develop` = **`7a571c2`** | Solo lo que el artifact toca: búfer de 8 s y `/health` |
 | `sign-ai-docs` | **`c778326`** (2/11), con `cambios/requerimientos.md` modificado sin commitear | v0.16, plan de pruebas, trazabilidad, `latex/` |
-| `sign-ai-android` | **`70194c2`** | Contrato del WebSocket y catálogo de animaciones |
+| `sign-ai-android` | **`2fc1f03`** | Contrato del WebSocket y catálogo de animaciones |
 | Artifact | `/tmp/opencode/contraste-backend-artifacto.md` (704 líneas) | Lista de afirmaciones a verificar |
 | Overleaf | **No se abrió**, por instrucción del owner | Se usó la copia de `sign-ai-docs/latex/` |
 | `.env` del backend | **No se leyó el archivo** | Se instanciaron los `Settings` dentro de la imagen con el repo montado (§0.3) |
@@ -471,5 +471,5 @@ gh run view 40617063393
 | `9c873be` | backend | APK por Wi-Fi (27/10) |
 | `c8aa516` | backend | El prompt conserva el pronombre (27/10) |
 | `c778326` | docs | Copia del SRS del 2/11 |
-| `70194c2` | android | Punta de `main` al cerrar esta revisión |
+| `2fc1f03` | android | Punta de `main` al cerrar esta revisión |
 | `7a571c2` | stt | Punta de `main` al cerrar esta revisión |

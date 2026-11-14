@@ -3,14 +3,14 @@
 **Fecha:** 2026-11-03 · **Rama:** `main` · **Repositorio:** `sign-ai-android`
 
 Este documento explica, en orden, todo lo que se hizo en esta sesión: primero la
-actualización del spec de interfaz contra el código que entró en `3be7256`, y después las
+actualización del spec de interfaz contra el código que entró en `98fde03`, y después las
 dos propuestas de redacción en el SRS de la tesis, con control de cambios.
 
 ---
 
 ## 1. Contexto
 
-El commit `3be7256` (`feat(settings): velocidad con botones y AVANZADO solo en
+El commit `98fde03` (`feat(settings): velocidad con botones y AVANZADO solo en
 compilaciones de desarrollo`) cambió el comportamiento de Ajustes, pero el spec
 `openspec/specs/ui/spec.md` quedó atrás. La sesión que hizo ese commit dejó anotados dos
 pendientes:
@@ -55,7 +55,7 @@ Los archivos revisados fueron:
 ### 2.3. Verificación y cierre
 
 - `./gradlew build` → **BUILD SUCCESSFUL**.
-- Commit `14d768e` (`docs(spec): Ajustes con botones, íconos por fila y AVANZADO solo en
+- Commit `e83c87e` (`docs(spec): Ajustes con botones, íconos por fila y AVANZADO solo en
   desarrollo`).
 - Push a `main`.
 
@@ -98,7 +98,7 @@ esa fila ya no existe: ahora el bloque entero depende del flag de compilación.
 Se extendió la sesión existente del día,
 `openspec/sessions/2026-11-03-ajustes-velocidad-y-devtools.md`, con una «Segunda parte» que
 registra el spec actualizado y las dos ediciones del SRS. También se actualizó su línea en
-`openspec/sessions/README.md`. Commit `bf827b7`, pusheado a `main`.
+`openspec/sessions/README.md`. Commit `262b27a`, pusheado a `main`.
 
 ---
 
@@ -116,8 +116,8 @@ No se instaló en el dispositivo porque no hubo cambios de código después del 
 
 | Commit | Qué contiene |
 |---|---|
-| `14d768e` | Spec de UI actualizado (`SET-4`, `SET-8`, `SET-9`, `BRG-6` y tabla de íconos). |
-| `bf827b7` | Bitácora de la sesión y su línea en el índice. |
+| `e83c87e` | Spec de UI actualizado (`SET-4`, `SET-8`, `SET-9`, `BRG-6` y tabla de íconos). |
+| `262b27a` | Bitácora de la sesión y su línea en el índice. |
 
 En Overleaf quedan dos cambios pendientes de revisión en el panel de *Review* del SRS,
 ambos con `tracked: true`, para que el owner los acepte o los rechace.

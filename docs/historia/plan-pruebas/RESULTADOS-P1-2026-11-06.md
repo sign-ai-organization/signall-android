@@ -9,7 +9,7 @@ explica cómo se llegó a esos números.
 - **Ronda:** evaluación (la segunda ronda; la del 5/11 quedó como diagnóstica).
 - **Carril:** P1, texto y estático.
 - **Ejecutor:** agente IA, sesión del 2026-11-06.
-- **Rama:** `main`, commit `4ded3a8`.
+- **Rama:** `main`, commit `72fd58f`.
 - **Libro:** `resultados-consolidados.xlsx`, 148 filas (74 de la ronda diagnóstica + 74 de la
   ronda de evaluación). Las 23 de P1 están llenas; las otras 51 quedaron «Sin ejecutar» o
   «Bloqueada» hasta que las corran P2 y P3.
@@ -31,7 +31,7 @@ local sin saberlo.
 | Servidor | canónico (la única máquina disponible) |
 | Commit backend | `9c74e76` |
 | Commit STT | `9787e49` |
-| Commit app | `ddcb791` |
+| Commit app | `298e80c` |
 | APK | `debug`, sha256 `52958cfcab1ee6dcddaa1edfa2e47b44a2c5f02a55c7b8f2ec78fdb39a047034`, 40.295.947 B |
 | LLM efectivo | `gpt-4o-mini`, `llm_base_url=""`, temperatura 0 |
 | Umbral de caché | 0,03 |
@@ -613,7 +613,7 @@ por esta corrida.
 | Sello del ambiente | `docs/plan-pruebas/evidencias/PREFLIGHT/SELLO-P1_E_20261106_01.json` |
 | Resumen legible | este archivo, `docs/historia/plan-pruebas/RESULTADOS-P1-2026-11-06.md` |
 | Bitácora de sesión | `openspec/sessions/2026-11-06-ronda-p1-23-pruebas.md` |
-| Commit | `4ded3a8` en `main` |
+| Commit | `72fd58f` en `main` |
 
 ## 8. Estado final del sistema
 

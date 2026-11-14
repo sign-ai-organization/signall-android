@@ -57,6 +57,6 @@ defecto.
 
 ## Commits
 
-- `sign-ai-android`: `ab65293`, `eb2549f`, `8a4e2a9` (plan, notas y conclusiones).
+- `sign-ai-android`: `ec96095`, `558fa3e`, `e1ff56b` (plan, notas y conclusiones).
 - `sign-ai-backend`: `8f27bf8` (`main` y `develop`).
 - `sign-ai-docs`: `72070e3` (`main`).

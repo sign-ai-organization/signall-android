@@ -49,7 +49,7 @@ Nada. Esta sesión no cambió código de la app ni midió latencias.
 Decisión del owner: **`develop` queda como una copia de `main` en todos los repos de
 código**, menos `signai-avatar` y `sign-ai-docs`, que no se tocan.
 
-- **app**: `develop` se adelantó a `main` por fast-forward (`6ad0fda` → `c50eb1d`) y se
+- **app**: `develop` se adelantó a `main` por fast-forward (`c1d6556` → `27bd09c`) y se
   pusheó. Antes de moverla se commiteó la bitácora de esta sesión, para que el commit
   también quedara en `develop` y las dos ramas terminaran en el mismo punto.
 - **backend** y **STT**: ya estaban iguales a `main` (`c8aa516` y `7a571c2`), así que no se

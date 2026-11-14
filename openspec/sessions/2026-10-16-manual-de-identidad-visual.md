@@ -1,7 +1,7 @@
 # Manual de identidad visual: la paleta grafito y el ámbar de captura
 
 **Fecha:** 2026-10-16, noche · **Rama:** `flujo-oraciones` ·
-**Autoría del cambio de paleta:** Samuel Osorio (`e154198`)
+**Autoría del cambio de paleta:** Samuel Osorio (`e6b0280`)
 
 ## Qué llegó
 

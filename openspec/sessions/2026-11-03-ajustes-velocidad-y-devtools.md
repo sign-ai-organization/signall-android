@@ -18,7 +18,7 @@ Después pidió dos cosas más, en mensajes separados:
 
 ## Qué se hizo
 
-Commit único `3be7256` (`feat(settings): velocidad con botones y AVANZADO solo en
+Commit único `98fde03` (`feat(settings): velocidad con botones y AVANZADO solo en
 compilaciones de desarrollo`).
 
 1. **Velocidad con botones** (`ui/screens/settings/SettingsSidebar.kt`, `SpeedRow`): sale el
@@ -99,12 +99,12 @@ levantado (Ajustes no lo necesita).
 ## Segunda parte (misma fecha): el spec y el SRS
 
 El owner pidió cerrar los dos pendientes de arriba en la misma sesión, en ese orden: primero
-poner al día el spec contra el código de `3be7256`, y después proponer en el SRS los dos
+poner al día el spec contra el código de `98fde03`, y después proponer en el SRS los dos
 cambios de redacción que faltaban.
 
 ### Qué se hizo
 
-1. **`openspec/specs/ui/spec.md`** (commit `14d768e`):
+1. **`openspec/specs/ui/spec.md`** (commit `e83c87e`):
    - `SET-4`: la velocidad son **dos botones − / +** con el valor visible al medio, paso 10 y
      rango 10–100; un valor viejo fuera de la grilla se alinea al primer toque y el cambio
      entra en la **seña siguiente** sin cortar la actual.

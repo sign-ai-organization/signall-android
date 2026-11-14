@@ -24,7 +24,7 @@ Se verificó el camino completo por WiFi antes de escribirlo, no después. Se de
 a `plan-wifi.md` con el estado de sus fases, en vez de describir un camino que el plan
 todavía no terminó.
 
-Commits: `c34d1d2` (`docs(readme): agregar la puesta en marcha del sistema y el camino
+Commits: `9f076b8` (`docs(readme): agregar la puesta en marcha del sistema y el camino
 por WiFi`), pusheado a `main`. En los hermanos **no se commiteó nada**.
 
 ## Qué se midió

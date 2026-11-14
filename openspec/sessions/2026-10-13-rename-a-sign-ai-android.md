@@ -6,7 +6,7 @@
 
 ## Qué se hizo
 
-1. **Commit y push de todo lo que estaba sin trackear** (`08213ce`): el skill
+1. **Commit y push de todo lo que estaba sin trackear** (`7fd6b9c`): el skill
    `controlar-app-movil` en `.opencode/skills/`, `tools/HERRAMIENTAS.md`, los
    flows de `tools/maestro/`, los scripts de `tools/rendimiento/` y
    `tools/pinch.sh`, más los ajustes a `AGENTS.md`, `tools/README.md` y el

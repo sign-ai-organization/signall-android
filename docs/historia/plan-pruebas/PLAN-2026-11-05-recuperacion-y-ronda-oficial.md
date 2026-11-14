@@ -5,7 +5,7 @@ descubrió al cerrar la ronda diagnóstica, qué pruebas quedaron contaminadas p
 local, cómo se recuperan, qué se arregla después y cómo se corre la ronda de evaluación con
 subagentes sin que se pisen ni se queden en loop.
 
-- **Estado de partida:** ronda diagnóstica cerrada, **74 de 74** filas (commit `6c28985`).
+- **Estado de partida:** ronda diagnóstica cerrada, **74 de 74** filas (commit `7f08d74`).
 - **Motivo del plan:** la ronda midió con **Ollama local `qwen3:4b-instruct`**, no con el
   modelo oficial `gpt-4o-mini`.
 - **Regla de oro:** no se pasa a la fase 2 sin cerrar la fase 1, y no se pasa a la fase 3 sin
@@ -676,7 +676,7 @@ queda como evidencia.
 
 | Qué | Dónde |
 |---|---|
-| Ronda diagnóstica cerrada | commit `6c28985`, `docs/plan-pruebas/` |
+| Ronda diagnóstica cerrada | commit `7f08d74`, `docs/plan-pruebas/` |
 | Resultados | `plantilla-resultados.xlsx`, columnas 12–17 |
 | Evidencias | `docs/plan-pruebas/evidencias/<BLOQUE>/` |
 | Análisis por causa | `ANALISIS-2026-11-04.md` |

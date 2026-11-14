@@ -105,8 +105,8 @@ RTX 3050 mientras esta máquina tiene una **RTX 4050 de 6 GB**.
   - El PR #6 (solo texto, rama `feat/text-frames`) se cerró al consolidar: la
     rama se renombró y el trabajo quedó en `1a5d975`.
 - Este repo: 4 commits en `main` (sin PR, directo, por decisión del owner):
-  `77aa092` sesión con el backend, `76ff5d9` frase escrita + cola, `61ecd51` cola
-  y MNM en `app.js`, `4c0d399` features en el spec. Más `tools/mock_backend.py`.
+  `be0166d` sesión con el backend, `c641874` frase escrita + cola, `4e0cf77` cola
+  y MNM en `app.js`, `4894f57` features en el spec. Más `tools/mock_backend.py`.
 
 ## Implementado y verificado (2026-09-30, tarde)
 
@@ -140,14 +140,14 @@ Probando con el MCP de mobile-next (elAGENTS.md lo marca como vía primaria;
 yo venía usando `adb shell input` a ciegas y por eso diagnosing cosas que no
 eran) aparecieron dos bugs reales:
 
-1. **Crash al descargar el asset** — `4bf0699`. `httpOrigin` concatenaba
+1. **Crash al descargar el asset** — `e7044f0`. `httpOrigin` concatenaba
    esquema y host sin separador: `ws://10.0.2.2:8080/ws/translate` se
    volvía `http10.0.2.2:8080/ws`, OkHttp lo rechazaba y la app moría con
    `Expected URL scheme 'http' or 'https' but was 'http10.0.2.2'` justo
    cuando llegaba la primera glosa con animación. Además, la request se
    construía *fuera* del `runCatching`, así que una URL mal puesta mataba
    la app; ahora degrada a "asset no disponible".
-2. **El WebView robaba el foco** — `be653ec`. Un WebView es focusable en
+2. **El WebView robaba el foco** — `b8ac8e6`. Un WebView es focusable en
    touch mode por defecto: lo tomaba al arrancar y lo mantenía, así que
    **todo lo que se escribía iba a la escena 3D en vez de al campo**, el
    botón Traducir quedaba deshabilitado y la app parecía muerta.

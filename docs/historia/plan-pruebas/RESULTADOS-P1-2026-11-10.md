@@ -8,7 +8,7 @@ plan ni al libro: las fichas mandan y el libro es la fuente de los resultados.
 - **Ronda:** evaluación (repite solo lo pendiente del carril 1).
 - **Carril:** P1, texto y estático (25 pruebas; 8 ya habían pasado el 6/11 y no se repiten).
 - **Ejecutor:** agente IA, sesión del 2026-11-10.
-- **Rama:** `main`, commit `dc90b99` de la app, `a7d4eec` del backend, `4824979` del STT.
+- **Rama:** `main`, commit `b35a82d` de la app, `a7d4eec` del backend, `4824979` del STT.
 - **Sello:** `evidencias/PREFLIGHT/SELLO-P1_E_20261110_01.json`.
 - **Arnés:** `docs/plan-pruebas/arnes/` (esta vez queda versionado; el del 6/11 se perdió con
   el `/tmp`).
@@ -429,7 +429,7 @@ tocarlo; el cambio quedó anotado en `docs/sdd-changes.md` del backend.
 ### 10.3 Los dos libros
 
 El 10/11 el carril 2 dejó sus 25 filas de la ronda de evaluación en
-`resultados-consolidados.xlsx` (commit `e89073e`), sobre el libro de dos rondas. Como el Excel
+`resultados-consolidados.xlsx` (commit `476896f`), sobre el libro de dos rondas. Como el Excel
 es un archivo binario, dos carriles sobre el mismo archivo no se fusionan en el historial sin
 perder trabajo, y la instrucción es no tocar lo del otro carril.
 

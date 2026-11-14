@@ -1,6 +1,6 @@
 # Panel de Conversación en burbujas — qué se hizo y por qué
 
-**Fecha:** 2026-11-03 · **Rama:** `main` · **Commit:** `44264e5`
+**Fecha:** 2026-11-03 · **Rama:** `main` · **Commit:** `ef2f223`
 **Archivos tocados:** `ui/screens/conversation/ConversationPanel.kt`,
 `ui/designsystem/foundation/SignAllShapes.kt`, `ui/designsystem/foundation/SignAllSizes.kt`,
 `openspec/specs/ui/spec.md`, `openspec/sessions/2026-11-03-conversacion-en-burbujas.md`

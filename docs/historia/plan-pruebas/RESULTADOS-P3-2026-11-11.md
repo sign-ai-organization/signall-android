@@ -43,7 +43,7 @@ Pauline da casi lo mismo (mediana 3,05, p95 12,44, máximo 13,92 cm, 11 de 82).
 
 - **Diagnóstica:** los pasos hacia `SENTIR` daban de 37,6 a 39,6 cm (máximo `NUNCA→SENTIR` en FR-01-022), y también `ABUELO→TIO` (37,0) y `ABUELO→NUNCA` (36,4).
 - **Evaluación:** los más altos son `ABUELO→NUNCA` (14,2), `ABUELO→TIO` (14,1) y `HOLA→BUENOS DIAS` (13,3).
-- **Qué cambió entre las dos:** el commit `53cabe1` de Juan Diego («entradas y regresos al reposo nuevos en las 50 señas») cambió los GLB: `juan.glb` de 30.323.680 a 27.727.320 B y `pauline.glb` de 27.850.104 a 27.594.616 B.
+- **Qué cambió entre las dos:** el commit `051e73a` de Juan Diego («entradas y regresos al reposo nuevos en las 50 señas») cambió los GLB: `juan.glb` de 30.323.680 a 27.727.320 B y `pauline.glb` de 27.850.104 a 27.594.616 B.
 - **Orden de los hechos:** la diagnóstica y una primera corrida de evaluación (`PR-AVT-04_E_20261111_01`) se hicieron con los GLB anteriores y dieron lo mismo; la corrida con los GLB nuevos es `PR-AVT-04_E_20261111_02`. La fila del libro apunta a la segunda y nombra la primera.
 - **Umbrales:** se fijaron con los GLB anteriores (cifra medida más 25 %, redondeada hacia arriba) y ahora quedan holgados. Si el owner quiere que reflejen los GLB vigentes, hay que fijarlos de nuevo con la corrida `_02`.
 - **Límite:** es el salto crudo entre clips, antes de la fundición de 100 ms. Lo que se ve en pantalla es menor, y eso no se midió en el teléfono. Sobre los 2.450 pares posibles de los 50 clips, una medición anterior (`openspec/sessions/2026-10-26-correccion-afirmaciones-glb.md`) dio mediana de 5,6 cm y 81 % bajo 10 cm; con los pasos reales de FR-01 y los GLB anteriores salieron 4,9 cm y 81,7 %.
@@ -157,7 +157,7 @@ Con eso coinciden 4 de 5 tipos (Afirmación, Pregunta de sí o no, Negación y O
 
 ## 6. Hallazgo: los GLB de los avatares cambiaron durante la sesión
 
-El commit `53cabe1` de Juan Diego («entradas y regresos al reposo nuevos en las 50 señas», 11/11 19:09) llegó al repositorio local a las 19:29 y reemplazó `juan.glb` y `pauline.glb`. Consecuencias:
+El commit `051e73a` de Juan Diego («entradas y regresos al reposo nuevos en las 50 señas», 11/11 19:09) llegó al repositorio local a las 19:29 y reemplazó `juan.glb` y `pauline.glb`. Consecuencias:
 
 - **`PR-AVT-04`:** los saltos bajaron (§2). Las filas del libro y la evidencia distinguen las dos mediciones. La ficha trae los umbrales de los GLB anteriores.
 - **`PR-AVT-06` (peso de las animaciones, carril de P1):** su fila de evaluación dice «Los GLB no cambiaron desde el 06/11» y 30.323.680 B para Juan; con los GLB nuevos eso ya no es cierto. No se tocó: es del carril de P1.

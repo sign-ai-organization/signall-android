@@ -13,7 +13,7 @@ disposición; no hay otros carriles corriendo.
 ## Qué se hizo
 
 - **Preflight y sello** (`evidencias/PREFLIGHT/SELLO-P1_E_20261106_01.json`): backend `9c74e76`,
-  STT `9787e49`, app `ddcb791`, APK `debug` `52958cfc…`, `gpt-4o-mini` con `llm_base_url=""`,
+  STT `9787e49`, app `298e80c`, APK `debug` `52958cfc…`, `gpt-4o-mini` con `llm_base_url=""`,
   umbral 0,03, caché vacía, 50 filas de catálogo + 13 sinónimos, Redmi Note 9S `1ed6699f`.
 - **Datos:** se extrajeron FR-01…FR-11, CO-01…CO-05, AU-05 y CT-01/03 del anexo C del plan con
   un parser propio (`/tmp/opencode/p1-2026-11-06/scripts/parse_anexo.py`). Los 10 textos de

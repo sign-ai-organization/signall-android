@@ -3,7 +3,7 @@
 **Día:** viernes 6 de noviembre de 2026. **Rama:** `ramaSergio`.
 
 - **Objetivo:** aplicar la fase 4 del plan de implementación (AVT-03 decisión, RES-03 fix).
-- **Hallazgo:** el código de las dos ya existía desde el commit `c473956`; el plan estaba
+- **Hallazgo:** el código de las dos ya existía desde el commit `f3677ab`; el plan estaba
   desactualizado en ese punto.
 
 ## Lo que ya estaba hecho

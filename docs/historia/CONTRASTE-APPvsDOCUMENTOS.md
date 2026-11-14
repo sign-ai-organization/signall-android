@@ -1,7 +1,7 @@
 # Contraste App ↔ Documentos — qué hay que cambiar en la app
 
 **Fecha:** 2026-10-17 · **App:** `sign-ai-android`, rama `flujo-oraciones`, commit
-`e04bca8` (el último de la lista de §1)
+`1daa832` (el último de la lista de §1)
 **Fuente de verdad:** el **SRS de Overleaf**, proyecto `6a122a19bb9a5dd9d390ba3d`,
 archivo `main.tex`, **1370 líneas**, versión 426, editado el **2026-10-17** (releído
 después de esa edición).
@@ -38,7 +38,7 @@ Ninguno requiere inventar el requisito.
 | ID | Qué hay que cambiar | Dónde en la app | Qué lo pide el SRS | Estado |
 |---|---|---|---|---|
 | **A1** | Que el tercer estado del micrófono **se vea**, no solo se describa | `ui/screens/bottombar/SignAiBottomBar.kt`, `ui/state/MainScreenState.kt` | Tabla de estados, filas *Texto listo* y *Grabando* (`main.tex:732-741`) | ✅ Hecho con A7 |
-| **A2** | Pedir el permiso de micrófono **al abrir la app**, no al tocar el micrófono | `ui/MainScreen.kt:78-103` | §Interfaz con el Usuario (`main.tex:830`) | ✅ Hecho (`1c85ddd`) |
+| **A2** | Pedir el permiso de micrófono **al abrir la app**, no al tocar el micrófono | `ui/MainScreen.kt:78-103` | §Interfaz con el Usuario (`main.tex:830`) | ✅ Hecho (`f7900e2`) |
 | **A3** | **`wss://` por default**, con el `ws://` de desarrollo como bypass por build config | `data/SignAiBackendConfig.kt`, `isEncrypted`, `res/xml/network_security_config.xml`, `app/build.gradle.kts`, el bypass `-Psignai.backendWsUrl` y el build `demo` con `src/demo/res/xml/network_security_config.xml` | §Interfaces de Comunicación (`main.tex:1088`, `:1093`) | ✅ Hecho · **el 2026-10-27 el `demo` demostró el `wss://` con TLS de laboratorio**; para `release` sigue faltando el dominio (§9 #6) |
 | **A4** | Destrabar la frase que quedó a medio traducir; reconexión con espera creciente y contador que se reinicia | `ui/state/MainScreenState.kt`, `:695`, `:909-915` | Tabla de estados, fila *Desconectado* (`main.tex:754-765`) | ✅ Hecho · **el SRS necesita un ajuste** (§9 #9) |
 | **A5** | Avisar **"Seña no disponible" glosa por glosa**, hoy se salta en silencio | `ui/state/MainScreenState.kt`, `queueItemsFor` y `onSignFailed` | §Alcance (`main.tex:200-202`) y tabla, fila *Reproduciendo* (`main.tex:747`) | ✅ Hecho |
@@ -492,7 +492,7 @@ es lo que otra sesión necesita para no dar algo por verificado sin serlo.
 
 ### ✅ A2 — Permiso de micrófono al abrir la app
 
-Commit `1c85ddd`, instalado y verificado en el Redmi Note 9S (Android 11, MIUI).
+Commit `f7900e2`, instalado y verificado en el Redmi Note 9S (Android 11, MIUI).
 Cuatro casos: el diálogo aparece al abrir; al denegar sale el aviso de 3 s y el
 campo y Traducir siguen disponibles; el segundo arranque no pregunta ni avisa; con
 el permiso concedido no hay diálogo. Bitácora completa en
