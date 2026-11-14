@@ -16,11 +16,11 @@ INFORMES="$(cd "$AQUI/.." && pwd)/informes"
 RAIZ="$(cd "$AQUI/../../../.." && pwd)"
 
 REPOS=(
-  "sign-ai-android"
-  "sign-ai-backend"
-  "sign-ai-stt"
-  "sign-ai-docs"
-  "signai-avatar"
+  "signall-android"
+  "signall-backend"
+  "signall-stt"
+  "signall-docs"
+  "signall-avatar"
 )
 
 mkdir -p "$INFORMES"
@@ -34,10 +34,14 @@ echo "gitleaks $(gitleaks version) · reportes en $INFORMES"
 echo
 
 total=0
+saltados=0
 for repo in "${REPOS[@]}"; do
   ruta="$RAIZ/$repo"
   if [ ! -d "$ruta/.git" ]; then
-    echo "  $repo: no es un repositorio, se salta"
+    # Un repositorio que falta NO es un repositorio limpio: si se salta en
+    # silencio, el script dice "sin hallazgos" sin haber mirado nada.
+    echo "  $repo: falta $ruta, no se pudo escanear" >&2
+    saltados=$((saltados + 1))
     continue
   fi
 
@@ -66,6 +70,11 @@ for repo in "${REPOS[@]}"; do
 done
 
 echo
+if [ $saltados -gt 0 ]; then
+  echo "$saltados repositorio(s) no se pudieron escanear. El resultado no sirve como línea base." >&2
+  exit 2
+fi
+
 if [ $total -eq 0 ]; then
   echo "Sin hallazgos en los cinco repositorios."
   exit 0

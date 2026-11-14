@@ -58,8 +58,8 @@ el `export`.
 
 | Proyecto | ncloc | bugs | code smells | vulnerabilidades | fiabilidad | duplicación |
 |---|---|---|---|---|---|---|
-| `signall-android` | 13.806 | 1 | 63 | 0 | C | 4,8 % |
-| `signall-backend` | 2.349 | 1 | 6 | 0 | E | 0 % |
+| `signall-android` | 13.804 | 0 | 63 | 0 | A | 4,8 % |
+| `signall-backend` | 2.349 | 0 | 6 | 0 | A | 0 % |
 | `signall-stt` | 1.347 | 0 | 5 | 0 | A | 0 % |
 
 - Los tres tienen **cobertura 0 %**: no hay tests, ni en backend ni en STT ni en la app.
@@ -67,16 +67,24 @@ el `export`.
 - El STT pasó de 853 a 1.347 líneas y de 2 a 5 code smells después de R-07 porque ahora
   también se analiza `scripts/`, no solo `app/`. No es una regresión: es que antes se
   miraba media casa.
-- Las claves nuevas son `signall-android`, `signall-backend` y `signall-stt`. En el
-  servidor quedaron los proyectos viejos de la primera corrida (`sign-all-*`); borrarlos
-  es del owner.
+- Las claves nuevas son `signall-android`, `signall-backend` y `signall-stt`. Los tres
+  proyectos viejos de la primera corrida (`sign-all-*`) se borraron el 2026-11-13; en el
+  servidor solo quedan los nuevos.
+- Los dos "bugs" de la primera corrida eran uno real y uno falso:
+  - android, `kotlin:S1764`: una condición con `Procesando` y `Desconectado` repetidos.
+    Se deduplicó (`64fd43d`), sin cambio de comportamiento.
+  - backend, `python:S3862` en `orchestrator.py:17`: `translate_stream()` es un generador
+    asíncrono (`yield` dentro) y el `async for` es correcto. Marcado como falso positivo
+    en el servidor el 2026-11-13, con el comentario que lo explica.
+- El analizador de Python **no puede parsear** `app/persistence/database.py`: usa la
+  sintaxis genérica de PEP 695 (`def run_with_retry[T]`), que es válida en 3.12 y compila,
+  pero la versión del analizador todavía no la lee. Sonar lo reporta como `ERROR` y sigue;
+  ese archivo queda sin analizar. No es un fallo del código.
+- El análisis de Kotlin necesita los binarios compilados: `sonar.kotlin.binaries` apunta
+  a `app/build/tmp/kotlin-classes/debug`, así que hay que compilar antes de escanear.
 - Hoy los tres repos de código tienen CI en `.github/workflows/ci.yml`: compilación o
   análisis estático, y gitleaks sobre el árbol. El análisis de SonarQube no puede correr
   en Actions porque el servidor vive en esta máquina.
-- La fiabilidad del backend es E por un solo bug. Conviene mirarlo antes que la deuda de
-  estilo.
-- El análisis de Kotlin necesita los binarios compilados: `sonar.kotlin.binaries` apunta
-  a `app/build/tmp/kotlin-classes/debug`, así que hay que compilar antes de escanear.
 
 ---
 
@@ -90,9 +98,15 @@ Recorre los cinco repositorios y escanea **toda la historia** (`--log-opts="--al
 solo la rama actual). Deja un JSON por repo con hallazgos en
 `reestructuracion/herramientas/informes/`, carpeta ignorada por git.
 
-Sale 0 si está limpio y 1 si encontró algo, así que sirve tal cual en CI.
+Sale 0 si está limpio y 1 si encontró algo, así que sirve tal cual en CI. **Y sale 2 si
+un repositorio no existe**: antes se los saltaba en silencio y el script decía "sin
+hallazgos" sin haber mirado nada. Ese verde falso duró hasta el 2026-11-13, cuando tenía
+adentro los cinco nombres viejos de repositorio.
 
-Los hallazgos de la primera corrida están clasificados en `../01-leaks.md`.
+Los hallazgos de la primera corrida están clasificados en `../01-leaks.md`. La corrida del
+2026-11-13, con toda la historia y las credenciales ya rotadas, da **0 hallazgos** en los
+cinco.
+
 
 ---
 

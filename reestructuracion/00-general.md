@@ -113,6 +113,35 @@ toca `ui/` y la otra `assets/web/`.
 Verificación cruzada, READMEs finales, y una última pasada de Sonar y de gitleaks sobre
 todo, con las credenciales ya rotadas.
 
+**Hecha el 2026-11-13.** Resultado, con las credenciales comprobadas muertas contra los
+servicios:
+
+| Qué | Antes | Después |
+|---|---|---|
+| gitleaks, historia completa de los cinco | 9 hallazgos en android | **0** (5 clasificados como falso positivo, 2 credenciales rotadas y fechados en `.gitleaksignore`) |
+| Sonar `signall-android` | 1 bug, fiab C, 63 smells | **0 bugs, fiab A**, 63 smells |
+| Sonar `signall-backend` | 1 bug, fiab E, 6 smells | **0 bugs, fiab A**, 6 smells (el bug era un falso positivo, marcado en el servidor) |
+| Sonar `signall-stt` | 0 bugs, fiab A, 5 smells | igual |
+| Proyectos viejos `sign-all-*` en Sonar | 3 | **borrados** |
+
+La verificación cruzada encontró tres cosas que las olas anteriores no habían visto:
+
+1. **`leaks.sh` decía "sin hallazgos" sin escanear nada.** Tenía los cinco nombres viejos
+   de repositorio adentro, así que se saltaba los cinco y salía 0. Un verde falso. Ahora
+   falla con código 2 si un repositorio no está.
+2. **Rutas muertas en herramientas y arneses de prueba**, no en prosa histórica:
+   `tools/medir-*.py`, `tools/pack_avatars.py`, `tools/verificar-tiempo-real.sh`, los seis
+   arneses de `docs/plan-pruebas/arnes/` y la sonda de glosado. Apuntaban a
+   `../sign-ai-stt`, `../signai-avatar` y al paquete `com.signai.webview`: se habrían
+   roto al volver a medir.
+3. **Una condición duplicada** en `requestTranslation` (`Procesando` y `Desconectado`,
+   cada uno dos veces). El comportamiento no cambiaba, pero era el único "bug" de Sonar en
+   la app.
+
+Lo que la ola 2 **no** cierra porque no es suya: el renombre de los repositorios en GitHub
+(siguen `sign-all-*`) y el CI de `signall-docs`.
+
+
 ### Reglas de convivencia (las cinco que evitan el desastre)
 
 1. **Un archivo tiene un solo dueño a la vez.** Si dos lo necesitan, se reparte por
@@ -324,7 +353,7 @@ vez.
 | R-05 | 0 · C4 | sacar evidencias pesadas, dejar lo vivo, `docs/historia/` | android | ✅ hecho · `14b2c24` · `docs/` 5,6 MB | backend, STT |
 | R-07 | 0 · C5 | `sonar-project.properties` + GitHub Actions | android, backend, STT | ✅ hecho · `8f90f1d`, `43ada1f`, `429019e` | cualquiera |
 | R-06 | 1 | README corto por repositorio | android, backend, STT | ✅ hecho · `a7746a5`, `7d8585b`, `d5e5a89` | — |
-| — | 2 | verificación cruzada y última pasada de Sonar y gitleaks | todos | informe de cierre | — |
+| — | 2 | verificación cruzada y última pasada de Sonar y gitleaks | todos | ✅ hecho · `c194988`, `64fd43d` · ver § Ola 2 | — |
 
 R-02 y R-03 son **un solo hilo**: mismos 76 archivos, separados obligan a pasar dos veces.
 R-08 se adelantó al principio porque es lo único que obliga a un clon nuevo.

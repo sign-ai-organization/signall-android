@@ -132,3 +132,70 @@ Lo de la primera parte (rotar credenciales, push, Sonar viejo, URLs de GitHub, C
   `docs/performance.md`, `docs/decisions.md`, `docs/sdd-changes.md`): siguen diciendo
   SignAI. No se tocaron porque son documentos citados en la tesis y el SDD manda.
 - **La ola 2** no se puede cerrar sin las credenciales rotadas y sin push.
+
+---
+
+# Tercera parte: ola 2, el cierre
+
+**Misma fecha, al final.** La ola 2 es la verificación cruzada: mirar todo lo hecho con
+los ojos de un tercero, volver a pasar Sonar y gitleaks, y dejar el número final.
+
+## Las credenciales filtradas ya estaban rotadas
+
+La ola 2 se bloqueó el 2026-11-13 esperando la rotación. No hacía falta: las dos
+credenciales que gitleaks encontró en la historia se probaron contra el servicio real y
+están muertas.
+
+| Credencial | Prueba | Resultado |
+|---|---|---|
+| Contraseña de Neon | `psql` con la URL filtrada | `password authentication failed` en el mismo host donde la del `.env` actual conecta |
+| Clave de OpenAI | `GET /v1/models` con la clave | HTTP 401 |
+
+Los valores viejos siguen escritos en `.envJulian` y `env` (locales, en `.gitignore`) y el
+`.env` del backend ya tiene los nuevos, así que la rotación se hizo antes. **No se
+reescribe la historia**: los dos commits con las credenciales ya están en `origin/main`, y
+sacarlos de ahí exigiría un `force-push`, que las reglas prohíben. Reescribir localmente
+solo cambiaría los hashes de todo lo demás.
+
+## Lo que encontró la verificación cruzada
+
+1. **`leaks.sh` daba un verde falso.** Se saltaba los cinco repositorios porque tenía los
+   nombres viejos adentro (`sign-ai-*`) y salía 0 igual. Ahora sale 2 si falta un
+   repositorio.
+2. **Rutas y paquete viejos en herramientas y arneses de prueba.** R-03 se había quedado
+   con la prosa histórica pero no con `tools/` ni con `docs/plan-pruebas/arnes/`. Volver a
+   medir con eso habría fallado o medido la app vieja (`com.signai.webview`).
+3. **Una condición duplicada** en `requestTranslation`: `Procesando` y `Desconectado`,
+   cada uno dos veces. El único bug de Sonar en la app.
+4. **Un falso positivo en el backend**: `translate_stream()` es un generador asíncrono y
+   el `async for` es correcto. Marcado en el servidor.
+5. **El analizador de Python no parsea `database.py`**: PEP 695 (`def run_with_retry[T]`)
+   es válido en 3.12, pero el analizador todavía no lo lee.
+
+## Números finales
+
+| Proyecto Sonar | bugs | smells | fiabilidad | ncloc |
+|---|---|---|---|---|
+| `signall-android` | 0 | 63 | A | 13.804 |
+| `signall-backend` | 0 | 6 | A | 2.349 |
+| `signall-stt` | 0 | 5 | A | 1.347 |
+
+gitleaks, historia completa de los cinco repositorios: **0 hallazgos**. Los proyectos
+viejos `sign-all-*` se borraron del servidor; quedan solo los tres nuevos.
+
+## Verificación en el equipo
+
+| Qué | Resultado |
+|---|---|
+| `./gradlew build` | en verde |
+| `./gradlew installDebug` | instalada en el Redmi (`lastUpdateTime` 2026-11-13 21:26) |
+| `leaks.sh` | 0 en los cinco |
+| `sonar.sh` de los tres | análisis correcto; android reescaneado después del dedupe |
+
+## Lo que sigue sin cerrar
+
+- **El renombre en GitHub**: los cinco `origin` siguen `sign-all-*`. Renombrarlos a
+  `signall-*` es una acción sobre GitHub, con permiso de administrador, y decide el owner.
+- **El CI de `signall-docs`**: el plan se contradice (§ 4 "no se tocar por dentro" contra
+  § 5 "los cuatro"). No se creó.
+- **El `push`**: android 15 commits adelante, backend 4, STT 3. Nada publicado.

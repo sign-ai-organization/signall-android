@@ -38,12 +38,33 @@ completo del `.env` del backend —`DATABASE_URL` con la clave de Neon adentro, 
      backend.
    Borrar el archivo o reescribir la historia **no descompromete** una credencial que ya
    estuvo publicada. Una clave rotada no sirve para nada aunque siga escrita.
+   **Hecho antes del 2026-11-13** (ver § Verificación).
 2. **Sacar los dos archivos del árbol** cuando se haga R-05: con la limpieza de
    `docs/plan-pruebas/` desaparecen los dos. Ahí ya no quedan.
 3. **Decidir si se reescribe la historia.** Mi recomendación: **no**. El repo pesa
    330 MB y una reescritura con `git-filter-repo` obliga a que todos los clones se
    rehagan; con las credenciales rotadas no compra nada. Si el repositorio va a ser
    público, entonces sí hay que hablarlo.
+
+   La decisión se sostiene por una razón más dura: **los dos commits con las credenciales
+   ya están en `origin/main`** (`0d0420ff` y `5b8c28db`, comprobado con
+   `git merge-base --is-ancestor`). Una reescritura local no los saca del remoto; sacarlos
+   exigiría un `force-push`, que el § Reglas de convivencia prohíbe. Reescribir la historia
+   sin eso solo cambia los hashes de todo lo demás y no despublica nada.
+
+## Verificación de la rotación (2026-11-13)
+
+Las dos credenciales se probaron contra el servicio real, sin imprimir los valores:
+
+| Credencial | Prueba | Resultado |
+|---|---|---|
+| Contraseña de Neon (`npg_…`, 16 caracteres) | `psql <URL filtrada> -c 'select 1'` | `password authentication failed for user 'neondb_owner'` en el **mismo host** donde la del `.env` actual conecta (`exit 0`) |
+| Clave de OpenAI (`sk-proj-…`, 164 caracteres) | `GET https://api.openai.com/v1/models` con la clave | **HTTP 401** |
+
+Conclusión: las dos están rotadas y no sirven. Los valores muertos **siguen escritos** en
+`.envJulian` y `env` de la raíz de android, que son locales y están en `.gitignore`; el
+`.env` del backend ya tiene los nuevos. Se pueden borrar sin miedo, pero no son un riesgo.
+
 
 ## Los falsos positivos, para que no se repitan
 
@@ -63,6 +84,12 @@ cada corrida si no hay un `.gitleaksignore`:
 
 ## Pendiente
 
-- Repetir la corrida después de rotar, para dejar el reporte limpio como línea base.
-- Agregar `.gitleaksignore` con los falsos positivos de arriba cuando se monte el CI
-  (R-07).
+- ~~Repetir la corrida después de rotar~~ **hecho el 2026-11-13**: 0 hallazgos en los
+  cinco repositorios, historia completa.
+- ~~Agregar `.gitleaksignore`~~ **hecho**: los seis falsos positivos y las dos credenciales
+  rotadas están fechados y explicados en el archivo. Un hallazgo nuevo ya no se pierde
+  entre los conocidos.
+- **`leaks.sh` mentía**: tenía los nombres viejos de los repositorios y se saltaba los
+  cinco, así que decía "sin hallazgos" sin escanear nada. Corregido: ahora sale con
+  código 2 si un repositorio no está.
+
