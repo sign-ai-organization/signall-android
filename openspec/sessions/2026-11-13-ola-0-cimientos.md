@@ -194,8 +194,11 @@ viejos `sign-all-*` se borraron del servidor; quedan solo los tres nuevos.
 
 ## Lo que sigue sin cerrar
 
-- **El renombre en GitHub**: los cinco `origin` siguen `sign-all-*`. Renombrarlos a
-  `signall-*` es una acción sobre GitHub, con permiso de administrador, y decide el owner.
-- **El CI de `signall-docs`**: el plan se contradice (§ 4 "no se tocar por dentro" contra
-  § 5 "los cuatro"). No se creó.
-- **El `push`**: android 15 commits adelante, backend 4, STT 3. Nada publicado.
+- **El renombre en GitHub**: ~~los cinco `origin` siguen `sign-all-*`~~ **hecho el mismo
+  día**: los cinco repositorios pasaron a `signall-*` y los `origin` se reapuntaron;
+  `git ls-remote` responde en los cinco. No hubo `push`: solo cambia el nombre del
+  repositorio, y GitHub redirige las URLs viejas.
+- **El CI de `signall-docs`**: ~~el plan se contradice~~ **resuelto por el owner**: no se
+  crea, porque el § 4 ("solo cambia el nombre del repositorio") manda sobre el § 5.
+- **El `push`**: android 17 commits adelante, backend 4, STT 3. Nada publicado, y el owner
+  decidió que no hasta que todo esté listo.

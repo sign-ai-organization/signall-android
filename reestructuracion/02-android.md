@@ -121,14 +121,25 @@ El análisis de Sonar salió **idéntico a la línea base**: el trabajo no agreg
 
 ## Pendiente
 
-1. **Proyectos viejos en SonarQube.** Quedaron `sign-all-android`, `sign-all-backend` y
-   `sign-all-stt` con el primer análisis. Los nuevos son `signall-*`. Borrarlos es del
-   owner.
-2. **Rotar las dos credenciales** de Neon y OpenAI (ver `01-leaks.md`).
-3. **El nombre de los repos en GitHub** sigue siendo `sign-all-*` en los cinco `origin`;
-   las carpetas locales ya son `signall-*`. Unificar es del owner.
-4. **CI en `signall-docs`**: el § 4 del plan dice que ese repositorio no se toca por
-   dentro y el § 5 de R-07 dice "los cuatro". No se creó: es una decisión del owner.
+Cerrado en la ola 2 (2026-11-13):
+
+1. ~~**Proyectos viejos en SonarQube.**~~ Borrados los tres `sign-all-*`; quedan solo
+   `signall-android`, `signall-backend` y `signall-stt`.
+2. ~~**Rotar las dos credenciales.**~~ Ya estaban rotadas: se comprobó contra Neon
+   (`password authentication failed`) y OpenAI (HTTP 401). Ver `01-leaks.md`.
+3. ~~**El nombre de los repos en GitHub.**~~ Renombrados a `signall-*` y los `origin`
+   reapuntados; `git ls-remote` responde en los cinco.
+4. ~~**CI en `signall-docs`.**~~ No se crea: el owner resolvió la contradicción a favor del
+   § 4 ("solo cambia el nombre del repositorio").
+
+Sigue abierto:
+
+5. La app vieja (`com.signai.webview`) sigue instalada en el teléfono y **no se
+   desinstaló**: borrarla se lleva el historial y los ajustes del owner. Las dos conviven
+   sin problema hasta que él decida.
+6. Los nombres internos del **backend** y del **STT** (`SignAI` en documentación, log de
+   arranque y compose) son su bloque, no el contrato.
+
 5. La app vieja (`com.signai.webview`) sigue instalada en el teléfono y **no se
    desinstaló**: borrarla se lleva el historial y los ajustes del owner. Las dos conviven
    sin problema hasta que él decida.
