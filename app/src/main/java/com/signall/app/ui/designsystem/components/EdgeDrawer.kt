@@ -1,6 +1,7 @@
 package com.signall.app.ui.designsystem.components
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -57,6 +58,7 @@ import com.signall.app.ui.designsystem.foundation.SignAllShapes
 import com.signall.app.ui.designsystem.foundation.SignAllSizes
 import com.signall.app.ui.designsystem.foundation.SignAllSpacing
 import com.signall.app.ui.theme.SignAllTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -214,13 +216,12 @@ fun SignAllEdgeDrawer(
     // (which is itself animated by its `Animatable`), so the fade is exactly in
     // step with the other drawer sliding in — it starts the moment the gesture
     // (or the tap's opening animation) begins, not when it finishes.
-    val enabledFraction =
-        if (isOpen) 1f else (1f - otherOpenFraction.coerceIn(0f, 1f))
+    val enabledFraction = tabVisibleFraction(isOpen, otherOpenFraction)
 
-    val direction = if (side == DrawerSide.End) 1f else -1f
-    val closedOffset = direction * widthPx
-    val minOffset = if (side == DrawerSide.End) 0f else -widthPx
-    val maxOffset = if (side == DrawerSide.End) widthPx else 0f
+    val axis = drawerAxis(side, widthPx)
+    val closedOffset = axis.closedOffset
+    val minOffset = axis.minOffset
+    val maxOffset = axis.maxOffset
 
     val offsetX = remember(side) { Animatable(if (isOpen) 0f else closedOffset) }
     var dragging by remember { mutableStateOf(false) }
@@ -241,33 +242,21 @@ fun SignAllEdgeDrawer(
     // vale para cualquier ancho de panel (`panelWidth = min(maxWidth * 0.88,
     // 350.dp)`) y cualquier densidad, sin un dp fijo que pueda quedar corto.
     LaunchedEffect(isOpen) {
-        if (!dragging) {
-            val target = if (isOpen) 0f else closedOffset
-            if (reduceMotion) {
-                offsetX.snapTo(target)
-            } else {
-                offsetX.animateTo(
-                    targetValue = target,
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessMedium,
-                    ),
-                )
-            }
-        }
+        if (!dragging) settleOffset(offsetX, settleTarget(isOpen, closedOffset), reduceMotion, Spring.StiffnessMedium)
     }
 
     val fraction = (1f - abs(offsetX.value) / widthPx).coerceIn(0f, 1f)
 
     LaunchedEffect(fraction) { onFractionChange(fraction) }
 
-    val dragState = rememberDraggableState { delta ->
-        if (gestureOwned) {
-            scope.launch {
-                offsetX.snapTo((offsetX.value + delta).coerceIn(minOffset, maxOffset))
-            }
-        }
-    }
+    val dragState =
+        drawerDragState(
+            offsetX = offsetX,
+            scope = scope,
+            minOffset = minOffset,
+            maxOffset = maxOffset,
+            isOwned = { gestureOwned },
+        )
     val startDrag: () -> Unit = {
         gestureOwned = claimGesture()
         dragging = gestureOwned
@@ -284,56 +273,36 @@ fun SignAllEdgeDrawer(
         // `velocity` llega en px/s con el signo del dedo: positivo = el dedo va
         // hacia la derecha. `offsetX` crece hacia la derecha, así que el signo se
         // usa tal cual, sin invertirlo por lado.
-        val towardOpen = if (side == DrawerSide.End) velocity < 0f else velocity > 0f
-        val towardClosed = if (side == DrawerSide.End) velocity > 0f else velocity < 0f
-        val passedHalfway = abs(offsetX.value) < widthPx / 2f
-        // A drawer cannot be dragged open while the other one is on screen.
         val shouldOpen =
-            !otherDrawerOpen &&
-                when {
-                    abs(velocity) < flingVelocityPx -> passedHalfway
-                    towardOpen -> true
-                    towardClosed -> false
-                    else -> passedHalfway
-                }
-        val target = if (shouldOpen) 0f else closedOffset
+            dragSettlesOpen(
+                velocity = velocity,
+                offsetPx = offsetX.value,
+                widthPx = widthPx,
+                side = side,
+                otherDrawerOpen = otherDrawerOpen,
+                flingVelocityPx = flingVelocityPx,
+            )
+        val target = settleTarget(shouldOpen, closedOffset)
         // La velocidad se arrastra al resorte SOLO si empuja hacia el destino.
         // En contra del destino, un resorte crítico igual podría pasarse del
         // borde, que es justo lo que se está quitando (ver el comentario de
         // `LaunchedEffect(isOpen)`). Con la misma dirección el recorrido es
         // monótono: llega y se queda.
-        val towardTarget = if (shouldOpen) towardOpen else towardClosed
-        val carriedVelocity = if (towardTarget) velocity else 0f
+        val carriedVelocity = dragCarriedVelocity(shouldOpen, velocity, side)
         scope.launch {
-            if (reduceMotion) {
-                offsetX.snapTo(target)
-            } else {
-                // Mismo criterio que la apertura por tap: ζ = 1. Sobre
-                // `StiffnessHigh` el tramo que falta recorrer se hace en muy
-                // pocos frames, así que soltar el arrastre sigue sintiéndose
-                // inmediato, y ahora además hereda el impulso del dedo en vez de
-                // arrancar de cero.
-                offsetX.animateTo(
-                    targetValue = target,
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessHigh,
-                    ),
-                    initialVelocity = carriedVelocity,
-                )
-            }
+            // Mismo criterio que la apertura por tap: ζ = 1. Sobre
+            // `StiffnessHigh` el tramo que falta recorrer se hace en muy pocos
+            // frames, así que soltar el arrastre sigue sintiéndose inmediato, y
+            // ahora además hereda el impulso del dedo en vez de arrancar de cero.
+            settleOffset(offsetX, target, reduceMotion, Spring.StiffnessHigh, carriedVelocity)
             onOpenChange(shouldOpen)
         }
     }
 
-    val horizontalAlignment = if (side == DrawerSide.End) Alignment.CenterEnd else Alignment.CenterStart
-    val topAlignment = if (side == DrawerSide.End) Alignment.TopEnd else Alignment.TopStart
-    val drawerShape =
-        if (side == DrawerSide.End) SignAllShapes.cornerDrawerRight
-        else SignAllShapes.cornerDrawerLeft
-    val tabShape =
-        if (side == DrawerSide.End) SignAllShapes.cornerEdgeTabRight
-        else SignAllShapes.cornerEdgeTabLeft
+    val horizontalAlignment = axis.horizontalAlignment
+    val topAlignment = axis.topAlignment
+    val drawerShape = axis.drawerShape
+    val tabShape = axis.tabShape
 
     val geometry = DrawerGeometry(
         side = side,
@@ -354,24 +323,16 @@ fun SignAllEdgeDrawer(
         previewLabel = previewLabel,
     )
     val drag = DrawerDrag(state = dragState, onStart = startDrag, onStop = snapAfterDrag)
-    val handleGestures = HandleGestures(
-        claimOnPress = { gestureOwned = claimGesture() },
-        cancelIfIdle = {
-            // No tap and no drag consumed it (the gesture was cancelled): drop
-            // the lock.
-            if (gestureOwned && !dragging) {
-                gestureOwned = false
-                releaseGesture()
-            }
-        },
-        onTap = {
-            if (gestureOwned) {
-                gestureOwned = false
-                releaseGesture()
-                onOpenChange(!isOpen)
-            }
-        },
-    )
+    val handleGestures =
+        drawerGestures(
+            claimGesture = claimGesture,
+            releaseGesture = releaseGesture,
+            isOwned = { gestureOwned },
+            setOwned = { gestureOwned = it },
+            isDragging = { dragging },
+            isOpen = { isOpen },
+            onOpenChange = onOpenChange,
+        )
 
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         content()
@@ -403,7 +364,7 @@ fun SignAllEdgeDrawer(
             geometry = geometry,
             width = edgeStripWidth,
             bottomExclusion = edgeStripBottomExclusion,
-            visible = isOpen || fraction > 0.01f || !otherDrawerOpen,
+            visible = stripVisible(isOpen, fraction, otherDrawerOpen),
             drag = drag,
         )
 
@@ -438,7 +399,7 @@ fun SignAllEdgeDrawer(
 
         DrawerPanel(
             geometry = geometry,
-            movable = isOpen || fraction > 0.001f,
+            movable = panelMovable(isOpen, fraction),
             drag = drag,
         ) {
             drawerContent()
@@ -459,7 +420,7 @@ fun SignAllEdgeDrawer(
         EdgeHandle(
             geometry = geometry,
             sizing = sizing,
-            enabled = isOpen || (!otherDrawerOpen && otherOpenFraction <= 0.001f),
+            enabled = handleEnabled(isOpen, otherDrawerOpen, otherOpenFraction),
             drag = drag,
             gestures = handleGestures,
         )
@@ -829,3 +790,160 @@ private fun BoxScope.EdgeHandle(
         }
     }
 }
+
+/** Fracción de pestaña visible mientras el otro drawer se está abriendo. */
+private fun tabVisibleFraction(isOpen: Boolean, otherOpenFraction: Float): Float =
+    if (isOpen) 1f else 1f - otherOpenFraction.coerceIn(0f, 1f)
+
+/** Geometría que depende del lado del drawer, calculada una sola vez. */
+private class DrawerAxis(
+    val closedOffset: Float,
+    val minOffset: Float,
+    val maxOffset: Float,
+    val horizontalAlignment: Alignment,
+    val topAlignment: Alignment,
+    val drawerShape: Shape,
+    val tabShape: Shape,
+)
+
+private fun drawerAxis(side: DrawerSide, widthPx: Float): DrawerAxis =
+    if (side == DrawerSide.End) {
+        DrawerAxis(
+            closedOffset = widthPx,
+            minOffset = 0f,
+            maxOffset = widthPx,
+            horizontalAlignment = Alignment.CenterEnd,
+            topAlignment = Alignment.TopEnd,
+            drawerShape = SignAllShapes.cornerDrawerRight,
+            tabShape = SignAllShapes.cornerEdgeTabRight,
+        )
+    } else {
+        DrawerAxis(
+            closedOffset = -widthPx,
+            minOffset = -widthPx,
+            maxOffset = 0f,
+            horizontalAlignment = Alignment.CenterStart,
+            topAlignment = Alignment.TopStart,
+            drawerShape = SignAllShapes.cornerDrawerLeft,
+            tabShape = SignAllShapes.cornerEdgeTabLeft,
+        )
+    }
+
+/**
+ * Cómo decide un drawer estándar al soltar el arrastre: primero la velocidad y,
+ * solo si no hubo fling, la distancia recorrida. Un drawer no se puede abrir
+ * mientras el otro está en pantalla.
+ */
+private fun dragSettlesOpen(
+    velocity: Float,
+    offsetPx: Float,
+    widthPx: Float,
+    side: DrawerSide,
+    otherDrawerOpen: Boolean,
+    flingVelocityPx: Float,
+): Boolean {
+    if (otherDrawerOpen) return false
+    val passedHalfway = abs(offsetPx) < widthPx / 2f
+    if (abs(velocity) < flingVelocityPx) return passedHalfway
+    return if (side == DrawerSide.End) velocity < 0f else velocity > 0f
+}
+
+/** Si la velocidad del dedo empuja hacia el destino del asentamiento. */
+private fun dragPushesToward(
+    open: Boolean,
+    velocity: Float,
+    side: DrawerSide,
+): Boolean {
+    val towardOpen = if (side == DrawerSide.End) velocity < 0f else velocity > 0f
+    return if (open) towardOpen else !towardOpen
+}
+
+/** Lleva el panel a [target]: seco si las animaciones están reducidas, con ζ = 1 si no. */
+private suspend fun settleOffset(
+    offsetX: Animatable<Float, AnimationVector1D>,
+    target: Float,
+    reduceMotion: Boolean,
+    stiffness: Float,
+    initialVelocity: Float = 0f,
+) {
+    if (reduceMotion) {
+        offsetX.snapTo(target)
+        return
+    }
+    offsetX.animateTo(
+        targetValue = target,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioNoBouncy,
+            stiffness = stiffness,
+        ),
+        initialVelocity = initialVelocity,
+    )
+}
+
+/** Destino del asentamiento: abierto (0) o cerrado ([closedOffset]). */
+private fun settleTarget(open: Boolean, closedOffset: Float): Float = if (open) 0f else closedOffset
+
+/** Arrastre del panel: solo mueve si el gesto en vuelo es el dueño del bloqueo. */
+@Composable
+private fun drawerDragState(
+    offsetX: Animatable<Float, AnimationVector1D>,
+    scope: CoroutineScope,
+    minOffset: Float,
+    maxOffset: Float,
+    isOwned: () -> Boolean,
+): DraggableState =
+    rememberDraggableState { delta ->
+        if (isOwned()) {
+            scope.launch {
+                offsetX.snapTo((offsetX.value + delta).coerceIn(minOffset, maxOffset))
+            }
+        }
+    }
+
+/**
+ * Los gestos del tirador: el toque reclama el bloqueo, el toque sin arrastre lo
+ * suelta y abre o cierra, y una cancelación sin toque ni arrastre también lo
+ * suelta.
+ */
+private fun drawerGestures(
+    claimGesture: () -> Boolean,
+    releaseGesture: () -> Unit,
+    isOwned: () -> Boolean,
+    setOwned: (Boolean) -> Unit,
+    isDragging: () -> Boolean,
+    isOpen: () -> Boolean,
+    onOpenChange: (Boolean) -> Unit,
+): HandleGestures =
+    HandleGestures(
+        claimOnPress = { setOwned(claimGesture()) },
+        cancelIfIdle = {
+            // No tap and no drag consumed it (the gesture was cancelled): drop
+            // the lock.
+            if (isOwned() && !isDragging()) {
+                setOwned(false)
+                releaseGesture()
+            }
+        },
+        onTap = {
+            if (isOwned()) {
+                setOwned(false)
+                releaseGesture()
+                onOpenChange(!isOpen())
+            }
+        },
+    )
+
+/** La franja de gestos se dibuja en cuanto puede actuar. */
+private fun stripVisible(isOpen: Boolean, fraction: Float, otherDrawerOpen: Boolean): Boolean =
+    isOpen || fraction > 0.01f || !otherDrawerOpen
+
+/** El panel sigue al dedo mientras está abierto o en movimiento. */
+private fun panelMovable(isOpen: Boolean, fraction: Float): Boolean = isOpen || fraction > 0.001f
+
+/** El tirador solo toma entrada cuando el otro drawer está completamente quieto. */
+private fun handleEnabled(isOpen: Boolean, otherDrawerOpen: Boolean, otherOpenFraction: Float): Boolean =
+    isOpen || (!otherDrawerOpen && otherOpenFraction <= 0.001f)
+
+/** La velocidad se arrastra al resorte solo si empuja hacia el destino. */
+private fun dragCarriedVelocity(open: Boolean, velocity: Float, side: DrawerSide): Float =
+    if (dragPushesToward(open, velocity, side)) velocity else 0f

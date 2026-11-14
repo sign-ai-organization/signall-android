@@ -60,7 +60,6 @@ fun Button(
     modifier: Modifier = Modifier,
     text: String? = null,
     enabled: Boolean = true,
-    loading: Boolean = false,
     appearance: ButtonAppearance = ButtonAppearance(),
     onClick: () -> Unit = {},
     content: (@Composable () -> Unit)? = null,

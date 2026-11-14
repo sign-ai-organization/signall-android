@@ -58,7 +58,6 @@ data class IconButtonAppearance(
 fun IconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    loading: Boolean = false,
     appearance: IconButtonAppearance = IconButtonAppearance(),
     onClick: () -> Unit = {},
     content: @Composable () -> Unit,

@@ -199,36 +199,18 @@ fun MainScreen(state: MainScreenState) {
 
     // Back closes the history sheet, then the open drawer, instead of leaving.
     BackHandler(enabled = showConversation || showSettings || showHistory) {
-        when {
-            showHistory -> showHistory = false
-            showConversation || showSettings -> state.closeDrawer()
-        }
+        closeTopLayer(
+            showHistory = showHistory,
+            onCloseHistory = { showHistory = false },
+            onCloseDrawer = { state.closeDrawer() },
+        )
     }
 
-    // Safety net: never leave the app stuck on the splash if the WebView fails
-    // to load (e.g. no internet for the Three.js CDN).
-    //
-    // Keyed on [loading] and not on `Unit`: Acerca de swaps the whole main subtree out
-    // of composition, so returning recreates the WebView and turns `loading` back on
-    // (see `onBack` below). With a `Unit` key that second wait never existed and a
-    // failed reload would leave the splash up forever.
-    LaunchedEffect(loading) {
-        if (!loading) return@LaunchedEffect
-        delay(SplashTimeoutMs)
-        loading = false
-    }
-
-    // The STT's `SILENCE_TIMEOUT_MS`, for the scene's debug overlay (D-6).
-    //
-    // Keyed on `!loading` because it is the WebView that shows it, and the WebView
-    // is destroyed and recreated when Acerca de is opened and closed: reading it
-    // before the scene exists would leave the new one showing "?". Best effort —
-    // `silenceTimeoutMs()` returns null when /health can't be read, and the overlay
-    // says "?", which is the truth.
-    LaunchedEffect(!loading) {
-        if (loading) return@LaunchedEffect
-        state.pushSilenceTimeout()
-    }
+    SplashTimeouts(
+        loading = loading,
+        onTimeout = { loading = false },
+        onSceneReady = { state.pushSilenceTimeout() },
+    )
 
     val contentAlpha by animateFloatAsState(
         targetValue = if (loading) 0f else 1f,
@@ -331,7 +313,7 @@ private fun MainScene(
             val panelWidth = minOf(maxWidth * 0.88f, 350.dp)
             Box(Modifier.fillMaxSize()) {
                 SceneLayer(state = state, scene = scene, callbacks = callbacks)
-                BottomBarLayer(state = state, scene = scene, callbacks = callbacks)
+                BottomBarLayer(state = state, callbacks = callbacks)
                 ConversationDrawer(
                     state = state,
                     scene = scene,
@@ -410,7 +392,6 @@ private fun SceneLayer(
 @Composable
 private fun BoxScope.BottomBarLayer(
     state: MainScreenState,
-    scene: SceneState,
     callbacks: SceneCallbacks,
 ) {
     val density = LocalDensity.current
@@ -569,5 +550,48 @@ private fun SettingsDrawer(
         },
     ) {
         Box(Modifier.fillMaxSize())
+    }
+}
+
+/** Atrás cierra primero la hoja de historial y después el drawer abierto. */
+private fun closeTopLayer(
+    showHistory: Boolean,
+    onCloseHistory: () -> Unit,
+    onCloseDrawer: () -> Unit,
+) {
+    if (showHistory) onCloseHistory() else onCloseDrawer()
+}
+
+/**
+ * Los dos tiempos del splash.
+ *
+ * El primero es la red de seguridad: nunca dejar la app colgada en el splash si
+ * el WebView no carga (por ejemplo, sin internet para el CDN de Three.js). Va
+ * llaveado en [loading] y no en `Unit` porque Acerca de saca todo el subárbol de
+ * composición, así que volver recrea el WebView y prende [loading] otra vez; con
+ * una llave `Unit` esa segunda espera no existiría y una recarga fallida dejaría
+ * el splash para siempre.
+ *
+ * El segundo lee el `SILENCE_TIMEOUT_MS` del STT para el overlay de la escena
+ * (D-6). Va llaveado en `!loading` porque lo muestra el WebView, y el WebView se
+ * destruye y recrea al abrir y cerrar Acerca de: leerlo antes de que exista la
+ * escena dejaría al nuevo mostrando "?". Es de mejor esfuerzo —
+ * `silenceTimeoutMs()` devuelve null si no puede leer `/health`, y el overlay
+ * dice "?", que es la verdad.
+ */
+@Composable
+private fun SplashTimeouts(
+    loading: Boolean,
+    onTimeout: () -> Unit,
+    onSceneReady: () -> Unit,
+) {
+    LaunchedEffect(loading) {
+        if (!loading) return@LaunchedEffect
+        delay(SplashTimeoutMs)
+        onTimeout()
+    }
+    LaunchedEffect(!loading) {
+        if (loading) return@LaunchedEffect
+        onSceneReady()
     }
 }
