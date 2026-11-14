@@ -1,0 +1,13 @@
+# Configuración de gitleaks para este repo. Se extiende la configuración por
+# defecto y solo se declaran artefactos que no son credenciales.
+#
+# El .glb es binario y el escáner lee cadenas sueltas de la malla, y
+# app/build/ son copias generadas de esos mismos assets: ni uno ni otro
+# contienen secretos del proyecto.
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Assets binarios del avatar y sus copias de build"
+paths = ['''app/build/''', '''app/src/main/assets/web/models/.*\.glb$''']

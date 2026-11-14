@@ -12,13 +12,13 @@ carpetas locales a `signall-*` (dos `l`, sin guion) y pidió migrar OpenCode.
 
 | Commit | Qué |
 |---|---|
-| `cf9fb5b` | R-02 + R-03: paquete `com.signall.app`, 75 archivos movidos con `git mv`, toda la familia `SignAi*`/`SignAI*` → `SignAll*` |
-| `1dcefb0` | Rutas a los hermanos `../signall-*` en 119 archivos, incluidos `.opencode/` y las bitácoras |
-| `52e0698` | R-04: `reestructuracion/03-contrato.md`, la tabla del contrato y el veredicto |
-| `97a0eec` | R-05: evidencias fuera del árbol, `docs/historia/`, índices nuevos |
-| `a61dfb7` | R-07: `sonar-project.properties`, `.gitleaksignore` y CI |
-| `e66356d` | OpenCode migrado y bitácora de la ola 0 |
-| `c51443e` | Referencias a los documentos que pasaron a `docs/historia/` |
+| `37f8600` | R-02 + R-03: paquete `com.signall.app`, 75 archivos movidos con `git mv`, toda la familia `SignAi*`/`SignAI*` → `SignAll*` |
+| `adefcf9` | Rutas a los hermanos `../signall-*` en 119 archivos, incluidos `.opencode/` y las bitácoras |
+| `b0feafd` | R-04: `reestructuracion/03-contrato.md`, la tabla del contrato y el veredicto |
+| `36e51ee` | R-05: evidencias fuera del árbol, `docs/historia/`, índices nuevos |
+| `0cd3d82` | R-07: `sonar-project.properties`, `.gitleaksignore` y CI |
+| `8b30bc2` | OpenCode migrado y bitácora de la ola 0 |
+| `53fe1cd` | Referencias a los documentos que pasaron a `docs/historia/` |
 
 En los hermanos: `signall-backend` `da38a77` (constancia de R-04) y `43ada1f` (CI y Sonar);
 `signall-stt` `429019e` (CI y Sonar).
@@ -30,7 +30,7 @@ En los hermanos: `signall-backend` `da38a77` (constancia de R-04) y `43ada1f` (C
 - **Los `rt_*` y los frames no se tocan.** El cable no lleva la marca —los frames son
   `text`, `end`, `transcript`, `segment`, `done`, `error`, `capability`— y renombrar una
   métrica rompe la comparación con la línea base publicada. Lo decidió el owner.
-- **Las evidencias van a `../data/evidencias/`**, que no es repositorio, igual que
+- **Las evidencias van a `../signall-docs/evidencias/`**, que no es repositorio, igual que
   `../material-3d/`. Lo decidió el owner.
 - **Se commitea local en los hermanos, sin push**, con la orden explícita del owner para
   esta sesión.
@@ -87,7 +87,7 @@ salió idéntico a la línea base: 13 806 ncloc, 63 code smells, 1 bug, 4,8 % de
 |---|---|---|
 | `signall-backend` | `15c6a4e` | Rutas `../sign-ai-*` → `../signall-*` y marca en README y `CLAUDE.md` |
 | `signall-stt` | `7359e7e` | Lo mismo, más el título de la app FastAPI y dos rutas muertas de sus bitácoras |
-| `signall-android` | `a7746a5` | R-06: README de 325 a 79 líneas y `docs/ARRANQUE.md` con el detalle |
+| `signall-android` | `7e8bdbd` | R-06: README de 325 a 79 líneas y `docs/ARRANQUE.md` con el detalle |
 | `signall-backend` | `7d8585b` | R-06: README corto |
 | `signall-stt` | `d5e5a89` | R-06: README corto y `docs/API-Y-CONFIGURACION.md` |
 

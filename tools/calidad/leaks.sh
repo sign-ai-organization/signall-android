@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 # Escanea credenciales con gitleaks en TODA la historia de los cinco repositorios.
 #
-# Uso:  reestructuracion/herramientas/escanear/leaks.sh
+# Uso:  tools/calidad/leaks.sh
 #
-# Escribe un JSON por repositorio en reestructuracion/herramientas/informes/.
-# ESE JSON PUEDE CONTENER EL SECRETO EN CLARO: la carpeta informes/ está en
-# .gitignore y no se commitea nunca.
+# Deja un JSON por repositorio en ${XDG_CACHE_HOME:-$HOME/.cache}/signall/informes/.
+# Ese JSON puede contener el secreto en claro: vive fuera del repo y no se commitea.
 #
-# Sale con código 1 si encuentra algo (sirve para CI), 0 si está limpio.
+# Sale con código 0 si está limpio, 1 si encontró algo (sirve para CI) y 2 si un
+# repositorio falta o la herramienta no está.
 
 set -uo pipefail
 
 AQUI="$(cd "$(dirname "$0")" && pwd)"
-INFORMES="$(cd "$AQUI/.." && pwd)/informes"
-RAIZ="$(cd "$AQUI/../../../.." && pwd)"
+RAIZ="$(cd "$AQUI/../../.." && pwd)"
+INFORMES="${XDG_CACHE_HOME:-$HOME/.cache}/signall/informes"
 
 REPOS=(
   "signall-android"

@@ -11,7 +11,7 @@ el de la última oración de la frase, como dice FR-01.
 
     ~/venv/bin/python docs/plan-pruebas/arnes/avt05.py --serie RZCW90DTMQJ \
         --fr01 ../signall-docs/borradores/plan-pruebas/02-datos/FR-01-frases-dominio.md \
-        --salida ../data/evidencias/plan-pruebas/evidencias/AVT --fecha 20261111 --ronda E
+        --salida ../signall-docs/evidencias/plan-pruebas/evidencias/AVT --fecha 20261111 --ronda E
 """
 
 from __future__ import annotations

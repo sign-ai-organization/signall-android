@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """PR-RES-04 · Falla de la base de datos, casos 1 y 3 (el caso 2 se midió el 10/11 con el arreglo del backend).
 
-    python docs/plan-pruebas/arnes/res04.py --salida ../data/evidencias/plan-pruebas/evidencias/RES/PR-RES-04_E_20261110_02
+    python docs/plan-pruebas/arnes/res04.py --salida ../signall-docs/evidencias/plan-pruebas/evidencias/RES/PR-RES-04_E_20261110_02
 
 Laboratorio: contenedores `p8lab-pg` (Postgres con pgvector), `p8lab-backend` (puerto 8180) y LLM real.
 - Caso 1, base cortada mientras se traduce: una frase nueva; a los 300 ms del envío se detiene la base

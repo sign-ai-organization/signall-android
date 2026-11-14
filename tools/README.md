@@ -10,6 +10,10 @@
 
 ## Contenido
 
+- **`calidad/`** — los dos escaneos de calidad, reproducibles: `sonar.sh
+  <repo>` manda un repositorio al SonarQube local (`:9000`) y `leaks.sh` corre
+  gitleaks sobre toda la historia de los cinco repositorios. El token de Sonar
+  vive en `~/.config/signall/sonar.env`, fuera del repo.
 - **`verificar-tiempo-real.sh`** — **empezá por acá** si tocás el pipeline de
   voz. Un comando que corre la verificación completa: salud de los dos
   servicios, el divisor de oraciones y el protocolo del WebSocket, los 28

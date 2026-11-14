@@ -227,9 +227,15 @@ STT se lleva 3724 ms. El detalle y cómo repetirlo, en `tools/TIEMPO-REAL.md`.
 Acá: commit y push directo a `main`, sin PR ni rama de feature. **No abrir PRs ni pedir
 confirmación para commitear.** Los hermanos tampoco se commitean sin que el owner lo pida.
 
-> **Excepción vigente desde el 2026-11-13, mientras dure la reestructuración:** **nada de
-> `push`.** Se commitea local y se para ahí; el push lo ordena el owner, repo por repo.
-> Ver `reestructuracion/00-general.md`.
+> **La reestructuración se cerró el 2026-11-14.** El 2026-11-13 hubo una excepción («nada
+> de `push`»); ya no rige: se vuelve a commitear y pushear `main` como siempre. Ese mismo
+> día **se reescribió la historia de este repo** con `git-filter-repo` para sacar de todos
+> los commits las credenciales y las evidencias pesadas de `docs/plan-pruebas/`; el `.git`
+> pasó de 334 MB a 65 MB. Consecuencia: **los hashes de commit anteriores al 2026-11-14
+> cambiaron**. El mapeo viejo → nuevo está en
+> [`docs/historia/commit-map-2026-11-14.txt`](docs/historia/commit-map-2026-11-14.txt) y
+> los documentos ya citan los hashes nuevos. Un clon anterior a esa fecha hay que
+> rehacerlo (o `git fetch && git reset --hard origin/main`).
 
 **Todo el trabajo va a `main`, en los cuatro repos.** El owner decidió el **2026-11-11**
 que se abandona la rama `develop`: **no existe más** en ninguno de ellos y **no se vuelve a
@@ -238,7 +244,7 @@ propios, así que no se perdió nada) y las remotas quedaron atrás de `main`:
 
 | Repo | `origin/main` | `origin/develop` (obsoleta) |
 |---|---|---|
-| `signall-android` | `704e0ac` | `704e0ac` (igual, se igualó ese día) |
+| `signall-android` | `69181d2` | `69181d2` (igual, se igualó ese día) |
 | `signall-backend` | `301e721` | `301e721` (igual) |
 | `signall-stt` | `4824979` | `4824979` (igual) |
 | `signall-docs` | `401b7d1` | `8ff4fd2` (11 commits atrás) |
@@ -251,7 +257,7 @@ trabajar.
 decisión del owner.
 
 **El flujo por oraciones ya está en `main`** (2026-10-21). La rama `flujo-oraciones` fue el
-nuevo `main`: un fast-forward (`587ed04` → `2d8c757`) con el merge de `origin/main` que ya
+nuevo `main`: un fast-forward (`5b7329e` → `4aac5c2`) con el merge de `origin/main` que ya
 traía. Se trabaja sobre `main`. El punto de retorno es `respaldo/main-2026-10-21`, que
 apunta al `main` viejo y está en el remoto.
 

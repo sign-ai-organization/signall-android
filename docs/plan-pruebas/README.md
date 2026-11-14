@@ -1,7 +1,7 @@
 # Plantilla de resultados — Plan de Pruebas
 
 > Las evidencias de las rondas ya ejecutadas **no están en el repositorio**: viven en
-> `../data/evidencias/plan-pruebas/`. El índice y la equivalencia con las rutas viejas
+> `../signall-docs/evidencias/plan-pruebas/`. El índice y la equivalencia con las rutas viejas
 > están en [`INDICE-EVIDENCIAS.md`](INDICE-EVIDENCIAS.md). Los reportes de las rondas,
 > en [`../historia/plan-pruebas/`](../historia/plan-pruebas/).
 

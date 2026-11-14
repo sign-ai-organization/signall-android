@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-# Envía un repositorio a SonarQube local (http://localhost:9000) con el sonar-scanner
-# oficial, corriendo en Docker. No instala nada en el host.
+# Envía un repositorio a SonarQube local (http://localhost:9000) con el
+# sonar-scanner oficial, corriendo en Docker. No instala nada en el host.
 #
 # Uso:
-#   reestructuracion/herramientas/escanear/sonar.sh sign-ai-android
-#   reestructuracion/herramientas/escanear/sonar.sh sign-ai-backend
+#   tools/calidad/sonar.sh signall-android
+#   tools/calidad/sonar.sh signall-backend
+#   tools/calidad/sonar.sh signall-stt
 #
 # Necesita un token. Se lee, en este orden:
 #   1. la variable de entorno SONAR_TOKEN
-#   2. reestructuracion/herramientas/.env.sonar   (ignorado por git: `.env*`)
+#   2. ~/.config/signall/sonar.env   (fuera del repo, nunca se commitea)
 #
-#   SONAR_TOKEN=sqp_xxxxxxxx reestructuracion/herramientas/escanear/sonar.sh sign-ai-backend
+#   SONAR_TOKEN=sqp_xxxxxxxx tools/calidad/sonar.sh signall-backend
 #
 # El token se genera en SonarQube: My Account → Security → Generate Tokens.
 # Los proyectos se crean solos en el primer escaneo si el usuario tiene permiso.
@@ -18,12 +19,12 @@
 set -euo pipefail
 
 AQUI="$(cd "$(dirname "$0")" && pwd)"
-HERR="$(cd "$AQUI/.." && pwd)"
-RAIZ="$(cd "$AQUI/../../../.." && pwd)"
+RAIZ="$(cd "$AQUI/../../.." && pwd)"
+TOKEN_ENV="${XDG_CONFIG_HOME:-$HOME/.config}/signall/sonar.env"
 
 repo="${1:-}"
 if [ -z "$repo" ]; then
-  echo "Uso: $(basename "$0") <nombre-del-repo>   (ej: sign-ai-android)" >&2
+  echo "Uso: $(basename "$0") <nombre-del-repo>   (ej: signall-android)" >&2
   exit 2
 fi
 
@@ -33,13 +34,13 @@ if [ ! -d "$ruta" ]; then
   exit 2
 fi
 
-if [ -z "${SONAR_TOKEN:-}" ] && [ -f "$HERR/.env.sonar" ]; then
-  # shellcheck disable=SC1091
-  . "$HERR/.env.sonar"
+if [ -z "${SONAR_TOKEN:-}" ] && [ -f "$TOKEN_ENV" ]; then
+  # shellcheck disable=SC1090
+  . "$TOKEN_ENV"
 fi
 
 if [ -z "${SONAR_TOKEN:-}" ]; then
-  echo "Falta SONAR_TOKEN (variable de entorno o $HERR/.env.sonar)." >&2
+  echo "Falta SONAR_TOKEN (variable de entorno o $TOKEN_ENV)." >&2
   exit 2
 fi
 
@@ -48,19 +49,17 @@ fi
 export SONAR_TOKEN
 
 if [ ! -f "$ruta/sonar-project.properties" ]; then
-  echo "Falta $repo/sonar-project.properties. La plantilla está en" >&2
-  echo "reestructuracion/herramientas/plantillas/" >&2
+  echo "Falta $repo/sonar-project.properties." >&2
   exit 2
 fi
 
 # La clave del proyecto la manda el sonar-project.properties, no el nombre de la
-# carpeta: el repo ya se llama sign-all-* pero la carpeta local conserva el nombre
-# viejo, y la clave tiene que seguir al repositorio, no a la carpeta.
+# carpeta local.
 clave=$(sed -n 's/^sonar\.projectKey=//p' "$ruta/sonar-project.properties" | tr -d '\r')
 
 if ! curl -fsS http://localhost:9000/api/system/status 2>/dev/null | grep -q '"status":"UP"'; then
   echo "SonarQube no responde en http://localhost:9000." >&2
-  echo "Levantarlo con: docker compose -f $HERR/docker-compose.sonarqube.yml up -d" >&2
+  echo "Levantarlo con: docker start signall-sonarqube signall-sonar-db" >&2
   exit 2
 fi
 

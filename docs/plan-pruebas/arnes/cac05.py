@@ -7,7 +7,7 @@ el LLM devuelve contenido vacío y el backend no guarda una respuesta vacía). L
 por el mismo camino hasta el final: una sola llamada al LLM, con el mismo retardo; solo cambia el guardado.
 
     python docs/plan-pruebas/arnes/cac05.py --datos <carpeta de extraer_anexo.py> \
-        --salida ../data/evidencias/plan-pruebas/evidencias/CAC/PR-CAC-05_E_20261110_02 [--invertir]
+        --salida ../signall-docs/evidencias/plan-pruebas/evidencias/CAC/PR-CAC-05_E_20261110_02 [--invertir]
 
 Se alternan las dos condiciones frase a frase (A, B, A, B...) con 1 s de pausa. `--invertir` cambia
 qué mitad de las frases va con guardado, para que el resultado no dependa de las frases.

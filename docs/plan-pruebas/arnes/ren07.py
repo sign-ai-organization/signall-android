@@ -12,7 +12,7 @@ cada 30 s, el contador de carga de `dumpsys battery`, y los `signStart` y
 
     ~/venv/bin/python docs/plan-pruebas/arnes/ren07.py --serie 192.168.0.14:5555 \
         --fr01 ../signall-docs/borradores/plan-pruebas/02-datos/FR-01-frases-dominio.md \
-        --salida ../data/evidencias/plan-pruebas/evidencias/REN --fecha 20261111 --base 1
+        --salida ../signall-docs/evidencias/plan-pruebas/evidencias/REN --fecha 20261111 --base 1
 """
 
 from __future__ import annotations

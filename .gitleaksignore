@@ -1,33 +1,7 @@
-# Falsos positivos y hallazgos ya cerrados, clasificados en
-# reestructuracion/01-leaks.md.
-# Cada línea es el campo `Fingerprint` de un hallazgo: archivo, regla y línea.
+# Falsos positivos del árbol. Cada línea es el campo `Fingerprint` de un hallazgo.
 #
-# El .glb es binario y el escáner lee cadenas sueltas de la malla.
-app/src/main/assets/web/models/pauline.glb:generic-api-key:1
 # `LIVE_KEY_PERMANENT` es el nombre de un morph target del avatar, no una clave.
+# Va en dos formas porque el escaneo de historia (gitleaks git) y el del árbol
+# (gitleaks dir) numeran la línea distinto.
 tools/measure_face_markers.py:generic-api-key:52
-
-# ---------------------------------------------------------------------------
-# Falsos positivos de las evidencias de PR-SEC-01 (commit 5b8c28db).
-# `Sec-WebSocket-Key:` es el nonce de un handshake de WebSocket: cambia en cada
-# conexión y no da acceso a nada. Los archivos ya no están en el árbol, pero
-# siguen en la historia, así que gitleaks los vuelve a encontrar en cada
-# corrida con --log-opts=--all.
-docs/plan-pruebas/evidencias/SEC/PR-SEC-01_E_20261105_01_descartada.txt:generic-api-key:93
-docs/plan-pruebas/evidencias/SEC/PR-SEC-01_E_20261105_01_descartada.txt:generic-api-key:127
-docs/plan-pruebas/evidencias/SEC/PR-SEC-01_E_20261105_01_descartada.txt:generic-api-key:144
-docs/plan-pruebas/evidencias/SEC/PR-SEC-01_E_20261105_02_descartada.txt:generic-api-key:719
-docs/plan-pruebas/evidencias/SEC/PR-SEC-01_E_20261105_03.txt:generic-api-key:928
-
-# ---------------------------------------------------------------------------
-# Credenciales reales que estuvieron en la historia y ya están ROTADAS.
-# Comprobado contra los servicios el 2026-11-13 (ver 01-leaks.md):
-#   - contraseña de Neon: `password authentication failed` en el mismo host
-#     donde la del .env actual conecta;
-#   - clave de OpenAI: HTTP 401 en /v1/models.
-# Se ignoran para que la línea base quede limpia y un hallazgo nuevo no se
-# pierda entre dos conocidos. No se borran del historial: los commits ya estaban
-# en origin y una reescritura obligaría a un force-push, que está prohibido.
-docs/plan-pruebas/evidencias/CAC/PR-CAC-05_D_20261104_01.json:generic-api-key:876
-docs/plan-pruebas/evidencias/CAC/PR-CAC-05_E_20261105_01.json:generic-api-key:877
-docs/plan-pruebas/evidencias/CAC/PR-CAC-05_E_20261105_01.json:openai-api-key:877
+tools/measure_face_markers.py:generic-api-key:60

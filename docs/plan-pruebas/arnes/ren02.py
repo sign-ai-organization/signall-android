@@ -4,7 +4,7 @@
 Uso (laboratorio con la caché vacía y el LLM real):
 
     python docs/plan-pruebas/arnes/ren02.py --url ws://127.0.0.1:8180/ws/translate \
-        --contenedor p8lab-backend --salida ../data/evidencias/plan-pruebas/evidencias/REN/PR-REN-02_E_20261110_02
+        --contenedor p8lab-backend --salida ../signall-docs/evidencias/plan-pruebas/evidencias/REN/PR-REN-02_E_20261110_02
 
 Método (igual que el del 06/11): una conexión nueva por envío; los tiempos por paso salen de las
 líneas `Pipeline trace for ...` del log del backend, en el mismo orden de los envíos. El primer

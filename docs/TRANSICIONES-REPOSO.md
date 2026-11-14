@@ -21,7 +21,7 @@
   Medido en el Redmi (2,574 s para `0028`, que sin salida dura 2,125 s). Las
   cifras anteriores de duración de la representación no son comparables.
 
-Evidencia, tamaños, hashes y pruebas: `../data/evidencias/avatar/transiciones-2026-11-11/integracion/`.
+Evidencia, tamaños, hashes y pruebas: `../signall-docs/evidencias/avatar/transiciones-2026-11-11/integracion/`.
 Prueba en el dispositivo pendiente: el Redmi se desconectó del USB en el
 `installDebug`, así que no se instaló esta versión.
 
@@ -71,7 +71,7 @@ aprobados y mismo final v3 en ambos lados. Ocho uniones locales; `0001/0006`
 añaden preparación de 0,375/0,250 s para preservar todas las muestras originales.
 Duran más; regresos con valores y tiempos relativos exactos, desplazados junto
 al clip. `0000` reemplaza su mezcla v1 y protege muestras aprobadas desde 0,500 s.
-Registro y comprobaciones: `../data/evidencias/avatar/transiciones-2026-11-11/entradas-01/README.md`.
+Registro y comprobaciones: `../signall-docs/evidencias/avatar/transiciones-2026-11-11/entradas-01/README.md`.
 
 ### Entradas 02: 0010–0019
 
@@ -80,7 +80,7 @@ Visor: `http://127.0.0.1:8766/entries-02/`. Diez entradas aprobadas sin correcci
 por seña, cinco con espera inicial en reposo nuevo. `0010/0012` añaden preparación
 de 0,250/0,3333 s para conservar sus muestras activas; duración aumenta, valores
 y tiempos relativos del regreso intactos. Registro:
-`../data/evidencias/avatar/transiciones-2026-11-11/entradas-02/README.md`.
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/entradas-02/README.md`.
 
 ### Entradas 03: 0020–0029
 
@@ -88,7 +88,7 @@ Visor: `http://127.0.0.1:8766/entries-03/`. Nueve entradas nuevas aprobadas
 («perfecto, todo. hermoso») y
 `0028` como referencia aprobada, con todos sus canales corregidos intactos en
 ambos lados. Esperas/uniones por seña; ninguna duración añadida. Regresos aprobados
-conservados. Registro: `../data/evidencias/avatar/transiciones-2026-11-11/entradas-03/README.md`.
+conservados. Registro: `../signall-docs/evidencias/avatar/transiciones-2026-11-11/entradas-03/README.md`.
 
 ### Entradas 04: 0030–0039
 
@@ -96,13 +96,13 @@ Visor: `http://127.0.0.1:8766/entries-04/`. Diez aprobadas sin correcciones
 («todo bien, ya termina las señas, lo que queda»): ocho
 entradas con regresos aprobados y `0038/0039` con ambos extremos nuevos, señalados
 para revisión. Sin duración añadida. Registro:
-`../data/evidencias/avatar/transiciones-2026-11-11/entradas-04/README.md`.
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/entradas-04/README.md`.
 
 ### Último grupo: 0040–0049
 
 Visor: `http://127.0.0.1:8766/entries-05/`. Diez propuestas de entrada y regreso
 preparadas, pendientes de revisión. Sin duración añadida. Registro y ventanas:
-`../data/evidencias/avatar/transiciones-2026-11-11/entradas-05/README.md`.
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/entradas-05/README.md`.
 Las 50 ya tienen propuestas; últimas diez no aprobadas todavía. Integración
 posterior debe combinar clips elegidos de entradas 01–05 y selección `0020` v3;
 no usar un GLB de grupo como paquete final de todos. `0028` íntegra en entradas 03.
@@ -131,7 +131,7 @@ suavizado corporal local de 1,500–2,125 s, cinco muestras con bordes quíntico
 sin editar dedos, cara ni curvas locales de brazos/manos. Mantiene exacta v1
 fuera de esa ventana; los apoyos de pies y movimiento global deben revisarse.
 Fuente v1 aún no aprobada, segunda prueba también pendiente. Registro
-`../data/evidencias/avatar/transiciones-2026-11-11/0020-cuerpo-v2/README.md`, visor
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/0020-cuerpo-v2/README.md`, visor
 `http://127.0.0.1:8766/0020-smooth-v2/`. Sin integración.
 
 Después precisó manos/dedos y cuerpo, autorizando otra copia conjunta. V3 extiende
@@ -140,7 +140,7 @@ v1 y comprueba que el cuerpo sea exacto a v2, sin doble filtrado. Ahora sí var�
 curvas locales y configuraciones intermedias de manos en el tramo, incluido el
 inicio del regreso: pendientes revisión de contactos y significado, no se afirman
 intactos. Entrada/cara/fuera de ventana exactos. Registro
-`../data/evidencias/avatar/transiciones-2026-11-11/0020-conjunto-v3/README.md`, visor
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/0020-conjunto-v3/README.md`, visor
 `http://127.0.0.1:8766/0020-smooth-v3/`. Tres propuestas aún sin aprobación final.
 
 Decisión posterior: **«bien, ya sigamos con el resto. esa ya dejemosla asi»**.
@@ -148,7 +148,7 @@ Se conserva v3 de `0020`, sin más ajustes ni afirmación de perfección/validez
 Selección/hashes en `0020-conjunto-v3/accepted.json` de las evidencias; integrar
 esa versión, no el archivo anterior sin corrección de entradas 03. Se retoman grupos.
 Visor lento con pausa/tiempo: `http://127.0.0.1:8766/0020-inspect/`.
-Registro: `../data/evidencias/avatar/transiciones-2026-11-11/0020-diagnostico/README.md`.
+Registro: `../signall-docs/evidencias/avatar/transiciones-2026-11-11/0020-diagnostico/README.md`.
 
 ## Qué se aprobó
 
@@ -174,7 +174,7 @@ lingüística de los 400 clips.
 ## Integridad y reproducción
 
 - Scripts, visores, comprobaciones y capturas en
-  `../data/evidencias/avatar/transiciones-2026-11-11/`, subcarpetas `v2/` y `v3/`.
+  `../signall-docs/evidencias/avatar/transiciones-2026-11-11/`, subcarpetas `v2/` y `v3/`.
 - V2 modifica solo seis rotaciones por variante de `0000`. V3 no cambia GLB.
 - Fuentes: `../signall-avatar/models/`, commit
   `fc6f372c8412010d85925fe342fdcf0c073fbdf1`; fuentes intactas.
@@ -189,7 +189,7 @@ Se auditaron los **400 clips** de los dos assets actuales (50 señas × cuatro
 variantes × dos avatares), sin editarlos. Script reproducible:
 
 ```bash
-python3 ../data/evidencias/avatar/transiciones-2026-11-11/audit_endings.py
+python3 ../signall-docs/evidencias/avatar/transiciones-2026-11-11/audit_endings.py
 ```
 
 El informe `all-clips-audit.json` registra hashes, duración, distancia angular
@@ -219,7 +219,7 @@ El suavizado final de cuerpo es una decisión separada del límite lingüístico
 
 Referencia `0000` y dos propuestas nuevas, `0001`/`0002`, en ambos avatares.
 Registro por seña, ventanas, scripts y resultados en
-`../data/evidencias/avatar/transiciones-2026-11-11/grupo-01/README.md`.
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/grupo-01/README.md`.
 `0001` y `0002` conservan íntegramente su entrada; sus regresos tienen límites
 distintos. El owner aprobó ambas propuestas el 2026-11-11: «Las dos perfectas.
 todo perfecto», sin correcciones. No especificó una revisión desglosada por
@@ -231,7 +231,7 @@ avatar/variante. Grupo 01 aprobado, pendiente de integración. Visor temporal:
 El owner pidió **cinco señas nuevas por grupo**. Grupo 02: `0003`–`0007`,
 propuestas preparadas con entradas intactas y ventanas de regreso distintas.
 Registro individual y evidencia en
-`../data/evidencias/avatar/transiciones-2026-11-11/grupo-02/README.md`.
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/grupo-02/README.md`.
 Visor temporal: `http://127.0.0.1:8766/group-02/`. El owner aprobó las cinco
 el 2026-11-11: «hermoso todo aprobado, siguientes», sin correcciones.
 Integración pendiente; no se atribuye revisión individual por avatar/variante.
@@ -241,7 +241,7 @@ Integración pendiente; no se atribuye revisión individual por avatar/variante.
 `0008`–`0012`: cinco propuestas con entradas intactas y tiempos separados,
 aprobadas el 2026-11-11 («hermoso todo aprobado, siguientes»), sin correcciones.
 Sin desglose de revisión por avatar/variante. Registro y evidencia en
-`../data/evidencias/avatar/transiciones-2026-11-11/grupo-03/README.md`.
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/grupo-03/README.md`.
 Visor temporal: `http://127.0.0.1:8766/group-03/`. La app sigue sin transiciones
 nuevas integradas; los grupos anteriores mantienen sus aprobaciones.
 
@@ -252,7 +252,7 @@ nuevas integradas; los grupos anteriores mantienen sus aprobaciones.
 anclas elegidas por seña. `0016` requiere especial revisión: el original termina
 con el codo aún flexionado; no se presume que sea un error ni se valida su gesto
 por análisis angular. Registro y evidencia en
-`../data/evidencias/avatar/transiciones-2026-11-11/grupo-04/README.md`.
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/grupo-04/README.md`.
 Visor temporal: `http://127.0.0.1:8766/group-04/`. Sin integración aún.
 
 ### Grupo 05
@@ -261,7 +261,7 @@ Visor temporal: `http://127.0.0.1:8766/group-04/`. Sin integración aún.
 («hermoso todo aprobado TODO, siguientes»), incluida `0018`. Con anclas por seña y entradas
 exactas en los GLB. `0018` requiere especial revisión por acabar el original con
 codos flexionados. Registro y evidencia en
-`../data/evidencias/avatar/transiciones-2026-11-11/grupo-05/README.md`.
+`../signall-docs/evidencias/avatar/transiciones-2026-11-11/grupo-05/README.md`.
 Visor temporal: `http://127.0.0.1:8766/group-05/`. Sin integración aún.
 
 ### Grupo 06
@@ -270,7 +270,7 @@ Visor temporal: `http://127.0.0.1:8766/group-05/`. Sin integración aún.
 («hermoso todo aprobado TODO, siguientes»), incluida `0025`. Entradas exactas y anclas propias.
 `0025` requiere especial revisión por su movimiento tardío y postura final
 flexionada; no se asume que sea incorrecta ni que sea igual a otros regresos.
-Registro en `../data/evidencias/avatar/transiciones-2026-11-11/grupo-06/README.md`.
+Registro en `../signall-docs/evidencias/avatar/transiciones-2026-11-11/grupo-06/README.md`.
 Visor temporal: `http://127.0.0.1:8766/group-06/`. Sin integración aún.
 
 ### Grupo 07
@@ -281,7 +281,7 @@ de `0028`: sus canales iniciales están idénticos al original. En ambos avatare
 afirmativa, el codo pasa de unos 26,5° a unos 0,7–1,3° del reposo entre muestras
 separadas por unos 42 ms. Incidencia previa al ajuste; corrección aún pendiente,
 sin modificar ventanas aprobadas. Informe `0028-start-diagnosis.json` del grupo.
-Registro en `../data/evidencias/avatar/transiciones-2026-11-11/grupo-07/README.md`.
+Registro en `../signall-docs/evidencias/avatar/transiciones-2026-11-11/grupo-07/README.md`.
 Visor temporal: `http://127.0.0.1:8766/group-07/`. Sin integración aún.
 
 ### Corrección inicial aislada de 0028
@@ -292,7 +292,7 @@ Propuesta: reemplazar las primeras muestras TRS por las segundas (1/24→2/24 s)
 sin cambiar los tiempos ni ninguna muestra posterior ni el regreso aprobado.
 No se tocan canales compactados entre extremos ni pesos de la cara. Copias de
 ambos avatares y cuatro variantes; pendiente aprobación visual.
-Registro: `../data/evidencias/avatar/transiciones-2026-11-11/0028-inicio/README.md`.
+Registro: `../signall-docs/evidencias/avatar/transiciones-2026-11-11/0028-inicio/README.md`.
 Visor temporal: `http://127.0.0.1:8766/0028-start/`. App intacta.
 
 La corrección del salto fue aprobada después («Bien, excelente. Muy muy muy
@@ -301,7 +301,7 @@ una entrada nueva solo para `0028`: reposo nuevo hasta 0,4167 s y preparación
 directa hasta la muestra de 0,750 s; desde ahí, gesto/regreso exactos a la copia
 sin salto aprobada. Seis rotaciones por variante, resto intacto. Ventana propuesta,
 pendiente aprobación; no se generaliza a otras señas.
-Registro en `../data/evidencias/avatar/transiciones-2026-11-11/0028-entrada/README.md`;
+Registro en `../signall-docs/evidencias/avatar/transiciones-2026-11-11/0028-entrada/README.md`;
 visor `http://127.0.0.1:8766/0028-entry/`. Sin integración todavía.
 
 El owner aprobó esta entrada el 2026-11-11: «hermoso, perfecto. documentamos y
@@ -312,7 +312,7 @@ entrada y regreso de `0028`, pendientes de integración. No se generaliza esa en
 
 `0033`–`0037`: cinco regresos aprobados por el owner («ya revisé todo el grupo y
 está bien»); entradas pendientes de revisión con el criterio nuevo, ver prioridad actual.
-Registro: `../data/evidencias/avatar/transiciones-2026-11-11/grupo-08/README.md`.
+Registro: `../signall-docs/evidencias/avatar/transiciones-2026-11-11/grupo-08/README.md`.
 Visor temporal: `http://127.0.0.1:8766/group-08/`. Sin integración aún.
 
 La integración deberá preservar nombres y rutas de clips, las cuatro variantes
