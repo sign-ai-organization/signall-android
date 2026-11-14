@@ -11,6 +11,7 @@ import com.signall.app.domain.Character
 import com.signall.app.domain.Setting
 import com.signall.app.domain.Settings
 import com.signall.app.domain.SignQueueItem
+import com.signall.app.testing.ThrottledAudioRecord
 import com.signall.app.ui.designsystem.components.DrawerSide
 import com.signall.app.ui.webview.SignAllWebViewController
 import kotlinx.coroutines.Dispatchers
@@ -57,6 +58,7 @@ class MainScreenStateTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
+        ThrottledAudioRecord.install()
         history = FakeHistory()
         settings = FakeSettings()
         webView = FakeWebView()
@@ -80,6 +82,7 @@ class MainScreenStateTest {
     @After
     fun tearDown() {
         Dispatchers.resetMain()
+        ThrottledAudioRecord.clear()
     }
 
     private fun dispatch(event: BackendEvent) {
@@ -258,7 +261,9 @@ class MainScreenStateTest {
 
     private class FakeHistory : SignHistoryRepository {
         private val items = mutableListOf<String>()
+
         override fun load(): List<String> = items.toList()
+
         override fun record(text: String): List<String> {
             if (text.isNotBlank()) {
                 items.remove(text)
@@ -270,7 +275,9 @@ class MainScreenStateTest {
 
     private class FakeSettings : SettingsRepository {
         var saved: Settings = Settings()
+
         override fun load(): Settings = saved
+
         override fun save(settings: Settings) {
             saved = settings
         }
@@ -280,28 +287,45 @@ class MainScreenStateTest {
         val avatarCalls = mutableListOf<String>()
         var lastTheme: Boolean? = null
         var lastDefaultSign: String? = null
+
         override fun attach(webView: WebView) = Unit
+
         override fun play() = Unit
+
         override fun setQueue(items: List<SignQueueItem>) = Unit
+
         override fun appendQueue(items: List<SignQueueItem>) = Unit
+
         override fun playFrom(index: Int) = Unit
+
         override fun stop() = Unit
+
         override fun setDefaultSign(url: String) {
             lastDefaultSign = url
         }
+
         override fun setAvatar(id: String) {
             avatarCalls.add(id)
         }
+
         override fun setBackground(on: Boolean) = Unit
+
         override fun setGrid(on: Boolean) = Unit
+
         override fun setFreeCamera(on: Boolean) = Unit
+
         override fun setDebug(on: Boolean) = Unit
+
         override fun setReduceMotion(on: Boolean) = Unit
+
         override fun setSpeed(factor: Float) = Unit
+
         override fun setTheme(dark: Boolean) {
             lastTheme = dark
         }
+
         override fun setSilenceTimeoutMs(ms: Int?) = Unit
+
         override fun applyBlur(on: Boolean) = Unit
     }
 }

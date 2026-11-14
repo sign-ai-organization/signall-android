@@ -249,6 +249,11 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.14.2")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+    // Servidor WebSocket falso para el contrato con el backend (`/ws/translate`).
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    // Pruebas de composables: se renderizan en la JVM con Robolectric.
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
 // ── Cobertura ──────────────────────────────────────────────────────────────
@@ -297,6 +302,49 @@ tasks.register<JacocoReport>("jacocoTestReport") {
             include("jacoco/*.exec")
         },
     )
+}
+
+// ── Cobertura de las pruebas con Robolectric ───────────────────────────────
+//
+// Robolectric define las clases de la app en su propio *sandbox* (un
+// `ClassLoader` que las lee de bytes), así que `ProtectionDomain.codeSource`
+// queda vacío. El agente de JaCoCo, por defecto, **saltea** las clases sin
+// `codeSource` y el informe salía con 0 % aunque las pruebas corrieran y
+// pasaran: solo contaba lo cubierto por las pruebas que no usan Robolectric.
+//
+// `includeNoLocationClasses` es justamente la opción del agente para
+// instrumentarlas. La exclusión de `jdk.internal.*` es de la documentación de
+// JaCoCo: instrumentar el JDK mismo rompe el arranque del agente.
+// ── JVM que **ejecuta** las pruebas ────────────────────────────────────────
+//
+// `phosphoricons-regular-android:1.0.5` publica sus clases en class-file 65
+// (Java 21) y el JVM 17 del proyecto no puede cargarlas: cualquier prueba que
+// dibuje un icono revienta con `UnsupportedClassVersionError`. El build no
+// cambia (se sigue compilando con `jvmTarget = 17`, y Android desugarea el
+// bytecode igual de bien); lo que cambia es el JVM que corre los tests, que
+// tiene que ser 21 o más.
+//
+// Se pide **21 exacto** —la LTS que soportan Robolectric 4.14 y el resolvedor
+// de toolchains— y Gradle lo descarga solo si no está (ver `settings.gradle.kts`).
+// Si no se puede resolver, se deja el default: el build de producción sigue
+// funcionando y solo las pruebas de composables piden el JDK nuevo.
+val testJvm: JavaLauncher? =
+    runCatching {
+        the<JavaToolchainService>()
+            .launcherFor { languageVersion.set(JavaLanguageVersion.of(21)) }
+            .get()
+    }.getOrNull()
+
+tasks.withType<Test>().configureEach {
+    // Robolectric carga el runtime de Android en cada clase de prueba; con el
+    // heap por defecto (512 MB) la suite completa se queda sin memoria a mitad
+    // de camino y el error aparece como un fallo del agente de JaCoCo.
+    maxHeapSize = "2g"
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
+    }
+    if (testJvm != null) javaLauncher.set(testJvm)
 }
 
 // ── Análisis estático ──────────────────────────────────────────────────────
