@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.nomanr.plugin.lumo")
     id("org.jlleitschuh.gradle.ktlint")
+    jacoco
 }
 
 // ── Identidad del build ────────────────────────────────────────────────────
@@ -141,6 +142,9 @@ android {
 
     buildTypes {
         debug {
+            // Cobertura de las pruebas unitarias: `./gradlew jacocoTestReport`
+            // deja el XML que lee Sonar (ver `sonar-project.properties`).
+            enableUnitTestCoverage = true
             buildConfigField(
                 "String",
                 "BACKEND_WS_URL",
@@ -200,6 +204,13 @@ android {
         compose = true
         buildConfig = true
     }
+
+    testOptions {
+        unitTests {
+            // Robolectric necesita los recursos y el manifest.
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 kotlin {
@@ -227,6 +238,65 @@ dependencies {
     implementation("io.github.dev778g-me:phosphoricons-regular-android:1.0.5")
 
     implementation("androidx.webkit:webkit:1.12.1")
+
+    // ── Pruebas unitarias ──────────────────────────────────────────────────
+    // Corren en la JVM (`./gradlew test`), sin device. Robolectric da Context,
+    // SharedPreferences y el reloj de Android; Mockito, los dobles de las clases
+    // que hablan por red o con el WebView.
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.14.1")
+    testImplementation("androidx.test:core:1.6.1")
+    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+}
+
+// ── Cobertura ──────────────────────────────────────────────────────────────
+//
+// `./gradlew jacocoTestReport` corre las pruebas del build type debug y escribe
+// el XML en la ruta que declara `sonar-project.properties`
+// (`sonar.coverage.jacoco.xmlReportPaths`). Se excluye lo que no es código de la
+// app: clases generadas (`R`, `BuildConfig`), el manifest y las propias clases
+// de prueba.
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required.set(true)
+        xml.outputLocation.set(layout.buildDirectory.file("reports/jacoco/test/jacocoTestReport.xml"))
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/test/html"))
+    }
+
+    val excluir =
+        listOf(
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*",
+            "android/**/*.*",
+        )
+    // `fileTree` es perezoso: si se resolviera en configuración, la carpeta de
+    // clases todavía no existe y el reporte sale vacío.
+    classDirectories.setFrom(
+        files(
+            fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/debug")) { exclude(excluir) },
+            fileTree(layout.buildDirectory.dir("intermediates/javac/debug/classes")) {
+                exclude(excluir)
+            },
+        ),
+    )
+    sourceDirectories.setFrom(files("src/main/java"))
+    executionData.setFrom(
+        fileTree(layout.buildDirectory) {
+            // AGP deja el `.exec` en `outputs/unit_test_code_coverage/...` cuando
+            // se usa `enableUnitTestCoverage`; el otro camino es el del plugin
+            // JaCoCo a secas.
+            include("outputs/unit_test_code_coverage/**/*.exec")
+            include("jacoco/*.exec")
+        },
+    )
 }
 
 // ── Análisis estático ──────────────────────────────────────────────────────
