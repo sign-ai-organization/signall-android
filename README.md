@@ -120,10 +120,10 @@ build `release` las ignora siempre.
 
 ## Licencia
 
-Este proyecto se distribuye bajo la licencia {{LICENCIA}}. Ver [LICENSE](LICENSE).
+Este proyecto se distribuye bajo la licencia que defina la Pontificia Universidad Javeriana (pendiente de confirmación; por ahora, todos los derechos reservados). Ver [LICENSE](LICENSE).
 
 ## Trabajo de grado
 
 SignAll es un trabajo de grado de la Pontificia Universidad Javeriana (Colombia). Para
-citarlo: {{AUTOR}} ({{AÑO}}). *SignAll: español hablado a Lengua de Señas Colombiana con un
+citarlo: el equipo del trabajo de grado (2026). *SignAll: español hablado a Lengua de Señas Colombiana con un
 avatar 3D*.
