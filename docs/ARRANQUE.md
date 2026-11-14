@@ -47,16 +47,28 @@ Edita `.env` y llena, como mínimo, `DATABASE_URL` (la cadena de Neon, con
 `sslmode=require`) y `LLM_API_KEY`. Sin esos dos el backend arranca y falla en la primera
 frase. Son credenciales reales: `.env` está en `.gitignore` y no se sube.
 
-### Paso 2 — Levantar backend y STT
+### Paso 2 — Levantar backend, STT y proxy
 
 ```bash
 cd ../signall-backend
-docker compose up -d
+docker compose -f docker-compose.yml -f docker-compose.host.yml up -d
 ```
 
-Ese único comando construye y levanta **los dos** servicios: el backend en el `8080` y el
-STT en el `8000`. La primera vez tarda bastante porque instala PyTorch y descarga el
-modelo de Whisper; después queda cacheado en un volumen.
+Ese comando construye y levanta **los tres** servicios: el backend en el `8080`, el STT en
+el `8000` y el proxy TLS en el `443`. La primera vez tarda bastante porque instala PyTorch y
+descarga el modelo de Whisper; después queda cacheado en un volumen.
+
+El proxy va en el segundo archivo de Compose y no en el primero, así que un `docker compose
+up -d` a secas **no lo levanta**: para la app `debug`, que habla `ws://` contra el 8080,
+alcanza; para la app `demo`, que habla `wss://`, no. El certificado de laboratorio tiene que
+existir antes en `signall-backend/deploy/certs/` (se emite una vez por máquina, según
+[`../signall-backend/deploy/README.md`](../signall-backend/deploy/README.md)), y se comprueba
+así:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.host.yml ps caddy
+curl --cacert deploy/certs/lab-ca.crt https://127.0.0.1/health
+```
 
 **No está listo cuando el contenedor dice "Started".** Medido el 2026-10-29 en esta
 máquina: el STT respondió a los ~10 s y el backend a los ~52 s, porque carga el modelo de
