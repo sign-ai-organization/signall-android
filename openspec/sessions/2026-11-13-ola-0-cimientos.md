@@ -73,3 +73,62 @@ salió idéntico a la línea base: 13 806 ncloc, 63 code smells, 1 bug, 4,8 % de
 - **Prompts de R-03, R-04, R-05 y R-07**: no existían y los bloques se corrieron con el
   alcance del § 5. Escribirlos queda para quien repita el trabajo.
 - Nombres internos del **backend** y del **STT**: son su bloque, no el contrato.
+
+---
+
+# Segunda parte: ola 1 y los nombres de los hermanos
+
+**Misma fecha, después de la ola 0.** El owner pidió seguir con la ola 1 y con el trabajo
+0/1 que la ola 0 dejó permitido en paralelo: los nombres internos del backend y del STT.
+
+## Qué se hizo
+
+| Repo | Commit | Qué |
+|---|---|---|
+| `signall-backend` | `15c6a4e` | Rutas `../sign-ai-*` → `../signall-*` y marca en README y `CLAUDE.md` |
+| `signall-stt` | `7359e7e` | Lo mismo, más el título de la app FastAPI y dos rutas muertas de sus bitácoras |
+| `signall-android` | `a7746a5` | R-06: README de 325 a 79 líneas y `docs/ARRANQUE.md` con el detalle |
+| `signall-backend` | `7d8585b` | R-06: README corto |
+| `signall-stt` | `d5e5a89` | R-06: README corto y `docs/API-Y-CONFIGURACION.md` |
+
+## El hallazgo que importaba
+
+El `docker-compose.yml` del backend compilaba el STT desde `../sign-ai-stt`. Después del
+renombre de carpetas esa ruta **ya no existía**, así que `docker compose up --build` fallaba
+o usaba otra cosa. Ahora apunta a `../signall-stt` y se verificó con `docker compose config`
+(sale 0) más la existencia de `../signall-stt/Dockerfile`.
+
+Es el tipo de ruta que no se nota hasta que alguien clona de cero: en esta máquina los
+contenedores estaban levantados desde antes del renombre.
+
+## Qué se decidió
+
+- **R-06 en tres repos, no en cinco.** El § 4 del plan prohíbe tocar `signall-docs` y
+  `signall-avatar` por dentro, y el § 5 pedía un README en los cinco. El owner eligió los
+  tres de código. Los otros dos quedan pendientes con la razón escrita en el plan.
+- **La marca no se toca en `docs/sdd.md` ni en las bitácoras.** El SDD es el documento
+  formal y sigue al nombre de la tesis, que es una decisión académica aparte. Lo mismo con
+  los informes de una fecha: se les corrigieron las rutas muertas, no la prosa.
+- **`.cache/signai-piper` se queda como está.** Es el directorio de caché local de Piper en
+  el script de fixtures; renombrarlo obliga a bajar la voz otra vez y no se ve desde afuera.
+
+## Qué se verificó
+
+| Qué | Resultado |
+|---|---|
+| `./gradlew build` en android | en verde |
+| `./gradlew installDebug` | instalada en el Redmi (`lastUpdateTime` 2026-11-13 21:10) |
+| `docker compose config` en el backend | sale 0 |
+| `python -m compileall` en el backend y en el STT | sin errores |
+| Enlaces relativos de los cuatro README/documentos nuevos | todos resuelven |
+
+## Qué sigue pendiente
+
+Lo de la primera parte (rotar credenciales, push, Sonar viejo, URLs de GitHub, CI de
+`signall-docs`), más:
+
+- **README de `signall-docs` y `signall-avatar`**, si el owner levanta la regla del § 4.
+- **La marca en los documentos de trabajo del backend** (`docs/plan-wifi.md`,
+  `docs/performance.md`, `docs/decisions.md`, `docs/sdd-changes.md`): siguen diciendo
+  SignAI. No se tocaron porque son documentos citados en la tesis y el SDD manda.
+- **La ola 2** no se puede cerrar sin las credenciales rotadas y sin push.

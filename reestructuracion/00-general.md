@@ -323,7 +323,7 @@ vez.
 | R-04 | 0 · C3 | nombres que cruzan el socket, en los dos lados el mismo día | android + backend | ✅ verificado: **no se renombra nada** · `9bac1f7`, backend `da38a77` | **nada** |
 | R-05 | 0 · C4 | sacar evidencias pesadas, dejar lo vivo, `docs/historia/` | android | ✅ hecho · `14b2c24` · `docs/` 5,6 MB | backend, STT |
 | R-07 | 0 · C5 | `sonar-project.properties` + GitHub Actions | android, backend, STT | ✅ hecho · `8f90f1d`, `43ada1f`, `429019e` | cualquiera |
-| R-06 | 1 | README corto por repositorio | los 5 | 5 READMEs | todo, al final de la ola 0 |
+| R-06 | 1 | README corto por repositorio | android, backend, STT | ✅ hecho · `a7746a5`, `7d8585b`, `d5e5a89` | — |
 | — | 2 | verificación cruzada y última pasada de Sonar y gitleaks | todos | informe de cierre | — |
 
 R-02 y R-03 son **un solo hilo**: mismos 76 archivos, separados obligan a pasar dos veces.
@@ -332,6 +332,11 @@ R-08 se adelantó al principio porque es lo único que obliga a un clon nuevo.
 **Los prompts de R-03, R-04, R-05 y R-07 no existían** cuando se ejecutó la ola 0. Los
 bloques se corrieron con el alcance de esta tabla y lo que quedó escrito es el resultado,
 no el prompt. Escribirlos queda pendiente si alguien tiene que repetir el trabajo.
+
+**R-06 se hizo en tres repos, no en cinco.** El § 4 dice que `signall-docs` y
+`signall-avatar` no se tocan por dentro, así que un README ahí sería una excepción. El
+owner decidió el 2026-11-13 dejarlos fuera: el avatar, además, vive en la rama `dev`, que
+no se toca. Los README de esos dos quedan pendientes con esa razón anotada.
 
 **Advertencia que hay que decirle a cualquiera que se sume mientras la ola 0 esté
 abierta:** en android no se toca `app/` ni `docs/`. Se trabaja en backend, en STT, en
@@ -364,4 +369,6 @@ volver a conceder `RECORD_AUDIO`, que son dos minutos.
 | 2026-11-13 | **R-05** (`14b2c24`): `docs/` pasa de 246 MB y 1 736 archivos a **5,6 MB y 99**. Evidencias a `../data/evidencias/`, reportes cerrados a `docs/historia/`, índice nuevo. |
 | 2026-11-13 | **R-07** (`8f90f1d`, backend `43ada1f`, STT `429019e`): claves `signall-*` en Sonar, `.gitleaksignore` y CI mínimo. Sonar de android sale idéntico a la línea base. |
 | 2026-11-13 | **Verificado en el device.** Con "Instalar vía USB" habilitado en MIUI, `installDebug` entra y la app arranca con `com.signall.app`: escena lista en 3 307 ms, una frase de dos glosas representada, métricas bajo `SignAllMetrics` y el historial en `shared_prefs/signall.xml`. |
+| 2026-11-13 | **Nombres internos de los hermanos** (backend `15c6a4e`, STT `7359e7e`): rutas `../sign-ai-*` a `../signall-*`, marca en README y `CLAUDE.md`. Se arregla el `build: ../sign-ai-stt` del compose del backend, que después del renombre de carpetas ya no resolvía. |
+| 2026-11-13 | **R-06** (android `a7746a5`, backend `7d8585b`, STT `d5e5a89`): README corto en los tres repos de código, con el detalle movido a `docs/`. `signall-docs` y `signall-avatar` quedan fuera porque el § 4 prohíbe tocarlos por dentro. |
 
