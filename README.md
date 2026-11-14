@@ -1,79 +1,129 @@
-# SignAll — app Android
+# signall-android
 
-App del proyecto **SignAll**: español hablado → Lengua de Señas Colombiana representada
-por un avatar 3D. Esta app es **una pieza del sistema**, no el sistema: la voz la
-transcribe un servicio aparte, el texto lo traduce otro, y la app solo reproduce el
-resultado.
-
-```
-../signall-stt ──PCM16/WS──▶ ../signall-backend ──WS/JSON──▶ esta app
-                                      │
-                                      └──▶ Neon (Postgres 16 + pgvector)
-```
+Aplicación Android del proyecto **SignAll**: español hablado → Lengua de Señas Colombiana
+(LSC) representada por un avatar 3D.
 
 ## Qué es
 
-Una sola pantalla en Compose con un `WebView` que dibuja al avatar en Three.js. Recibe
-oraciones por un WebSocket con el backend, las convierte en una cola de clips y las
-representa. Los avatares (`Juan` y `Pauline`, 200 clips cada uno) y el catálogo viajan
-dentro del APK.
+Una sola pantalla en Kotlin con Jetpack Compose y un `WebView` donde se dibuja el avatar en
+Three.js. La app abre un WebSocket con el backend, le manda el texto escrito o el audio
+capturado, recibe las oraciones ya traducidas a glosas y las representa en orden con el
+avatar elegido. Los avatares y el catálogo de señas viajan dentro del APK, así que la escena
+no depende de la red.
 
-## Cómo se corre
+Es la última pieza del sistema: la captura de voz y la traducción viven en otros dos
+servicios.
 
-Los cuatro repos van bajo la misma carpeta padre (`SignAll/`), uno al lado del otro.
+## Enfoque
+
+**Hace:** captura el micrófono, envía audio y texto por un único WebSocket, muestra la
+transcripción que devuelve el servidor y representa las señas con uno de los dos avatares
+(Juan o Pauline, 50 señas × 4 marcas faciales cada uno).
+
+**No hace:** no transcribe voz, no traduce español a glosas y no decide qué se representa.
+La transcripción es de [signall-stt](https://github.com/sign-ai-organization/signall-stt) y
+la traducción, de [signall-backend](https://github.com/sign-ai-organization/signall-backend).
+Sin el backend la app arranca y muestra la escena, pero no puede representar nada.
+
+## Cómo se usa
+
+La app necesita el backend para funcionar y, para dictar por voz, el servicio de
+transcripción. El backend trae un `docker-compose.yml` que levanta los dos servicios:
 
 ```bash
-# 1. backend y STT (necesita ../signall-backend/.env con DATABASE_URL y LLM_API_KEY)
-cd ../signall-backend && docker compose up -d
-
-# 2. esperar a los dos servicios: el backend tarda ~50 s en cargar modelos y catálogo
-curl -s http://127.0.0.1:8080/health
-curl -s http://127.0.0.1:8000/health
-
-# 3. compilar e instalar
-./gradlew installDebug                       # emulador
-./gradlew installDebug -Psignall.backendWsUrl=ws://<IP-del-PC>:8080/ws/translate   # teléfono
+# desde la carpeta que contiene este repositorio
+git clone https://github.com/sign-ai-organization/signall-backend
+git clone https://github.com/sign-ai-organization/signall-stt
+cd signall-backend
+cp .env.example .env          # completar DATABASE_URL y LLM_API_KEY
+docker compose up -d
 ```
 
-La dirección del backend se hornea en el APK al compilar: si cambia la IP, hay que
-recompilar. El paso a paso completo, incluido todo por WiFi, está en
+Los dos clones van juntos porque el `docker-compose.yml` del backend construye el servicio de
+voz desde una carpeta hermana. Si se prefiere correr el STT por separado, el
+[README del backend](https://github.com/sign-ai-organization/signall-backend) explica cómo.
+
+El backend queda en `http://localhost:8080` y el STT en `http://localhost:8000`. La primera
+vez tarda varios minutos (instala dependencias y descarga el modelo de voz); no está listo
+cuando el contenedor arranca, sino cuando responde:
+
+```bash
+curl -s http://localhost:8080/health
+curl -s http://localhost:8000/health
+```
+
+Después se compila e instala la app, desde la carpeta de este repositorio:
+
+```bash
+./gradlew installDebug
+```
+
+Por defecto el APK de `debug` apunta a `ws://10.0.2.2:8080/ws/translate`, que es la forma en
+que el emulador ve a la máquina anfitriona.
+
+**En un teléfono físico** hay dos caminos:
+
+```bash
+# por USB
+adb reverse tcp:8080 tcp:8080
+./gradlew installDebug -Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate
+
+# por WiFi, con la IP de la computadora
+./gradlew installDebug -Psignall.backendWsUrl=ws://192.168.1.20:8080/ws/translate
+```
+
+La dirección del backend se graba en el APK al compilar: si cambia la IP hay que recompilar.
+El paso a paso completo, con los errores ya conocidos, está en
 [`docs/ARRANQUE.md`](docs/ARRANQUE.md).
+
+## Requisitos
+
+| Necesitas | Detalle |
+|---|---|
+| JDK 17 | el proyecto usa AGP 8.9.3 y Kotlin 2.3.21 |
+| Android SDK 36 | con `build-tools 36.0.0`; se ubica por `local.properties` o `ANDROID_HOME` |
+| `adb` y un dispositivo o emulador | `minSdk` 26 |
+| Docker + Compose | solo para levantar el backend y el STT con su `docker-compose.yml` |
+| Backend | `ws://…:8080/ws/translate`; credenciales en el `.env` del backend |
+| STT | solo para dictar por voz; el backend lo consume |
+| Internet en el dispositivo | Three.js se carga desde un CDN, aunque el avatar sea local |
+| Permiso `RECORD_AUDIO` | la app lo pide al usar el micrófono; si se negó, se concede con `adb shell pm grant com.signall.app android.permission.RECORD_AUDIO` |
+
+## Estructura
+
+```
+app/src/main/java/com/signall/app/   UI en Compose, estado de pantalla, WebSocket y puente con la escena
+app/src/main/assets/web/             escena Three.js, capa de marcadores (humanize.js) y los dos avatares GLB
+docs/                                arranque, modo en vivo, mediciones y manual de identidad visual
+tools/                               scripts de empaquetado de avatares, mediciones y clientes de prueba
+openspec/                            contexto del proyecto: especificaciones y bitácora de sesiones
+```
 
 ## Cómo se verifica
 
 ```bash
-./gradlew build                    # compila; incluye ktlint y el lint de Android
-./gradlew installDebug             # instala en el device o emulador conectado
-adb logcat -s SignAllNet           # "sesión abierta: ws://…" y cada "segment i/n"
-adb logcat -s SignAllMetrics       # latencias y señas representadas
+./gradlew build          # compila; incluye ktlint y el lint de Android
+./gradlew ktlintCheck    # solo el análisis estático de Kotlin
+./gradlew installDebug   # compila e instala en el dispositivo conectado
+
+adb logcat -s SignAllNet       # cada oración que manda el backend, con índice y total
+adb logcat -s SignAllMetrics   # glosas, duración de la representación y percentiles
 ```
 
-## Qué necesita
+La app no tiene pruebas automatizadas. El arranque, la latencia y el comportamiento en el
+dispositivo se miden a mano con lo que hay en `tools/`; el detalle está en
+[`tools/README.md`](tools/README.md).
 
-| Necesitas | Detalle |
-|---|---|
-| JDK 17 y Android SDK 36 | el SDK se ubica por `local.properties` o `ANDROID_HOME` |
-| `adb` | device físico o emulador; `minSdk` 26 |
-| Backend y STT | `8080` y `8000`, levantados con el compose del backend |
-| Credenciales | `DATABASE_URL` y `LLM_API_KEY` en `../signall-backend/.env` |
-| Internet en el teléfono | Three.js se carga de un CDN |
-| `RECORD_AUDIO` | permiso de runtime: `adb shell pm grant com.signall.app android.permission.RECORD_AUDIO` |
+Las herramientas de desarrollo (consola de la escena y bloque AVANZADO de Ajustes) existen
+solo si la compilación las pide, con `./gradlew installDebug -Psignall.devTools=true`. El
+build `release` las ignora siempre.
 
-Teléfono por USB: `adb reverse tcp:8080 tcp:8080` y compilar con
-`-Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. Sin eso la app muestra "Sin
-conexión con el servidor", porque el default `10.0.2.2` es el host del emulador.
+## Licencia
 
-## Adónde ir después
+Este proyecto se distribuye bajo la licencia {{LICENCIA}}. Ver [LICENSE](LICENSE).
 
-| Si vas a tocar… | Lee |
-|---|---|
-| Reglas de trabajo, git, UI, gotchas | [`AGENTS.md`](AGENTS.md) |
-| Arranque completo, WiFi, demo cifrada, errores ya pisados | [`docs/ARRANQUE.md`](docs/ARRANQUE.md) |
-| Los repos hermanos, el contrato del WebSocket | [`docs/SISTEMA.md`](docs/SISTEMA.md) |
-| El micrófono, la cola de la escena, la latencia | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) |
-| Probar en el dispositivo, medir rendimiento | [`tools/README.md`](tools/README.md) |
-| Colores, marca, contraste | [`docs/manual-identidad-visual.md`](docs/manual-identidad-visual.md) |
-| El protocolo exacto del backend | `../signall-backend/docs/android-integration.md` |
+## Trabajo de grado
 
-Este repo commitea directo a `main`, sin PR ni rama de feature. **Nada de `push`**: el
-push lo ordena el owner, repo por repo. En los hermanos no se commitea sin que lo pida.
+SignAll es un trabajo de grado de la Pontificia Universidad Javeriana (Colombia). Para
+citarlo: {{AUTOR}} ({{AÑO}}). *SignAll: español hablado a Lengua de Señas Colombiana con un
+avatar 3D*.
