@@ -8,8 +8,7 @@ cual.
 Trabajamos en el proyecto **SignAll** (tesis: español hablado → Lengua de Señas Colombiana
 con avatar 3D). Estás en el repo `sign-ai-android`; los hermanos son `../signall-backend`,
 `../signall-stt`, `../signall-docs` y `../signall-avatar`. Los repositorios en GitHub ya se
-llaman `sign-all-*`, pero las carpetas locales conservan el nombre viejo a propósito: no
-las renombres. Leé primero `AGENTS.md` y después `reestructuracion/00-general.md`, que tiene
+llaman `signall-*` y las carpetas locales también: nunca uses `sign-all-*`, con guion. Leé primero `AGENTS.md` y después `reestructuracion/00-general.md`, que tiene
 el plan completo, las decisiones tomadas, las abiertas y las herramientas; tu trabajo es
 ejecutar la **ola 0 (cimientos)** en el orden del § 5: R-02 y R-03 como un solo hilo (pasar
 `namespace` y `applicationId` a `com.signall.app` y renombrar los identificadores internos),
