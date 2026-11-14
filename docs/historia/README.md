@@ -16,6 +16,7 @@ un archivo marcado como historia no se vuelve a leer por error en una sesión de
 | `CONTRASTE-BACKEND-ARTIFACT-2026-11-03.md` | Contraste del backend contra el `artifact`, del 2026-11-03 |
 | `REPORTE-2026-11-03-spec-ui-y-srs.md` | Reporte de alineación entre el spec de UI y el SRS |
 | `PREPARACION-AJUSTES-ANIMACIONES.md` | Preparación de una tanda de ajustes de animación, ya aplicada |
+| `ramas-y-historial-2026-11.md` | Ramas que ya no existen y la reescritura del historial del 2026-11-14, con el mapeo de hashes |
 | `plan-pruebas/` | Los reportes de las rondas de prueba y los planes que las ordenaron |
 
 ## Lo que sigue vivo
@@ -26,7 +27,7 @@ un archivo marcado como historia no se vuelve a leer por error en una sesión de
 - [`../plan-pruebas/README.md`](../plan-pruebas/README.md) — cómo se corre y se registra
   una ronda, con la plantilla.
 - [`../plan-pruebas/INDICE-EVIDENCIAS.md`](../plan-pruebas/INDICE-EVIDENCIAS.md) — dónde
-  están las evidencias, que viven fuera del clon.
+  están las evidencias, que desde el 2026-11-14 viven versionadas en `signall-docs/evidencias/`.
 
 ## Las rondas de prueba
 

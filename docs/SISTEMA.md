@@ -5,8 +5,9 @@ cuando la tarea toca el pipeline, el WebSocket, el STT, el catálogo o los docum
 la tesis.
 
 Esta app es **una de las piezas** del sistema SignAll (tesis, Ingeniería de Sistemas,
-PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
-`sign-ai-organization` de GitHub.
+PUJ). Las otras viven en la organización `sign-ai-organization` de GitHub
+(`https://github.com/sign-ai-organization/<repo>`) y, cuando se trabaja en las cuatro a la
+vez, se clonan como carpetas hermanas bajo `../`.
 
 ```
 ../signall-stt ──PCM16/WS──▶ ../signall-backend ──WS/JSON──▶ ../signall-android (esta app)
@@ -19,7 +20,7 @@ PUJ). Las otras viven en carpetas hermanas bajo `../`, todas en la organización
 
 | Repo | Qué es | Rama | Puerto | Se levanta con |
 |---|---|---|---|---|
-| `../signall-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `main` | 8080 | `docker compose up --build` (levanta **también** el STT) |
+| `../signall-backend` | Monolito modular FastAPI: WS con el cliente, NLP de glosas LSC, validación contra catálogo, caché semántico, Neon | `main` | 8080 | `docker compose -f docker-compose.yml -f docker-compose.host.yml up -d` (levanta **también** el STT y el proxy TLS) |
 | `../signall-stt` | faster-whisper + WebRTC VAD: audio → texto en tiempo real | `main` | 8000 | incluido en el compose del backend, o solo desde su repo |
 | `../signall-docs` | **Los documentos de la tesis**: los formales en LaTeX (SRS, SDD, memoria, plan de pruebas, SPMP), los borradores en Markdown y los diagramas | `main` | — | `make` (compila los PDF) |
 | `../signall-avatar` | Producción de las animaciones con Cascadeur; versiona en `models/` los GLB finales de Juan y Pauline (200 clips cada uno: 50 señas × 4 marcas faciales). La demo Flask de landmarks que también vive ahí está congelada desde 2026-09-19 | `dev` | — | — |
@@ -31,7 +32,7 @@ sin que el compilador avise. Ese es el motivo de que este archivo exista.
 
 ## `../signall-backend`
 
-**Leé `CLAUDE.md` (147 líneas) antes de tocarlo.** Tiene las reglas que no están
+**Lee el `CLAUDE.md` del backend antes de tocarlo.** Tiene las reglas que no están
 acá: código y comentarios **en inglés sin excepción**, los nombres de clases tienen que
 coincidir con los del SDD, y **nunca hacer `git commit` ni `git push`** — se sugiere el
 mensaje y lo manda el owner, por PR contra `main`.
@@ -86,9 +87,10 @@ sincronizar ni nada que se edite en dos lugares.
 
 ```
 latex/<documento>/main.tex   ← el original, se edita acá
-  srs/ · sdd/ · memoria/ · plan-pruebas/ · administracion/
+  srs/ · sdd/ · memoria/ · plan-pruebas/ · administracion/ · vfp/
 borradores/                  ← Markdown de trabajo (requerimientos, casos de uso, plan de pruebas)
-cambios/requerimientos.md    ← bandeja de cambios: Propuesto / Acordado / Hecho
+cambios/                     ← qué cambió y por qué: es el registro de cada cambio
+evidencias/                  ← videos, audios, libros de resultados y capturas de las pruebas
 diagramas/draw.io + png/     ← los .drawio editables y su exportación
 versiones-pasadas/           ← historia, no se edita
 ```
@@ -101,10 +103,12 @@ versiones-pasadas/           ← historia, no se edita
   `main` local queda por detrás en cuanto el equipo mergea, así que **antes de empezar hay
   que hacer `git fetch`**: el 2026-11-04 la copia local estaba 20 commits atrás.
 - **El control de cambios es git**: `git diff` dice qué se tocó y `git log` cuándo.
-- **`cambios/requerimientos.md` es la bandeja de cambios pendientes**, con estados
-  **Propuesto / Acordado / Hecho**: ahí caen las cosas que la app ya hace y el documento
-  todavía no dice (modo en vivo, entrada de texto, historial, apagado del mic…). Si se
-  implementa algo sin requisito, se anota ahí.
+- **`cambios/` es el registro de cada cambio**, y `cambios/requerimientos.md` es además la
+  bandeja de cambios pendientes, con estados **Propuesto / Acordado / Hecho**: ahí caen las
+  cosas que la app ya hace y el documento todavía no dice (modo en vivo, entrada de texto,
+  historial, apagado del micrófono…). Si se implementa algo sin requisito, se anota ahí.
+- **`evidencias/` guarda lo que se ejecutó**: videos, audios, libros de resultados y capturas,
+  ordenados por bloque del plan de pruebas. Se agregan; las viejas no se corrigen.
 - **`ESTADO.md` lista la deuda conocida** de cada documento: qué está atrasado, qué falta y
   con qué evidencia. Conviene leerlo antes de «corregir» algo que ya está anotado.
 - **Los `.drawio` y los borradores de requerimientos los edita el owner**: los cambios
@@ -117,14 +121,15 @@ versiones-pasadas/           ← historia, no se edita
 3. `../signall-docs/latex/<documento>/main.tex` — el documento.
 4. El skill **`documentos-tesis`** — el flujo de trabajo completo.
 
-### Dos cosas que confunden
+### Lo que hay que saber antes de escribir
 
-- **El nombre del sistema**: **los documentos dicen `SignAll` y el código dice `SignAll`**, a
-  propósito. El owner decidió el 2026-11-04 que en la tesis el nombre es `SignAll`; los
-  repositorios de GitHub y los documentos internos de los repos no se renombraron.
-- **La copia quedó congelada el 2026-11-04** y las correcciones que se habían hecho en
-  Overleaf después se volvieron a aplicar el mismo día. Lo que se corrigió y lo que sigue
-  abierto está en `ESTADO.md`.
+- **El nombre del sistema es `SignAll`**, en los documentos, en el código y en los
+  repositorios. Los nombres viejos (`SignAI`) que aparezcan en un texto de antes del
+  2026-11-12 son historia.
+- **Los documentos formales ya no están en Overleaf.** Se retiró el 2026-11-04, y desde
+  entonces `signall-docs` es la única copia: editar allá y compilar acá es editar el original.
+- **Cada cambio no trivial se documenta ahí**, en `cambios/` y —si toca un documento formal— en
+  el `.tex` compilado con `make`. Es un estándar de los cuatro repositorios, no una sugerencia.
 
 ## `../signall-avatar`
 
