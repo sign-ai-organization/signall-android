@@ -76,7 +76,7 @@ generadas. El CI pasó a escanear **la historia**, no solo el árbol, porque ya 
 
 | Proyecto | Code smells antes | Ahora | Cobertura |
 |---|---|---|---|
-| `signall-android` | 63 | **0** | ver § 5 |
+| `signall-android` | 63 | **0** | **81,3 %** (Sonar, sin el design system) |
 | `signall-backend` | 6 | **0** | 0 % → **82,8 %** |
 | `signall-stt` | 5 | **0** | **90,0 %** |
 
@@ -97,8 +97,17 @@ Lo que se cambió, en grande:
   `AvatarBridgeCallbacks`…) y se actualizaron **63 call sites**.
 - Literales duplicados, `if` anidados y código comentado: corregidos.
 
-**Los 13 avisos de "TODO" eran falsos positivos**: la regla matchea la palabra española «todo»
+**Los avisos de "TODO" eran falsos positivos**: la regla matchea la palabra española «todo»
 en los comentarios. Se cerraron como tales en el servidor.
+
+**Segunda pasada (mismo día).** El análisis siguiente volvió a abrir los mismos 15 falsos
+positivos, porque cerrarlos a mano no sobrevive a un análisis nuevo. La solución quedó en
+`sonar-project.properties`: un `sonar.issue.ignore.multicriteria` que excluye `kotlin:S1135` para
+todos los `.kt`, con la comprobación de que no hay ningún `TODO`/`FIXME` real
+(`grep -rnE "\b(TODO|FIXME|XXX|HACK)\b" app/src/main/java` no devuelve nada). Esa pasada
+encontró además cinco avisos reales que sí se corrigieron: la complejidad del `EdgeDrawer` (47, ya
+por debajo de 15), la de `MainScreen` (16), dos parámetros `loading` que no hacían nada en
+`Button`/`IconButton` y un parámetro `scene` que `BottomBarLayer` no usaba.
 
 ## 5. Cobertura
 
@@ -108,25 +117,39 @@ Ninguno de los tres repositorios tenía una sola prueba.
 |---|---|---|---|
 | `signall-backend` | 0 % | **82,8 %** | `app/` |
 | `signall-stt` | 0 % | **90,0 %** | `app/` |
-| `signall-android` | 0 % | ver el cierre | código propio, **sin** `ui/designsystem/` |
+| `signall-android` | 0 % | **92,2 %** (221 pruebas) | código propio, **sin** `ui/designsystem/` |
 
 En el backend la cobertura se genera con `scripts/cobertura.sh` sobre los 28 scripts
 `verify_*.py` (seis necesitan Neon o el LLM y se saltean con el motivo impreso). En el STT se
 agregaron pruebas de API con `TestClient`, de las métricas y del planificador.
 
-En Android se sumó JUnit, Robolectric, Mockito y JaCoCo (`./gradlew test`,
+En Android se sumó JUnit, Robolectric, Mockito, `MockWebServer` y JaCoCo (`./gradlew test`,
 `./gradlew jacocoTestReport`). **El design system de Lumo (`ui/designsystem/`) se excluye del
 denominador**: son 4 759 de las 8 099 líneas ejecutables y es código copiado y adaptado, no
 lógica de la app. Es una decisión del owner del 2026-11-14 y está escrita en
-`sonar-project.properties`.
+`sonar-project.properties`. Son **221 pruebas** y **3 087 de 3 350 líneas** del código propio
+(92,2 %): la máquina de estados, los dos repositorios, el cliente del WebSocket contra
+`MockWebServer`, el catálogo, el contrato con el backend y una prueba por pantalla y por
+componente con Robolectric. Lo que queda flojo está en
+`openspec/sessions/2026-11-14-cobertura-app-80.md`.
+
+`./gradlew build` corre la suite **solo en `debug`**: las pruebas de composables necesitan el
+`ComponentActivity` que declara `ui-test-manifest`, que es `debugImplementation`.
+
+**Verificado en el emulador `VMApp_API36`** (2026-11-14): la frase «buenos dias» llegó al
+backend, volvió como `segment 0/1 -> BUENOS DIAS`, se representó en 2 963 ms y los dos paneles
+laterales abrían y cerraban. El micrófono grabó a 16 kHz y un `final` vacío se trató como «No se
+escuchó nada», no como error. Evidencias en `signall-docs/evidencias/verificacion-app/`.
 
 ## 6. Documentación pública y licencia
 
 - Los tres README se reescribieron con la misma estructura (qué es, enfoque, cómo se usa,
   requisitos, estructura, cómo se verifica, licencia) y ya no exigen la carpeta padre: los
   hermanos se nombran por nombre y URL.
-- `AGENTS.md` (android) y `CLAUDE.md` (backend, docs) se reescribieron con la misma idea y se
-  agregó, como **estándar**, que cada cambio no trivial se documenta en `signall-docs/cambios/`.
+- `AGENTS.md` (android) y `CLAUDE.md` (backend, STT y docs) se reescribieron con la misma idea y
+  se agregó, como **estándar**, que cada cambio no trivial se documenta en `signall-docs/cambios/`.
+  El de `signall-stt` es nuevo: ese repositorio no tenía documento de agentes y solo el README
+  nombraba a los hermanos.
 - Los cuatro documentos dicen que los repositorios hermanos son **fuentes de información** y que
   `signall-docs` manda para lo escrito.
 - El **proxy TLS dejó de ser un extra**: el sistema se levanta con
@@ -151,9 +174,10 @@ lógica de la app. Es una decisión del owner del 2026-11-14 y está escrita en
 
 1. **`signall-backend/AGENTS.md` no está versionado** (`.git/info/exclude`, decisión previa del
    owner). `CLAUDE.md` es el documento que viaja.
-2. **Cuatro `verify_*.py` del backend ya fallaban antes de esta sesión**
-   (`verify_audio_validation`, `verify_client_frames`, `verify_done_on_error`, `verify_turn_id`):
-   esperan frames de antes de dos cambios del contrato. No se tocaron; el runner los reporta.
+2. ~~Cuatro `verify_*.py` del backend~~: **resueltos**. Los cuatro esperaban el contrato anterior
+   al frame `capability` (`8a31cc2`) y al orden no determinista entre el eco de voz y los
+   `segment` (`8631115`). Se adaptaron los scripts, no el backend: hoy los cuatro terminan en
+   `all OK`. Detalle en `signall-docs/cambios/verificacion-contrato-backend-2026-11-14.md`.
 3. **`app/main.py` del STT y `app/metrics.py`** tienen partes sin cubrir que dependen de GPU o de
    servicios externos; está anotado en su bitácora.
 4. **La licencia** queda a la espera de la universidad.
