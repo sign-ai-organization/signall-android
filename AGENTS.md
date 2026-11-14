@@ -223,9 +223,14 @@ Trampas que hacen perder tiempo:
 **Pruebas y análisis estático.** Hay pruebas unitarias en `app/src/test/` (JUnit, Robolectric y
 Mockito; corren en la JVM, sin dispositivo): `./gradlew test`. La cobertura se mide con
 `./gradlew jacocoTestReport`, que escribe el XML que lee Sonar; el design system de Lumo queda
-fuera del denominador porque es código adaptado, no lógica de la app. El CI
-(`.github/workflows/ci.yml`) corre `./gradlew build` —que incluye ktlint y el lint de Android— y
-gitleaks sobre el árbol y la historia.
+fuera del denominador porque es código adaptado, no lógica de la app.
+
+**No hay CI**: el repositorio no tiene `.github/workflows/` a propósito (2026-11-14). Todo se
+verifica en esta máquina con `tools/calidad/verificar.sh`, que corre `./gradlew build` —y con eso
+ktlint y el lint de Android— y después gitleaks sobre el árbol y la historia de los cinco
+repositorios. En los hermanos también hay un `tools/calidad/verificar.sh` con lo suyo (ruff y mypy
+en el backend, `compileall` en el STT). No se vuelve a agregar un workflow sin que el owner lo
+pida.
 
 **ktlint se agregó el 2026-11-03** (`org.jlleitschuh.gradle.ktlint` 14.2.0): `./gradlew
 ktlintCheck` corre en `build` y falla con los avisos nuevos. La deuda de estilo anterior está
