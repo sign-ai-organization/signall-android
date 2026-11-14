@@ -7,18 +7,18 @@
 El owner pidió instalar [HyperFrames](https://github.com/heygen-com/hyperframes) y hacer un
 video de ~30 s (±5) que **muestre** las funcionalidades de la app, sin venderla, con los
 colores del modo oscuro de la app como base. Tres decisiones suyas al empezar: el proyecto
-vive en un repo hermano (`../sign-ai-video`), se rinden los dos formatos (horizontal y
+vive en un repo hermano (`../signall-video`), se rinden los dos formatos (horizontal y
 vertical), y el material es la app real grabada en el Redmi.
 
 ## Qué se hizo
 
 1. **HyperFrames instalado**: `npx hyperframes init sign-ai-video` (CLI 0.9.41, Node 26,
    FFmpeg 9). Las skills quedaron en `~/.config/opencode/skills/`.
-2. **Proyecto `../sign-ai-video`** (hermano, como el resto del sistema):
+2. **Proyecto `../signall-video`** (hermano, como el resto del sistema):
    `index.html` (horizontal 1920×1080), `compositions/s1..s7-*.html` (una escena por beat),
    `assets/scene.css` (tokens, tipografía, layout de los dos formatos), `assets/clips/`
    (cortes), `assets/audio/bed.wav` (música generada con `tools/make_bed.py`).
-3. **Proyecto `../sign-ai-video-vertical`**: generado por `tools/build_formats.py` a partir
+3. **Proyecto `../signall-video-vertical`**: generado por `tools/build_formats.py` a partir
    de `index.html`, con `assets/` y `compositions/` enlazados al proyecto horizontal. Es un
    segundo proyecto porque HyperFrames solo admite un HTML raíz con
    `data-composition-id` por proyecto, y no deja que un `data-composition-src` salga de la
@@ -29,9 +29,9 @@ vertical), y el material es la app real grabada en el Redmi.
    Seis grabaciones de pantalla (`assets/raw/rec1..rec7.mp4`) y siete cortes.
 5. **Guion** (opción A, elegida por el owner): una frase —«Hola, buenos días, ¿cómo
    estás?»— de punta a punta; después conversación, ajustes y el cambio de personaje.
-   Detalle en `../sign-ai-video/SPEC.md`.
-6. **Renders**: `../sign-ai-video/renders/signall-horizontal.mp4` (1920×1080, 5,8 MB) y
-   `../sign-ai-video-vertical/renders/signall-vertical.mp4` (1080×1920, 6,1 MB), los dos de
+   Detalle en `../signall-video/SPEC.md`.
+6. **Renders**: `../signall-video/renders/signall-horizontal.mp4` (1920×1080, 5,8 MB) y
+   `../signall-video-vertical/renders/signall-vertical.mp4` (1080×1920, 6,1 MB), los dos de
    30,9 s a 30 fps.
 
 ## Qué se decidió
@@ -110,7 +110,7 @@ en el clip a 4,57 s / 8,00 s / 11,63 s. La frase escrita va sin tildes porque `a
 solo acepta ASCII; el teclado no aparece porque los IME están deshabilitados.
 
 **Entregables**: `renders/signall-horizontal.mp4` (1920×1080, 6,1 MB) y
-`../sign-ai-video-vertical/renders/signall-vertical.mp4` (1080×1920, 7,6 MB), los dos de
+`../signall-video-vertical/renders/signall-vertical.mp4` (1080×1920, 7,6 MB), los dos de
 40,4 s a 30 fps y con audio AAC; el render mide **−18,1 LUFS** integrados.
 
 **Teléfono**: se devolvió al estado por defecto (Juan, velocidad 50, interfaz 50) y se
@@ -123,7 +123,7 @@ se quiere oír el dictado.
 ## Qué quedó pendiente
 
 - **Commit**: ninguno de los dos proyectos de video está en git; el owner decide si
-  `../sign-ai-video` (y el vertical) se versionan aparte.
+  `../signall-video` (y el vertical) se versionan aparte.
 - **Voz**: si se quiere mostrar el dictado con audio, hace falta una toma con voz humana
   (no se puede inyectar audio al micrófono del Redmi sin root). El guion ya tiene el lugar.
 - **Música con licencia**: hoy es un pad generado; si se prefiere una pista real, cambiar

@@ -64,7 +64,7 @@ muy robótico».
 - Decidir si RF-AVT-03 y PR-AVT-05 se actualizan: la escena ahora hace más de lo que
   describen. No se tocó ningún documento de `../signall-docs`.
 - Las cifras de tamaño de PR-AVT-06 y los hashes de los `.glb` cambiaron.
-- `../sign-ai-avatar` no se tocó: los originales siguen en `fc6f372`.
+- `../signall-avatar` no se tocó: los originales siguen en `fc6f372`.
 
 ## Corrección de la noche: ojos en blanco y párpados cerrados en reposo
 
