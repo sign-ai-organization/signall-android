@@ -1557,8 +1557,6 @@ class MainScreenState(
             return
         }
         if (playbackState == PlaybackState.Procesando ||
-            playbackState == PlaybackState.Procesando ||
-            playbackState == PlaybackState.Desconectado ||
             playbackState == PlaybackState.Desconectado
         ) {
             return
