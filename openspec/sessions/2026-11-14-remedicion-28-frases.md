@@ -60,11 +60,12 @@ afirmar cómo se siente el producto hablando.
 
 ## Qué quedó pendiente
 
-1. **La deuda de `SignAI` en `signall-docs`.** Una auditoría de solo lectura
-   encontró que los cinco documentos formales ya dicen `SignAll`; lo que quedó
-   atrás son tres líneas del plan de pruebas (`SignAiMetrics`, `SignAiNet`,
-   `SignAIWeb`, `-Psignai.devTools`), ~51 referencias técnicas en borradores y
-   algunas notas de estado que ya son falsas. El título y el nombre en los
-   borradores que alimentan el SRS son decisión del owner. No se tocó el repo.
+1. ~~**La deuda de `SignAI` en `signall-docs`.**~~ Se corrigió lo técnico
+   (commit `e24e997`): los tres tags del plan de pruebas, los nombres de clase de
+   los borradores del SDD, las rutas `signall-*` y las notas de estado que decían
+   que el código seguía con el nombre viejo. Queda a decisión del owner el título
+   y el nombre del sistema en los borradores que alimentan el SRS, el nombre del
+   archivo `SignAI_Requerimientos_Consolidados_v0.16.md` y los títulos de los
+   videos de YouTube de PER-04.
 2. **Publicar los números en el SRS y la memoria.** Ahora que existen, el documento
    que cite latencia tiene que citar esta corrida con su origen, no la de Ollama.
