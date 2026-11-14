@@ -32,6 +32,7 @@ import com.signall.app.ui.designsystem.components.SignAllDropdown
 import com.signall.app.ui.designsystem.components.SignAllIcon
 import com.signall.app.ui.designsystem.components.SignAllText
 import com.signall.app.ui.designsystem.components.Surface
+import com.signall.app.ui.designsystem.components.SurfaceStyle
 import com.signall.app.ui.designsystem.foundation.SignAllShapes
 import com.signall.app.ui.designsystem.foundation.SignAllSizes
 import com.signall.app.ui.icons.SignAllIcons
@@ -61,100 +62,135 @@ fun CharacterPicker(
         onDismissRequest = { expanded = false },
         maxHeight = 260.dp,
         trigger = {
-            Surface(
-                onClick = { expanded = !expanded },
+            CharacterTrigger(
+                current = current,
+                expanded = expanded,
                 enabled = enabled,
-                shape = SignAllShapes.cornerTile,
-                color = SignAllTheme.colors.background,
-                border = BorderStroke(
-                    1.dp,
-                    if (expanded) SignAllTheme.colors.strong else SignAllTheme.colors.outline,
-                ),
-                modifier = Modifier
-                    .width(SignAllSizes.characterTriggerWidth)
-                    .height(SignAllSizes.characterTriggerHeight)
-                    .alpha(if (enabled) 1f else 0.45f),
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(SignAllSizes.characterTriggerHeight)
-                        .padding(start = 14.dp, end = 11.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    SignAllText(
-                        text = current.label,
-                        style = SignAllTheme.typography.body2,
-                        color = SignAllTheme.colors.text,
-                    )
-                    SignAllIcon(
-                        imageVector = SignAllIcons.CaretDown,
-                        contentDescription = null,
-                        size = 16.dp,
-                        tint = SignAllTheme.colors.muted,
-                        modifier = Modifier.rotate(if (expanded) 180f else 0f),
-                    )
-                }
-            }
+                onToggle = { expanded = !expanded },
+            )
         },
     ) {
         Character.entries.forEach { character ->
-            val selected = character == current
-            val menuShape = SignAllShapes.cornerMenu
-            val ringColor = SignAllTheme.colors.background
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 42.dp)
-                    .clip(menuShape)
-                    .background(
-                        if (selected) SignAllTheme.colors.soft else Color.Transparent,
-                        menuShape,
-                    )
-                    .selectable(
-                        selected = selected,
-                        enabled = enabled,
-                        role = Role.RadioButton,
-                        onClick = {
-                            onPick(character)
-                            expanded = false
-                        },
-                    )
-                    .padding(horizontal = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(9.dp),
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(9.dp)
-                        .drawBehind {
-                            // Prototype `.character-dot { box-shadow: 0 0 0 3px
-                            // var(--background) }` — a 3dp ring, no layout cost.
-                            drawCircle(
-                                color = ringColor,
-                                radius = size.minDimension / 2f + 3.dp.toPx(),
-                            )
-                        }
-                        .background(Color(character.colorArgb), CircleShape),
-                )
-                SignAllText(
-                    text = character.label,
-                    style = SignAllTheme.typography.body2,
-                    color = SignAllTheme.colors.text,
-                    modifier = Modifier.weight(1f),
-                )
-                if (selected) {
-                    // `strong` (el acento azul) sobre `soft` da 2.3:1: la marca de
-                    // selección tiene que verse, y para eso va el color del texto.
-                    SignAllIcon(
-                        imageVector = SignAllIcons.Check,
-                        contentDescription = null,
-                        size = 16.dp,
-                        tint = SignAllTheme.colors.text,
+            CharacterOption(
+                character = character,
+                selected = character == current,
+                enabled = enabled,
+                onPick = {
+                    onPick(character)
+                    expanded = false
+                },
+            )
+        }
+    }
+}
+
+/** The closed control: the current character, a chevron, and the enable state. */
+@Composable
+private fun CharacterTrigger(
+    current: Character,
+    expanded: Boolean,
+    enabled: Boolean,
+    onToggle: () -> Unit,
+) {
+    Surface(
+        onClick = onToggle,
+        enabled = enabled,
+        style =
+            SurfaceStyle(
+                shape = SignAllShapes.cornerTile,
+                color = SignAllTheme.colors.background,
+                border =
+                    BorderStroke(
+                        1.dp,
+                        if (expanded) SignAllTheme.colors.strong else SignAllTheme.colors.outline,
+                    ),
+            ),
+        modifier = Modifier
+            .width(SignAllSizes.characterTriggerWidth)
+            .height(SignAllSizes.characterTriggerHeight)
+            .alpha(if (enabled) 1f else 0.45f),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(SignAllSizes.characterTriggerHeight)
+                .padding(start = 14.dp, end = 11.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            SignAllText(
+                text = current.label,
+                style = SignAllTheme.typography.body2,
+                color = SignAllTheme.colors.text,
+            )
+            SignAllIcon(
+                imageVector = SignAllIcons.CaretDown,
+                contentDescription = null,
+                size = 16.dp,
+                tint = SignAllTheme.colors.muted,
+                modifier = Modifier.rotate(if (expanded) 180f else 0f),
+            )
+        }
+    }
+}
+
+/** One row of the menu: the color dot, the label and the selected check. */
+@Composable
+private fun CharacterOption(
+    character: Character,
+    selected: Boolean,
+    enabled: Boolean,
+    onPick: () -> Unit,
+) {
+    val menuShape = SignAllShapes.cornerMenu
+    val ringColor = SignAllTheme.colors.background
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 42.dp)
+            .clip(menuShape)
+            .background(
+                if (selected) SignAllTheme.colors.soft else Color.Transparent,
+                menuShape,
+            )
+            .selectable(
+                selected = selected,
+                enabled = enabled,
+                role = Role.RadioButton,
+                onClick = onPick,
+            )
+            .padding(horizontal = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(9.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(9.dp)
+                .drawBehind {
+                    // Prototype `.character-dot { box-shadow: 0 0 0 3px
+                    // var(--background) }` — a 3dp ring, no layout cost.
+                    drawCircle(
+                        color = ringColor,
+                        radius = size.minDimension / 2f + 3.dp.toPx(),
                     )
                 }
-            }
+                .background(Color(character.colorArgb), CircleShape),
+        )
+        SignAllText(
+            text = character.label,
+            style = SignAllTheme.typography.body2,
+            color = SignAllTheme.colors.text,
+            modifier = Modifier.weight(1f),
+        )
+        if (selected) {
+            // `strong` (el acento azul) sobre `soft` da 2.3:1: la marca de
+            // selección tiene que verse, y para eso va el color del texto.
+            SignAllIcon(
+                imageVector = SignAllIcons.Check,
+                contentDescription = null,
+                size = 16.dp,
+                tint = SignAllTheme.colors.text,
+            )
         }
     }
 }

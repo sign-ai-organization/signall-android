@@ -11,140 +11,130 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.takeOrElse
 
+/**
+ * Los cuatro colores de un mismo rol —el texto del campo, su etiqueta, el borde…—,
+ * uno por estado del campo.
+ *
+ * Se agrupa por rol y no por estado para que el `copy` de [TextFieldColors] siga
+ * leyéndose: cada sección del campo se cambia con un solo nombre.
+ */
 @Immutable
-class TextFieldColors(
-    val focusedTextColor: Color,
-    val unfocusedTextColor: Color,
-    val disabledTextColor: Color,
-    val errorTextColor: Color,
-    val focusedContainerColor: Color,
-    val unfocusedContainerColor: Color,
-    val disabledContainerColor: Color,
-    val errorContainerColor: Color,
-    val cursorColor: Color,
-    val errorCursorColor: Color,
-    val textSelectionColors: TextSelectionColors,
-    val focusedOutlineColor: Color,
-    val unfocusedOutlineColor: Color,
-    val disabledOutlineColor: Color,
-    val errorOutlineColor: Color,
-    val focusedLeadingIconColor: Color,
-    val unfocusedLeadingIconColor: Color,
-    val disabledLeadingIconColor: Color,
-    val errorLeadingIconColor: Color,
-    val focusedTrailingIconColor: Color,
-    val unfocusedTrailingIconColor: Color,
-    val disabledTrailingIconColor: Color,
-    val errorTrailingIconColor: Color,
-    val focusedLabelColor: Color,
-    val unfocusedLabelColor: Color,
-    val disabledLabelColor: Color,
-    val errorLabelColor: Color,
-    val focusedPlaceholderColor: Color,
-    val unfocusedPlaceholderColor: Color,
-    val disabledPlaceholderColor: Color,
-    val errorPlaceholderColor: Color,
-    val focusedSupportingTextColor: Color,
-    val unfocusedSupportingTextColor: Color,
-    val disabledSupportingTextColor: Color,
-    val errorSupportingTextColor: Color,
-    val focusedPrefixColor: Color,
-    val unfocusedPrefixColor: Color,
-    val disabledPrefixColor: Color,
-    val errorPrefixColor: Color,
-    val focusedSuffixColor: Color,
-    val unfocusedSuffixColor: Color,
-    val disabledSuffixColor: Color,
-    val errorSuffixColor: Color,
+class TextFieldStateColors(
+    val focused: Color,
+    val unfocused: Color,
+    val disabled: Color,
+    val error: Color,
 ) {
     fun copy(
-        focusedTextColor: Color = this.focusedTextColor,
-        unfocusedTextColor: Color = this.unfocusedTextColor,
-        disabledTextColor: Color = this.disabledTextColor,
-        errorTextColor: Color = this.errorTextColor,
-        focusedContainerColor: Color = this.focusedContainerColor,
-        unfocusedContainerColor: Color = this.unfocusedContainerColor,
-        disabledContainerColor: Color = this.disabledContainerColor,
-        errorContainerColor: Color = this.errorContainerColor,
-        cursorColor: Color = this.cursorColor,
-        errorCursorColor: Color = this.errorCursorColor,
+        focused: Color = this.focused,
+        unfocused: Color = this.unfocused,
+        disabled: Color = this.disabled,
+        error: Color = this.error,
+    ) = TextFieldStateColors(
+        focused = focused.takeOrElse { this.focused },
+        unfocused = unfocused.takeOrElse { this.unfocused },
+        disabled = disabled.takeOrElse { this.disabled },
+        error = error.takeOrElse { this.error },
+    )
+
+    internal fun colorFor(
+        enabled: Boolean,
+        isError: Boolean,
+        isFocused: Boolean,
+    ): Color = when {
+        !enabled -> disabled
+        isError -> error
+        isFocused -> focused
+        else -> unfocused
+    }
+}
+
+/** El fondo del contenedor y su borde. */
+@Immutable
+class TextFieldContainerColors(
+    val background: TextFieldStateColors,
+    val border: TextFieldStateColors,
+) {
+    fun copy(
+        background: TextFieldStateColors = this.background,
+        border: TextFieldStateColors = this.border,
+    ) = TextFieldContainerColors(background = background, border = border)
+}
+
+/** Todo lo que es texto adentro del campo. */
+@Immutable
+class TextFieldTextColors(
+    val input: TextFieldStateColors,
+    val label: TextFieldStateColors,
+    val placeholder: TextFieldStateColors,
+    val supporting: TextFieldStateColors,
+    val prefix: TextFieldStateColors,
+    val suffix: TextFieldStateColors,
+) {
+    fun copy(
+        input: TextFieldStateColors = this.input,
+        label: TextFieldStateColors = this.label,
+        placeholder: TextFieldStateColors = this.placeholder,
+        supporting: TextFieldStateColors = this.supporting,
+        prefix: TextFieldStateColors = this.prefix,
+        suffix: TextFieldStateColors = this.suffix,
+    ) = TextFieldTextColors(
+        input = input,
+        label = label,
+        placeholder = placeholder,
+        supporting = supporting,
+        prefix = prefix,
+        suffix = suffix,
+    )
+}
+
+/** Los iconos de los extremos. */
+@Immutable
+class TextFieldIconColors(
+    val leading: TextFieldStateColors,
+    val trailing: TextFieldStateColors,
+) {
+    fun copy(
+        leading: TextFieldStateColors = this.leading,
+        trailing: TextFieldStateColors = this.trailing,
+    ) = TextFieldIconColors(leading = leading, trailing = trailing)
+}
+
+/** El cursor. El resto de la selección vive en [TextFieldColors.textSelectionColors]. */
+@Immutable
+class TextFieldCursorColors(
+    val color: Color,
+    val errorColor: Color,
+) {
+    fun copy(
+        color: Color = this.color,
+        errorColor: Color = this.errorColor,
+    ) = TextFieldCursorColors(
+        color = color.takeOrElse { this.color },
+        errorColor = errorColor.takeOrElse { this.errorColor },
+    )
+}
+
+@Immutable
+class TextFieldColors(
+    val container: TextFieldContainerColors,
+    val text: TextFieldTextColors,
+    val icons: TextFieldIconColors,
+    val cursor: TextFieldCursorColors,
+    val textSelectionColors: TextSelectionColors,
+) {
+    fun copy(
+        container: TextFieldContainerColors = this.container,
+        text: TextFieldTextColors = this.text,
+        icons: TextFieldIconColors = this.icons,
+        cursor: TextFieldCursorColors = this.cursor,
         textSelectionColors: TextSelectionColors? = this.textSelectionColors,
-        focusedOutlineColor: Color = this.focusedOutlineColor,
-        unfocusedOutlineColor: Color = this.unfocusedOutlineColor,
-        disabledOutlineColor: Color = this.disabledOutlineColor,
-        errorOutlineColor: Color = this.errorOutlineColor,
-        focusedLeadingIconColor: Color = this.focusedLeadingIconColor,
-        unfocusedLeadingIconColor: Color = this.unfocusedLeadingIconColor,
-        disabledLeadingIconColor: Color = this.disabledLeadingIconColor,
-        errorLeadingIconColor: Color = this.errorLeadingIconColor,
-        focusedTrailingIconColor: Color = this.focusedTrailingIconColor,
-        unfocusedTrailingIconColor: Color = this.unfocusedTrailingIconColor,
-        disabledTrailingIconColor: Color = this.disabledTrailingIconColor,
-        errorTrailingIconColor: Color = this.errorTrailingIconColor,
-        focusedLabelColor: Color = this.focusedLabelColor,
-        unfocusedLabelColor: Color = this.unfocusedLabelColor,
-        disabledLabelColor: Color = this.disabledLabelColor,
-        errorLabelColor: Color = this.errorLabelColor,
-        focusedPlaceholderColor: Color = this.focusedPlaceholderColor,
-        unfocusedPlaceholderColor: Color = this.unfocusedPlaceholderColor,
-        disabledPlaceholderColor: Color = this.disabledPlaceholderColor,
-        errorPlaceholderColor: Color = this.errorPlaceholderColor,
-        focusedSupportingTextColor: Color = this.focusedSupportingTextColor,
-        unfocusedSupportingTextColor: Color = this.unfocusedSupportingTextColor,
-        disabledSupportingTextColor: Color = this.disabledSupportingTextColor,
-        errorSupportingTextColor: Color = this.errorSupportingTextColor,
-        focusedPrefixColor: Color = this.focusedPrefixColor,
-        unfocusedPrefixColor: Color = this.unfocusedPrefixColor,
-        disabledPrefixColor: Color = this.disabledPrefixColor,
-        errorPrefixColor: Color = this.errorPrefixColor,
-        focusedSuffixColor: Color = this.focusedSuffixColor,
-        unfocusedSuffixColor: Color = this.unfocusedSuffixColor,
-        disabledSuffixColor: Color = this.disabledSuffixColor,
-        errorSuffixColor: Color = this.errorSuffixColor,
     ) = TextFieldColors(
-        focusedTextColor = focusedTextColor.takeOrElse { this.focusedTextColor },
-        unfocusedTextColor = unfocusedTextColor.takeOrElse { this.unfocusedTextColor },
-        disabledTextColor = disabledTextColor.takeOrElse { this.disabledTextColor },
-        errorTextColor = errorTextColor.takeOrElse { this.errorTextColor },
-        focusedContainerColor = focusedContainerColor.takeOrElse { this.focusedContainerColor },
-        unfocusedContainerColor = unfocusedContainerColor.takeOrElse { this.unfocusedContainerColor },
-        disabledContainerColor = disabledContainerColor.takeOrElse { this.disabledContainerColor },
-        errorContainerColor = errorContainerColor.takeOrElse { this.errorContainerColor },
-        cursorColor = cursorColor.takeOrElse { this.cursorColor },
-        errorCursorColor = errorCursorColor.takeOrElse { this.errorCursorColor },
+        container = container,
+        text = text,
+        icons = icons,
+        cursor = cursor,
         textSelectionColors = textSelectionColors.takeOrElse { this.textSelectionColors },
-        focusedOutlineColor = focusedOutlineColor.takeOrElse { this.focusedOutlineColor },
-        unfocusedOutlineColor = unfocusedOutlineColor.takeOrElse { this.unfocusedOutlineColor },
-        disabledOutlineColor = disabledOutlineColor.takeOrElse { this.disabledOutlineColor },
-        errorOutlineColor = errorOutlineColor.takeOrElse { this.errorOutlineColor },
-        focusedLeadingIconColor = focusedLeadingIconColor.takeOrElse { this.focusedLeadingIconColor },
-        unfocusedLeadingIconColor = unfocusedLeadingIconColor.takeOrElse { this.unfocusedLeadingIconColor },
-        disabledLeadingIconColor = disabledLeadingIconColor.takeOrElse { this.disabledLeadingIconColor },
-        errorLeadingIconColor = errorLeadingIconColor.takeOrElse { this.errorLeadingIconColor },
-        focusedTrailingIconColor = focusedTrailingIconColor.takeOrElse { this.focusedTrailingIconColor },
-        unfocusedTrailingIconColor = unfocusedTrailingIconColor.takeOrElse { this.unfocusedTrailingIconColor },
-        disabledTrailingIconColor = disabledTrailingIconColor.takeOrElse { this.disabledTrailingIconColor },
-        errorTrailingIconColor = errorTrailingIconColor.takeOrElse { this.errorTrailingIconColor },
-        focusedLabelColor = focusedLabelColor.takeOrElse { this.focusedLabelColor },
-        unfocusedLabelColor = unfocusedLabelColor.takeOrElse { this.unfocusedLabelColor },
-        disabledLabelColor = disabledLabelColor.takeOrElse { this.disabledLabelColor },
-        errorLabelColor = errorLabelColor.takeOrElse { this.errorLabelColor },
-        focusedPlaceholderColor = focusedPlaceholderColor.takeOrElse { this.focusedPlaceholderColor },
-        unfocusedPlaceholderColor = unfocusedPlaceholderColor.takeOrElse { this.unfocusedPlaceholderColor },
-        disabledPlaceholderColor = disabledPlaceholderColor.takeOrElse { this.disabledPlaceholderColor },
-        errorPlaceholderColor = errorPlaceholderColor.takeOrElse { this.errorPlaceholderColor },
-        focusedSupportingTextColor = focusedSupportingTextColor.takeOrElse { this.focusedSupportingTextColor },
-        unfocusedSupportingTextColor = unfocusedSupportingTextColor.takeOrElse { this.unfocusedSupportingTextColor },
-        disabledSupportingTextColor = disabledSupportingTextColor.takeOrElse { this.disabledSupportingTextColor },
-        errorSupportingTextColor = errorSupportingTextColor.takeOrElse { this.errorSupportingTextColor },
-        focusedPrefixColor = focusedPrefixColor.takeOrElse { this.focusedPrefixColor },
-        unfocusedPrefixColor = unfocusedPrefixColor.takeOrElse { this.unfocusedPrefixColor },
-        disabledPrefixColor = disabledPrefixColor.takeOrElse { this.disabledPrefixColor },
-        errorPrefixColor = errorPrefixColor.takeOrElse { this.errorPrefixColor },
-        focusedSuffixColor = focusedSuffixColor.takeOrElse { this.focusedSuffixColor },
-        unfocusedSuffixColor = unfocusedSuffixColor.takeOrElse { this.unfocusedSuffixColor },
-        disabledSuffixColor = disabledSuffixColor.takeOrElse { this.disabledSuffixColor },
-        errorSuffixColor = errorSuffixColor.takeOrElse { this.errorSuffixColor },
     )
 
     private fun TextSelectionColors?.takeOrElse(block: () -> TextSelectionColors): TextSelectionColors = this ?: block()
@@ -154,185 +144,103 @@ class TextFieldColors(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledLeadingIconColor
-                isError -> errorLeadingIconColor
-                focused -> focusedLeadingIconColor
-                else -> unfocusedLeadingIconColor
-            },
-        )
-    }
+    ): State<Color> = icons.leading.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun trailingIconColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledTrailingIconColor
-                isError -> errorTrailingIconColor
-                focused -> focusedTrailingIconColor
-                else -> unfocusedTrailingIconColor
-            },
-        )
-    }
+    ): State<Color> = icons.trailing.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun labelColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledLabelColor
-                isError -> errorLabelColor
-                focused -> focusedLabelColor
-                else -> unfocusedLabelColor
-            },
-        )
-    }
+    ): State<Color> = text.label.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun placeholderColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledPlaceholderColor
-                isError -> errorPlaceholderColor
-                focused -> focusedPlaceholderColor
-                else -> unfocusedPlaceholderColor
-            },
-        )
-    }
+    ): State<Color> = text.placeholder.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun supportingTextColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledSupportingTextColor
-                isError -> errorSupportingTextColor
-                focused -> focusedSupportingTextColor
-                else -> unfocusedSupportingTextColor
-            },
-        )
-    }
+    ): State<Color> = text.supporting.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun prefixColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledPrefixColor
-                isError -> errorPrefixColor
-                focused -> focusedPrefixColor
-                else -> unfocusedPrefixColor
-            },
-        )
-    }
+    ): State<Color> = text.prefix.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun suffixColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledSuffixColor
-                isError -> errorSuffixColor
-                focused -> focusedSuffixColor
-                else -> unfocusedSuffixColor
-            },
-        )
-    }
+    ): State<Color> = text.suffix.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun containerColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledContainerColor
-                isError -> errorContainerColor
-                focused -> focusedContainerColor
-                else -> unfocusedContainerColor
-            },
-        )
-    }
+    ): State<Color> = container.background.stateColor(enabled, isError, interactionSource)
 
     @Composable
     fun containerOutlineColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledOutlineColor
-                isError -> errorOutlineColor
-                focused -> focusedOutlineColor
-                else -> unfocusedOutlineColor
-            },
-        )
-    }
+    ): State<Color> = container.border.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun textColor(
         enabled: Boolean,
         isError: Boolean,
         interactionSource: InteractionSource,
-    ): State<Color> {
-        val focused by interactionSource.collectIsFocusedAsState()
-
-        return rememberUpdatedState(
-            when {
-                !enabled -> disabledTextColor
-                isError -> errorTextColor
-                focused -> focusedTextColor
-                else -> unfocusedTextColor
-            },
-        )
-    }
+    ): State<Color> = text.input.stateColor(enabled, isError, interactionSource)
 
     @Composable
     internal fun cursorColor(isError: Boolean): State<Color> {
-        return rememberUpdatedState(if (isError) errorCursorColor else cursorColor)
+        return rememberUpdatedState(if (isError) cursor.errorColor else cursor.color)
     }
 
     internal val selectionColors: TextSelectionColors
         @Composable get() = textSelectionColors
+}
+
+/**
+ * Atajo para escribir un rol completo de [TextFieldColors] con sus cuatro estados.
+ * Existe para que los `colors()` de cada variante no queden en cuatro líneas por rol.
+ */
+internal fun textFieldStateColors(
+    focused: Color,
+    unfocused: Color,
+    disabled: Color,
+    error: Color,
+): TextFieldStateColors = TextFieldStateColors(
+    focused = focused,
+    unfocused = unfocused,
+    disabled = disabled,
+    error = error,
+)
+
+@Composable
+private fun TextFieldStateColors.stateColor(
+    enabled: Boolean,
+    isError: Boolean,
+    interactionSource: InteractionSource,
+): State<Color> {
+    val focused by interactionSource.collectIsFocusedAsState()
+
+    return rememberUpdatedState(colorFor(enabled, isError, focused))
 }

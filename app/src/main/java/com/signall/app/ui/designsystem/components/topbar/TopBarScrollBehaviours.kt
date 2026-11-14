@@ -71,12 +71,12 @@ class EnterAlwaysScrollBehavior(
             ): Offset {
                 if (!canScroll()) return Offset.Zero
                 state.contentOffset += consumed.y
-                if (state.heightOffset == 0f || state.heightOffset == state.heightOffsetLimit) {
-                    if (consumed.y == 0f && available.y > 0f) {
-                        // Reset the total content offset to zero when scrolling all the way down.
-                        // This will eliminate some float precision inaccuracies.
-                        state.contentOffset = 0f
-                    }
+                if ((state.heightOffset == 0f || state.heightOffset == state.heightOffsetLimit) &&
+                    consumed.y == 0f && available.y > 0f
+                ) {
+                    // Reset the total content offset to zero when scrolling all the way down.
+                    // This will eliminate some float precision inaccuracies.
+                    state.contentOffset = 0f
                 }
                 state.heightOffset += consumed.y
                 return Offset.Zero
@@ -206,19 +206,18 @@ suspend fun settleBar(
             }
     }
     // Snap if animation specs were provided.
-    if (snapAnimationSpec != null) {
-        if (state.heightOffset < 0 &&
-            state.heightOffset > state.heightOffsetLimit
-        ) {
-            AnimationState(initialValue = state.heightOffset).animateTo(
-                if (state.collapsedFraction < 0.5f) {
-                    0f
-                } else {
-                    state.heightOffsetLimit
-                },
-                animationSpec = snapAnimationSpec,
-            ) { state.heightOffset = value }
-        }
+    if (snapAnimationSpec != null &&
+        state.heightOffset < 0 &&
+        state.heightOffset > state.heightOffsetLimit
+    ) {
+        AnimationState(initialValue = state.heightOffset).animateTo(
+            if (state.collapsedFraction < 0.5f) {
+                0f
+            } else {
+                state.heightOffsetLimit
+            },
+            animationSpec = snapAnimationSpec,
+        ) { state.heightOffset = value }
     }
 
     return Velocity(0f, remainingVelocity)

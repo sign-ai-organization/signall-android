@@ -21,6 +21,7 @@ import com.signall.app.ui.designsystem.components.SignAllDropdownMenuItem
 import com.signall.app.ui.designsystem.components.SignAllIcon
 import com.signall.app.ui.designsystem.components.SignAllText
 import com.signall.app.ui.designsystem.components.Surface
+import com.signall.app.ui.designsystem.components.SurfaceStyle
 import com.signall.app.ui.designsystem.foundation.SignAllShapes
 import com.signall.app.ui.designsystem.foundation.SignAllSizes
 import com.signall.app.ui.icons.SignAllIcons
@@ -58,12 +59,16 @@ fun SignPickerDropdown(
         trigger = {
             Surface(
                 onClick = { expanded = !expanded },
-                shape = SignAllShapes.cornerTile,
-                color = SignAllTheme.colors.background,
-                border = BorderStroke(
-                    1.dp,
-                    if (expanded) SignAllTheme.colors.strong else SignAllTheme.colors.outline,
-                ),
+                style =
+                    SurfaceStyle(
+                        shape = SignAllShapes.cornerTile,
+                        color = SignAllTheme.colors.background,
+                        border =
+                            BorderStroke(
+                                1.dp,
+                                if (expanded) SignAllTheme.colors.strong else SignAllTheme.colors.outline,
+                            ),
+                    ),
                 modifier = Modifier
                     .width(SignAllSizes.signTriggerWidth)
                     .height(SignAllSizes.characterTriggerHeight),

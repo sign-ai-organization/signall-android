@@ -47,6 +47,14 @@ object SignsCatalog {
     const val DEFAULT: String = "0000_0000_0000"
 
     /**
+     * Prefix of the asset contract: every sign is `signs/<id>.glb`.
+     *
+     * It is the same string the backend's catalog answers, so it is an
+     * identifier, not a label: it must not change.
+     */
+    private const val SIGN_PATH_PREFIX = "signs/"
+
+    /**
      * The logical path of a sign, as a same-origin URL.
      *
      * The animation itself is a clip inside `assets/web/models/juan.glb` or `assets/web/models/pauline.glb`, and the scene
@@ -56,7 +64,7 @@ object SignsCatalog {
      * because it is also what the backend's catalog answers, so the same string
      * means the same sign on both sides.
      */
-    fun assetUrl(id: String): String = "signs/$id.glb"
+    fun assetUrl(id: String): String = "$SIGN_PATH_PREFIX$id.glb"
 
     /**
      * Resolves a `glb_animation_path` coming from the backend to a local asset,
@@ -70,9 +78,9 @@ object SignsCatalog {
      */
     fun localAssetOrNull(path: String): String? {
         val clean = path.trim()
-        if (!clean.startsWith("signs/") || clean.contains("..") || clean.contains("//")) return null
+        if (!clean.startsWith(SIGN_PATH_PREFIX) || clean.contains("..") || clean.contains("//")) return null
         if (!clean.endsWith(".glb")) return null
-        val id = clean.removePrefix("signs/").removeSuffix(".glb")
+        val id = clean.removePrefix(SIGN_PATH_PREFIX).removeSuffix(".glb")
         return if (id in available) clean else null
     }
 
@@ -88,7 +96,7 @@ object SignsCatalog {
      */
     fun isOwnAssetPath(path: String): Boolean {
         val clean = path.trim()
-        return clean.startsWith("signs/") && clean.endsWith(".glb") &&
+        return clean.startsWith(SIGN_PATH_PREFIX) && clean.endsWith(".glb") &&
             !clean.contains("..") && !clean.contains("//")
     }
 }

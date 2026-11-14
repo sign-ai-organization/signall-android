@@ -130,6 +130,9 @@ const val MicPermissionNotice =
  */
 private const val SentTextHoldMs = 1_500L
 
+/** What the stage says when the dictation ended without text: it is not an error. */
+private const val NothingHeardStatus = "No se escuchó nada."
+
 private const val TAG = "SignAllState"
 
 class MainScreenState(
@@ -1049,83 +1052,87 @@ class MainScreenState(
 
     private fun handleEvent(event: BackendEvent) {
         when (event) {
-            is BackendEvent.Connected -> {
-                // El contador de reconexión se reinicia **acá**, no cuando se
-                // pierde la sesión: es el restablecimiento el que lo reinicia
-                // (`main.tex:761-772`, "momento en el que el contador se reinicia").
-                // Antes nunca volvía a cero, así que después de unas horas de app
-                // abierta la primera caída esperaba el tope en vez de 1 s.
-                reconnectAttempts = 0
-                // La sesión nueva arranca con voz disponible; el frame
-                // `capability` la corrige en el mismo instante si el STT no
-                // está. Sin esto una sesión degradada dejaba el micrófono
-                // apagado para siempre, incluso al reconectar.
-                sttAvailable = true
-                if (playbackState == PlaybackState.Desconectado) {
-                    playbackState = PlaybackState.Inactivo
-                }
-            }
-
-            is BackendEvent.Transcript -> {
-                // Un `final` vacío es una respuesta, no una frase perdida: el STT
-                // cerró el utterance sobre audio que su filtro de descarte no
-                // encontró. Descartarlo dejaría el micrófono creyendo que la
-                // frase sigue abierta y "Procesando..." aguantaría hasta el
-                // timeout, que después reportaría como fallida una frase que
-                // nunca existió. No escribe nada en el campo: un `final` vacío
-                // **no** puede vaciar lo que el usuario escribió a mano.
-                if (event.text.isBlank()) {
-                    if (event.final) onEmptyFinal()
-                    return
-                }
-                // Cualquier cosa que vuelva prueba que el viaje de ida y vuelta
-                // funciona, así que la red de seguridad de "no llegó la
-                // transcripción" ya no hace falta.
-                processingJob?.cancel()
-                // Y también la de "no llegó la traducción": algo contesta.
-                armTurnSilence()
-                heardAnythingThisSession = true
-                // Dictado y en vivo parten del mismo sitio —los mismos chunks y
-                // el mismo STT— y se separan acá. Lo decide esta app, no el
-                // backend: el `final` de lo dictado llega después de que el
-                // usuario apagó el micrófono, así que el flag tiene que
-                // sobrevivir al apagado ([dictationAwaitingFinal]).
-                if (micMode == MicMode.Dictation || dictationAwaitingFinal) {
-                    onDictationTranscript(event)
-                } else {
-                    onLiveTranscript(event)
-                }
-            }
-
-            is BackendEvent.Segment -> {
-                if (belongsToCurrentTurn(event.turn)) onWholePhraseSegment(event)
-                else dropStaleFrame("segment", event.turn)
-            }
-
-            is BackendEvent.PhraseDone -> {
-                if (belongsToCurrentTurn(event.turn)) finishTurn()
-                else dropStaleFrame("done", event.turn)
-            }
-
-            is BackendEvent.Failure -> {
-                if (belongsToCurrentTurn(event.turn)) fail(event.message)
-                else dropStaleFrame("error", event.turn)
-            }
-
-            // `RNF-AV-03`: si el servicio de transcripción no está, la sesión
-            // sigue viva y el texto se puede traducir. Lo único que se apaga es
-            // la voz, y el aviso dice cuál de las dos cosas falló.
-            is BackendEvent.Capabilities -> {
-                sttAvailable = event.audio
-                if (!event.audio) {
-                    if (micMode != MicMode.Off) changeMicMode(MicMode.Off)
-                    showNotice(MicUnavailableNotice)
-                    watchForVoiceToReturn()
-                }
-            }
-
+            is BackendEvent.Connected -> onConnected()
+            is BackendEvent.Transcript -> onTranscript(event)
+            is BackendEvent.Segment -> onSegment(event)
+            is BackendEvent.PhraseDone -> onPhraseDone(event)
+            is BackendEvent.Failure -> onFailure(event)
+            is BackendEvent.Capabilities -> onCapabilities(event)
             is BackendEvent.Disconnected -> onDisconnected()
         }
+    }
+
+    private fun onConnected() {
+        // El contador de reconexión se reinicia **acá**, no cuando se
+        // pierde la sesión: es el restablecimiento el que lo reinicia
+        // (`main.tex:761-772`, "momento en el que el contador se reinicia").
+        // Antes nunca volvía a cero, así que después de unas horas de app
+        // abierta la primera caída esperaba el tope en vez de 1 s.
+        reconnectAttempts = 0
+        // La sesión nueva arranca con voz disponible; el frame `capability` la
+        // corrige en el mismo instante si el STT no está. Sin esto una sesión
+        // degradada dejaba el micrófono apagado para siempre, incluso al reconectar.
+        sttAvailable = true
+        if (playbackState == PlaybackState.Desconectado) {
+            playbackState = PlaybackState.Inactivo
+        }
+    }
+
+    private fun onTranscript(event: BackendEvent.Transcript) {
+        // Un `final` vacío es una respuesta, no una frase perdida: el STT
+        // cerró el utterance sobre audio que su filtro de descarte no
+        // encontró. Descartarlo dejaría el micrófono creyendo que la
+        // frase sigue abierta y "Procesando..." aguantaría hasta el
+        // timeout, que después reportaría como fallida una frase que
+        // nunca existió. No escribe nada en el campo: un `final` vacío
+        // **no** puede vaciar lo que el usuario escribió a mano.
+        if (event.text.isBlank()) {
+            if (event.final) onEmptyFinal()
+            return
+        }
+        // Cualquier cosa que vuelva prueba que el viaje de ida y vuelta
+        // funciona, así que la red de seguridad de "no llegó la
+        // transcripción" ya no hace falta.
+        processingJob?.cancel()
+        // Y también la de "no llegó la traducción": algo contesta.
+        armTurnSilence()
+        heardAnythingThisSession = true
+        // Dictado y en vivo parten del mismo sitio —los mismos chunks y
+        // el mismo STT— y se separan acá. Lo decide esta app, no el
+        // backend: el `final` de lo dictado llega después de que el
+        // usuario apagó el micrófono, así que el flag tiene que
+        // sobrevivir al apagado ([dictationAwaitingFinal]).
+        if (micMode == MicMode.Dictation || dictationAwaitingFinal) {
+            onDictationTranscript(event)
+        } else {
+            onLiveTranscript(event)
+        }
+    }
+
+    private fun onSegment(event: BackendEvent.Segment) {
+        if (belongsToCurrentTurn(event.turn)) onWholePhraseSegment(event)
+        else dropStaleFrame("segment", event.turn)
+    }
+
+    private fun onPhraseDone(event: BackendEvent.PhraseDone) {
+        if (belongsToCurrentTurn(event.turn)) finishTurn()
+        else dropStaleFrame("done", event.turn)
+    }
+
+    private fun onFailure(event: BackendEvent.Failure) {
+        if (belongsToCurrentTurn(event.turn)) fail(event.message)
+        else dropStaleFrame("error", event.turn)
+    }
+
+    // `RNF-AV-03`: si el servicio de transcripción no está, la sesión
+    // sigue viva y el texto se puede traducir. Lo único que se apaga es
+    // la voz, y el aviso dice cuál de las dos cosas falló.
+    private fun onCapabilities(event: BackendEvent.Capabilities) {
+        sttAvailable = event.audio
+        if (event.audio) return
+        if (micMode != MicMode.Off) changeMicMode(MicMode.Off)
+        showNotice(MicUnavailableNotice)
+        watchForVoiceToReturn()
     }
 
     private var voiceWatchJob: Job? = null
@@ -1500,7 +1507,7 @@ class MainScreenState(
         if (dictationPending) {
             showStatus("Texto listo. Toca Traducir para enviarlo.")
         } else {
-            showStatus("No se escuchó nada.")
+            showStatus(NothingHeardStatus)
         }
         Log.i(
             TAG,
@@ -1818,56 +1825,11 @@ class MainScreenState(
             val items = resolved.flatMap { it.items }
             val first = !queueStarted
 
-            if (first) {
-                // Solo se vacía si esta cola **reemplaza** a la de la escena. Si se
-                // encola detrás (D3), los índices de la escena siguen a los de la
-                // frase que suena y la lista tiene que seguirla.
-                if (!(queuePlaying && queuedPhrases < MaxQueuedPhrases)) turnQueueItems.clear()
-                // A replay is not a new turn: the phrase is already in the history
-                // and already has a conversation entry, so recording it again would
-                // duplicate both (`CNV-5`).
-                if (text.isNotBlank() && !isReplay) {
-                    syncHistory(history.record(text))
-                    conversation.add(
-                        ConversationTurn(
-                            id = turnCounter++,
-                            text = text,
-                            gloss = formatGlosses(pendingSegments.values.toList()),
-                        ),
-                    )
-                    conversationTurnIndex = conversation.size - 1
-                }
-            } else if (conversationTurnIndex >= 0) {
-                // La entrada de conversación del turno se **completa** con las
-                // oraciones que van llegando. Antes se armaba de una sola vez con
-                // la frase entera; ahora la primera oración arranca la cola, así
-                // que sin esto el panel quedaría mostrando solo la primera mitad
-                // de lo que el avatar ya está representando.
-                val turn = conversation[conversationTurnIndex]
-                conversation[conversationTurnIndex] =
-                    turn.copy(gloss = formatGlosses(pendingSegments.values.toList()))
-            }
+            if (first) recordNewTurn(text) else completeTurnGloss()
 
             turnQueueItems += items
 
-            // Aviso por glosa, que es lo que pide el SRS (`main.tex:201` y `:753`):
-            // "Seña no disponible" en vez de mandar al avatar una instrucción
-            // inválida. Antes solo aparecía el texto cuando una oración entera no
-            // produjo nada, así que una frase con tres glosas de cinco y dos
-            // representables se saltaba en silencio lo que le faltaba.
-            //
-            // Este es el **único** texto propio que sale en el indicador sin
-            // depuración, porque es el único que la tabla prescribe: la fila
-            // *Reproduciendo* dice "Si alguna palabra no está en el catálogo, la
-            // pantalla muestra el mensaje ``Seña no disponible''". Es el texto
-            // alternativo de *Reproduciendo*, no un estado aparte, y por eso va
-            // por [showMissingSign] y no por [showStatus]. Las glosas que faltaron
-            // quedan en el log (`SignAllState`), que es donde se mira al depurar.
-            val missing = resolved.flatMap { it.missing }
-            if (missing.isNotEmpty()) {
-                showMissingSign()
-                Log.i(TAG, "glosas sin animación, avisadas: ${missing.joinToString(", ")}")
-            }
+            warnMissingGlosses(resolved.flatMap { it.missing })
 
             if (items.isEmpty()) {
                 // Una oración que no produjo ninguna seña no es el fin del turno:
@@ -1893,40 +1855,9 @@ class MainScreenState(
 
             if (first) {
                 queueStarted = true
-                // Frase nueva con el avatar todavía representando la anterior:
-                // se **encola** en vez de reemplazar (decisión D3 del
-                // 2026-11-05). Reemplazar cortaba la frase en curso a la mitad
-                // —PR-AVT-03 lo midió: la frase 1 se cortó en su 4.ª seña a los
-                // 200 ms y la 2 en la 4.ª a los 891 ms— y el usuario nunca veía
-                // terminar lo que ya había pedido.
-                if (queuePlaying && queuedPhrases < MaxQueuedPhrases) {
-                    queuedPhrases += 1
-                    webView.appendQueue(items)
-                    if (!queuePlaying) startPlaybackClock()
-                    queuePlaying = true
-                } else {
-                    // Tope alcanzado (o cola vacía): la nueva reemplaza, que es
-                    // descartar la más vieja. Se avisa, y el aviso se ve sin
-                    // depuración porque es una frase que se cae.
-                    if (queuePlaying) showNotice(QueueFullNotice)
-                    queuedPhrases = 0
-                    webView.setQueue(items)
-                    webView.play()
-                    startPlaybackClock()
-                    queuePlaying = true
-                }
+                deliverFirstQueue(items)
             } else {
-                // La escena decide sola si hay que arrancar: `appendQueue` vuelve
-                // a llamar `playFrom` si la cola ya se había vaciado mientras esta
-                // oración se traducía (ver `app.js`). O viene sonando o arranca
-                // después de este comando, así que en los dos casos queda
-                // representando.
-                webView.appendQueue(items)
-                // El reloj solo se reinicia si venía de estar parado. Si venía
-                // sonando, reiniciarlo haría que `representado:` midiera solo el
-                // último tramo de la frase.
-                if (!queuePlaying) startPlaybackClock()
-                queuePlaying = true
+                appendToScene(items)
             }
             playbackState = PlaybackState.Reproduciendo
         }
@@ -1941,6 +1872,111 @@ class MainScreenState(
             // —falló, o se canceló—, la siguiente tiene que poder seguir igual.
             myTurn.complete(Unit)
         }
+    }
+
+    /**
+     * Registra el turno nuevo en el historial y en la conversación.
+     *
+     * Solo se vacía [turnQueueItems] si esta cola **reemplaza** a la de la escena.
+     * Si se encola detrás (D3), los índices de la escena siguen a los de la frase
+     * que suena y la lista tiene que seguirla.
+     */
+    private fun recordNewTurn(text: String) {
+        if (!(queuePlaying && queuedPhrases < MaxQueuedPhrases)) turnQueueItems.clear()
+        // A replay is not a new turn: the phrase is already in the history and
+        // already has a conversation entry, so recording it again would duplicate
+        // both (`CNV-5`).
+        if (text.isBlank() || isReplay) return
+        syncHistory(history.record(text))
+        conversation.add(
+            ConversationTurn(
+                id = turnCounter++,
+                text = text,
+                gloss = formatGlosses(pendingSegments.values.toList()),
+            ),
+        )
+        conversationTurnIndex = conversation.size - 1
+    }
+
+    /**
+     * Completa la entrada de conversación del turno con las oraciones que van
+     * llegando.
+     *
+     * Antes se armaba de una sola vez con la frase entera; ahora la primera
+     * oración arranca la cola, así que sin esto el panel quedaría mostrando solo
+     * la primera mitad de lo que el avatar ya está representando.
+     */
+    private fun completeTurnGloss() {
+        if (conversationTurnIndex < 0) return
+        val turn = conversation[conversationTurnIndex]
+        conversation[conversationTurnIndex] =
+            turn.copy(gloss = formatGlosses(pendingSegments.values.toList()))
+    }
+
+    /**
+     * Avisa por glosa, que es lo que pide el SRS (`main.tex:201` y `:753`):
+     * "Seña no disponible" en vez de mandar al avatar una instrucción inválida.
+     *
+     * Antes solo aparecía el texto cuando una oración entera no produjo nada, así
+     * que una frase con tres glosas de cinco y dos representables se saltaba en
+     * silencio lo que le faltaba.
+     *
+     * Este es el **único** texto propio que sale en el indicador sin depuración,
+     * porque es el único que la tabla prescribe: la fila *Reproduciendo* dice "Si
+     * alguna palabra no está en el catálogo, la pantalla muestra el mensaje ``Seña
+     * no disponible''". Es el texto alternativo de *Reproduciendo*, no un estado
+     * aparte, y por eso va por [showMissingSign] y no por [showStatus]. Las glosas
+     * que faltaron quedan en el log (`SignAllState`), que es donde se mira al
+     * depurar.
+     */
+    private fun warnMissingGlosses(missing: List<String>) {
+        if (missing.isEmpty()) return
+        showMissingSign()
+        Log.i(TAG, "glosas sin animación, avisadas: ${missing.joinToString(", ")}")
+    }
+
+    /**
+     * Entrega la primera tanda del turno a la escena.
+     *
+     * Frase nueva con el avatar todavía representando la anterior: se **encola**
+     * en vez de reemplazar (decisión D3 del 2026-11-05). Reemplazar cortaba la
+     * frase en curso a la mitad —PR-AVT-03 lo midió: la frase 1 se cortó en su
+     * 4.ª seña a los 200 ms y la 2 en la 4.ª a los 891 ms— y el usuario nunca veía
+     * terminar lo que ya había pedido.
+     */
+    private fun deliverFirstQueue(items: List<SignQueueItem>) {
+        if (queuePlaying && queuedPhrases < MaxQueuedPhrases) {
+            queuedPhrases += 1
+            webView.appendQueue(items)
+            if (!queuePlaying) startPlaybackClock()
+            queuePlaying = true
+            return
+        }
+        // Tope alcanzado (o cola vacía): la nueva reemplaza, que es descartar la
+        // más vieja. Se avisa, y el aviso se ve sin depuración porque es una frase
+        // que se cae.
+        if (queuePlaying) showNotice(QueueFullNotice)
+        queuedPhrases = 0
+        webView.setQueue(items)
+        webView.play()
+        startPlaybackClock()
+        queuePlaying = true
+    }
+
+    /**
+     * Suma una oración a la frase que ya está sonando.
+     *
+     * La escena decide sola si hay que arrancar: `appendQueue` vuelve a llamar
+     * `playFrom` si la cola ya se había vaciado mientras esta oración se traducía
+     * (ver `app.js`). O viene sonando o arranca después de este comando, así que en
+     * los dos casos queda representando. El reloj solo se reinicia si venía de
+     * estar parado: si venía sonando, reiniciarlo haría que `representado:` midiera
+     * solo el último tramo de la frase.
+     */
+    private fun appendToScene(items: List<SignQueueItem>) {
+        webView.appendQueue(items)
+        if (!queuePlaying) startPlaybackClock()
+        queuePlaying = true
     }
 
     /**
@@ -2007,26 +2043,24 @@ class MainScreenState(
             pendingText = null
         }
 
-        if (!queueStarted) {
-            // Un `done` sin nada detrás. Cuando hay una frase en vuelo
-            // (`pendingText` solo se pone cuando el backend se comprometió con una) quiere
-            // decir que la frase no produjo ninguna seña, y sin esto el turno
-            // se quedaría en "Procesando" para siempre. Sin frase en vuelo es un
-            // `done` que llegó tarde o por segunda vez: la cola ya arrancó y no
-            // hay nada que informar, así que cerrar acá mataría el turno.
-            if (fraseEnVuelo != null) {
-                pendingText = null
-                if (micActive) {
-                    showStatus("Esa frase no produjo ninguna seña.")
-                    resumeListeningIfMicOn()
-                } else {
-                    // El estado también se cierra: sin esto la app se quedaba en
-                    // "Procesando" para siempre, con el Traducir deshabilitado,
-                    // cuando la frase no tenía ninguna seña que representar.
-                    playbackState = PlaybackState.Inactivo
-                    doneVisible = true
-                    showStatus("Esa frase no produjo ninguna seña.")
-                }
+        // Un `done` sin nada detrás. Cuando hay una frase en vuelo
+        // (`pendingText` solo se pone cuando el backend se comprometió con una) quiere
+        // decir que la frase no produjo ninguna seña, y sin esto el turno
+        // se quedaría en "Procesando" para siempre. Sin frase en vuelo es un
+        // `done` que llegó tarde o por segunda vez: la cola ya arrancó y no
+        // hay nada que informar, así que cerrar acá mataría el turno.
+        if (!queueStarted && fraseEnVuelo != null) {
+            pendingText = null
+            if (micActive) {
+                showStatus("Esa frase no produjo ninguna seña.")
+                resumeListeningIfMicOn()
+            } else {
+                // El estado también se cierra: sin esto la app se quedaba en
+                // "Procesando" para siempre, con el Traducir deshabilitado,
+                // cuando la frase no tenía ninguna seña que representar.
+                playbackState = PlaybackState.Inactivo
+                doneVisible = true
+                showStatus("Esa frase no produjo ninguna seña.")
             }
         }
 
@@ -2278,7 +2312,7 @@ class MainScreenState(
             Log.i(TAG, "el micrófono se apagó sin transcripción: no hay nada que traducir")
             resetTurn()
             playbackState = PlaybackState.Inactivo
-            showStatus("No se escuchó nada.")
+            showStatus(NothingHeardStatus)
             return
         }
 
@@ -2344,7 +2378,7 @@ class MainScreenState(
             dictationAwaitingFinal = false
             resetTurn()
             playbackState = PlaybackState.Inactivo
-            showStatus("No se escuchó nada.")
+            showStatus(NothingHeardStatus)
             return
         }
 
@@ -2525,15 +2559,13 @@ class MainScreenState(
     }
 
     private fun sendAudio(chunk: ByteArray) {
-        if (!backend.sendAudio(chunk)) {
+        if (!backend.sendAudio(chunk) && playbackState != PlaybackState.Desconectado) {
             // Si la sesión ya se perdió, el aviso lo pone [onDisconnected] y el
             // estado ya está en *Desconectado*. Fallar otra vez acá arrancaba un
             // estado *Error* con su mensaje encima en medio de la reconexión, que
             // es el mismo parpadeo que se quitó del otro lado.
-            if (playbackState != PlaybackState.Desconectado) {
-                changeMicMode(MicMode.Off)
-                fail("Se cortó la conexión mientras escuchaba.")
-            }
+            changeMicMode(MicMode.Off)
+            fail("Se cortó la conexión mientras escuchaba.")
         }
     }
 

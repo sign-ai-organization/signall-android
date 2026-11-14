@@ -136,9 +136,12 @@ fun SignAllDropdown(
                         contentAlignment = Alignment.TopStart,
                     ) {
                         Surface(
-                            color = SignAllTheme.colors.surface,
-                            border = BorderStroke(1.dp, SignAllTheme.colors.outline),
-                            shape = SignAllShapes.cornerControl,
+                            style =
+                                SurfaceStyle(
+                                    color = SignAllTheme.colors.surface,
+                                    border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+                                    shape = SignAllShapes.cornerControl,
+                                ),
                             modifier = Modifier
                                 .width(menuWidth ?: with(density) { triggerBounds.width.toDp() })
                                 .heightIn(max = maxHeight)

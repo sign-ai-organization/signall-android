@@ -26,6 +26,7 @@ import com.signall.app.ui.components.SettingRow
 import com.signall.app.ui.components.SignAllBrandTile
 import com.signall.app.ui.components.SignAllSmallIconButton
 import com.signall.app.ui.components.SignAllStepper
+import com.signall.app.ui.components.StepperConfig
 import com.signall.app.ui.components.SignPickerDropdown
 import com.signall.app.ui.designsystem.components.SignAllIcon
 import com.signall.app.ui.designsystem.components.SignAllText
@@ -47,20 +48,33 @@ import com.signall.app.ui.theme.SignAllTheme
  * compone el `Section`, así que no hay ninguna forma de llegar a esos ajustes
  * desde el teléfono, ni con la vieja preferencia `debug` guardada.
  */
+
+/** Lo que el panel de ajustes le pide al host. */
+class SettingsActions(
+    val onToggle: (Setting, Boolean) -> Unit,
+    val onCharacter: (Character) -> Unit,
+    val onSpeed: (Int) -> Unit,
+    val onInterfaceSize: (Int) -> Unit,
+    val onPickSign: (String) -> Unit,
+    val onClose: () -> Unit,
+    val onOpenAbout: () -> Unit,
+)
+
 @Composable
 fun SettingsSidebar(
     settings: Settings,
-    onToggle: (Setting, Boolean) -> Unit,
-    onCharacter: (Character) -> Unit,
     canSwitchAvatar: Boolean,
-    onSpeed: (Int) -> Unit,
-    onInterfaceSize: (Int) -> Unit,
     sign: String,
     signs: List<String>,
-    onPickSign: (String) -> Unit,
-    onClose: () -> Unit,
-    onOpenAbout: () -> Unit,
+    actions: SettingsActions,
 ) {
+    val onToggle = actions.onToggle
+    val onCharacter = actions.onCharacter
+    val onSpeed = actions.onSpeed
+    val onInterfaceSize = actions.onInterfaceSize
+    val onPickSign = actions.onPickSign
+    val onClose = actions.onClose
+    val onOpenAbout = actions.onOpenAbout
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -112,7 +126,7 @@ fun SettingsSidebar(
                 SignAllStepper(
                     value = settings.interfaceSize,
                     onValue = onInterfaceSize,
-                    label = "el tamaño de la interfaz",
+                    config = StepperConfig(label = "el tamaño de la interfaz"),
                 )
             }
             SettingRow(label = "Texto en negrita", icon = SignAllIcons.TextB) {
@@ -197,10 +211,12 @@ private fun SpeedRow(speed: Int, onSpeed: (Int) -> Unit) {
         SignAllStepper(
             value = speed,
             onValue = onSpeed,
-            step = 10,
-            minValue = 10,
-            maxValue = 100,
-            label = "la velocidad de las señas",
+            config = StepperConfig(
+                step = 10,
+                minValue = 10,
+                maxValue = 100,
+                label = "la velocidad de las señas",
+            ),
         )
     }
 }

@@ -39,6 +39,7 @@ import com.signall.app.ui.components.SignAllSmallIconButton
 import com.signall.app.ui.designsystem.components.SignAllIcon
 import com.signall.app.ui.designsystem.components.SignAllText
 import com.signall.app.ui.designsystem.components.Surface
+import com.signall.app.ui.designsystem.components.SurfaceStyle
 import com.signall.app.ui.designsystem.foundation.LocalReduceMotion
 import com.signall.app.ui.designsystem.foundation.SignAllShapes
 import com.signall.app.ui.designsystem.foundation.SignAllSizes
@@ -107,56 +108,20 @@ fun ConversationPanel(
             .navigationBarsPadding()
             .padding(horizontal = 22.dp, vertical = 28.dp),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top,
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                SignAllText(
-                    text = "CONTEXTO",
-                    style = SignAllTheme.typography.eyebrow,
-                    color = SignAllTheme.colors.muted,
-                )
-                SignAllText(
-                    text = "Conversación",
-                    style = SignAllTheme.typography.h2,
-                    color = SignAllTheme.colors.text,
-                )
-            }
-            SignAllSmallIconButton(
-                icon = SignAllIcons.X,
-                contentDescription = "Cerrar",
-                onClick = onClose,
-            )
-        }
+        ConversationHeader(onClose = onClose)
 
         Spacer(Modifier.height(38.dp))
 
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             if (turns.isEmpty()) {
-                SignAllText(
-                    text = "Aún no hay frases en esta conversación.",
-                    style = SignAllTheme.typography.body2,
-                    color = SignAllTheme.colors.muted,
-                )
+                ConversationEmptyState()
             } else {
-                LazyColumn(
-                    state = listState,
-                    // The list is vertical: hand horizontal drags back to the
-                    // drawer, so swiping over the turns closes it like swiping
-                    // over the header does (spec `EDG-9`).
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .horizontalDragBlocked(),
-                ) {
-                    items(items = turns, key = { it.id }) { turn ->
-                        ConversationTurnItem(
-                            turn = turn,
-                            onRepeat = { onRepeat(turn.text) },
-                            modifier = if (reduceMotion) Modifier else Modifier.animateItem(),
-                        )
-                    }
-                }
+                ConversationLog(
+                    turns = turns,
+                    listState = listState,
+                    reduceMotion = reduceMotion,
+                    onRepeat = onRepeat,
+                )
             }
         }
 
@@ -166,6 +131,67 @@ fun ConversationPanel(
             color = SignAllTheme.colors.muted,
             modifier = Modifier.padding(top = 18.dp),
         )
+    }
+}
+
+@Composable
+private fun ConversationHeader(onClose: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Top,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            SignAllText(
+                text = "CONTEXTO",
+                style = SignAllTheme.typography.eyebrow,
+                color = SignAllTheme.colors.muted,
+            )
+            SignAllText(
+                text = "Conversación",
+                style = SignAllTheme.typography.h2,
+                color = SignAllTheme.colors.text,
+            )
+        }
+        SignAllSmallIconButton(
+            icon = SignAllIcons.X,
+            contentDescription = "Cerrar",
+            onClick = onClose,
+        )
+    }
+}
+
+@Composable
+private fun ConversationEmptyState() {
+    SignAllText(
+        text = "Aún no hay frases en esta conversación.",
+        style = SignAllTheme.typography.body2,
+        color = SignAllTheme.colors.muted,
+    )
+}
+
+@Composable
+private fun ConversationLog(
+    turns: List<ConversationTurn>,
+    listState: LazyListState,
+    reduceMotion: Boolean,
+    onRepeat: (String) -> Unit,
+) {
+    LazyColumn(
+        state = listState,
+        // The list is vertical: hand horizontal drags back to the
+        // drawer, so swiping over the turns closes it like swiping
+        // over the header does (spec `EDG-9`).
+        modifier = Modifier
+            .fillMaxSize()
+            .horizontalDragBlocked(),
+    ) {
+        items(items = turns, key = { it.id }) { turn ->
+            ConversationTurnItem(
+                turn = turn,
+                onRepeat = { onRepeat(turn.text) },
+                modifier = if (reduceMotion) Modifier else Modifier.animateItem(),
+            )
+        }
     }
 }
 
@@ -269,9 +295,12 @@ private fun ConversationBubble(
 ) {
     Surface(
         modifier = modifier,
-        shape = shape,
-        color = color,
-        border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+        style =
+            SurfaceStyle(
+                shape = shape,
+                color = color,
+                border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+            ),
     ) {
         Column(
             modifier = Modifier.padding(
@@ -296,9 +325,12 @@ private fun TurnRepeatButton(phrase: String, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
     Surface(
         onClick = onClick,
-        shape = SignAllShapes.cornerRepeat,
-        color = SignAllTheme.colors.soft,
-        border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+        style =
+            SurfaceStyle(
+                shape = SignAllShapes.cornerRepeat,
+                color = SignAllTheme.colors.soft,
+                border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+            ),
         interactionSource = interaction,
         modifier = Modifier
             .size(SignAllSizes.repeatButtonSize)

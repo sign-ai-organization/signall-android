@@ -22,6 +22,8 @@ import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
@@ -30,150 +32,204 @@ import androidx.compose.ui.util.fastFirstOrNull
 import kotlin.math.max
 import kotlin.math.roundToInt
 
+/**
+ * Las ranuras que dibuja [TextFieldLayout]. La del texto y la del contenedor son
+ * obligatorias; el resto se compone solo si no es `null`.
+ */
+internal class TextFieldLayoutSlots(
+    val textField: @Composable () -> Unit,
+    val container: @Composable () -> Unit,
+    val label: @Composable (() -> Unit)? = null,
+    val placeholder: @Composable ((Modifier) -> Unit)? = null,
+    val leading: @Composable (() -> Unit)? = null,
+    val trailing: @Composable (() -> Unit)? = null,
+    val prefix: @Composable (() -> Unit)? = null,
+    val suffix: @Composable (() -> Unit)? = null,
+    val supporting: @Composable (() -> Unit)? = null,
+)
+
 @Composable
 internal fun TextFieldLayout(
-    modifier: Modifier,
-    textField: @Composable () -> Unit,
-    label: @Composable (() -> Unit)?,
-    placeholder: @Composable ((Modifier) -> Unit)?,
-    leading: @Composable (() -> Unit)?,
-    trailing: @Composable (() -> Unit)?,
-    prefix: @Composable (() -> Unit)?,
-    suffix: @Composable (() -> Unit)?,
-    container: @Composable () -> Unit,
-    supporting: @Composable (() -> Unit)?,
-    paddingValues: PaddingValues,
-    labelPaddingValues: PaddingValues,
-    supportingPaddingValues: PaddingValues,
-    leadingIconPaddingValues: PaddingValues,
-    trailingIconPaddingValues: PaddingValues,
+    slots: TextFieldLayoutSlots,
+    paddings: TextFieldPaddings,
+    modifier: Modifier = Modifier,
 ) {
+    val contentPadding = paddings.content
     val measurePolicy =
-        remember(paddingValues) {
-            TextFieldMeasurePolicy(paddingValues)
+        remember(contentPadding) {
+            TextFieldMeasurePolicy(contentPadding)
         }
-    val layoutDirection = LocalLayoutDirection.current
 
     Layout(
         modifier = modifier,
-        content = {
-            if (label != null) {
-                Box(
-                    Modifier
-                        .layoutId(LabelId)
-                        .padding(
-                            labelPaddingValues,
-                        )
-                        .wrapContentHeight(),
-                ) { label() }
-            }
-            container()
-
-            if (leading != null) {
-                Box(
-                    modifier =
-                        Modifier
-                            .layoutId(LeadingId)
-                            .padding(leadingIconPaddingValues)
-                            .then(IconDefaultSizeModifier),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    leading()
-                }
-            }
-            if (trailing != null) {
-                Box(
-                    modifier =
-                        Modifier
-                            .layoutId(TrailingId)
-                            .padding(trailingIconPaddingValues)
-                            .then(IconDefaultSizeModifier),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    trailing()
-                }
-            }
-
-            val startTextFieldPadding = paddingValues.calculateStartPadding(layoutDirection)
-            val endTextFieldPadding = paddingValues.calculateEndPadding(layoutDirection)
-            val startLeadingIconPadding = leadingIconPaddingValues.calculateStartPadding(layoutDirection)
-            val endTrailingIconPadding = trailingIconPaddingValues.calculateEndPadding(layoutDirection)
-
-            val startPadding =
-                if (leading != null) {
-                    (startTextFieldPadding - startLeadingIconPadding).coerceAtLeast(0.dp)
-                } else {
-                    startTextFieldPadding
-                }
-            val endPadding =
-                if (trailing != null) {
-                    (endTextFieldPadding - endTrailingIconPadding).coerceAtLeast(0.dp)
-                } else {
-                    endTextFieldPadding
-                }
-
-            if (prefix != null) {
-                Box(
-                    Modifier
-                        .layoutId(PrefixId)
-                        .heightIn(min = MinTextLineHeight)
-                        .wrapContentHeight()
-                        .padding(start = startPadding, end = PrefixSuffixTextPadding),
-                ) {
-                    prefix()
-                }
-            }
-            if (suffix != null) {
-                Box(
-                    Modifier
-                        .layoutId(SuffixId)
-                        .heightIn(min = MinTextLineHeight)
-                        .wrapContentHeight()
-                        .padding(start = PrefixSuffixTextPadding, end = endPadding),
-                ) {
-                    suffix()
-                }
-            }
-
-            val textPadding =
-                Modifier
-                    .heightIn(min = MinTextLineHeight)
-                    .wrapContentHeight()
-                    .padding(
-                        start = if (prefix == null) startPadding else 0.dp,
-                        end = if (suffix == null) endPadding else 0.dp,
-                    )
-
-            if (placeholder != null) {
-                placeholder(
-                    Modifier
-                        .layoutId(PlaceholderId)
-                        .then(textPadding),
-                )
-            }
-            Box(
-                modifier =
-                    Modifier
-                        .layoutId(TextFieldId)
-                        .then(textPadding),
-                propagateMinConstraints = true,
-            ) {
-                textField()
-            }
-
-            if (supporting != null) {
-                Box(
-                    Modifier
-                        .layoutId(SupportingId)
-                        .heightIn(min = MinSupportingTextLineHeight)
-                        .wrapContentHeight()
-                        .padding(supportingPaddingValues),
-                ) { supporting() }
-            }
-        },
+        content = { TextFieldContent(slots, paddings) },
         measurePolicy = measurePolicy,
     )
 }
+
+/**
+ * Compone las ranuras en el orden en que el [TextFieldMeasurePolicy] las espera. El
+ * orden importa: es el mismo del layout original.
+ */
+@Composable
+private fun TextFieldContent(
+    slots: TextFieldLayoutSlots,
+    paddings: TextFieldPaddings,
+) {
+    val horizontalPadding = contentHorizontalPadding(slots, paddings, LocalLayoutDirection.current)
+
+    slots.label?.let { LabelSlot(paddings.label, it) }
+    slots.container()
+    IconSlots(slots, paddings)
+    AffixSlots(slots, horizontalPadding)
+    TextSlots(slots, horizontalPadding)
+    slots.supporting?.let { SupportingTextSlot(paddings.supportingText, it) }
+}
+
+@Composable
+private fun LabelSlot(
+    paddingValues: PaddingValues,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        Modifier
+            .layoutId(LabelId)
+            .padding(paddingValues)
+            .wrapContentHeight(),
+    ) { content() }
+}
+
+@Composable
+private fun IconSlots(
+    slots: TextFieldLayoutSlots,
+    paddings: TextFieldPaddings,
+) {
+    slots.leading?.let { IconSlot(LeadingId, paddings.leadingIcon, it) }
+    slots.trailing?.let { IconSlot(TrailingId, paddings.trailingIcon, it) }
+}
+
+@Composable
+private fun IconSlot(
+    slotId: String,
+    paddingValues: PaddingValues,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        modifier =
+            Modifier
+                .layoutId(slotId)
+                .padding(paddingValues)
+                .then(IconDefaultSizeModifier),
+        contentAlignment = Alignment.Center,
+    ) { content() }
+}
+
+@Composable
+private fun AffixSlots(
+    slots: TextFieldLayoutSlots,
+    horizontalPadding: TextFieldSidePadding,
+) {
+    slots.prefix?.let { AffixSlot(PrefixId, horizontalPadding.start, PrefixSuffixTextPadding, it) }
+    slots.suffix?.let { AffixSlot(SuffixId, PrefixSuffixTextPadding, horizontalPadding.end, it) }
+}
+
+@Composable
+private fun AffixSlot(
+    slotId: String,
+    start: Dp,
+    end: Dp,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        Modifier
+            .layoutId(slotId)
+            .heightIn(min = MinTextLineHeight)
+            .wrapContentHeight()
+            .padding(start = start, end = end),
+    ) { content() }
+}
+
+@Composable
+private fun TextSlots(
+    slots: TextFieldLayoutSlots,
+    horizontalPadding: TextFieldSidePadding,
+) {
+    val textModifier = textPadding(slots, horizontalPadding)
+
+    slots.placeholder?.let {
+        it(
+            Modifier
+                .layoutId(PlaceholderId)
+                .then(textModifier),
+        )
+    }
+    Box(
+        modifier =
+            Modifier
+                .layoutId(TextFieldId)
+                .then(textModifier),
+        propagateMinConstraints = true,
+    ) {
+        slots.textField()
+    }
+}
+
+@Composable
+private fun SupportingTextSlot(
+    paddingValues: PaddingValues,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        Modifier
+            .layoutId(SupportingId)
+            .heightIn(min = MinSupportingTextLineHeight)
+            .wrapContentHeight()
+            .padding(paddingValues),
+    ) { content() }
+}
+
+/** El relleno horizontal del texto, ya descontado el lugar de los iconos. */
+private class TextFieldSidePadding(
+    val start: Dp,
+    val end: Dp,
+)
+
+private fun contentHorizontalPadding(
+    slots: TextFieldLayoutSlots,
+    paddings: TextFieldPaddings,
+    layoutDirection: LayoutDirection,
+): TextFieldSidePadding {
+    val start = paddings.content.calculateStartPadding(layoutDirection)
+    val end = paddings.content.calculateEndPadding(layoutDirection)
+    val startLeadingIconPadding = paddings.leadingIcon.calculateStartPadding(layoutDirection)
+    val endTrailingIconPadding = paddings.trailingIcon.calculateEndPadding(layoutDirection)
+
+    return TextFieldSidePadding(
+        start =
+            if (slots.leading != null) {
+                (start - startLeadingIconPadding).coerceAtLeast(0.dp)
+            } else {
+                start
+            },
+        end =
+            if (slots.trailing != null) {
+                (end - endTrailingIconPadding).coerceAtLeast(0.dp)
+            } else {
+                end
+            },
+    )
+}
+
+private fun textPadding(
+    slots: TextFieldLayoutSlots,
+    horizontalPadding: TextFieldSidePadding,
+): Modifier = Modifier
+    .heightIn(min = MinTextLineHeight)
+    .wrapContentHeight()
+    .padding(
+        start = if (slots.prefix == null) horizontalPadding.start else 0.dp,
+        end = if (slots.suffix == null) horizontalPadding.end else 0.dp,
+    )
 
 private class TextFieldMeasurePolicy(
     private val paddingValues: PaddingValues,
@@ -247,13 +303,16 @@ private class TextFieldMeasurePolicy(
             )
         val width =
             calculateWidth(
-                leadingWidth = widthOrZero(leadingPlaceable),
-                trailingWidth = widthOrZero(trailingPlaceable),
-                prefixWidth = widthOrZero(prefixPlaceable),
-                suffixWidth = widthOrZero(suffixPlaceable),
-                textFieldWidth = textFieldPlaceable.width,
-                labelWidth = widthOrZero(labelPlaceable),
-                placeholderWidth = widthOrZero(placeholderPlaceable),
+                widths =
+                    TextFieldWidths(
+                        leading = widthOrZero(leadingPlaceable),
+                        trailing = widthOrZero(trailingPlaceable),
+                        prefix = widthOrZero(prefixPlaceable),
+                        suffix = widthOrZero(suffixPlaceable),
+                        textField = textFieldPlaceable.width,
+                        label = widthOrZero(labelPlaceable),
+                        placeholder = widthOrZero(placeholderPlaceable),
+                    ),
                 constraints = constraints,
             )
 
@@ -268,14 +327,17 @@ private class TextFieldMeasurePolicy(
 
         val totalHeight =
             calculateHeight(
-                textFieldHeight = textFieldPlaceable.height,
-                labelHeight = labelHeight,
-                leadingHeight = heightOrZero(leadingPlaceable),
-                trailingHeight = heightOrZero(trailingPlaceable),
-                prefixHeight = heightOrZero(prefixPlaceable),
-                suffixHeight = heightOrZero(suffixPlaceable),
-                placeholderHeight = heightOrZero(placeholderPlaceable),
-                supportingHeight = supportingHeight,
+                heights =
+                    TextFieldHeights(
+                        textField = textFieldPlaceable.height,
+                        label = labelHeight,
+                        leading = heightOrZero(leadingPlaceable),
+                        trailing = heightOrZero(trailingPlaceable),
+                        prefix = heightOrZero(prefixPlaceable),
+                        suffix = heightOrZero(suffixPlaceable),
+                        placeholder = heightOrZero(placeholderPlaceable),
+                        supporting = supportingHeight,
+                    ),
                 constraints = constraints,
                 density = density,
                 paddingValues = paddingValues,
@@ -308,17 +370,20 @@ private class TextFieldMeasurePolicy(
 
         return layout(width, totalHeight) {
             placePlaceables(
+                placeables =
+                    TextFieldPlaceables(
+                        textField = textFieldPlaceable,
+                        label = labelPlaceable,
+                        placeholder = placeholderPlaceable,
+                        leading = leadingPlaceable,
+                        trailing = trailingPlaceable,
+                        prefix = prefixPlaceable,
+                        suffix = suffixPlaceable,
+                        container = containerPlaceable,
+                        supporting = supportingPlaceable,
+                    ),
                 width = width,
                 totalHeight = totalHeight,
-                textFieldPlaceable = textFieldPlaceable,
-                labelPlaceable = labelPlaceable,
-                placeholderPlaceable = placeholderPlaceable,
-                leadingPlaceable = leadingPlaceable,
-                trailingPlaceable = trailingPlaceable,
-                prefixPlaceable = prefixPlaceable,
-                suffixPlaceable = suffixPlaceable,
-                containerPlaceable = containerPlaceable,
-                supportingPlaceable = supportingPlaceable,
                 textPosition = centeredTextPosition,
             )
         }
@@ -366,40 +431,17 @@ private class TextFieldMeasurePolicy(
         intrinsicMeasurer: (IntrinsicMeasurable, Int) -> Int,
     ): Int {
         val textFieldWidth = intrinsicMeasurer(measurables.fastFirst { it.layoutId == TextFieldId }, height)
-        val labelWidth =
-            measurables.fastFirstOrNull { it.layoutId == LabelId }?.let {
-                intrinsicMeasurer(it, height)
-            } ?: 0
-        val trailingWidth =
-            measurables.fastFirstOrNull { it.layoutId == TrailingId }?.let {
-                intrinsicMeasurer(it, height)
-            } ?: 0
-        val prefixWidth =
-            measurables.fastFirstOrNull { it.layoutId == PrefixId }?.let {
-                intrinsicMeasurer(it, height)
-            } ?: 0
-        val suffixWidth =
-            measurables.fastFirstOrNull { it.layoutId == SuffixId }?.let {
-                intrinsicMeasurer(it, height)
-            } ?: 0
-        val leadingWidth =
-            measurables.fastFirstOrNull { it.layoutId == LeadingId }?.let {
-                intrinsicMeasurer(it, height)
-            } ?: 0
-        val placeholderWidth =
-            measurables.fastFirstOrNull { it.layoutId == PlaceholderId }?.let {
-                intrinsicMeasurer(it, height)
-            } ?: 0
-        return calculateWidth(
-            leadingWidth = leadingWidth,
-            trailingWidth = trailingWidth,
-            prefixWidth = prefixWidth,
-            suffixWidth = suffixWidth,
-            textFieldWidth = textFieldWidth,
-            labelWidth = labelWidth,
-            placeholderWidth = placeholderWidth,
-            constraints = ZeroConstraints,
-        )
+        val widths =
+            TextFieldWidths(
+                leading = measurables.intrinsicWidthOf(LeadingId, height, intrinsicMeasurer),
+                trailing = measurables.intrinsicWidthOf(TrailingId, height, intrinsicMeasurer),
+                prefix = measurables.intrinsicWidthOf(PrefixId, height, intrinsicMeasurer),
+                suffix = measurables.intrinsicWidthOf(SuffixId, height, intrinsicMeasurer),
+                textField = textFieldWidth,
+                label = measurables.intrinsicWidthOf(LabelId, height, intrinsicMeasurer),
+                placeholder = measurables.intrinsicWidthOf(PlaceholderId, height, intrinsicMeasurer),
+            )
+        return calculateWidth(widths = widths, constraints = ZeroConstraints)
     }
 
     private fun IntrinsicMeasureScope.intrinsicHeight(
@@ -459,21 +501,32 @@ private class TextFieldMeasurePolicy(
                 intrinsicMeasurer(it, width)
             } ?: 0
 
+        val heights =
+            TextFieldHeights(
+                textField = textFieldHeight,
+                label = labelHeight,
+                leading = leadingHeight,
+                trailing = trailingHeight,
+                prefix = prefixHeight,
+                suffix = suffixHeight,
+                placeholder = placeholderHeight,
+                supporting = supportingHeight,
+            )
+
         return calculateHeight(
-            textFieldHeight = textFieldHeight,
-            labelHeight = labelHeight,
-            leadingHeight = leadingHeight,
-            trailingHeight = trailingHeight,
-            prefixHeight = prefixHeight,
-            suffixHeight = suffixHeight,
-            placeholderHeight = placeholderHeight,
-            supportingHeight = supportingHeight,
+            heights = heights,
             constraints = ZeroConstraints,
             density = density,
             paddingValues = paddingValues,
         )
     }
 }
+
+private fun List<IntrinsicMeasurable>.intrinsicWidthOf(
+    slotId: String,
+    height: Int,
+    intrinsicMeasurer: (IntrinsicMeasurable, Int) -> Int,
+): Int = fastFirstOrNull { it.layoutId == slotId }?.let { intrinsicMeasurer(it, height) } ?: 0
 
 private fun Int.substractConstraintSafely(from: Int): Int {
     if (this == Constraints.Infinity) {
@@ -482,37 +535,47 @@ private fun Int.substractConstraintSafely(from: Int): Int {
     return this - from
 }
 
+/** Los anchos medidos de cada ranura, para que [calculateWidth] no reciba siete sueltos. */
+private class TextFieldWidths(
+    val leading: Int,
+    val trailing: Int,
+    val prefix: Int,
+    val suffix: Int,
+    val textField: Int,
+    val label: Int,
+    val placeholder: Int,
+)
+
 private fun calculateWidth(
-    leadingWidth: Int,
-    trailingWidth: Int,
-    prefixWidth: Int,
-    suffixWidth: Int,
-    textFieldWidth: Int,
-    labelWidth: Int,
-    placeholderWidth: Int,
+    widths: TextFieldWidths,
     constraints: Constraints,
 ): Int {
-    val affixTotalWidth = prefixWidth + suffixWidth
+    val affixTotalWidth = widths.prefix + widths.suffix
     val middleSection =
         maxOf(
-            textFieldWidth + affixTotalWidth,
-            placeholderWidth + affixTotalWidth,
+            widths.textField + affixTotalWidth,
+            widths.placeholder + affixTotalWidth,
             // Prefix/suffix does not get applied to label
-            labelWidth,
+            widths.label,
         )
-    val wrappedWidth = leadingWidth + middleSection + trailingWidth
+    val wrappedWidth = widths.leading + middleSection + widths.trailing
     return max(wrappedWidth, constraints.minWidth)
 }
 
+/** Los altos medidos de cada ranura, para que [calculateHeight] no reciba once sueltos. */
+private class TextFieldHeights(
+    val textField: Int,
+    val label: Int,
+    val leading: Int,
+    val trailing: Int,
+    val prefix: Int,
+    val suffix: Int,
+    val placeholder: Int,
+    val supporting: Int,
+)
+
 private fun calculateHeight(
-    textFieldHeight: Int,
-    labelHeight: Int,
-    leadingHeight: Int,
-    trailingHeight: Int,
-    prefixHeight: Int,
-    suffixHeight: Int,
-    placeholderHeight: Int,
-    supportingHeight: Int,
+    heights: TextFieldHeights,
     constraints: Constraints,
     density: Float,
     paddingValues: PaddingValues,
@@ -521,42 +584,56 @@ private fun calculateHeight(
 
     val inputFieldHeight =
         maxOf(
-            textFieldHeight,
-            placeholderHeight,
-            prefixHeight,
-            suffixHeight,
+            heights.textField,
+            heights.placeholder,
+            heights.prefix,
+            heights.suffix,
         )
 
-    val layoutHeight = verticalPadding + labelHeight + inputFieldHeight + supportingHeight
+    val layoutHeight = verticalPadding + heights.label + inputFieldHeight + heights.supporting
 
     return max(
         constraints.minHeight,
         maxOf(
-            leadingHeight,
-            trailingHeight,
+            heights.leading,
+            heights.trailing,
             layoutHeight.roundToInt(),
         ),
     )
 }
 
+/** Los placeables medidos, para que [placePlaceables] no reciba trece sueltos. */
+private class TextFieldPlaceables(
+    val textField: Placeable,
+    val label: Placeable?,
+    val placeholder: Placeable?,
+    val leading: Placeable?,
+    val trailing: Placeable?,
+    val prefix: Placeable?,
+    val suffix: Placeable?,
+    val container: Placeable,
+    val supporting: Placeable?,
+)
+
 private fun Placeable.PlacementScope.placePlaceables(
+    placeables: TextFieldPlaceables,
     width: Int,
     totalHeight: Int,
-    textFieldPlaceable: Placeable,
-    labelPlaceable: Placeable?,
-    placeholderPlaceable: Placeable?,
-    leadingPlaceable: Placeable?,
-    trailingPlaceable: Placeable?,
-    prefixPlaceable: Placeable?,
-    suffixPlaceable: Placeable?,
-    containerPlaceable: Placeable,
-    supportingPlaceable: Placeable?,
     textPosition: Int,
 ) {
+    val textFieldPlaceable = placeables.textField
+    val labelPlaceable = placeables.label
+    val placeholderPlaceable = placeables.placeholder
+    val leadingPlaceable = placeables.leading
+    val trailingPlaceable = placeables.trailing
+    val prefixPlaceable = placeables.prefix
+    val suffixPlaceable = placeables.suffix
+    val supportingPlaceable = placeables.supporting
+
     val containerHeight = totalHeight - heightOrZero(labelPlaceable) - heightOrZero(supportingPlaceable)
     val labelHeight = heightOrZero(labelPlaceable)
 
-    containerPlaceable.place(0, heightOrZero(labelPlaceable))
+    placeables.container.place(0, heightOrZero(labelPlaceable))
 
     labelPlaceable?.placeRelative(0, 0)
 

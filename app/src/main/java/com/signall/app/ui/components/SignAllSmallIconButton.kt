@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.signall.app.ui.designsystem.components.SignAllIcon
 import com.signall.app.ui.designsystem.components.Surface
+import com.signall.app.ui.designsystem.components.SurfaceStyle
 import com.signall.app.ui.designsystem.foundation.SignAllShapes
 import com.signall.app.ui.designsystem.foundation.SignAllSizes
 import com.signall.app.ui.theme.SignAllTheme
@@ -42,8 +43,11 @@ fun SignAllSmallIconButton(
     Surface(
         onClick = onClick,
         enabled = enabled,
-        shape = shape,
-        color = SignAllTheme.colors.soft,
+        style =
+            SurfaceStyle(
+                shape = shape,
+                color = SignAllTheme.colors.soft,
+            ),
         modifier = modifier
             .size(size)
             .semantics { this.contentDescription = contentDescription },

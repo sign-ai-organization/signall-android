@@ -38,27 +38,40 @@ import com.signall.app.ui.designsystem.contentColorFor
 import com.signall.app.ui.designsystem.foundation.ButtonElevation
 import androidx.compose.ui.tooling.preview.Preview
 
+/**
+ * Lo visual de un [IconButton]: qué [IconButtonVariant] elige los colores, más la
+ * forma, el relleno interno y el `interactionSource` que antes viajaban sueltos en
+ * la firma.
+ *
+ * El `interactionSource` arranca en `null` como centinela: no se puede usar
+ * `remember` en el default de un `data class`, así que el composable lo resuelve.
+ */
+@Immutable
+data class IconButtonAppearance(
+    val variant: IconButtonVariant = IconButtonVariant.Primary,
+    val shape: Shape = IconButtonDefaults.ButtonSquareShape,
+    val contentPadding: PaddingValues = IconButtonDefaults.ButtonPadding,
+    val interactionSource: MutableInteractionSource? = null,
+)
+
 @Composable
 fun IconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     loading: Boolean = false,
-    variant: IconButtonVariant = IconButtonVariant.Primary,
-    shape: Shape = IconButtonDefaults.ButtonSquareShape,
+    appearance: IconButtonAppearance = IconButtonAppearance(),
     onClick: () -> Unit = {},
-    contentPadding: PaddingValues = IconButtonDefaults.ButtonPadding,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable () -> Unit,
 ) {
-    val style = IconButtonDefaults.styleFor(variant, shape)
+    val style = IconButtonDefaults.styleFor(appearance.variant, appearance.shape)
+    val interactionSource = appearance.interactionSource ?: remember { MutableInteractionSource() }
 
     IconButtonComponent(
         modifier = modifier,
         enabled = enabled,
-        loading = loading,
         style = style,
         onClick = onClick,
-        contentPadding = contentPadding,
+        contentPadding = appearance.contentPadding,
         interactionSource = interactionSource,
         content = content,
     )
@@ -68,7 +81,6 @@ fun IconButton(
 private fun IconButtonComponent(
     modifier: Modifier,
     enabled: Boolean,
-    loading: Boolean,
     style: IconButtonStyle,
     onClick: () -> Unit,
     contentPadding: PaddingValues,
@@ -90,11 +102,14 @@ private fun IconButtonComponent(
                 minHeight = IconButtonDefaults.ButtonSize,
             ).semantics { role = Role.Button },
         enabled = enabled,
-        shape = style.shape,
-        color = containerColor,
-        contentColor = contentColor,
-        border = borderStroke,
-        shadowElevation = shadowElevation,
+        style =
+            SurfaceStyle(
+                shape = style.shape,
+                color = containerColor,
+                contentColor = contentColor,
+                shadowElevation = shadowElevation,
+                border = borderStroke,
+            ),
         interactionSource = interactionSource,
     ) {
         Box(
@@ -391,16 +406,16 @@ fun PrimaryIconButtonPreview() {
             BasicText(text = "Primary Icon Buttons", style = SignAllTheme.typography.h2)
 
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                IconButton(variant = IconButtonVariant.Primary) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.Primary)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.PrimaryOutlined) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.PrimaryOutlined)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.PrimaryElevated) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.PrimaryElevated)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.PrimaryGhost) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.PrimaryGhost)) {
                     DummyIconForIconButtonPreview()
                 }
             }
@@ -419,16 +434,16 @@ fun SecondaryIconButtonPreview() {
             BasicText(text = "Secondary Icon Buttons", style = SignAllTheme.typography.h2)
 
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                IconButton(variant = IconButtonVariant.Secondary) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.Secondary)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.SecondaryOutlined) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.SecondaryOutlined)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.SecondaryElevated) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.SecondaryElevated)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.SecondaryGhost) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.SecondaryGhost)) {
                     DummyIconForIconButtonPreview()
                 }
             }
@@ -447,16 +462,16 @@ fun DestructiveIconButtonPreview() {
             BasicText(text = "Destructive Icon Buttons", style = SignAllTheme.typography.h2)
 
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                IconButton(variant = IconButtonVariant.Destructive) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.Destructive)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.DestructiveOutlined) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.DestructiveOutlined)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.DestructiveElevated) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.DestructiveElevated)) {
                     DummyIconForIconButtonPreview()
                 }
-                IconButton(variant = IconButtonVariant.DestructiveGhost) {
+                IconButton(appearance = IconButtonAppearance(IconButtonVariant.DestructiveGhost)) {
                     DummyIconForIconButtonPreview()
                 }
             }
@@ -481,7 +496,7 @@ fun GhostIconButtonPreview() {
                     contentAlignment = Alignment.Center,
                 ) {
                     CompositionLocalProvider(LocalContentColor provides contentColorFor(color = SignAllTheme.colors.background)) {
-                        IconButton(variant = IconButtonVariant.Ghost) {
+                        IconButton(appearance = IconButtonAppearance(IconButtonVariant.Ghost)) {
                             DummyIconForIconButtonPreview()
                         }
                     }
@@ -492,7 +507,7 @@ fun GhostIconButtonPreview() {
                     contentAlignment = Alignment.Center,
                 ) {
                     CompositionLocalProvider(LocalContentColor provides contentColorFor(color = SignAllTheme.colors.primary)) {
-                        IconButton(variant = IconButtonVariant.Ghost) {
+                        IconButton(appearance = IconButtonAppearance(IconButtonVariant.Ghost)) {
                             DummyIconForIconButtonPreview()
                         }
                     }
@@ -503,7 +518,7 @@ fun GhostIconButtonPreview() {
                     contentAlignment = Alignment.Center,
                 ) {
                     CompositionLocalProvider(LocalContentColor provides contentColorFor(color = SignAllTheme.colors.secondary)) {
-                        IconButton(variant = IconButtonVariant.Ghost) {
+                        IconButton(appearance = IconButtonAppearance(IconButtonVariant.Ghost)) {
                             DummyIconForIconButtonPreview()
                         }
                     }
@@ -514,7 +529,7 @@ fun GhostIconButtonPreview() {
                     contentAlignment = Alignment.Center,
                 ) {
                     CompositionLocalProvider(LocalContentColor provides contentColorFor(color = SignAllTheme.colors.tertiary)) {
-                        IconButton(variant = IconButtonVariant.Ghost) {
+                        IconButton(appearance = IconButtonAppearance(IconButtonVariant.Ghost)) {
                             DummyIconForIconButtonPreview()
                         }
                     }
@@ -525,7 +540,7 @@ fun GhostIconButtonPreview() {
                     contentAlignment = Alignment.Center,
                 ) {
                     CompositionLocalProvider(LocalContentColor provides contentColorFor(color = SignAllTheme.colors.surface)) {
-                        IconButton(variant = IconButtonVariant.Ghost) {
+                        IconButton(appearance = IconButtonAppearance(IconButtonVariant.Ghost)) {
                             DummyIconForIconButtonPreview()
                         }
                     }
@@ -536,7 +551,7 @@ fun GhostIconButtonPreview() {
                     contentAlignment = Alignment.Center,
                 ) {
                     CompositionLocalProvider(LocalContentColor provides contentColorFor(color = SignAllTheme.colors.error)) {
-                        IconButton(variant = IconButtonVariant.Ghost) {
+                        IconButton(appearance = IconButtonAppearance(IconButtonVariant.Ghost)) {
                             DummyIconForIconButtonPreview()
                         }
                     }
@@ -558,14 +573,12 @@ fun IconButtonShapesPreview() {
 
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 IconButton(
-                    variant = IconButtonVariant.Primary,
-                    shape = IconButtonDefaults.ButtonSquareShape,
+                    appearance = IconButtonAppearance(variant = IconButtonVariant.Primary, shape = IconButtonDefaults.ButtonSquareShape),
                 ) {
                     DummyIconForIconButtonPreview()
                 }
                 IconButton(
-                    variant = IconButtonVariant.PrimaryOutlined,
-                    shape = IconButtonDefaults.ButtonSquareShape,
+                    appearance = IconButtonAppearance(variant = IconButtonVariant.PrimaryOutlined, shape = IconButtonDefaults.ButtonSquareShape),
                 ) {
                     DummyIconForIconButtonPreview()
                 }
@@ -575,14 +588,12 @@ fun IconButtonShapesPreview() {
 
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 IconButton(
-                    variant = IconButtonVariant.Primary,
-                    shape = IconButtonDefaults.ButtonCircleShape,
+                    appearance = IconButtonAppearance(variant = IconButtonVariant.Primary, shape = IconButtonDefaults.ButtonCircleShape),
                 ) {
                     DummyIconForIconButtonPreview()
                 }
                 IconButton(
-                    variant = IconButtonVariant.PrimaryOutlined,
-                    shape = IconButtonDefaults.ButtonCircleShape,
+                    appearance = IconButtonAppearance(variant = IconButtonVariant.PrimaryOutlined, shape = IconButtonDefaults.ButtonCircleShape),
                 ) {
                     DummyIconForIconButtonPreview()
                 }

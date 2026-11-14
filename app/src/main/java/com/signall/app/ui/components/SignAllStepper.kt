@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -54,18 +55,29 @@ private fun steppedValue(
     return (min + index * step).coerceIn(min, max)
 }
 
+/** Rango, paso y textos de un stepper. */
+@Immutable
+data class StepperConfig(
+    val step: Int = STEP,
+    val minValue: Int = 0,
+    val maxValue: Int = 100,
+    val label: String,
+    val decreaseContentDescription: String = "Reducir $label",
+    val increaseContentDescription: String = "Aumentar $label",
+)
+
 @Composable
 fun SignAllStepper(
     value: Int,
     onValue: (Int) -> Unit,
+    config: StepperConfig,
     modifier: Modifier = Modifier,
-    step: Int = STEP,
-    minValue: Int = 0,
-    maxValue: Int = 100,
-    label: String,
-    decreaseContentDescription: String = "Reducir $label",
-    increaseContentDescription: String = "Aumentar $label",
 ) {
+    val step = config.step
+    val minValue = config.minValue
+    val maxValue = config.maxValue
+    val decreaseContentDescription = config.decreaseContentDescription
+    val increaseContentDescription = config.increaseContentDescription
     val canDecrease = value > minValue
     val canIncrease = value < maxValue
     Row(

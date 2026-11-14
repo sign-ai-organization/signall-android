@@ -34,6 +34,19 @@ class AudioCapture(private val onChunk: (ByteArray) -> Unit) {
     fun start(scope: CoroutineScope, sampleRate: Int = SAMPLE_RATE, frameMs: Int = FRAME_MS) {
         if (isRecording) return
         val frameSamples = sampleRate * frameMs / 1000
+        val recorder = createRecorder(sampleRate, frameSamples) ?: return
+        record = recorder
+        if (!startRecording(recorder)) {
+            record = null
+            return
+        }
+        Log.i(TAG, "recording ${sampleRate}Hz mono, chunks of ${frameMs}ms")
+
+        job = scope.launch(Dispatchers.IO) { readLoop(recorder, frameSamples) }
+    }
+
+    /** Opens the recorder, or returns null and says why in logcat. */
+    private fun createRecorder(sampleRate: Int, frameSamples: Int): AudioRecord? {
         val minBuffer = AudioRecord.getMinBufferSize(
             sampleRate,
             AudioFormat.CHANNEL_IN_MONO,
@@ -41,7 +54,7 @@ class AudioCapture(private val onChunk: (ByteArray) -> Unit) {
         )
         if (minBuffer <= 0) {
             Log.w(TAG, "AudioRecord reports no usable buffer size ($minBuffer)")
-            return
+            return null
         }
 
         // VOICE_RECOGNITION rather than MIC: it is the source tuned for speech
@@ -56,46 +69,47 @@ class AudioCapture(private val onChunk: (ByteArray) -> Unit) {
             )
         }.getOrElse {
             Log.w(TAG, "could not create AudioRecord: ${it.message}")
-            return
+            return null
         }
 
         if (recorder.state != AudioRecord.STATE_INITIALIZED) {
             Log.w(TAG, "AudioRecord not initialized (state=${recorder.state})")
             recorder.release()
-            return
+            return null
         }
+        return recorder
+    }
 
-        record = recorder
-        val buffer = ShortArray(frameSamples)
-        val bytes = ByteArray(frameSamples * BYTES_PER_SAMPLE)
-
+    /** Starts the recorder; on failure it is released and the caller clears [record]. */
+    private fun startRecording(recorder: AudioRecord): Boolean =
         try {
             recorder.startRecording()
+            true
         } catch (e: IllegalStateException) {
             Log.w(TAG, "startRecording failed: ${e.message}")
             recorder.release()
-            record = null
-            return
+            false
         }
-        Log.i(TAG, "recording ${sampleRate}Hz mono, chunks of ${frameMs}ms")
 
-        job = scope.launch(Dispatchers.IO) {
-            while (isRecording) {
-                val read = recorder.read(buffer, 0, frameSamples)
-                if (read <= 0) {
-                    if (read < 0) Log.w(TAG, "AudioRecord.read -> $read")
-                    continue
-                }
-                // Only the samples actually read; a short read must not send
-                // leftover audio from the previous chunk.
-                for (i in 0 until read) {
-                    val sample = buffer[i].toInt()
-                    bytes[i * 2] = (sample and 0xFF).toByte()
-                    bytes[i * 2 + 1] = ((sample shr 8) and 0xFF).toByte()
-                }
-                val used = read * BYTES_PER_SAMPLE
-                if (used < bytes.size) onChunk(bytes.copyOf(used)) else onChunk(bytes)
+    /** Reads chunks until [stop] flips [isRecording], and hands each one over. */
+    private fun readLoop(recorder: AudioRecord, frameSamples: Int) {
+        val buffer = ShortArray(frameSamples)
+        val bytes = ByteArray(frameSamples * BYTES_PER_SAMPLE)
+        while (isRecording) {
+            val read = recorder.read(buffer, 0, frameSamples)
+            if (read <= 0) {
+                if (read < 0) Log.w(TAG, "AudioRecord.read -> $read")
+                continue
             }
+            // Only the samples actually read; a short read must not send
+            // leftover audio from the previous chunk.
+            for (i in 0 until read) {
+                val sample = buffer[i].toInt()
+                bytes[i * 2] = (sample and 0xFF).toByte()
+                bytes[i * 2 + 1] = ((sample shr 8) and 0xFF).toByte()
+            }
+            val used = read * BYTES_PER_SAMPLE
+            if (used < bytes.size) onChunk(bytes.copyOf(used)) else onChunk(bytes)
         }
     }
 

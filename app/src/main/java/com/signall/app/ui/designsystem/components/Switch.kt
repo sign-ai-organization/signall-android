@@ -19,6 +19,7 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -87,35 +88,47 @@ fun Switch(
 
     SwitchComponent(
         modifier = modifier.then(toggleableModifier),
-        checked = checked,
+        state =
+            SwitchThumbState(
+                checked = checked,
+                position = animationState.thumbPosition.value,
+                sizeOffset = animationState.thumbSizeOffset.value,
+            ),
         enabled = enabled,
         colors = colors,
         interactionSource = interactionSource,
         thumbContent = thumbContent,
-        thumbPosition = animationState.thumbPosition.value,
-        thumbSizeOffset = animationState.thumbSizeOffset.value,
     )
 }
+
+/**
+ * Lo que anima el thumb en un fotograma: si está prendido y dónde quedó la
+ * animación. Va junto porque siempre viaja junto.
+ */
+@Immutable
+private data class SwitchThumbState(
+    val checked: Boolean,
+    val position: Float,
+    val sizeOffset: Float,
+)
 
 @Composable
 private fun SwitchComponent(
     modifier: Modifier,
-    checked: Boolean,
+    state: SwitchThumbState,
     enabled: Boolean,
     colors: SwitchColors,
     interactionSource: InteractionSource,
     thumbContent: (@Composable () -> Unit)?,
-    thumbPosition: Float,
-    thumbSizeOffset: Float,
 ) {
-    val borderColor = colors.borderColor(enabled = enabled, checked = checked)
+    val borderColor = colors.borderColor(enabled = enabled, checked = state.checked)
 
     Box(
         modifier =
             modifier
                 .size(SwitchWidth, SwitchHeight)
                 .background(
-                    color = colors.trackColor(enabled, checked),
+                    color = colors.trackColor(enabled, state.checked),
                     shape = TrackShape,
                 )
                 .border(
@@ -124,11 +137,11 @@ private fun SwitchComponent(
                     shape = TrackShape,
                 ),
     ) {
-        val checkedThumbSize = UncheckedThumbSize + ThumbSizeStateOffset * thumbPosition
+        val checkedThumbSize = UncheckedThumbSize + ThumbSizeStateOffset * state.position
         val uncheckedThumbSize =
-            UncheckedThumbSize + ThumbSizeStateOffset * if (thumbPosition == 0f) thumbSizeOffset else thumbPosition
+            UncheckedThumbSize + ThumbSizeStateOffset * if (state.position == 0f) state.sizeOffset else state.position
 
-        val thumbSize = if (checked) checkedThumbSize else uncheckedThumbSize
+        val thumbSize = if (state.checked) checkedThumbSize else uncheckedThumbSize
         val verticalPadding = (SwitchHeight - ThumbSize) / 2
 
         Box(
@@ -146,13 +159,13 @@ private fun SwitchComponent(
                         val sizeDifference = (maxThumbSize - currentThumbSize) / 2
 
                         IntOffset(
-                            x = (padding + sizeDifference + (totalMovableDistance * thumbPosition)).roundToInt(),
+                            x = (padding + sizeDifference + (totalMovableDistance * state.position)).roundToInt(),
                             y = 0,
                         )
                     }
                     .drawBehind {
                         drawCircle(
-                            color = colors.thumbColor(enabled, checked),
+                            color = colors.thumbColor(enabled, state.checked),
                         )
                     }
                     .indication(
@@ -167,7 +180,7 @@ private fun SwitchComponent(
         ) {
             if (thumbContent != null) {
                 CompositionLocalProvider(
-                    LocalContentColor provides colors.iconColor(enabled, checked),
+                    LocalContentColor provides colors.iconColor(enabled, state.checked),
                 ) {
                     thumbContent()
                 }
@@ -175,6 +188,34 @@ private fun SwitchComponent(
         }
     }
 }
+
+/**
+ * Los dieciséis colores del switch, en un solo objeto.
+ *
+ * Cada campo arranca en [Color.Unspecified] a propósito: un `data class` no puede
+ * tener defaults `@Composable` (`SignAllTheme.colors.*`), así que el centinela viaja
+ * hasta [SwitchDefaults.colors] y ahí se resuelve contra el tema. Los defaults
+ * siguen siendo exactamente los de antes.
+ */
+@Immutable
+data class SwitchAppearance(
+    val checkedThumbColor: Color = Color.Unspecified,
+    val checkedTrackColor: Color = Color.Unspecified,
+    val checkedBorderColor: Color = Color.Unspecified,
+    val checkedIconColor: Color = Color.Unspecified,
+    val uncheckedThumbColor: Color = Color.Unspecified,
+    val uncheckedTrackColor: Color = Color.Unspecified,
+    val uncheckedBorderColor: Color = Color.Unspecified,
+    val uncheckedIconColor: Color = Color.Unspecified,
+    val disabledCheckedThumbColor: Color = Color.Unspecified,
+    val disabledCheckedTrackColor: Color = Color.Unspecified,
+    val disabledCheckedBorderColor: Color = Color.Unspecified,
+    val disabledCheckedIconColor: Color = Color.Unspecified,
+    val disabledUncheckedThumbColor: Color = Color.Unspecified,
+    val disabledUncheckedTrackColor: Color = Color.Unspecified,
+    val disabledUncheckedBorderColor: Color = Color.Unspecified,
+    val disabledUncheckedIconColor: Color = Color.Unspecified,
+)
 
 object SwitchDefaults {
     // Prototype `.switch` (PrototipoFrontend/app/globals.css): 43x25, padding 3,
@@ -189,43 +230,30 @@ object SwitchDefaults {
     val RippleRadius = 20.dp
 
     @Composable
-    fun colors(
-        checkedThumbColor: Color = SignAllTheme.colors.background,
-        checkedTrackColor: Color = SignAllTheme.colors.strong,
-        checkedBorderColor: Color = SignAllTheme.colors.strong,
-        checkedIconColor: Color = SignAllTheme.colors.strong,
-        uncheckedThumbColor: Color = SignAllTheme.colors.muted,
-        uncheckedTrackColor: Color = SignAllTheme.colors.soft,
-        uncheckedBorderColor: Color = SignAllTheme.colors.soft,
-        uncheckedIconColor: Color = SignAllTheme.colors.muted,
-        disabledCheckedThumbColor: Color = SignAllTheme.colors.onDisabled,
-        disabledCheckedTrackColor: Color = SignAllTheme.colors.disabled,
-        disabledCheckedBorderColor: Color = SignAllTheme.colors.disabled,
-        disabledCheckedIconColor: Color = SignAllTheme.colors.disabled,
-        disabledUncheckedThumbColor: Color = SignAllTheme.colors.disabled,
-        disabledUncheckedTrackColor: Color = SignAllTheme.colors.transparent,
-        disabledUncheckedBorderColor: Color = SignAllTheme.colors.disabled,
-        disabledUncheckedIconColor: Color = SignAllTheme.colors.onDisabled,
-    ): SwitchColors =
-        SwitchColors(
-            checkedThumbColor = checkedThumbColor,
-            checkedTrackColor = checkedTrackColor,
-            checkedBorderColor = checkedBorderColor,
-            checkedIconColor = checkedIconColor,
-            uncheckedThumbColor = uncheckedThumbColor,
-            uncheckedTrackColor = uncheckedTrackColor,
-            uncheckedBorderColor = uncheckedBorderColor,
-            uncheckedIconColor = uncheckedIconColor,
-            disabledCheckedThumbColor = disabledCheckedThumbColor,
-            disabledCheckedTrackColor = disabledCheckedTrackColor,
-            disabledCheckedBorderColor = disabledCheckedBorderColor,
-            disabledCheckedIconColor = disabledCheckedIconColor,
-            disabledUncheckedThumbColor = disabledUncheckedThumbColor,
-            disabledUncheckedTrackColor = disabledUncheckedTrackColor,
-            disabledUncheckedBorderColor = disabledUncheckedBorderColor,
-            disabledUncheckedIconColor = disabledUncheckedIconColor,
+    fun colors(appearance: SwitchAppearance = SwitchAppearance()): SwitchColors {
+        val theme = SignAllTheme.colors
+        return SwitchColors(
+            checkedThumbColor = appearance.checkedThumbColor.orDefault(theme.background),
+            checkedTrackColor = appearance.checkedTrackColor.orDefault(theme.strong),
+            checkedBorderColor = appearance.checkedBorderColor.orDefault(theme.strong),
+            checkedIconColor = appearance.checkedIconColor.orDefault(theme.strong),
+            uncheckedThumbColor = appearance.uncheckedThumbColor.orDefault(theme.muted),
+            uncheckedTrackColor = appearance.uncheckedTrackColor.orDefault(theme.soft),
+            uncheckedBorderColor = appearance.uncheckedBorderColor.orDefault(theme.soft),
+            uncheckedIconColor = appearance.uncheckedIconColor.orDefault(theme.muted),
+            disabledCheckedThumbColor = appearance.disabledCheckedThumbColor.orDefault(theme.onDisabled),
+            disabledCheckedTrackColor = appearance.disabledCheckedTrackColor.orDefault(theme.disabled),
+            disabledCheckedBorderColor = appearance.disabledCheckedBorderColor.orDefault(theme.disabled),
+            disabledCheckedIconColor = appearance.disabledCheckedIconColor.orDefault(theme.disabled),
+            disabledUncheckedThumbColor = appearance.disabledUncheckedThumbColor.orDefault(theme.disabled),
+            disabledUncheckedTrackColor = appearance.disabledUncheckedTrackColor.orDefault(theme.transparent),
+            disabledUncheckedBorderColor = appearance.disabledUncheckedBorderColor.orDefault(theme.disabled),
+            disabledUncheckedIconColor = appearance.disabledUncheckedIconColor.orDefault(theme.onDisabled),
         )
+    }
 }
+
+private fun Color.orDefault(default: Color): Color = if (this == Color.Unspecified) default else this
 
 @Stable
 class SwitchColors(

@@ -32,40 +32,63 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.signall.app.ui.designsystem.SignAllTheme
 import com.signall.app.ui.designsystem.LocalContentColor
+import com.signall.app.ui.designsystem.components.textfield.TextFieldDecorations
+import com.signall.app.ui.designsystem.components.textfield.TextFieldOptions
 import com.signall.app.ui.designsystem.foundation.ProvideContentColorTextStyle
+
+/**
+ * Los rellenos de cada ranura del campo, ya resueltos por la variante: outlined,
+ * filled o underlined cada una deja los que le corresponden.
+ */
+internal class TextFieldPaddings(
+    val content: PaddingValues,
+    val label: PaddingValues,
+    val supportingText: PaddingValues,
+    val leadingIcon: PaddingValues,
+    val trailingIcon: PaddingValues,
+)
+
+/**
+ * Lo que el decorado necesita saber del campo: el texto que se está mostrando, cómo
+ * se comporta, qué ranuras tiene, con qué colores y con quién sigue el foco.
+ */
+internal class TextFieldDecorationState(
+    val value: String,
+    val options: TextFieldOptions,
+    val decorations: TextFieldDecorations,
+    val colors: TextFieldColors,
+    val interactionSource: InteractionSource,
+)
 
 @Composable
 internal fun CommonDecorationBox(
-    value: String,
+    state: TextFieldDecorationState,
     innerTextField: @Composable () -> Unit,
-    visualTransformation: VisualTransformation,
-    label: @Composable (() -> Unit)?,
-    placeholder: @Composable (() -> Unit)? = null,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    prefix: @Composable (() -> Unit)? = null,
-    suffix: @Composable (() -> Unit)? = null,
-    supportingText: @Composable (() -> Unit)? = null,
-    enabled: Boolean = true,
-    isError: Boolean = false,
-    interactionSource: InteractionSource,
-    colors: TextFieldColors,
-    contentPadding: PaddingValues,
-    labelPadding: PaddingValues,
-    supportingTextPadding: PaddingValues,
-    leadingIconPadding: PaddingValues,
-    trailingIconPadding: PaddingValues,
+    paddings: TextFieldPaddings,
     container: @Composable () -> Unit,
 ) {
+    val options = state.options
+    val decorations = state.decorations
+    val colors = state.colors
+    val interactionSource = state.interactionSource
+    val enabled = options.enabled
+    val isError = options.isError
+    val label = decorations.label
+    val placeholder = decorations.placeholder
+    val leadingIcon = decorations.leadingIcon
+    val trailingIcon = decorations.trailingIcon
+    val prefix = decorations.prefix
+    val suffix = decorations.suffix
+    val supportingText = decorations.supportingText
+
     val transformedText =
-        remember(value, visualTransformation) {
-            visualTransformation.filter(AnnotatedString(value))
+        remember(state.value, options.visualTransformation) {
+            options.visualTransformation.filter(AnnotatedString(state.value))
         }.text.text
 
     val isFocused = interactionSource.collectIsFocusedAsState().value
@@ -167,21 +190,19 @@ internal fun CommonDecorationBox(
         }
 
         TextFieldLayout(
-            modifier = Modifier,
-            textField = innerTextField,
-            placeholder = decoratedPlaceholder,
-            label = decoratedLabel,
-            leading = decoratedLeading,
-            trailing = decoratedTrailing,
-            prefix = decoratedPrefix,
-            suffix = decoratedSuffix,
-            container = containerWithId,
-            supporting = decoratedSupporting,
-            paddingValues = contentPadding,
-            labelPaddingValues = labelPadding,
-            supportingPaddingValues = supportingTextPadding,
-            leadingIconPaddingValues = leadingIconPadding,
-            trailingIconPaddingValues = trailingIconPadding,
+            slots =
+                TextFieldLayoutSlots(
+                    textField = innerTextField,
+                    placeholder = decoratedPlaceholder,
+                    label = decoratedLabel,
+                    leading = decoratedLeading,
+                    trailing = decoratedTrailing,
+                    prefix = decoratedPrefix,
+                    suffix = decoratedSuffix,
+                    container = containerWithId,
+                    supporting = decoratedSupporting,
+                ),
+            paddings = paddings,
         )
     }
 }

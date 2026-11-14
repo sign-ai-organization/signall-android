@@ -86,50 +86,23 @@ private fun signsPathHandler(dir: File): PathHandler = object : PathHandler {
     }
 }
 
+/** Los avisos que la escena manda por el puente, todos opcionales. */
+class AvatarBridgeCallbacks(
+    val onProgress: (Int) -> Unit = {},
+    val onPlaybackDone: () -> Unit = {},
+    val onSignStart: (queueIndex: Int, jsMillis: Long) -> Unit = { _, _ -> },
+    val onSignFailed: (queueIndex: Int) -> Unit = {},
+    val onAvatarLoaded: (id: String) -> Unit = {},
+    val onAvatarFailed: (id: String) -> Unit = {},
+    val onSceneFailed: (reason: String) -> Unit = {},
+    val onLoaded: () -> Unit = {},
+)
+
 @Composable
 fun AvatarWebView(
-    modifier: Modifier = Modifier,
     onReady: (WebView) -> Unit,
-    onProgress: (Int) -> Unit = {},
-    onPlaybackDone: () -> Unit = {},
-    /**
-     * The avatar is actually moving: `signStart:<queueIndex>:<jsMillis>` from the
-     * scene (`notifySignStart` in `app.js`).
-     *
-     * This is the leg nothing measured: the backend's clock stops when the
-     * `segment` goes out, and `play()` on the Kotlin side is *before* the `.glb`
-     * finishes loading. Between those two is the time the user actually waits
-     * staring at a still avatar. The two clocks cannot be subtracted from each
-     * other, so each side reports its own and this one is the difference between
-     * the segment arriving here and the bridge message arriving here.
-     */
-    onSignStart: (queueIndex: Int, jsMillis: Long) -> Unit = { _, _ -> },
-    /**
-     * A sign of the phrase could not be loaded and was skipped: the scene keeps
-     * going with the rest of the phrase (`notifySignFailed` in `app.js`).
-     *
-     * The state uses it to say "Seña no disponible", which is the only text of its
-     * own the SRS table allows on the indicator (`main.tex:201` and `:753`).
-     */
-    onSignFailed: (queueIndex: Int) -> Unit = {},
-    /**
-     * La escena cargó el avatar pedido con [setAvatar] (`avatarLoaded:<id>`).
-     *
-     * El primer avatar no pasa por acá: ese sigue avisando `avatarReady`, que
-     * es también el que esconde el splash.
-     */
-    onAvatarLoaded: (id: String) -> Unit = {},
-    /** La escena no pudo cargar el avatar pedido (`avatarFailed:<id>`). */
-    onAvatarFailed: (id: String) -> Unit = {},
-    /**
-     * The scene is gone: the page failed to load, or the browser lost its render
-     * process (`onReceivedError` / `onRenderProcessGone`).
-     *
-     * New: before this the app had no way of learning the canvas was dead, so it
-     * kept saying *Reproduciendo* with a still avatar and no way out.
-     */
-    onSceneFailed: (reason: String) -> Unit = {},
-    onLoaded: () -> Unit = {},
+    callbacks: AvatarBridgeCallbacks,
+    modifier: Modifier = Modifier,
     // While a drawer is open the WebView must not take any touch: it is an
     // embedded Android View and would otherwise win the whole screen, leaving
     // the drawer's backdrop and handle unreachable (spec `EDG-22`).
@@ -146,226 +119,265 @@ fun AvatarWebView(
     avatarId: String = "juan",
 ) {
     val context = LocalContext.current
-    val signsDir = remember(context) { File(context.cacheDir, SignAssetRepository.SIGNS_PATH_PREFIX.trim('/')) }
+    val signsDir = remember(context) {
+        File(context.cacheDir, SignAssetRepository.SIGNS_PATH_PREFIX.trim('/'))
+    }
     AndroidView(
         modifier = modifier.pointerInteropFilter {
             // Returning true consumes the event here, so the scene never sees it
             // while a drawer is open and the panel/backdrop keep the taps.
             !interactive
         },
-        factory = {
-            WebView(it).apply {
-                settings.javaScriptEnabled = true
-                settings.mediaPlaybackRequiresUserGesture = false
-                // The scene has no text input and never needs the IME, but a
-                // WebView is focusable by default: Android hands it the initial
-                // focus on attach, and it kept it, so the phrase field never got
-                // it and everything typed went to the 3D canvas instead. Found
-                // with `mobile_list_elements_on_screen`, where the WebView and
-                // the EditText both showed as `[focused]`.
-                //
-                // Both flags are needed: `isFocusableInTouchMode = false` alone
-                // stops it taking focus on tap, but the initial focus on attach
-                // still landed on it, because it was focusable outside touch
-                // mode. The canvas only uses pointer events, so it loses
-                // nothing.
-                isFocusable = false
-                isFocusableInTouchMode = false
-                // -1 = la escena todavía no avisó; el progreso de la página no
-                // es el de la escena (ver `onProgressChanged`).
-                var sceneProgress = -1
-                val bridgeSupported =
-                    WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
-                webChromeClient = object : android.webkit.WebChromeClient() {
-                    override fun onProgressChanged(view: WebView, newProgress: Int) {
-                        super.onProgressChanged(view, newProgress)
-                        // El progreso de la página NO es el de la escena: la
-                        // página termina de cargar cuando todavía falta bajar y
-                        // parsear los 13 MB del avatar, así que el splash se
-                        // quedaba clavado en "100 %" sobre un canvas vacío.
-                        // Mientras la escena no avise, la página ocupa solo el
-                        // primer tramo de la barra; después manda la escena.
-                        onProgress(
-                            when {
-                                !bridgeSupported -> newProgress
-                                sceneProgress >= 0 -> sceneProgress
-                                else -> minOf(newProgress * 2 / 5, 45)
-                            },
-                        )
-                    }
+        factory = { buildSceneWebView(it, signsDir, avatarId, callbacks, onReady) },
+    )
+}
 
-                    override fun onConsoleMessage(message: android.webkit.ConsoleMessage): Boolean {
-                        android.util.Log.d(
-                            "SignAllWeb",
-                            "${message.messageLevel()}: ${message.message()} @${message.lineNumber()}",
-                        )
-                        return true
-                    }
-                }
+/** El progreso de la escena, que empieza en -1 ("todavía no avisó"). */
+private class SceneBridgeState {
+    var progress: Int = -1
+}
 
-                // JS → Kotlin: `window.SignAllBridge.postMessage("onPlaybackDone")`,
-                // `postMessage("avatarReady")`, `postMessage("progress:<0..100>")`,
-                // `postMessage("signStart:<i>:<ms>")` y `postMessage("signFailed:<i>")`.
-                // Only registered when the feature is supported (fallback: no
-                // playback event, the UI just stays in `signing`; y el splash se
-                // destapa por el timeout de 8 s).
-                if (bridgeSupported) {
-                    WebViewCompat.addWebMessageListener(
-                        this,
-                        BridgeObjectName,
-                        setOf(BridgeOrigin),
-                        object : WebViewCompat.WebMessageListener {
-                            override fun onPostMessage(
-                                view: WebView,
-                                message: androidx.webkit.WebMessageCompat,
-                                sourceOrigin: android.net.Uri,
-                                isMainFrame: Boolean,
-                                replyProxy: androidx.webkit.JavaScriptReplyProxy,
-                            ) {
-                                // El progreso de la escena va aparte del `when`:
-                                // no es una igualdad, trae el porcentaje pegado.
-                                val data = message.data
-                                if (data != null && data.startsWith(ProgressPrefix)) {
-                                    data.removePrefix(ProgressPrefix).toIntOrNull()
-                                        ?.let { pct ->
-                                            sceneProgress = pct.coerceIn(0, 100)
-                                            onProgress(sceneProgress)
-                                        }
-                                    return
-                                }
-                                // Cambio de avatar en caliente. Va antes del
-                                // `when` porque el mensaje trae el id pegado.
-                                if (data != null && data.startsWith(AvatarLoadedPrefix)) {
-                                    onAvatarLoaded(data.removePrefix(AvatarLoadedPrefix))
-                                    return
-                                }
-                                if (data != null && data.startsWith(AvatarFailedPrefix)) {
-                                    onAvatarFailed(data.removePrefix(AvatarFailedPrefix))
-                                    return
-                                }
-                                when (data) {
-                                    "onPlaybackDone" -> onPlaybackDone()
-                                    // El avatar son 13 MB con las 50 señas adentro:
-                                    // `onPageFinished` dispara antes de que termine
-                                    // de bajar, parsear y compilar, así que usarlo
-                                    // para esconder el splash dejaba ver un canvas
-                                    // negro. La escena avisa cuando ya está todo
-                                    // cargado y hay un frame pintado. Si el bridge
-                                    // no está soportado, el timeout de `SignAllSplash`
-                                    // (8 s) destapa igual.
-                                    "avatarReady" -> onLoaded()
-                                    // `startsWith` y no igualdad exacta: el mensaje
-                                    // trae índice de cola y reloj propio, para que
-                                    // los tres tramos (Android -> escena, escena ->
-                                    // primer fotograma, escena -> Kotlin) se puedan
-                                    // leer por separado en logcat.
-                                    else ->
-                                        data
-                                            ?.takeIf { it.startsWith(SignStartPrefix) }
-                                            ?.removePrefix(SignStartPrefix)
-                                            ?.split(":")
-                                            ?.let { parts ->
-                                                onSignStart(
-                                                    parts.getOrNull(0)?.toIntOrNull() ?: 0,
-                                                    parts.getOrNull(1)?.toLongOrNull() ?: 0L,
-                                                )
-                                            }
-                                            // Mismo camino, mensaje nuevo: la escena se
-                                            // saltó una seña y sigue con la frase. Sin
-                                            // esto el salto era invisible desde Kotlin.
-                                            ?: data
-                                                ?.takeIf { it.startsWith(SignFailedPrefix) }
-                                                ?.removePrefix(SignFailedPrefix)
-                                                ?.toIntOrNull()
-                                                ?.let(onSignFailed)
-                                }
-                            }
-                        },
-                    )
-                }
-                val assetLoader = WebViewAssetLoader.Builder()
-                    .addPathHandler(AssetsPath, WebViewAssetLoader.AssetsPathHandler(context))
-                    .addPathHandler(SignAssetRepository.SIGNS_PATH_PREFIX, signsPathHandler(signsDir))
-                    .build()
-                webViewClient = object : WebViewClientCompat() {
-                    override fun onPageFinished(view: WebView, url: String) {
-                        super.onPageFinished(view, url)
-                        // Fallback: si el WebView no soporta el listener de
-                        // mensajes, la escena no puede avisar y hay que destapar
-                        // con el fin de la carga de la página. Cuando sí hay
-                        // listener, el aviso real es `avatarReady`.
-                        if (!bridgeSupported) onLoaded()
-                    }
+private fun buildSceneWebView(
+    context: android.content.Context,
+    signsDir: File,
+    avatarId: String,
+    callbacks: AvatarBridgeCallbacks,
+    onReady: (WebView) -> Unit,
+): WebView {
+    val state = SceneBridgeState()
+    val bridgeSupported =
+        WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
+    return WebView(context).apply {
+        configureSceneWebView()
+        webChromeClient = sceneChromeClient(bridgeSupported, state, callbacks)
+        if (bridgeSupported) registerBridge(this, state, callbacks)
+        webViewClient = sceneWebViewClient(context, signsDir, bridgeSupported, callbacks)
+        loadUrl(
+            "$BridgeOrigin$AssetsPath" + "web/index.html?avatar=" +
+                android.net.Uri.encode(avatarId),
+        )
+        onReady(this)
+    }
+}
 
-                    /**
-                     * La página principal no cargó.
-                     *
-                     * Antes no había ninguna de estas dos callbacks, y el resultado
-                     * era el mismo: si el navegador dejaba de poder con la escena, la
-                     * app se quedaba diciendo *Reproduciendo* con el muñeco quieto y
-                     * sin salida.
-                     *
-                     * Solo el marco principal: los `.glb` de las señas y el Three.js
-                     * de jsDelivr son subrecursos, y el fallo de uno de ellos lo
-                     * avisa la escena (`notifySignFailed`), no esta callback.
-                     */
-                    override fun onReceivedError(
-                        view: WebView,
-                        request: WebResourceRequest,
-                        error: WebResourceErrorCompat,
-                    ) {
-                        // La firma es medio de plataforma y medio `Compat`: la de
-                        // plataforma está `final` en `WebViewClientCompat` y es ella la
-                        // que despacha a esta.
-                        super.onReceivedError(view, request, error)
-                        if (!request.isForMainFrame) return
-                        onSceneFailed("No se pudo cargar la escena: ${error.description}")
-                    }
+/**
+ * Settings del WebView de la escena.
+ *
+ * El campo de texto (`settings`/`isFocusable`) importa: la escena no tiene
+ * entrada de texto y nunca necesita el IME, pero un WebView es focusable por
+ * defecto. Android le daba el foco inicial al attach, lo conservaba, y entonces
+ * el campo de la frase nunca lo recibía y todo lo que se escribía iba al canvas
+ * 3D. Las dos banderas hacen falta: `isFocusableInTouchMode = false` solo evita
+ * que tome el foco al tocarlo, pero el foco inicial del attach seguía cayendo ahí
+ * porque era focusable fuera del modo táctil. El canvas solo usa eventos de
+ * puntero, así que no pierde nada.
+ */
+private fun WebView.configureSceneWebView() {
+    settings.javaScriptEnabled = true
+    settings.mediaPlaybackRequiresUserGesture = false
+    isFocusable = false
+    isFocusableInTouchMode = false
+}
 
-                    /**
-                     * El navegador perdió su proceso de render.
-                     *
-                     * `false` = "no lo atendí": el sistema **mata la app** y el launcher la vuelve a
-                     * levantar con todo funcionando. Es lo que decidió el owner el
-                     * 2026-10-17, y es lo único que funciona: un WebView sin proceso
-                     * de render **no renderiza nunca más**, así que con `true` la app
-                     * sobreviviría con un canvas negro por el resto de la sesión y
-                     * la única salida sería cerrarla a mano. Perder lo que había en el
-                     * campo es menos malo que un avatar muerto.
-                     *
-                     * El aviso va igual antes de devolver: el proceso se va a morir,
-                     * pero queda en el log por qué pasó, y `sceneDead` alcanza a
-                     * limpiar el estado en el poco tiempo que hay.
-                     */
-                    override fun onRenderProcessGone(
-                        view: WebView,
-                        detail: android.webkit.RenderProcessGoneDetail,
-                    ): Boolean {
-                        android.util.Log.e(
-                            "SignAllWeb",
-                            "el proceso de render del WebView murió (${detail.didCrash()}); la app se reinicia",
-                        )
-                        onSceneFailed("La escena 3D dejó de funcionar: la app se está reiniciando.")
-                        return false
-                    }
+/**
+ * El progreso de la escena NO es el de la página: la página termina de cargar
+ * cuando todavía falta bajar y parsear los 13 MB del avatar, así que el splash se
+ * quedaba clavado en "100 %" sobre un canvas vacío. Mientras la escena no avise,
+ * la página ocupa solo el primer tramo de la barra; después manda la escena.
+ */
+private fun sceneChromeClient(
+    bridgeSupported: Boolean,
+    state: SceneBridgeState,
+    callbacks: AvatarBridgeCallbacks,
+): android.webkit.WebChromeClient = object : android.webkit.WebChromeClient() {
+    override fun onProgressChanged(view: WebView, newProgress: Int) {
+        super.onProgressChanged(view, newProgress)
+        callbacks.onProgress(
+            when {
+                !bridgeSupported -> newProgress
+                state.progress >= 0 -> state.progress
+                else -> minOf(newProgress * 2 / 5, 45)
+            },
+        )
+    }
 
-                    override fun shouldInterceptRequest(
-                        view: WebView,
-                        request: android.webkit.WebResourceRequest,
-                    ): android.webkit.WebResourceResponse? {
-                        val resp = assetLoader.shouldInterceptRequest(request.url) ?: return null
-                        val headers = resp.responseHeaders ?: mutableMapOf()
-                        headers["Cache-Control"] = "no-store"
-                        resp.responseHeaders = headers
-                        return resp
-                    }
-                }
-                loadUrl(
-                    "$BridgeOrigin$AssetsPath" + "web/index.html?avatar=" +
-                        android.net.Uri.encode(avatarId),
-                )
-                onReady(this)
+    override fun onConsoleMessage(message: android.webkit.ConsoleMessage): Boolean {
+        android.util.Log.d(
+            "SignAllWeb",
+            "${message.messageLevel()}: ${message.message()} @${message.lineNumber()}",
+        )
+        return true
+    }
+}
+
+/**
+ * JS → Kotlin: `window.SignAllBridge.postMessage("onPlaybackDone")`,
+ * `postMessage("avatarReady")`, `postMessage("progress:<0..100>")`,
+ * `postMessage("signStart:<i>:<ms>")` y `postMessage("signFailed:<i>")`.
+ *
+ * Only registered when the feature is supported (fallback: no playback event,
+ * the UI just stays in `signing`; y el splash se destapa por el timeout de 8 s).
+ */
+private fun registerBridge(
+    view: WebView,
+    state: SceneBridgeState,
+    callbacks: AvatarBridgeCallbacks,
+) {
+    WebViewCompat.addWebMessageListener(
+        view,
+        BridgeObjectName,
+        setOf(BridgeOrigin),
+        object : WebViewCompat.WebMessageListener {
+            override fun onPostMessage(
+                webView: WebView,
+                message: androidx.webkit.WebMessageCompat,
+                sourceOrigin: android.net.Uri,
+                isMainFrame: Boolean,
+                replyProxy: androidx.webkit.JavaScriptReplyProxy,
+            ) {
+                dispatchBridgeMessage(message.data, state, callbacks)
             }
         },
     )
+}
+
+/**
+ * Reparte un mensaje de la escena.
+ *
+ * Los que traen un valor pegado (`progress:`, `avatarLoaded:`, `avatarFailed:`,
+ * `signStart:`, `signFailed:`) van antes del `when` de igualdad porque se leen
+ * con `startsWith`; los otros dos son nombres exactos.
+ */
+private fun dispatchBridgeMessage(
+    data: String?,
+    state: SceneBridgeState,
+    callbacks: AvatarBridgeCallbacks,
+) {
+    if (data == null) return
+    if (data.startsWith(ProgressPrefix)) {
+        data.removePrefix(ProgressPrefix).toIntOrNull()?.let { pct ->
+            state.progress = pct.coerceIn(0, 100)
+            callbacks.onProgress(state.progress)
+        }
+        return
+    }
+    // Cambio de avatar en caliente. Va antes del `when` porque el mensaje trae
+    // el id pegado.
+    if (data.startsWith(AvatarLoadedPrefix)) {
+        callbacks.onAvatarLoaded(data.removePrefix(AvatarLoadedPrefix))
+        return
+    }
+    if (data.startsWith(AvatarFailedPrefix)) {
+        callbacks.onAvatarFailed(data.removePrefix(AvatarFailedPrefix))
+        return
+    }
+    when {
+        data == "onPlaybackDone" -> callbacks.onPlaybackDone()
+        // El avatar son 13 MB con las 50 señas adentro: `onPageFinished` dispara
+        // antes de que termine de bajar, parsear y compilar, así que usarlo para
+        // esconder el splash dejaba ver un canvas negro. La escena avisa cuando ya
+        // está todo cargado y hay un frame pintado. Si el bridge no está
+        // soportado, el timeout de `SignAllSplash` (8 s) destapa igual.
+        data == "avatarReady" -> callbacks.onLoaded()
+        // `startsWith` y no igualdad exacta: el mensaje trae índice de cola y
+        // reloj propio, para que los tres tramos (Android -> escena, escena ->
+        // primer fotograma, escena -> Kotlin) se puedan leer por separado en
+        // logcat.
+        data.startsWith(SignStartPrefix) -> {
+            val parts = data.removePrefix(SignStartPrefix).split(":")
+            callbacks.onSignStart(
+                parts.getOrNull(0)?.toIntOrNull() ?: 0,
+                parts.getOrNull(1)?.toLongOrNull() ?: 0L,
+            )
+        }
+        // Mismo camino, mensaje nuevo: la escena se saltó una seña y sigue con la
+        // frase. Sin esto el salto era invisible desde Kotlin.
+        data.startsWith(SignFailedPrefix) ->
+            data.removePrefix(SignFailedPrefix).toIntOrNull()?.let(callbacks.onSignFailed)
+    }
+}
+
+private fun sceneWebViewClient(
+    context: android.content.Context,
+    signsDir: File,
+    bridgeSupported: Boolean,
+    callbacks: AvatarBridgeCallbacks,
+): WebViewClientCompat {
+    val assetLoader = WebViewAssetLoader.Builder()
+        .addPathHandler(AssetsPath, WebViewAssetLoader.AssetsPathHandler(context))
+        .addPathHandler(SignAssetRepository.SIGNS_PATH_PREFIX, signsPathHandler(signsDir))
+        .build()
+    return object : WebViewClientCompat() {
+        override fun onPageFinished(view: WebView, url: String) {
+            super.onPageFinished(view, url)
+            // Fallback: si el WebView no soporta el listener de mensajes, la
+            // escena no puede avisar y hay que destapar con el fin de la carga de
+            // la página. Cuando sí hay listener, el aviso real es `avatarReady`.
+            if (!bridgeSupported) callbacks.onLoaded()
+        }
+
+        /**
+         * La página principal no cargó.
+         *
+         * Antes no había ninguna de estas dos callbacks, y el resultado era el
+         * mismo: si el navegador dejaba de poder con la escena, la app se quedaba
+         * diciendo *Reproduciendo* con el muñeco quieto y sin salida.
+         *
+         * Solo el marco principal: los `.glb` de las señas y el Three.js de
+         * jsDelivr son subrecursos, y el fallo de uno de ellos lo avisa la escena
+         * (`notifySignFailed`), no esta callback.
+         */
+        override fun onReceivedError(
+            view: WebView,
+            request: WebResourceRequest,
+            error: WebResourceErrorCompat,
+        ) {
+            // La firma es medio de plataforma y medio `Compat`: la de plataforma
+            // está `final` en `WebViewClientCompat` y es ella la que despacha a
+            // esta.
+            super.onReceivedError(view, request, error)
+            if (!request.isForMainFrame) return
+            callbacks.onSceneFailed("No se pudo cargar la escena: ${error.description}")
+        }
+
+        /**
+         * El navegador perdió su proceso de render.
+         *
+         * `false` = "no lo atendí": el sistema **mata la app** y el launcher la
+         * vuelve a levantar con todo funcionando. Es lo que decidió el owner el
+         * 2026-10-17, y es lo único que funciona: un WebView sin proceso de render
+         * **no renderiza nunca más**, así que con `true` la app sobreviviría con un
+         * canvas negro por el resto de la sesión y la única salida sería cerrarla a
+         * mano. Perder lo que había en el campo es menos malo que un avatar muerto.
+         *
+         * El aviso va igual antes de devolver: el proceso se va a morir, pero queda
+         * en el log por qué pasó, y `sceneDead` alcanza a limpiar el estado en el
+         * poco tiempo que hay.
+         */
+        override fun onRenderProcessGone(
+            view: WebView,
+            detail: android.webkit.RenderProcessGoneDetail,
+        ): Boolean {
+            android.util.Log.e(
+                "SignAllWeb",
+                "el proceso de render del WebView murió (${detail.didCrash()}); la app se reinicia",
+            )
+            callbacks.onSceneFailed(
+                "La escena 3D dejó de funcionar: la app se está reiniciando.",
+            )
+            return false
+        }
+
+        override fun shouldInterceptRequest(
+            view: WebView,
+            request: android.webkit.WebResourceRequest,
+        ): WebResourceResponse? {
+            val resp = assetLoader.shouldInterceptRequest(request.url) ?: return null
+            val headers = resp.responseHeaders ?: mutableMapOf()
+            // Fuerza `no-store` para que un cambio de `app.js` se vea al recargar.
+            headers["Cache-Control"] = "no-store"
+            resp.responseHeaders = headers
+            return resp
+        }
+    }
 }

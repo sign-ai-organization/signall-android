@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.signall.app.ui.designsystem.components.SignAllIcon
 import com.signall.app.ui.designsystem.components.SignAllText
 import com.signall.app.ui.designsystem.components.Surface
+import com.signall.app.ui.designsystem.components.SurfaceStyle
 import com.signall.app.ui.designsystem.foundation.LocalReduceMotion
 import com.signall.app.ui.designsystem.foundation.SignAllShapes
 import com.signall.app.ui.designsystem.foundation.SignAllSizes
@@ -88,8 +89,11 @@ fun HistoryBottomSheet(
         ) {
             val topShape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
             Surface(
-                shape = topShape,
-                color = SignAllTheme.colors.surface,
+                style =
+                    SurfaceStyle(
+                        shape = topShape,
+                        color = SignAllTheme.colors.surface,
+                    ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .semantics { contentDescription = "Historial reciente" }
@@ -167,9 +171,12 @@ fun HistoryBottomSheet(
 private fun HistoryItem(phrase: String, onClick: () -> Unit) {
     Surface(
         onClick = onClick,
-        shape = SignAllShapes.cornerControl,
-        color = SignAllTheme.colors.transparent,
-        border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+        style =
+            SurfaceStyle(
+                shape = SignAllShapes.cornerControl,
+                color = SignAllTheme.colors.transparent,
+                border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+            ),
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = SignAllSizes.historyItemMinHeight)

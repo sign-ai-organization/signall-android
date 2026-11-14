@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.signall.app.ui.designsystem.components.SignAllIcon
 import com.signall.app.ui.designsystem.components.SignAllText
 import com.signall.app.ui.designsystem.components.Surface
+import com.signall.app.ui.designsystem.components.SurfaceStyle
 import com.signall.app.ui.designsystem.foundation.SignAllMotion
 import com.signall.app.ui.designsystem.foundation.SignAllShapes
 import com.signall.app.ui.designsystem.foundation.SignAllSpacing
@@ -115,17 +117,28 @@ private fun PlaybackState.dotColor(): Color = when (this) {
     -> SignAllTheme.colors.strong
 }
 
+/** Lo que el escenario dibuja: el estado, el rótulo y la seña en curso. */
+@Immutable
+data class StageState(
+    val status: String,
+    val playback: PlaybackState,
+    val doneVisible: Boolean,
+    val bottomInset: Dp = 0.dp,
+    val currentGloss: String? = null,
+)
+
 @Composable
 fun AvatarStage(
-    status: String,
-    state: PlaybackState,
-    doneVisible: Boolean,
+    stage: StageState,
     onRepeat: () -> Unit,
     modifier: Modifier = Modifier,
-    bottomInset: Dp = 0.dp,
-    currentGloss: String? = null,
     content: @Composable () -> Unit,
 ) {
+    val status = stage.status
+    val state = stage.playback
+    val doneVisible = stage.doneVisible
+    val bottomInset = stage.bottomInset
+    val currentGloss = stage.currentGloss
     // `AnimatedVisibility` sigue componiendo su contenido mientras se va, y para
     // entonces `currentGloss` ya es `null`: se guarda el último texto para que la
     // salida muestre la seña que terminó y no una píldora vacía.
@@ -253,9 +266,12 @@ fun AvatarStage(
             val interaction = remember { MutableInteractionSource() }
             Surface(
                 onClick = onRepeat,
-                shape = SignAllShapes.cornerPill,
-                color = SignAllTheme.colors.surface,
-                border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+                style =
+                    SurfaceStyle(
+                        shape = SignAllShapes.cornerPill,
+                        color = SignAllTheme.colors.surface,
+                        border = BorderStroke(1.dp, SignAllTheme.colors.outline),
+                    ),
                 interactionSource = interaction,
                 modifier = Modifier
                     .pressScale(interaction)

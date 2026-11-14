@@ -6,6 +6,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
@@ -13,6 +14,7 @@ import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -23,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.systemGestureExclusion
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +42,7 @@ import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
@@ -109,62 +113,96 @@ enum class DrawerSide { Start, End }
 // deliberado queda por debajo.
 private val DrawerFlingVelocity = 125.dp
 
-@Composable
-fun SignAllEdgeDrawer(
-    side: DrawerSide,
-    isOpen: Boolean,
-    onOpenChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-    drawerWidth: Dp = SignAllSizes.drawerWidth,
+/** Medidas y textos de un drawer. */
+@Immutable
+data class DrawerConfig(
+    val drawerWidth: Dp = SignAllSizes.drawerWidth,
     // Zona de arrastre invisible en el borde. Subió de 48 a 60 dp (+25 %) el
     // 2026-10-22 porque con navegación por gestos el sistema se queda con los
     // primeros ~20 dp de cada lado; ver [handleHitPadding].
-    edgeStripWidth: Dp = 60.dp,
+    val edgeStripWidth: Dp = 60.dp,
     // Grab strip of the OPEN drawer: wider than the closed-side strip, since
     // this one is an actual drag handle and not just a screen-edge swipe zone.
-    handleDragWidth: Dp = 90.dp,
+    val handleDragWidth: Dp = 90.dp,
     // ZONA TÁCTIL INVISIBLE de la pestaña, extra **hacia adentro de la pantalla**.
     //
-    // El dibujo del tab son 20dp pegados al borde, y MIUI se come los primeros ~15dp
-    // de cada lado con sus gestos de sistema: del ancho útil quedaban muy poco y en el
-    // Redmi Note 9S el owner no lograba abrir los paneles (2026-10-16). Esto suma ancho
-    // solo al nodo que recibe el toque — el tab sigue siendo 20x62dp, con la misma
-    // sombra y el mismo grip, y `contentAlignment` lo mantiene pegado al borde porque el
-    // Box crece hacia el interior. Es el mismo truco que en un iPhone: la Diana es chica
-    // a la vista y grande al dedo.
+    // El dibujo del tab son 20dp pegados al borde, y MIUI se come los primeros
+    // ~15dp de cada lado con sus gestos de sistema: del ancho útil quedaba muy
+    // poco y en el Redmi Note 9S el owner no lograba abrir los paneles
+    // (2026-10-16). Esto suma ancho solo al nodo que recibe el toque — el tab
+    // sigue siendo 20x62dp, con la misma sombra y el mismo grip, y
+    // `contentAlignment` lo mantiene pegado al borde porque el Box crece hacia el
+    // interior. Es el mismo truco que en un iPhone: la Diana es chica a la vista
+    // y grande al dedo.
     //
-    // Subió de 28 a 35 dp (+25 %) el 2026-10-22, junto con el alto del nodo (160 → 200
-    // dp) y con `systemGestureExclusion` (ver abajo): el owner usa navegación por gestos
-    // y el gesto de "atrás" del sistema se quedaba con el arrastre desde el borde.
-    handleHitPadding: Dp = 35.dp,
-    edgeStripBottomExclusion: Dp = 0.dp,
-    previewLabel: String = "",
+    // Subió de 28 a 35 dp (+25 %) el 2026-10-22, junto con el alto del nodo
+    // (160 → 200 dp) y con `systemGestureExclusion` (ver abajo): el owner usa
+    // navegación por gestos y el gesto de "atrás" del sistema se quedaba con el
+    // arrastre desde el borde.
+    val handleHitPadding: Dp = 35.dp,
+    val edgeStripBottomExclusion: Dp = 0.dp,
+    val previewLabel: String = "",
+)
+
+/** En qué estado está este drawer y el de al lado. */
+@Immutable
+data class DrawerOpenState(
+    val isOpen: Boolean,
     // The other drawer is the one on screen. The open gestures (edge strip and
     // handle drag) are inert while it is: with a drawer open the only way out is
     // closing it (tap its backdrop/handle, drag it back, or press back), so the
     // two drawers can never cross-fade into each other (spec `EDG-19`).
-    otherDrawerOpen: Boolean = false,
+    val otherDrawerOpen: Boolean = false,
     // This drawer's own open fraction (0 closed → 1 open), echoed back by the
     // host. The handle of the drawer that IS open uses it to take its dim as the
     // backdrop fades in, so the closed side never flashes undimmed (spec
     // `EDG-14`).
-    currentlyOpenFraction: Float = 0f,
+    val currentlyOpenFraction: Float = 0f,
     // Open fraction of the OTHER drawer (0 closed → 1 open). This tab fades out
     // in step with the counterpart opening, instead of switching off only when
     // the counterpart is fully open (spec `EDG-19`/`EDG-22`).
-    otherOpenFraction: Float = 0f,
+    val otherOpenFraction: Float = 0f,
+)
+
+/** Lo que el drawer le dice al host. */
+class DrawerHandlers(
+    val onOpenChange: (Boolean) -> Unit,
     // Reports this drawer's open fraction (0 closed → 1 open) so its own handle
     // can follow the same backdrop animation.
-    onFractionChange: (Float) -> Unit = {},
+    val onFractionChange: (Float) -> Unit = {},
     // Synchronous, host-owned lock so two fingers cannot start a gesture on both
     // tabs at once (spec `EDG-19`). `claimGesture` is called on the very first
     // pointer event and must answer immediately, before recomposition; it
     // returns false when the other side already owns the gesture.
-    claimGesture: () -> Boolean = { true },
-    releaseGesture: () -> Unit = {},
+    val claimGesture: () -> Boolean = { true },
+    val releaseGesture: () -> Unit = {},
+)
+
+@Composable
+fun SignAllEdgeDrawer(
+    side: DrawerSide,
+    state: DrawerOpenState,
+    config: DrawerConfig,
+    handlers: DrawerHandlers,
+    modifier: Modifier = Modifier,
     drawerContent: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
+    val isOpen = state.isOpen
+    val otherDrawerOpen = state.otherDrawerOpen
+    val currentlyOpenFraction = state.currentlyOpenFraction
+    val otherOpenFraction = state.otherOpenFraction
+    val onOpenChange = handlers.onOpenChange
+    val onFractionChange = handlers.onFractionChange
+    val claimGesture = handlers.claimGesture
+    val releaseGesture = handlers.releaseGesture
+    val drawerWidth = config.drawerWidth
+    val edgeStripWidth = config.edgeStripWidth
+    val handleDragWidth = config.handleDragWidth
+    val handleHitPadding = config.handleHitPadding
+    val edgeStripBottomExclusion = config.edgeStripBottomExclusion
+    val previewLabel = config.previewLabel
+
     val density = LocalDensity.current
     val widthPx = with(density) { drawerWidth.toPx() }
     val edgeStripWidthPx = with(density) { edgeStripWidth.toPx() }
@@ -293,6 +331,47 @@ fun SignAllEdgeDrawer(
     val drawerShape =
         if (side == DrawerSide.End) SignAllShapes.cornerDrawerRight
         else SignAllShapes.cornerDrawerLeft
+    val tabShape =
+        if (side == DrawerSide.End) SignAllShapes.cornerEdgeTabRight
+        else SignAllShapes.cornerEdgeTabLeft
+
+    val geometry = DrawerGeometry(
+        side = side,
+        isOpen = isOpen,
+        alignment = horizontalAlignment,
+        topAlignment = topAlignment,
+        drawerShape = drawerShape,
+        tabShape = tabShape,
+        widthPx = widthPx,
+        drawerWidth = drawerWidth,
+        offsetPx = offsetX.value,
+        fraction = fraction,
+        dragging = dragging,
+        otherDrawerOpen = otherDrawerOpen,
+        otherOpenFraction = otherOpenFraction,
+        currentlyOpenFraction = currentlyOpenFraction,
+        enabledFraction = enabledFraction,
+        previewLabel = previewLabel,
+    )
+    val drag = DrawerDrag(state = dragState, onStart = startDrag, onStop = snapAfterDrag)
+    val handleGestures = HandleGestures(
+        claimOnPress = { gestureOwned = claimGesture() },
+        cancelIfIdle = {
+            // No tap and no drag consumed it (the gesture was cancelled): drop
+            // the lock.
+            if (gestureOwned && !dragging) {
+                gestureOwned = false
+                releaseGesture()
+            }
+        },
+        onTap = {
+            if (gestureOwned) {
+                gestureOwned = false
+                releaseGesture()
+                onOpenChange(!isOpen)
+            }
+        },
+    )
 
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         content()
@@ -301,7 +380,12 @@ fun SignAllEdgeDrawer(
         // screen height, i.e. slightly above the vertical center. The handle Box
         // is 160dp tall and centered, so shift it up by 8% of the height (plus
         // the half-tab correction to align the 62dp tab's top).
-        val tabOffsetY = 31.dp - maxHeight * 0.08f
+        val sizing = HandleSizing(
+            handleDragWidth = handleDragWidth,
+            edgeStripWidth = edgeStripWidth,
+            hitPadding = handleHitPadding,
+            tabOffsetY = 31.dp - maxHeight * 0.08f,
+        )
 
         // Invisible gesture strip on this drawer's edge. `padding` BEFORE
         // `fillMaxHeight` shrinks the node itself, so the hit area excludes the
@@ -315,42 +399,16 @@ fun SignAllEdgeDrawer(
         // route, which silently swallowed every tap meant for the *other*
         // drawer's backdrop (spec `EDG-22`). Skipping the node is the only
         // reliable way to take it out of hit-testing.
-        val edgeStripIsOpen = isOpen || fraction > 0.01f
-        if (edgeStripIsOpen || !otherDrawerOpen) {
-            Box(
-                modifier = Modifier
-                    .align(topAlignment)
-                    .padding(bottom = edgeStripBottomExclusion)
-                    .fillMaxHeight()
-                    .width(edgeStripWidth)
-                    .draggable(
-                        state = dragState,
-                        orientation = Orientation.Horizontal,
-                        onDragStarted = { startDrag() },
-                        onDragStopped = { snapAfterDrag(it) },
-                    ),
-            )
-        }
+        EdgeStrip(
+            geometry = geometry,
+            width = edgeStripWidth,
+            bottomExclusion = edgeStripBottomExclusion,
+            visible = isOpen || fraction > 0.01f || !otherDrawerOpen,
+            drag = drag,
+        )
 
         // Drag preview: translucent panel that follows the finger.
-        if (dragging && fraction > 0.02f && fraction < 0.98f) {
-            Box(
-                modifier = Modifier
-                    .align(horizontalAlignment)
-                    .fillMaxHeight()
-                    .width(drawerWidth)
-                    .offset { IntOffset(offsetX.value.toInt(), 0) }
-                    .background(SignAllTheme.colors.surface.copy(alpha = 0.94f)),
-                contentAlignment = Alignment.Center,
-            ) {
-                SignAllText(
-                    text = previewLabel.uppercase(),
-                    style = SignAllTheme.typography.label,
-                    color = SignAllTheme.colors.muted,
-                    modifier = Modifier.padding(horizontal = SignAllSpacing.lg),
-                )
-            }
-        }
+        DragPreview(geometry = geometry)
 
         // Backdrop (spec `EDG-9`/`EDG-10`): a full-screen scrim with the
         // prototype's weighted gradient — opaque at the drawer's edge, fully
@@ -363,48 +421,10 @@ fun SignAllEdgeDrawer(
         // screen, and the opposite handle sits in the remaining 12% right where a
         // user naturally taps to dismiss, so a strip-only backdrop left a dead
         // zone where tapping did nothing.
-        if (fraction > 0.01f) {
-            val base = SignAllTheme.colors.scrim
-            val screenW = with(density) { maxWidth.toPx() }
-            // Where the panel's leading edge is, in px, and which way the
-            // gradient fades (from that edge toward the far screen edge).
-            val edgeX =
-                if (side == DrawerSide.End) offsetX.value
-                else widthPx + offsetX.value
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer { alpha = fraction }
-                    .drawBehind {
-                        val start = edgeX.coerceIn(0f, screenW)
-                        val brush =
-                            if (side == DrawerSide.End) {
-                                Brush.horizontalGradient(
-                                    colorStops = arrayOf(
-                                        0f to Color.Transparent,
-                                        1f to base,
-                                    ),
-                                    startX = 0f,
-                                    endX = start.coerceAtLeast(1f),
-                                )
-                            } else {
-                                Brush.horizontalGradient(
-                                    colorStops = arrayOf(
-                                        0f to base,
-                                        1f to Color.Transparent,
-                                    ),
-                                    startX = start,
-                                    endX = screenW.coerceAtLeast(start + 1f),
-                                )
-                            }
-                        drawRect(brush = brush)
-                    }
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                    ) { onOpenChange(false) },
-            )
-        }
+        DrawerScrim(
+            geometry = geometry,
+            screenWidthPx = with(density) { maxWidth.toPx() },
+        ) { onOpenChange(false) }
 
         // Panel shadow: the prototype's `.side-panel { box-shadow: 0 0 28px
         // rgba(0,0,0,.12) }`. `Modifier.shadow` renders as hard side bands on
@@ -414,76 +434,14 @@ fun SignAllEdgeDrawer(
         // that rounded rect, so it follows the corner while the panel (drawn on
         // top) hides the middle. Composed before the panel and riding the same
         // `offsetX`, so it tracks the panel exactly while it moves.
-        val panelMovable = isOpen || fraction > 0.001f
-        val shadowBase = SignAllTheme.colors.scrim
-        Box(
-            modifier = Modifier
-                .align(horizontalAlignment)
-                .fillMaxHeight()
-                .width(drawerWidth)
-                .offset { IntOffset(offsetX.value.toInt(), 0) }
-                .graphicsLayer { alpha = fraction }
-                .drawBehind {
-                    val shadowPx = 22.dp.toPx()
-                    val cornerPx = 27.dp.toPx()
-                    val outer = RoundRect(
-                        rect = Rect(
-                            left = -shadowPx,
-                            top = -shadowPx,
-                            right = size.width + shadowPx,
-                            bottom = size.height + shadowPx,
-                        ),
-                        cornerRadius = CornerRadius(cornerPx + shadowPx),
-                    )
-                    val clip = Path().apply { addRoundRect(outer) }
-                    clipPath(clip) {
-                        val span = size.width + 2 * shadowPx
-                        val edge0 = shadowPx / span
-                        val edge1 = (shadowPx + size.width) / span
-                        drawRect(
-                            brush = Brush.horizontalGradient(
-                                colorStops = arrayOf(
-                                    0f to Color.Transparent,
-                                    edge0 to shadowBase.copy(alpha = 0.12f),
-                                    edge1 to shadowBase.copy(alpha = 0.12f),
-                                    1f to Color.Transparent,
-                                ),
-                                startX = -shadowPx,
-                                endX = size.width + shadowPx,
-                            ),
-                        )
-                    }
-                },
-        ) {
-            Box(Modifier.fillMaxSize())
-        }
+        PanelShadow(geometry = geometry)
 
-        Box(
-            modifier = Modifier
-                .align(horizontalAlignment)
-                .fillMaxHeight()
-                .width(drawerWidth)
-                .offset { IntOffset(offsetX.value.toInt(), 0) }
-                .then(
-                    if (panelMovable) {
-                        Modifier.draggable(
-                            state = dragState,
-                            orientation = Orientation.Horizontal,
-                            onDragStarted = { startDrag() },
-                            onDragStopped = { snapAfterDrag(it) },
-                        )
-                    } else {
-                        Modifier
-                    },
-                ),
+        DrawerPanel(
+            geometry = geometry,
+            movable = isOpen || fraction > 0.001f,
+            drag = drag,
         ) {
-            Surface(
-                color = SignAllTheme.colors.surface,
-                shape = drawerShape,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                drawerContent()
-            }
+            drawerContent()
         }
 
         // Aquí estaba la franja `drawerOverflow` (64 dp de `surface` colgando
@@ -494,143 +452,379 @@ fun SignAllEdgeDrawer(
         // con el panel ancho (`min(maxWidth * 0.88, 350.dp)`), un rebote de 16 %
         // ya se le acercaba al límite.
 
-        // Handle: edge tab that rides the drawer's leading edge, matching the
-        // prototype `.edge-tab` (globals.css): a small `surface` tab hugging the
-        // screen edge, hairline `outline`, soft shadow and a two-line grip.
-        // Tappable to open/close (spec `EDG-3`/`EDG-11`) and draggable. Composed
-        // last so it stays tappable while the drawer is open.
-        //
-        // While the OTHER drawer is the active one this tab must not take any
-        // touch — a pointer-input node is the topmost hit route in Compose even
-        // when its gesture is disabled, and it used to swallow the active
-        // drawer's backdrop taps (spec `EDG-22`). So instead of not composing it
-        // (which made it vanish abruptly), it is always composed but the
-        // `draggable`/`clickable` are attached only when it may act. A plain
-        // layout node with no pointer input is skipped by hit-testing, and its
-        // alpha rides `enabledFraction`, so it fades out gradually while the
-        // counterpart opens.
-        val tabShape =
-            if (side == DrawerSide.End) SignAllShapes.cornerEdgeTabRight
-            else SignAllShapes.cornerEdgeTabLeft
         // Interactive only while the counterpart is completely at rest. The
         // moment the other drawer starts moving (its fraction leaves 0) this tab
         // stops taking input, so two fingers cannot open both drawers at once
         // even though the fading tab is still visible (spec `EDG-19`/`EDG-22`).
-        val handleEnabled = isOpen || (!otherDrawerOpen && otherOpenFraction <= 0.001f)
-        Box(
-            modifier = Modifier
-                .align(horizontalAlignment)
-                .offset {
-                    val handleOffset =
-                        if (side == DrawerSide.End) {
-                            (offsetX.value - widthPx).coerceAtMost(0f)
-                        } else {
-                            (offsetX.value + widthPx).coerceAtLeast(0f)
-                        }
-                    IntOffset(
-                        handleOffset.toInt(),
-                        tabOffsetY.roundToPx(),
-                    )
-                }
-                // La zona táctil es más ancha que el dibujo: el tab se sigue
-                // dibujando con `contentAlignment` pegado al borde y el ancho extra
-                // queda hacia adentro de la pantalla (ver [handleHitPadding]).
-                .width((if (isOpen) handleDragWidth else edgeStripWidth) + handleHitPadding)
-                // 200dp de alto (de 160) = +25 %, y además es **el máximo** que
-                // Android deja excluir de los gestos del sistema por borde: pedir más
-                // hace que ignore la exclusión.
-                .height(200.dp)
-                // Con navegación por gestos por el sistema, arrastrar desde el borde
-                // de la pantalla no abre el panel: el gesto de "atrás" de Android se
-                // queda con el touch antes de que llegue a la app (owner, 2026-10-22).
-                // `systemGestureExclusion` le pide al sistema que no trate esta zona
-                // como gesto de navegación, así el arrastre llega al `draggable` de
-                // abajo. Es una **petición**: Android honra hasta 200dp por borde
-                // (este nodo mide exactamente eso) y el fabricante puede tener su
-                // propio criterio — en MIUI se verifica en el dispositivo.
-                .systemGestureExclusion()
-                .graphicsLayer { alpha = enabledFraction }
-                .then(
-                    if (handleEnabled) {
-                        Modifier
-                            .draggable(
-                                state = dragState,
-                                orientation = Orientation.Horizontal,
-                                onDragStarted = { startDrag() },
-                                onDragStopped = { snapAfterDrag(it) },
-                            )
-                            .pointerInput(isOpen, otherDrawerOpen) {
-                                detectTapGestures(
-                                    onPress = {
-                                        // Claim on the first pointer event, so a
-                                        // second finger on the other tab is
-                                        // rejected in the same frame (`EDG-19`).
-                                        gestureOwned = claimGesture()
-                                        tryAwaitRelease()
-                                        // No tap and no drag consumed it (the
-                                        // gesture was cancelled): drop the lock.
-                                        if (gestureOwned && !dragging) {
-                                            gestureOwned = false
-                                            releaseGesture()
-                                        }
-                                    },
-                                    onTap = {
-                                        if (gestureOwned) {
-                                            gestureOwned = false
-                                            releaseGesture()
-                                            onOpenChange(!isOpen)
-                                        }
-                                    },
-                                )
-                            }
-                            .semantics {
-                                contentDescription =
-                                    if (isOpen) "Cerrar panel" else "Abrir $previewLabel"
-                            }
+        EdgeHandle(
+            geometry = geometry,
+            sizing = sizing,
+            enabled = isOpen || (!otherDrawerOpen && otherOpenFraction <= 0.001f),
+            drag = drag,
+            gestures = handleGestures,
+        )
+    }
+}
+
+/** Todo lo que un dibujo del drawer necesita saber, ya calculado. */
+private class DrawerGeometry(
+    val side: DrawerSide,
+    val isOpen: Boolean,
+    val alignment: Alignment,
+    val topAlignment: Alignment,
+    val drawerShape: Shape,
+    val tabShape: Shape,
+    val widthPx: Float,
+    val drawerWidth: Dp,
+    val offsetPx: Float,
+    val fraction: Float,
+    val dragging: Boolean,
+    val otherDrawerOpen: Boolean,
+    val otherOpenFraction: Float,
+    val currentlyOpenFraction: Float,
+    val enabledFraction: Float,
+    val previewLabel: String,
+)
+
+/** El arrastre compartido por las tres zonas que lo aceptan. */
+private class DrawerDrag(
+    val state: DraggableState,
+    val onStart: () -> Unit,
+    val onStop: (Float) -> Unit,
+)
+
+/** Los tres puntos del gesto de toque de la pestaña. */
+private class HandleGestures(
+    val claimOnPress: () -> Unit,
+    val cancelIfIdle: () -> Unit,
+    val onTap: () -> Unit,
+)
+
+/** Medidas de la pestaña. */
+private class HandleSizing(
+    val handleDragWidth: Dp,
+    val edgeStripWidth: Dp,
+    val hitPadding: Dp,
+    val tabOffsetY: Dp,
+)
+
+@Composable
+private fun BoxScope.EdgeStrip(
+    geometry: DrawerGeometry,
+    width: Dp,
+    bottomExclusion: Dp,
+    visible: Boolean,
+    drag: DrawerDrag,
+) {
+    if (!visible) return
+    Box(
+        modifier = Modifier
+            .align(geometry.topAlignment)
+            .padding(bottom = bottomExclusion)
+            .fillMaxHeight()
+            .width(width)
+            .draggable(
+                state = drag.state,
+                orientation = Orientation.Horizontal,
+                onDragStarted = { drag.onStart() },
+                onDragStopped = { drag.onStop(it) },
+            ),
+    )
+}
+
+@Composable
+private fun BoxScope.DragPreview(geometry: DrawerGeometry) {
+    val visible =
+        geometry.dragging && geometry.fraction > 0.02f && geometry.fraction < 0.98f
+    if (!visible) return
+    Box(
+        modifier = Modifier
+            .align(geometry.alignment)
+            .fillMaxHeight()
+            .width(geometry.drawerWidth)
+            .offset { IntOffset(geometry.offsetPx.toInt(), 0) }
+            .background(SignAllTheme.colors.surface.copy(alpha = 0.94f)),
+        contentAlignment = Alignment.Center,
+    ) {
+        SignAllText(
+            text = geometry.previewLabel.uppercase(),
+            style = SignAllTheme.typography.label,
+            color = SignAllTheme.colors.muted,
+            modifier = Modifier.padding(horizontal = SignAllSpacing.lg),
+        )
+    }
+}
+
+@Composable
+private fun BoxScope.DrawerScrim(
+    geometry: DrawerGeometry,
+    screenWidthPx: Float,
+    onDismiss: () -> Unit,
+) {
+    if (geometry.fraction <= 0.01f) return
+    val base = SignAllTheme.colors.scrim
+    // Where the panel's leading edge is, in px, and which way the gradient fades
+    // (from that edge toward the far screen edge).
+    val edgeX =
+        if (geometry.side == DrawerSide.End) {
+            geometry.offsetPx
+        } else {
+            geometry.widthPx + geometry.offsetPx
+        }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .graphicsLayer { alpha = geometry.fraction }
+            .drawBehind {
+                val start = edgeX.coerceIn(0f, screenWidthPx)
+                val brush =
+                    if (geometry.side == DrawerSide.End) {
+                        Brush.horizontalGradient(
+                            colorStops = arrayOf(
+                                0f to Color.Transparent,
+                                1f to base,
+                            ),
+                            startX = 0f,
+                            endX = start.coerceAtLeast(1f),
+                        )
                     } else {
-                        Modifier
-                    },
-                ),
-            contentAlignment = if (side == DrawerSide.End) Alignment.CenterEnd else Alignment.CenterStart,
-        ) {
-            Box(
-                modifier = Modifier
-                    .width(20.dp)
-                    .height(62.dp)
-                    .shadow(elevation = 6.dp, shape = tabShape, clip = false)
-                    .background(color = SignAllTheme.colors.surface, shape = tabShape)
-                    .border(width = 1.dp, color = SignAllTheme.colors.outline, shape = tabShape),
-                contentAlignment = Alignment.Center,
-            ) {
-                // Grip: two rounded vertical lines (prototype `.edge-grip`,
-                // `box-shadow: 7px 0 0` → 4dp line + 3dp gap + 4dp line).
-                Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-                    repeat(2) {
-                        Box(
-                            modifier = Modifier
-                                .width(4.dp)
-                                .height(28.dp)
-                                .background(
-                                    color = SignAllTheme.colors.muted.copy(alpha = 0.65f),
-                                    shape = SignAllShapes.cornerPill,
-                                ),
+                        Brush.horizontalGradient(
+                            colorStops = arrayOf(
+                                0f to base,
+                                1f to Color.Transparent,
+                            ),
+                            startX = start,
+                            endX = screenWidthPx.coerceAtLeast(start + 1f),
                         )
                     }
+                drawRect(brush = brush)
+            }
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+            ) { onDismiss() },
+    )
+}
+
+@Composable
+private fun BoxScope.PanelShadow(geometry: DrawerGeometry) {
+    val shadowBase = SignAllTheme.colors.scrim
+    Box(
+        modifier = Modifier
+            .align(geometry.alignment)
+            .fillMaxHeight()
+            .width(geometry.drawerWidth)
+            .offset { IntOffset(geometry.offsetPx.toInt(), 0) }
+            .graphicsLayer { alpha = geometry.fraction }
+            .drawBehind {
+                val shadowPx = 22.dp.toPx()
+                val cornerPx = 27.dp.toPx()
+                val outer = RoundRect(
+                    rect = Rect(
+                        left = -shadowPx,
+                        top = -shadowPx,
+                        right = size.width + shadowPx,
+                        bottom = size.height + shadowPx,
+                    ),
+                    cornerRadius = CornerRadius(cornerPx + shadowPx),
+                )
+                val clip = Path().apply { addRoundRect(outer) }
+                clipPath(clip) {
+                    val span = size.width + 2 * shadowPx
+                    val edge0 = shadowPx / span
+                    val edge1 = (shadowPx + size.width) / span
+                    drawRect(
+                        brush = Brush.horizontalGradient(
+                            colorStops = arrayOf(
+                                0f to Color.Transparent,
+                                edge0 to shadowBase.copy(alpha = 0.12f),
+                                edge1 to shadowBase.copy(alpha = 0.12f),
+                                1f to Color.Transparent,
+                            ),
+                            startX = -shadowPx,
+                            endX = size.width + shadowPx,
+                        ),
+                    )
                 }
-                // This handle belongs to the open drawer (the drawers nest, so
-                // the opposite backdrop cannot reach it): it gets a mild dim
-                // instead of vanishing behind the backdrop (spec `EDG-14`).
-                val dim = SignAllTheme.colors.scrim.alpha * 0.5f * currentlyOpenFraction
-                if (dim > 0f) {
+            },
+    ) {
+        Box(Modifier.fillMaxSize())
+    }
+}
+
+@Composable
+private fun BoxScope.DrawerPanel(
+    geometry: DrawerGeometry,
+    movable: Boolean,
+    drag: DrawerDrag,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .align(geometry.alignment)
+            .fillMaxHeight()
+            .width(geometry.drawerWidth)
+            .offset { IntOffset(geometry.offsetPx.toInt(), 0) }
+            .then(
+                if (movable) {
+                    Modifier.draggable(
+                        state = drag.state,
+                        orientation = Orientation.Horizontal,
+                        onDragStarted = { drag.onStart() },
+                        onDragStopped = { drag.onStop(it) },
+                    )
+                } else {
+                    Modifier
+                },
+            ),
+    ) {
+        Surface(
+            style =
+                SurfaceStyle(
+                    color = SignAllTheme.colors.surface,
+                    shape = geometry.drawerShape,
+                ),
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            content()
+        }
+    }
+}
+
+/**
+ * Handle: edge tab that rides the drawer's leading edge, matching the prototype
+ * `.edge-tab` (globals.css): a small `surface` tab hugging the screen edge,
+ * hairline `outline`, soft shadow and a two-line grip.
+ *
+ * Tappable to open/close (spec `EDG-3`/`EDG-11`) and draggable. Composed last so
+ * it stays tappable while the drawer is open.
+ *
+ * While the OTHER drawer is the active one this tab must not take any touch — a
+ * pointer-input node is the topmost hit route in Compose even when its gesture is
+ * disabled, and it used to swallow the active drawer's backdrop taps (spec
+ * `EDG-22`). So instead of not composing it (which made it vanish abruptly), it
+ * is always composed but the `draggable`/`clickable` are attached only when it
+ * may act. A plain layout node with no pointer input is skipped by hit-testing,
+ * and its alpha rides `enabledFraction`, so it fades out gradually while the
+ * counterpart opens.
+ */
+@Composable
+private fun BoxScope.EdgeHandle(
+    geometry: DrawerGeometry,
+    sizing: HandleSizing,
+    enabled: Boolean,
+    drag: DrawerDrag,
+    gestures: HandleGestures,
+) {
+    Box(
+        modifier = Modifier
+            .align(geometry.alignment)
+            .offset {
+                val handleOffset =
+                    if (geometry.side == DrawerSide.End) {
+                        (geometry.offsetPx - geometry.widthPx).coerceAtMost(0f)
+                    } else {
+                        (geometry.offsetPx + geometry.widthPx).coerceAtLeast(0f)
+                    }
+                IntOffset(handleOffset.toInt(), sizing.tabOffsetY.roundToPx())
+            }
+            // La zona táctil es más ancha que el dibujo: el tab se sigue
+            // dibujando con `contentAlignment` pegado al borde y el ancho extra
+            // queda hacia adentro de la pantalla (ver el KDoc de la función).
+            .width(
+                (if (geometry.isOpen) sizing.handleDragWidth else sizing.edgeStripWidth) +
+                    sizing.hitPadding,
+            )
+            // 200dp de alto (de 160) = +25 %, y además es **el máximo** que
+            // Android deja excluir de los gestos del sistema por borde: pedir más
+            // hace que ignore la exclusión.
+            .height(200.dp)
+            // Con navegación por gestos por el sistema, arrastrar desde el borde
+            // de la pantalla no abre el panel: el gesto de "atrás" de Android se
+            // queda con el touch antes de que llegue a la app (owner, 2026-10-22).
+            // `systemGestureExclusion` le pide al sistema que no trate esta zona
+            // como gesto de navegación, así el arrastre llega al `draggable` de
+            // abajo. Es una **petición**: Android honra hasta 200dp por borde
+            // (este nodo mide exactamente eso) y el fabricante puede tener su
+            // propio criterio — en MIUI se verifica en el dispositivo.
+            .systemGestureExclusion()
+            .graphicsLayer { alpha = geometry.enabledFraction }
+            .then(
+                if (enabled) {
+                    Modifier
+                        .draggable(
+                            state = drag.state,
+                            orientation = Orientation.Horizontal,
+                            onDragStarted = { drag.onStart() },
+                            onDragStopped = { drag.onStop(it) },
+                        )
+                        .pointerInput(geometry.isOpen, geometry.otherDrawerOpen) {
+                            detectTapGestures(
+                                onPress = {
+                                    // Claim on the first pointer event, so a second
+                                    // finger on the other tab is rejected in the same
+                                    // frame (`EDG-19`).
+                                    gestures.claimOnPress()
+                                    tryAwaitRelease()
+                                    gestures.cancelIfIdle()
+                                },
+                                onTap = { gestures.onTap() },
+                            )
+                        }
+                        .semantics {
+                            contentDescription =
+                                if (geometry.isOpen) "Cerrar panel"
+                                else "Abrir ${geometry.previewLabel}"
+                        }
+                } else {
+                    Modifier
+                },
+            ),
+        contentAlignment =
+            if (geometry.side == DrawerSide.End) Alignment.CenterEnd
+            else Alignment.CenterStart,
+    ) {
+        Box(
+            modifier = Modifier
+                .width(20.dp)
+                .height(62.dp)
+                .shadow(elevation = 6.dp, shape = geometry.tabShape, clip = false)
+                .background(color = SignAllTheme.colors.surface, shape = geometry.tabShape)
+                .border(
+                    width = 1.dp,
+                    color = SignAllTheme.colors.outline,
+                    shape = geometry.tabShape,
+                ),
+            contentAlignment = Alignment.Center,
+        ) {
+            // Grip: two rounded vertical lines (prototype `.edge-grip`,
+            // `box-shadow: 7px 0 0` → 4dp line + 3dp gap + 4dp line).
+            Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+                repeat(2) {
                     Box(
                         modifier = Modifier
-                            .matchParentSize()
+                            .width(4.dp)
+                            .height(28.dp)
                             .background(
-                                color = SignAllTheme.colors.scrim.copy(alpha = dim),
-                                shape = tabShape,
+                                color = SignAllTheme.colors.muted.copy(alpha = 0.65f),
+                                shape = SignAllShapes.cornerPill,
                             ),
                     )
                 }
+            }
+            // This handle belongs to the open drawer (the drawers nest, so the
+            // opposite backdrop cannot reach it): it gets a mild dim instead of
+            // vanishing behind the backdrop (spec `EDG-14`).
+            val dim = SignAllTheme.colors.scrim.alpha * 0.5f * geometry.currentlyOpenFraction
+            if (dim > 0f) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(
+                            color = SignAllTheme.colors.scrim.copy(alpha = dim),
+                            shape = geometry.tabShape,
+                        ),
+                )
             }
         }
     }

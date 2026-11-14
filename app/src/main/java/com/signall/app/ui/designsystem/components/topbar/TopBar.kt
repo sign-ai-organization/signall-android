@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.signall.app.ui.designsystem.SignAllTheme
 import com.signall.app.ui.designsystem.LocalContentColor
 import com.signall.app.ui.designsystem.components.Surface
+import com.signall.app.ui.designsystem.components.SurfaceStyle
 import com.signall.app.ui.designsystem.components.topbar.TopBarDefaults.TopBarHeight
 import com.signall.app.ui.designsystem.contentColorFor
 import com.signall.app.ui.designsystem.foundation.systemBarsForVisualComponents
@@ -133,7 +134,7 @@ internal fun TopBarLayout(
     // calculating based on scrolling behaviour
     val dynamicHeight = height.intValue + (scrollBehavior?.state?.heightOffset ?: 0).toInt()
 
-    Surface(modifier = modifier.then(topBarDragModifier), color = topBarContainerColor) {
+    Surface(modifier = modifier.then(topBarDragModifier), style = SurfaceStyle(color = topBarContainerColor)) {
         CompositionLocalProvider(LocalContentColor provides topBarContentColor) {
             Layout(
                 content = content,
