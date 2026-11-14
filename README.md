@@ -36,14 +36,19 @@ git clone https://github.com/sign-ai-organization/signall-backend
 git clone https://github.com/sign-ai-organization/signall-stt
 cd signall-backend
 cp .env.example .env          # completar DATABASE_URL y LLM_API_KEY
-docker compose up -d
+# El proxy TLS vive en el override: `docker compose up -d` a secas lo deja afuera.
+docker compose -f docker-compose.yml -f docker-compose.host.yml up -d
 ```
 
 Los dos clones van juntos porque el `docker-compose.yml` del backend construye el servicio de
 voz desde una carpeta hermana. Si se prefiere correr el STT por separado, el
 [README del backend](https://github.com/sign-ai-organization/signall-backend) explica cómo.
 
-El backend queda en `http://localhost:8080` y el STT en `http://localhost:8000`. La primera
+El backend queda en `http://localhost:8080` y el STT en `http://localhost:8000`. El proxy
+termina el TLS en `https://127.0.0.1/` y **es parte del sistema**: sin él no hay `wss://` y el
+build `demo` de la app no conecta. Se comprueba con
+`curl --cacert deploy/certs/lab-ca.crt https://127.0.0.1/health`; el detalle está en el
+`deploy/README.md` del backend. La primera
 vez tarda varios minutos (instala dependencias y descarga el modelo de voz); no está listo
 cuando el contenedor arranca, sino cuando responde:
 
@@ -103,6 +108,8 @@ openspec/                            contexto del proyecto: especificaciones y b
 
 ```bash
 ./gradlew build          # compila; incluye ktlint y el lint de Android
+./gradlew test           # pruebas unitarias en la JVM, sin dispositivo
+./gradlew jacocoTestReport   # cobertura; deja el XML que lee SonarQube
 ./gradlew ktlintCheck    # solo el análisis estático de Kotlin
 ./gradlew installDebug   # compila e instala en el dispositivo conectado
 
@@ -110,9 +117,10 @@ adb logcat -s SignAllNet       # cada oración que manda el backend, con índice
 adb logcat -s SignAllMetrics   # glosas, duración de la representación y percentiles
 ```
 
-La app no tiene pruebas automatizadas. El arranque, la latencia y el comportamiento en el
-dispositivo se miden a mano con lo que hay en `tools/`; el detalle está en
-[`tools/README.md`](tools/README.md).
+Las pruebas unitarias cubren la lógica (la máquina de estados, los repositorios, el catálogo y
+el contrato con el backend) y renderizan las pantallas con Robolectric. El arranque, la latencia
+y el comportamiento en el dispositivo se miden a mano con lo que hay en `tools/`; el detalle
+está en [`tools/README.md`](tools/README.md).
 
 Las herramientas de desarrollo (consola de la escena y bloque AVANZADO de Ajustes) existen
 solo si la compilación las pide, con `./gradlew installDebug -Psignall.devTools=true`. El

@@ -220,11 +220,22 @@ Trampas que hacen perder tiempo:
   recomposición lo mostraba de nuevo. Regla general: **tocar un control cierra el teclado, no
   manda la frase** — el texto se queda en el campo.
 
-No hay tests, no hay CI. **ktlint se agregó el 2026-11-03** (`org.jlleitschuh.gradle.ktlint`
-14.2.0): `./gradlew ktlintCheck` corre en `build` y falla con los avisos nuevos. La deuda de
-estilo anterior está congelada en `app/config/ktlint/baseline.xml` (ninguna violación era un
-error real, solo reglas de formato); un archivo nuevo que entre con avisos sí falla. Toolchain:
-AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2024.12.01.
+**Pruebas y análisis estático.** Hay pruebas unitarias en `app/src/test/` (JUnit, Robolectric y
+Mockito; corren en la JVM, sin dispositivo): `./gradlew test`. La cobertura se mide con
+`./gradlew jacocoTestReport`, que escribe el XML que lee Sonar; el design system de Lumo queda
+fuera del denominador porque es código adaptado, no lógica de la app. El CI
+(`.github/workflows/ci.yml`) corre `./gradlew build` —que incluye ktlint y el lint de Android— y
+gitleaks sobre el árbol y la historia.
+
+**ktlint se agregó el 2026-11-03** (`org.jlleitschuh.gradle.ktlint` 14.2.0): `./gradlew
+ktlintCheck` corre en `build` y falla con los avisos nuevos. La deuda de estilo anterior está
+congelada en `app/config/ktlint/baseline.xml`; un archivo nuevo que entre con avisos sí falla.
+Toolchain: AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM
+2024.12.01.
+
+**SonarQube es local** (`http://localhost:9000`, sin cuenta ni nube): se corre a mano con
+`tools/calidad/sonar.sh signall-android` antes de cerrar un trabajo. El servidor vive en la
+máquina de la tesis, así que no puede correr en Actions.
 
 ## Observabilidad
 
