@@ -127,10 +127,13 @@ tools/medir-retraso.py                        # cuánto se sigue representando t
 ### Requisitos previos
 
 ```bash
-cd ../signall-backend && docker compose up -d --build   # backend + STT
+cd ../signall-backend && docker compose -f docker-compose.yml -f docker-compose.host.yml up -d --build
 curl -s 127.0.0.1:8080/health   # {"status":"ok","cache_loaded":true,"cache_rows":0}
 curl -s 127.0.0.1:8000/health   # {...}
 ```
+
+El segundo archivo de Compose es el que levanta el proxy TLS: `docker compose up -d` a
+secas deja el proxy afuera y el APK `demo` no conecta.
 
 **No hay bandera de tiempo real.** En `main` del backend no existen
 `REALTIME_ENABLED`, ni el modo por fragmentos, ni el perfil de dos modelos del
