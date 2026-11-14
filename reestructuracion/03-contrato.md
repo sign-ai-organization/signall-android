@@ -67,4 +67,8 @@ que los emite en el teléfono, y eso no se ve desde el backend.
 
 - El backend sigue diciendo `SignAI` en su documentación interna y en el arranque del
   log; es su propio bloque de nombres, no el contrato.
-- Remedir `rt_first_sign_ms` con las 28 frases sigue pendiente y no depende de esto.
+- Remedir `rt_first_sign_ms` con las 28 frases ~~sigue pendiente y no depende de esto~~:
+  **hecho el 2026-11-13**. Con `gpt-4o-mini` y Whisper `medium` en Docker dio p50
+  632–675 ms / p95 890–1015 ms en frío, y p50 0,5 ms con la caché caliente. El
+  número que importa para la experiencia es audio→primera seña, p50 4366 ms, de
+  los cuales 3724 ms son el STT. Detalle en `tools/TIEMPO-REAL.md`.

@@ -112,6 +112,7 @@ nombres `rt_*`. El detalle y el porqué están en [03-contrato.md](03-contrato.m
 | `SharedPreferences` | el historial quedó en `shared_prefs/signall.xml` |
 | gitleaks sobre el árbol exportado de git | `no leaks found` (60 MB escaneados) |
 | SonarQube `signall-android` | 13 806 ncloc · 63 code smells · 1 bug · 4,8 % duplicación · cobertura 0 % |
+| `rt_first_sign_ms`, 28 frases (2026-11-13) | p50 **632–675 ms** / p95 **890–1015 ms** en frío (dos pasadas) y p50 0,5 ms con caché caliente, en `/metrics` del backend |
 
 Los tiempos son de **una** frase en el Redmi Note 9S con el backend en Docker y
 `adb reverse`: sirven para comprobar que el camino funciona, no como medición de

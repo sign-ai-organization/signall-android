@@ -349,10 +349,11 @@ de que el `.glb` termine de bajar). Sale en `SignAllMetrics` como
 3. **Prueba de regresión del eco**: el auto-envío en vivo no debe poder dispararse
    por un frame que no venga del STT. El backend ya está arreglado y con test; en
    la app es una guarda de una línea.
-4. **Repetir la medición de las 28 frases** con la pila completa y la caché
-   vacía, ahora que el avatar representa oración por oración: la línea base
-   publicada (913 ms p50) sigue siendo del camino por palabras y no es
-   comparable.
+4. ~~**Repetir la medición de las 28 frases** con la pila completa y la caché
+   vacía, ahora que el avatar representa oración por oración.~~ Hecho el
+   2026-11-13 con `gpt-4o-mini` y Whisper `medium` en Docker: `rt_first_sign_ms`
+   p50 632–675 ms / p95 890–1015 ms en frío y p50 0,5 ms en caliente;
+   audio→primera seña p50 4366 ms. Ver `tools/TIEMPO-REAL.md`.
 5. `setQueue` resetea `queueIdx` a 0 aunque haya algo sonando: si una frase
    entra mientras la anterior se representa, el índice 0 de la nueva no llega a
    reproducirse. Es anterior a este trabajo y no se tocó, pero `appendQueue` lo

@@ -37,23 +37,30 @@ es justamente el camino que el flujo por palabras usaba. Lo que se gana es que *
 avatar nunca representa media oración** y que la clave de caché es una oración
 limpia, la misma en los dos modos.
 
-### Lo que se midió (28 fixtures, backend + STT reales, 2026-10-15)
+### Lo que se midió (28 frases, pila completa, 2026-11-13)
 
 Las 28 frases de `../signall-stt/fixtures/audio` reproducidas por el WebSocket a
-velocidad 1x, con `qwen3:4b-instruct` en Ollama local (`127.0.0.1:11434`) y la
-caché semántica vacía:
+velocidad 1x, con **la pila que se publica**: backend y STT en Docker, Whisper
+`medium` en CUDA y el LLM de producción (`gpt-4o-mini`, `LLM_TEMPERATURE=0.0`),
+medido desde el Redmi Note 9S con `adb reverse`. Caché semántica vacía y backend
+reiniciado, porque `SEMANTIC_CACHE_PRELOAD` deja la copia en memoria.
 
-| | p50 | p95 |
-|---|---|---|
-| **`rt_first_sign_ms`** (transcripción final → primera oración enviada) | **273 ms** | **422 ms** |
-| Ídem con la caché caliente | 1 ms | 4 ms |
-| Del primer sample de audio a la primera seña (**lo que percibe el usuario**) | **4010 ms** | — |
-| …de los cuales el STT | 3709 ms | — |
+Dos pasadas en frío el mismo día, para que la cifra no dependa de una corrida.
+Cifras de `/metrics` del backend, que es donde vive `rt_first_sign_ms`:
 
-**El pipeline no es el cuello de botella: el STT lo es.** De los 4,0 s que pasan
+| | p50 | p95 | min | max |
+|---|---|---|---|---|
+| **`rt_first_sign_ms`**, pasada 1 (28 frases, 28 *miss*) | **675 ms** | **1015 ms** | 556 ms | 1165 ms |
+| **`rt_first_sign_ms`**, pasada 2 (28 frases, 28 *miss*) | **632 ms** | **890 ms** | 525 ms | 1132 ms |
+| Ídem con la caché caliente (27 aciertos de 28) | 0,5 ms | 3,1 ms | — | — |
+| Del primer sample de audio a la primera seña (**lo que percibe el usuario**) | **4366 ms** | — | 3192 ms | 8529 ms |
+| …de los cuales el STT | 3724 ms | — | — | — |
+
+**El pipeline no es el cuello de botella: el STT lo es.** De los 4,4 s que pasan
 desde que el usuario empieza a hablar hasta que aparece la primera seña, 3,7 s
 son el STT esperando a que la frase se cierre por los 1,5 s de silencio y
-transcribiéndola. Traducir cuesta 273 ms.
+transcribiéndola. Traducir cuesta 0,63 s con el LLM en frío y 0,5 ms con la
+caché caliente.
 
 Esto **no se puede comparar** con la línea base publicada (p50 913 ms / p95
 1336 ms): esa era del camino por palabras y medía otra cosa. El nombre
@@ -62,7 +69,21 @@ pero la comparación no vale.
 
 Las 28 frases son cortas —mediana de 2 palabras, 1 seña y 1 oración— así que
 **no dicen nada de una conversación real**. Para eso están las cuatro
-`conversacion_*.wav`, que tienen 5–8 palabras.
+`conversacion_*.wav`, que tienen 5–8 palabras: en esta corrida fueron las cuatro
+más lentas (6,2 s a 8,5 s de audio a primera seña), y son las que se acercan a
+una frase hablada de verdad.
+
+### La medición anterior (2026-10-15, Ollama local) — historia
+
+Serve para ver de dónde viene la cifra de 273 ms que citan los documentos viejos:
+la misma prueba, con `qwen3:4b-instruct` en Ollama local (`127.0.0.1:11434`) y la
+caché vacía. **No es el LLM de producción y no se debe citar como si lo fuera.**
+
+| | p50 | p95 |
+|---|---|---|
+| `rt_first_sign_ms` (Ollama local) | 273 ms | 422 ms |
+| Ídem con la caché caliente | 1 ms | 4 ms |
+| Del primer sample de audio a la primera seña | 4010 ms | — |
 
 ### Repetir la medición
 

@@ -215,8 +215,12 @@ AGP 8.9.3, Kotlin 2.3.21, compileSdk/target 36, minSdk 26, JVM 17, Compose BOM 2
 instrumentó no se puede afirmar que mejoró. Y al citar un número, decí de dónde salió.
 
 `rt_first_sign_ms` es el que decide si se siente en tiempo real. **Ojo**: la línea base
-publicada (913 ms p50 / 1336 ms p95) es **del camino por palabras**; con oraciones la
-cifra sube por construcción y **no es comparable**. Falta remedir con las 28 frases.
+publicada (913 ms p50 / 1336 ms p95) es **del camino por palabras** y **no es
+comparable**. Lo remedido con el flujo por oraciones y la pila de producción (2026-11-13,
+28 frases, dos pasadas en frío, `/metrics` del backend) es **p50 632–675 ms / p95
+890–1015 ms** con el LLM en frío y **p50 0,5 ms** con la caché caliente. El número que
+manda para la experiencia es otro: **audio→primera seña, p50 4366 ms**, de los cuales el
+STT se lleva 3724 ms. El detalle y cómo repetirlo, en `tools/TIEMPO-REAL.md`.
 
 ## Git
 
