@@ -138,8 +138,10 @@ La verificación cruzada encontró tres cosas que las olas anteriores no habían
    cada uno dos veces). El comportamiento no cambiaba, pero era el único "bug" de Sonar en
    la app.
 
-Lo que la ola 2 **no** cierra porque no es suya: el renombre de los repositorios en GitHub
-(siguen `sign-all-*`) y el CI de `signall-docs`.
+Lo que la ola 2 **no** cerraba estaba en manos del owner y se resolvió el mismo día: los
+cinco repositorios se renombraron en GitHub a `signall-*` y los `origin` se reapuntaron; y
+el CI de `signall-docs` **no se crea**, porque el § 4 manda sobre el § 5.
+
 
 
 ### Reglas de convivencia (las cinco que evitan el desastre)
@@ -187,9 +189,15 @@ así que las rutas relativas `../signall-backend`, `../signall-stt`, `../signall
 `../signall-avatar` son las que funcionan; `AGENTS.md`, `docs/`, `tools/` y `.opencode` se
 actualizaron en el commit `39d6a82`.
 
-Lo único que sigue con el nombre viejo es la **URL del remoto**: el 2026-11-13 se
-renombraron en GitHub a `sign-all-*` y los cinco `origin` quedaron apuntando ahí.
-Unificar eso es del owner, porque toca GitHub, no el código.
+Lo único que quedaba con el nombre viejo era la **URL del remoto**: el 2026-11-13 los
+repositorios se renombraron en GitHub a `sign-all-*` (grafía con guion, la vieja) y los
+cinco `origin` quedaron apuntando ahí. **Corregido el mismo día**: los cinco se renombraron
+otra vez a `signall-*`, los `origin` se reapuntaron y se verificó con `git ls-remote` que
+los cinco responden. GitHub mantiene redirección de las URLs viejas.
+
+Lo que sí sigue con el nombre viejo es la **organización**: `sign-ai-organization`. No está
+en el plan y renombrarla es una decisión aparte, porque cambia todas las URLs de una vez.
+
 
 Aparte: en el directorio hermano hay dos carpetas que **no son repositorios**
 (`sign-ai-video/`, `sign-ai-video-vertical/`) y que el owner pasó a `signall-video/` y
@@ -311,9 +319,12 @@ Hay cuatro familias y no todas se tratan igual:
 ### 3.9 Integración continua
 
 - Hoy no hay CI. **Recomiendo** un GitHub Actions mínimo, por repo:
-  - `sign-ai-android`: `./gradlew build` (ya corre ktlint) + gitleaks.
-  - `sign-ai-backend` y `sign-ai-stt`: gitleaks + lo que el `CLAUDE.md`/`README`
+  - `signall-android`: `./gradlew build` (ya corre ktlint) + gitleaks.
+  - `signall-backend` y `signall-stt`: gitleaks + lo que el `CLAUDE.md`/`README`
     respectivo diga que ya se corre a mano.
+- **`signall-docs` queda fuera del CI** (decisión del owner, 2026-11-13): el § 4 dice que
+  ese repositorio solo cambia de nombre, y un workflow es tocarlo por dentro. La
+  contradicción con "los cuatro" se resuelve a favor del § 4.
 - Sin eso, SonarQube no tiene datos y gitleaks depende de que alguien se acuerde. El
   análisis de SonarQube local **no puede correr en Actions**: el servidor vive en esta
   máquina. En CI iría el escaneo de leaks y las compilaciones; el análisis de calidad se
@@ -346,7 +357,7 @@ vez.
 | Bloque | Ola | Qué se hace | Repo | Entregable | Puede ir en paralelo con |
 |---|---|---|---|---|---|
 | R-01 | — | gitleaks sobre toda la historia | los 5 | **hecho** → `01-leaks.md` | — |
-| R-08 | 0 · C0 | renombrar los repos en GitHub y los `origin` | los 5 | **hecho** · `sign-all-*` en el remoto | — |
+| R-08 | 0 · C0 | renombrar los repos en GitHub y los `origin` | los 5 | **hecho** · `signall-*` en el remoto | — |
 | R-02 | 0 · C1 | `namespace`, `applicationId` y paquete Kotlin → `com.signall.app` | android | ✅ hecho · `cf9fb5b` | backend, STT |
 | R-03 | 0 · C2 | tags, `window.SignAll`, `SignAllBridge`, `SignAllState`, `SharedPreferences` | android | ✅ hecho · `cf9fb5b` | backend, STT |
 | R-04 | 0 · C3 | nombres que cruzan el socket, en los dos lados el mismo día | android + backend | ✅ verificado: **no se renombra nada** · `9bac1f7`, backend `da38a77` | **nada** |
@@ -401,3 +412,6 @@ volver a conceder `RECORD_AUDIO`, que son dos minutos.
 | 2026-11-13 | **Nombres internos de los hermanos** (backend `15c6a4e`, STT `7359e7e`): rutas `../sign-ai-*` a `../signall-*`, marca en README y `CLAUDE.md`. Se arregla el `build: ../sign-ai-stt` del compose del backend, que después del renombre de carpetas ya no resolvía. |
 | 2026-11-13 | **R-06** (android `a7746a5`, backend `7d8585b`, STT `d5e5a89`): README corto en los tres repos de código, con el detalle movido a `docs/`. `signall-docs` y `signall-avatar` quedan fuera porque el § 4 prohíbe tocarlos por dentro. |
 
+| 2026-11-13 | **Ola 2** (`c194988`, `64fd43d`, `a99719a`): las dos credenciales filtradas se comprueban muertas contra Neon y OpenAI; gitleaks en 0 sobre la historia de los cinco; Sonar en 0 bugs y fiabilidad A en los tres proyectos; se borran los `sign-all-*` viejos. La verificación cruzada arregla rutas y paquete viejo en `tools/` y en los arneses, el verde falso de `leaks.sh` y una condición duplicada. |
+| 2026-11-13 | **Renombre final en GitHub**: los cinco repositorios pasan de `sign-all-*` a `signall-*` (la grafía de la convención), los `origin` se reapuntan y `git ls-remote` responde en los cinco. Sin `push`: solo cambia el nombre del repositorio. |
+| 2026-11-13 | **CI de `signall-docs`**: no se crea. Decisión del owner a favor del § 4 ("solo cambia el nombre del repositorio") sobre el § 5 ("los cuatro"). |
