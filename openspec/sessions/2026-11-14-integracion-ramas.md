@@ -82,3 +82,10 @@ en verde en `signall-backend` y `signall-stt`.
     que probarlos también con GPU.
 - El anuncio mDNS de la prueba se hizo con `avahi-publish-service` como usuario normal; el
   archivo en `/etc/avahi/services/` (el que documenta el repo) necesita `sudo` y no se instaló.
+
+## Qué se corrigió de paso en la documentación
+
+`docs/SISTEMA.md` describía el STT con "dos modelos" (`PARTIAL_MODEL_SIZE` para los parciales),
+un perfil `REALTIME` y `SILENCE_TIMEOUT_MS=600`. Nada de eso existe en el código: hay un solo
+`MODEL_SIZE`, el `InferenceScheduler` serializa y el silencio por defecto es 1500 ms. Se
+actualizó al estado real, con el perfil de CPU como caso base.

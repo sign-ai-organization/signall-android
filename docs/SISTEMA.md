@@ -70,9 +70,12 @@ completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contr
   texto**. Un frame de texto plano `"end"` fuerza el cierre del segmento.
 - `words` y `audio_ms` son **aditivos** (2026-10-14): el backend los usa para decidir
   qué seña representar y cuándo, pero el STT no depende de que alguien los lea.
-- Perfil de tiempo real: **dos modelos** (`PARTIAL_MODEL_SIZE=small` para los
-  parciales, `MODEL_SIZE=medium` para los finales) + `InferenceScheduler` +
-  `SILENCE_TIMEOUT_MS=600`. `REALTIME=false` devuelve los defaults previos.
+- Perfil del servicio: **un solo modelo** (`MODEL_SIZE`), serializado por
+  `InferenceScheduler` (`MAX_CONCURRENT_INFERENCE=1`); `SILENCE_TIMEOUT_MS=1500` es el
+  mayor término de la latencia. La CPU es el caso base (`small`/`cpu`/`int8`) y la GPU se
+  pide con `docker-compose.gpu.yml` (`medium`/`cuda`/`float16`), sin autodetección. Los
+  antiguos `PARTIAL_MODEL_SIZE`, el perfil `REALTIME` y la separación entre parciales y
+  finales ya no existen.
 - **Los 28 fixtures de `fixtures/audio/*.wav` no están en git** (los binarios no; los
   `.json` sí). Se generan con `python -m scripts.make_audio_fixtures.py --all` en un
   venv aparte con Piper. Los números de latencia solo son comparables entre corridas
