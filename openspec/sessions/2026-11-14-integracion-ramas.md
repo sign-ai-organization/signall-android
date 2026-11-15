@@ -89,3 +89,29 @@ en verde en `signall-backend` y `signall-stt`.
 un perfil `REALTIME` y `SILENCE_TIMEOUT_MS=600`. Nada de eso existe en el código: hay un solo
 `MODEL_SIZE`, el `InferenceScheduler` serializa y el silencio por defecto es 1500 ms. Se
 actualizó al estado real, con el perfil de CPU como caso base.
+
+## Corrección del owner (2026-11-15, madrugada)
+
+El owner aclaró el diseño: **el default es el entorno del plan de pruebas** (Whisper `medium` en
+una GPU NVIDIA) y la CPU es solo una **opción fácil de montaje** para una PC sin GPU o con una
+GPU que no alcanza. La rama había invertido eso (CPU como caso base), que no era el pedido. Se
+corrigió en `signall-backend` y `signall-stt`:
+
+- `docker-compose.yml` vuelve a fijar `medium`/`cuda`/`float16` con
+  `deploy.resources.reservations.devices` (driver `nvidia`), y `app/config.py` y `.env.example`
+  dicen lo mismo.
+- El perfil de CPU pasa a ser `docker-compose.cpu.yml`: fija `small`/`cpu`/`int8`, quita la
+  reserva con `deploy: !reset {}` y compila el STT sin las librerías de CUDA. `gpu.yml` se
+  retiró porque la GPU ya es el default.
+- Las librerías de CUDA salieron de `requirements.txt` del STT: ahora están en
+  `requirements-gpu.txt`, y el `Dockerfile` elige con `ARG REQUIREMENTS_FILE` (default: GPU).
+- La imagen del backend ya no tiene variante CUDA: **siempre** instala torch del índice de CPU,
+  porque sus embeddings corren en CPU aunque la máquina tenga GPU. El override que la construía
+  con PyPI se retiró (era el que llevaba la imagen a 10,1 GB).
+
+Verificado en esta PC (con RTX 4050): imagen del STT de CPU **874 MB** contra 4,6 GB de la de
+GPU; sin ningún paquete `nvidia-*` en la imagen de CPU y una transcripción real del fixture
+`bien.wav` → `"Bien, bien."` en 1,57 s (`small`/`cpu`/`int8`). Backend: 10,1 GB → 2,58 GB.
+El perfil de GPU (default) sigue cargando `medium` en CUDA.
+
+El owner también decidió que **la prueba del Redmi como hotspot no se hace**.

@@ -25,7 +25,7 @@ SignAll/
 | JDK | 17 | `java -version` |
 | Android SDK | platform 36, build-tools | `sdkmanager --list_installed` |
 | `adb` | cualquiera reciente | `adb version` |
-| Docker + Compose | con GPU opcional | `docker compose version` |
+| Docker + Compose | GPU NVIDIA, o el perfil de CPU | `docker compose version` |
 
 El proyecto compila con Gradle 8.11.1, AGP 8.9.3, Kotlin 2.3.21, `minSdk` 26,
 `compileSdk`/`targetSdk` 36 y JVM 17. El SDK se ubica por `local.properties`
@@ -79,8 +79,16 @@ curl -s http://127.0.0.1:8000/health   # {"status":"ok","model":"medium",...}
 curl -s http://127.0.0.1:8080/health   # {"status":"ok","cache_loaded":true,...}
 ```
 
-Si no tienes GPU NVIDIA, lee la nota de CPU en
-[`../../signall-stt/README.md`](../../signall-stt/README.md).
+El default es el entorno del plan de pruebas: Whisper `medium` en una GPU NVIDIA. **Si no tienes
+GPU** (o la que tienes no alcanza), agrega el perfil de CPU al comando y listo: fija
+`small`/`cpu`/`int8`, quita la reserva de la tarjeta y compila el STT sin las librerías de CUDA.
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.host.yml \
+    -f docker-compose.cpu.yml up -d --build
+```
+
+El detalle está en [`../../signall-stt/README.md`](../../signall-stt/README.md).
 
 ### Paso 3 — Compilar e instalar la app
 
