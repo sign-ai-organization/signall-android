@@ -35,7 +35,7 @@ sin que el compilador avise. Ese es el motivo de que este archivo exista.
 **Lee el `CLAUDE.md` del backend antes de tocarlo.** Tiene las reglas que no están
 acá: código y comentarios **en inglés sin excepción**, los nombres de clases tienen que
 coincidir con los del SDD, y **nunca hacer `git commit` ni `git push`** — se sugiere el
-mensaje y lo manda el owner, por PR contra `main`.
+mensaje y lo manda el owner, directo a `main`.
 
 - **Contrato con la app**: `docs/android-integration.md` (423 líneas) es la fuente de
   verdad del WebSocket `/ws/translate`: qué campos manda cada frame, qué espera la
@@ -61,9 +61,8 @@ mensaje y lo manda el owner, por PR contra `main`.
 
 ## `../signall-stt`
 
-Sin AGENTS.md ni CLAUDE.md: su documentación es el `README.md` (235 líneas), muy
-completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contra
-`main`**.
+Su `CLAUDE.md` tiene las reglas y el `README.md` (235 líneas) el detalle. Mismo criterio de
+git que el backend: **preguntarle al owner, directo a `main`**.
 
 - **Protocolo**: el cliente manda frames **binarios** PCM16LE mono 16 kHz sin cabecera
   WAV (el servidor los reagrupa en 30 ms para el VAD) y el STT responde con **JSON de
@@ -72,10 +71,10 @@ completo. Mismo criterio de git que el backend: **preguntarle al owner, PR contr
   qué seña representar y cuándo, pero el STT no depende de que alguien los lea.
 - Perfil del servicio: **un solo modelo** (`MODEL_SIZE`), serializado por
   `InferenceScheduler` (`MAX_CONCURRENT_INFERENCE=1`); `SILENCE_TIMEOUT_MS=1500` es el
-  mayor término de la latencia. La CPU es el caso base (`small`/`cpu`/`int8`) y la GPU se
-  pide con `docker-compose.gpu.yml` (`medium`/`cuda`/`float16`), sin autodetección. Los
-  antiguos `PARTIAL_MODEL_SIZE`, el perfil `REALTIME` y la separación entre parciales y
-  finales ya no existen.
+  mayor término de la latencia. El default es el del plan de pruebas (`medium`/`cuda`/
+  `float16`, GPU reservada) y la CPU es el override `docker-compose.cpu.yml`
+  (`small`/`cpu`/`int8`), sin autodetección. Los antiguos `PARTIAL_MODEL_SIZE`, el perfil
+  `REALTIME` y la separación entre parciales y finales ya no existen.
 - **Los 28 fixtures de `fixtures/audio/*.wav` no están en git** (los binarios no; los
   `.json` sí). Se generan con `python -m scripts.make_audio_fixtures.py --all` en un
   venv aparte con Piper. Los números de latencia solo son comparables entre corridas
@@ -161,7 +160,7 @@ empaquetan: `assets/web/signs/` se borró el 2026-10-22—. `../material-3d/GLB 
 `tools/pack_signall.py` son el pipeline intermedio de un solo avatar, retirado el
 2026-10-26. No mezclar los pipelines ni copiar scripts entre ellos.
 
-**Regla de git**: como todo hermano, no se commitea ahí sin que el owner lo pida (PR contra
+**Regla de git**: como todo hermano, no se commitea ahí sin que el owner lo pida (directo a
 `main`). Esta app solo lee `models/`.
 
 ## Carpetas hermanas que **no** son repositorios

@@ -70,25 +70,36 @@ docker compose -f docker-compose.yml -f docker-compose.host.yml ps caddy
 curl --cacert deploy/certs/lab-ca.crt https://127.0.0.1/health
 ```
 
-**No está listo cuando el contenedor dice "Started".** Medido el 2026-10-29 en esta
-máquina: el STT respondió a los ~10 s y el backend a los ~52 s, porque carga el modelo de
-Whisper, spaCy y el catálogo completo de Neon. Espera a los dos:
+**No está listo cuando el contenedor dice "Started".** En un arranque en frío el STT respondió
+a los ~10 s y el backend a los ~52 s, porque carga el modelo de Whisper, spaCy y el catálogo
+completo de Neon. Espera a los dos:
 
 ```bash
 curl -s http://127.0.0.1:8000/health   # {"status":"ok","model":"medium",...}
 curl -s http://127.0.0.1:8080/health   # {"status":"ok","cache_loaded":true,...}
 ```
 
-El default es el entorno del plan de pruebas: Whisper `medium` en una GPU NVIDIA. **Si no tienes
-GPU** (o la que tienes no alcanza), agrega el perfil de CPU al comando y listo: fija
-`small`/`cpu`/`int8`, quita la reserva de la tarjeta y compila el STT sin las librerías de CUDA.
+### Los dos perfiles del servidor
 
-```bash
-docker compose -f docker-compose.yml -f docker-compose.host.yml \
-    -f docker-compose.cpu.yml up -d --build
-```
+El default es el entorno del plan de pruebas: Whisper `medium` en una GPU NVIDIA
+(`cuda`/`float16`), con la tarjeta reservada. Nada detecta el hardware: el perfil se declara en
+el comando.
 
-El detalle está en [`../../signall-stt/README.md`](../../signall-stt/README.md).
+| Caso | Comando | Qué cambia |
+|---|---|---|
+| **PC con GPU** (default) | `docker compose -f docker-compose.yml -f docker-compose.host.yml up -d` | `medium`/`cuda`/`float16`, reserva NVIDIA e imagen del STT con las librerías de CUDA |
+| **PC sin GPU** (o con una que no alcanza) | el mismo comando **+ `-f docker-compose.cpu.yml`**, con `--build` la primera vez | `small`/`cpu`/`int8`, sin reserva NVIDIA y sin librerías de CUDA en la imagen |
+| **Solo el STT** | `cd ../signall-stt && docker compose up --build`, o con `-f docker-compose.cpu.yml` | el servicio de voz solo, en el `8000` |
+
+Los tres valores (`MODEL_SIZE`, `DEVICE`, `COMPUTE_TYPE`) salen del entorno y se pueden ajustar
+en el `.env`; el perfil de CPU los **fija** en el compose, así que manda él aunque el `.env` diga
+`cuda`. El `/health` del STT publica `model`, `device` y `requested_device`, así que dice la
+verdad sobre lo que quedó levantado. El detalle de los archivos está en
+[`../../signall-stt/README.md`](../../signall-stt/README.md).
+
+**La app no se configura**: al abrir, y en cada reconexión, prueba el último endpoint recordado,
+mDNS, el escaneo de la subred y por último la dirección compilada. El orden y la diagnosis están
+en [`DESCUBRIMIENTO-BACKEND.md`](DESCUBRIMIENTO-BACKEND.md).
 
 ### Paso 3 — Compilar e instalar la app
 
@@ -108,7 +119,7 @@ Si el descubrimiento no aplica (backend por USB con `adb reverse`, o una IP fija
 quiere forzar), la dirección se pasa como **último recurso**:
 
 ```bash
-./gradlew installDebug -Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate
+./gradlew installDebug -Psignall.backendWsUrl=ws://<ip-de-la-pc>:8080/ws/translate
 ```
 
 Para verificar sin instalar: `./gradlew build`.
@@ -138,12 +149,11 @@ regla: un build cifrado solo prueba `https://…:443`, nunca `http://…:8080`.
 
 ## 4. Todo por WiFi
 
-Funciona completo: ADB, instalación y traducción. Medido el 2026-10-29 con un Redmi
-Note 9S en `192.168.80.19` y el PC en `192.168.80.49`, los dos en la misma red.
+Funciona completo: ADB, instalación y traducción, con el teléfono y la PC en la misma red.
 
 > **Hay un plan para esto.** El camino WiFi tiene su propio documento,
 > [`../../signall-backend/docs/plan-wifi.md`](../../signall-backend/docs/plan-wifi.md)
-> (2026-10-27), y conviene leerlo antes de cambiar cualquier cosa de esta sección. Según su
+, y conviene leerlo antes de cambiar cualquier cosa de esta sección. Según su
 > checklist, la fase 1 (`ufw` para el 443) y la fase 2 (APK servido por Caddy en `/apk/`)
 > están hechas. **La fase 3 cambió de forma**: en vez del campo de URL en AVANZADO que
 > proponía el plan, la app descubre el backend sola (mDNS + subred local), así que ya no hay
@@ -159,14 +169,14 @@ sudo pacman -S android-tools        # una sola vez
 
 ```bash
 adb tcpip 5555
-adb connect 192.168.80.19:5555     # IP del teléfono
-adb devices                        # debe aparecer 192.168.80.19:5555
+adb connect <ip-del-telefono>:5555     # IP del teléfono
+adb devices                        # debe aparecer <ip-del-telefono>:5555
 ```
 
 **Las siguientes veces** que solo cambió la red o se reinició `adb` en el PC, sin cable:
 
 ```bash
-adb connect 192.168.80.19:5555
+adb connect <ip-del-telefono>:5555
 ```
 
 La IP del teléfono se lee con `adb shell ip -4 addr show wlan0` (con cable o por red) o en
@@ -176,7 +186,7 @@ Ajustes → WiFi. El teléfono también se anuncia por mDNS: `adb mdns services`
 Ya sin cable, instalar y probar es igual que siempre:
 
 ```bash
-./gradlew installDebug -Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate
+./gradlew installDebug -Psignall.backendWsUrl=ws://<ip-de-la-pc>:8080/ws/translate
 adb logcat -s SignAllNet
 ```
 
@@ -184,7 +194,7 @@ adb logcat -s SignAllNet
 falla con `more than one device/emulator`. Desconecta el cable o fija el destino:
 
 ```bash
-ANDROID_SERIAL=192.168.80.19:5555 ./gradlew installDebug -Psignall.backendWsUrl=...
+ANDROID_SERIAL=<ip-del-telefono>:5555 ./gradlew installDebug -Psignall.backendWsUrl=...
 ```
 
 ### Windows
@@ -200,8 +210,8 @@ No verificado en una máquina Windows; esto es el procedimiento esperado. Los co
 
 ```powershell
 adb tcpip 5555
-adb connect 192.168.80.19:5555
-.\gradlew.bat installDebug "-Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate"
+adb connect <ip-del-telefono>:5555
+.\gradlew.bat installDebug "-Psignall.backendWsUrl=ws://<ip-de-la-pc>:8080/ws/translate"
 ```
 
 Las comillas alrededor de `-P...` no son opcionales en PowerShell: sin ellas el argumento
@@ -220,8 +230,7 @@ Compila el build `demo` con la IP actual adentro, lo copia a
 `https://<IP>/apk/` y lo instalas. Necesita Caddy levantado (el `443`) y la CA de
 laboratorio instalada en el teléfono.
 
-Verificado el 2026-10-29: la página y el APK de 40,8 MB respondieron `200` desde el
-teléfono. El APK que sirve ese camino es `demo`, así que reemplaza al `debug`.
+Verificado: la página y el APK de 40,8 MB respondieron `200` desde el teléfono. El APK que sirve ese camino es `demo`, así que reemplaza al `debug`.
 
 ### El cortafuegos: dos caminos que se comportan distinto
 
@@ -232,11 +241,11 @@ El teléfono puede llegar al PC por dos puertos, y `ufw` no los trata igual:
 | `ws://<IP>:8080` (build `debug`) | el backend, publicado por Docker en la red del compose | **no**. Docker inserta sus reglas antes que `ufw`, así que el puerto queda abierto a la LAN aunque `ufw` esté en `DROP` y no haya ninguna regla |
 | `wss://<IP>` (build `demo`, Caddy en el 443) | Caddy, en red de host | **sí**. Sin regla, el TCP no pasa |
 
-Medido el 2026-10-29: con `ufw` activo y política de entrada `DROP`, **sin regla para
-8080**, el teléfono alcanzó `http://192.168.80.49:8080/health` con `200`. Se comprobó
+Medido: con `ufw` activo y política de entrada `DROP`, **sin regla para
+8080**, el teléfono alcanzó `http://<ip-de-la-pc>:8080/health` con `200`. Se comprobó
 además con el `15672` de RabbitMQ, que no tiene nada que ver con el proyecto: también
 respondió `200` desde el teléfono. El 443 sí necesita regla, y ya está puesta
-(`ufw allow from 192.168.80.0/24 to any port 443`, fase 1 de `plan-wifi.md`).
+(`ufw allow from <tu-subred>/24 to any port 443`, fase 1 de `plan-wifi.md`).
 
 Consecuencias prácticas:
 
@@ -261,7 +270,7 @@ curl -s http://127.0.0.1:8080/metrics
 curl -s http://127.0.0.1:8000/metrics
 ```
 
-Medición de referencia, tomada el 2026-10-29 por WiFi con la frase "Hola como estas":
+Medición de referencia por WiFi con la frase "Hola como estas":
 2 glosas, **envío→primera seña 205 ms** y 2 señas representadas en 3 956 ms. Son cifras de
 una sola frase, no un promedio.
 
@@ -289,12 +298,12 @@ adb reverse tcp:8443 tcp:443
 # por WiFi: la app busca sola el 443 de Caddy por mDNS o escaneo
 ./gradlew installDemo
 # si se quiere forzar una IP concreta (último recurso):
-./gradlew installDemo -Psignall.backendWsUrl=wss://192.168.80.49/ws/translate
+./gradlew installDemo -Psignall.backendWsUrl=wss://<ip-de-la-pc>/ws/translate
 ```
 
 En el teléfono tiene que estar instalada la **CA de laboratorio**; si falta, el handshake
 falla con `Trust anchor for certification path not found` y eso no es un problema de la
-app. (Comprobado el 2026-10-29: el `443` responde por WiFi y el teléfono rechaza el
+app. (Comprobado: el `443` responde por WiFi y el teléfono rechaza el
 certificado porque no lo tiene instalado.)
 
 `demo` comparte `applicationId` con `debug`, así que lo reemplaza: después de la demo,
