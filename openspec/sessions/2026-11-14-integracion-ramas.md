@@ -115,3 +115,15 @@ GPU; sin ningún paquete `nvidia-*` en la imagen de CPU y una transcripción rea
 El perfil de GPU (default) sigue cargando `medium` en CUDA.
 
 El owner también decidió que **la prueba del Redmi como hotspot no se hace**.
+
+## Revisión: ¿el backend debería pedir CUDA? (2026-11-15)
+
+El owner preguntó si el backend tenía que pedir CUDA y si el cambio tocaba el entorno de la
+tesis. Respuesta, con evidencia: **no**. El SDD (2026-11-11) marca solo al «Servicio STT» como
+contenedor con GPU, y la memoria dice lo mismo; `docker inspect` del backend da
+`DeviceRequests: null` mientras el STT tiene la reserva `nvidia`, y adentro del backend
+`torch.cuda.is_available()` es `False` porque no existen `/dev/nvidia*`. `SentenceTransformer`
+se construye sin dispositivo, así que siempre eligió CPU en ese contenedor, y
+`docs/performance.md` §5 ya había medido el embedding en 12–17 ms. Los 7,5 GB de `nvidia-*` del
+wheel de PyPI no se usaron nunca. Queda anotado qué haría falta si algún día se quiere el
+embedding en GPU: reservar el dispositivo y llevar torch con CUDA, con el documento al día.
