@@ -26,7 +26,10 @@ import java.util.concurrent.TimeUnit
  * overlay muestra "?" y la app sigue igual, porque un valor que no se conoce no
  * es motivo para romper nada.
  */
-class BackendHealth(private val httpOrigin: String) {
+class BackendHealth(private val originProvider: () -> String) {
+
+    /** Constructor para quien tiene un origen fijo (pruebas y usos puntuales). */
+    constructor(httpOrigin: String) : this({ httpOrigin })
 
     private val http: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(5, TimeUnit.SECONDS)
@@ -38,7 +41,7 @@ class BackendHealth(private val httpOrigin: String) {
         // La URL se arma adentro del runCatching: un `signall.backendWsUrl` mal
         // escrito tiene que degradar a "no se sabe", no tirar la app.
         runCatching {
-            val request = Request.Builder().url(httpOrigin.trimEnd('/') + "/health").build()
+            val request = Request.Builder().url(originProvider().trimEnd('/') + "/health").build()
             http.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) return@use null
                 val body = response.body?.string() ?: return@use null

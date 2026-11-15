@@ -10,7 +10,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.signall.app.BuildConfig
 import com.signall.app.data.AudioCapture
+import com.signall.app.data.BackendEndpointResolver
 import com.signall.app.data.BackendHealth
+import com.signall.app.data.NetworkWatcher
 import com.signall.app.data.SettingsRepository
 import com.signall.app.data.SignAllWebSocketClient
 import com.signall.app.data.SignAssetRepository
@@ -28,10 +30,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import java.util.concurrent.atomic.AtomicReference
 
 /** Wait for the drawer close animation before replaying a conversation turn (`CNV-6`). */
@@ -142,6 +148,19 @@ class MainScreenState(
     private val backend: SignAllWebSocketClient,
     private val assets: SignAssetRepository,
     private val health: BackendHealth,
+    /**
+     * Descubrimiento del backend. Opcional para no atar la máquina de estados a
+     * Android en las pruebas: sin él, el cliente usa la URL con la que se lo
+     * construyó, que es el comportamiento anterior.
+     */
+    private val endpointResolver: BackendEndpointResolver? = null,
+    /**
+     * Aviso de cambio de red. Opcional por el mismo motivo que el
+     * descubrimiento: las pruebas emiten a mano. Sin él, la sesión sigue
+     * enterándose de una red caída por el latido del socket (hasta 20 s), que
+     * era el caso "hay que reiniciar la app".
+     */
+    private val networkWatcher: NetworkWatcher? = null,
     val signs: List<String> = SignsCatalog.available,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -882,6 +901,61 @@ class MainScreenState(
     private var reconnectAttempts = 0
 
     /**
+     * Corte de la espera del reintento cuando cambia la red.
+     *
+     * Es un canal conflado y no un `Flow` porque el aviso es una **orden**: si
+     * llegaron tres cambios mientras la app resolvía, alcanza con uno para que
+     * el próximo intento sea ya. Quien lo consume es [backoff].
+     */
+    private val retryNow = Channel<Unit>(Channel.CONFLATED)
+
+    /** Colección del aviso de red, viva mientras la pantalla lo esté. */
+    private var networkJob: Job? = null
+
+    /**
+     * Le pregunta al descubrimiento cuál es el backend de esta sesión.
+     *
+     * Corre en la corrutina de [connect], no en el hilo principal: NSD, el
+     * escaneo y los health checks suspenden y vuelven. Un fallo del
+     * descubrimiento no tumba la app: se sigue con el endpoint que hubiera y el
+     * socket dirá si sirve.
+     */
+    private suspend fun resolveEndpoint() {
+        val resolver = endpointResolver ?: return
+        try {
+            val config = resolver.resolve()
+            Log.i(TAG, "backend para esta sesión: ${config.url}")
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (e: Exception) {
+            Log.w(TAG, "el descubrimiento falló: ${e.message}")
+        }
+    }
+
+    /**
+     * Suelta lo que quede vivo al salir de la pantalla.
+     *
+     * Lo importante es el escaneo: sin esto, cerrar la app durante los ~3 s de
+     * NSD o los cientos de `GET /health` dejaría corrutinas y sockets
+     * trabajando para una pantalla que ya no existe. Cancelar el scope alcanza
+     * para todo lo que cuelga de él (sesión, temporizadores, escaneo), y
+     * [BackendHealthProbe] cancela además las llamadas HTTP en vuelo.
+     */
+    fun dispose() {
+        Log.i(TAG, "pantalla cerrada: se cancela la sesión y el descubrimiento")
+        connectJob?.cancel()
+        networkJob?.cancel()
+        voiceWatchJob?.cancel()
+        statusJob?.cancel()
+        processingJob?.cancel()
+        turnSilenceJob?.cancel()
+        sentTextJob?.cancel()
+        audio.stop()
+        backend.close()
+        scope.cancel()
+    }
+
+    /**
      * Opens the translation session and keeps it open, reconnecting on failure.
      *
      * El SRS pide tres cosas y las tres están acá (`main.tex:761-772`): espera
@@ -892,6 +966,7 @@ class MainScreenState(
      */
     fun connect() {
         connectJob?.cancel()
+        watchNetwork()
         connectJob = scope.launch {
             while (isActive) {
                 if (playbackState == PlaybackState.Inactivo) {
@@ -899,6 +974,10 @@ class MainScreenState(
                     // estado solo, y su texto ya dice que se está reconectando.
                     playbackState = PlaybackState.Desconectado
                 }
+                // Antes de abrir el socket, y en cada reconexión: el endpoint
+                // pudo cambiar de IP, y el backend pudo aparecer en otra máquina
+                // de la red. Si no hay descubrimiento, esto no hace nada.
+                resolveEndpoint()
                 backend.events().collect { event -> handleEvent(event) }
                 // The flow only ends when the session dropped, so this is the
                 // reconnect path: back off, then try again.
@@ -910,11 +989,78 @@ class MainScreenState(
                 // la app quedaba trabada y había que cerrarla a la fuerza.
                 playbackState = PlaybackState.Desconectado
                 reconnectAttempts++
-                delay(
-                    (ReconnectBaseMs * reconnectAttempts).coerceAtMost(MaxReconnectWaitMs),
-                )
+                backoff()
             }
         }
+    }
+
+    /**
+     * Escucha el sistema para cortar la sesión en cuanto la red cambia.
+     *
+     * Dos cosas a la vez:
+     *
+     * - **Cierra el socket.** Un socket atado a una red que ya no existe queda
+     *   "abierto" para OkHttp hasta que el latido falla; sin esto la app podía
+     *   tardar [SignAllWebSocketClient.HeartbeatIntervalSec] + la espera en
+     *   darse cuenta, y ese rato es el que se vivía como "no agarra hasta
+     *   reiniciar".
+     * - **Despierta la espera.** [backoff] deja de contar y el descubrimiento
+     *   vuelve a correr en el acto: es justo el momento en que hay una IP nueva
+     *   que buscar.
+     *
+     * No se vuelve a registrar en cada reconexión: la colección vive mientras
+     * la pantalla esté abierta y [dispose] la cancela.
+     */
+    private fun watchNetwork() {
+        val watcher = networkWatcher ?: return
+        if (networkJob?.isActive == true) return
+        networkJob = scope.launch {
+            try {
+                watcher.changes().collect {
+                    Log.i(TAG, "cambió la red: se reintenta el backend ahora")
+                    backend.close()
+                    retryNow.trySend(Unit)
+                }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (e: Exception) {
+                Log.w(TAG, "el aviso de red falló: ${e.message}")
+            }
+        }
+    }
+
+    /**
+     * La espera creciente entre intentos, interrumpible.
+     *
+     * El SRS pide espera creciente con tope de 5 s y **sin límite de intentos**
+     * (`main.tex:761-772`). Lo que agrega esto es que un cambio de red la corta:
+     * cuando la red vuelve después de una caída, esperar el turno completo del
+     * backoff es tiempo perdido, y el contador vuelve a cero porque la situación
+     * cambió, no porque el intento anterior haya fallado.
+     */
+    private suspend fun backoff() {
+        val wait = (ReconnectBaseMs * reconnectAttempts).coerceAtMost(MaxReconnectWaitMs)
+        val interrupted = withTimeoutOrNull(wait) { retryNow.receive() } != null
+        if (interrupted) reconnectAttempts = 0
+        // Lo que haya quedado encolado es de este mismo cambio: el próximo
+        // intento ya está empezando.
+        retryNow.tryReceive()
+    }
+
+    /**
+     * La pantalla volvió al frente y no hay sesión: se reintenta ya.
+     *
+     * Cubre el caso de abrir la app después de un rato en segundo plano. El
+     * proceso pudo haber quedado congelado mientras esperaba el turno del
+     * backoff, o el socket pudo morir sin que nadie lo notara; al volver a la
+     * pantalla no tiene sentido seguir esperando. Si la sesión está abierta no
+     * se toca nada: de eso se encarga el latido.
+     */
+    fun retryIfDisconnected() {
+        if (backend.isConnected) return
+        Log.i(TAG, "pantalla al frente sin sesión: se reintenta el backend ahora")
+        backend.close()
+        retryNow.trySend(Unit)
     }
 
     /**
@@ -1069,6 +1215,9 @@ class MainScreenState(
         // Antes nunca volvía a cero, así que después de unas horas de app
         // abierta la primera caída esperaba el tope en vez de 1 s.
         reconnectAttempts = 0
+        // La sesión abrió: este endpoint funciona, así que el próximo arranque
+        // empieza por acá en vez de volver a descubrir.
+        endpointResolver?.rememberConnected()
         // La sesión nueva arranca con voz disponible; el frame `capability` la
         // corrige en el mismo instante si el STT no está. Sin esto una sesión
         // degradada dejaba el micrófono apagado para siempre, incluso al reconectar.

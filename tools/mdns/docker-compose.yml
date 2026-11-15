@@ -1,0 +1,9 @@
+services:
+  signall-mdns:
+    build: .
+    container_name: signall-mdns
+    # En Linux es imprescindible: con la red bridge el multicast no sale a la
+    # LAN y el teléfono no ve el anuncio. En Docker Desktop (macOS/Windows) el
+    # modo host no sirve para mDNS; ahí se instala Avahi en el sistema.
+    network_mode: host
+    restart: unless-stopped

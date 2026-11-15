@@ -24,8 +24,11 @@ import java.io.File
  */
 class SignAssetRepository(
     private val cacheDir: File,
-    private val httpOrigin: String,
+    private val originProvider: () -> String,
 ) {
+
+    /** Constructor para quien tiene un origen fijo (pruebas y usos puntuales). */
+    constructor(cacheDir: File, httpOrigin: String) : this(cacheDir, { httpOrigin })
 
     private val http: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, java.util.concurrent.TimeUnit.SECONDS)
@@ -55,7 +58,7 @@ class SignAssetRepository(
             target.parentFile?.mkdirs()
             runCatching {
                 val request = Request.Builder()
-                    .url(httpOrigin.trimEnd('/') + "/" + relative)
+                    .url(originProvider().trimEnd('/') + "/" + relative)
                     .build()
                 http.newCall(request).execute().use { response ->
                     if (!response.isSuccessful) {

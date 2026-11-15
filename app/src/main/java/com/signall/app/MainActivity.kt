@@ -13,7 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.signall.app.data.AndroidLocalSubnetProvider
+import com.signall.app.data.AndroidNetworkWatcher
+import com.signall.app.data.BackendDiscovery
 import com.signall.app.data.BackendHealth
+import com.signall.app.data.HttpBackendHealthProbe
+import com.signall.app.data.NsdMdnsDiscovery
+import com.signall.app.data.SharedPrefsBackendEndpointStore
 import com.signall.app.data.SharedPrefsSettingsRepository
 import com.signall.app.data.SharedPrefsSignHistoryRepository
 import com.signall.app.data.SignAllBackendConfig
@@ -25,20 +31,37 @@ import com.signall.app.ui.theme.SignAllTheme
 import com.signall.app.ui.webview.WebViewSignAllController
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var screenState: MainScreenState
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         excludeDrawerEdgeBands(window)
-        val backendConfig = SignAllBackendConfig.fromBuildConfig()
+        // El backend ya no está horneado: `BACKEND_WS_URL` queda solo como
+        // último recurso. La URL viva la decide el descubrimiento (endpoint
+        // recordado → mDNS → subred local) y puede cambiar entre reconexiones
+        // sin recompilar la app.
+        val fallback = SignAllBackendConfig.fromBuildConfig()
+        val discovery = BackendDiscovery(
+            store = SharedPrefsBackendEndpointStore(this),
+            fallback = fallback,
+            mdns = NsdMdnsDiscovery(this),
+            localNetwork = AndroidLocalSubnetProvider(this),
+            probe = HttpBackendHealthProbe(),
+        )
         val state =
             MainScreenState(
                 history = SharedPrefsSignHistoryRepository(this),
                 settingsStore = SharedPrefsSettingsRepository(this),
                 webView = WebViewSignAllController(),
-                backend = SignAllWebSocketClient(backendConfig),
-                assets = SignAssetRepository(cacheDir, backendConfig.httpOrigin),
-                health = BackendHealth(backendConfig.httpOrigin),
+                backend = SignAllWebSocketClient { discovery.current },
+                assets = SignAssetRepository(cacheDir) { discovery.current.httpOrigin },
+                health = BackendHealth { discovery.current.httpOrigin },
+                endpointResolver = discovery,
+                networkWatcher = AndroidNetworkWatcher(this),
             )
+        screenState = state
         setContent {
             val settings = state.settings
             SystemBars(darkTheme = settings.darkTheme)
@@ -53,6 +76,16 @@ class MainActivity : ComponentActivity() {
                 MainScreen(state)
             }
         }
+    }
+
+    /**
+     * Al volver a la pantalla, si la sesión no está abierta se reintenta en el
+     * acto: el proceso pudo haber estado congelado en segundo plano esperando
+     * el turno del backoff. Si la sesión está viva no se toca nada.
+     */
+    override fun onStart() {
+        super.onStart()
+        screenState.retryIfDisconnected()
     }
 }
 

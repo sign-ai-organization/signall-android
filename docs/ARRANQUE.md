@@ -90,7 +90,14 @@ Si no tienes GPU NVIDIA, lee la nota de CPU en
 ./gradlew installDebug
 ```
 
-**Teléfono** (ajusta la IP a la de tu máquina en la red actual):
+**Teléfono** (en la misma red que la PC; la app descubre la dirección sola):
+
+```bash
+./gradlew installDebug
+```
+
+Si el descubrimiento no aplica (backend por USB con `adb reverse`, o una IP fija que se
+quiere forzar), la dirección se pasa como **último recurso**:
 
 ```bash
 ./gradlew installDebug -Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate
@@ -100,22 +107,26 @@ Para verificar sin instalar: `./gradlew build`.
 
 ## 3. Dónde apunta la app
 
-La dirección del backend se **hornea en el APK al compilar** (`BuildConfig.BACKEND_WS_URL`);
-no hay ningún campo en Ajustes para cambiarla en caliente. Por eso hay que recompilar
-cuando cambia la IP.
+La app **descubre el backend sola**: al abrir y en cada reconexión prueba el último
+endpoint exitoso, después mDNS (`_signall._tcp`) y por último la subred local con un
+`GET /health` corto. `BuildConfig.BACKEND_WS_URL` quedó como **último recurso**, no como
+la dirección normal. El detalle, y cómo anunciar el servicio desde la PC, está en
+[`DESCUBRIMIENTO-BACKEND.md`](DESCUBRIMIENTO-BACKEND.md).
 
-| Cómo te conectas | Dirección | Comando |
+| Cómo te conectas | Qué hace la app | Comando |
 |---|---|---|
-| Emulador | `ws://10.0.2.2:8080/ws/translate` | `./gradlew installDebug` |
-| Teléfono por USB | `ws://127.0.0.1:8080/ws/translate` | `adb reverse tcp:8080 tcp:8080` y luego `./gradlew installDebug -Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate` |
-| Teléfono por WiFi | `ws://<IP-del-PC>:8080/ws/translate` | `./gradlew installDebug -Psignall.backendWsUrl=ws://192.168.80.49:8080/ws/translate` |
-| Demo cifrada (`demo`) | `wss://…` | ver § 6 |
+| Emulador | No hay LAN que descubrir: usa el fallback `ws://10.0.2.2:8080/ws/translate` | `./gradlew installDebug` |
+| Teléfono por USB, sin red | Usa el fallback `127.0.0.1` si se compila con él | `adb reverse tcp:8080 tcp:8080` y `./gradlew installDebug -Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate` |
+| Teléfono por WiFi | Encuentra la PC por mDNS o escaneando la subred; no hay que pasar ninguna IP | `./gradlew installDebug` |
+| Demo cifrada (`demo`) | Busca por mDNS/escaneo en `https://…:443`; necesita la CA de laboratorio | ver § 6 |
 
-`adb reverse` **solo existe por USB**: no hay equivalente por red. Por WiFi se usa la IP
-de la máquina directamente.
+`adb reverse` **solo existe por USB**: no hay equivalente por red. Si el teléfono está
+conectado por USB **y** en la misma WiFi que la PC, el descubrimiento puede encontrar el
+backend por la LAN y usar esa dirección; las dos funcionan.
 
 `release` y `demo` **ignoran** la propiedad si no empieza por `wss://`, a propósito: el SRS
-pide que todo lo que sale del dispositivo vaya cifrado.
+pide que todo lo que sale del dispositivo vaya cifrado. El descubrimiento respeta esa
+regla: un build cifrado solo prueba `https://…:443`, nunca `http://…:8080`.
 
 ## 4. Todo por WiFi
 
@@ -126,9 +137,9 @@ Note 9S en `192.168.80.19` y el PC en `192.168.80.49`, los dos en la misma red.
 > [`../../signall-backend/docs/plan-wifi.md`](../../signall-backend/docs/plan-wifi.md)
 > (2026-10-27), y conviene leerlo antes de cambiar cualquier cosa de esta sección. Según su
 > checklist, la fase 1 (`ufw` para el 443) y la fase 2 (APK servido por Caddy en `/apk/`)
-> están hechas; **la fase 3 no**: la dirección del backend todavía no se puede editar desde
-> la app, así que hoy sigue siendo un parámetro de compilación. Lo que sigue describe cómo
-> funciona hoy, no el estado final que el plan persigue.
+> están hechas. **La fase 3 cambió de forma**: en vez del campo de URL en AVANZADO que
+> proponía el plan, la app descubre el backend sola (mDNS + subred local), así que ya no hay
+> que recompilar cuando cambia la IP. Ver [`DESCUBRIMIENTO-BACKEND.md`](DESCUBRIMIENTO-BACKEND.md).
 
 ### Linux (verificado en CachyOS/Arch)
 
@@ -267,7 +278,9 @@ El plan completo está en `../../signall-backend/docs/plan-proxy-tls.md`.
 adb reverse tcp:8443 tcp:443
 ./gradlew installDemo
 
-# por WiFi: directo a la IP de la máquina
+# por WiFi: la app busca sola el 443 de Caddy por mDNS o escaneo
+./gradlew installDemo
+# si se quiere forzar una IP concreta (último recurso):
 ./gradlew installDemo -Psignall.backendWsUrl=wss://192.168.80.49/ws/translate
 ```
 
@@ -283,9 +296,9 @@ vuelve con `./gradlew installDebug`.
 
 | Síntoma | Causa | Solución |
 |---|---|---|
-| "Sin conexión con el servidor" en un teléfono físico | el APK apunta a `10.0.2.2`, que es el host del **emulador** | compila con la IP de tu red, o usa `adb reverse` |
+| "Sin conexión con el servidor" en un teléfono físico | no hay backend en la subred y se usó el fallback `10.0.2.2`, que es el host del **emulador** | revisa `adb logcat -s SignAllNet`: si dice `sin resultados`, el backend no está anunciado ni responde en la subred; ver [`DESCUBRIMIENTO-BACKEND.md`](DESCUBRIMIENTO-BACKEND.md) |
 | `more than one device/emulator` | USB y WiFi conectados a la vez | desconecta el cable o usa `ANDROID_SERIAL` |
-| El cambio de IP rompió todo | la dirección está horneada en el APK | recompila con `-Psignall.backendWsUrl` |
+| El cambio de IP rompió todo | el backend no se está anunciando y el escaneo no lo encuentra | anúncialo por mDNS (§2 del documento de descubrimiento) o revisa el cortafuegos; no hace falta recompilar |
 | "No se pudo abrir el micrófono" | `RECORD_AUDIO` es permiso de runtime y no viene otorgado | `adb shell pm grant com.signall.app android.permission.RECORD_AUDIO` |
 | El backend responde en el `8080` pero las frases no cambian de glosa | `semantic_cache` no se invalida al cambiar prompt o modelo | `DELETE FROM semantic_cache;` |
 | Sembraste el catálogo y no se ve | `CatalogRepository.load_all()` lo carga **una sola vez** al arrancar | reinicia el backend |

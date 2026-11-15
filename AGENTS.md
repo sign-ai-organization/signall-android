@@ -190,10 +190,14 @@ trabajo sin instalar.** Si no hay dispositivo, se dice explícitamente.
 Trampas que hacen perder tiempo:
 
 - **Dispositivo físico por USB**: el `BACKEND_WS_URL` por defecto es
-  `ws://10.0.2.2:8080/ws/translate`, que es el loopback del **emulador**. En un teléfono real
-  hay que usar `adb reverse tcp:8080 tcp:8080` y compilar con
-  `-Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. Sin eso la app muestra "Sin
-  conexión con el servidor" y parece un problema del backend.
+  `ws://10.0.2.2:8080/ws/translate`, que es el loopback del **emulador**. La app
+  descubre el backend en la red local sola (endpoint recordado → mDNS `_signall._tcp`
+  → escaneo de la subred), así que en un teléfono real normalmente no hay que pasar
+  nada. Si el backend no está anunciado ni responde en la subred, el descubrimiento
+  dice `sin resultados` en `adb logcat -s SignAllNet` y cae al valor compilado; para
+  el camino USB se usa `adb reverse tcp:8080 tcp:8080` y
+  `-Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate`. Detalle en
+  [`docs/DESCUBRIMIENTO-BACKEND.md`](docs/DESCUBRIMIENTO-BACKEND.md).
 - **La demo del cifrado usa el build `demo`, no `debug`.** `demo` hereda `release` (solo
   `wss://`), se firma con la clave de `debug` y trae su `network_security_config` con las CA
   del **usuario** como anclas; apunta a `wss://127.0.0.1:8443/ws/translate`. El túnel es
@@ -481,6 +485,7 @@ La regla es leer la fila antes de decidir, no después.
 | **El hermano, el STT, el catálogo, o una decisión de tesis** | [`docs/SISTEMA.md`](docs/SISTEMA.md) — mapa, `CLAUDE.md` del backend, protocolo del STT, estructura de `signall-docs` |
 | **Saber qué se decidió ya entre el código y los documentos, o qué hay que cambiar en la app** | `ls docs/historia/CONTRASTE-*.md`. Los contrastes son documentos de trabajo de una sesión: se crean, se actualizan y a veces se borran, así que no hay una lista fija — se buscan por nombre. Cada repositorio tiene el suyo en su `docs/` |
 | **El micrófono, el modo en vivo, la cola de la escena o la latencia** | [`docs/MODO-EN-VIVO.md`](docs/MODO-EN-VIVO.md) + `tools/TIEMPO-REAL.md` |
+| **La conexión con el backend, una IP que cambió, mDNS o "no conecta"** | [`docs/DESCUBRIMIENTO-BACKEND.md`](docs/DESCUBRIMIENTO-BACKEND.md) — el orden del descubrimiento, el anuncio con Avahi/Caddy y la prueba por hotspot |
 | **Probar o verificar en el dispositivo, o "va lento"** | skill **`controlar-app-movil`** — qué herramienta usar, y los errores ya pisados |
 | **Compose, Lumo, accesibilidad o performance** | skill **`compose-best-practices`** (Lumo/Phosphor, cero Material 3) + `ui/designsystem/Color.kt` |
 | **Tocar el dispositivo, medir, o elegir herramienta del `mobile-mcp`** | [`tools/HERRAMIENTAS.md`](tools/HERRAMIENTAS.md) — índice en [`tools/README.md`](tools/README.md) |
