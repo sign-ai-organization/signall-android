@@ -7,7 +7,6 @@ import android.util.Log
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Avisa cuando la red por defecto cambia: aparece una, se cae o es otra.
@@ -58,26 +57,46 @@ class AndroidNetworkWatcher(context: Context) : NetworkWatcher {
             return@callbackFlow
         }
 
-        val last = AtomicReference(
+        // El estado se guarda con un candado y se compara con `equals`, no con
+        // una `AtomicReference`: `compareAndSet` compara **identidad** y Android
+        // entrega una instancia distinta de `Network` para la misma red (misma
+        // `netId`, otro objeto). Con la comparación por identidad, `onLost` se
+        // descartaba y la app no cortaba el socket al quedarse sin red, que es
+        // justo lo que este vigilante existe para evitar. Medido en el Redmi
+        // Note 9S el 2026-11-14: al apagar el Wi-Fi no aparecía
+        // `aviso de red: perdida`.
+        val lock = Any()
+        var last: Network? =
             try {
                 manager.activeNetwork
             } catch (e: Exception) {
                 Log.w(TAG, "no se pudo leer la red activa: ${e.message}")
                 null
-            },
-        )
+            }
 
         val callback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 // Misma red que la que ya había: el sistema repite este callback
                 // en varios momentos y no es un cambio que justifique cortar.
-                if (last.getAndSet(network) == network) return
+                val changed =
+                    synchronized(lock) {
+                        val previous = last
+                        last = network
+                        previous != network
+                    }
+                if (!changed) return
                 Log.i(TAG, "aviso de red: disponible $network")
                 trySend(Unit)
             }
 
             override fun onLost(network: Network) {
-                if (!last.compareAndSet(network, null)) return
+                val changed =
+                    synchronized(lock) {
+                        if (last != network) return@synchronized false
+                        last = null
+                        true
+                    }
+                if (!changed) return
                 Log.i(TAG, "aviso de red: perdida $network")
                 trySend(Unit)
             }
