@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<!--
+  Variante del anuncio para cuando el backend se publica detrás de Caddy en el
+  443. Copiar como /etc/avahi/services/signall.service (reemplaza la variante
+  del 8080) y recargar Avahi.
+
+  El certificado de Caddy tiene que cubrir la IP o el nombre que resuelve el
+  teléfono. El build `demo` confía en la CA de laboratorio instalada por el
+  usuario; un build `release` solo confía en las CA del sistema.
+-->
+<service-group>
+  <name replace-wildcards="yes">SignAll en %h</name>
+  <service>
+    <type>_signall._tcp</type>
+    <port>443</port>
+    <txt-record>path=/ws/translate</txt-record>
+    <txt-record>health=/health</txt-record>
+    <txt-record>scheme=wss</txt-record>
+    <txt-record>tls=1</txt-record>
+  </service>
+</service-group>

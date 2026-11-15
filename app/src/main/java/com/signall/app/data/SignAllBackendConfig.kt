@@ -3,28 +3,30 @@ package com.signall.app.data
 import com.signall.app.BuildConfig
 
 /**
- * Where the backend lives.
+ * Un endpoint del backend.
  *
- * The URL comes from `BuildConfig.BACKEND_WS_URL`, which `build.gradle.kts`
- * fills **per build type**:
+ * La app ya **no** depende de una IP horneada: al arrancar, y cada vez que se
+ * pierde la conexión, `BackendDiscovery` busca el backend con el endpoint
+ * guardado, mDNS y un escaneo de la subred local, y recién si todo eso falla
+ * usa `BuildConfig.BACKEND_WS_URL` como último recurso.
  *
- * - `debug` takes `-Psignall.backendWsUrl=…`, so a physical device can point at
- *   the development machine without editing code:
+ * `build.gradle.kts` sigue llenando esa constante por build type, y sigue
+ * sirviendo para los casos en los que el descubrimiento no aplica: el emulador
+ * (`10.0.2.2`), `adb reverse` (`127.0.0.1`) y una URL de release sin descubrir.
+ *
+ * - `debug` toma `-Psignall.backendWsUrl=…`:
  *
  *   ```
  *   ./gradlew installDebug -Psignall.backendWsUrl=ws://127.0.0.1:8080/ws/translate
  *   ```
  *
- *   The default is `10.0.2.2`, the Android emulator's alias for the host machine.
- *   On a real device use the host's LAN address, never `127.0.0.1` (that points
- *   at the phone itself) — or `adb reverse tcp:8080 tcp:8080`, which makes
- *   `127.0.0.1` the host again.
+ * - `release` **ignora esa propiedad a menos que sea `wss://`**. El SRS pide
+ *   que todo lo que sale del dispositivo vaya cifrado (`main.tex:1095`) y que
+ *   el enlace con el backend sea WSS (`:1100`), así que un APK firmado no puede
+ *   quedar apuntando a `ws://` por una propiedad de build.
  *
- * - `release` **ignores that property unless it is `wss://`**. The SRS asks for
- *   everything leaving the device to be encrypted (`main.tex:1095`) and for the
- *   app↔backend link to be WSS (`:1100`), so a signed build must not be able to
- *   be pointed at a plain `ws://` by a build flag. No domain is deployed yet,
- *   which is why its default is a host that cannot resolve instead of a guess.
+ * El esquema de [url] también decide qué busca el descubrimiento: `ws` prueba
+ * `http://…:8080` (backend en Docker) y `wss` prueba `https://…:443` (Caddy).
  */
 data class SignAllBackendConfig(val url: String) {
 

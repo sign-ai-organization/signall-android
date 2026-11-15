@@ -2,6 +2,7 @@ package com.signall.app.ui.state
 
 import android.webkit.WebView
 import com.signall.app.data.BackendHealth
+import com.signall.app.data.NetworkWatcher
 import com.signall.app.data.SignAllWebSocketClient
 import com.signall.app.data.SignAssetRepository
 import com.signall.app.data.SignHistoryRepository
@@ -35,6 +36,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -142,6 +145,80 @@ class MainScreenStateFlowTest {
         assertEquals(PlaybackState.Desconectado, nuevo.playbackState)
         advance(2_000)
         assertEquals(PlaybackState.Desconectado, nuevo.playbackState)
+    }
+
+    @Test
+    fun `un cambio de red corta la espera y reabre la sesion sin reiniciar`() {
+        val red = MutableSharedFlow<Unit>(extraBufferCapacity = 8)
+        var sesiones = 0
+        val breve = mock<SignAllWebSocketClient>()
+        whenever(breve.events()).thenAnswer {
+            sesiones++
+            flow<BackendEvent> { }
+        }
+        whenever(breve.isConnected).thenReturn(false)
+        val nuevo =
+            MainScreenState(
+                history,
+                settings,
+                webScene,
+                breve,
+                assets,
+                health,
+                networkWatcher = NetworkWatcher { red },
+            )
+        settle()
+        // El primer flujo terminó: el bucle quedaría esperando 1 s.
+        assertEquals(1, sesiones)
+        assertEquals(PlaybackState.Desconectado, nuevo.playbackState)
+
+        // La red cambió: no se avanza el reloj, el intento sale ya.
+        red.tryEmit(Unit)
+        settle()
+
+        assertEquals(2, sesiones)
+        verify(breve).close()
+    }
+
+    @Test
+    fun `un cambio de red cierra el socket que quedo atado a la red vieja`() {
+        val red = MutableSharedFlow<Unit>(extraBufferCapacity = 8)
+        val abierto = MutableSharedFlow<BackendEvent>(extraBufferCapacity = 8)
+        val largo = mock<SignAllWebSocketClient>()
+        whenever(largo.events()).thenReturn(abierto)
+        whenever(largo.isConnected).thenReturn(true)
+        val nuevo =
+            MainScreenState(
+                history,
+                settings,
+                webScene,
+                largo,
+                assets,
+                health,
+                networkWatcher = NetworkWatcher { red },
+            )
+        settle()
+
+        red.tryEmit(Unit)
+        settle()
+
+        verify(largo).close()
+    }
+
+    @Test
+    fun `volver a la pantalla con la sesion abierta no la corta`() {
+        val abierto = MutableSharedFlow<BackendEvent>(extraBufferCapacity = 8)
+        val largo = mock<SignAllWebSocketClient>()
+        whenever(largo.events()).thenReturn(abierto)
+        whenever(largo.isConnected).thenReturn(true)
+        val nuevo =
+            MainScreenState(history, settings, webScene, largo, assets, health)
+        settle()
+
+        nuevo.retryIfDisconnected()
+        settle()
+
+        verify(largo, never()).close()
     }
 
     @Test

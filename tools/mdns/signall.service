@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<!--
+  Anuncio mDNS del backend de SignAll para Avahi.
+
+  Copiar a /etc/avahi/services/signall.service y recargar:
+
+      sudo cp tools/mdns/signall.service /etc/avahi/services/
+      sudo systemctl restart avahi-daemon
+
+  El tipo `_signall._tcp` es el que busca la app. El puerto es el **de entrada**
+  de la PC, no el interno del contenedor:
+
+  - backend en Docker:      8080 + scheme=ws
+  - detrás de Caddy:        443  + scheme=wss + tls=1 (ver signall-caddy.service)
+
+  Ver docs/DESCUBRIMIENTO-BACKEND.md.
+-->
+<service-group>
+  <name replace-wildcards="yes">SignAll en %h</name>
+  <service>
+    <type>_signall._tcp</type>
+    <port>8080</port>
+    <txt-record>path=/ws/translate</txt-record>
+    <txt-record>health=/health</txt-record>
+    <txt-record>scheme=ws</txt-record>
+  </service>
+</service-group>

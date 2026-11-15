@@ -45,7 +45,17 @@ import okio.ByteString.Companion.toByteString
  * [events] is a function, not a property: every call is a fresh cold flow, so
  * reconnecting means collecting it again.
  */
-class SignAllWebSocketClient(private val config: SignAllBackendConfig) {
+class SignAllWebSocketClient(private val configProvider: () -> SignAllBackendConfig) {
+
+    /**
+     * Constructor para quien no necesita que la URL cambie en caliente (las
+     * pruebas, y cualquier uso puntual). La app usa el primario: la URL la
+     * decide el descubrimiento y puede cambiar entre reconexiones.
+     */
+    constructor(config: SignAllBackendConfig) : this({ config })
+
+    /** La configuración vigente, leída en cada apertura de sesión. */
+    private val config: SignAllBackendConfig get() = configProvider()
 
     private val http: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
@@ -88,7 +98,10 @@ class SignAllWebSocketClient(private val config: SignAllBackendConfig) {
 
     fun events(): Flow<BackendEvent> = callbackFlow {
         val producer = this
-        val request = Request.Builder().url(config.url).build()
+        // Una lectura por sesión: si el descubrimiento cambia la URL mientras
+        // tanto, esta sesión sigue hablando con la que abrió.
+        val active = config
+        val request = Request.Builder().url(active.url).build()
         val listener = object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 // RF-INT-COM-03 se verifica "por inspección del tráfico de red", así
@@ -96,7 +109,7 @@ class SignAllWebSocketClient(private val config: SignAllBackendConfig) {
                 // release esta línea nunca puede decir SIN CIFRAR.
                 Log.i(
                     TAG,
-                    "sesión abierta: ${config.url} (${if (config.isEncrypted) "TLS" else "SIN CIFRAR"})",
+                    "sesión abierta: ${active.url} (${if (active.isEncrypted) "TLS" else "SIN CIFRAR"})",
                 )
                 nextTurn.set(0)
                 trySend(BackendEvent.Connected)

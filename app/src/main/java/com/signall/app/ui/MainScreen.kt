@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -174,6 +175,12 @@ private data class SceneCallbacks(
 
 @Composable
 fun MainScreen(state: MainScreenState) {
+    // Al salir de la pantalla se corta el descubrimiento en curso: NSD y el
+    // escaneo de la subred no deben seguir trabajando para una pantalla que ya
+    // no existe. El estado se crea en `MainActivity`, uno por actividad.
+    DisposableEffect(Unit) {
+        onDispose { state.dispose() }
+    }
     var showHistory by remember { mutableStateOf(false) }
     var showAbout by remember { mutableStateOf(false) }
     var bottomBarHeight by remember { mutableStateOf(0.dp) }

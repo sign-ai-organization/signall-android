@@ -28,6 +28,10 @@ val buildNumber: Int = git("rev-list", "--count", "HEAD").toIntOrNull()?.coerceA
 
 // ── Dónde vive el backend ──────────────────────────────────────────────────
 //
+// La app lo descubre sola (endpoint recordado → mDNS `_signall._tcp` → subred
+// local); estas URLs son solo el **último recurso** cuando el descubrimiento no
+// encuentra nada. El detalle está en `docs/DESCUBRIMIENTO-BACKEND.md`.
+//
 // El SRS pide que todo lo que sale del dispositivo vaya cifrado (`main.tex:1095`)
 // y que el enlace con el backend sea WSS (`:1100`), así que **un build de
 // release solo puede apuntar a `wss://`**. Para desarrollar hace falta `ws://`
@@ -39,9 +43,9 @@ val buildNumber: Int = git("rev-list", "--count", "HEAD").toIntOrNull()?.coerceA
 val backendWsUrlOverride: String? = project.findProperty("signall.backendWsUrl") as String?
 
 /**
- * Default de debug: el alias del emulador a la máquina de desarrollo, para que
- * `./gradlew installDebug` funcione sin pasar nada. Un teléfono físico necesita
- * la dirección de la red local o `adb reverse`, nunca `127.0.0.1` a secas.
+ * Fallback de debug: el alias del emulador a la máquina de desarrollo. En un
+ * teléfono físico el descubrimiento encuentra la PC en la LAN; `10.0.2.2` es
+ * lo que queda cuando no hay red que descubrir.
  */
 val debugBackendWsUrl = "ws://10.0.2.2:8080/ws/translate"
 

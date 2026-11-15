@@ -4,6 +4,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <!-- Descubrimiento automático del backend. `ACCESS_NETWORK_STATE` es para
+         leer la IP y la máscara de la red activa con LinkProperties;
+         `ACCESS_WIFI_STATE`/`CHANGE_WIFI_MULTICAST_STATE` son para el
+         MulticastLock que necesita mDNS (sin él, MIUI y otros fabricantes
+         filtran el multicast). No son permisos de runtime. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
     <!-- The app translates what the user says; without the mic it can only
          accept typed phrases (RF-UI-04). -->
     <uses-feature
