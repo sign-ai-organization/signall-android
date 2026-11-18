@@ -48,34 +48,47 @@ Samuel, el avatar y las pruebas de la app; Sergio y Julián, documentación, bac
 2. Ahí hace su lectura y sus cambios, solo sobre sus documentos.
 3. **Si un cambio obliga a tocar otro repositorio**, la misma rama se propaga a ese repositorio,
    también derivada de `main`. Mismo nombre, misma lógica.
-4. Al final, cuando los cuatro terminen, se integra.
+4. **Todo termina en `revision-diego`.** Esa es la rama donde queda la revisión final. Lo decidió
+   el owner y no se vuelve a discutir.
+
+## Lectura cruzada y archivo de revisión
+
+Se puede leer cualquier documento, no solo el propio, para detectar inconsistencias entre
+documentos y entre documento y código.
+
+- **Edición: solo el documento propio.** El de otro no se toca, ni se corrige de paso.
+- **Lo que se encuentre en un documento ajeno va a un archivo de revisión**, con la misma lógica
+  que esta bitácora: qué dice el documento, contra qué se comparó, cuál parece tener la razón y a
+  quién le toca decidir. No es una corrección: es una anotación para el dueño.
+- **Un archivo por revisor** en `../signall-docs/revision/<nombre>.md` (uno por persona, no uno
+  compartido: un archivo único choca entre cuatro ramas). Cada entrada con el documento, la
+  sección o la línea, y el dueño al que le corresponde.
+- El dueño cierra la anotación cuando decide: la aplica en su `.tex` o la rechaza con el motivo.
+  **Nadie edita un documento sin que su dueño lo decida.**
 
 ## Qué se decidió
 
-- **Un dueño por documento y sin cruces.** Un documento no lo trabajan dos personas.
+- **Un dueño por documento y sin cruces de edición.** Leer, todos; editar, solo el dueño.
 - **La memoria es toda de Julián**, sin excepción.
 - **El reparto se hizo por trabajo y por tamaño**, no por gusto: quedó en 114, 124, 104 y 91
   páginas.
 - **Las ramas nacen de `main`**, siempre, también las de los repos hermanos.
+- **Todo se queda en `revision-diego`.** No hay integración a `main` en esta etapa.
+- **El formato de biblioteca no se atiende ahora.**
 - **Esta sesión no arranca la revisión.** Solo deja el método escrito.
 
 ## Qué quedó pendiente
 
-- **Confirmar si el formato de biblioteca entra en la entrega.** Si entra, hay que conseguirlo: no
-  está en ningún repositorio. Propuesto para Sergio, que ya maneja la bibliografía del SRS.
-- **Decidir si hay segundo lector** por documento. Recomendado sí, leyendo y reportando sin
-  editar; si no, cada uno revisa lo suyo y nadie ve el conjunto.
-- **Precisar el destino de la integración final.** El owner lo dijo como «todo va a quedar en mi
-  rama»; falta decir si el destino es `main` o una rama de consolidación.
 - **Empezar por el plan de administración** (Diego, el más corto) para calibrar cómo se revisa
-  antes de meterse en el SRS.
+  antes de meterse en el SRS. El orden de los documentos siguientes queda a criterio del revisor.
 - El SDD incluye backend y STT: Diego lo revisa completo, pero lo del backend se le pregunta a
   Sergio, que no lo edita.
 - Plan de pruebas y plan de administración se tocan en las rondas: Samuel y Diego tienen que
   hablarlo, no reescribirlo cada uno por su lado.
+- El formato de biblioteca queda fuera por ahora; si al final se pide, es un faltante que hay que
+  conseguir, no está en ningún repositorio.
 
 ## Nota de método de la revisión
 
 La idea acordada es que cada uno lea su documento mientras un agente hace el contraste simultáneo
-contra el código y contra los otros documentos, y devuelva hallazgos por dueño. **Nadie edita un
-documento sin que su dueño lo decida.**
+contra el código y contra los otros documentos, y devuelva hallazgos por dueño.
