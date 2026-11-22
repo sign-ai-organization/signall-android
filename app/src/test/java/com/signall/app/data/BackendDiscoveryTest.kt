@@ -156,17 +156,69 @@ class BackendDiscoveryTest {
     }
 
     @Test
-    fun `un build cifrado escanea el 443 y devuelve wss`() = runBlocking {
-        val secureFallback = SignAllBackendConfig("wss://backend.invalid/ws/translate")
+    fun `un build cifrado no busca en la red y usa el compilado`() = runBlocking {
+        val secureFallback = SignAllBackendConfig("wss://127.0.0.1:8443/ws/translate")
         val store = FakeStore()
+        val mdns = FakeMdns(listOf(DiscoveredService("signall", "192.168.43.100", 443, secure = true)))
         val subnets = FakeSubnets(listOf(Ipv4LinkAddress("192.168.43.5", 24)))
         val probe = FakeProbe(healthy = setOf("192.168.43.100"))
-        val resolver = discovery(store, subnets = subnets, probe = probe, wsFallback = secureFallback)
+        val resolver = discovery(store, mdns, subnets, probe, wsFallback = secureFallback)
+
+        val result = resolver.resolve()
+
+        assertEquals("wss://127.0.0.1:8443/ws/translate", result.url)
+        assertEquals(secureFallback.url, resolver.current.url)
+        assertEquals(0, mdns.calls)
+        assertEquals(0, subnets.calls)
+        assertTrue(probe.attempts.isEmpty())
+        assertEquals(0, store.saved)
+    }
+
+    @Test
+    fun `un build cifrado prueba el recordado wss antes del compilado`() = runBlocking {
+        val secureFallback = SignAllBackendConfig("wss://127.0.0.1:8443/ws/translate")
+        val store = FakeStore("wss://192.168.43.100:443/ws/translate")
+        val mdns = FakeMdns()
+        val subnets = FakeSubnets()
+        val probe = FakeProbe(healthy = setOf("192.168.43.100"))
+        val resolver = discovery(store, mdns, subnets, probe, wsFallback = secureFallback)
 
         val result = resolver.resolve()
 
         assertEquals("wss://192.168.43.100:443/ws/translate", result.url)
-        assertTrue(probe.attempts.all { it.endsWith(":443/https") })
+        assertEquals("192.168.43.100:443/https", probe.attempts.single())
+        assertEquals(0, mdns.calls)
+        assertEquals(0, subnets.calls)
+    }
+
+    @Test
+    fun `un build cifrado con el recordado caido usa el compilado sin escanear`() = runBlocking {
+        val secureFallback = SignAllBackendConfig("wss://127.0.0.1:8443/ws/translate")
+        val store = FakeStore("wss://192.168.43.100:443/ws/translate")
+        val mdns = FakeMdns()
+        val subnets = FakeSubnets(listOf(Ipv4LinkAddress("192.168.43.5", 24)))
+        val probe = FakeProbe()
+        val resolver = discovery(store, mdns, subnets, probe, wsFallback = secureFallback)
+
+        val result = resolver.resolve()
+
+        assertEquals(secureFallback.url, result.url)
+        assertEquals(listOf("192.168.43.100:443/https"), probe.attempts)
+        assertEquals(0, mdns.calls)
+        assertEquals(0, subnets.calls)
+    }
+
+    @Test
+    fun `un build cifrado ignora un endpoint recordado en texto claro`() = runBlocking {
+        val secureFallback = SignAllBackendConfig("wss://127.0.0.1:8443/ws/translate")
+        val store = FakeStore("ws://192.168.43.100:8080/ws/translate")
+        val probe = FakeProbe(healthy = setOf("192.168.43.100"))
+        val resolver = discovery(store, probe = probe, wsFallback = secureFallback)
+
+        val result = resolver.resolve()
+
+        assertEquals(secureFallback.url, result.url)
+        assertTrue(probe.attempts.isEmpty())
     }
 
     @Test
