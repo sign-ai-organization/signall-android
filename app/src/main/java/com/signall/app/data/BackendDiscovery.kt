@@ -45,6 +45,13 @@ interface BackendEndpointResolver {
  *    comportamiento viejo, y sigue sirviendo para el emulador
  *    (`10.0.2.2`) y para `adb reverse` (`127.0.0.1`).
  *
+ * Los pasos 2 y 3 son **solo para `debug`**. Un build cifrado (`demo`/`release`)
+ * ya sabe a qué backend hablar: el compilado con `wss://`. Buscarlo por la red
+ * no puede dar otra cosa —el anuncio mDNS de la PC es `http://…:8080` y el
+ * escaneo prueba `https://…:443`— y costaba ~6 s de espera en cada arranque
+ * (2,5 s de mDNS más el escaneo). Ese build prueba el recordado y, si no
+ * responde, usa el compilado en el acto; ver [resolveEncryptedBuild].
+ *
  * Cada paso exitoso se guarda, y [rememberConnected] vuelve a guardar el
  * endpoint cuando el WebSocket abre. Así el siguiente arranque empieza por el
  * que de verdad funcionó, sin recompilar la app cuando el DHCP cambia la IP.
@@ -68,6 +75,8 @@ class BackendDiscovery(
         private set
 
     override suspend fun resolve(): SignAllBackendConfig = withContext(Dispatchers.IO) {
+        if (fallback.isEncrypted) return@withContext resolveEncryptedBuild()
+
         Log.i(TAG, "buscando backend: recordado=${store.lastSuccessfulUrl() ?: "ninguno"}")
 
         remembered()?.let { return@withContext it }
@@ -77,6 +86,49 @@ class BackendDiscovery(
         Log.i(TAG, "sin resultados: se usa el fallback ${fallback.url}")
         current = fallback
         fallback
+    }
+
+    /**
+     * Camino del build cifrado (`demo`/`release`): sin mDNS y sin escaneo.
+     *
+     * El backend de esos builds es el compilado con `wss://`, y el único
+     * endpoint que puede reemplazarlo es otro `wss://` que haya funcionado
+     * antes. Se prueba ese, rápido (400 ms de tope), y si no contesta se usa el
+     * compilado sin más vueltas: no hay nada que buscar en la red local que
+     * pueda ser mejor que el endpoint que el build ya trae.
+     */
+    private suspend fun resolveEncryptedBuild(): SignAllBackendConfig {
+        val saved = store.lastSuccessfulUrl()
+        Log.i(TAG, "buscando backend: build cifrado, recordado=${saved ?: "ninguno"}")
+
+        rememberedEncrypted(saved)?.let { return it }
+
+        Log.i(TAG, "descubrimiento desactivado: build cifrado, se usa ${fallback.url}")
+        current = fallback
+        return fallback
+    }
+
+    /**
+     * El endpoint recordado, solo si es `wss://`.
+     *
+     * Un build cifrado no puede adoptar un `ws://` guardado: sería el build de
+     * `debug` que estuvo instalado antes (comparten `applicationId`) y bajaría
+     * el enlace a texto en claro sin que nadie lo pidiera. Se ignora y se sigue
+     * con el compilado.
+     */
+    private suspend fun rememberedEncrypted(saved: String?): SignAllBackendConfig? {
+        if (saved == null) return null
+        if (!saved.startsWith("wss://")) {
+            Log.i(TAG, "el endpoint recordado $saved no es cifrado; se ignora")
+            return null
+        }
+        val config = SignAllBackendConfig(saved)
+        if (probeConfig(config)) {
+            adopt(config, "recordado")
+            return config
+        }
+        Log.i(TAG, "intento fallido: el endpoint recordado $saved no responde")
+        return null
     }
 
     override fun rememberConnected() {

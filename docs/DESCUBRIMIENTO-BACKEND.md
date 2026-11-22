@@ -18,17 +18,29 @@ descubra sola. No hay ningún campo de servidor que llenar.
 Al abrir la app, y otra vez cada vez que se pierde la conexión, se intenta en
 este orden:
 
-| Paso | Qué hace | Cuánto espera |
-|---|---|---|
-| 1 | Prueba el **último endpoint exitoso** guardado en preferencias (`signall` → `backend_ws_url`) | 400 ms |
-| 2 | Busca por **mDNS** el servicio `_signall._tcp` | 2,5 s |
-| 3 | Escanea la **subred local** con `GET /health` corto y concurrencia limitada | lo que tarde la red |
-| 4 | Usa `BuildConfig.BACKEND_WS_URL` como **último recurso** | — |
+| Paso | Qué hace | Cuánto espera | Builds |
+|---|---|---|---|
+| 1 | Prueba el **último endpoint exitoso** guardado en preferencias (`signall` → `backend_ws_url`) | 400 ms | todos |
+| 2 | Busca por **mDNS** el servicio `_signall._tcp` | 2,5 s | solo `debug` |
+| 3 | Escanea la **subred local** con `GET /health` corto y concurrencia limitada | lo que tarde la red | solo `debug` |
+| 4 | Usa `BuildConfig.BACKEND_WS_URL` como **último recurso** | — | todos |
 
 El primer paso que contesta con el `/health` propio de SignAll gana, se guarda y
 es el que se usa para abrir el WebSocket. Si nada contesta, se usa el valor
 compilado, que sigue sirviendo para el emulador (`10.0.2.2`) y para
 `adb reverse` (`127.0.0.1`).
+
+**Los builds cifrados (`demo` y `release`) no descubren.** Su backend es el
+compilado con `wss://`: prueban el endpoint recordado —solo si también es
+`wss://`, para no bajar el enlace a texto en claro— y, si no responde, usan el
+compilado en el acto. Antes hacían mDNS y escaneo igual que `debug`, y eso
+costaba unos 6 s de espera en cada arranque para buscar un `http://…:8080` que
+ese build nunca podría aceptar. El log lo dice:
+
+```
+buscando backend: build cifrado, recordado=ninguno
+descubrimiento desactivado: build cifrado, se usa wss://127.0.0.1:8443/ws/translate
+```
 
 ### Qué dispara un intento de reconexión
 
@@ -93,7 +105,12 @@ El esquema lo decide el build type:
 | Build | Pista | Escaneo | mDNS |
 |---|---|---|---|
 | `debug` | `ws://` | `http://<ip>:8080/health` | puerto anunciado; sin `tls` → `ws://` |
-| `demo` / `release` | `wss://` | `https://<ip>:443/health` | puerto anunciado; `tls=1` o 443 → `wss://` |
+| `demo` / `release` | `wss://` | no escanea | no busca |
+
+El escaneo del build `debug` prueba `http://…:8080` y el mDNS acepta el anuncio
+sin `tls` o en el 8080; los dos proponen `ws://`. En un build cifrado ese
+resultado no serviría —el enlace tiene que ser `wss://`— y por eso el
+descubrimiento no corre ahí.
 
 ---
 
